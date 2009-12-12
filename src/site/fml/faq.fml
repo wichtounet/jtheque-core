@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faqs title="Frequently Asked Questions">
+    <part id="General">
+        <faq id="needed-libraries">
+            <question>De quelles librairies a besoin JTheque Core ?</question>
+            <answer>
+                <p>
+                    JTheque Core nécessite les librairies suivantes :
+                </p>
+                <ul>
+                    <li>Commons Collections 3.2.1</li>
+                    <li>Commons BeanUtils 1.7</li>
+                    <li>Commons Digester 1.7</li>
+                    <li>AppleJavaExtensions</li>
+                    <li>SkinLf 6.7</li>
+                    <li>SwingX 1.6</li>
+                    <li>JXLayer 3.0.4</li>
+                    <li>Timing Framework 1.0</li>
+                    <li>iText 2.1.0</li>
+                    <li>JXL</li>
+                    <li>POI 3.0.2</li>
+                    <li>Jasper Reports 3.5.0</li>
+                    <li>Javamail 1.4.1</li>
+                    <li>SLF4J 1.5.8</li>
+                    <li>Log4J 1.2.15</li>
+                    <li>ehCache 1.5.0</li>
+                    <li>Spring JDBC</li>
+                    <li>Spring AOP</li>
+                    <li>Spring Beans</li>
+                    <li>Spring Context</li>
+                    <li>Spring Tx</li>
+                    <li>Spring Core</li>
+                    <li>Jaxen</li>
+                    <li>Jdom 1.1</li>
+                    <li>SaxPath</li>
+                    <li>Xerces</li>
+                    <li>Backport util concurrent 3.0</li>
+                    <li>H2 1.1.112</li>
+                    <li>JSR107 cache 1.0</li>
+                </ul>
+            </answer>
+        </faq>
+    </part>
+</faqs>

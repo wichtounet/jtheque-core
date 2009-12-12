@@ -1,0 +1,17 @@
+News
+
+* 29.11.2009  JTheque Core 2.0.2
+
+    La version 2.0.2 du core est maintenant disponible. Pour plus d'informations, rendez-vous sur la 
+    page {{{versions.html} versions}}. 
+
+* 12.09.2009  JTheque Core 2.0.1
+
+    La version 2.0.1 du core est maintenant disponible. Pour plus d'informations, rendez-vous sur la 
+    page {{{versions.html} versions}}. 
+
+* 08.09.2009  Nouveau site
+
+    Je suis heureux de vous annoncer la mise en place d'un nouveau site pour JTheque Core. Ce nouveau 
+    site est maintenant géré avec Maven 2. Cela m'évite beaucoup de travail et fournit une architecture
+    de site bien connue des développeurs Java. 

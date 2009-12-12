@@ -1,0 +1,335 @@
+package org.jtheque.core.managers.core.application;
+
+import org.jdom.Element;
+import org.jtheque.core.managers.resource.ImageType;
+import org.jtheque.core.utils.SystemProperty;
+import org.jtheque.core.utils.file.XMLException;
+import org.jtheque.core.utils.file.XMLReader;
+import org.jtheque.utils.StringUtils;
+import org.jtheque.utils.bean.InternationalString;
+import org.jtheque.utils.bean.Version;
+import org.jtheque.utils.collections.ArrayUtils;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+
+/*
+ * This file is part of JTheque.
+ * 	   
+ * JTheque is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License. 
+ *
+ * JTheque is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+/**
+ * An XML Application. It seems a JTheque Core Application who's read from an XML file.
+ *
+ * @author Baptiste Wicht
+ */
+public final class XMLApplication implements Application {
+    private final XMLReader reader;
+
+    private Version version;
+
+    private InternationalString author;
+    private InternationalString name;
+    private InternationalString site;
+    private InternationalString email;
+    private InternationalString copyright;
+
+    private String logo;
+    private ImageType logoType;
+
+    private String windowIcon;
+    private ImageType windowIconType;
+
+    private String folderPath;
+    private String licenceFilePath;
+    private String applicationRepository;
+    private String applicationMessageFileURL;
+
+    private boolean displayLicence;
+
+    private String[] supportedLanguages = {"fr", "en"};
+
+    private final Map<String, String> properties = new HashMap<String, String>(10);
+
+    /**
+     * Construct a new XMLApplication from an XML file.
+     *
+     * @param filePath The path to the XML file.
+     */
+    public XMLApplication(String filePath) {
+        super();
+
+        reader = new XMLReader();
+
+        openFile(filePath);
+
+        try {
+            readFile();
+        } catch (XMLException e) {
+            throw new IllegalArgumentException("Unable to read the file " + filePath, e);
+        }
+    }
+
+    /**
+     * Open the file.
+     *
+     * @param filePath The path to the file.
+     */
+    private void openFile(String filePath) {
+        try {
+            reader.openFile(filePath);
+        } catch (XMLException e) {
+            throw new IllegalArgumentException("Unable to read the file " + filePath, e);
+        }
+    }
+
+    /**
+     * Read the file.
+     *
+     * @throws XMLException if an error occurs during the XML processing.
+     */
+    private void readFile() throws XMLException {
+        readVersion();
+        readApplicationValues();
+        readInternationalization();
+        readImages();
+        readOptions();
+        readProperties();
+    }
+
+    /**
+     * Read the version of the application from the file.
+     *
+     * @throws XMLException if an error occurs during the XML processing.
+     */
+    private void readVersion() throws XMLException {
+        String versionStr = reader.readString("@version", reader.getRootElement());
+
+        version = new Version(versionStr);
+    }
+
+    /**
+     * Read the application values (repository, messages file) from the file.
+     *
+     * @throws XMLException if an error occurs during the XML processing.
+     */
+    private void readApplicationValues() throws XMLException {
+        String folder = reader.readString("folder", reader.getRootElement());
+
+        if (StringUtils.isEmpty(folder) || !new File(folder).exists()) {
+            folderPath = new File(SystemProperty.USER_DIR.get()).getParentFile().getAbsolutePath();
+        } else {
+            folderPath = new File(folder).getAbsolutePath();
+        }
+
+        applicationRepository = reader.readString("repository", reader.getRootElement());
+        applicationMessageFileURL = reader.readString("messages", reader.getRootElement());
+    }
+
+    /**
+     * Read all the internationalized values of the application from the file.
+     *
+     * @throws XMLException if an error occurs during the XML processing.
+     */
+    private void readInternationalization() throws XMLException {
+        Object i18nElement = reader.getNode("i18n", reader.getRootElement());
+
+        Collection<Element> nodes = reader.getNodes("languages/language", i18nElement);
+
+        Collection<String> languages = new ArrayList<String>(nodes.size());
+
+        for (Element languageElement : nodes) {
+            languages.add(languageElement.getText());
+        }
+
+        supportedLanguages = languages.toArray(new String[languages.size()]);
+
+        name = readInternationalString("name", i18nElement);
+        author = readInternationalString("author", i18nElement);
+        site = readInternationalString("site", i18nElement);
+        email = readInternationalString("email", i18nElement);
+        copyright = readInternationalString("copyright", i18nElement);
+    }
+
+    /**
+     * Read an international string from the file.
+     *
+     * @param path          The path the international string element.
+     * @param parentElement The parent element.
+     * @return The internationalized string.
+     * @throws XMLException if an error occurs during the XML processing.
+     */
+    private InternationalString readInternationalString(String path, Object parentElement) throws XMLException {
+        InternationalString internationalString = new InternationalString();
+
+        Collection<Element> elements = reader.getNodes(path + "/*", parentElement);
+
+        for (Element child : elements) {
+            internationalString.put(child.getName(), child.getText());
+        }
+
+        return internationalString;
+    }
+
+    /**
+     * Read the images from the file.
+     *
+     * @throws XMLException if an error occurs during the XML processing.
+     */
+    private void readImages() throws XMLException {
+        readLogo();
+        readWindowIcon();
+    }
+
+    /**
+     * Read the logo information from the file.
+     *
+     * @throws XMLException if an error occurs during the XML processing.
+     */
+    private void readLogo() throws XMLException {
+        Object logoElement = reader.getNode("logo", reader.getRootElement());
+
+        logo = SystemProperty.USER_DIR.get() + "images/" + reader.readString("image", logoElement);
+
+        String type = reader.readString("type", logoElement);
+        logoType = StringUtils.isEmpty(type) ? ImageType.PNG : ImageType.resolve(type);
+    }
+
+    /**
+     * Read the window icon information from the file.
+     *
+     * @throws XMLException if an error occurs during the XML processing.
+     */
+    private void readWindowIcon() throws XMLException {
+        Object iconElement = reader.getNode("icon", reader.getRootElement());
+
+        windowIcon = "file:" + SystemProperty.USER_DIR.get() + "images/" + reader.readString("image", iconElement);
+
+        String type = reader.readString("type", iconElement);
+        windowIconType = StringUtils.isEmpty(type) ? ImageType.PNG : ImageType.resolve(type);
+    }
+
+    /**
+     * Read the application options from the file.
+     *
+     * @throws XMLException if an error occurs during the XML processing.
+     */
+    private void readOptions() throws XMLException {
+        Object optionsElement = reader.getNode("options", reader.getRootElement());
+
+        displayLicence = reader.readBoolean("displayLicence", optionsElement);
+        licenceFilePath = SystemProperty.USER_DIR.get() + reader.readString("licence", optionsElement);
+    }
+
+    /**
+     * Read the application properties from the file.
+     *
+     * @throws XMLException if an error occurs during the XML processing.
+     */
+    private void readProperties() throws XMLException {
+        Collection<Element> nodes = reader.getNodes("properties/*", reader.getRootElement());
+
+        for (Element propertyElement : nodes) {
+            properties.put(propertyElement.getName(), propertyElement.getText());
+        }
+    }
+
+    @Override
+    public Version getVersion() {
+        return version;
+    }
+
+    @Override
+    public InternationalString getAuthor() {
+        return author;
+    }
+
+    @Override
+    public InternationalString getName() {
+        return name;
+    }
+
+    @Override
+    public InternationalString getSite() {
+        return site;
+    }
+
+    @Override
+    public InternationalString getEmail() {
+        return email;
+    }
+
+    @Override
+    public InternationalString getCopyright() {
+        return copyright;
+    }
+
+    @Override
+    public String getLogo() {
+        return logo;
+    }
+
+    @Override
+    public ImageType getLogoType() {
+        return logoType;
+    }
+
+    @Override
+    public String getWindowIcon() {
+        return windowIcon;
+    }
+
+    @Override
+    public ImageType getWindowIconType() {
+        return windowIconType;
+    }
+
+    @Override
+    public boolean isDisplayLicence() {
+        return displayLicence;
+    }
+
+    @Override
+    public String getRepository() {
+        return applicationRepository;
+    }
+
+    @Override
+    public String getMessageFileURL() {
+        return applicationMessageFileURL;
+    }
+
+    @Override
+    public String[] getSupportedLanguages() {
+        return ArrayUtils.copyOf(supportedLanguages);
+    }
+
+    @Override
+    public String getProperty(String key) {
+        return properties.get(key);
+    }
+
+    @Override
+    public String getLicenceFilePath() {
+        return licenceFilePath;
+    }
+
+    @Override
+    public String getFolderPath() {
+        return folderPath;
+    }
+}

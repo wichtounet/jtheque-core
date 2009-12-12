@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="
+            http://www.springframework.org/schema/aop
+            http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+            http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+            http://www.springframework.org/schema/context
+            http://www.springframework.org/schema/context/spring-context-2.5.xsd
+            http://www.springframework.org/schema/tx
+            http://www.springframework.org/schema/tx/spring-tx-2.5.xsd"
+       default-lazy-init="true">
+
+    <aop:aspectj-autoproxy/>
+
+    <context:annotation-config/>
+
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+
+    <!-- PlaceHolder for the properties file -->
+
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="location" value="org/jtheque/core/spring/core.properties"/>
+    </bean>
+
+    <!-- Internationalization -->
+
+    <bean id="messageSource" class="org.jtheque.core.managers.language.JThequeResourceBundle"
+          depends-on="managerContainer">
+        <property name="coreBaseNames">
+            <list>
+                <value>${i18n.core}</value>
+                <value>${i18n.dialogs}</value>
+                <value>${i18n.errors}</value>
+                <value>${i18n.messages}</value>
+            </list>
+        </property>
+        <property name="cacheSeconds" value="-1"/>
+        <property name="fileEncodings" value="UTF-8"/>
+        <property name="defaultEncoding" value="UTF-8"/>
+        <property name="useCodeAsDefaultMessage" value="true"/>
+    </bean>
+
+    <!-- Phases -->
+
+    <bean id="phasesManager" class="org.jtheque.core.managers.lifecycle.phases.PhasesManagerImpl">
+        <constructor-arg>
+            <list>
+                <bean class="org.jtheque.core.managers.lifecycle.phases.FirstPhase"/>
+                <bean class="org.jtheque.core.managers.lifecycle.phases.SecondPhase"/>
+            </list>
+        </constructor-arg>
+    </bean>
+
+    <!-- Post processors -->
+
+    <bean id="loggerPostProcessor" class="org.jtheque.core.spring.processors.LoggerPostProcessor"/>
+
+    <bean id="modulePostProcessor" class="org.jtheque.core.spring.processors.ModulePostProcessor"/>
+
+    <bean id="dataContainerProcessor" class="org.jtheque.core.spring.processors.DataContainerPostProcessor"/>
+
+    <!-- Persistence  -->
+
+    <bean id="dataSource" class="org.jtheque.core.managers.persistence.JThequeDataSource" destroy-method="destroy">
+        <property name="driverClassName" value="${db.driver}"/>
+        <property name="url" value="${db.url}"/>
+        <property name="username" value="${db.user}"/>
+        <property name="password" value="${db.password}"/>
+    </bean>
+
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.simple.SimpleJdbcTemplate">
+        <constructor-arg ref="dataSource"/>
+    </bean>
+
+    <bean id="daoPersistenceContext" class="org.jtheque.core.managers.persistence.context.DaoPersistenceContext"/>
+
+    <!-- Formatters -->
+
+    <bean id="dateFormat" class="java.text.SimpleDateFormat">
+        <constructor-arg value="${patterns.date}"/>
+    </bean>
+
+    <bean id="timeFormat" class="java.text.SimpleDateFormat">
+        <constructor-arg value="${patterns.time}"/>
+    </bean>
+
+    <!-- Aspects -->
+
+    <bean class="org.jtheque.core.spring.aspect.ManagerLoggingAspect"/>
+
+    <bean class="org.jtheque.core.spring.aspect.PhasesCounterAndLoggingAspect"/>
+
+    <!-- Import sub-files -->
+
+    <import resource="core-managers.xml"/>
+    <import resource="core-views.xml"/>
+    <import resource="core-actions.xml"/>
+    <import resource="core-resources.xml"/>
+</beans>

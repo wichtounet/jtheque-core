@@ -1,0 +1,75 @@
+Versions
+
+Ce document présente les différentes versions de JTheque Core. 
+
+* 2.0.3.SNAPSHOT Version de travail
+
+* 2.0.2 29.11.2009 Suppression des modules primaires
+
+    * Dependances entre modules
+    * Configuration du niveau de log depuis le fichier application.xml
+    * Manager de beans générique
+    * Amélioration de la qualité du code
+    * Utilisation de Substance comme Look & Feel
+    * PropertiesManager plus performant
+    * Une seule annotation pour les modules @Module
+    * Passage en UTF-8
+    * Dépendances entre schéma de base de données
+    * Amélioration des fichiers .versions
+    * Mise à jour SwingX -> 1.6
+    * Mise à jour JXLayer -> 3.0.4
+    * Plus de modules primaires, utilisation d'applications
+    * Remplacement de Commons Logging par SLF4J. 
+    * 7 corrections de bug
+
+* 2.0.1 12.09.2009 Simplification des applications, internationalisation
+
+    * Les dépendances Maven sont maintenant correctement résolues via des repository  et non des fichiers locaux
+    * Une application JTheque Core devient un simple fichier plat (XML)
+    * Amélioration de l'internationalisation
+    * Traduction du core en allemand
+    * Amélioration de la configuration des images pour l'application
+
+* 2.0 30.08.2009 Maven 2, Spring, XML
+
+    * Passage de FormLayout à GridBagLayout 
+    * Passage de Spring JavaConfig à une configuration XML
+    * Suppression des méthodes getXXXManager() et utilisation des interfaces
+    * Séparation d'Application en Application et ApplicationManager
+    * Injection des ressources via Spring
+    * Déplacement de l'import depuis une base de données vers un nouveau module (Tools Module)
+    * Intégration des modules dans Spring et simplification de leur architecture avec les annotations
+    * Utilisation de Sonar pour l'analyse de qualité
+    * Amélioration des tests unitaires
+    * Passage à Maven2
+
+* 1.4 05.07.2009 Refonte graphique, événements
+
+    * Refonte graphique
+    * Externalisation des utilitaires vers JTheque Utils
+    * Implémentation du choix des collections directement dans le core
+    * Implémentation de l'activation/désactivation des services du core
+    * Lancement des managers en 2 phases
+    * Journalisation des événements
+    * Système de vérification des versions nécessaires du core pour les module
+
+* 1.3 01.06.2009 Spring JDBC, H2
+
+    * Utilisation de H2
+    * Utilisation de Spring JDBC 
+
+* 1.2 08.04.2009 Cache de second niveau, Jasper Reports, ...
+
+    * Cache de second niveau
+    * Support de Jasper Reports
+    * Refactorings
+
+* 1.1 10.03.2009 Refactorings et améliorations
+
+    * Refactorings
+    * Améliorations de base
+                
+* 1.0 09.02.2009 Première version
+
+    * Version de base
+    * Permet de développer des applications modulaires en Java

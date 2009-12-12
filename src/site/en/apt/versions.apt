@@ -1,0 +1,75 @@
+Versions
+
+This document show the different versions of JTheque Core. 
+
+* 2.0.3.SNAPSHOT Version de travail
+
+* 2.0.2 29.11.2009 Delete primary module concept
+
+    * Dependencies between modules
+    * Configure log level from application.xml file
+    * Generic BeansManager
+    * Code quality improvements
+    * Use Substance as Look & Feel
+    * Performance improvements for PropertiesManager
+    * Only one annotation for modules, @Module
+    * UTF-8 encoding
+    * Dependencies between database schema
+    * Improvement of .versions file
+    * Update SwingX -> 1.6
+    * Update JXLayer -> 3.0.4
+    * No more primary modules, use of JTheque Applications. 
+    * Replace Commons Logging with SLF4J. 
+    * 7 bug corrections
+
+* 2.0.1 12.09.2009 Applications easier, internationalization
+
+    * The Maven dependencies are now correctly resolved with repository and not local files. 
+    * A JTheque Core application is now a simple flat file (XML)
+    * Internationalization's improvements
+    * New language for the core : German
+    * Better image's configuration for an application
+
+* 2.0 30.08.2009 Maven 2, Spring, XML
+
+    * Switch from FormLayout to GridBagLayout 
+    * Switch from Spring JavaConfig to an XML configuration
+    * Deletion of getXXXManager() methods and use of interfaces
+    * Cut of Application to Application and ApplicationManager
+    * Injection resources with Spring
+    * Move "import from an other database" feature to a new utility module "JTheque Tools Module". 
+    * Integration of the modules in Spring and simplification of their architecture with annotation
+    * Use of sonar for continuous quality measure
+    * Unit test improvements. 
+    * Use of Maven 2
+
+* 1.4 05.07.2009 Graphics review, events
+
+    * Graphical review
+    * Move utilities to JTheque Utils project
+    * Implementation of collection's choice directly in core. 
+    * Implementation of enabling/disabling services of the core. 
+    * Manager launching in 2 phases
+    * Events logging
+    * System of needed core version verification
+
+* 1.3 01.06.2009 Spring JDBC, H2
+
+    * Use of H2
+    * Use of Spring JDBC 
+
+* 1.2 08.04.2009 Second level cache, Jasper Reports, ...
+
+    * Second level cache
+    * Support of Jasper Reports
+    * Refactorings
+
+* 1.1 10.03.2009 Refactorings and improvements
+
+    * Refactorings
+    * Base improvements
+                
+* 1.0 09.02.2009 First release
+
+    * Base's versions
+    * Enable Java Developer to develop modular applications

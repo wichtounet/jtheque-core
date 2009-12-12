@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:jtheque="http://www.jtheque.com/schema/jtheque"
+       xsi:schemaLocation="
+            http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.jtheque.com/schema/jtheque
+            http://www.jtheque.com/schema/jtheque/jtheque.xsd"
+       default-lazy-init="true">
+
+    <!-- Actions -->
+
+    <bean id="exitAction" class="org.jtheque.core.managers.view.impl.actions.core.ExitAction"/>
+
+    <!-- Author -->
+
+    <bean id="proposeImprovementAction" class="org.jtheque.core.managers.view.impl.actions.author.AcProposeImprovement"/>
+    <bean id="informOfABugAction" class="org.jtheque.core.managers.view.impl.actions.author.AcInformOfABug"/>
+    <bean id="helpAction" class="org.jtheque.core.managers.view.impl.actions.author.AcOpenHelp"/>
+    <bean id="makeDonationAction" class="org.jtheque.core.managers.view.impl.actions.author.AcMakeDonation"/>
+
+    <!-- About -->
+
+    <bean id="aboutAction" class="org.jtheque.core.managers.view.impl.actions.about.DisplayAboutViewAction"/>
+
+    <!-- Backup / Restore -->
+
+    <bean id="backupToJTDAction" class="org.jtheque.core.managers.view.impl.actions.backup.AcBackupToJTD"/>
+    <bean id="backupToXMLAction" class="org.jtheque.core.managers.view.impl.actions.backup.AcBackupToXML"/>
+    <bean id="restoreToJTDAction" class="org.jtheque.core.managers.view.impl.actions.backup.AcRestoreFromJTD"/>
+    <bean id="restoreToXMLAction" class="org.jtheque.core.managers.view.impl.actions.backup.AcRestoreFromXML"/>
+
+    <!-- Collection -->
+
+    <bean id="chooseCollectionAction" class="org.jtheque.core.managers.view.impl.actions.collections.ChooseAction"/>
+    <bean id="createCollectionAction" class="org.jtheque.core.managers.view.impl.actions.collections.CreateAction"/>
+    <bean id="cancelCollectionAction" class="org.jtheque.core.managers.view.impl.actions.collections.CancelAction"/>
+
+    <!-- Config -->
+
+    <bean id="applyChangesAndCloseAction" class="org.jtheque.core.managers.view.impl.actions.config.ApplyChangesAndCloseAction"/>
+    <bean id="cancelChangesAction" class="org.jtheque.core.managers.view.impl.actions.config.CancelChangesAction"/>
+    <bean id="applyChangesAction" class="org.jtheque.core.managers.view.impl.actions.config.ApplyChangesAction"/>
+    <bean id="checkProxyAction" class="org.jtheque.core.managers.view.impl.actions.config.CheckProxyAction"/>
+
+    <jtheque:display id="displayConfigurationViewAction" key="config.actions.display" view="configView"/>
+
+    <!-- Licence -->
+
+    <bean id="printLicenseAction" class="org.jtheque.core.managers.view.impl.actions.about.PrintLicenseAction"/>
+
+    <jtheque:close id="closeLicenceViewAction" key="licence.actions.close" view="licenceView"/>
+
+    <!-- Log -->
+
+    <bean id="updateLogViewAction" class="org.jtheque.core.managers.view.impl.actions.event.UpdateAction"/>
+
+    <jtheque:display id="displayLogViewAction" key="log.view.actions.display" view="logView"/>
+
+    <!-- Messages -->
+
+    <jtheque:display id="displayMessagesAction" key="messages.actions.display" view="messageView"/>
+    <jtheque:close id="closeMessageViewAction" key="messages.actions.close" view="messageView"/>
+
+    <bean id="displayNextMessageAction" class="org.jtheque.core.managers.view.impl.actions.messages.DisplayNextMessageAction"/>
+    <bean id="displayPreviousMessageAction" class="org.jtheque.core.managers.view.impl.actions.messages.DisplayPreviousMessageAction"/>
+
+    <!-- Modules -->
+
+    <jtheque:display id="manageModuleAction" key="modules.actions.manage" view="moduleView"/>
+
+    <!-- Repository -->
+
+    <bean id="expandRepositoryAction" class="org.jtheque.core.managers.view.impl.actions.module.repository.ExpandRepositoryModuleAction"/>
+    <bean id="installRepositoryAction" class="org.jtheque.core.managers.view.impl.actions.module.repository.InstallRepositoryModuleAction"/>
+
+    <jtheque:display id="searchRepositoryAction" key="modules.actions.repository" view="repositoryView"/>
+
+    <!-- Undo/redo -->
+
+    <bean id="redoAction" class="org.jtheque.core.managers.view.impl.actions.undo.RedoAction"/>
+    <bean id="undoAction" class="org.jtheque.core.managers.view.impl.actions.undo.UndoAction"/>
+
+    <!-- Update -->
+
+    <bean id="updateUpdatableAction" class="org.jtheque.core.managers.view.impl.actions.module.UpdateUpdatableAction"/>
+    <bean id="enableModuleAction" class="org.jtheque.core.managers.view.impl.actions.module.EnableModuleAction"/>
+    <bean id="disableModuleAction" class="org.jtheque.core.managers.view.impl.actions.module.DisableModuleAction"/>
+    <bean id="uninstallModuleAction" class="org.jtheque.core.managers.view.impl.actions.module.UninstallModuleAction"/>
+    <bean id="updateModuleAction" class="org.jtheque.core.managers.view.impl.actions.module.UpdateModuleAction"/>
+    <bean id="installModuleAction" class="org.jtheque.core.managers.view.impl.actions.module.InstallModuleAction"/>
+    <bean id="loadModuleAction" class="org.jtheque.core.managers.view.impl.actions.module.LoadModuleAction"/>
+
+    <!-- ModuleContainer -->
+
+    <bean id="validateUpdateViewAction" class="org.jtheque.core.managers.view.impl.actions.module.update.AcValidateUpdateView"/>
+
+    <jtheque:close id="closeUpdateViewAction" key="update.actions.cancel" view="updateView"/>
+
+</beans>

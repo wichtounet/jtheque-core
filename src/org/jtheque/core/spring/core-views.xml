@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:jtheque="http://www.jtheque.com/schema/jtheque"
+       xsi:schemaLocation="
+            http://www.springframework.org/schema/beans 
+            http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+            http://www.jtheque.com/schema/jtheque
+            http://www.jtheque.com/schema/jtheque/jtheque.xsd"
+       default-lazy-init="true">
+
+    <!-- Window Manager -->
+
+    <bean id="windowManager" class="org.jtheque.core.managers.view.WindowManager"/>
+
+    <!-- Proxy views -->
+
+    <jtheque:proxy id="mainView" type="org.jtheque.core.managers.view.impl.frame.MainView"/>
+    <jtheque:proxy id="configView" type="org.jtheque.core.managers.view.impl.frame.ConfigView"/>
+    <jtheque:proxy id="licenceView" type="org.jtheque.core.managers.view.impl.frame.LicenceView"/>
+    <jtheque:proxy id="logView" type="org.jtheque.core.managers.view.impl.frame.LogView"/>
+    <jtheque:proxy id="messageView" type="org.jtheque.core.managers.view.impl.frame.MessageView"/>
+    <jtheque:proxy id="moduleView" type="org.jtheque.core.managers.view.impl.frame.ModuleView"/>
+    <jtheque:proxy id="repositoryView" type="org.jtheque.core.managers.view.impl.frame.RepositoryView"/>
+    <jtheque:proxy id="updateView" type="org.jtheque.core.managers.view.impl.frame.UpdateView"/>
+
+    <jtheque:proxy id="collectionPane" type="org.jtheque.core.managers.view.impl.components.filthy.java2d.CollectionPane"/>
+    <jtheque:proxy id="aboutPane" type="org.jtheque.core.managers.view.impl.components.filthy.java2d.AboutPane"/>
+
+    <!-- Real views -->
+
+    <bean id="_mainView" class="org.jtheque.core.managers.view.impl.frame.MainView" factory-method="get"/>
+
+    <bean id="_configView" class="org.jtheque.core.managers.view.impl.frame.ConfigView">
+        <constructor-arg ref="_mainView"/>
+        <constructor-arg ref="applyChangesAndCloseAction"/>
+        <constructor-arg ref="cancelChangesAction"/>
+        <constructor-arg ref="applyChangesAction"/>
+    </bean>
+
+    <bean id="_licenceView" class="org.jtheque.core.managers.view.impl.frame.LicenceView">
+        <constructor-arg ref="_mainView"/>
+        <property name="closeAction" ref="closeLicenceViewAction"/>
+        <property name="printAction" ref="printLicenseAction"/>
+        <property name="defaultWidth" value="${licence.view.width}"/>
+        <property name="defaultHeight" value="${licence.view.height}"/>
+    </bean>
+
+    <bean id="_logView" class="org.jtheque.core.managers.view.impl.frame.LogView">
+        <constructor-arg ref="_mainView"/>
+        <property name="updateAction" ref="updateLogViewAction"/>
+        <property name="defaultWidth" value="${log.view.width}"/>
+        <property name="defaultHeight" value="${log.view.height}"/>
+    </bean>
+
+    <bean id="_messageView" class="org.jtheque.core.managers.view.impl.frame.MessageView">
+        <constructor-arg ref="_mainView"/>
+        <constructor-arg>
+            <bean class="org.jtheque.core.managers.view.impl.models.MessageModel"/>
+        </constructor-arg>
+        <property name="closeAction" ref="closeMessageViewAction"/>
+        <property name="displayNextAction" ref="displayNextMessageAction"/>
+        <property name="displayPreviousAction" ref="displayPreviousMessageAction"/>
+    </bean>
+
+    <bean id="_moduleView" class="org.jtheque.core.managers.view.impl.frame.ModuleView">
+        <constructor-arg ref="_mainView"/>
+    </bean>
+
+    <bean id="_repositoryView" class="org.jtheque.core.managers.view.impl.frame.RepositoryView">
+        <constructor-arg ref="_mainView"/>
+        <property name="installAction" ref="installRepositoryAction"/>
+        <property name="expandAction" ref="expandRepositoryAction"/>
+    </bean>
+
+    <bean id="_updateView" class="org.jtheque.core.managers.view.impl.frame.UpdateView">
+        <constructor-arg ref="_mainView"/>
+        <property name="closeAction" ref="closeUpdateViewAction"/>
+        <property name="validateAction" ref="validateUpdateViewAction"/>
+    </bean>
+
+    <!-- Config panels -->
+
+    <bean id="_configAppearanceView" class="org.jtheque.core.managers.view.impl.components.config.JPanelConfigAppearance"/>
+
+    <bean id="_configNetworkView" class="org.jtheque.core.managers.view.impl.components.config.JPanelConfigNetwork">
+        <property name="checkProxyAction" ref="checkProxyAction"/>
+    </bean>
+
+    <bean id="_configOthersView" class="org.jtheque.core.managers.view.impl.components.config.JPanelConfigOthers"/>
+
+    <!-- Sub panels -->
+
+    <bean id="modulesPanel" class="org.jtheque.core.managers.view.impl.components.panel.ModulesPanel">
+        <property name="enableModuleAction" ref="enableModuleAction"/>
+        <property name="disableModuleAction" ref="disableModuleAction"/>
+        <property name="uninstallModuleAction" ref="uninstallModuleAction"/>
+        <property name="updateModuleAction" ref="updateModuleAction"/>
+        <property name="installModuleAction" ref="installModuleAction"/>
+        <property name="loadModuleAction" ref="loadModuleAction"/>
+        <property name="searchRepositoryAction" ref="searchRepositoryAction"/>
+    </bean>
+
+    <bean id="updatablesPanel" class="org.jtheque.core.managers.view.impl.components.panel.UpdatablesPanel">
+        <property name="updateUpdatableAction" ref="updateUpdatableAction"/>
+    </bean>
+
+    <!-- Java2D panes -->
+
+    <bean id="_aboutPane" class="org.jtheque.core.managers.view.impl.components.filthy.java2d.AboutPane"/>
+
+    <bean id="_collectionPane" class="org.jtheque.core.managers.view.impl.components.filthy.java2d.CollectionPane">
+        <property name="hintColor" ref="white"/>
+        <property name="backgroundColor" ref="black"/>
+        <property name="errorColor" ref="red"/>
+        <property name="cancelAction" ref="cancelCollectionAction"/>
+        <property name="chooseAction" ref="chooseCollectionAction"/>
+        <property name="createAction" ref="createCollectionAction"/>
+        <property name="hintFont" ref="hintFont"/>
+    </bean>
+
+    <!-- UI Defaults -->
+
+    <bean id="uiDefaults" class="org.jtheque.core.managers.view.impl.JThequeViewDefaults">
+        <property name="backgroundColor" ref="white"/>
+        <property name="foregroundColor" ref="black"/>
+        <property name="selectedForegroundColor" ref="white"/>
+        <property name="selectedBackgroundColor" ref="blue"/>
+        <property name="filthyBackgroundColor" ref="black"/>
+        <property name="filthyForegroundColor" ref="white"/>
+        <property name="filthyButtonFont" ref="filthyButtonFont"/>
+        <property name="filthyInputFont" ref="filthyInputFont"/>
+    </bean>
+</beans>

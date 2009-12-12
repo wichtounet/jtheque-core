@@ -1,0 +1,132 @@
+Télécharger JTheque Core 2.0.2
+
+   JTheque est distribué sous forme d'une archive Jar, les sources de JTheque Core sont distribués sous plusieurs formes
+   pour votre convenance. 
+
+   JTheque Core 2.0.2 est distribué sous licence {{{http://www.gnu.org/copyleft/gpl.html} GNU General Public License, version 3}}.
+
+*-------------------------+---------+----------------+-----------------+
+|                         |  Lien   | Checksum (MD5) | Checksum (SHA1) |
+*-------------------------+---------+----------------+-----------------+
+| Environnement de base 2.0.2 (zip)       | {{{http://jtheque.developpez.com/repository/org/jtheque/jtheque-core/2.0.2/dev-base-2.0.2.zip} dev-base-2.0.2.zip}} | | |
+*-------------------------+---------+----------------+-----------------+
+| JTheque Core 2.0.2 (jar)                | {{{http://jtheque.developpez.com/repository/org/jtheque/jtheque-core/2.0.2/jtheque-core-2.0.2.jar} jtheque-core-2.0.2.jar}} | {{{http://jtheque.developpez.com/repository/org/jtheque/jtheque-core/2.0.2/jtheque-core-2.0.2.jar.md5} jtheque-core-2.0.2.jar.md5}} | {{{http://jtheque.developpez.com/repository/org/jtheque/jtheque-core/2.0.2/jtheque-core-2.0.2.jar.sha1} jtheque-core-2.0.2.jar.sha1}} | 
+*-------------------------+---------+----------------+-----------------+
+| JTheque Core 2.0.2 (Source tar.bz2)     | {{{http://jtheque.developpez.com/repository/org/jtheque/jtheque-core/2.0.2/jtheque-core-2.0.2-src.tar.bz2} jtheque-core-2.0.2-src.tar.bz2}} | {{{http://jtheque.developpez.com/repository/org/jtheque/jtheque-core/2.0.2/jtheque-core-2.0.2-src.tar.bz2.md5} jtheque-core-2.0.2-src.tar.bz2.md5}} | {{{http://jtheque.developpez.com/repository/org/jtheque/jtheque-core/2.0.2/jtheque-core-2.0.2-src.tar.bz2.sha1} jtheque-core-2.0.2-src.tar.bz2.sha1}} | 
+*-------------------------+---------+----------------+-----------------+
+| JTheque Core 2.0.2 (Source tar.gz)      | {{{http://jtheque.developpez.com/repository/org/jtheque/jtheque-core/2.0.2/jtheque-core-2.0.2-src.tar.gz} jtheque-core-2.0.2-src.tar.gz}} | {{{http://jtheque.developpez.com/repository/org/jtheque/jtheque-core/2.0.2/jtheque-core-2.0.2-src.tar.gz.md5} jtheque-core-2.0.2-src.tar.gz.md5}} | {{{http://jtheque.developpez.com/repository/org/jtheque/jtheque-core/2.0.2/jtheque-core-2.0.2-src.tar.gz.sha1} jtheque-core-2.0.2-src.tar.gz.sha1}} | 
+*-------------------------+---------+----------------+-----------------+
+| JTheque Core 2.0.2 (Source zip)         | {{{http://jtheque.developpez.com/repository/org/jtheque/jtheque-core/2.0.2/jtheque-core-2.0.2-src.zip} jtheque-core-2.0.2-src.zip}} | {{{http://jtheque.developpez.com/repository/org/jtheque/jtheque-core/2.0.2/jtheque-core-2.0.2-src.zip.md5} jtheque-core-2.0.2-src.zip.md5}} | {{{http://jtheque.developpez.com/repository/org/jtheque/jtheque-core/2.0.2/jtheque-core-2.0.2.jar.sha1} jtheque-core-2.0.2-src.zip.sha1}} | 
+*-------------------------+---------+----------------+-----------------+
+| JTheque Core 2.0.2 (Javadoc jar)        | {{{http://jtheque.developpez.com/repository/org/jtheque/jtheque-core/2.0.2/jtheque-core-2.0.2-javadoc.jar} jtheque-core-2.0.2.jar}} | {{{http://jtheque.developpez.com/repository/org/jtheque/jtheque-core/2.0.2/jtheque-core-2.0.2-javadoc.jar.md5} jtheque-core-2.0.2-javadoc.jar.md5}} | {{{http://jtheque.developpez.com/repository/org/jtheque/jtheque-core/2.0.2/jtheque-core-2.0.2-javadoc.jar.sha1} jtheque-core-2.0.2-javadoc.jar.sha1}} | 
+*-------------------------+---------+----------------+-----------------+
+| Release Notes           | {{{versions.html} 2.0.2}} | | |
+*-------------------------+---------+----------------+-----------------+
+
+* {JTheque Core 2.0.1}
+
+*-------------------------+---------+----------------+-----------------+
+|                         |  Lien   | Checksum (MD5) | Checksum (SHA1) |
+*-------------------------+---------+----------------+-----------------+
+| Environnement de base 2.0.1 (zip)       | {{{http://jtheque.developpez.com/repository/org/jtheque/jtheque-core/2.0.1/dev-base-2.0.1.zip} dev-base-2.0.1.zip}} | | |
+*-------------------------+---------+----------------+-----------------+
+| JTheque Core 2.0.1 (jar)                | {{{http://jtheque.developpez.com/repository/org/jtheque/jtheque-core/2.0.1/jtheque-core-2.0.1.jar} jtheque-core-2.0.1.jar}} | {{{http://jtheque.developpez.com/repository/org/jtheque/jtheque-core/2.0.1/jtheque-core-2.0.1.jar.md5} jtheque-core-2.0.1.jar.md5}} | {{{http://jtheque.developpez.com/repository/org/jtheque/jtheque-core/2.0.1/jtheque-core-2.0.1.jar.sha1} jtheque-core-2.0.1.jar.sha1}} | 
+*-------------------------+---------+----------------+-----------------+
+| JTheque Core 2.0.1 (Source tar.bz2)     | {{{http://jtheque.developpez.com/repository/org/jtheque/jtheque-core/2.0.1/jtheque-core-2.0.1-src.tar.bz2} jtheque-core-2.0.1-src.tar.bz2}} | {{{http://jtheque.developpez.com/repository/org/jtheque/jtheque-core/2.0.1/jtheque-core-2.0.1-src.tar.bz2.md5} jtheque-core-2.0.1-src.tar.bz2.md5}} | {{{http://jtheque.developpez.com/repository/org/jtheque/jtheque-core/2.0.1/jtheque-core-2.0.1-src.tar.bz2.sha1} jtheque-core-2.0.1-src.tar.bz2.sha1}} | 
+*-------------------------+---------+----------------+-----------------+
+| JTheque Core 2.0.1 (Source tar.gz)      | {{{http://jtheque.developpez.com/repository/org/jtheque/jtheque-core/2.0.1/jtheque-core-2.0.1-src.tar.gz} jtheque-core-2.0.1-src.tar.gz}} | {{{http://jtheque.developpez.com/repository/org/jtheque/jtheque-core/2.0.1/jtheque-core-2.0.1-src.tar.gz.md5} jtheque-core-2.0.1-src.tar.gz.md5}} | {{{http://jtheque.developpez.com/repository/org/jtheque/jtheque-core/2.0.1/jtheque-core-2.0.1-src.tar.gz.sha1} jtheque-core-2.0.1-src.tar.gz.sha1}} | 
+*-------------------------+---------+----------------+-----------------+
+| JTheque Core 2.0.1 (Source zip)         | {{{http://jtheque.developpez.com/repository/org/jtheque/jtheque-core/2.0.1/jtheque-core-2.0.1-src.zip} jtheque-core-2.0.1-src.zip}} | {{{http://jtheque.developpez.com/repository/org/jtheque/jtheque-core/2.0.1/jtheque-core-2.0.1-src.zip.md5} jtheque-core-2.0.1-src.zip.md5}} | {{{http://jtheque.developpez.com/repository/org/jtheque/jtheque-core/2.0.1/jtheque-core-2.0.1.jar.sha1} jtheque-core-2.0.1-src.zip.sha1}} | 
+*-------------------------+---------+----------------+-----------------+
+| JTheque Core 2.0.1 (Javadoc jar)        | {{{http://jtheque.developpez.com/repository/org/jtheque/jtheque-core/2.0.1/jtheque-core-2.0.1-javadoc.jar} jtheque-core-2.0.1.jar}} | {{{http://jtheque.developpez.com/repository/org/jtheque/jtheque-core/2.0.1/jtheque-core-2.0.1-javadoc.jar.md5} jtheque-core-2.0.1-javadoc.jar.md5}} | {{{http://jtheque.developpez.com/repository/org/jtheque/jtheque-core/2.0.1/jtheque-core-2.0.1-javadoc.jar.sha1} jtheque-core-2.0.1-javadoc.jar.sha1}} | 
+*-------------------------+---------+----------------+-----------------+
+| Release Notes           | {{{versions.html} 2.0.1}} | | |
+*-------------------------+---------+----------------+-----------------+
+
+* {JTheque Core 2.0}
+
+*-------------------------+---------+----------------+-----------------+
+|                         |  Lien   | Checksum (MD5) | Checksum (SHA1) |
+*-------------------------+---------+----------------+-----------------+
+| Environnement de base 2.0 (zip)       | {{{http://jtheque.developpez.com/repository/org/jtheque/jtheque-core/2.0/dev-base-2.0.zip} dev-base-2.0.zip}} | | |
+*-------------------------+---------+----------------+-----------------+
+| JTheque Core 2.0 (jar)                | {{{http://jtheque.developpez.com/repository/org/jtheque/jtheque-core/2.0/jtheque-core-2.0.jar} jtheque-core-2.0.jar}} | {{{http://jtheque.developpez.com/repository/org/jtheque/jtheque-core/2.0/jtheque-core-2.0.jar.md5} jtheque-core-2.0.jar.md5}} | {{{http://jtheque.developpez.com/repository/org/jtheque/jtheque-core/2.0/jtheque-core-2.0.jar.sha1} jtheque-core-2.0.jar.sha1}} | 
+*-------------------------+---------+----------------+-----------------+
+| JTheque Core 2.0 (Source tar.bz2)     | {{{http://jtheque.developpez.com/repository/org/jtheque/jtheque-core/2.0/jtheque-core-2.0-src.tar.bz2} jtheque-core-2.0-src.tar.bz2}} | {{{http://jtheque.developpez.com/repository/org/jtheque/jtheque-core/2.0/jtheque-core-2.0-src.tar.bz2.md5} jtheque-core-2.0-src.tar.bz2.md5}} | {{{http://jtheque.developpez.com/repository/org/jtheque/jtheque-core/2.0/jtheque-core-2.0-src.tar.bz2.sha1} jtheque-core-2.0-src.tar.bz2.sha1}} | 
+*-------------------------+---------+----------------+-----------------+
+| JTheque Core 2.0 (Source tar.gz)      | {{{http://jtheque.developpez.com/repository/org/jtheque/jtheque-core/2.0/jtheque-core-2.0-src.tar.gz} jtheque-core-2.0-src.tar.gz}} | {{{http://jtheque.developpez.com/repository/org/jtheque/jtheque-core/2.0/jtheque-core-2.0-src.tar.gz.md5} jtheque-core-2.0-src.tar.gz.md5}} | {{{http://jtheque.developpez.com/repository/org/jtheque/jtheque-core/2.0/jtheque-core-2.0-src.tar.gz.sha1} jtheque-core-2.0-src.tar.gz.sha1}} | 
+*-------------------------+---------+----------------+-----------------+
+| JTheque Core 2.0 (Source zip)         | {{{http://jtheque.developpez.com/repository/org/jtheque/jtheque-core/2.0/jtheque-core-2.0-src.zip} jtheque-core-2.0-src.zip}} | {{{http://jtheque.developpez.com/repository/org/jtheque/jtheque-core/2.0/jtheque-core-2.0-src.zip.md5} jtheque-core-2.0-src.zip.md5}} | {{{http://jtheque.developpez.com/repository/org/jtheque/jtheque-core/2.0/jtheque-core-2.0.jar.sha1} jtheque-core-2.0-src.zip.sha1}} | 
+*-------------------------+---------+----------------+-----------------+
+| JTheque Core 2.0 (Javadoc jar)        | {{{http://jtheque.developpez.com/repository/org/jtheque/jtheque-core/2.0/jtheque-core-2.0-javadoc.jar} jtheque-core-2.0.jar}} | {{{http://jtheque.developpez.com/repository/org/jtheque/jtheque-core/2.0/jtheque-core-2.0-javadoc.jar.md5} jtheque-core-2.0-javadoc.jar.md5}} | {{{http://jtheque.developpez.com/repository/org/jtheque/jtheque-core/2.0/jtheque-core-2.0-javadoc.jar.sha1} jtheque-core-2.0-javadoc.jar.sha1}} | 
+*-------------------------+---------+----------------+-----------------+
+| Release Notes           | {{{versions.html} 2.0}} | | |
+*-------------------------+---------+----------------+-----------------+
+
+* {JTheque Core 1.4}
+
+*-------------------------+---------+
+|                         |  Lien   |
+*-------------------------+---------+
+| JTheque Core 1.4 (jar)                | {{{http://jtheque.developpez.com/archives/JTheque Core/1.4/JTheque-Core.jar} JTheque-Core.jar}} | 
+*-------------------------+---------+
+| JTheque Core 1.4 (Source zip)         | {{{http://jtheque.developpez.com/archives/JTheque Core/1.4/JTheque-Core_src.zip} JTheque-Core_src.zip}} | 
+*-------------------------+---------+
+| JTheque Core 1.4 (Javadoc zip)        | {{{http://jtheque.developpez.com/archives/JTheque Core/1.4/JTheque-Core_doc.zip} JTheque-Core_doc.zip}} | 
+*-------------------------+---------+
+| Release Notes           | {{{versions.html} 1.4}} | 
+*-------------------------+---------+
+
+* {JTheque Core 1.3}
+
+*-------------------------+---------+
+|                         |  Lien   |
+*-------------------------+---------+
+| JTheque Core 1.3 (jar)                | {{{http://jtheque.developpez.com/archives/JTheque Core/1.3/JTheque-Core.jar} JTheque-Core.jar}} | 
+*-------------------------+---------+
+| JTheque Core 1.3 (Source zip)         | {{{http://jtheque.developpez.com/archives/JTheque Core/1.3/JTheque-Core_src.zip} JTheque-Core_src.zip}} | 
+*-------------------------+---------+
+| JTheque Core 1.3 (Javadoc zip)        | {{{http://jtheque.developpez.com/archives/JTheque Core/1.3/JTheque-Core_doc.zip} JTheque-Core_doc.zip}} | 
+*-------------------------+---------+
+| Release Notes           | {{{versions.html} 1.3}} | 
+*-------------------------+---------+
+
+* {JTheque Core 1.2}
+
+*-------------------------+---------+
+|                         |  Lien   |
+*-------------------------+---------+
+| JTheque Core 1.2 (jar)                | {{{http://jtheque.developpez.com/archives/JTheque Core/1.2/JTheque-Core.jar} JTheque-Core.jar}} | 
+*-------------------------+---------+
+| Release Notes           | {{{versions.html} 1.2}} | 
+*-------------------------+---------+
+
+* {JTheque Core 1.1}
+
+*-------------------------+---------+
+|                         |  Lien   |
+*-------------------------+---------+
+| JTheque Core 1.1 (jar)                | {{{http://jtheque.developpez.com/archives/JTheque Core/1.1/JTheque-Core.jar} JTheque-Core.jar}} | 
+*-------------------------+---------+
+| Release Notes           | {{{versions.html} 1.1}} | 
+*-------------------------+---------+
+
+* {JTheque Core 1.0}
+
+*-------------------------+---------+
+|                         |  Lien   |
+*-------------------------+---------+
+| JTheque Core 1.0 (jar)                | {{{http://jtheque.developpez.com/archives/JTheque Core/1.0/JTheque-Core.jar} JTheque-Core.jar}} | 
+*-------------------------+---------+
+| Release Notes           | {{{versions.html} 1.0}} | 
+*-------------------------+---------+
+
+* Pré-requis sytèmes
+
+*----------------------+---------------------------------------------------------------------------------------------+
+| <<JRE>>              | 6.0 ou supérieur |
+*----------------------+---------------------------------------------------------------------------------------------+
+| <<Librairies>> | Dépendances JTheque Core | 
+*----------------------+---------------------------------------------------------------------------------------------+
+| <<Operating System>> | Aucun pré-requis. La librairie est multi-plateforme. |
+*----------------------+---------------------------------------------------------------------------------------------+
