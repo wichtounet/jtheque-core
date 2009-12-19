@@ -65,7 +65,7 @@ public abstract class AbstractDBUnitTest {
         try {
             connection = new DatabaseDataSourceConnection(dataSource);
 
-            IDataSet dataSet = new FlatXmlDataSet(new File(datasetPath));
+            IDataSet dataSet = new FlatXmlDataSet(getClass().getResource(datasetPath));
 
             createHsqldbTables(dataSet, connection.getConnection());
         } catch (SQLException e) {
@@ -83,7 +83,7 @@ public abstract class AbstractDBUnitTest {
     @Before
     public void setUp() {
         try {
-            IDataSet dataSet = new FlatXmlDataSet(new File(datasetPath));
+            IDataSet dataSet = new FlatXmlDataSet(getClass().getResource(datasetPath));
 
             DatabaseOperation.CLEAN_INSERT.execute(
                     connection,
