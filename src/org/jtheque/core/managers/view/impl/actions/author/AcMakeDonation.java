@@ -25,8 +25,6 @@ import org.jtheque.core.managers.view.impl.actions.utils.AbstractBrowseAction;
  * @author Baptiste Wicht
  */
 public final class AcMakeDonation extends AbstractBrowseAction {
-    private static final long serialVersionUID = -163510361075558672L;
-
     /**
      * Construct a new AcMakeDonation with a specific key.
      */

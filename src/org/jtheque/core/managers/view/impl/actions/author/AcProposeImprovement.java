@@ -25,8 +25,6 @@ import org.jtheque.core.managers.view.impl.actions.utils.AbstractBrowseAction;
  * @author Baptiste Wicht
  */
 public final class AcProposeImprovement extends AbstractBrowseAction {
-    private static final long serialVersionUID = -5852473577443844095L;
-
     /**
      * Construct a new AcProposeImprovement with a specific key.
      */

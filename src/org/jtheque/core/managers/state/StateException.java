@@ -22,8 +22,6 @@ package org.jtheque.core.managers.state;
  * @author Baptiste Wicht
  */
 public final class StateException extends Exception {
-    private static final long serialVersionUID = 3211028665261071420L;
-
     /**
      * Construct a new StateException.
      *

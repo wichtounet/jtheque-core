@@ -36,8 +36,6 @@ import javax.swing.undo.UndoableEdit;
  * @author Baptiste Wicht
  */
 public final class UndoRedoManager extends UndoManager implements IUndoRedoManager {
-    private static final long serialVersionUID = 6866297626121439473L;
-
     private Action undoAction;
     private Action redoAction;
 

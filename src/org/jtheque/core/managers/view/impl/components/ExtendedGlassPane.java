@@ -28,8 +28,6 @@ import java.awt.Graphics;
  * @author Baptiste Wicht
  */
 public final class ExtendedGlassPane extends JPanel {
-    private static final long serialVersionUID = -6859351186159311114L;
-
     private WaitFigure waitFigure;
 
     private boolean wait;

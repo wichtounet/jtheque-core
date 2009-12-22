@@ -45,8 +45,6 @@ import java.awt.event.ActionEvent;
  * @author Baptiste Wicht
  */
 public final class FilthyFileChooserPanel extends JPanel implements Internationalizable {
-    private static final long serialVersionUID = 7771152303769137038L;
-
     private FilthyTextField fieldFilePath;
     private JLabel label;
     private JButton button;
@@ -187,8 +185,6 @@ public final class FilthyFileChooserPanel extends JPanel implements Internationa
      * @author Baptiste Wicht
      */
     private static final class BrowseButton extends JButton {
-        private static final long serialVersionUID = -1755351679829538229L;
-
         /**
          * Construct a new BrowseButton.
          *

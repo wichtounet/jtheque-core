@@ -28,8 +28,6 @@ import java.awt.event.ActionEvent;
  * @author Baptiste Wicht
  */
 public final class ApplyChangesAndCloseAction extends JThequeAction {
-    private static final long serialVersionUID = 6369402013821793128L;
-
     @Resource
     private IConfigView configView;
 

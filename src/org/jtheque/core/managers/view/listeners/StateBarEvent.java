@@ -26,8 +26,6 @@ import java.util.EventObject;
  * @author Baptiste Wicht
  */
 public final class StateBarEvent extends EventObject {
-    private static final long serialVersionUID = -6212722763085056041L;
-
     private final StateBarComponent component;
 
     /**

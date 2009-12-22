@@ -29,8 +29,6 @@ import java.awt.event.ActionEvent;
  * @author Baptiste Wicht
  */
 public final class CheckProxyAction extends JThequeSimpleAction {
-    private static final long serialVersionUID = -5097742091545119996L;
-
     @Resource
     private IConfigView configView;
 

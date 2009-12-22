@@ -41,8 +41,6 @@ import java.util.List;
  * @author Baptiste Wicht
  */
 public final class JMenuBarJTheque extends JMenuBar implements FeatureListener {
-    private static final long serialVersionUID = 5456288493618686500L;
-
     private final Comparator<Feature> featureComparator = new ByPositionComparator();
 
     /**

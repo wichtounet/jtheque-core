@@ -70,8 +70,6 @@ public final class ModuleRepositoryListRenderer implements ListCellRenderer {
      * @author Baptiste Wicht
      */
     public static final class ModulePanel extends JPanel {
-        private static final long serialVersionUID = -615526545174675314L;
-
         private final JLabel labelName;
         private final JLabel labelDescription;
         private final JLabel onlineLabel;

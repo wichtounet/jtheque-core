@@ -34,8 +34,6 @@ import java.awt.RenderingHints;
  * @author Baptiste Wicht
  */
 public final class JThequeI18nLabel extends JLabel implements Internationalizable {
-    private static final long serialVersionUID = 1483789631678563339L;
-
     private String textKey;
     private Object[] replaces;
 

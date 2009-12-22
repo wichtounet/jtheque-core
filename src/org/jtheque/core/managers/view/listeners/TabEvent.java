@@ -26,8 +26,6 @@ import java.util.EventObject;
  * @author Baptiste Wicht
  */
 public final class TabEvent extends EventObject {
-    private static final long serialVersionUID = -7789383378883592033L;
-
     private final TabComponent component;
 
     /**

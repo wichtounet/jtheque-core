@@ -37,8 +37,6 @@ import java.util.Collection;
  * @author Baptiste Wicht
  */
 public final class MessageView extends SwingDialogView implements IMessageView {
-    private static final long serialVersionUID = 6806683143749769795L;
-
     private JLabel dateLabel;
     private JLabel sourceLabel;
     private JLabel titleLabel;

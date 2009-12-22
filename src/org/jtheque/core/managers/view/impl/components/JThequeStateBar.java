@@ -41,8 +41,6 @@ import java.util.List;
  * @author Baptiste Wicht
  */
 public final class JThequeStateBar extends JPanel implements StateBarListener {
-    private static final long serialVersionUID = -2486656031428620984L;
-
     private int currentColumn;
 
     private final GridBagUtils gbc = new GridBagUtils();

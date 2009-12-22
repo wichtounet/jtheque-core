@@ -33,7 +33,6 @@ import java.awt.Insets;
  * @author Baptiste Wicht
  */
 public final class KernelInfoPanel extends JPanel {
-    private static final long serialVersionUID = 2153940436750024480L;
     private static final int TITLE_FONT_SIZE = 16;
 
     /**

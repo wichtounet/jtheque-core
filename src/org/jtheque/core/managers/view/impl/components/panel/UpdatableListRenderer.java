@@ -37,13 +37,12 @@ import java.awt.Font;
  * @author Baptiste Wicht
  */
 public final class UpdatableListRenderer extends JPanel implements ListCellRenderer {
-    private static final long serialVersionUID = -4146856433184922449L;
-
     private final JLabel labelName;
     private final JLabel labelCurrentVersion;
     private final JLabel labelOnlineVersion;
     private final JLabel labelCurrentVersion1;
     private final JLabel labelOnlineVersion1;
+
     private static final int TITLE_FONT_SIZE = 16;
 
     /**

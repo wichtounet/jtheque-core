@@ -31,8 +31,6 @@ import java.awt.event.KeyEvent;
  * @author Baptiste Wicht
  */
 public final class ExitAction extends JThequeAction {
-    private static final long serialVersionUID = -6014202624557696605L;
-
     /**
      * Construct a new ExitAction.
      */

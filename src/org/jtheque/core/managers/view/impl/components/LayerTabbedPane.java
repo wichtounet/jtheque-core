@@ -42,8 +42,6 @@ import java.util.List;
  * @author Baptiste Wicht
  */
 public class LayerTabbedPane extends JTabbedPane implements ViewComponent {
-    private static final long serialVersionUID = -5183713814998385959L;
-
     private final List<JXLayer<JComponent>> components;
 
     /**

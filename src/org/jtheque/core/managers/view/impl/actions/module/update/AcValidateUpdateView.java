@@ -33,8 +33,6 @@ import java.awt.event.ActionEvent;
  * @author Baptiste Wicht
  */
 public final class AcValidateUpdateView extends JThequeAction {
-    private static final long serialVersionUID = -8738725543815418407L;
-
     @Resource
     private IUpdateView updateView;
 

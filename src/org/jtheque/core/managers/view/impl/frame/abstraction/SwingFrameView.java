@@ -31,8 +31,6 @@ import java.awt.Image;
  * @author Baptiste Wicht
  */
 public abstract class SwingFrameView extends JFrame implements IWindowView {
-    private static final long serialVersionUID = 7565206091681655066L;
-
     private IModel model;
 
     /**

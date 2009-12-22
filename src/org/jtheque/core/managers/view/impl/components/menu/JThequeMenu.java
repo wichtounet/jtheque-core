@@ -29,8 +29,6 @@ import javax.swing.plaf.basic.BasicMenuUI;
  * @author Baptiste Wicht
  */
 public final class JThequeMenu extends JMenu implements Internationalizable {
-    private static final long serialVersionUID = 7026652221740733889L;
-
     private final String key;
 
     /**

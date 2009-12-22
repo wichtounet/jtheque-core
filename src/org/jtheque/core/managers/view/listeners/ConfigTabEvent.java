@@ -26,8 +26,6 @@ import java.util.EventObject;
  * @author Baptiste Wicht
  */
 public final class ConfigTabEvent extends EventObject {
-    private static final long serialVersionUID = 4507857803183035714L;
-
     private final ConfigTabComponent component;
 
     /**

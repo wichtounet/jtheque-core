@@ -38,8 +38,6 @@ import java.util.Collection;
  * @author Baptiste Wicht
  */
 public final class ModuleView extends SwingDialogView implements IModuleView {
-    private static final long serialVersionUID = 6467142755416553148L;
-
     @Resource
     private IModulesPanelView modulesPanel;
 

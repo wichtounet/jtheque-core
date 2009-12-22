@@ -25,8 +25,6 @@ import org.jtheque.utils.io.SimpleFilter;
  * @author Baptiste Wicht
  */
 public final class AcRestoreFromXML extends AcRestore {
-    private static final long serialVersionUID = 8667936692423398847L;
-
     /**
      * Construct a new AcRestoreFromXML.
      */

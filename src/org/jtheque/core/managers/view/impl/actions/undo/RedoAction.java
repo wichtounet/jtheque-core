@@ -28,8 +28,6 @@ import java.awt.event.KeyEvent;
  * @author Baptiste Wicht
  */
 public final class RedoAction extends AbstractAction {
-    private static final long serialVersionUID = -6271465994104883451L;
-
     @Resource
     private IUndoRedoManager undoRedoManager;
 

@@ -32,8 +32,6 @@ import java.awt.event.ActionEvent;
  * @author Baptiste Wicht
  */
 public final class PrintLicenseAction extends JThequeAction {
-    private static final long serialVersionUID = -4284548215691104781L;
-
     @Resource
     private ILicenceView licenceView;
 

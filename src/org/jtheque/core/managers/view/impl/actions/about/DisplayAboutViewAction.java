@@ -28,8 +28,6 @@ import java.awt.event.ActionEvent;
  * @author Baptiste Wicht
  */
 public final class DisplayAboutViewAction extends JThequeAction {
-    private static final long serialVersionUID = -163510361075558672L;
-
     /**
      * Construct a new DisplayAboutViewAction.
      */

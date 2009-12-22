@@ -29,8 +29,6 @@ import javax.swing.JCheckBox;
  * @author Baptiste Wicht
  */
 public final class JThequeCheckBox extends JCheckBox implements Internationalizable {
-    private static final long serialVersionUID = 8282767047250267719L;
-
     private final String textKey;
 
     /**

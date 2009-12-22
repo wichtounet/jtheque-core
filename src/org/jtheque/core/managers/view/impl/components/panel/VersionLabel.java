@@ -28,8 +28,6 @@ import java.awt.Color;
  * @author Baptiste Wicht
  */
 public final class VersionLabel extends JLabel {
-    private static final long serialVersionUID = 7452721108284830082L;
-
     /**
      * Construct a new KernelVersionLabel.
      *

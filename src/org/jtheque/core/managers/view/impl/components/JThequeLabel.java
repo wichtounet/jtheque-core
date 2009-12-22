@@ -29,8 +29,6 @@ import java.awt.RenderingHints;
  * @author Baptiste Wicht
  */
 public final class JThequeLabel extends JLabel {
-    private static final long serialVersionUID = 1483789631678563339L;
-
     /**
      * Construct a new <code>JThequeLabel</code>.
      *

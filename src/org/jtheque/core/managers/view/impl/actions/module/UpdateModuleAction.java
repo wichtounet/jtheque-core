@@ -27,8 +27,6 @@ import org.jtheque.core.managers.view.able.IViewManager;
  * @author Baptiste Wicht
  */
 public final class UpdateModuleAction extends AbstractUpdateAction {
-    private static final long serialVersionUID = -3539046572672124766L;
-
     /**
      * Construct a new UpdateModuleAction.
      */

@@ -32,8 +32,6 @@ import java.awt.event.ActionEvent;
  * @author Baptiste Wicht
  */
 public final class UninstallModuleAction extends JThequeAction {
-    private static final long serialVersionUID = -6202490675265430179L;
-
     @Resource
     private IModuleView moduleView;
 

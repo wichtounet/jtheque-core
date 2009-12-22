@@ -34,8 +34,6 @@ import java.util.List;
  * @author Baptiste Wicht
  */
 public final class EventsTableModel extends AbstractTableModel {
-    private static final long serialVersionUID = 1296194815930212582L;
-
     private final DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy", Managers.getManager(ILanguageManager.class).getCurrentLocale());
     private final DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss,SSS", Managers.getManager(ILanguageManager.class).getCurrentLocale());
 

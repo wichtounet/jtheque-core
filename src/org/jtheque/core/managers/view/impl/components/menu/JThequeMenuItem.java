@@ -26,8 +26,6 @@ import javax.swing.plaf.basic.BasicMenuItemUI;
  * @author Baptiste Wicht
  */
 public final class JThequeMenuItem extends JMenuItem {
-    private static final long serialVersionUID = -8571990501266469173L;
-
     /**
      * Construct a new JThequeMenuItem.
      *

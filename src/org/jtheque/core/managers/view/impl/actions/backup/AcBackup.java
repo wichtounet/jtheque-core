@@ -37,8 +37,6 @@ import java.io.File;
  * @author Baptiste Wicht
  */
 public abstract class AcBackup extends JThequeAction {
-    private static final long serialVersionUID = -380584744380346496L;
-
     private final SimpleFilter filter;
     private final FileType type;
 

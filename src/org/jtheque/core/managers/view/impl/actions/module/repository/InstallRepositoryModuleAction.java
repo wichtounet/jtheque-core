@@ -32,8 +32,6 @@ import java.awt.event.ActionEvent;
  * @author Baptiste Wicht
  */
 public final class InstallRepositoryModuleAction extends JThequeAction {
-    private static final long serialVersionUID = 8858330756505259791L;
-
     @Resource
     private IRepositoryView repositoryView;
 

@@ -53,8 +53,6 @@ import java.awt.event.WindowListener;
  * @author Baptiste Wicht
  */
 public final class MainView extends SwingFrameView implements TitleListener, IMainView {
-    private static final long serialVersionUID = -5931960632421815283L;
-
     private LayerTabbedPane tab;
 
     private MainController controller;

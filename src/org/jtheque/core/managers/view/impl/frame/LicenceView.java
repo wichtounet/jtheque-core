@@ -37,8 +37,6 @@ import java.util.Collection;
  * @author Baptiste Wicht
  */
 public final class LicenceView extends SwingDialogView implements ILicenceView {
-    private static final long serialVersionUID = 5615123728060819325L;
-
     private Action printAction;
     private Action closeAction;
 

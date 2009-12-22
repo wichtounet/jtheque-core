@@ -25,8 +25,6 @@ import org.jtheque.core.managers.view.impl.actions.utils.AbstractBrowseAction;
  * @author Baptiste Wicht
  */
 public final class AcInformOfABug extends AbstractBrowseAction {
-    private static final long serialVersionUID = -3968008007397041001L;
-
     /**
      * Construct a new AcInformOfABug with a specific key.
      */

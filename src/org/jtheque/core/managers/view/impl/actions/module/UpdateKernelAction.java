@@ -25,8 +25,6 @@ import org.jtheque.core.managers.update.IUpdateManager;
  * @author Baptiste Wicht
  */
 public final class UpdateKernelAction extends AbstractUpdateAction {
-    private static final long serialVersionUID = 3190615300122331869L;
-
     /**
      * Construct a new UpdateKernelAction.
      */

@@ -24,8 +24,6 @@ import org.jtheque.core.managers.ManagerException;
  * @author Baptiste Wicht
  */
 public final class ConfigException extends ManagerException {
-    private static final long serialVersionUID = -6574237262395076661L;
-
     /**
      * Construct a new ConfigException.
      *

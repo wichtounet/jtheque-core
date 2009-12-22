@@ -33,8 +33,6 @@ import java.awt.event.ActionEvent;
  * @author Baptiste Wicht
  */
 public final class LoadModuleAction extends JThequeAction {
-    private static final long serialVersionUID = 614803099785720738L;
-
     @Resource
     private IModuleView moduleView;
 

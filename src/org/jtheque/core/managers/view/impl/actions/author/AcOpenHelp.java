@@ -30,8 +30,6 @@ import java.awt.event.KeyEvent;
  * @author Baptiste Wicht
  */
 public final class AcOpenHelp extends AbstractBrowseAction {
-    private static final long serialVersionUID = -163510361075558672L;
-
     /**
      * Construct a new AcOpenHelp with a specific key.
      */

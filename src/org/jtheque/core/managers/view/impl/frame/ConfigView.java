@@ -39,8 +39,6 @@ import java.util.Collection;
  * @author Baptiste Wicht
  */
 public final class ConfigView extends SwingDialogView implements ConfigTabListener, IConfigView {
-    private static final long serialVersionUID = -7273750454132893687L;
-
     private LayerTabbedPane tab;
 
     private final Action applyChangesAndCloseAction;

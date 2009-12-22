@@ -25,8 +25,6 @@ import org.jtheque.utils.io.SimpleFilter;
  * @author Baptiste Wicht
  */
 public final class AcBackupToJTD extends AcBackup {
-    private static final long serialVersionUID = -380584744380346496L;
-
     /**
      * Construct a new AcBackupToJTD.
      */

@@ -31,8 +31,6 @@ import java.io.File;
  * @author Baptiste Wicht
  */
 public final class InstallModuleAction extends JThequeAction {
-    private static final long serialVersionUID = -911919582657663109L;
-
     /**
      * Construct a new InstallModuleAction.
      */

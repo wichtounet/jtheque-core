@@ -96,8 +96,6 @@ public final class MainTabbedPane extends LayerTabbedPane implements TabListener
      * @author Baptiste Wicht
      */
     private static final class PositionComparator implements Comparator<TabComponent>, Serializable {
-        private static final long serialVersionUID = -4510118352701529569L;
-
         @Override
         public int compare(TabComponent component, TabComponent other) {
             return component.getPosition().compareTo(other.getPosition());

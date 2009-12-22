@@ -38,8 +38,6 @@ import java.util.Collection;
  * @author Baptiste Wicht
  */
 public final class UpdateView extends SwingDialogView implements IUpdateView {
-    private static final long serialVersionUID = -7893962323439572997L;
-
     private VersionsComboBoxModel model;
 
     private Mode mode = Mode.KERNEL;

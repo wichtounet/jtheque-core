@@ -25,8 +25,6 @@ import org.jtheque.utils.io.SimpleFilter;
  * @author Baptiste Wicht
  */
 public final class AcBackupToXML extends AcBackup {
-    private static final long serialVersionUID = -380584744380986496L;
-
     /**
      * Construct a new AcBackupToXML.
      */

@@ -29,8 +29,6 @@ import java.util.List;
  * @author Baptiste Wicht
  */
 public final class AvailableLanguagesComboBoxModel extends DefaultComboBoxModel {
-    private static final long serialVersionUID = -4951122212082229878L;
-
     private final List<String> languages;
 
     /**

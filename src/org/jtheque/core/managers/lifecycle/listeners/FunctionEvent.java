@@ -24,8 +24,6 @@ import java.util.EventObject;
  * @author Baptiste Wicht
  */
 public final class FunctionEvent extends EventObject {
-    private static final long serialVersionUID = 4356006373361686392L;
-
     private final String function;
 
     /**

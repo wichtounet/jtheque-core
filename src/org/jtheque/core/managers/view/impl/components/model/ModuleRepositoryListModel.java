@@ -30,8 +30,6 @@ import java.util.List;
  * @author Baptiste Wicht
  */
 public final class ModuleRepositoryListModel extends DefaultListModel {
-    private static final long serialVersionUID = -4658778193485774835L;
-
     private final List<ModuleDescription> modules;
 
     /**

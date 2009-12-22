@@ -31,8 +31,6 @@ import javax.swing.ImageIcon;
  * @author Baptiste Wicht
  */
 public abstract class JThequeAction extends AbstractAction implements Internationalizable {
-    private static final long serialVersionUID = 8079012258919407519L;
-
     private final String key;
     private Object[] replaces;
 

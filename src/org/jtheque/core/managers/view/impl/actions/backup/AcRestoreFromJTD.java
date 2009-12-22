@@ -25,8 +25,6 @@ import org.jtheque.utils.io.SimpleFilter;
  * @author Baptiste Wicht
  */
 public final class AcRestoreFromJTD extends AcRestore {
-    private static final long serialVersionUID = 8422616659589497685L;
-
     /**
      * Construct a new AcRestoreFromJTD.
      */

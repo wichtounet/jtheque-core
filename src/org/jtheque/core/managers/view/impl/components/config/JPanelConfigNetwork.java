@@ -39,8 +39,6 @@ import java.util.Collection;
  * @author Baptiste Wicht
  */
 public final class JPanelConfigNetwork extends JPanel implements INetworkConfigView, ConfigTabComponent {
-    private static final long serialVersionUID = 636787338625488832L;
-
     private JCheckBox boxProxy;
     private JTextField fieldAddress;
     private JTextField fieldPort;

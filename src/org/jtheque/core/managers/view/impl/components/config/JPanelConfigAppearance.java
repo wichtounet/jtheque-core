@@ -38,8 +38,6 @@ import java.util.Collection;
  * @author Baptiste Wicht
  */
 public final class JPanelConfigAppearance extends JPanel implements ConfigTabComponent, IAppearanceConfigView {
-    private static final long serialVersionUID = -7510689107909645415L;
-
     private AvailableLanguagesComboBoxModel modelLanguages;
     private JCheckBox boxRetainSizeAndPosition;
 

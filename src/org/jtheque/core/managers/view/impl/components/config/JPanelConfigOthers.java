@@ -37,8 +37,6 @@ import java.util.Collection;
  * @author Baptiste Wicht
  */
 public final class JPanelConfigOthers extends JPanel implements IOthersConfigView, ConfigTabComponent {
-    private static final long serialVersionUID = 1549545390644920034L;
-
     private JCheckBox boxDeleteLogs;
     private JCheckBox checkBoxStart;
     private JTextField fieldEmail;

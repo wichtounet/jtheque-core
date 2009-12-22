@@ -31,8 +31,6 @@ import java.util.List;
  * @author Baptiste Wicht
  */
 public final class UpdatableListModel extends DefaultListModel implements UpdatableListener {
-    private static final long serialVersionUID = -4658778193485774835L;
-
     private final List<Updatable> updatables;
 
     /**

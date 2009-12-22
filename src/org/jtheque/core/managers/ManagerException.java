@@ -22,8 +22,6 @@ package org.jtheque.core.managers;
  * @author Baptiste Wicht
  */
 public class ManagerException extends Exception {
-    private static final long serialVersionUID = -1947358376384227549L;
-
     /**
      * Construct a new ManagerException from another exception.
      *

@@ -32,8 +32,6 @@ import java.util.List;
  * @author Baptiste Wicht
  */
 public final class VersionsComboBoxModel extends DefaultComboBoxModel {
-    private static final long serialVersionUID = -5108796092448300590L;
-
     private Mode mode = Mode.KERNEL;
     private ModuleContainer currentModule;
     private Updatable currentUpdatable;

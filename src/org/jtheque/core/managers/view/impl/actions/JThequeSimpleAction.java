@@ -29,8 +29,6 @@ import javax.swing.ImageIcon;
  * @author Baptiste Wicht
  */
 public abstract class JThequeSimpleAction extends AbstractAction {
-    private static final long serialVersionUID = 3014436302328108725L;
-
     /**
      * Set the text key.
      *

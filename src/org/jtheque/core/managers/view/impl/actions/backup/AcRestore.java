@@ -40,8 +40,6 @@ import java.io.File;
  * @author Baptiste Wicht
  */
 public class AcRestore extends JThequeAction {
-    private static final long serialVersionUID = 8422616659589497685L;
-
     private final SimpleFilter filter;
     private final FileType type;
 

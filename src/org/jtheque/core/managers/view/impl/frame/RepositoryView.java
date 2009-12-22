@@ -42,8 +42,6 @@ import java.util.Collection;
  * @author Baptiste Wicht
  */
 public final class RepositoryView extends SwingDialogView implements IRepositoryView {
-    private static final long serialVersionUID = 6856961386106373658L;
-
     private JList list;
 
     private Action expandAction;

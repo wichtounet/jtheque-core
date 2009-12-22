@@ -24,8 +24,6 @@ import java.util.EventObject;
  * @author Baptiste Wicht
  */
 public final class FeatureEvent extends EventObject {
-    private static final long serialVersionUID = -6305357619064873817L;
-
     private final Feature feature;
     private Feature subFeature;
 

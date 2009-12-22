@@ -24,8 +24,6 @@ import java.util.EventObject;
  * @author Baptiste Wicht
  */
 public final class TitleEvent extends EventObject {
-    private static final long serialVersionUID = 4356006373361686392L;
-
     private final String title;
 
     /**

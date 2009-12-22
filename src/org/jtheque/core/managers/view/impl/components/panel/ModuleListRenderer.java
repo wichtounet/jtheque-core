@@ -40,8 +40,6 @@ import java.awt.Font;
  * @author Baptiste Wicht
  */
 public final class ModuleListRenderer extends JPanel implements ListCellRenderer {
-    private static final long serialVersionUID = -4146856433184922449L;
-
     private final JLabel labelName;
     private final JLabel labelAuthor;
 

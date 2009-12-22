@@ -186,8 +186,6 @@ public final class FileChooserPanel extends JPanel implements Internationalizabl
      * @author Baptiste Wicht
      */
     private static final class BrowseButton extends JButton {
-        private static final long serialVersionUID = -1755351679829538229L;
-
         /**
          * Construct a new BrowseButton with a specific text.
          */
