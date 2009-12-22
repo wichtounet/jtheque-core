@@ -18,7 +18,9 @@
             <item name="JTheque Core" href="http://jtheque.developpez.com/utilities/core/"/>
         </breadcrumbs>
 
-        <menu ref="parent"/>
+        <menu name="Parent">
+            <item name="JTheque Utilities" href="http://jtheque.developpez.com/utilities/en/"/>
+        </menu>
 
         <menu name="JTheque Core">
             <item name="Overview" href="index.html"/>
