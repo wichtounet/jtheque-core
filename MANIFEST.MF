@@ -3,7 +3,8 @@ Main-Class: org.jtheque.core.CoreLauncher
 Class-Path: ../lib/jtheque-utils-1.1.2.jar 
  ../lib/aop/aopalliance.jar ../lib/aop/asm-2.2.3.jar ../lib/aop/asm-commons-2.2.3.jar ../lib/aop/asm-util-2.2.3.jar ../lib/aop/aspectjrt.jar ../lib/aop/aspectjweaver.jar 
  ../lib/commons/commons-digester-1.7.jar ../lib/commons/commons-beanutils-1.7.jar ../lib/others/log4j-1.2.15.jar 
- ../lib/gui/AppleJavaExtensions.jar ../lib/gui/jxlayer-3.0.4.jar ../lib/gui/swingx-1.6.jar ../lib/gui/TimingFramework-1.0.jar ../lib/gui/substance-lite-5.3.jar 
+ ../lib/gui/AppleJavaExtensions.jar ../lib/gui/jxlayer-3.0.4.jar ../lib/gui/swingx-1.6.jar ../lib/gui/TimingFramework-1.0.jar  
+ ../lib/gui/trident-1.2.jar ../lib/gui/substance-6.0.jar 
  ../lib/jasper/iText-2.1.0.jar ../lib/jasper/jasperreports-3.5.0.jar ../lib/jasper/jxl.jar ../lib/jasper/poi-3.0.2.jar 
  ../lib/others/javamail-1.4.1.jar ../lib/others/slf4j-log4j12-1.5.8.jar ../lib/others/slf4j-api-1.5.8.jar ../lib/others/jcl-over-slf4j-1.5.8.jar 
  ../lib/persistence/ehcache-1.6.0.jar ../lib/persistence/h2-1.1.112.jar 
