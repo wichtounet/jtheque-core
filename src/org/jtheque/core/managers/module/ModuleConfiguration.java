@@ -16,12 +16,12 @@ package org.jtheque.core.managers.module;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import org.jtheque.core.managers.Managers;
 import org.jtheque.core.managers.module.beans.ModuleContainer;
 import org.jtheque.core.managers.module.beans.ModuleState;
 import org.jtheque.core.managers.state.AbstractState;
 import org.jtheque.core.managers.state.NodeState;
 import org.jtheque.core.managers.update.InstallationResult;
+import org.jtheque.utils.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -33,7 +33,7 @@ import java.util.Collection;
  */
 public final class ModuleConfiguration extends AbstractState {
     private final Collection<ModuleInfo> infos = new ArrayList<ModuleInfo>(20);
-
+    
     @Override
     public boolean isDelegated() {
         return true;
@@ -55,17 +55,22 @@ public final class ModuleConfiguration extends AbstractState {
      * @return The ModuleInfo.
      */
     private static ModuleInfo convertToModuleInfo(NodeState node) {
-        ModuleInfo info = new ModuleInfo();
+        ModuleInfo info = new ModuleInfo(node.getAttributeValue("id"));
 
-        info.setModuleId(node.getAttributeValue("id"));
-
-        for (NodeState child : node.getChildrens()) {
-            if ("state".equals(child.getName())) {
-                info.setState(ModuleState.valueOf(Integer.parseInt(child.getText())));
-            } else if ("file".equals(child.getName())) {
-                info.setFilePath(child.getText());
+        if(StringUtils.isNotEmpty(node.getAttributeValue("state"))){
+            info.setState(ModuleState.valueOf(node.getIntAttributeValue("state")));
+        } else {
+            for (NodeState child : node.getChildrens()) {
+                if ("state".equals(child.getName())) {
+                    info.setState(ModuleState.valueOf(Integer.parseInt(child.getText())));
+                }
             }
         }
+
+        if(info.getState() == null){
+            info.setState(ModuleState.INSTALLED);
+        }
+
         return info;
     }
 
@@ -90,8 +95,7 @@ public final class ModuleConfiguration extends AbstractState {
         NodeState state = new NodeState("module");
 
         state.setAttribute("id", info.getModuleId());
-        state.addSimpleChildValue("state", Integer.toString(info.getState().ordinal()));
-        state.addSimpleChildValue("file", info.getFilePath());
+        state.setAttribute("state", Integer.toString(info.getState().ordinal()));
 
         return state;
     }
@@ -103,15 +107,13 @@ public final class ModuleConfiguration extends AbstractState {
      * @return The module information.
      */
     ModuleInfo getModuleInfo(String moduleName) {
-        ModuleInfo info = null;
-
         for (ModuleInfo i : infos) {
             if (i.getModuleId().equals(moduleName)) {
-                info = i;
+                return i;
             }
         }
 
-        return info;
+        return null;
     }
 
     /**
@@ -121,15 +123,13 @@ public final class ModuleConfiguration extends AbstractState {
      * @return The state of the module.
      */
     public ModuleState getState(String moduleName) {
-        ModuleState state = null;
-
         ModuleInfo info = getModuleInfo(moduleName);
 
         if (info != null) {
-            state = info.getState();
+            return info.getState();
         }
 
-        return state;
+        return null;
     }
 
     /**
@@ -153,16 +153,13 @@ public final class ModuleConfiguration extends AbstractState {
      * @return true if the manager contains the module.
      */
     public boolean containsModule(ModuleContainer module) {
-        boolean contains = false;
-
         for (ModuleInfo i : infos) {
-            if (i.getFilePath().equals(module.getModuleFile().getName()) && i.getModuleId().equals(module.getId())) {
-                contains = true;
-                break;
+            if (i.getModuleId().equals(module.getId())) {
+                return true;
             }
         }
 
-        return contains;
+        return false;
     }
 
     /**
@@ -182,7 +179,7 @@ public final class ModuleConfiguration extends AbstractState {
      * @param module The module container to add.
      */
     public void add(ModuleContainer module) {
-        add(module, module.getState());
+        add(module.getId(), module.getState());
     }
 
     /**
@@ -192,13 +189,7 @@ public final class ModuleConfiguration extends AbstractState {
      * @param state  The state of the module.
      */
     public void add(ModuleContainer module, ModuleState state) {
-        ModuleInfo info = new ModuleInfo();
-
-        info.setState(state);
-        info.setModuleId(module.getId());
-        info.setFilePath(module.getModuleFile().getName());
-
-        infos.add(info);
+        add(module.getId(), state);
     }
 
     /**
@@ -207,11 +198,19 @@ public final class ModuleConfiguration extends AbstractState {
      * @param result The installation result.
      */
     public void add(InstallationResult result) {
-        ModuleInfo info = new ModuleInfo();
+        add(result.getName(), ModuleState.INSTALLED);
+    }
 
-        info.setFilePath(Managers.getCore().getFolders().getModulesFolder() + "/" + result.getJarFile());
-        info.setModuleId(result.getName());
-        info.setState(ModuleState.INSTALLED);
+    /**
+     * Add a module info to the configuration.
+     *
+     * @param id The module id.
+     * @param state The module state.
+     */
+    private void add(String id, ModuleState state) {
+        ModuleInfo info = new ModuleInfo(id);
+
+        info.setState(state);
 
         infos.add(info);
     }

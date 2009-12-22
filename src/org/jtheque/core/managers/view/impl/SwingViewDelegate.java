@@ -67,14 +67,24 @@ public final class SwingViewDelegate implements ViewDelegate {
 
     @Override
     public void displayError(JThequeError error) {
-        ErrorInfo info = new ErrorInfo("Error", error.getMessage(), error.getDetails(), "", error.getException(), Level.SEVERE, null);
+        final ErrorInfo info = new ErrorInfo("Error", error.getMessage(), error.getDetails(), "", error.getException(), Level.SEVERE, null);
 
-        JXErrorPane.showDialog((Component) Managers.getManager(IViewManager.class).getViews().getMainView().getImpl(), info);
+        run(new Runnable(){
+            @Override
+            public void run() {
+                JXErrorPane.showDialog((Component) Managers.getManager(IViewManager.class).getViews().getMainView().getImpl(), info);
+            }
+        });
     }
 
     @Override
-    public void displayText(String text) {
-        JOptionPane.showMessageDialog((Component) Managers.getManager(IViewManager.class).getViews().getMainView().getImpl(), text);
+    public void displayText(final String text) {
+        run(new Runnable(){
+            @Override
+            public void run() {
+                JOptionPane.showMessageDialog((Component) Managers.getManager(IViewManager.class).getViews().getMainView().getImpl(), text);
+            }
+        });
     }
 
     @Override

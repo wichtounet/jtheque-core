@@ -24,9 +24,14 @@ import org.jtheque.core.managers.module.beans.ModuleState;
  * @author Baptiste Wicht
  */
 final class ModuleInfo {
-    private String filePath;
     private String moduleId;
     private ModuleState state;
+
+    public ModuleInfo(String id) {
+        super();
+
+        moduleId = id;
+    }
 
     /**
      * Set the state of the module.
@@ -63,22 +68,4 @@ final class ModuleInfo {
     public String getModuleId() {
         return moduleId;
     }
-
-    /**
-     * Set the file path.
-     *
-     * @param filePath The path to the file.
-     */
-    public void setFilePath(String filePath) {
-        this.filePath = filePath;
-    }
-
-    /**
-     * Return the path to the file.
-     *
-     * @return The path to the file.
-     */
-    public String getFilePath() {
-        return filePath;
-	}
 }

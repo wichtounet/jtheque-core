@@ -16,6 +16,7 @@ package org.jtheque.core.managers.state;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.collections.CollectionUtils;
 
 import java.util.ArrayList;
@@ -169,6 +170,7 @@ public final class NodeState {
      * Return the attribute value.
      *
      * @param key The name of the attribute.
+     *
      * @return The value of the attribute or null if the attribute doesn't exist.
      */
     public String getAttributeValue(String key) {
@@ -182,5 +184,22 @@ public final class NodeState {
         }
 
         return value;
+    }
+
+    /**
+     * Return the integer attribute value.
+     *
+     * @param key The name of the attribute.
+     *
+     * @return The int value of the attribute or 0 if the attribute doesn't exist.
+     */
+    public int getIntAttributeValue(String key){
+        String value = getAttributeValue(key);
+
+        if(StringUtils.isNotEmpty(value)){
+            return Integer.parseInt(value);
+        }
+
+        return 0;
     }
 }

@@ -95,6 +95,7 @@ public final class ModuleManager extends AbstractManager implements IModuleManag
     private void loadModuleBeans() {
         for (ModuleContainer module : moduleContainers) {
             module.setModule(Managers.getManager(IBeansManager.class).getBean(module.getBeanName()));
+
             Managers.getManager(ILanguageManager.class).addBaseName(module.getInfos().i18n());
 
             if (CollectionBasedModule.class.isAssignableFrom(module.getModule().getClass())) {
