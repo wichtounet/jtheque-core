@@ -43,13 +43,18 @@ import java.util.Collection;
  * @author Baptiste Wicht
  */
 public abstract class SwingDialogView extends JDialog implements IWindowView, Internationalizable {
-    private static final long serialVersionUID = -8195629136423644512L;
-
     private String titleKey;
     private IModel model;
 
     private boolean glassPaneInstalled;
     private boolean waitFigureInstalled;
+
+    /**
+     * Construct a SwingDialogView modal to the main view.
+     */
+    protected SwingDialogView(){
+        this((Frame) Managers.getManager(IViewManager.class).getViews().getMainView().getImpl());
+    }
 
     /**
      * Construct a SwingDialogView.
