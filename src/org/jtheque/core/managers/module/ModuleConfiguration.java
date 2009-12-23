@@ -33,7 +33,9 @@ import java.util.Collection;
  */
 public final class ModuleConfiguration extends AbstractState {
     private final Collection<ModuleInfo> infos = new ArrayList<ModuleInfo>(20);
-    
+
+    private boolean discovery;
+
     @Override
     public boolean isDelegated() {
         return true;
@@ -44,6 +46,8 @@ public final class ModuleConfiguration extends AbstractState {
         for (NodeState node : nodes) {
             if ("module".equals(node.getName())) {
                 infos.add(convertToModuleInfo(node));
+            } else if("discovery".equals(node.getName())){
+                discovery = true;
             }
         }
     }
@@ -52,6 +56,7 @@ public final class ModuleConfiguration extends AbstractState {
      * Convert the node state to a ModuleInfo.
      *
      * @param node The node state to convert to ModuleInfo.
+     *
      * @return The ModuleInfo.
      */
     private static ModuleInfo convertToModuleInfo(NodeState node) {
@@ -78,6 +83,10 @@ public final class ModuleConfiguration extends AbstractState {
     public Collection<NodeState> delegateSave() {
         Collection<NodeState> states = new ArrayList<NodeState>(25);
 
+        if(discovery){
+            states.add(new NodeState("discovery"));
+        }
+
         for (ModuleInfo info : infos) {
             states.add(convertToNodeState(info));
         }
@@ -89,6 +98,7 @@ public final class ModuleConfiguration extends AbstractState {
      * Convert the module info the node state.
      *
      * @param info The module info.
+     *
      * @return The node state.
      */
     private static NodeState convertToNodeState(ModuleInfo info) {
@@ -104,6 +114,7 @@ public final class ModuleConfiguration extends AbstractState {
      * Return the module information of a module.
      *
      * @param moduleName The name of the module.
+     *
      * @return The module information.
      */
     ModuleInfo getModuleInfo(String moduleName) {
@@ -114,6 +125,15 @@ public final class ModuleConfiguration extends AbstractState {
         }
 
         return null;
+    }
+
+    /**
+     * Indicate if we must add the modules not listed in the XML File or not.
+     *
+     * @return <code>true</code> if we must add the modules not listed in the configuration else <code>false</code>. 
+     */
+    public boolean isDiscovery(){
+        return discovery;
     }
 
     /**

@@ -17,6 +17,7 @@ package org.jtheque.core.managers.module;
  */
 
 import org.jtheque.core.managers.module.beans.ModuleContainer;
+import org.jtheque.core.managers.module.beans.ModuleState;
 import org.jtheque.utils.collections.Filter;
 
 /**
@@ -43,6 +44,11 @@ final class ConfigurationFilter implements Filter<ModuleContainer> {
         if (configuration.containsModule(module)) {
             module.setState(configuration.getState(module.getId()));
 
+            return true;
+        } else if(configuration.isDiscovery()){
+            module.setState(ModuleState.INSTALLED);
+            configuration.add(module);
+            
             return true;
         }
 
