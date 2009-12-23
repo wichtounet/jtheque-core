@@ -69,14 +69,6 @@ public interface ILanguageManager {
     String getMessage(String key);
 
     /**
-     * Return all the lines of a message. The end line character used is \n.
-     *
-     * @param key The key of the message.
-     * @return An array containing all the lines of the internationalized message.
-     */
-    String[] getLinesMessage(String key);
-
-    /**
      * Return the message of the key and effect the replaces.
      *
      * @param key      The message key.
@@ -84,6 +76,14 @@ public interface ILanguageManager {
      * @return The message of the current locale with the replacements.
      */
     String getMessage(String key, Object... replaces);
+
+    /**
+     * Return all the lines of a message. The end line character used is \n.
+     *
+     * @param key The key of the message.
+     * @return An array containing all the lines of the internationalized message.
+     */
+    String[] getLinesMessage(String key);
 
     /**
      * Return all the supported languages.

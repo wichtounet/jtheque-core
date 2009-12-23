@@ -32,11 +32,11 @@ public abstract class AbstractManager implements IManager {
     private static final WeakEventListenerList LISTENERS = new WeakEventListenerList();
 
     /**
-     * Return the listeners of the manager.
+     * Return the listeners of the manager. The listener's list is static so shared to all the managers. 
      *
      * @return The listeners of the manager.
      */
-    protected static WeakEventListenerList getListeners() {
+    protected static WeakEventListenerList getListeners(){
         return LISTENERS;
     }
 
