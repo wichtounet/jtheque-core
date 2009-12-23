@@ -17,6 +17,9 @@ package org.jtheque.core.managers.view.impl.actions.core;
  */
 
 import org.jtheque.core.managers.Managers;
+import org.jtheque.core.managers.core.Core;
+import org.jtheque.core.managers.resource.IResourceManager;
+import org.jtheque.core.managers.resource.ImageType;
 import org.jtheque.core.managers.view.impl.actions.JThequeAction;
 
 import javax.swing.Action;
@@ -39,6 +42,8 @@ public final class ExitAction extends JThequeAction {
 
         putValue(Action.ACCELERATOR_KEY,
                 KeyStroke.getKeyStroke(KeyEvent.VK_E, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+
+        setIcon(Managers.getManager(IResourceManager.class).getIcon(Core.IMAGES_BASE_NAME, "exit", ImageType.PNG));
     }
 
     @Override

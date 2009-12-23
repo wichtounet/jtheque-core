@@ -16,7 +16,11 @@ package org.jtheque.core.managers.view.impl.actions.backup;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import org.jtheque.core.managers.Managers;
+import org.jtheque.core.managers.core.Core;
 import org.jtheque.core.managers.file.able.FileType;
+import org.jtheque.core.managers.resource.IResourceManager;
+import org.jtheque.core.managers.resource.ImageType;
 import org.jtheque.utils.io.SimpleFilter;
 
 /**
@@ -30,5 +34,7 @@ public final class AcRestoreFromXML extends AcRestore {
      */
     public AcRestoreFromXML() {
         super("file.actions.from.xml", new SimpleFilter("XML(*.xml)", ".xml"), FileType.XML);
+
+        setIcon(Managers.getManager(IResourceManager.class).getIcon(Core.IMAGES_BASE_NAME, "xml", ImageType.PNG));
     }
 }
