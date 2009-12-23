@@ -37,17 +37,37 @@ public interface IFeatureManager {
     }
 
     /**
+     * Add a menu to the application. It's an object who contains some features that will be
+     * added to the menu bar.
+     *
+     * @param menu The menu to add to the application.
+     */
+    void addMenu(Menu menu);
+
+    /**
+     * Remove the menu from the application.
+     *
+     * @param menu The menu to remove. 
+     */
+    void removeMenu(Menu menu);
+
+    /**
      * Create a feature.
+     *
+     * It's better to create a Custom Menu and to add it using addMenu method.
      *
      * @param position The position of the feature.
      * @param type     The type of the feature.
      * @param key      The internationalization key.
      * @return The created feature.
      */
+    @Deprecated
     Feature createFeature(int position, FeatureType type, String key);
 
     /**
      * Add a sub feature to a parent feature.
+     *
+     * It's better to create a Custom Menu and to add it using addMenu method.
      *
      * @param parent     The parent feature.
      * @param actionName The bean name of the action.
@@ -57,10 +77,13 @@ public interface IFeatureManager {
      * @param baseName   The images base name.
      * @return The sub feature.
      */
+    @Deprecated
     Feature addSubFeature(Feature parent, String actionName, FeatureType type, int position, String baseName, String icon);
 
     /**
      * Add a sub feature to a parent feature.
+     *
+     * It's better to create a Custom Menu and to add it using addMenu method.
      *
      * @param parent     The parent feature.
      * @param actionName The bean name of the action.
@@ -68,20 +91,27 @@ public interface IFeatureManager {
      * @param position   The position of the sub feature.
      * @return The sub feature.
      */
+    @Deprecated
     Feature addSubFeature(Feature parent, String actionName, FeatureType type, int position);
 
     /**
      * Add a feature.
      *
+     * It's better to create a Custom Menu and to add it using addMenu method.
+     *
      * @param feature The feature to add.
      */
+    @Deprecated
     void addFeature(Feature feature);
 
     /**
      * Remove a feature.
      *
+     * It's better to create a Custom Menu and to add it using addMenu method.
+     *
      * @param feature The feature to remove.
      */
+    @Deprecated
     void removeFeature(Feature feature);
 
     /**

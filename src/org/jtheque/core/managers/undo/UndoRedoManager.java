@@ -18,10 +18,6 @@ package org.jtheque.core.managers.undo;
 
 import org.jtheque.core.managers.ManagerException;
 import org.jtheque.core.managers.Managers;
-import org.jtheque.core.managers.feature.Feature;
-import org.jtheque.core.managers.feature.Feature.FeatureType;
-import org.jtheque.core.managers.feature.IFeatureManager;
-import org.jtheque.core.managers.feature.IFeatureManager.CoreFeature;
 import org.jtheque.core.managers.log.ILoggingManager;
 import org.jtheque.core.managers.resource.IResourceManager;
 
@@ -56,25 +52,7 @@ public final class UndoRedoManager extends UndoManager implements IUndoRedoManag
         undoAction = Managers.getManager(IResourceManager.class).getAction("undoAction");
         redoAction = Managers.getManager(IResourceManager.class).getAction("redoAction");
 
-        addFeature(undoAction, 1);
-        addFeature(redoAction, 2);
-
         stateChanged();
-    }
-
-    /**
-     * Add the undo/redo feature.
-     *
-     * @param action   The action to add to the menu.
-     * @param position The position of the feature.
-     */
-    private static void addFeature(Action action, int position) {
-        Feature undoFeature = new Feature();
-        undoFeature.setType(FeatureType.ACTION);
-        undoFeature.setAction(action);
-        undoFeature.setPosition(position);
-
-        Managers.getManager(IFeatureManager.class).getFeature(CoreFeature.EDIT).addSubFeature(undoFeature);
     }
 
 

@@ -35,6 +35,26 @@ public class Feature {
 
     private final Collection<Feature> subFeatures = new ArrayList<Feature>(20);
 
+    public Feature(){
+        super();
+    }
+
+    public Feature(FeatureType type, Integer position, Action action){
+        super();
+
+        this.action = action;
+        this.type = type;
+        this.position = position;
+    }
+
+    public Feature(FeatureType type, String titleKey, Integer position){
+        super();
+
+        this.type = type;
+        this.titleKey = titleKey;
+        this.position = position;
+    }
+
     /**
      * The Feature Type.
      *
