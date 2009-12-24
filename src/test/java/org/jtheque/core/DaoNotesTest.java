@@ -1,4 +1,4 @@
-package org.jtheque.core.tests.unit;
+package org.jtheque.core;
 
 import org.jtheque.core.utils.db.DaoNotes;
 import org.junit.Test;

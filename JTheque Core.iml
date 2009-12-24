@@ -4,11 +4,11 @@
     <facet type="Spring" name="Spring">
       <configuration>
         <fileset id="fileset1" name="JTheque Core Fileset" removed="false">
-          <file>file://$MODULE_DIR$/src/org/jtheque/core/spring/core-beans.xml</file>
-          <file>file://$MODULE_DIR$/src/org/jtheque/core/spring/core-managers.xml</file>
-          <file>file://$MODULE_DIR$/src/org/jtheque/core/spring/core-views.xml</file>
-          <file>file://$MODULE_DIR$/src/org/jtheque/core/spring/core-actions.xml</file>
-          <file>file://$MODULE_DIR$/src/org/jtheque/core/spring/core-resources.xml</file>
+          <file>file://$MODULE_DIR$/src/main/java/org/jtheque/core/spring/core-beans.xml</file>
+          <file>file://$MODULE_DIR$/src/main/java/org/jtheque/core/spring/core-managers.xml</file>
+          <file>file://$MODULE_DIR$/src/main/java/org/jtheque/core/spring/core-views.xml</file>
+          <file>file://$MODULE_DIR$/src/main/java/org/jtheque/core/spring/core-actions.xml</file>
+          <file>file://$MODULE_DIR$/src/main/java/org/jtheque/core/spring/core-resources.xml</file>
           <file>file://$MODULE_DIR$/src/org/jtheque/core/spring/core-aspects.xml</file>
         </fileset>
       </configuration>
@@ -18,8 +18,10 @@
     <output url="file://M:/Server/Builds/utils/jtheque-core/classes/production" />
     <output-test url="file://M:/Server/Builds/utils/jtheque-core/classes/test" />
     <content url="file://$MODULE_DIR$">
-      <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/main/resources" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="inheritedJdk" />

@@ -1,4 +1,4 @@
-package org.jtheque.core.tests.unit;
+package org.jtheque.core;
 
 /*
  * This file is part of JTheque.
