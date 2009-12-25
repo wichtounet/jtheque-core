@@ -1,7 +1,6 @@
 package org.jtheque.core.managers.core.application;
 
 import org.jtheque.core.managers.resource.ImageType;
-import org.jtheque.utils.bean.InternationalString;
 import org.jtheque.utils.bean.Version;
 
 /*
@@ -101,35 +100,35 @@ public interface Application {
      *
      * @return The name of the application.
      */
-    InternationalString getName();
+    String getName();
 
     /**
      * Return the author of the application.
      *
      * @return The author of the application.
      */
-    InternationalString getAuthor();
+    String getAuthor();
 
     /**
      * Return the email of the author of the application.
      *
      * @return The email of the author of the application.
      */
-    InternationalString getEmail();
+    String getEmail();
 
     /**
      * Return the site of the application.
      *
      * @return The site of the application.
      */
-    InternationalString getSite();
+    String getSite();
 
     /**
      * Return the copyright of the application.
      *
      * @return The copyright of the application.
      */
-    InternationalString getCopyright();
+    String getCopyright();
 
     /**
      * Return all the supported languages of the application.
@@ -142,6 +141,7 @@ public interface Application {
      * Return the application property.
      *
      * @param key The key of the property.
+     *
      * @return The value of the property or empty string if there is no property with this key.
      */
     String getProperty(String key);

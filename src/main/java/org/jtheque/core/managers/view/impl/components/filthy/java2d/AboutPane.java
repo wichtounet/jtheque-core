@@ -281,7 +281,7 @@ public final class AboutPane extends AbstractAboutPane implements IAboutView, In
      * @param textColor The text color.
      */
     private void paintTitle(Graphics g2, int xStart, int yStart, Color textColor) {
-        PaintUtils.drawString(g2, Managers.getCore().getApplication().getName().toString(), xStart, yStart, fontName, textColor);
+        PaintUtils.drawString(g2, Managers.getCore().getApplication().getName(), xStart, yStart, fontName, textColor);
 
         PaintUtils.fillRect(g2, xStart, yStart + 20, paintWidth, 3, textColor);
     }
@@ -356,7 +356,7 @@ public final class AboutPane extends AbstractAboutPane implements IAboutView, In
 
         int logoWidth = logo == null ? 0 : logo.getWidth();
 
-        paintWidth = Math.max(metrics.stringWidth(Managers.getCore().getApplication().getName().toString()), logoWidth + 30 + max + 20 + maxRight);
+        paintWidth = Math.max(metrics.stringWidth(Managers.getCore().getApplication().getName()), logoWidth + 30 + max + 20 + maxRight);
     }
 
     /**

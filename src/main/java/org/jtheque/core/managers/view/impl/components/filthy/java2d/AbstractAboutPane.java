@@ -42,7 +42,7 @@ public abstract class AbstractAboutPane extends JXPanel {
      * Init the view.
      */
     void init() {
-        copyright = Managers.getCore().getApplication().getCopyright().toString();
+        copyright = Managers.getCore().getApplication().getCopyright();
         licence = getMessage("about.actions.read");
 
         infos = new Info[4];
@@ -50,11 +50,11 @@ public abstract class AbstractAboutPane extends JXPanel {
         infos[0] = new Info(getMessage("about.view.version"),
                 Managers.getCore().getApplication().getVersion().getVersion(), false, false);
         infos[1] = new Info(getMessage("about.view.author"),
-                Managers.getCore().getApplication().getAuthor().toString(), false, false);
+                Managers.getCore().getApplication().getAuthor(), false, false);
         infos[2] = new Info(getMessage("about.view.site"),
-                Managers.getCore().getApplication().getSite().toString(), true, false);
+                Managers.getCore().getApplication().getSite(), true, false);
         infos[3] = new Info(getMessage("about.view.mail"),
-                Managers.getCore().getApplication().getEmail().toString(), false, true);
+                Managers.getCore().getApplication().getEmail(), false, true);
 
         credits = new ArrayList<String>(Managers.getCore().getCreditsMessage().size() * 4);
 
