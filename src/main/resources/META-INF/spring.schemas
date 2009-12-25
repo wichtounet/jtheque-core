@@ -15,4 +15,4 @@
 # along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-http\://www.jtheque.com/schema/jtheque/jtheque.xsd=org/jtheque/core/spring/extension/jtheque.xsd
+http\://www.jtheque.com/schema/jtheque/jtheque.xsd=org/jtheque/core/spring/jtheque.xsd

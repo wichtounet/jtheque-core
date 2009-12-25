@@ -43,8 +43,8 @@ public enum SystemProperty {
         public String get() {
             String value = super.get();
 
-            if (!value.endsWith(File.separator)) {
-                value += File.separator;
+            if (!value.endsWith("/")) {
+                value += "/";
             }
 
             return value;

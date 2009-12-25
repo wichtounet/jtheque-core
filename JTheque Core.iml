@@ -4,11 +4,11 @@
     <facet type="Spring" name="Spring">
       <configuration>
         <fileset id="fileset1" name="JTheque Core Fileset" removed="false">
-          <file>file://$MODULE_DIR$/src/main/java/org/jtheque/core/spring/core-beans.xml</file>
-          <file>file://$MODULE_DIR$/src/main/java/org/jtheque/core/spring/core-managers.xml</file>
-          <file>file://$MODULE_DIR$/src/main/java/org/jtheque/core/spring/core-views.xml</file>
-          <file>file://$MODULE_DIR$/src/main/java/org/jtheque/core/spring/core-actions.xml</file>
-          <file>file://$MODULE_DIR$/src/main/java/org/jtheque/core/spring/core-resources.xml</file>
+          <file>file://$MODULE_DIR$/src/main/resources/org/jtheque/core/spring/core-beans.xml</file>
+          <file>file://$MODULE_DIR$/src/main/resources/org/jtheque/core/spring/core-managers.xml</file>
+          <file>file://$MODULE_DIR$/src/main/resources/org/jtheque/core/spring/core-views.xml</file>
+          <file>file://$MODULE_DIR$/src/main/resources/org/jtheque/core/spring/core-actions.xml</file>
+          <file>file://$MODULE_DIR$/src/main/resources/org/jtheque/core/spring/core-resources.xml</file>
           <file>file://$MODULE_DIR$/src/org/jtheque/core/spring/core-aspects.xml</file>
         </fileset>
       </configuration>

@@ -140,7 +140,7 @@ public final class Core implements ICore {
 
     @Override
     public String getImagesBaseName() {
-        return "org/jtheque/core/resources/images";
+        return IMAGES_BASE_NAME;
     }
 
     @Override

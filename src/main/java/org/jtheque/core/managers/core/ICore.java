@@ -30,7 +30,7 @@ import java.util.Collection;
  * @author Baptiste Wicht
  */
 public interface ICore {
-    String IMAGES_BASE_NAME = "org/jtheque/core/resources/images";
+    String IMAGES_BASE_NAME = "org/jtheque/core/images";
 
     /**
      * Return the version of the core.
