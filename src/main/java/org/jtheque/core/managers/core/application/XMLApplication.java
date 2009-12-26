@@ -1,6 +1,7 @@
 package org.jtheque.core.managers.core.application;
 
 import org.jdom.Element;
+import org.jtheque.core.managers.resource.ImageDescriptor;
 import org.jtheque.core.managers.resource.ImageType;
 import org.jtheque.core.utils.SystemProperty;
 import org.jtheque.core.utils.file.XMLException;
@@ -11,6 +12,7 @@ import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.collections.ArrayUtils;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -44,11 +46,8 @@ public final class XMLApplication implements Application {
 
     private ApplicationProperties applicationProperties;
 
-    private String logo;
-    private ImageType logoType;
-
-    private String windowIcon;
-    private ImageType windowIconType;
+    private ImageDescriptor icon;
+    private ImageDescriptor logo;
 
     private String folderPath;
     private String licenceFilePath;
@@ -77,6 +76,12 @@ public final class XMLApplication implements Application {
             readFile();
         } catch (XMLException e){
             throw new IllegalArgumentException("Unable to read the file " + filePath, e);
+        } finally {
+            try {
+                reader.close();
+            } catch (IOException e){
+                throw new IllegalArgumentException("Unable to close the file " + filePath, e);
+            }
         }
     }
 
@@ -224,36 +229,48 @@ public final class XMLApplication implements Application {
      * @throws XMLException if an error occurs during the XML processing.
      */
     private void readImages() throws XMLException{
-        readLogo();
-        readWindowIcon();
-    }
-
-    /**
-     * Read the logo information from the file.
-     *
-     * @throws XMLException if an error occurs during the XML processing.
-     */
-    private void readLogo() throws XMLException{
-        Object logoElement = reader.getNode("logo", reader.getRootElement());
-
-        logo = SystemProperty.USER_DIR.get() + "images/" + reader.readString("image", logoElement);
-
-        String type = reader.readString("type", logoElement);
-        logoType = StringUtils.isEmpty(type) ? ImageType.PNG : ImageType.resolve(type);
+        logo = readImageDescriptor("logo");
+        icon = readImageDescriptor("icon");
     }
 
     /**
      * Read the window icon information from the file.
      *
+     * @param node The node to read the image from.
+     *
      * @throws XMLException if an error occurs during the XML processing.
+     *
+     * @return Return the read image descriptor. If the node doesn't exists a default ImageDescriptor with
+     * the name of the node as the image and PNG type is returned.
      */
-    private void readWindowIcon() throws XMLException{
-        Object iconElement = reader.getNode("icon", reader.getRootElement());
+    private ImageDescriptor readImageDescriptor(String node) throws XMLException{
+        if(reader.existsNode(node, reader.getRootElement())){
+            Object iconElement = reader.getNode(node, reader.getRootElement());
 
-        windowIcon = "file:" + SystemProperty.USER_DIR.get() + "images/" + reader.readString("image", iconElement);
+            String path = SystemProperty.USER_DIR.get() + "images/" + reader.readString("image", iconElement);
 
-        String type = reader.readString("type", iconElement);
-        windowIconType = StringUtils.isEmpty(type) ? ImageType.PNG : ImageType.resolve(type);
+            if(reader.existsValue("@image", iconElement)){
+                path += reader.readString("@image", iconElement);
+            } else {
+                path += reader.readString("image", iconElement);
+            }
+
+            ImageType type;
+
+            if(reader.existsNode("type", iconElement)){
+                String typeStr = reader.readString("type", iconElement);
+                type = StringUtils.isEmpty(typeStr) ? ImageType.PNG : ImageType.resolve(typeStr);
+            } else if(reader.existsValue("@type", iconElement)){
+                String typeStr = reader.readString("@type", iconElement);
+                type = StringUtils.isEmpty(typeStr) ? ImageType.PNG : ImageType.resolve(typeStr);
+            } else {
+                type = ImageType.PNG;
+            }
+
+            return new ImageDescriptor(path, type);
+        }
+
+        return new ImageDescriptor(node, ImageType.PNG);
     }
 
     /**
@@ -313,22 +330,22 @@ public final class XMLApplication implements Application {
 
     @Override
     public String getLogo(){
-        return logo;
+        return logo.getImage();
     }
 
     @Override
     public ImageType getLogoType(){
-        return logoType;
+        return logo.getType();
     }
 
     @Override
     public String getWindowIcon(){
-        return windowIcon;
+        return icon.getImage();
     }
 
     @Override
     public ImageType getWindowIconType(){
-        return windowIconType;
+        return icon.getType();
     }
 
     @Override

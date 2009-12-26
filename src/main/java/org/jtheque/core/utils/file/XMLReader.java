@@ -174,6 +174,14 @@ public final class XMLReader implements Closeable {
         return n;
     }
 
+    public boolean existsNode(String path, Object node) throws XMLException {
+        return getNode(path, node) != null;
+    }
+
+    public boolean existsValue(String path, Object node) throws XMLException {
+        return readString(path, node) != null;
+    }
+
     /**
      * Read a String value from the node.
      *
