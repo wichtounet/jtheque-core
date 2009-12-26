@@ -1,20 +1,10 @@
 package org.jtheque.core.managers.core.application;
 
-import org.jdom.Element;
 import org.jtheque.core.managers.resource.ImageDescriptor;
 import org.jtheque.core.managers.resource.ImageType;
-import org.jtheque.core.utils.SystemProperty;
-import org.jtheque.core.utils.file.XMLException;
-import org.jtheque.core.utils.file.XMLReader;
-import org.jtheque.utils.StringUtils;
-import org.jtheque.utils.bean.InternationalString;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.collections.ArrayUtils;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,8 +30,6 @@ import java.util.Map;
  * @author Baptiste Wicht
  */
 public final class XMLApplication implements Application {
-    private final XMLReader reader;
-
     private Version version;
 
     private ApplicationProperties applicationProperties;
@@ -49,256 +37,11 @@ public final class XMLApplication implements Application {
     private ImageDescriptor icon;
     private ImageDescriptor logo;
 
-    private String folderPath;
-    private String licenceFilePath;
-    private String applicationRepository;
-    private String applicationMessageFileURL;
-
     private boolean displayLicence;
 
     private String[] supportedLanguages = {"fr", "en"};
 
     private final Map<String, String> properties = new HashMap<String, String>(5);
-
-    /**
-     * Construct a new XMLApplication from an XML file.
-     *
-     * @param filePath The path to the XML file.
-     */
-    public XMLApplication(String filePath){
-        super();
-
-        reader = new XMLReader();
-
-        openFile(filePath);
-
-        try {
-            readFile();
-        } catch (XMLException e){
-            throw new IllegalArgumentException("Unable to read the file " + filePath, e);
-        } finally {
-            try {
-                reader.close();
-            } catch (IOException e){
-                throw new IllegalArgumentException("Unable to close the file " + filePath, e);
-            }
-        }
-    }
-
-    /**
-     * Open the file.
-     *
-     * @param filePath The path to the file.
-     */
-    private void openFile(String filePath){
-        try {
-            reader.openFile(filePath);
-        } catch (XMLException e){
-            throw new IllegalArgumentException("Unable to read the file " + filePath, e);
-        }
-    }
-
-    /**
-     * Read the file.
-     *
-     * @throws XMLException if an error occurs during the XML processing.
-     */
-    private void readFile() throws XMLException{
-        readVersion();
-        readApplicationValues();
-        readInternationalization();
-        readImages();
-        readOptions();
-        readProperties();
-    }
-
-    /**
-     * Read the version of the application from the file.
-     *
-     * @throws XMLException if an error occurs during the XML processing.
-     */
-    private void readVersion() throws XMLException{
-        String versionStr = reader.readString("@version", reader.getRootElement());
-
-        version = new Version(versionStr);
-    }
-
-    /**
-     * Read the application values (repository, messages file) from the file.
-     *
-     * @throws XMLException if an error occurs during the XML processing.
-     */
-    private void readApplicationValues() throws XMLException{
-        String folder = reader.readString("folder", reader.getRootElement());
-
-        if (StringUtils.isEmpty(folder) || !new File(folder).exists()){
-            folderPath = new File(SystemProperty.USER_DIR.get()).getParentFile().getAbsolutePath();
-        } else {
-            folderPath = new File(folder).getAbsolutePath();
-        }
-
-        applicationRepository = reader.readString("repository", reader.getRootElement());
-        applicationMessageFileURL = reader.readString("messages", reader.getRootElement());
-    }
-
-    /**
-     * Read all the internationalized values of the application from the file.
-     *
-     * @throws XMLException if an error occurs during the XML processing.
-     */
-    private void readInternationalization() throws XMLException{
-        Object i18nElement = reader.getNode("i18n", reader.getRootElement());
-
-        readLanguages(i18nElement);
-        readApplicationProperties(i18nElement);
-    }
-
-    /**
-     * Read all the supported languages of the application.
-     *
-     * @param i18nElement The i18n XML element.
-     *
-     * @throws XMLException If an errors occurs during the XML processing.
-     */
-    private void readLanguages(Object i18nElement) throws XMLException{
-        Collection<Element> nodes = reader.getNodes("languages/language", i18nElement);
-
-        Collection<String> languages = new ArrayList<String>(nodes.size());
-
-        for (Element languageElement : nodes){
-            languages.add(languageElement.getText());
-        }
-
-        nodes = reader.getNodes("languages/*", i18nElement);
-
-        for (Element languageElement : nodes){
-            languages.add(languageElement.getName());
-        }
-
-        supportedLanguages = languages.toArray(new String[languages.size()]);
-    }
-
-    /**
-     * Read the application internationalisation properties.
-     *
-     * @param i18nElement The i18n XML element.
-     *
-     * @throws XMLException If an errors occurs during the XML processing.
-     */
-    private void readApplicationProperties(Object i18nElement) throws XMLException{
-        if (reader.getNode("files", i18nElement) != null || reader.getNode("name", i18nElement) == null){
-            applicationProperties = new I18nAplicationProperties();
-        } else {
-            DirectValuesApplicationProperties props = new DirectValuesApplicationProperties();
-
-            props.setName(readInternationalString("name", i18nElement));
-            props.setAuthor(readInternationalString("author", i18nElement));
-            props.setSite(readInternationalString("site", i18nElement));
-            props.setEmail(readInternationalString("email", i18nElement));
-            props.setCopyright(readInternationalString("copyright", i18nElement));
-
-            applicationProperties = props;
-        }
-    }
-
-    /**
-     * Read an international string from the file.
-     *
-     * @param path The path the international string element.
-     * @param parentElement The parent element.
-     *
-     * @return The internationalized string.
-     *
-     * @throws XMLException if an error occurs during the XML processing.
-     */
-    private InternationalString readInternationalString(String path, Object parentElement) throws XMLException{
-        InternationalString internationalString = new InternationalString();
-
-        Collection<Element> elements = reader.getNodes(path + "/*", parentElement);
-
-        for (Element child : elements){
-            internationalString.put(child.getName(), child.getText());
-        }
-
-        return internationalString;
-    }
-
-    /**
-     * Read the images from the file.
-     *
-     * @throws XMLException if an error occurs during the XML processing.
-     */
-    private void readImages() throws XMLException{
-        logo = readImageDescriptor("logo");
-        icon = readImageDescriptor("icon");
-    }
-
-    /**
-     * Read the window icon information from the file.
-     *
-     * @param node The node to read the image from.
-     *
-     * @throws XMLException if an error occurs during the XML processing.
-     *
-     * @return Return the read image descriptor. If the node doesn't exists a default ImageDescriptor with
-     * the name of the node as the image and PNG type is returned.
-     */
-    private ImageDescriptor readImageDescriptor(String node) throws XMLException{
-        if(reader.existsNode(node, reader.getRootElement())){
-            Object iconElement = reader.getNode(node, reader.getRootElement());
-
-            String path = SystemProperty.USER_DIR.get() + "images/" + reader.readString("image", iconElement);
-
-            if(reader.existsValue("@image", iconElement)){
-                path += reader.readString("@image", iconElement);
-            } else {
-                path += reader.readString("image", iconElement);
-            }
-
-            ImageType type;
-
-            if(reader.existsNode("type", iconElement)){
-                String typeStr = reader.readString("type", iconElement);
-                type = StringUtils.isEmpty(typeStr) ? ImageType.PNG : ImageType.resolve(typeStr);
-            } else if(reader.existsValue("@type", iconElement)){
-                String typeStr = reader.readString("@type", iconElement);
-                type = StringUtils.isEmpty(typeStr) ? ImageType.PNG : ImageType.resolve(typeStr);
-            } else {
-                type = ImageType.PNG;
-            }
-
-            return new ImageDescriptor(path, type);
-        }
-
-        return new ImageDescriptor(node, ImageType.PNG);
-    }
-
-    /**
-     * Read the application options from the file.
-     *
-     * @throws XMLException if an error occurs during the XML processing.
-     */
-    private void readOptions() throws XMLException{
-        Object optionsElement = reader.getNode("options", reader.getRootElement());
-        
-        if(reader.existsValue("licence", optionsElement) && StringUtils.isNotEmpty(reader.readString("licence", optionsElement))){
-            displayLicence = true;
-            licenceFilePath = SystemProperty.USER_DIR.get() + reader.readString("licence", optionsElement);
-        }
-    }
-
-    /**
-     * Read the application properties from the file.
-     *
-     * @throws XMLException if an error occurs during the XML processing.
-     */
-    private void readProperties() throws XMLException{
-        Collection<Element> nodes = reader.getNodes("properties/*", reader.getRootElement());
-
-        for (Element propertyElement : nodes){
-            properties.put(propertyElement.getName(), propertyElement.getText());
-        }
-    }
 
     @Override
     public Version getVersion(){
@@ -357,12 +100,12 @@ public final class XMLApplication implements Application {
 
     @Override
     public String getRepository(){
-        return applicationRepository;
+        return getProperty("application.repository");
     }
 
     @Override
     public String getMessageFileURL(){
-        return applicationMessageFileURL;
+        return getProperty("application.messages");
     }
 
     @Override
@@ -377,11 +120,38 @@ public final class XMLApplication implements Application {
 
     @Override
     public String getLicenceFilePath(){
-        return licenceFilePath;
+        return getProperty("application.licence");
     }
 
     @Override
     public String getFolderPath(){
-        return folderPath;
+        return getProperty("application.folder.path");
+    }
+
+    //Package protected methods to fill the application
+
+    void setProperty(String name, String value){
+        properties.put(name, value);
+    }
+
+    void displayLicence(){
+        displayLicence = true;
+    }
+
+    void setVersion(Version version){
+        this.version = version;
+    }
+
+    void setSupportedLanguages(String[] supportedLanguages){
+        this.supportedLanguages = ArrayUtils.copyOf(supportedLanguages);
+    }
+
+    void setApplicationProperties(ApplicationProperties applicationProperties){
+        this.applicationProperties = applicationProperties;
+    }
+
+    void setImages(ImageDescriptor logo, ImageDescriptor icon){
+        this.logo = logo;
+        this.icon = icon;
     }
 }

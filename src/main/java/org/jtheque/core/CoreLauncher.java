@@ -2,7 +2,7 @@ package org.jtheque.core;
 
 import org.jtheque.core.managers.core.Core;
 import org.jtheque.core.managers.core.application.Application;
-import org.jtheque.core.managers.core.application.XMLApplication;
+import org.jtheque.core.managers.core.application.XMLApplicationReader;
 import org.jtheque.core.utils.SystemProperty;
 
 /*
@@ -41,10 +41,8 @@ public final class CoreLauncher {
      * @param args No args will be read.
      */
     public static void main(String[] args){
-        SystemProperty.USER_DIR.set("N:\\Programmation\\WorkDirectory\\JTheque\\Applications\\JTheque Movies Windows\\Core");
+        Application application = new XMLApplicationReader().readApplication(SystemProperty.USER_DIR.get() + "application.xml");
 
-        Application application = new XMLApplication(SystemProperty.USER_DIR.get() + "application.xml");
-        
         Core.getInstance().launchJThequeCore(application);
     }
 }
