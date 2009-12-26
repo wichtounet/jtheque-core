@@ -1,32 +1,27 @@
 package org.jtheque.core.managers.view.impl.frame;
 
 import org.jdesktop.swingx.JXTable;
-import org.jtheque.core.managers.error.JThequeError;
 import org.jtheque.core.managers.event.EventLog;
 import org.jtheque.core.managers.view.able.ILogView;
+import org.jtheque.core.managers.view.able.components.IModel;
+import org.jtheque.core.managers.view.impl.actions.event.UpdateAction;
 import org.jtheque.core.managers.view.impl.components.model.EventsTableModel;
 import org.jtheque.core.managers.view.impl.components.model.LogComboBoxModel;
-import org.jtheque.core.managers.view.impl.frame.abstraction.SwingDialogView;
+import org.jtheque.core.managers.view.impl.frame.abstraction.SwingBuildedDialogView;
 import org.jtheque.core.utils.ui.Borders;
 import org.jtheque.core.utils.ui.PanelBuilder;
 import org.jtheque.utils.ui.GridBagUtils;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
-import javax.swing.Action;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import java.awt.Container;
-import java.awt.Frame;
 import java.awt.Insets;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.text.DateFormat;
-import java.util.Collection;
 
 /*
  * This file is part of JTheque.
@@ -49,7 +44,7 @@ import java.util.Collection;
  *
  * @author Baptiste Wicht
  */
-public final class LogView extends SwingDialogView implements ListSelectionListener, ItemListener, ILogView {
+public final class LogView extends SwingBuildedDialogView<IModel> implements ListSelectionListener, ItemListener, ILogView {
     private JXTable tableEvents;
     private EventsTableModel eventsModel;
 
@@ -59,49 +54,31 @@ public final class LogView extends SwingDialogView implements ListSelectionListe
     private JLabel labelLevel;
     private JLabel labelDate;
     private JLabel labelTime;
+
     private JTextArea areaDetails;
 
-    @Resource
-    private DateFormat dateFormat;
+    private final DateFormat dateFormat;
+    private final DateFormat timeFormat;
 
-    @Resource
-    private DateFormat timeFormat;
+    private static final int DEFAULT_WIDTH = 600;
+    private static final int DEFAULT_HEIGHT = 450;
 
-    private Action updateAction;
+    public LogView(DateFormat dateFormat, DateFormat timeFormat){
+        super();
 
-    private int defaultWidth;
-    private int defaultHeight;
-
-    /**
-     * Construct a new LogView.
-     *
-     * @param frame The parent frame.
-     */
-    public LogView(Frame frame) {
-        super(frame);
+        this.dateFormat = dateFormat;
+        this.timeFormat = timeFormat;
     }
 
-    /**
-     * Build the view.
-     */
-    @PostConstruct
-    public void build() {
-        setResizable(false);
+    @Override
+    protected void initView(){
         setTitleKey("log.view.title");
-        setSize(defaultWidth, defaultHeight);
-        setContentPane(buildContentPane());
-
-        setLocationRelativeTo(getOwner());
+        setResizable(false);
+        setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
     }
 
-    /**
-     * Build the content pane.
-     *
-     * @return The content pane.
-     */
-    private Container buildContentPane() {
-        PanelBuilder builder = new PanelBuilder();
-
+    @Override
+    protected void buildView(PanelBuilder builder){
         builder.setDefaultInsets(new Insets(4, 4, 4, 4));
 
         builder.addI18nLabel("log.view.log", builder.gbcSet(0, 0, GridBagUtils.NONE, GridBagUtils.LINE_END));
@@ -128,9 +105,7 @@ public final class LogView extends SwingDialogView implements ListSelectionListe
 
         createInfosPanel(builder);
 
-        builder.addButton(updateAction, builder.gbcSet(1, 3, GridBagUtils.NONE, GridBagUtils.LINE_END));
-
-        return builder.getPanel();
+        builder.addButton(new UpdateAction(), builder.gbcSet(1, 3, GridBagUtils.NONE, GridBagUtils.LINE_END));
     }
 
     /**
@@ -139,14 +114,12 @@ public final class LogView extends SwingDialogView implements ListSelectionListe
      * @param parent The parent builder.
      */
     private void createInfosPanel(PanelBuilder parent) {
-        PanelBuilder builder = new PanelBuilder();
+        PanelBuilder builder = parent.addPanel(parent.gbcSet(0, 2, GridBagUtils.BOTH, GridBagUtils.LINE_START, 2, 1, 1.0, 0.33));
 
-        builder.getPanel().setBorder(Borders.createTitledBorder("log.view.details"));
+        builder.setBorder(Borders.createTitledBorder("log.view.details"));
 
         addLabels(builder);
         addFieldLabels(builder);
-
-        parent.add(builder.getPanel(), parent.gbcSet(0, 2, GridBagUtils.BOTH, GridBagUtils.LINE_START, 2, 1, 1.0, 0.33));
     }
 
     /**
@@ -155,12 +128,12 @@ public final class LogView extends SwingDialogView implements ListSelectionListe
      * @param builder The frame builder.
      */
     private void addFieldLabels(PanelBuilder builder) {
-        labelTitle = builder.add(new JLabel(), builder.gbcSet(0, 0, GridBagUtils.NONE, GridBagUtils.BASELINE_LEADING, 4, 1));
-        labelLog = builder.add(new JLabel(), builder.gbcSet(1, 1, GridBagUtils.HORIZONTAL, GridBagUtils.BASELINE_LEADING, 0.5, 0.0));
-        labelSource = builder.add(new JLabel(), builder.gbcSet(1, 2, GridBagUtils.HORIZONTAL, GridBagUtils.BASELINE_LEADING, 0.5, 0.0));
-        labelLevel = builder.add(new JLabel(), builder.gbcSet(1, 3, GridBagUtils.HORIZONTAL, GridBagUtils.BASELINE_LEADING, 0.5, 0.0));
-        labelDate = builder.add(new JLabel(), builder.gbcSet(3, 1, GridBagUtils.HORIZONTAL, GridBagUtils.BASELINE_LEADING, 0.5, 0.0));
-        labelTime = builder.add(new JLabel(), builder.gbcSet(3, 2, GridBagUtils.HORIZONTAL, GridBagUtils.BASELINE_LEADING, 0.5, 0.0));
+        labelTitle = builder.addLabel(builder.gbcSet(0, 0, GridBagUtils.NONE, GridBagUtils.BASELINE_LEADING, 4, 1));
+        labelLog = builder.addLabel(builder.gbcSet(1, 1, GridBagUtils.HORIZONTAL, GridBagUtils.BASELINE_LEADING, 0.5, 0.0));
+        labelSource = builder.addLabel(builder.gbcSet(1, 2, GridBagUtils.HORIZONTAL, GridBagUtils.BASELINE_LEADING, 0.5, 0.0));
+        labelLevel = builder.addLabel(builder.gbcSet(1, 3, GridBagUtils.HORIZONTAL, GridBagUtils.BASELINE_LEADING, 0.5, 0.0));
+        labelDate = builder.addLabel(builder.gbcSet(3, 1, GridBagUtils.HORIZONTAL, GridBagUtils.BASELINE_LEADING, 0.5, 0.0));
+        labelTime = builder.addLabel(builder.gbcSet(3, 2, GridBagUtils.HORIZONTAL, GridBagUtils.BASELINE_LEADING, 0.5, 0.0));
 
         areaDetails = new JTextArea();
         areaDetails.setRows(3);
@@ -185,11 +158,6 @@ public final class LogView extends SwingDialogView implements ListSelectionListe
     }
 
     @Override
-    protected void validate(Collection<JThequeError> errors) {
-        //Nothing to validate
-    }
-
-    @Override
     public void valueChanged(ListSelectionEvent e) {
         if (tableEvents.getSelectedRowCount() > 0) {
             EventLog event = eventsModel.getValueAt(tableEvents.getSelectedRow());
@@ -209,32 +177,5 @@ public final class LogView extends SwingDialogView implements ListSelectionListe
         if (e.getStateChange() == ItemEvent.SELECTED) {
             eventsModel.setLog((String) e.getItem());
         }
-    }
-
-    /**
-     * Set the action to launch to update the view. This is not for use, this is only for Spring injection.
-     *
-     * @param updateAction The action.
-     */
-    public void setUpdateAction(Action updateAction) {
-        this.updateAction = updateAction;
-    }
-
-    /**
-     * Set the default width. This is not for use, this is only for Spring injection.
-     *
-     * @param defaultWidth The default width.
-     */
-    public void setDefaultWidth(int defaultWidth) {
-        this.defaultWidth = defaultWidth;
-    }
-
-    /**
-     * Set the default height. This is not for use, this is only for Spring injection.
-     *
-     * @param defaultHeight The default height.
-     */
-    public void setDefaultHeight(int defaultHeight) {
-        this.defaultHeight = defaultHeight;
     }
 }

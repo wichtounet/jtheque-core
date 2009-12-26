@@ -31,26 +31,13 @@
 
     <bean id="_mainView" class="org.jtheque.core.managers.view.impl.frame.MainView" factory-method="get"/>
 
-    <bean id="_configView" class="org.jtheque.core.managers.view.impl.frame.ConfigView">
-        <constructor-arg ref="_mainView"/>
-        <constructor-arg ref="applyChangesAndCloseAction"/>
-        <constructor-arg ref="cancelChangesAction"/>
-        <constructor-arg ref="applyChangesAction"/>
-    </bean>
+    <bean id="_configView" class="org.jtheque.core.managers.view.impl.frame.ConfigView" />
 
-    <bean id="_licenceView" class="org.jtheque.core.managers.view.impl.frame.LicenceView">
-        <constructor-arg ref="_mainView"/>
-        <property name="closeAction" ref="closeLicenceViewAction"/>
-        <property name="printAction" ref="printLicenseAction"/>
-        <property name="defaultWidth" value="${licence.view.width}"/>
-        <property name="defaultHeight" value="${licence.view.height}"/>
-    </bean>
+    <bean id="_licenceView" class="org.jtheque.core.managers.view.impl.frame.LicenceView" />
 
     <bean id="_logView" class="org.jtheque.core.managers.view.impl.frame.LogView">
-        <constructor-arg ref="_mainView"/>
-        <property name="updateAction" ref="updateLogViewAction"/>
-        <property name="defaultWidth" value="${log.view.width}"/>
-        <property name="defaultHeight" value="${log.view.height}"/>
+        <constructor-arg ref="dateFormat" />
+        <constructor-arg ref="timeFormat" />
     </bean>
 
     <bean id="_messageView" class="org.jtheque.core.managers.view.impl.frame.MessageView">

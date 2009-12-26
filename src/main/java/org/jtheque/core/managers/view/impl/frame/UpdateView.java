@@ -16,76 +16,45 @@ package org.jtheque.core.managers.view.impl.frame;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import org.jtheque.core.managers.error.JThequeError;
 import org.jtheque.core.managers.module.beans.ModuleContainer;
 import org.jtheque.core.managers.update.Updatable;
+import org.jtheque.core.managers.view.able.components.IModel;
 import org.jtheque.core.managers.view.able.update.IUpdateView;
+import org.jtheque.core.managers.view.impl.actions.module.update.AcValidateUpdateView;
 import org.jtheque.core.managers.view.impl.components.model.VersionsComboBoxModel;
-import org.jtheque.core.managers.view.impl.frame.abstraction.SwingDialogView;
+import org.jtheque.core.managers.view.impl.frame.abstraction.SwingBuildedDialogView;
 import org.jtheque.core.utils.ui.PanelBuilder;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.ui.GridBagUtils;
-
-import javax.annotation.PostConstruct;
-import javax.swing.Action;
-import java.awt.Container;
-import java.awt.Frame;
-import java.util.Collection;
 
 /**
  * An update view.
  *
  * @author Baptiste Wicht
  */
-public final class UpdateView extends SwingDialogView implements IUpdateView {
+public final class UpdateView extends SwingBuildedDialogView<IModel> implements IUpdateView {
     private VersionsComboBoxModel model;
 
     private Mode mode = Mode.KERNEL;
     private ModuleContainer module;
     private Updatable updatable;
 
-    private Action validateAction;
-    private Action closeAction;
-
-    /**
-     * Construct a new UpdateView.
-     *
-     * @param frame The parent frame.
-     */
-    public UpdateView(Frame frame) {
-        super(frame);
-    }
-
-    /**
-     * Build the view.
-     */
-    @PostConstruct
-    public void build() {
-        setContentPane(buildContentPane());
-        setResizable(false);
+    @Override
+    protected void initView(){
         setTitleKey("update.view.title");
-        pack();
-
-        setLocationRelativeTo(getOwner());
+        setResizable(false);
     }
 
-    /**
-     * Build the content pane.
-     *
-     * @return The content pane.
-     */
-    private Container buildContentPane() {
-        PanelBuilder builder = new PanelBuilder();
-
+    @Override
+    protected void buildView(PanelBuilder builder){
         builder.addI18nLabel("update.view.versions", builder.gbcSet(0, 0, GridBagUtils.HORIZONTAL));
 
         model = new VersionsComboBoxModel();
 
         builder.addComboBox(model, builder.gbcSet(0, 1, GridBagUtils.HORIZONTAL));
 
-        builder.addButtonBar(builder.gbcSet(0, 2, GridBagUtils.HORIZONTAL), validateAction, closeAction);
-
-        return builder.getPanel();
+        builder.addButtonBar(builder.gbcSet(0, 2, GridBagUtils.HORIZONTAL),
+                new AcValidateUpdateView(), getCloseAction("update.actions.cancel"));
     }
 
     @Override
@@ -125,28 +94,5 @@ public final class UpdateView extends SwingDialogView implements IUpdateView {
     @Override
     public Updatable getUpdatable() {
         return updatable;
-    }
-
-    @Override
-    protected void validate(Collection<JThequeError> errors) {
-        //Nothing to validate
-    }
-
-    /**
-     * Set the action to validate the update view. This is not for use, this is only for Spring injection.
-     *
-     * @param validateAction The action.
-     */
-    public void setValidateAction(Action validateAction) {
-        this.validateAction = validateAction;
-    }
-
-    /**
-     * Set the action to close the update view. This is not for use, this is only for Spring injection.
-     *
-     * @param closeAction The action.
-     */
-    public void setCloseAction(Action closeAction) {
-        this.closeAction = closeAction;
     }
 }

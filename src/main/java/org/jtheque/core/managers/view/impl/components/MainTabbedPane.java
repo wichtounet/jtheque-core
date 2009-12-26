@@ -1,4 +1,4 @@
-package org.jtheque.core.managers.view.impl.frame;
+package org.jtheque.core.managers.view.impl.components;
 
 import org.jtheque.core.managers.Managers;
 import org.jtheque.core.managers.language.ILanguageManager;

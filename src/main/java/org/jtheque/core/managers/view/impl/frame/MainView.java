@@ -27,6 +27,7 @@ import org.jtheque.core.managers.view.able.IViewManager;
 import org.jtheque.core.managers.view.impl.components.InfiniteWaitUI;
 import org.jtheque.core.managers.view.impl.components.JThequeStateBar;
 import org.jtheque.core.managers.view.impl.components.LayerTabbedPane;
+import org.jtheque.core.managers.view.impl.components.MainTabbedPane;
 import org.jtheque.core.managers.view.impl.components.ViewContainer;
 import org.jtheque.core.managers.view.impl.components.menu.JMenuBarJTheque;
 import org.jtheque.core.managers.view.impl.frame.abstraction.SwingFrameView;

@@ -22,6 +22,7 @@ import javax.swing.JTextArea;
 import javax.swing.ListCellRenderer;
 import javax.swing.ListModel;
 import javax.swing.ListSelectionModel;
+import javax.swing.border.Border;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
@@ -179,6 +180,17 @@ public class PanelBuilder {
     /**
      * Add a label to the panel.
      *
+     * @param constraints The constraints to use to add to the panel.
+     * 
+     * @return The added label.
+     */
+    public JLabel addLabel(Object constraints) {
+        return add(new JLabel(), constraints);
+    }
+
+    /**
+     * Add a label to the panel.
+     *
      * @param text        The text of the label.
      * @param constraints The constraints to use to add to the panel.
      * @return The added label.
@@ -311,6 +323,10 @@ public class PanelBuilder {
      */
     public JComponent getPanel() {
         return panel;
+    }
+
+    public void setBorder(Border border){
+        panel.setBorder(border);
     }
 
     /* GridBagUtils delegate methods */

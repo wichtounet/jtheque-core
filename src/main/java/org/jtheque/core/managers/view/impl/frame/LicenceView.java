@@ -17,110 +17,36 @@ package org.jtheque.core.managers.view.impl.frame;
  */
 
 import org.jtheque.core.managers.Managers;
-import org.jtheque.core.managers.error.JThequeError;
 import org.jtheque.core.managers.view.able.ILicenceView;
-import org.jtheque.core.managers.view.able.IViewManager;
-import org.jtheque.core.managers.view.impl.frame.abstraction.SwingDialogView;
+import org.jtheque.core.managers.view.able.components.IModel;
+import org.jtheque.core.managers.view.impl.actions.about.PrintLicenseAction;
+import org.jtheque.core.managers.view.impl.frame.abstraction.SwingBuildedDialogView;
 import org.jtheque.core.utils.ui.PanelBuilder;
 import org.jtheque.utils.io.FileUtils;
 import org.jtheque.utils.ui.GridBagUtils;
-
-import javax.annotation.PostConstruct;
-import javax.swing.Action;
-import java.awt.Container;
-import java.awt.Frame;
-import java.util.Collection;
 
 /**
  * A view to display the licence.
  *
  * @author Baptiste Wicht
  */
-public final class LicenceView extends SwingDialogView implements ILicenceView {
-    private Action printAction;
-    private Action closeAction;
+public final class LicenceView extends SwingBuildedDialogView<IModel> implements ILicenceView {
+    private static final int DEFAULT_WIDTH = 800;
+    private static final int DEFAULT_HEIGHT = 600;
 
-    private int defaultWidth;
-    private int defaultHeight;
-
-    /**
-     * Construct a new Licence view.
-     *
-     * @param frame The parent frame.
-     */
-    public LicenceView(Frame frame) {
-        super(frame);
+    @Override
+    protected void initView(){
+        setTitleKey("licence.view.title", Managers.getCore().getApplication().getName());
     }
 
-    /**
-     * Build the view.
-     */
-    @PostConstruct
-    public void build() {
-        setTitle(getMessage("licence.view.title", Managers.getCore().getApplication().getName()));
-        setContentPane(buildContentPane());
-
-        Managers.getManager(IViewManager.class).configureView(this, "licence", defaultWidth, defaultHeight);
-    }
-
-    /**
-     * Build the content pane.
-     *
-     * @return The content pane.
-     */
-    private Container buildContentPane() {
-        PanelBuilder builder = new PanelBuilder();
-
+    @Override
+    protected void buildView(PanelBuilder builder){
         builder.addScrolledTextArea(FileUtils.getTextOf(Managers.getCore().getApplication().getLicenceFilePath()),
                 builder.gbcSet(0, 0, GridBagUtils.BOTH, GridBagUtils.BELOW_BASELINE_LEADING, 1.0, 1.0));
-        builder.addButtonBar(builder.gbcSet(0, 1, GridBagUtils.HORIZONTAL), printAction, closeAction);
 
-        return builder.getPanel();
-    }
+        builder.addButtonBar(builder.gbcSet(0, 1, GridBagUtils.HORIZONTAL),
+                new PrintLicenseAction(), getCloseAction("licence.actions.close"));
 
-    @Override
-    protected void validate(Collection<JThequeError> errors) {
-        //Nothing to validate
-    }
-
-    @Override
-    public void refreshText() {
-        setTitle(getMessage("licence.view.title", Managers.getCore().getApplication().getName()));
-    }
-
-    /**
-     * Set the action to launch to print the licence. This is not for use, this is only for Spring injection.
-     *
-     * @param printAction The action.
-     */
-    public void setPrintAction(Action printAction) {
-        this.printAction = printAction;
-    }
-
-    /**
-     * Set the action to launch to close the view. This is not for use, this is only for Spring injection.
-     *
-     * @param closeAction The action.
-     */
-    public void setCloseAction(Action closeAction) {
-        this.closeAction = closeAction;
-    }
-
-    /**
-     * Set the default width. This is not for use, this is only for Spring injection.
-     *
-     * @param defaultWidth The default width.
-     */
-    public void setDefaultWidth(int defaultWidth) {
-        this.defaultWidth = defaultWidth;
-    }
-
-    /**
-     * Set the default height. This is not for use, this is only for Spring injection.
-     *
-     * @param defaultHeight The default height.
-     */
-    public void setDefaultHeight(int defaultHeight) {
-        this.defaultHeight = defaultHeight;
+        getManager().configureView(this, "licence", DEFAULT_WIDTH, DEFAULT_HEIGHT);
     }
 }

@@ -16,71 +16,40 @@ package org.jtheque.core.managers.view.impl.frame;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import org.jtheque.core.managers.error.JThequeError;
+import org.jtheque.core.managers.Managers;
 import org.jtheque.core.managers.module.IModuleManager;
 import org.jtheque.core.managers.update.repository.ModuleDescription;
 import org.jtheque.core.managers.view.able.update.IRepositoryView;
+import org.jtheque.core.managers.view.impl.actions.module.repository.ExpandRepositoryModuleAction;
+import org.jtheque.core.managers.view.impl.actions.module.repository.InstallRepositoryModuleAction;
 import org.jtheque.core.managers.view.impl.components.model.ModuleRepositoryListModel;
 import org.jtheque.core.managers.view.impl.components.panel.ModuleRepositoryListRenderer;
 import org.jtheque.core.managers.view.impl.components.panel.ModuleRepositoryListRenderer.ModulePanel;
-import org.jtheque.core.managers.view.impl.frame.abstraction.SwingDialogView;
+import org.jtheque.core.managers.view.impl.frame.abstraction.SwingBuildedDialogView;
 import org.jtheque.core.utils.ui.PanelBuilder;
 import org.jtheque.utils.ui.GridBagUtils;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
-import javax.swing.Action;
 import javax.swing.JList;
 import javax.swing.ListSelectionModel;
-import java.awt.Container;
-import java.awt.Frame;
-import java.util.Collection;
 
 /**
  * The view to display the repository of the application.
  *
  * @author Baptiste Wicht
  */
-public final class RepositoryView extends SwingDialogView implements IRepositoryView {
+public final class RepositoryView extends SwingBuildedDialogView implements IRepositoryView {
     private JList list;
 
-    private Action expandAction;
-    private Action installAction;
-
-    @Resource
-    private IModuleManager moduleManager;
-
-    /**
-     * Construct a new <code>ModuleView</code>.
-     *
-     * @param frame The parent frame.
-     */
-    public RepositoryView(Frame frame) {
-        super(frame);
-    }
-
-    /**
-     * Build the view.
-     */
-    @PostConstruct
-    public void build() {
-        setTitle(getMessage("repository.view.title", moduleManager.getRepository().getApplication()));
-        setContentPane(buildContentPane());
+    @Override
+    protected void initView(){
+        setTitleKey("repository.view.title", Managers.getManager(IModuleManager.class).getRepository().getApplication());
         setResizable(false);
-        pack();
-
-        setLocationRelativeTo(getOwner());
     }
 
-    /**
-     * Build the content pane.
-     *
-     * @return The content pane.
-     */
-    private Container buildContentPane() {
-        PanelBuilder builder = new PanelBuilder();
-
-        builder.addLabel(moduleManager.getRepository().getTitle().toString(), builder.gbcSet(0, 0, GridBagUtils.HORIZONTAL));
+    @Override
+    protected void buildView(PanelBuilder builder){
+        builder.addLabel(Managers.getManager(IModuleManager.class).getRepository().getTitle().toString(),
+                builder.gbcSet(0, 0, GridBagUtils.HORIZONTAL));
 
         list = new JList();
         list.setModel(new ModuleRepositoryListModel());
@@ -90,9 +59,8 @@ public final class RepositoryView extends SwingDialogView implements IRepository
 
         builder.addScrolled(list, builder.gbcSet(0, 1, GridBagUtils.BOTH));
 
-        builder.addButtonBar(builder.gbcSet(0, 2, GridBagUtils.HORIZONTAL), expandAction, installAction);
-
-        return builder.getPanel();
+        builder.addButtonBar(builder.gbcSet(0, 2, GridBagUtils.HORIZONTAL),
+                new ExpandRepositoryModuleAction(), new InstallRepositoryModuleAction());
     }
 
     @Override
@@ -108,28 +76,5 @@ public final class RepositoryView extends SwingDialogView implements IRepository
                         list.getSelectedIndex(), true, true);
 
         renderer.expand();
-    }
-
-    @Override
-    protected void validate(Collection<JThequeError> errors) {
-        //Nothing to validate
-    }
-
-    /**
-     * Set the action to expand a module information. This is not for use, only for Spring Injection.
-     *
-     * @param expandAction The action.
-     */
-    public void setExpandAction(Action expandAction) {
-        this.expandAction = expandAction;
-    }
-
-    /**
-     * Set the action to install a module. This is not for use, only for Spring Injection.
-     *
-     * @param installAction The action.
-     */
-    public void setInstallAction(Action installAction) {
-        this.installAction = installAction;
     }
 }

@@ -16,75 +16,43 @@ package org.jtheque.core.managers.view.impl.frame;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import org.jtheque.core.managers.error.JThequeError;
 import org.jtheque.core.managers.message.Message;
 import org.jtheque.core.managers.view.able.IMessageView;
 import org.jtheque.core.managers.view.able.components.IModel;
-import org.jtheque.core.managers.view.impl.frame.abstraction.SwingDialogView;
+import org.jtheque.core.managers.view.impl.actions.messages.DisplayNextMessageAction;
+import org.jtheque.core.managers.view.impl.actions.messages.DisplayPreviousMessageAction;
+import org.jtheque.core.managers.view.impl.frame.abstraction.SwingBuildedDialogView;
 import org.jtheque.core.managers.view.impl.models.IMessageModel;
+import org.jtheque.core.managers.view.impl.models.MessageModel;
 import org.jtheque.core.utils.ui.PanelBuilder;
 import org.jtheque.utils.ui.GridBagUtils;
 
-import javax.annotation.PostConstruct;
-import javax.swing.Action;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
-import java.awt.Container;
-import java.awt.Frame;
-import java.util.Collection;
 
 /**
  * @author Baptiste Wicht
  */
-public final class MessageView extends SwingDialogView implements IMessageView {
+public final class MessageView extends SwingBuildedDialogView<IModel> implements IMessageView {
     private JLabel dateLabel;
     private JLabel sourceLabel;
     private JLabel titleLabel;
     private JTextArea messageArea;
 
-    private Action closeAction;
-    private Action displayNextAction;
-    private Action displayPreviousAction;
-
-    /**
-     * Construct a new <code>MessageView</code>.
-     *
-     * @param view  The parent frame.
-     * @param model The model to use.
-     */
-    public MessageView(Frame view, IModel model) {
-        super(view);
-
-        setModel(model);
-    }
-
-    /**
-     * Build the view.
-     */
-    @PostConstruct
-    public void build() {
+    @Override
+    protected void initView(){
+        setModel(new MessageModel());
         setTitleKey("messages.view.title");
-        setContentPane(buildContentPane());
         setResizable(false);
-        pack();
-
-        setLocationRelativeTo(getOwner());
     }
 
-    /**
-     * Init the content pane and return it.
-     *
-     * @return The content pane.
-     */
-    private Container buildContentPane() {
-        PanelBuilder builder = new PanelBuilder();
-
+    @Override
+    protected void buildView(PanelBuilder builder){
         addLabels(builder);
         addFields(builder);
 
-        builder.addButtonBar(builder.gbcSet(0, 4, GridBagUtils.HORIZONTAL, GridBagUtils.LINE_END, 2, 1), closeAction, displayNextAction, displayPreviousAction);
-
-        return builder.getPanel();
+        builder.addButtonBar(builder.gbcSet(0, 4, GridBagUtils.HORIZONTAL, GridBagUtils.LINE_END, 2, 1),
+                getCloseAction("messages.actions.close"), new DisplayNextMessageAction(), new DisplayPreviousMessageAction());
     }
 
     /**
@@ -147,37 +115,5 @@ public final class MessageView extends SwingDialogView implements IMessageView {
     @Override
     public IMessageModel getModel() {
         return (IMessageModel) super.getModel();
-    }
-
-    @Override
-    protected void validate(Collection<JThequeError> errors) {
-        //Nothing to validate
-    }
-
-    /**
-     * Set the action to close the view. This is not for use, this is only for Spring Injection.
-     *
-     * @param closeAction The action.
-     */
-    public void setCloseAction(Action closeAction) {
-        this.closeAction = closeAction;
-    }
-
-    /**
-     * Set the action to display the next message. This is not for use, this is only for Spring Injection.
-     *
-     * @param displayNextAction The action.
-     */
-    public void setDisplayNextAction(Action displayNextAction) {
-        this.displayNextAction = displayNextAction;
-    }
-
-    /**
-     * Set the action to display the previous message. This is not for use, this is only for Spring Injection.
-     *
-     * @param displayPreviousAction The action.
-     */
-    public void setDisplayPreviousAction(Action displayPreviousAction) {
-        this.displayPreviousAction = displayPreviousAction;
     }
 }
