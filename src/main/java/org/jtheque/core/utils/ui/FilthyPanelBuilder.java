@@ -133,11 +133,6 @@ public final class FilthyPanelBuilder extends PanelBuilder {
         return combo;
     }
 
-    /*@Override
-    public FilthyButton addButton(Action action, Object constraints) {
-        return add(new FilthyButton(action), constraints);
-    }*/
-
     @Override
     public PanelBuilder addPanel(Object constraints) {
         PanelBuilder builder = new FilthyPanelBuilder();

@@ -21,7 +21,6 @@ import org.jtheque.core.managers.Managers;
 import org.jtheque.core.managers.view.able.ICollectionView;
 import org.jtheque.core.managers.view.able.IViewManager;
 import org.jtheque.core.managers.view.impl.components.JThequeI18nLabel;
-import org.jtheque.core.managers.view.impl.components.filthy.FilthyButton;
 import org.jtheque.core.managers.view.impl.components.filthy.FilthyPasswordField;
 import org.jtheque.core.managers.view.impl.components.filthy.FilthyTextField;
 import org.jtheque.core.utils.ui.AnimationUtils;
@@ -30,6 +29,7 @@ import org.jtheque.utils.ui.GridBagUtils;
 import javax.annotation.PostConstruct;
 import javax.swing.Action;
 import javax.swing.Box;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import java.awt.Color;
@@ -112,9 +112,9 @@ public final class CollectionPane extends JXPanel implements ICollectionView {
     private void addButtonBar(GridBagUtils gbc) {
         Container buttonsPanel = new JPanel();
 
-        buttonsPanel.add(new FilthyButton(createAction));
-        buttonsPanel.add(new FilthyButton(chooseAction));
-        buttonsPanel.add(new FilthyButton(cancelAction));
+        buttonsPanel.add(new JButton(createAction));
+        buttonsPanel.add(new JButton(chooseAction));
+        buttonsPanel.add(new JButton(cancelAction));
 
         buttonsPanel.setBackground(backgroundColor);
 
