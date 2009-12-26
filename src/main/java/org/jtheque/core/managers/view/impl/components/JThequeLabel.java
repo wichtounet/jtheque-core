@@ -16,6 +16,8 @@ package org.jtheque.core.managers.view.impl.components;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import org.jtheque.core.managers.view.ViewComponent;
+
 import javax.swing.JLabel;
 import java.awt.Color;
 import java.awt.Font;
@@ -28,7 +30,7 @@ import java.awt.RenderingHints;
  *
  * @author Baptiste Wicht
  */
-public final class JThequeLabel extends JLabel {
+public final class JThequeLabel extends JLabel implements ViewComponent {
     /**
      * Construct a new <code>JThequeLabel</code>.
      *
@@ -69,5 +71,10 @@ public final class JThequeLabel extends JLabel {
         ((Graphics2D) g).setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 
         super.paint(g);
+    }
+
+    @Override
+    public Object getImpl(){
+        return this;
     }
 }

@@ -19,6 +19,7 @@ package org.jtheque.core.managers.view.impl.components;
 import org.jtheque.core.managers.Managers;
 import org.jtheque.core.managers.language.ILanguageManager;
 import org.jtheque.core.managers.language.Internationalizable;
+import org.jtheque.core.managers.view.ViewComponent;
 import org.jtheque.utils.collections.ArrayUtils;
 
 import javax.swing.JLabel;
@@ -33,7 +34,7 @@ import java.awt.RenderingHints;
  *
  * @author Baptiste Wicht
  */
-public final class JThequeI18nLabel extends JLabel implements Internationalizable {
+public final class JThequeI18nLabel extends JLabel implements Internationalizable, ViewComponent {
     private String textKey;
     private Object[] replaces;
 
@@ -104,5 +105,10 @@ public final class JThequeI18nLabel extends JLabel implements Internationalizabl
         ((Graphics2D) g).setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 
         super.paint(g);
+    }
+
+    @Override
+    public Object getImpl(){
+        return this;
     }
 }
