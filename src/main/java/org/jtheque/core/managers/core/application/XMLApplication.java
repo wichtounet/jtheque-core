@@ -280,9 +280,11 @@ public final class XMLApplication implements Application {
      */
     private void readOptions() throws XMLException{
         Object optionsElement = reader.getNode("options", reader.getRootElement());
-
-        displayLicence = reader.readBoolean("displayLicence", optionsElement);
-        licenceFilePath = SystemProperty.USER_DIR.get() + reader.readString("licence", optionsElement);
+        
+        if(reader.existsValue("licence", optionsElement) && StringUtils.isNotEmpty(reader.readString("licence", optionsElement))){
+            displayLicence = true;
+            licenceFilePath = SystemProperty.USER_DIR.get() + reader.readString("licence", optionsElement);
+        }
     }
 
     /**
