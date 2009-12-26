@@ -28,6 +28,7 @@ import org.jtheque.core.managers.view.able.components.IModel;
 import org.jtheque.core.managers.view.impl.components.ExtendedGlassPane;
 import org.jtheque.core.managers.view.impl.components.InfiniteWaitFigure;
 import org.jtheque.core.managers.view.impl.components.WaitFigure;
+import org.jtheque.utils.collections.ArrayUtils;
 
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -44,6 +45,8 @@ import java.util.Collection;
  */
 public abstract class SwingDialogView extends JDialog implements IWindowView, Internationalizable {
     private String titleKey;
+    private Object[] titleReplaces;
+
     private IModel model;
 
     private boolean glassPaneInstalled;
@@ -174,25 +177,22 @@ public abstract class SwingDialogView extends JDialog implements IWindowView, In
      * Set the title key.
      *
      * @param key The internationalization key.
+     * @param replaces The replacements objects for the i18n methods. 
      */
-    protected final void setTitleKey(String key) {
+    protected final void setTitleKey(String key, Object... replaces) {
         titleKey = key;
-        setTitle(getMessage(key));
-    }
 
-    /**
-     * Return the title key.
-     *
-     * @return The internationalization key.
-     */
-    public final String getTitleKey() {
-        return titleKey;
+        if(!ArrayUtils.isEmpty(replaces)){
+            titleReplaces = ArrayUtils.copyOf(replaces);
+        }
+
+        setTitle(getMessage(key, replaces));
     }
 
     @Override
     public void refreshText() {
         if (titleKey != null) {
-            setTitleKey(titleKey);
+            setTitleKey(titleKey, titleReplaces);
         }
     }
 
@@ -201,7 +201,7 @@ public abstract class SwingDialogView extends JDialog implements IWindowView, In
      *
      * @param model The model of the view.
      */
-    public final void setModel(IModel model) {
+    public void setModel(IModel model) {
         this.model = model;
     }
 
