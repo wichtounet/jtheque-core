@@ -1,11 +1,18 @@
 package org.jtheque.core.managers.view.impl.actions.utils;
 
+import org.jtheque.core.managers.Managers;
+import org.jtheque.core.managers.beans.IBeansManager;
+import org.jtheque.core.managers.view.able.IView;
+import org.jtheque.core.managers.view.impl.actions.JThequeAction;
+
+import java.awt.event.ActionEvent;
+
 /*
  * This file is part of JTheque.
- *
+ * 	   
  * JTheque is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License.
+ * the Free Software Foundation, either version 3 of the License. 
  *
  * JTheque is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -16,35 +23,16 @@ package org.jtheque.core.managers.view.impl.actions.utils;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import org.jtheque.core.managers.view.able.IView;
-import org.jtheque.core.managers.view.impl.actions.JThequeAction;
-
-import java.awt.event.ActionEvent;
-
-/**
- * A generic close view action.
- *
- * @author Baptiste Wicht
- */
-public final class CloseViewAction extends JThequeAction {
-    private IView view;
+public class CloseBeanViewAction extends JThequeAction {
+    private final String view;
 
     /**
      * Construct a new CloseViewAction with a specific internationalization key.
      *
      * @param key The i18n key.
+     * @param view The view to close, it's the spring id.
      */
-    public CloseViewAction(String key) {
-        super(key);
-    }
-
-    /**
-     * Construct a new CloseViewAction with a specific internationalization key.
-     *
-     * @param key The i18n key.
-     * @param view The view to close.
-     */
-    public CloseViewAction(String key, IView view) {
+    public CloseBeanViewAction(String key, String view) {
         super(key);
 
         this.view = view;
@@ -52,15 +40,6 @@ public final class CloseViewAction extends JThequeAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        view.closeDown();
-    }
-
-    /**
-     * Set the view to close.
-     *
-     * @param view The view to close.
-     */
-    public void setView(IView view) {
-        this.view = view;
+        Managers.getManager(IBeansManager.class).<IView>getBean(view).closeDown();
     }
 }

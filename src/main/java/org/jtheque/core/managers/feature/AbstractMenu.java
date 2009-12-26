@@ -9,6 +9,8 @@ import org.jtheque.core.managers.Managers;
 import org.jtheque.core.managers.feature.IFeatureManager.CoreFeature;
 import org.jtheque.core.managers.resource.IResourceManager;
 import org.jtheque.core.managers.resource.ImageType;
+import org.jtheque.core.managers.view.able.IView;
+import org.jtheque.core.managers.view.impl.actions.ActionFactory;
 import org.jtheque.core.utils.CoreUtils;
 import org.jtheque.utils.collections.CollectionUtils;
 
@@ -216,6 +218,24 @@ public abstract class AbstractMenu implements Menu{
      * Create a separated (it seems with a line separator) feature.
      *
      * @param position The position of the feature.
+     * @param action The action.
+     * @param imagesBaseName The image's base name.
+     * @param image The image name.
+     *
+     * @return The created separated feature.
+     */
+    protected static Feature createSeparatedSubFeature(int position, Action action, String imagesBaseName, String image){
+        Feature f = createSeparatedSubFeature(position, action);
+
+        putIconOnAction(imagesBaseName, image, f);
+
+        return f;
+    }
+
+    /**
+     * Create a separated (it seems with a line separator) feature.
+     *
+     * @param position The position of the feature.
      * @param action The name of the action. This action will searched in Spring context.
      *
      * @return The created separated feature.
@@ -258,6 +278,24 @@ public abstract class AbstractMenu implements Menu{
      * Create a feature.
      *
      * @param position The position of the feature.
+     * @param action The action. 
+     * @param imagesBaseName The image's base name.
+     * @param image The image name.
+     *
+     * @return The created feature.
+     */
+    protected static Feature createSubFeature(int position, Action action, String imagesBaseName, String image){
+        Feature f = createSubFeature(position, action);
+
+        putIconOnAction(imagesBaseName, image, f);
+
+        return f;
+    }
+
+    /**
+     * Create a feature.
+     *
+     * @param position The position of the feature.
      * @param action The name of the action. This action will searched in Spring context.
      *
      * @return The created feature.
@@ -287,6 +325,24 @@ public abstract class AbstractMenu implements Menu{
      */
     protected static List<Feature> features(Feature... features){
         return Arrays.asList(features);
+    }
+
+    //Utility action methods
+
+    public static Action createCloseViewAction(String key, IView view){
+        return ActionFactory.createCloseViewAction(key, view);
+    }
+
+    public static Action createCloseViewAction(String key, String view){
+        return ActionFactory.createCloseViewAction(key, view);
+    }
+
+    public static Action createDisplayViewAction(String key, IView view){
+        return ActionFactory.createDisplayViewAction(key, view);
+    }
+
+    public static Action createDisplayViewAction(String key, String view){
+        return ActionFactory.createDisplayViewAction(key, view);
     }
 
     //Private methods

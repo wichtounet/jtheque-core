@@ -1,6 +1,8 @@
 package org.jtheque.core.managers.feature;
 
 import org.jtheque.core.managers.core.Core;
+import org.jtheque.core.managers.view.impl.actions.about.DisplayAboutViewAction;
+import org.jtheque.core.managers.view.impl.actions.core.ExitAction;
 
 import java.util.List;
 
@@ -35,7 +37,7 @@ public class CoreMenu extends AbstractMenu {
                 createSubFeature(201, "menu.restore",
                         createSubFeature(1, "restoreToJTDAction"),
                         createSubFeature(2, "restoreToXMLAction")),
-                createSeparatedSubFeature(1000, "exitAction")
+                createSeparatedSubFeature(1000, new ExitAction())
         );
     }
 
@@ -50,8 +52,8 @@ public class CoreMenu extends AbstractMenu {
     @Override
     protected List<Feature> getAdvancedMenuSubFeatures(){
         return features(
-                createSeparatedSubFeature(500, "displayConfigurationViewAction", Core.IMAGES_BASE_NAME, "options"),
-                createSeparatedSubFeature(750, "manageModuleAction", Core.IMAGES_BASE_NAME, "update")
+                createSeparatedSubFeature(500, createDisplayViewAction("config.actions.display", "configView"), Core.IMAGES_BASE_NAME, "options"),
+                createSeparatedSubFeature(750, createDisplayViewAction("modules.actions.manage", "moduleView"), Core.IMAGES_BASE_NAME, "update")
         );
     }
 
@@ -63,7 +65,7 @@ public class CoreMenu extends AbstractMenu {
                 createSeparatedSubFeature(4, "proposeImprovementAction", Core.IMAGES_BASE_NAME, "idea"),
                 createSeparatedSubFeature(6, "displayMessagesAction"),
                 createSeparatedSubFeature(25, "displayLogViewAction"),
-                createSeparatedSubFeature(150, "aboutAction", Core.IMAGES_BASE_NAME, "about")
+                createSeparatedSubFeature(150, new DisplayAboutViewAction(), Core.IMAGES_BASE_NAME, "about")
         );
     }
 }

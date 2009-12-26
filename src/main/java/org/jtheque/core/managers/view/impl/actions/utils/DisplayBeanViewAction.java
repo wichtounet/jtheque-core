@@ -1,5 +1,7 @@
 package org.jtheque.core.managers.view.impl.actions.utils;
 
+import org.jtheque.core.managers.Managers;
+import org.jtheque.core.managers.beans.IBeansManager;
 import org.jtheque.core.managers.view.able.IView;
 import org.jtheque.core.managers.view.impl.actions.JThequeAction;
 
@@ -7,10 +9,10 @@ import java.awt.event.ActionEvent;
 
 /*
  * This file is part of JTheque.
- *
+ * 	   
  * JTheque is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License.
+ * the Free Software Foundation, either version 3 of the License. 
  *
  * JTheque is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -21,30 +23,16 @@ import java.awt.event.ActionEvent;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/**
- * A generic display view action.
- *
- * @author Baptiste Wicht
- */
-public final class DisplayViewAction extends JThequeAction {
-    private IView view;
+public class DisplayBeanViewAction extends JThequeAction {
+    private final String view;
 
     /**
      * Construct a new DisplayViewAction with a specific internationalization key.
      *
      * @param key The i18n key.
+     * @param view
      */
-    public DisplayViewAction(String key) {
-        super(key);
-    }
-
-    /**
-     * Construct a new CloseViewAction with a specific internationalization key.
-     *
-     * @param key The i18n key.
-     * @param view The view to display.
-     */
-    public DisplayViewAction(String key, IView view) {
+    public DisplayBeanViewAction(String key, String view) {
         super(key);
 
         this.view = view;
@@ -52,15 +40,6 @@ public final class DisplayViewAction extends JThequeAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        view.display();
-    }
-
-    /**
-     * Set the view to display.
-     *
-     * @param view The view to display.
-     */
-    public void setView(IView view) {
-        this.view = view;
+        Managers.getManager(IBeansManager.class).<IView>getBean(view).display();
     }
 }
