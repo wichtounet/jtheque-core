@@ -39,6 +39,9 @@ public final class UpdateView extends SwingBuildedDialogView<IModel> implements 
     private ModuleContainer module;
     private Updatable updatable;
 
+    /**
+     * Construct a new UpdateView. 
+     */
     public UpdateView(){
         super();
 

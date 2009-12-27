@@ -63,6 +63,12 @@ public final class LogView extends SwingBuildedDialogView<IModel> implements Lis
     private static final int DEFAULT_WIDTH = 600;
     private static final int DEFAULT_HEIGHT = 450;
 
+    /**
+     * Construct a new LogView.
+     *
+     * @param dateFormat The dateformat to use.
+     * @param timeFormat The image format to use. 
+     */
     public LogView(DateFormat dateFormat, DateFormat timeFormat){
         super();
 

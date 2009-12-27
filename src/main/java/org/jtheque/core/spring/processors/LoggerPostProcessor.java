@@ -59,9 +59,19 @@ public final class LoggerPostProcessor implements BeanPostProcessor {
         return bean;
     }
 
+    /**
+     * A privileged action to make a field accessible.
+     *
+     * @author Baptiste Wicht
+     */
     private static final class MakeFieldAccessible implements PrivilegedAction<Object> {
         private final Field field;
 
+        /**
+         * Construct a new MakeFieldAccessible.
+         *
+         * @param field The field to make accessible. 
+         */
         private MakeFieldAccessible(Field field) {
             super();
             

@@ -60,6 +60,11 @@ public final class FilthyPanelBuilder extends PanelBuilder {
         super(panel);
     }
 
+    /**
+     * Construct a new FilthyPanelBuilder with a specific layout.
+     *
+     * @param layout The layout to set to the builded panel.
+     */
     public FilthyPanelBuilder(LayoutManager layout){
         super(layout);
     }

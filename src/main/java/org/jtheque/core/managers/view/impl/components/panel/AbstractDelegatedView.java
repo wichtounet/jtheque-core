@@ -38,6 +38,11 @@ public abstract class AbstractDelegatedView<T extends IView> implements IView {
         return delegate;
     }
 
+    /**
+     * Set the delegate view.
+     *
+     * @param view The delegate view. 
+     */
     public final void setDelegate(T view){
         delegate = view;
     }

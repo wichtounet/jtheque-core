@@ -32,6 +32,11 @@ import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 public abstract class AbstractSchema implements Schema {
     private SimpleJdbcTemplate jdbcTemplate;
 
+    /**
+     * Return the jdbc template to execute JDBC request.
+     *
+     * @return The jdbc template.
+     */
     public SimpleJdbcTemplate getJdbcTemplate(){
         if(jdbcTemplate == null){
             jdbcTemplate = CoreUtils.getBean("jdbcTemplate");
@@ -40,6 +45,12 @@ public abstract class AbstractSchema implements Schema {
         return jdbcTemplate;
     }
 
+    /**
+     * Update the the database executing the specified request.
+     *
+     * @param request The request to execute.
+     * @param args The args to give to the request. 
+     */
     public void update(String request, Object... args){
         getJdbcTemplate().update(request, args);
     }

@@ -16,10 +16,21 @@ package org.jtheque.core.managers.resource;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/**
+ * An image descriptor.
+ *
+ * @author Baptiste Wicht
+ */
 public class ImageDescriptor {
     private final String image;
     private final ImageType type;
 
+    /**
+     * Construct a new ImageDescriptor.
+     *
+     * @param image The image path.
+     * @param type The type of the image. 
+     */
     public ImageDescriptor(String image, ImageType type){
         super();
 
@@ -27,10 +38,20 @@ public class ImageDescriptor {
         this.type = type;
     }
 
+    /**
+     * Return the path to the image.
+     *
+     * @return The path to the image.
+     */
     public String getImage(){
         return image;
     }
 
+    /**
+     * Return the type of the image.
+     *
+     * @return The type of the image.
+     */
     public ImageType getType(){
         return type;
     }

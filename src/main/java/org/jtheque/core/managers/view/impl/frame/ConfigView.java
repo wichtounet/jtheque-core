@@ -40,6 +40,9 @@ import java.util.Collection;
 public final class ConfigView extends SwingBuildedDialogView<IModel> implements ConfigTabListener, IConfigView {
     private LayerTabbedPane tab;
 
+    /**
+     * Construct the ConfigView. 
+     */
     public ConfigView(){
         super();
 

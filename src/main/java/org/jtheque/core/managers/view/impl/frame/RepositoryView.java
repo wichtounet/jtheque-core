@@ -41,6 +41,9 @@ import javax.swing.ListSelectionModel;
 public final class RepositoryView extends SwingBuildedDialogView<IModel> implements IRepositoryView {
     private JList list;
 
+    /**
+     * Construct a new RepositoryView. 
+     */
     public RepositoryView(){
         super();
 

@@ -35,6 +35,9 @@ import javax.swing.JPanel;
 public final class UpdatablesPanel extends JPanel implements IUpdatablesPanelView {
     private final JList updatablesList;
 
+    /**
+     * Construct a new UpdatablesPanel. 
+     */
     public UpdatablesPanel(){
         super();
 

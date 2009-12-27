@@ -23,6 +23,11 @@ import java.awt.event.ActionEvent;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/**
+ * An action to close the view.
+ *
+ * @author Baptiste Wicht
+ */
 public final class CloseBeanViewAction extends JThequeAction {
     private final String view;
 

@@ -24,23 +24,63 @@ import javax.swing.Action;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/**
+ * A factory to create generic actions.
+ *
+ * @author Baptiste Wicht
+ */
 public final class ActionFactory {
+    /**
+     * Construct a new ActionFactory.
+     */
     private ActionFactory(){
         super();
     }
 
+    /**
+     * Create an action to close the view.
+     *
+      *@param key The i18n key.
+     * @param view The view to close.
+     *
+     * @return An action to close the view.
+     */
     public static Action createCloseViewAction(String key, IView view){
         return new CloseViewAction(key, view);
     }
 
+    /**
+     * Create an action to close the view.
+     *
+      *@param key The i18n key.
+     * @param view The name of the view to close. The action will be searched in Spring context.
+     *
+     * @return An action to close the view.
+     */
     public static Action createCloseViewAction(String key, String view){
         return new CloseBeanViewAction(key, view);
     }
 
+    /**
+     * Create an action to display the view.
+     *
+      *@param key The i18n key.
+     * @param view The view to close.
+     *
+     * @return An action to close the view.
+     */
     public static Action createDisplayViewAction(String key, IView view){
         return new DisplayViewAction(key, view);
     }
 
+    /**
+     * Create an action to display the view.
+     *
+      *@param key The i18n key. 
+     * @param view The name of the view to close. The action will be searched in Spring context.
+     *
+     * @return An action to close the view.
+     */
     public static Action createDisplayViewAction(String key, String view){
         return new DisplayBeanViewAction(key, view);
     }

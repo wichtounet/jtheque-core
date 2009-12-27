@@ -31,9 +31,21 @@ import java.util.Collection;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/**
+ * An XML application reader.
+ *
+ * @author Baptiste Wicht
+ */
 public final class XMLApplicationReader {
     private XMLReader reader;
 
+    /**
+     * Read the application file.
+     *
+     * @param filePath The path to the application file.
+     *
+     * @return The builded Application.
+     */
     public Application readApplication(String filePath){
         XMLApplication application = new XMLApplication();
 

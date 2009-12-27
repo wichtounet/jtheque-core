@@ -23,6 +23,11 @@ import java.awt.event.ActionEvent;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/**
+ * An action to display a view.
+ *
+ * @author Baptiste Wicht
+ */
 public class DisplayBeanViewAction extends JThequeAction {
     private final String view;
 

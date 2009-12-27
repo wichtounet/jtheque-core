@@ -256,6 +256,9 @@ public abstract class SwingDialogView extends JDialog implements IWindowView, In
      */
     protected abstract void validate(Collection<JThequeError> errors);
 
+    /**
+     * Install the glass pane of the view if necessary.
+     */
     private void installGlassPaneIfNecessary() {
         if (!glassPaneInstalled) {
             installGlassPane();
@@ -263,6 +266,9 @@ public abstract class SwingDialogView extends JDialog implements IWindowView, In
         }
     }
 
+    /**
+     * Install the wait figure if necessary. 
+     */
     private void installWaitFigureIfNecessary() {
         installGlassPaneIfNecessary();
 

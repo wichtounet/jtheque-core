@@ -35,7 +35,7 @@ import javax.swing.Action;
 /**
  * An abstract menu. This class provide several a method to specify features for each of the core features.
  * This methods are only called once and the result are kept in cache for the next call of the Menu methods.
- * On the same way, this class provide a method to specifiy the main features. This method are also cached.
+ * On the same way, this class provide a method to specify the main features. This method are also cached.
  *
  * @author Baptiste Wicht
  */
@@ -328,19 +328,51 @@ public abstract class AbstractMenu implements Menu{
     }
 
     //Utility action methods
-
+    
+    /**
+     * Create an action to close the view.
+     *
+      *@param key The i18n key.
+     * @param view The view to close.
+     *
+     * @return An action to close the view.
+     */
     public static Action createCloseViewAction(String key, IView view){
         return ActionFactory.createCloseViewAction(key, view);
     }
 
+    /**
+     * Create an action to close the view.
+     *
+      *@param key The i18n key.
+     * @param view The name of the view to close. The action will be searched in Spring context.
+     *
+     * @return An action to close the view.
+     */
     public static Action createCloseViewAction(String key, String view){
         return ActionFactory.createCloseViewAction(key, view);
     }
 
+    /**
+     * Create an action to display the view.
+     *
+      *@param key The i18n key.
+     * @param view The view to close.
+     *
+     * @return An action to close the view.
+     */
     public static Action createDisplayViewAction(String key, IView view){
         return ActionFactory.createDisplayViewAction(key, view);
     }
 
+    /**
+     * Create an action to display the view.
+     *
+      *@param key The i18n key.
+     * @param view The name of the view to close. The action will be searched in Spring context.
+     *
+     * @return An action to close the view.
+     */
     public static Action createDisplayViewAction(String key, String view){
         return ActionFactory.createDisplayViewAction(key, view);
     }

@@ -35,10 +35,20 @@ public class Feature {
 
     private final Collection<Feature> subFeatures = new ArrayList<Feature>(20);
 
+    /**
+     * Construct a new Feature.
+     */
     public Feature(){
         super();
     }
 
+    /**
+     * Construct a new Feature for an action.
+     *
+     * @param type The type of feature.
+     * @param position The position of the feature in the parent.
+     * @param action The action to execute when the feature is pressed.
+     */
     public Feature(FeatureType type, Integer position, Action action){
         super();
 
@@ -47,6 +57,13 @@ public class Feature {
         this.position = position;
     }
 
+    /**
+     * Construct a new Feature for a menu.
+     *
+     * @param type The type of feature.
+     * @param titleKey The i18n key of the title of the feature.
+     * @param position The position of the feature in the parent. 
+     */
     public Feature(FeatureType type, String titleKey, Integer position){
         super();
 

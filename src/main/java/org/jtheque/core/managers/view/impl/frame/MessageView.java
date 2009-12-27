@@ -31,6 +31,8 @@ import javax.swing.JLabel;
 import javax.swing.JTextArea;
 
 /**
+ * A view to display the messages of the module and the application. 
+ *
  * @author Baptiste Wicht
  */
 public final class MessageView extends SwingBuildedDialogView<IModel> implements IMessageView {
@@ -39,6 +41,9 @@ public final class MessageView extends SwingBuildedDialogView<IModel> implements
     private JLabel titleLabel;
     private JTextArea messageArea;
 
+    /**
+     * Construct a new MessageView.
+     */
     public MessageView(){
         super();
 

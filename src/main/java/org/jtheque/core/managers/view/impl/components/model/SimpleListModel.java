@@ -24,6 +24,13 @@ import java.util.List;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/**
+ * A simple list model to store dynamic objects.
+ *
+ * @param <T> The type of objects.
+ *
+ * @author Baptiste Wicht
+ */
 public class SimpleListModel<T> extends DefaultListModel {
     private final List<T> objects;
 

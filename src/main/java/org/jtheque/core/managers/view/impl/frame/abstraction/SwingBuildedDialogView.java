@@ -65,6 +65,12 @@ public abstract class SwingBuildedDialogView<T extends IModel> extends SwingDial
         this(frame, false);
     }
 
+    /**
+     * Construct a new SwingBuildedDialogView.
+     *
+     * @param frame The parent frame.
+     * @param filthy A boolean tag indicating if we must use a filthy panel builder or not.
+     */
     protected SwingBuildedDialogView(Frame frame, boolean filthy) {
         super(frame);
 
@@ -79,6 +85,9 @@ public abstract class SwingBuildedDialogView<T extends IModel> extends SwingDial
         this.filthy = filthy;
     }
 
+    /**
+     * Build the view.
+     */
     protected final void build(){
         initView();
 
@@ -89,6 +98,11 @@ public abstract class SwingBuildedDialogView<T extends IModel> extends SwingDial
         setLocationRelativeTo(getOwner());
     }
 
+    /**
+     * Build the content pane of the view.
+     *
+     * @return The builded content pane.
+     */
     private Container buildContentPane(){
         PanelBuilder builder = filthy ? new FilthyPanelBuilder() : new PanelBuilder();
 
@@ -97,6 +111,11 @@ public abstract class SwingBuildedDialogView<T extends IModel> extends SwingDial
         return builder.getPanel();
     }
 
+    /**
+     * Return the view manager.
+     *
+     * @return The view manager.
+     */
     public static IViewManager getManager(){
         return Managers.getManager(IViewManager.class);
     }
@@ -111,6 +130,13 @@ public abstract class SwingBuildedDialogView<T extends IModel> extends SwingDial
         return Managers.getManager(IBeansManager.class).<T>getBean(name);
     }
 
+    /**
+     * Return an action to close this view.
+     *
+     * @param key The i18n key.
+     *
+     * @return An action to close this view.
+     */
     public Action getCloseAction(String key){
         return ActionFactory.createCloseViewAction(key, this);
     }
@@ -125,7 +151,15 @@ public abstract class SwingBuildedDialogView<T extends IModel> extends SwingDial
         return (T) super.getModel();
     }
 
+    /**
+     * Init the view.
+     */
     protected abstract void initView();
 
+    /**
+     * Build the view.
+     *
+     * @param builder The builder to use to build the content pane.
+     */
     protected abstract void buildView(PanelBuilder builder);
 }

@@ -42,6 +42,9 @@ public final class JPanelConfigNetwork extends JPanel implements INetworkConfigV
     private JTextField fieldAddress;
     private JTextField fieldPort;
 
+    /**
+     * Construct a new JPanelConfigNetwork. 
+     */
     public JPanelConfigNetwork(){
         super();
 

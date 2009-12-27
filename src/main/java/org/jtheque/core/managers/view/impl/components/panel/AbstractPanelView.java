@@ -21,6 +21,13 @@ import javax.swing.JPanel;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/**
+ * An abstract view made of a panel.
+ *
+ * @param <T> The type of model.
+ *
+ * @author Baptiste Wicht
+ */
 public abstract class AbstractPanelView<T extends IModel> extends JPanel implements IView {
     private T model;
 
@@ -64,6 +71,11 @@ public abstract class AbstractPanelView<T extends IModel> extends JPanel impleme
         return true;
     }
 
+    /**
+     * Set the model.
+     *
+     * @param model The model of the view.
+     */
     protected void setModel(T model){
         this.model = model;
     }

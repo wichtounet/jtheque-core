@@ -55,6 +55,11 @@ public final class FirstPhase implements LifeCyclePhase {
         }
     }
 
+    /**
+     * A task to display the collection view in the EDT.
+     *
+     * @author Baptiste Wicht
+     */
     private static final class DisplayCollectionViewTask extends SimpleTask {
         @Override
         public void run() {

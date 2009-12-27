@@ -42,6 +42,9 @@ import javax.swing.JPanel;
 public final class ModulesPanel extends JPanel implements IModulesPanelView {
     private final JList modulesList;
 
+    /**
+     * Construct a new ModulesPanel. 
+     */
     public ModulesPanel(){
         super();
 

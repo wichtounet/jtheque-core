@@ -130,26 +130,56 @@ public final class XMLApplication implements Application {
 
     //Package protected methods to fill the application
 
+    /**
+     * Set the property value.
+     *
+     * @param name The name of the property.
+     * @param value The value of the property.
+     */
     void setProperty(String name, String value){
         properties.put(name, value);
     }
 
+    /**
+     * Set that the application must diplay licence.
+     */
     void displayLicence(){
         displayLicence = true;
     }
 
+    /**
+     * Set the version of the application.
+     *
+     * @param version The version of the application.
+     */
     void setVersion(Version version){
         this.version = version;
     }
 
+    /**
+     * Set the supported languages of the application.
+     *
+     * @param supportedLanguages The supported languages of the application.
+     */
     void setSupportedLanguages(String[] supportedLanguages){
         this.supportedLanguages = ArrayUtils.copyOf(supportedLanguages);
     }
 
+    /**
+     * Set the application internationalisation of the application.
+     *
+     * @param applicationProperties The application properties. 
+     */
     void setApplicationProperties(ApplicationProperties applicationProperties){
         this.applicationProperties = applicationProperties;
     }
 
+    /**
+     * Set the images of the application. 
+     *
+     * @param logo The logo of the application.
+     * @param icon The icon of the application. 
+     */
     void setImages(ImageDescriptor logo, ImageDescriptor icon){
         this.logo = logo;
         this.icon = icon;

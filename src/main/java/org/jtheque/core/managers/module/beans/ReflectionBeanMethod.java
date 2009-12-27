@@ -61,9 +61,19 @@ public final class ReflectionBeanMethod implements BeanMethod {
         }
     }
 
+    /**
+     * A privileged action to make a method accessible.
+     *
+     * @author Baptiste Wicht
+     */
     private static final class MakeMethodAccessible implements PrivilegedAction<Object> {
         private final Method method;
 
+        /**
+         * Construct a new MakeMethodAccessible.
+         *
+         * @param method The method to make accessible.
+         */
         private MakeMethodAccessible(Method method) {
             super();
             

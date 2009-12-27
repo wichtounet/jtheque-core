@@ -27,6 +27,11 @@ final class ModuleInfo {
     private String moduleId;
     private ModuleState state;
 
+    /**
+     * Construct a new ModuleInfo with a specified id.
+     *
+     * @param id The id of the module. 
+     */
     public ModuleInfo(String id) {
         super();
 

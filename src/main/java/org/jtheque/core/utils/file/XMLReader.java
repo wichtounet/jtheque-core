@@ -174,10 +174,30 @@ public final class XMLReader implements Closeable {
         return n;
     }
 
+    /**
+     * Indicate if a node exists with the specified path in the specified node.
+     *
+     * @param path The path to search for.
+     * @param node The node to search from.
+     *
+     * @return true if the path exists from the node else false.
+     *
+     * @throws XMLException If an errors occurs during the reading process.
+     */
     public boolean existsNode(String path, Object node) throws XMLException {
         return getNode(path, node) != null;
     }
 
+    /**
+     * Indicate if a value exists with the specified path in the specified node.
+     *
+     * @param path The path to search for.
+     * @param node The node to search from.
+     *
+     * @return true if the path exists from the node else false.
+     *
+     * @throws XMLException If an errors occurs during the reading process.
+     */
     public boolean existsValue(String path, Object node) throws XMLException {
         return readString(path, node) != null;
     }

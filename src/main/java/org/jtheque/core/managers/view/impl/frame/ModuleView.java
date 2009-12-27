@@ -40,6 +40,9 @@ public final class ModuleView extends SwingBuildedDialogView<IModel> implements 
     private IModulesPanelView modulesPanel;
     private IUpdatablesPanelView updatablesPanel;
 
+    /**
+     * Construct a new ModuleView. 
+     */
     public ModuleView(){
         super();
 

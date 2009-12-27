@@ -25,6 +25,13 @@ import java.util.List;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/**
+ * A simple combo box model to store dynamic objects.
+ *
+ * @param <T> The type of objects.
+ * 
+ * @author Baptiste Wicht
+ */
 public class SimpleComboBoxModel<T> extends DefaultComboBoxModel {
     private final List<T> objects;
 

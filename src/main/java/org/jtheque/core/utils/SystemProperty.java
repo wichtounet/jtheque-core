@@ -22,6 +22,11 @@ import java.security.PrivilegedAction;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/**
+ * A system property enumeration.
+ *
+ * @author Baptiste Wicht
+ */
 public enum SystemProperty {
     JAVA_IO_TMP_DIR("java.io.tmpdir") {
         @Override
@@ -55,10 +60,20 @@ public enum SystemProperty {
 
     private final String name;
 
+    /**
+     * Construct a new SystemProperty.
+     *
+     * @param name the name of the property.
+     */
     SystemProperty(String name) {
         this.name = name;
     }
 
+    /**
+     * Return the value of the property.
+     *
+     * @return The value of the property.
+     */
     public String get() {
         return AccessController.doPrivileged(new PrivilegedAction<String>() {
             @Override
@@ -68,8 +83,13 @@ public enum SystemProperty {
         });
     }
 
-    public String set(final String value) {
-        return AccessController.doPrivileged(new PrivilegedAction<String>() {
+    /**
+     * Set the value of the property.
+     *
+     * @param value The value of the property.
+     */
+    public void set(final String value) {
+        AccessController.doPrivileged(new PrivilegedAction<String>() {
             @Override
             public String run() {
                 return System.setProperty(getName(), value);
@@ -77,6 +97,11 @@ public enum SystemProperty {
         });
     }
 
+    /**
+     * Return the name of the property.
+     *
+     * @return The name of the property. 
+     */
     public String getName() {
         return name;
     }

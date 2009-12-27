@@ -78,10 +78,21 @@ public class PanelBuilder {
         this(panel, true);
     }
 
+    /**
+     * Construct a new PanelBuilder with a specified layout.
+     *
+     * @param layout The layout to set to the builded panel.
+     */
     public PanelBuilder(LayoutManager layout){
         this(new JPanel(layout), false);
     }
 
+    /**
+     * Construct a new PanelBuilder.
+     *
+     * @param panel The panel to build.
+     * @param layout If true set a default layout (GridBagLayout) to the builded panel.
+     */
     private PanelBuilder(JPanel panel, boolean layout){
         super();
 
@@ -274,12 +285,23 @@ public class PanelBuilder {
         addScrolled(new JTextArea(text), constraints);
     }
 
+    /**
+     * Add a JTree in a JScrollpane
+     *
+     * @param model The tree model.
+     * @param renderer The tree renderer.
+     * @param constraints The constraints to add the tree with.
+     *
+     * @return The added tree.
+     */
     public JXTree addScrolledTree(TreeModel model, TreeCellRenderer renderer, Object constraints){
         JXTree tree = new JXTree(model);
 
         if(renderer != null){
             tree.setCellRenderer(renderer);
         }
+
+        addScrolled(tree, constraints);
 
         return tree;
     }
@@ -367,6 +389,11 @@ public class PanelBuilder {
         return panel;
     }
 
+    /**
+     * Set the border of the panel.
+     *
+     * @param border The border to set to the panel. 
+     */
     public void setBorder(Border border){
         panel.setBorder(border);
     }
