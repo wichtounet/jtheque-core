@@ -135,7 +135,7 @@ public abstract class SwingDialogView extends JDialog implements IWindowView, In
      */
     protected static Image getDefaultWindowIcon() {
         return Managers.getManager(IResourceManager.class).getImage(
-                Managers.getCore().getApplication().getWindowIcon(),
+                "file:" + Managers.getCore().getApplication().getWindowIcon(),
                 Managers.getCore().getApplication().getWindowIconType());
     }
 

@@ -39,6 +39,12 @@ public final class MessageView extends SwingBuildedDialogView<IModel> implements
     private JLabel titleLabel;
     private JTextArea messageArea;
 
+    public MessageView(){
+        super();
+
+        build();
+    }
+
     @Override
     protected void initView(){
         setModel(new MessageModel());

@@ -31,12 +31,12 @@ import java.awt.Graphics2D;
 public class InfiniteWaitUI extends BufferedLayerUI<JComponent> {
     private final WaitFigure waitFigure;
 
-    private SizeTracker tracker;
+    private final SizeTracker tracker;
     
     /**
      * Construct a new <code>InfiniteWaitUI</code>.
      * 
-     * @param content
+     * @param content The content pane of the view.
      */
     public InfiniteWaitUI(JXLayer<JComponent> content) {
         super();

@@ -1,4 +1,4 @@
-package org.jtheque.core.managers.view.impl.components.panel;
+package org.jtheque.core.managers.view.impl.components.renderers;
 
 /*
  * This file is part of JTheque.

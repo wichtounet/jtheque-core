@@ -24,7 +24,7 @@ import javax.swing.Action;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-public class ActionFactory {
+public final class ActionFactory {
     private ActionFactory(){
         super();
     }

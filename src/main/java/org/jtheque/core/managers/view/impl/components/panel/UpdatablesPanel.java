@@ -2,12 +2,12 @@ package org.jtheque.core.managers.view.impl.components.panel;
 
 import org.jtheque.core.managers.update.Updatable;
 import org.jtheque.core.managers.view.able.components.IUpdatablesPanelView;
+import org.jtheque.core.managers.view.impl.actions.module.UpdateUpdatableAction;
 import org.jtheque.core.managers.view.impl.components.model.UpdatableListModel;
+import org.jtheque.core.managers.view.impl.components.renderers.UpdatableListRenderer;
 import org.jtheque.core.utils.ui.PanelBuilder;
 import org.jtheque.utils.ui.GridBagUtils;
 
-import javax.annotation.PostConstruct;
-import javax.swing.Action;
 import javax.swing.JList;
 import javax.swing.JPanel;
 
@@ -33,33 +33,21 @@ import javax.swing.JPanel;
  * @author Baptiste Wicht
  */
 public final class UpdatablesPanel extends JPanel implements IUpdatablesPanelView {
-    private JList updatablesList;
+    private final JList updatablesList;
 
-    private Action updateUpdatableAction;
+    public UpdatablesPanel(){
+        super();
 
-    /**
-     * Build the panel.
-     */
-    @PostConstruct
-    public void build() {
         PanelBuilder builder = new PanelBuilder(this);
 
         updatablesList = builder.addList(new UpdatableListModel(), new UpdatableListRenderer(), builder.gbcSet(0, 0, GridBagUtils.BOTH, GridBagUtils.FIRST_LINE_START));
 
-        builder.addButtonBar(builder.gbcSet(0, 1, GridBagUtils.HORIZONTAL, GridBagUtils.FIRST_LINE_START), updateUpdatableAction);
+        builder.addButtonBar(builder.gbcSet(0, 1, GridBagUtils.HORIZONTAL, GridBagUtils.FIRST_LINE_START),
+                new UpdateUpdatableAction());
     }
 
     @Override
     public Updatable getSelectedUpdatable() {
         return (Updatable) updatablesList.getSelectedValue();
-    }
-
-    /**
-     * Set the action to update the updatable. This is not for use, only for Spring injection.
-     *
-     * @param updateUpdatableAction The action.
-     */
-    public void setUpdateUpdatableAction(Action updateUpdatableAction) {
-        this.updateUpdatableAction = updateUpdatableAction;
     }
 }

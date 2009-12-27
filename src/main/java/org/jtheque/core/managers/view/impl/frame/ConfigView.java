@@ -40,6 +40,12 @@ import java.util.Collection;
 public final class ConfigView extends SwingBuildedDialogView<IModel> implements ConfigTabListener, IConfigView {
     private LayerTabbedPane tab;
 
+    public ConfigView(){
+        super();
+
+        build();
+    }
+
     @Override
     protected void initView(){
         setTitleKey("config.view.title");

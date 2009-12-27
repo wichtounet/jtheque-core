@@ -19,12 +19,13 @@ package org.jtheque.core.managers.view.impl.frame;
 import org.jtheque.core.managers.Managers;
 import org.jtheque.core.managers.module.IModuleManager;
 import org.jtheque.core.managers.update.repository.ModuleDescription;
+import org.jtheque.core.managers.view.able.components.IModel;
 import org.jtheque.core.managers.view.able.update.IRepositoryView;
 import org.jtheque.core.managers.view.impl.actions.module.repository.ExpandRepositoryModuleAction;
 import org.jtheque.core.managers.view.impl.actions.module.repository.InstallRepositoryModuleAction;
 import org.jtheque.core.managers.view.impl.components.model.ModuleRepositoryListModel;
-import org.jtheque.core.managers.view.impl.components.panel.ModuleRepositoryListRenderer;
-import org.jtheque.core.managers.view.impl.components.panel.ModuleRepositoryListRenderer.ModulePanel;
+import org.jtheque.core.managers.view.impl.components.panel.ModulePanel;
+import org.jtheque.core.managers.view.impl.components.renderers.ModuleRepositoryListRenderer;
 import org.jtheque.core.managers.view.impl.frame.abstraction.SwingBuildedDialogView;
 import org.jtheque.core.utils.ui.PanelBuilder;
 import org.jtheque.utils.ui.GridBagUtils;
@@ -37,8 +38,14 @@ import javax.swing.ListSelectionModel;
  *
  * @author Baptiste Wicht
  */
-public final class RepositoryView extends SwingBuildedDialogView implements IRepositoryView {
+public final class RepositoryView extends SwingBuildedDialogView<IModel> implements IRepositoryView {
     private JList list;
+
+    public RepositoryView(){
+        super();
+
+        build();
+    }
 
     @Override
     protected void initView(){

@@ -73,11 +73,6 @@ public final class ViewManager extends AbstractManager implements IViewManager {
     private IAboutView aboutPane;
 
     @Override
-    public void preInit() {
-        //Nothing to do
-    }
-
-    @Override
     public void displayAboutView() {
         viewDelegate.applyGlassPane(aboutPane.getImpl());
         aboutPane.appear();
@@ -146,7 +141,7 @@ public final class ViewManager extends AbstractManager implements IViewManager {
             } catch (Exception e) {
                 getLogger().error(e, "Unable to retrieve configuration");
                 configuration = new WindowsConfiguration();
-                getErrors().addInternationalizedError("error.loading.configuration");
+                getErrorManager().addInternationalizedError("error.loading.configuration");
             }
         }
     }

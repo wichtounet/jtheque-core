@@ -34,6 +34,12 @@ public final class LicenceView extends SwingBuildedDialogView<IModel> implements
     private static final int DEFAULT_WIDTH = 800;
     private static final int DEFAULT_HEIGHT = 600;
 
+    public LicenceView(){
+        super();
+
+        build();
+    }
+
     @Override
     protected void initView(){
         setTitleKey("licence.view.title", Managers.getCore().getApplication().getName());

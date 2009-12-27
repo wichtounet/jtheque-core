@@ -4,13 +4,19 @@ import org.jtheque.core.managers.Managers;
 import org.jtheque.core.managers.module.beans.ModuleContainer;
 import org.jtheque.core.managers.view.able.IViewManager;
 import org.jtheque.core.managers.view.able.components.IModulesPanelView;
+import org.jtheque.core.managers.view.impl.actions.ActionFactory;
+import org.jtheque.core.managers.view.impl.actions.module.DisableModuleAction;
+import org.jtheque.core.managers.view.impl.actions.module.EnableModuleAction;
+import org.jtheque.core.managers.view.impl.actions.module.InstallModuleAction;
+import org.jtheque.core.managers.view.impl.actions.module.LoadModuleAction;
+import org.jtheque.core.managers.view.impl.actions.module.UninstallModuleAction;
+import org.jtheque.core.managers.view.impl.actions.module.UpdateModuleAction;
 import org.jtheque.core.managers.view.impl.components.model.ModuleListModel;
+import org.jtheque.core.managers.view.impl.components.renderers.ModuleListRenderer;
 import org.jtheque.core.utils.ui.PanelBuilder;
 import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.utils.ui.LinedButtonBarBuilder;
 
-import javax.annotation.PostConstruct;
-import javax.swing.Action;
 import javax.swing.JList;
 import javax.swing.JPanel;
 
@@ -34,21 +40,11 @@ import javax.swing.JPanel;
  * @author Baptiste Wicht
  */
 public final class ModulesPanel extends JPanel implements IModulesPanelView {
-    private JList modulesList;
+    private final JList modulesList;
 
-    private Action enableModuleAction;
-    private Action disableModuleAction;
-    private Action uninstallModuleAction;
-    private Action updateModuleAction;
-    private Action installModuleAction;
-    private Action loadModuleAction;
-    private Action searchRepositoryAction;
+    public ModulesPanel(){
+        super();
 
-    /**
-     * Build the panel.
-     */
-    @PostConstruct
-    public void build() {
         PanelBuilder builder = new PanelBuilder(this);
 
         builder.add(new KernelInfoPanel(), builder.gbcSet(0, 0, GridBagUtils.HORIZONTAL, GridBagUtils.BASELINE_LEADING, 1.0, 0.0));
@@ -58,8 +54,8 @@ public final class ModulesPanel extends JPanel implements IModulesPanelView {
 
         LinedButtonBarBuilder barBuilder = new LinedButtonBarBuilder(2);
 
-        barBuilder.addActions(1, enableModuleAction, disableModuleAction, uninstallModuleAction, updateModuleAction);
-        barBuilder.addActions(2, installModuleAction, loadModuleAction, searchRepositoryAction);
+        barBuilder.addActions(1, new EnableModuleAction(), new DisableModuleAction(), new UninstallModuleAction(), new UpdateModuleAction());
+        barBuilder.addActions(2, new InstallModuleAction(), new LoadModuleAction(), ActionFactory.createDisplayViewAction("modules.actions.repository", "repositoryView"));
 
         builder.add(barBuilder.getPanel(), builder.gbcSet(0, 2, GridBagUtils.HORIZONTAL, GridBagUtils.BASELINE_LEADING, 1.0, 0.0));
     }
@@ -72,68 +68,5 @@ public final class ModulesPanel extends JPanel implements IModulesPanelView {
     @Override
     public void refresh() {
         Managers.getManager(IViewManager.class).refresh(modulesList);
-    }
-
-    /**
-     * Set the action to launch to enable the module. This is not for use, this is for Spring injection.
-     *
-     * @param enableModuleAction The action.
-     */
-    public void setEnableModuleAction(Action enableModuleAction) {
-        this.enableModuleAction = enableModuleAction;
-    }
-
-    /**
-     * Set the action to launch to disable the module. This is not for use, this is for Spring injection.
-     *
-     * @param disableModuleAction The action.
-     */
-    public void setDisableModuleAction(Action disableModuleAction) {
-        this.disableModuleAction = disableModuleAction;
-    }
-
-    /**
-     * Set the action to launch to uninstall the module. This is not for use, this is for Spring injection.
-     *
-     * @param uninstallModuleAction The action.
-     */
-    public void setUninstallModuleAction(Action uninstallModuleAction) {
-        this.uninstallModuleAction = uninstallModuleAction;
-    }
-
-    /**
-     * Set the action to launch to update the module. This is not for use, this is for Spring injection.
-     *
-     * @param updateModuleAction The action.
-     */
-    public void setUpdateModuleAction(Action updateModuleAction) {
-        this.updateModuleAction = updateModuleAction;
-    }
-
-    /**
-     * Set the action to launch to install the module. This is not for use, this is for Spring injection.
-     *
-     * @param installModuleAction The action.
-     */
-    public void setInstallModuleAction(Action installModuleAction) {
-        this.installModuleAction = installModuleAction;
-    }
-
-    /**
-     * Set the action to launch to load the module. This is not for use, this is for Spring injection.
-     *
-     * @param loadModuleAction The action.
-     */
-    public void setLoadModuleAction(Action loadModuleAction) {
-        this.loadModuleAction = loadModuleAction;
-    }
-
-    /**
-     * Set the action to launch to search in the repository for modules. This is not for use, this is for Spring injection.
-     *
-     * @param searchRepositoryAction The action.
-     */
-    public void setSearchRepositoryAction(Action searchRepositoryAction) {
-        this.searchRepositoryAction = searchRepositoryAction;
     }
 }

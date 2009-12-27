@@ -49,6 +49,8 @@ public abstract class SwingBuildedDialogView<T extends IModel> extends SwingDial
 
     /**
      * Construct a SwingDialogView modal to the main view.
+     *
+     * @param filthy Indicate if we must use a filthy panel builder.
      */
     protected SwingBuildedDialogView(boolean filthy){
         this((Frame) Managers.getManager(IViewManager.class).getViews().getMainView().getImpl(), filthy);
@@ -77,11 +79,13 @@ public abstract class SwingBuildedDialogView<T extends IModel> extends SwingDial
         this.filthy = filthy;
     }
 
-    protected void build(){
+    protected final void build(){
         initView();
 
         setContentPane(buildContentPane());
-        
+
+        pack();
+
         setLocationRelativeTo(getOwner());
     }
 

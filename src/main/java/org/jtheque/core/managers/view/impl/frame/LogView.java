@@ -68,6 +68,8 @@ public final class LogView extends SwingBuildedDialogView<IModel> implements Lis
 
         this.dateFormat = dateFormat;
         this.timeFormat = timeFormat;
+
+        build();
     }
 
     @Override

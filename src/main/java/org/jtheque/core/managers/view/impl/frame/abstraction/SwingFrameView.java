@@ -56,7 +56,7 @@ public abstract class SwingFrameView extends JFrame implements IWindowView {
      */
     protected static Image getDefaultWindowIcon() {
         return Managers.getManager(IResourceManager.class).getImage(
-                Managers.getCore().getApplication().getWindowIcon(),
+                "file:" + Managers.getCore().getApplication().getWindowIcon(),
                 Managers.getCore().getApplication().getWindowIconType());
     }
 

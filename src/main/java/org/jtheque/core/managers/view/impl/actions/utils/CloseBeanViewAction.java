@@ -23,7 +23,7 @@ import java.awt.event.ActionEvent;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-public class CloseBeanViewAction extends JThequeAction {
+public final class CloseBeanViewAction extends JThequeAction {
     private final String view;
 
     /**

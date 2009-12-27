@@ -30,7 +30,7 @@ public class DisplayBeanViewAction extends JThequeAction {
      * Construct a new DisplayViewAction with a specific internationalization key.
      *
      * @param key The i18n key.
-     * @param view
+     * @param view The name of the view to display. The view will be searched in the Spring context.
      */
     public DisplayBeanViewAction(String key, String view) {
         super(key);

@@ -5,7 +5,6 @@ import org.jtheque.core.managers.language.ILanguageManager;
 import org.jtheque.core.managers.language.TabTitleUpdater;
 import org.jtheque.core.managers.view.able.IViewManager;
 import org.jtheque.core.managers.view.able.components.TabComponent;
-import org.jtheque.core.managers.view.impl.components.LayerTabbedPane;
 import org.jtheque.core.managers.view.listeners.TabEvent;
 import org.jtheque.core.managers.view.listeners.TabListener;
 import org.jtheque.utils.collections.CollectionUtils;
