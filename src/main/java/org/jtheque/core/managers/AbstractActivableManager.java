@@ -21,7 +21,7 @@ package org.jtheque.core.managers;
  *
  * @author Baptiste Wicht
  */
-public abstract class AbstractActivableManager implements ActivableManager {
+public abstract class AbstractActivableManager extends AbstractManager implements ActivableManager {
     private boolean enabled = true;
 
     @Override

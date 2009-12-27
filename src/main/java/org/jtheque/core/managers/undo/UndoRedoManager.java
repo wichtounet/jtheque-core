@@ -43,7 +43,7 @@ public final class UndoRedoManager extends UndoManager implements IUndoRedoManag
     }
 
     @Override
-    public void close() throws ManagerException {
+    public void close(){
         //Nothing to do
     }
 

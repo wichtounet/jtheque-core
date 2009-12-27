@@ -40,31 +40,13 @@
         <constructor-arg ref="timeFormat" />
     </bean>
 
-    <bean id="_messageView" class="org.jtheque.core.managers.view.impl.frame.MessageView">
-        <constructor-arg ref="_mainView"/>
-        <constructor-arg>
-            <bean class="org.jtheque.core.managers.view.impl.models.MessageModel"/>
-        </constructor-arg>
-        <property name="closeAction" ref="closeMessageViewAction"/>
-        <property name="displayNextAction" ref="displayNextMessageAction"/>
-        <property name="displayPreviousAction" ref="displayPreviousMessageAction"/>
-    </bean>
+    <bean id="_messageView" class="org.jtheque.core.managers.view.impl.frame.MessageView" />
 
-    <bean id="_moduleView" class="org.jtheque.core.managers.view.impl.frame.ModuleView">
-        <constructor-arg ref="_mainView"/>
-    </bean>
+    <bean id="_moduleView" class="org.jtheque.core.managers.view.impl.frame.ModuleView" />
 
-    <bean id="_repositoryView" class="org.jtheque.core.managers.view.impl.frame.RepositoryView">
-        <constructor-arg ref="_mainView"/>
-        <property name="installAction" ref="installRepositoryAction"/>
-        <property name="expandAction" ref="expandRepositoryAction"/>
-    </bean>
+    <bean id="_repositoryView" class="org.jtheque.core.managers.view.impl.frame.RepositoryView" />
 
-    <bean id="_updateView" class="org.jtheque.core.managers.view.impl.frame.UpdateView">
-        <constructor-arg ref="_mainView"/>
-        <property name="closeAction" ref="closeUpdateViewAction"/>
-        <property name="validateAction" ref="validateUpdateViewAction"/>
-    </bean>
+    <bean id="_updateView" class="org.jtheque.core.managers.view.impl.frame.UpdateView" />
 
     <!-- Config panels -->
 
@@ -75,22 +57,6 @@
     </bean>
 
     <bean id="_configOthersView" class="org.jtheque.core.managers.view.impl.components.config.JPanelConfigOthers"/>
-
-    <!-- Sub panels -->
-
-    <bean id="modulesPanel" class="org.jtheque.core.managers.view.impl.components.panel.ModulesPanel">
-        <property name="enableModuleAction" ref="enableModuleAction"/>
-        <property name="disableModuleAction" ref="disableModuleAction"/>
-        <property name="uninstallModuleAction" ref="uninstallModuleAction"/>
-        <property name="updateModuleAction" ref="updateModuleAction"/>
-        <property name="installModuleAction" ref="installModuleAction"/>
-        <property name="loadModuleAction" ref="loadModuleAction"/>
-        <property name="searchRepositoryAction" ref="searchRepositoryAction"/>
-    </bean>
-
-    <bean id="updatablesPanel" class="org.jtheque.core.managers.view.impl.components.panel.UpdatablesPanel">
-        <property name="updateUpdatableAction" ref="updateUpdatableAction"/>
-    </bean>
 
     <!-- Java2D panes -->
 

@@ -16,6 +16,7 @@ package org.jtheque.core.spring.factory;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import org.jtheque.core.utils.CoreUtils;
 import org.springframework.beans.factory.config.AbstractFactoryBean;
 
 import javax.swing.SwingUtilities;
@@ -55,9 +56,9 @@ public final class SwingBeanCreator extends AbstractFactoryBean {
                 try {
                     instance[0] = beanClass.newInstance();
                 } catch (InstantiationException e) {
-                    e.printStackTrace();
+                    CoreUtils.getLogger(SwingBeanCreator.this.getClass()).error(e);
                 } catch (IllegalAccessException e) {
-                    e.printStackTrace();
+                    CoreUtils.getLogger(SwingBeanCreator.this.getClass()).error(e);
                 }
             }
         };
@@ -68,9 +69,9 @@ public final class SwingBeanCreator extends AbstractFactoryBean {
             try {
                 SwingUtilities.invokeAndWait(runnable);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                CoreUtils.getLogger(getClass()).error(e);
             } catch (InvocationTargetException e) {
-                e.printStackTrace();
+                CoreUtils.getLogger(getClass()).error(e);
             }
         }
 

@@ -12,7 +12,6 @@ import org.dbunit.operation.DatabaseOperation;
 import org.junit.Before;
 
 import javax.sql.DataSource;
-import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -101,7 +100,7 @@ public abstract class AbstractDBUnitTest {
      */
     protected final ITable getTable(String s) {
         try {
-            return getConnection().createDataSet().getTable(s);
+            return connection.createDataSet().getTable(s);
         } catch (Exception e) {
             fail(e.getMessage());
         }
@@ -196,7 +195,7 @@ public abstract class AbstractDBUnitTest {
      * @param str The string value.
      * @return The DB type.
      */
-    private String resolveType(String str) {
+    private static String resolveType(String str) {
         try {
             if (new Integer(str).toString().equals(str)) {
                 return "int";

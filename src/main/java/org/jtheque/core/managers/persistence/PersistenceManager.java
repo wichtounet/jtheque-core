@@ -29,21 +29,6 @@ import org.jtheque.core.managers.persistence.able.Entity;
  */
 public final class PersistenceManager extends AbstractActivableManager implements IPersistenceManager {
     @Override
-    public void preInit() {
-        //Nothing to do
-    }
-
-    @Override
-    public void init() throws ManagerException {
-        //Nothing to do
-    }
-
-    @Override
-    public void close() throws ManagerException {
-        //Nothing to do
-    }
-
-    @Override
     public void clearDatabase() {
         for (DataContainer<? extends Entity> dao : DataContainerProvider.getInstance().getAllContainers()) {
             dao.clearAll();

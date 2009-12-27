@@ -5,6 +5,7 @@ import org.jtheque.core.managers.core.ICore;
 import org.jtheque.core.managers.resource.IResourceManager;
 import org.jtheque.core.managers.resource.ImageType;
 
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 
 /*
@@ -52,7 +53,7 @@ public final class NoteImageManager {
      * @param note The image of the note.
      * @return The <code>BufferedImage</code>.
      */
-    public static BufferedImage getImage(Note note) {
+    public static Image getImage(Note note) {
         if (note == null) {
             return STARS[6];
         }

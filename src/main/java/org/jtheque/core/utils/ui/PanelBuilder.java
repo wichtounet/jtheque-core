@@ -1,5 +1,6 @@
 package org.jtheque.core.utils.ui;
 
+import org.jdesktop.swingx.JXTree;
 import org.jtheque.core.managers.Managers;
 import org.jtheque.core.managers.view.able.IViewManager;
 import org.jtheque.core.managers.view.impl.components.JThequeCheckBox;
@@ -23,11 +24,14 @@ import javax.swing.ListCellRenderer;
 import javax.swing.ListModel;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.Border;
+import javax.swing.tree.TreeCellRenderer;
+import javax.swing.tree.TreeModel;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.LayoutManager;
 
 /*
  * This file is part of JTheque.
@@ -62,7 +66,7 @@ public class PanelBuilder {
      * Construct a new PanelBuilder.
      */
     public PanelBuilder() {
-        this(new JPanel());
+        this(new JPanel(), true);
     }
 
     /**
@@ -71,7 +75,19 @@ public class PanelBuilder {
      * @param panel The panel to build.
      */
     public PanelBuilder(JPanel panel) {
+        this(panel, true);
+    }
+
+    public PanelBuilder(LayoutManager layout){
+        this(new JPanel(layout), false);
+    }
+
+    private PanelBuilder(JPanel panel, boolean layout){
         super();
+
+        if(layout){
+            panel.setLayout(new GridBagLayout());
+        }
 
         this.panel = panel;
         gbc = new GridBagUtils();
@@ -84,7 +100,6 @@ public class PanelBuilder {
      */
     void initJThequeDefaults() {
         panel.setBackground(Managers.getManager(IViewManager.class).getViewDefaults().getBackgroundColor());
-        panel.setLayout(new GridBagLayout());
         panel.setBorder(Borders.DIALOG_BORDER);
     }
 
@@ -156,6 +171,7 @@ public class PanelBuilder {
         JList list = new JList(model);
         list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         list.setVisibleRowCount(12);
+        list.setValueIsAdjusting(true);
 
         if (renderer != null) {
             list.setCellRenderer(renderer);
@@ -258,6 +274,16 @@ public class PanelBuilder {
         addScrolled(new JTextArea(text), constraints);
     }
 
+    public JXTree addScrolledTree(TreeModel model, TreeCellRenderer renderer, Object constraints){
+        JXTree tree = new JXTree(model);
+
+        if(renderer != null){
+            tree.setCellRenderer(renderer);
+        }
+
+        return tree;
+    }
+
     /**
      * Add a scrolled component.
      *
@@ -310,6 +336,22 @@ public class PanelBuilder {
      */
     public PanelBuilder addPanel(Object constraints) {
         PanelBuilder builder = new PanelBuilder();
+
+        add(builder.getPanel(), constraints);
+
+        return builder;
+    }
+
+    /**
+     * Add a panel to the panel.
+     *
+     * @param layout The layout to use.
+     * @param constraints The constraints to use to add to the panel.
+     *
+     * @return The builder of the intern panel builder.
+     */
+    public PanelBuilder addPanel(LayoutManager layout, Object constraints) {
+        PanelBuilder builder = new PanelBuilder(layout);
 
         add(builder.getPanel(), constraints);
 

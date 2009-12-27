@@ -25,7 +25,7 @@
     <!-- PlaceHolder for the properties file -->
 
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property name="location" value="core.properties"/>
+        <property name="location" value="classpath:org/jtheque/core/spring/core.properties"/>
     </bean>
 
     <!-- Internationalization -->

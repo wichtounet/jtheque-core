@@ -44,11 +44,6 @@ public final class SchemaManager extends AbstractActivableManager implements ISc
     private SchemaConfiguration configuration;
 
     @Override
-    public void preInit() {
-        //Nothing to do
-    }
-
-    @Override
     public void init() throws ManagerException {
         loadConfiguration();
 
@@ -142,11 +137,6 @@ public final class SchemaManager extends AbstractActivableManager implements ISc
             Managers.getManager(ILoggingManager.class).getLogger(getClass()).error(e);
             Managers.getManager(IErrorManager.class).addStartupError(new InternationalizedError("error.loading.configuration"));
         }
-    }
-
-    @Override
-    public void close() throws ManagerException {
-        //Nothing to do
     }
 
     @Override

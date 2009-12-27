@@ -32,7 +32,7 @@ public class DaoNotesTest {
      */
     @Test
     public void testGetNotes() {
-        assertEquals(DaoNotes.getInstance().getNotes().length, 7);
+        assertEquals(7, DaoNotes.getInstance().getNotes().length);
     }
 
     /**
@@ -40,14 +40,14 @@ public class DaoNotesTest {
      */
     @Test
     public void testIntValue() {
-        assertEquals(DaoNotes.NoteType.ERROR.intValue(), 0);
-        assertEquals(DaoNotes.NoteType.NULL.intValue(), 1);
-        assertEquals(DaoNotes.NoteType.BAD.intValue(), 2);
-        assertEquals(DaoNotes.NoteType.MIDDLE.intValue(), 3);
-        assertEquals(DaoNotes.NoteType.GOOD.intValue(), 4);
-        assertEquals(DaoNotes.NoteType.VERYGOOD.intValue(), 5);
-        assertEquals(DaoNotes.NoteType.PERFECT.intValue(), 6);
-        assertEquals(DaoNotes.NoteType.UNDEFINED.intValue(), 7);
+        assertEquals(0, DaoNotes.NoteType.ERROR.intValue());
+        assertEquals(1, DaoNotes.NoteType.NULL.intValue());
+        assertEquals(2, DaoNotes.NoteType.BAD.intValue());
+        assertEquals(3, DaoNotes.NoteType.MIDDLE.intValue());
+        assertEquals(4, DaoNotes.NoteType.GOOD.intValue());
+        assertEquals(5, DaoNotes.NoteType.VERYGOOD.intValue());
+        assertEquals(6, DaoNotes.NoteType.PERFECT.intValue());
+        assertEquals(7, DaoNotes.NoteType.UNDEFINED.intValue());
     }
 
     /**
@@ -55,14 +55,14 @@ public class DaoNotesTest {
      */
     @Test
     public void testGetEnum() {
-        assertEquals(DaoNotes.NoteType.getEnum(0), DaoNotes.NoteType.ERROR);
-        assertEquals(DaoNotes.NoteType.getEnum(1), DaoNotes.NoteType.NULL);
-        assertEquals(DaoNotes.NoteType.getEnum(2), DaoNotes.NoteType.BAD);
-        assertEquals(DaoNotes.NoteType.getEnum(3), DaoNotes.NoteType.MIDDLE);
-        assertEquals(DaoNotes.NoteType.getEnum(4), DaoNotes.NoteType.GOOD);
-        assertEquals(DaoNotes.NoteType.getEnum(5), DaoNotes.NoteType.VERYGOOD);
-        assertEquals(DaoNotes.NoteType.getEnum(6), DaoNotes.NoteType.PERFECT);
-        assertEquals(DaoNotes.NoteType.getEnum(7), DaoNotes.NoteType.UNDEFINED);
+        assertEquals(DaoNotes.NoteType.ERROR, DaoNotes.NoteType.getEnum(0));
+        assertEquals(DaoNotes.NoteType.NULL, DaoNotes.NoteType.getEnum(1));
+        assertEquals(DaoNotes.NoteType.BAD, DaoNotes.NoteType.getEnum(2));
+        assertEquals(DaoNotes.NoteType.MIDDLE, DaoNotes.NoteType.getEnum(3));
+        assertEquals(DaoNotes.NoteType.GOOD, DaoNotes.NoteType.getEnum(4));
+        assertEquals(DaoNotes.NoteType.VERYGOOD, DaoNotes.NoteType.getEnum(5));
+        assertEquals(DaoNotes.NoteType.PERFECT, DaoNotes.NoteType.getEnum(6));
+        assertEquals(DaoNotes.NoteType.UNDEFINED, DaoNotes.NoteType.getEnum(7));
     }
 
     /**
@@ -70,12 +70,12 @@ public class DaoNotesTest {
      */
     @Test
     public void testGetNote() {
-        assertEquals(DaoNotes.getInstance().getNote(DaoNotes.NoteType.NULL).getValue(), DaoNotes.NoteType.NULL);
-        assertEquals(DaoNotes.getInstance().getNote(DaoNotes.NoteType.BAD).getValue(), DaoNotes.NoteType.BAD);
-        assertEquals(DaoNotes.getInstance().getNote(DaoNotes.NoteType.MIDDLE).getValue(), DaoNotes.NoteType.MIDDLE);
-        assertEquals(DaoNotes.getInstance().getNote(DaoNotes.NoteType.GOOD).getValue(), DaoNotes.NoteType.GOOD);
-        assertEquals(DaoNotes.getInstance().getNote(DaoNotes.NoteType.VERYGOOD).getValue(), DaoNotes.NoteType.VERYGOOD);
-        assertEquals(DaoNotes.getInstance().getNote(DaoNotes.NoteType.PERFECT).getValue(), DaoNotes.NoteType.PERFECT);
-        assertEquals(DaoNotes.getInstance().getNote(DaoNotes.NoteType.UNDEFINED).getValue(), DaoNotes.NoteType.UNDEFINED);
+        assertEquals(DaoNotes.NoteType.NULL, DaoNotes.getInstance().getNote(DaoNotes.NoteType.NULL).getValue());
+        assertEquals(DaoNotes.NoteType.BAD, DaoNotes.getInstance().getNote(DaoNotes.NoteType.BAD).getValue());
+        assertEquals(DaoNotes.NoteType.MIDDLE, DaoNotes.getInstance().getNote(DaoNotes.NoteType.MIDDLE).getValue());
+        assertEquals(DaoNotes.NoteType.GOOD, DaoNotes.getInstance().getNote(DaoNotes.NoteType.GOOD).getValue());
+        assertEquals(DaoNotes.NoteType.VERYGOOD, DaoNotes.getInstance().getNote(DaoNotes.NoteType.VERYGOOD).getValue());
+        assertEquals(DaoNotes.NoteType.PERFECT, DaoNotes.getInstance().getNote(DaoNotes.NoteType.PERFECT).getValue());
+        assertEquals(DaoNotes.NoteType.UNDEFINED, DaoNotes.getInstance().getNote(DaoNotes.NoteType.UNDEFINED).getValue());
     }
 }

@@ -39,9 +39,9 @@ public class NoteTest {
         Object note4 = new NoteImpl(DaoNotes.NoteType.PERFECT, "test2");
         Object note5 = new NoteImpl(DaoNotes.NoteType.GOOD, "test");
 
-        assertTrue(note1.hashCode() == note1.hashCode());
-        assertTrue(note1.hashCode() == note2.hashCode());
-        assertTrue(note3.hashCode() == note5.hashCode());
+        assertEquals(note1.hashCode(), note1.hashCode());
+        assertEquals(note1.hashCode(), note2.hashCode());
+        assertEquals(note3.hashCode(), note5.hashCode());
 
         assertFalse(note2.hashCode() == note3.hashCode());
         assertFalse(note2.hashCode() == note4.hashCode());
@@ -49,7 +49,7 @@ public class NoteTest {
 
         assertFalse(note3.hashCode() == note1.hashCode());
         assertFalse(note3.hashCode() == note4.hashCode());
-        assertTrue(note3.hashCode() == note5.hashCode());
+        assertEquals(note3.hashCode(), note5.hashCode());
 
         assertFalse(note4.hashCode() == note5.hashCode());
     }

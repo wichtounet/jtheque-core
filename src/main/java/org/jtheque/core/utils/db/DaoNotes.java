@@ -87,7 +87,7 @@ public final class DaoNotes {
      * @param note The note to get the image for.
      * @return The image for the note.
      */
-    public Image getImage(Note note) {
+    public static Image getImage(Note note) {
         return NoteImageManager.getImage(note);
     }
 

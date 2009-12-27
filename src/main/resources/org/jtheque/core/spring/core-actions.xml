@@ -37,27 +37,8 @@
 
     <jtheque:display id="displayLogViewAction" key="log.view.actions.display" view="logView"/>
 
-    <!-- Messages -->
-
-    <jtheque:display id="displayMessagesAction" key="messages.actions.display" view="messageView"/>
-
-    <!-- Repository -->
-    
-    <jtheque:display id="searchRepositoryAction" key="modules.actions.repository" view="repositoryView"/>
-
     <!-- Undo/redo -->
 
     <bean id="redoAction" class="org.jtheque.core.managers.view.impl.actions.undo.RedoAction"/>
     <bean id="undoAction" class="org.jtheque.core.managers.view.impl.actions.undo.UndoAction"/>
-
-    <!-- Update -->
-
-    <bean id="updateUpdatableAction" class="org.jtheque.core.managers.view.impl.actions.module.UpdateUpdatableAction"/>
-    <bean id="enableModuleAction" class="org.jtheque.core.managers.view.impl.actions.module.EnableModuleAction"/>
-    <bean id="disableModuleAction" class="org.jtheque.core.managers.view.impl.actions.module.DisableModuleAction"/>
-    <bean id="uninstallModuleAction" class="org.jtheque.core.managers.view.impl.actions.module.UninstallModuleAction"/>
-    <bean id="updateModuleAction" class="org.jtheque.core.managers.view.impl.actions.module.UpdateModuleAction"/>
-    <bean id="installModuleAction" class="org.jtheque.core.managers.view.impl.actions.module.InstallModuleAction"/>
-    <bean id="loadModuleAction" class="org.jtheque.core.managers.view.impl.actions.module.LoadModuleAction"/>
-
 </beans>

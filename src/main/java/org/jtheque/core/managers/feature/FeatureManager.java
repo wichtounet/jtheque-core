@@ -51,17 +51,7 @@ public final class FeatureManager extends AbstractManager implements IFeatureMan
     }
 
     @Override
-    public void preInit() {
-        //Nothing to do
-    }
-
-    @Override
-    public void close() throws ManagerException {
-        //Nothing to close
-    }
-
-    @Override
-    public void init() throws ManagerException {
+    public void init(){
         coreFeatures.put(CoreFeature.FILE, createAndAddFeature(0, "menu.file"));
         coreFeatures.put(CoreFeature.EDIT, createAndAddFeature(1, "menu.edit"));
         coreFeatures.put(CoreFeature.ADVANCED, createAndAddFeature(990, "menu.advanced"));

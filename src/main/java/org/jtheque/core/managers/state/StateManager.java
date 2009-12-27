@@ -18,6 +18,7 @@ package org.jtheque.core.managers.state;
 
 import org.jdom.Attribute;
 import org.jdom.Element;
+import org.jtheque.core.managers.AbstractManager;
 import org.jtheque.core.managers.IManager;
 import org.jtheque.core.managers.ManagerException;
 import org.jtheque.core.managers.Managers;
@@ -39,7 +40,7 @@ import java.util.Map;
  *
  * @author Baptiste Wicht
  */
-public final class StateManager implements IStateManager, IManager {
+public final class StateManager extends AbstractManager implements IStateManager {
     private final Map<Class<? extends IState>, IState> states = new HashMap<Class<? extends IState>, IState>(10);
 
     @Override
@@ -120,11 +121,6 @@ public final class StateManager implements IStateManager, IManager {
         return nodeStates;
     }
 
-    @Override
-    public void init() throws ManagerException {
-        //Nothing to init
-    }
-
     /**
      * Return the config file.
      *
@@ -154,7 +150,7 @@ public final class StateManager implements IStateManager, IManager {
     }
 
     @Override
-    public void close() throws ManagerException {
+    public void close(){
         saveStates();
     }
 

@@ -16,6 +16,7 @@ package org.jtheque.core.managers.error;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import org.jtheque.core.managers.AbstractManager;
 import org.jtheque.core.managers.IManager;
 import org.jtheque.core.managers.ManagerException;
 import org.jtheque.core.managers.view.able.IViewManager;
@@ -30,7 +31,7 @@ import java.util.Collection;
  *
  * @author Baptiste Wicht
  */
-public final class ErrorManager implements IErrorManager, IManager {
+public final class ErrorManager extends AbstractManager implements IErrorManager {
     private static final Collection<JThequeError> STARTUP_ERRORS = new ArrayList<JThequeError>(10);
 
     private final Collection<JThequeError> errors = new ArrayList<JThequeError>(10);
@@ -39,20 +40,10 @@ public final class ErrorManager implements IErrorManager, IManager {
     private IViewManager viewManager;
 
     @Override
-    public void preInit() {
-        //Nothing to do
-    }
-
-    @Override
-    public void init() throws ManagerException {
+    public void init(){
         errors.addAll(STARTUP_ERRORS);
 
         STARTUP_ERRORS.clear();
-    }
-
-    @Override
-    public void close() throws ManagerException {
-        //Nothing to close
     }
 
     @Override

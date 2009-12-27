@@ -34,13 +34,13 @@ public class PropertiesManagerTest {
         Object property1 = propertiesManager.getPropertyQuickly(instance, "property1");
 
         assertTrue(property1 instanceof Integer);
-        assertTrue(property1.equals(0));
+        assertEquals(0, property1);
 
         instance.setProperty1(33);
 
         property1 = propertiesManager.getPropertyQuickly(instance, "property1");
 
-        assertTrue(property1.equals(33));
+        assertEquals(33, property1);
     }
 
     @Test
@@ -55,7 +55,7 @@ public class PropertiesManagerTest {
 
         memento.setProperty1(44);
 
-        assertEquals(instance1.getProperty1(), 88);
+        assertEquals(88, instance1.getProperty1());
     }
 
     @Test
@@ -68,7 +68,7 @@ public class PropertiesManagerTest {
 
         propertiesManager.restoreMemento(instance1, memento);
 
-        assertEquals(instance1.getProperty1(), 0);
+        assertEquals(0, instance1.getProperty1());
     }
 
     @Test
@@ -84,6 +84,7 @@ public class PropertiesManagerTest {
         assertEquals("TestClass{property1=3, property2=44, property3=test}", propertiesManager.toString(instance));
     }
 
+    //Must be public to be accessible by reflection
     public static final class TestClass {
         private int property1;
         private long property2;

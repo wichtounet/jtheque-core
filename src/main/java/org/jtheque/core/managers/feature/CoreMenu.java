@@ -27,7 +27,7 @@ import java.util.List;
  *
  * @author Baptiste Wicht
  */
-public class CoreMenu extends AbstractMenu {
+public final class CoreMenu extends AbstractMenu {
     @Override
     protected List<Feature> getFileMenuSubFeatures(){
         return features(
@@ -63,8 +63,8 @@ public class CoreMenu extends AbstractMenu {
                 createSeparatedSubFeature(1, "helpAction", Core.IMAGES_BASE_NAME, "help"),
                 createSeparatedSubFeature(2, "informOfABugAction", Core.IMAGES_BASE_NAME, "mail"),
                 createSeparatedSubFeature(4, "proposeImprovementAction", Core.IMAGES_BASE_NAME, "idea"),
-                createSeparatedSubFeature(6, "displayMessagesAction"),
-                createSeparatedSubFeature(25, "displayLogViewAction"),
+                createSeparatedSubFeature(6, createDisplayViewAction("messages.actions.display", "messageView")),
+                createSeparatedSubFeature(25, createDisplayViewAction("log.view.actions.display", "logView")),
                 createSeparatedSubFeature(150, new DisplayAboutViewAction(), Core.IMAGES_BASE_NAME, "about")
         );
     }

@@ -37,8 +37,6 @@ public interface IManager {
 
     /**
      * Close the manager.
-     *
-     * @throws ManagerException If an error occurs during the close process.
      */
-    void close() throws ManagerException;
+    void close();
 }

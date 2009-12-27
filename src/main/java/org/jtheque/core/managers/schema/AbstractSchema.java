@@ -2,8 +2,10 @@ package org.jtheque.core.managers.schema;
 
 import org.jtheque.core.managers.Managers;
 import org.jtheque.core.managers.properties.IPropertiesManager;
+import org.jtheque.core.utils.CoreUtils;
 import org.jtheque.utils.Constants;
 import org.jtheque.utils.StringUtils;
+import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 
 /*
  * This file is part of JTheque.
@@ -28,6 +30,20 @@ import org.jtheque.utils.StringUtils;
  * @author Baptiste Wicht
  */
 public abstract class AbstractSchema implements Schema {
+    private SimpleJdbcTemplate jdbcTemplate;
+
+    public SimpleJdbcTemplate getJdbcTemplate(){
+        if(jdbcTemplate == null){
+            jdbcTemplate = CoreUtils.getBean("jdbcTemplate");
+        }
+
+        return jdbcTemplate;
+    }
+
+    public void update(String request, Object... args){
+        getJdbcTemplate().update(request, args);
+    }
+
     @Override
     public final int compareTo(Schema other) {
         boolean hasDependency = StringUtils.isNotEmpty(getDependencies());

@@ -16,6 +16,7 @@ package org.jtheque.core.managers.properties;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import org.jtheque.core.managers.AbstractActivableManager;
 import org.jtheque.core.managers.AbstractManager;
 import org.jtheque.core.managers.ManagerException;
 import org.jtheque.utils.bean.EqualsUtils;
@@ -32,34 +33,7 @@ import java.util.List;
  *
  * @author Baptiste Wicht
  */
-public final class PropertiesManager extends AbstractManager implements IPropertiesManager {
-    private boolean enabled = true;
-
-    @Override
-    public void preInit() {
-        //Nothing to do
-    }
-
-    @Override
-    public void init() throws ManagerException {
-        //Nothing to init.
-    }
-
-    @Override
-    public void close() throws ManagerException {
-        //Nothing to init
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    @Override
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
-
+public final class PropertiesManager extends AbstractActivableManager implements IPropertiesManager {
     @Override
     public <T> T createMemento(T bean) {
         T instance = null;

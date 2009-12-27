@@ -55,16 +55,6 @@ public final class UpdateManager extends AbstractManager implements IUpdateManag
     }
 
     @Override
-    public void preInit() {
-        //Nothing to do
-    }
-
-    @Override
-    public void close() {
-        //Nothing to do
-    }
-
-    @Override
     public void init() {
         try {
             state = getStates().getOrCreateState(UpdatableState.class);

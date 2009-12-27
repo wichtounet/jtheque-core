@@ -54,7 +54,7 @@ public abstract class AbstractManager implements IManager {
      *
      * @return The error manager.
      */
-    protected static IErrorManager getErrors() {
+    protected static IErrorManager getErrorManager() {
         return getManager(IErrorManager.class);
     }
 
@@ -97,5 +97,20 @@ public abstract class AbstractManager implements IManager {
      */
     protected static <T> T getManager(Class<T> managerClass) {
         return Managers.getManager(managerClass);
+    }
+
+    @Override
+    public void preInit(){
+        //Nothing by default
+    }
+
+    @Override
+    public void init() throws ManagerException{
+        //Nothing by default
+    }
+
+    @Override
+    public void close(){
+        //Nothing by default
     }
 }

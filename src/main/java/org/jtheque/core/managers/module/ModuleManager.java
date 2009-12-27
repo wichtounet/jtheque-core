@@ -105,11 +105,6 @@ public final class ModuleManager extends AbstractManager implements IModuleManag
     }
 
     @Override
-    public void init() {
-        //Nothing to init
-    }
-
-    @Override
     public void close() {
         for (ModuleContainer module : moduleContainers) {
             if (module.getState() == ModuleState.UNINSTALLED) {
@@ -123,10 +118,7 @@ public final class ModuleManager extends AbstractManager implements IModuleManag
             }
         }
     }
-
-    /**
-     * Pre plug the modules.
-     */
+    
     @Override
     public void prePlugModules() {
         configureModules();
@@ -240,7 +232,7 @@ public final class ModuleManager extends AbstractManager implements IModuleManag
         } catch (Exception e) {
             configuration = new ModuleConfiguration();
             getLogger().error(e);
-            getErrors().addInternationalizedError("error.loading.configuration");
+            getErrorManager().addInternationalizedError("error.loading.configuration");
         }
 
         for (ModuleContainer module : moduleContainers) {

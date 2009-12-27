@@ -16,6 +16,7 @@ package org.jtheque.core.managers.beans;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import org.jtheque.core.managers.AbstractManager;
 import org.jtheque.core.managers.IManager;
 import org.jtheque.core.managers.beans.ioc.Ioc;
 import org.springframework.context.ApplicationContext;
@@ -25,17 +26,7 @@ import org.springframework.context.ApplicationContext;
  *
  * @author Baptiste Wicht
  */
-public final class BeansManager implements IBeansManager, IManager {
-    @Override
-    public void preInit() {
-        //Nothing to do
-    }
-
-    @Override
-    public void init() {
-        //Nothing to do
-    }
-
+public final class BeansManager extends AbstractManager implements IBeansManager {
     @Override
     public void close() {
         Ioc.getContainer().destroy();

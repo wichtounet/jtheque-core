@@ -1,5 +1,6 @@
 package org.jtheque.core.utils.ui;
 
+import org.jdesktop.swingx.JXTree;
 import org.jtheque.core.managers.view.impl.components.JThequeI18nLabel;
 import org.jtheque.core.managers.view.impl.components.filthy.FilthyComboBox;
 import org.jtheque.core.managers.view.impl.components.filthy.FilthyList;
@@ -14,8 +15,11 @@ import javax.swing.JScrollPane;
 import javax.swing.ListCellRenderer;
 import javax.swing.ListModel;
 import javax.swing.ListSelectionModel;
+import javax.swing.tree.TreeCellRenderer;
+import javax.swing.tree.TreeModel;
 import java.awt.Color;
 import java.awt.GridBagLayout;
+import java.awt.LayoutManager;
 
 /*
  * This file is part of JTheque.
@@ -54,6 +58,10 @@ public final class FilthyPanelBuilder extends PanelBuilder {
      */
     public FilthyPanelBuilder(JPanel panel) {
         super(panel);
+    }
+
+    public FilthyPanelBuilder(LayoutManager layout){
+        super(layout);
     }
 
     @Override
@@ -96,6 +104,7 @@ public final class FilthyPanelBuilder extends PanelBuilder {
 
         list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         list.setVisibleRowCount(10);
+        list.setValueIsAdjusting(true);
 
         if (renderer != null) {
             list.setCellRenderer(renderer);
@@ -140,5 +149,32 @@ public final class FilthyPanelBuilder extends PanelBuilder {
         add(builder.getPanel(), constraints);
 
         return builder;
+    }
+
+    @Override
+    public PanelBuilder addPanel(LayoutManager layout, Object constraints){
+        PanelBuilder builder = new FilthyPanelBuilder(layout);
+
+        add(builder.getPanel(), constraints);
+
+        return builder;
+    }
+
+    @Override
+    public JXTree addScrolledTree(TreeModel model, TreeCellRenderer renderer, Object constraints){
+        JXTree tree = new JXTree(model);
+        tree.setRootVisible(false);
+        tree.setShowsRootHandles(true);
+        tree.setOpaque(false);
+        tree.setBorder(Borders.EMPTY_BORDER);
+        tree.putClientProperty("JTree.lineStyle", "None");
+
+        if(renderer != null){
+            tree.setCellRenderer(renderer);
+        }
+
+        addScrolled(tree, constraints);
+
+        return tree;
     }
 }

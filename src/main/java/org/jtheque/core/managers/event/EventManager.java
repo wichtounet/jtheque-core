@@ -47,12 +47,7 @@ public final class EventManager extends AbstractManager implements IEventManager
     }
 
     @Override
-    public void init() throws ManagerException {
-        //Nothing to do here
-    }
-
-    @Override
-    public void close() throws ManagerException {
+    public void close(){
         saveXML();
     }
 

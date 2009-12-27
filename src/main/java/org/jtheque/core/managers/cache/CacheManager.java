@@ -2,6 +2,8 @@ package org.jtheque.core.managers.cache;
 
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.store.MemoryStoreEvictionPolicy;
+import org.jtheque.core.managers.AbstractActivableManager;
+import org.jtheque.core.managers.AbstractManager;
 import org.jtheque.core.managers.ManagerException;
 import org.jtheque.core.managers.Managers;
 import org.jtheque.core.managers.log.ILoggingManager;
@@ -30,8 +32,7 @@ import java.lang.reflect.Field;
  *
  * @author Baptiste Wicht
  */
-public final class CacheManager implements ICacheManager {
-    private boolean enabled = true;
+public final class CacheManager extends AbstractActivableManager implements ICacheManager {
     private static final int TWO_MINUTES = 120;
 
     @Override
@@ -42,23 +43,8 @@ public final class CacheManager implements ICacheManager {
     }
 
     @Override
-    public void init() throws ManagerException {
-        //Nothing to do
-    }
-
-    @Override
-    public void close() throws ManagerException {
+    public void close(){
         getCacheManager().shutdown();
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    @Override
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
     }
 
     /**

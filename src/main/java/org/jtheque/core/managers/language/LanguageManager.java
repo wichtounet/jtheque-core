@@ -1,5 +1,6 @@
 package org.jtheque.core.managers.language;
 
+import org.jtheque.core.managers.AbstractManager;
 import org.jtheque.core.managers.IManager;
 import org.jtheque.core.managers.ManagerException;
 import org.jtheque.core.managers.Managers;
@@ -75,8 +76,13 @@ public final class LanguageManager implements ILanguageManager, IManager {
     }
 
     @Override
-    public void preInit() {
-        //Nothing to do
+    public void preInit(){
+        //Nothing to do here
+    }
+
+    @Override
+    public void close(){
+        //Nothing to do here
     }
 
     @Override
@@ -112,11 +118,6 @@ public final class LanguageManager implements ILanguageManager, IManager {
                 throw new ManagerException(e);
             }
         }
-    }
-
-    @Override
-    public void close() throws ManagerException {
-        Managers.getManager(ILoggingManager.class).getLogger(getClass()).debug("Language Manager closed");
     }
 
     @Override

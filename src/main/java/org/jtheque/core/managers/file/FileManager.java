@@ -16,6 +16,8 @@ package org.jtheque.core.managers.file;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import org.jtheque.core.managers.AbstractActivableManager;
+import org.jtheque.core.managers.AbstractManager;
 import org.jtheque.core.managers.ManagerException;
 import org.jtheque.core.managers.file.able.BackupReader;
 import org.jtheque.core.managers.file.able.BackupWriter;
@@ -37,14 +39,12 @@ import java.util.Map;
  *
  * @author Baptiste Wicht
  */
-public final class FileManager implements IFileManager {
+public final class FileManager extends AbstractActivableManager implements IFileManager {
     private Backuper[] backupers;
     private Restorer[] restorers;
 
     private final Map<FileType, Collection<BackupWriter>> backupWriters;
     private final Map<FileType, Collection<BackupReader>> backupReaders;
-
-    private boolean enabled = true;
 
     /**
      * Construct a new FileManager.
@@ -54,31 +54,6 @@ public final class FileManager implements IFileManager {
 
         backupWriters = new EnumMap<FileType, Collection<BackupWriter>>(FileType.class);
         backupReaders = new EnumMap<FileType, Collection<BackupReader>>(FileType.class);
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    @Override
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
-
-    @Override
-    public void preInit() {
-        //Nothing to do
-    }
-
-    @Override
-    public void close() throws ManagerException {
-        //Nothing to close
-    }
-
-    @Override
-    public void init() throws ManagerException {
-        //Nothing to init
     }
 
     @Override

@@ -70,12 +70,7 @@ public final class Managers {
         CollectionUtils.reverse(MANAGERS);
 
         for (IManager manager : MANAGERS.values()) {
-            try {
-                manager.close();
-            } catch (ManagerException e) {
-                Managers.getManager(ILoggingManager.class).getLogger(Managers.class).error(e);
-                Managers.getManager(IErrorManager.class).addInternationalizedError("error.loading.manager");
-            }
+            manager.close();
         }
     }
 

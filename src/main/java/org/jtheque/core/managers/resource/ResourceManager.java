@@ -16,6 +16,7 @@ package org.jtheque.core.managers.resource;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import org.jtheque.core.managers.AbstractManager;
 import org.jtheque.core.managers.IManager;
 import org.jtheque.core.managers.ManagerException;
 import org.jtheque.core.managers.Managers;
@@ -41,25 +42,10 @@ import java.util.Map;
  *
  * @author Baptiste Wicht
  */
-public final class ResourceManager implements IResourceManager, IManager {
+public final class ResourceManager extends AbstractManager implements IResourceManager, IManager {
     private static final int DEFAULT_CACHE_SIZE = 50;
 
     private final Map<String, JThequeImage> cache = new HashMap<String, JThequeImage>(DEFAULT_CACHE_SIZE);
-
-    @Override
-    public void preInit() {
-        //Nothing to do
-    }
-
-    @Override
-    public void init() throws ManagerException {
-        //Nothing to do
-    }
-
-    @Override
-    public void close() throws ManagerException {
-        //Nothing to do
-    }
 
     @Override
     public ImageIcon getIcon(String baseName, String id, ImageType type) {
