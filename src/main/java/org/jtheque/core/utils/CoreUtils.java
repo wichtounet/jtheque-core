@@ -53,7 +53,16 @@ public class CoreUtils {
      * @return the main view.
      */
     public static IMainView getMainView(){
-        return Managers.getManager(IViewManager.class).getViews().getMainView();
+        return getView().getViews().getMainView();
+    }
+
+    /**
+     * Return the view manager.
+     *
+     * @return The view manager. 
+     */
+    public static IViewManager getView(){
+        return Managers.getManager(IViewManager.class);
     }
 
     /**

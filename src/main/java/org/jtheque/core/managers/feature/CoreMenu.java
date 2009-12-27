@@ -2,7 +2,16 @@ package org.jtheque.core.managers.feature;
 
 import org.jtheque.core.managers.core.Core;
 import org.jtheque.core.managers.view.impl.actions.about.DisplayAboutViewAction;
+import org.jtheque.core.managers.view.impl.actions.author.AcInformOfABug;
+import org.jtheque.core.managers.view.impl.actions.author.AcOpenHelp;
+import org.jtheque.core.managers.view.impl.actions.author.AcProposeImprovement;
+import org.jtheque.core.managers.view.impl.actions.backup.AcBackupToJTD;
+import org.jtheque.core.managers.view.impl.actions.backup.AcBackupToXML;
+import org.jtheque.core.managers.view.impl.actions.backup.AcRestoreFromJTD;
+import org.jtheque.core.managers.view.impl.actions.backup.AcRestoreFromXML;
 import org.jtheque.core.managers.view.impl.actions.core.ExitAction;
+import org.jtheque.core.managers.view.impl.actions.undo.RedoAction;
+import org.jtheque.core.managers.view.impl.actions.undo.UndoAction;
 
 import java.util.List;
 
@@ -32,11 +41,11 @@ public final class CoreMenu extends AbstractMenu {
     protected List<Feature> getFileMenuSubFeatures(){
         return features(
                 createSeparatedSubFeature(200, "menu.backup",
-                        createSubFeature(1, "backupToJTDAction"),
-                        createSubFeature(2, "backupToXMLAction")),
+                        createSubFeature(1, new AcBackupToJTD()),
+                        createSubFeature(2, new AcBackupToXML())),
                 createSubFeature(201, "menu.restore",
-                        createSubFeature(1, "restoreToJTDAction"),
-                        createSubFeature(2, "restoreToXMLAction")),
+                        createSubFeature(1, new AcRestoreFromJTD()),
+                        createSubFeature(2, new AcRestoreFromXML())),
                 createSeparatedSubFeature(1000, new ExitAction())
         );
     }
@@ -44,8 +53,8 @@ public final class CoreMenu extends AbstractMenu {
     @Override
     protected List<Feature> getEditMenuSubFeatures(){
         return features(
-                createSubFeature(1, "undoAction"),
-                createSubFeature(2, "redoAction")
+                createSubFeature(1, new UndoAction()),
+                createSubFeature(2, new RedoAction())
         );
     }
 
@@ -60,9 +69,9 @@ public final class CoreMenu extends AbstractMenu {
     @Override
     protected List<Feature> getHelpMenuSubFeatures(){
         return features(
-                createSeparatedSubFeature(1, "helpAction", Core.IMAGES_BASE_NAME, "help"),
-                createSeparatedSubFeature(2, "informOfABugAction", Core.IMAGES_BASE_NAME, "mail"),
-                createSeparatedSubFeature(4, "proposeImprovementAction", Core.IMAGES_BASE_NAME, "idea"),
+                createSeparatedSubFeature(1, new AcOpenHelp(), Core.IMAGES_BASE_NAME, "help"),
+                createSeparatedSubFeature(2, new AcInformOfABug(), Core.IMAGES_BASE_NAME, "mail"),
+                createSeparatedSubFeature(4, new AcProposeImprovement(), Core.IMAGES_BASE_NAME, "idea"),
                 createSeparatedSubFeature(6, createDisplayViewAction("messages.actions.display", "messageView")),
                 createSeparatedSubFeature(25, createDisplayViewAction("log.view.actions.display", "logView")),
                 createSeparatedSubFeature(150, new DisplayAboutViewAction(), Core.IMAGES_BASE_NAME, "about")

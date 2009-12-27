@@ -20,6 +20,9 @@ import org.jdesktop.swingx.JXPanel;
 import org.jtheque.core.managers.Managers;
 import org.jtheque.core.managers.view.able.ICollectionView;
 import org.jtheque.core.managers.view.able.IViewManager;
+import org.jtheque.core.managers.view.impl.actions.collections.CancelAction;
+import org.jtheque.core.managers.view.impl.actions.collections.ChooseAction;
+import org.jtheque.core.managers.view.impl.actions.collections.CreateAction;
 import org.jtheque.core.managers.view.impl.components.JThequeI18nLabel;
 import org.jtheque.core.managers.view.impl.components.filthy.FilthyPasswordField;
 import org.jtheque.core.managers.view.impl.components.filthy.FilthyTextField;
@@ -52,10 +55,6 @@ public final class CollectionPane extends JXPanel implements ICollectionView {
     private Color hintColor;
     private Color backgroundColor;
     private Color errorColor;
-
-    private Action createAction;
-    private Action cancelAction;
-    private Action chooseAction;
 
     private Font hintFont;
     private static final int LEFT_MARGIN_WIDTH = 200;
@@ -112,9 +111,9 @@ public final class CollectionPane extends JXPanel implements ICollectionView {
     private void addButtonBar(GridBagUtils gbc) {
         Container buttonsPanel = new JPanel();
 
-        buttonsPanel.add(new JButton(createAction));
-        buttonsPanel.add(new JButton(chooseAction));
-        buttonsPanel.add(new JButton(cancelAction));
+        buttonsPanel.add(new JButton(new CreateAction()));
+        buttonsPanel.add(new JButton(new ChooseAction()));
+        buttonsPanel.add(new JButton(new CancelAction()));
 
         buttonsPanel.setBackground(backgroundColor);
 
@@ -223,33 +222,6 @@ public final class CollectionPane extends JXPanel implements ICollectionView {
      */
     public void setErrorColor(Color errorColor) {
         this.errorColor = errorColor;
-    }
-
-    /**
-     * Set the action to launch with the create button. Not for use, only for Spring injection.
-     *
-     * @param createAction The create action.
-     */
-    public void setCreateAction(Action createAction) {
-        this.createAction = createAction;
-    }
-
-    /**
-     * Set the action to launch with the cancel button. Not for use, only for Spring injection.
-     *
-     * @param cancelAction The cancel action.
-     */
-    public void setCancelAction(Action cancelAction) {
-        this.cancelAction = cancelAction;
-    }
-
-    /**
-     * Set the action to launch with the choose button. Not for use, only for Spring injection.
-     *
-     * @param chooseAction The choose action.
-     */
-    public void setChooseAction(Action chooseAction) {
-        this.chooseAction = chooseAction;
     }
 
     /**

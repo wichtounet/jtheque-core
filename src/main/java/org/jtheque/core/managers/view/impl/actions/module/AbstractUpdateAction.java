@@ -1,6 +1,7 @@
 package org.jtheque.core.managers.view.impl.actions.module;
 
 import org.jtheque.core.managers.Managers;
+import org.jtheque.core.managers.beans.IBeansManager;
 import org.jtheque.core.managers.error.IErrorManager;
 import org.jtheque.core.managers.log.ILoggingManager;
 import org.jtheque.core.managers.view.able.IViewManager;
@@ -43,6 +44,8 @@ public abstract class AbstractUpdateAction extends JThequeAction {
      */
     AbstractUpdateAction(String key) {
         super(key);
+
+        Managers.getManager(IBeansManager.class).inject(this);
     }
 
     @Override

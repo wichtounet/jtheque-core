@@ -20,13 +20,12 @@ import org.jtheque.core.managers.Managers;
 import org.jtheque.core.managers.error.JThequeError;
 import org.jtheque.core.managers.language.ILanguageManager;
 import org.jtheque.core.managers.view.able.config.INetworkConfigView;
-import org.jtheque.core.managers.view.impl.actions.JThequeSimpleAction;
+import org.jtheque.core.managers.view.impl.actions.config.CheckProxyAction;
 import org.jtheque.core.utils.ui.Borders;
 import org.jtheque.core.utils.ui.PanelBuilder;
 import org.jtheque.core.utils.ui.ValidationUtils;
 import org.jtheque.utils.ui.GridBagUtils;
 
-import javax.annotation.PostConstruct;
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
@@ -43,13 +42,9 @@ public final class JPanelConfigNetwork extends JPanel implements INetworkConfigV
     private JTextField fieldAddress;
     private JTextField fieldPort;
 
-    private JThequeSimpleAction checkProxyAction;
+    public JPanelConfigNetwork(){
+        super();
 
-    /**
-     * Build the view.
-     */
-    @PostConstruct
-    public void build() {
         addProxyPanel();
 
         fillAllFields();
@@ -66,12 +61,12 @@ public final class JPanelConfigNetwork extends JPanel implements INetworkConfigV
 
         boxProxy = builder.addI18nCheckBox("config.network.proxy.check",
                 parent.gbcSet(0, 0, GridBagUtils.HORIZONTAL, GridBagUtils.BASELINE_LEADING, 2, 1));
-        boxProxy.addActionListener(checkProxyAction);
+        boxProxy.addActionListener(new CheckProxyAction());
 
         builder.addI18nLabel("config.network.proxy.address", parent.gbcSet(0, 1));
-        builder.addI18nLabel("config.network.proxy.port", parent.gbcSet(0, 2));
-
         fieldAddress = builder.add(new JTextField(10), parent.gbcSet(1, 1, GridBagUtils.HORIZONTAL));
+
+        builder.addI18nLabel("config.network.proxy.port", parent.gbcSet(0, 2));
         fieldPort = builder.add(new JTextField(10), parent.gbcSet(1, 2, GridBagUtils.HORIZONTAL));
     }
 
@@ -122,15 +117,6 @@ public final class JPanelConfigNetwork extends JPanel implements INetworkConfigV
             ValidationUtils.rejectIfEmpty(fieldAddress.getText(), "config.network.proxy.address", errors);
             ValidationUtils.rejectIfEmpty(fieldPort.getText(), "config.network.proxy.port", errors);
         }
-    }
-
-    /**
-     * Set the action to launch when the proxy checkbox is selected.
-     *
-     * @param checkProxyAction The action.
-     */
-    public void setCheckProxyAction(JThequeSimpleAction checkProxyAction) {
-        this.checkProxyAction = checkProxyAction;
     }
 
     @Override

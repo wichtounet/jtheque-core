@@ -52,6 +52,37 @@ public interface IFeatureManager {
     void removeMenu(Menu menu);
 
     /**
+     * Return all the features of the application.
+     *
+     * @return A List containing all the features.
+     */
+    Collection<Feature> getFeatures();
+
+    /**
+     * Return the core feature.
+     *
+     * @param feature The feature type.
+     * @return The searched feature.
+     */
+    Feature getFeature(CoreFeature feature);
+
+    /**
+     * Add a feature listener.
+     *
+     * @param listener The feature listener to add.
+     */
+    void addFeatureListener(FeatureListener listener);
+
+    /**
+     * Remove a feature listener.
+     *
+     * @param listener The feature listener to remove.
+     */
+    void removeFeatureListener(FeatureListener listener);
+
+    /* Deprecated old methods */
+
+    /**
      * Create a feature.
      *
      * It's better to create a Custom Menu and to add it using addMenu method.
@@ -113,33 +144,4 @@ public interface IFeatureManager {
      */
     @Deprecated
     void removeFeature(Feature feature);
-
-    /**
-     * Return all the features of the application.
-     *
-     * @return A List containing all the features.
-     */
-    Collection<Feature> getFeatures();
-
-    /**
-     * Return the core feature.
-     *
-     * @param feature The feature type.
-     * @return The searched feature.
-     */
-    Feature getFeature(CoreFeature feature);
-
-    /**
-     * Add a feature listener.
-     *
-     * @param listener The feature listener to add.
-     */
-    void addFeatureListener(FeatureListener listener);
-
-    /**
-     * Remove a feature listener.
-     *
-     * @param listener The feature listener to remove.
-     */
-    void removeFeatureListener(FeatureListener listener);
 }

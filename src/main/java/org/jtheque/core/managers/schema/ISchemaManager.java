@@ -28,6 +28,7 @@ public interface ISchemaManager extends ActivableManager {
      * Register a schema.
      *
      * @param schema The schema to add.
+     *
      * @see Schema
      */
     void registerSchema(Schema schema);
@@ -36,6 +37,7 @@ public interface ISchemaManager extends ActivableManager {
      * Unregister a schema.
      *
      * @param schema The schema to remove.
+     *
      * @see Schema
      */
     void unregisterSchema(Schema schema);

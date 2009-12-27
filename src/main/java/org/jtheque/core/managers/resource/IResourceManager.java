@@ -131,7 +131,7 @@ public interface IResourceManager {
     BufferedImage getImage(String id);
 
     /**
-     * Return the color of the specified name.
+     * Return the color of the specified name. The color will be searched in the Spring context.
      *
      * @param name The name of the color.
      * @return The color of the specified name.
@@ -139,7 +139,7 @@ public interface IResourceManager {
     Color getColor(String name);
 
     /**
-     * Return the action of the specified name.
+     * Return the action of the specified name. The color will be searched in the Spring context.
      *
      * @param name The name of the color.
      * @return The action of the specified name.

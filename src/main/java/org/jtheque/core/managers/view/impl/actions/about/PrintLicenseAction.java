@@ -17,6 +17,7 @@ package org.jtheque.core.managers.view.impl.actions.about;
  */
 
 import org.jtheque.core.managers.Managers;
+import org.jtheque.core.managers.beans.IBeansManager;
 import org.jtheque.core.managers.view.able.ILicenceView;
 import org.jtheque.core.managers.view.able.IViewManager;
 import org.jtheque.core.managers.view.edt.SimpleTask;
@@ -40,6 +41,8 @@ public final class PrintLicenseAction extends JThequeAction {
      */
     public PrintLicenseAction() {
         super("licence.actions.print");
+
+        Managers.getManager(IBeansManager.class).inject(this);
     }
 
     @Override

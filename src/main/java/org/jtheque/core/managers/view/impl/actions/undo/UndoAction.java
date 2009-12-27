@@ -16,6 +16,7 @@ package org.jtheque.core.managers.view.impl.actions.undo;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import org.jtheque.core.managers.Managers;
 import org.jtheque.core.managers.undo.IUndoRedoManager;
 
 import javax.annotation.Resource;
@@ -28,9 +29,6 @@ import java.awt.event.KeyEvent;
  * @author Baptiste Wicht
  */
 public final class UndoAction extends AbstractAction {
-    @Resource
-    private IUndoRedoManager undoRedoManager;
-
     /**
      * Construct a new UndoAction.
      */
@@ -40,6 +38,6 @@ public final class UndoAction extends AbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent ae) {
-        undoRedoManager.undo();
+        Managers.getManager(IUndoRedoManager.class).undo();
     }
 }

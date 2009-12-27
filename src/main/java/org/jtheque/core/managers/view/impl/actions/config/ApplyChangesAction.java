@@ -18,6 +18,7 @@ package org.jtheque.core.managers.view.impl.actions.config;
 
 import org.jtheque.core.managers.view.able.IConfigView;
 import org.jtheque.core.managers.view.impl.actions.JThequeAction;
+import org.jtheque.core.utils.CoreUtils;
 
 import javax.annotation.Resource;
 import java.awt.event.ActionEvent;
@@ -28,9 +29,6 @@ import java.awt.event.ActionEvent;
  * @author Baptiste Wicht
  */
 public final class ApplyChangesAction extends JThequeAction {
-    @Resource
-    private IConfigView configView;
-
     /**
      * Construct a new AcApplyChanges.
      */
@@ -40,8 +38,8 @@ public final class ApplyChangesAction extends JThequeAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (configView.validateContent()) {
-            configView.getSelectedPanelConfig().apply();
+        if (CoreUtils.<IConfigView>getBean("configView").validateContent()) {
+            CoreUtils.<IConfigView>getBean("configView").getSelectedPanelConfig().apply();
         }
     }
 }

@@ -22,6 +22,7 @@ import org.jtheque.core.managers.module.beans.ModuleContainer;
 import org.jtheque.core.managers.view.able.IViewManager;
 import org.jtheque.core.managers.view.able.update.IModuleView;
 import org.jtheque.core.managers.view.impl.actions.JThequeAction;
+import org.jtheque.core.utils.CoreUtils;
 
 import javax.annotation.Resource;
 import java.awt.event.ActionEvent;
@@ -32,9 +33,6 @@ import java.awt.event.ActionEvent;
  * @author Baptiste Wicht
  */
 public final class UninstallModuleAction extends JThequeAction {
-    @Resource
-    private IModuleView moduleView;
-
     /**
      * Construct a new UninstallModuleAction.
      */
@@ -44,6 +42,8 @@ public final class UninstallModuleAction extends JThequeAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        IModuleView moduleView = CoreUtils.getBean("moduleView");
+
         ModuleContainer module = moduleView.getSelectedModule();
 
         boolean confirm = Managers.getManager(IViewManager.class).askI18nUserForConfirmation(

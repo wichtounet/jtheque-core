@@ -103,6 +103,11 @@ public final class PropertiesManager extends AbstractActivableManager implements
     }
 
     @Override
+    public Object getProperty(Object bean, String property){
+        return ReflectionUtils.getProperty(bean, property);
+    }
+
+    @Override
     public Object getPropertyQuickly(Object bean, String property) {
         return ReflectionUtils.getPropertyValue(bean, property);
     }

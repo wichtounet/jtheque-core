@@ -22,6 +22,7 @@ import org.jtheque.core.managers.update.repository.ModuleDescription;
 import org.jtheque.core.managers.view.able.IViewManager;
 import org.jtheque.core.managers.view.able.update.IRepositoryView;
 import org.jtheque.core.managers.view.impl.actions.JThequeAction;
+import org.jtheque.core.utils.CoreUtils;
 
 import javax.annotation.Resource;
 import java.awt.event.ActionEvent;
@@ -32,9 +33,6 @@ import java.awt.event.ActionEvent;
  * @author Baptiste Wicht
  */
 public final class InstallRepositoryModuleAction extends JThequeAction {
-    @Resource
-    private IRepositoryView repositoryView;
-
     /**
      * Construct a new InstallRepositoryModuleAction.
      */
@@ -44,7 +42,7 @@ public final class InstallRepositoryModuleAction extends JThequeAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        ModuleDescription description = repositoryView.getSelectedModule();
+        ModuleDescription description = CoreUtils.<IRepositoryView>getBean("repositoryView").getSelectedModule();
 
         if (description.getCoreVersion().isGreaterThan(Managers.getCore().getCoreCurrentVersion())) {
             Managers.getManager(IViewManager.class).displayI18nText("error.module.version.core");

@@ -19,6 +19,7 @@ package org.jtheque.core.managers.view.impl.actions.collections;
 import org.jtheque.core.managers.Managers;
 import org.jtheque.core.managers.view.able.ICollectionView;
 import org.jtheque.core.managers.view.impl.actions.JThequeAction;
+import org.jtheque.core.utils.CoreUtils;
 
 import javax.annotation.Resource;
 import java.awt.event.ActionEvent;
@@ -29,9 +30,6 @@ import java.awt.event.ActionEvent;
  * @author Baptiste Wicht
  */
 public final class ChooseAction extends JThequeAction {
-    @Resource
-    private ICollectionView collectionView;
-
     /**
      * Construct a new ChooseAction.
      */
@@ -41,6 +39,8 @@ public final class ChooseAction extends JThequeAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        ICollectionView collectionView = CoreUtils.getBean("collectionView");
+
         Managers.getCore().getLifeCycleManager().chooseCollection(collectionView.getCollection(), collectionView.getPassword(), false);
     }
 }

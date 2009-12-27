@@ -104,6 +104,5 @@
 
     <import resource="core-managers.xml"/>
     <import resource="core-views.xml"/>
-    <import resource="core-actions.xml"/>
     <import resource="core-resources.xml"/>
 </beans>

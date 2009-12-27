@@ -16,8 +16,6 @@ package org.jtheque.core.managers.error;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import java.util.Collection;
-
 /**
  * An error manager. It seems a manager who enable module to display some errors in a simple way.
  *
@@ -30,13 +28,6 @@ public interface IErrorManager {
      * @param error A new error.
      */
     void addError(JThequeError error);
-
-    /**
-     * Return all the errors.
-     *
-     * @return A List containing all the errors.
-     */
-    Collection<JThequeError> getErrors();
 
     /**
      * Add a startup error.

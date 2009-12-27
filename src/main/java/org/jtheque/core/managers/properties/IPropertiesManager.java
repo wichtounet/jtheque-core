@@ -61,16 +61,29 @@ public interface IPropertiesManager extends ActivableManager {
      * @param bean       The first bean.
      * @param other      The other bean.
      * @param properties The properties to use.
+     *
      * @return <code>true</code> if the two objects are equals else <code>false</code>.
      */
     boolean areEquals(Object bean, Object other, String... properties);
 
     /**
-     * Return the value of the property. This method doesn't parse the entire class, so it's quicker than
-     * getProperty() but it doesn't use so if you've to use many times, use getProperty.
+     * Return the value of the property. This method parse the entire class, but use a cache, so it's better to
+     * use it when we have to access a lot of times the same class.
      *
      * @param bean     The bean to get the property value from.
      * @param property The property.
+     *
+     * @return the value of the property.
+     */
+    Object getProperty(Object bean, String property);
+
+    /**
+     * Return the value of the property. This method doesn't parse the entire class, so it's quicker than
+     * getProperty() but it doesn't use cache so if you've to use it many times, use getProperty().
+     *
+     * @param bean     The bean to get the property value from.
+     * @param property The property.
+     *
      * @return the value of the property.
      */
     Object getPropertyQuickly(Object bean, String property);

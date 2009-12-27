@@ -66,9 +66,6 @@
         <property name="hintColor" ref="white"/>
         <property name="backgroundColor" ref="black"/>
         <property name="errorColor" ref="red"/>
-        <property name="cancelAction" ref="cancelCollectionAction"/>
-        <property name="chooseAction" ref="chooseCollectionAction"/>
-        <property name="createAction" ref="createCollectionAction"/>
         <property name="hintFont" ref="hintFont"/>
     </bean>
 

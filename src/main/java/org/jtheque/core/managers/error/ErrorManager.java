@@ -17,10 +17,7 @@ package org.jtheque.core.managers.error;
  */
 
 import org.jtheque.core.managers.AbstractManager;
-import org.jtheque.core.managers.IManager;
-import org.jtheque.core.managers.ManagerException;
 import org.jtheque.core.managers.view.able.IViewManager;
-import org.jtheque.utils.collections.CollectionUtils;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -51,11 +48,6 @@ public final class ErrorManager extends AbstractManager implements IErrorManager
         errors.add(error);
 
         viewManager.displayError(error);
-    }
-
-    @Override
-    public Collection<JThequeError> getErrors() {
-        return CollectionUtils.copyOf(errors);
     }
 
     @Override

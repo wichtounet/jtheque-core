@@ -17,6 +17,7 @@ package org.jtheque.core.managers.view.impl.actions.module.update;
  */
 
 import org.jtheque.core.managers.Managers;
+import org.jtheque.core.managers.beans.IBeansManager;
 import org.jtheque.core.managers.update.IUpdateManager;
 import org.jtheque.core.managers.view.able.IViewManager;
 import org.jtheque.core.managers.view.able.update.IUpdateView;
@@ -41,6 +42,8 @@ public final class AcValidateUpdateView extends JThequeAction {
      */
     public AcValidateUpdateView() {
         super("update.actions.update");
+
+        Managers.getManager(IBeansManager.class).inject(this);
     }
 
     @Override

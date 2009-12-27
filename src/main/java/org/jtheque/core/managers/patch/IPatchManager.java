@@ -28,9 +28,9 @@ public interface IPatchManager extends IManager {
     /**
      * Set updated.
      *
-     * @param updatedParameter true if the application has been updated else false.
+     * @param updated true if the application has been updated else false.
      */
-    void setUpdated(boolean updatedParameter);
+    void setUpdated(boolean updated);
 
     /**
      * Register an online patch.

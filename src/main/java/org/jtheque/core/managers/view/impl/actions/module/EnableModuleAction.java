@@ -23,6 +23,7 @@ import org.jtheque.core.managers.module.beans.ModuleState;
 import org.jtheque.core.managers.view.able.IViewManager;
 import org.jtheque.core.managers.view.able.update.IModuleView;
 import org.jtheque.core.managers.view.impl.actions.JThequeAction;
+import org.jtheque.core.utils.CoreUtils;
 import org.jtheque.utils.bean.Version;
 
 import javax.annotation.Resource;
@@ -34,9 +35,6 @@ import java.awt.event.ActionEvent;
  * @author Baptiste Wicht
  */
 public final class EnableModuleAction extends JThequeAction {
-    @Resource
-    private IModuleView moduleView;
-
     /**
      * Construct a new EnableModuleAction.
      */
@@ -46,6 +44,8 @@ public final class EnableModuleAction extends JThequeAction {
 
     @Override
     public void actionPerformed(ActionEvent arg0) {
+        IModuleView moduleView = CoreUtils.getBean("moduleView");
+
         ModuleContainer module = moduleView.getSelectedModule();
 
         if (module.getState() == ModuleState.DISABLED) {
