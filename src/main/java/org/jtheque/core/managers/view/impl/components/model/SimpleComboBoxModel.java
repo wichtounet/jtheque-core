@@ -2,6 +2,7 @@ package org.jtheque.core.managers.view.impl.components.model;
 
 import org.jtheque.utils.collections.CollectionUtils;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,44 +25,44 @@ import java.util.List;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-public class SimpleListModel<T> extends DefaultListModel {
+public class SimpleComboBoxModel<T> extends DefaultComboBoxModel {
     private final List<T> objects;
 
     /**
-     * Construct a new SimpleListModel.
+     * Construct a new SimpleComboBoxModel.
      */
-    public SimpleListModel(){
+    public SimpleComboBoxModel(){
         this(10);
     }
 
     /**
-     * Construct a new SimpleListModel.
+     * Construct a new SimpleComboBoxModel.
      *
      * @param capacity The initial capacity of the model.
      */
-    public SimpleListModel(int capacity){
+    public SimpleComboBoxModel(int capacity){
         super();
 
         objects = new ArrayList<T>(capacity);
     }
 
     /**
-     * Construct a new SimpleListModel. 
+     * Construct a new SimpleComboBoxModel.
      *
      * @param objects The objects to put in the model.
      */
-    public SimpleListModel(Collection<T> objects){
+    public SimpleComboBoxModel(Collection<T> objects){
         super();
 
         this.objects = CollectionUtils.copyOf(objects);
     }
 
     /**
-     * Construct a new SimpleListModel.
+     * Construct a new SimpleComboBoxModel.
      *
      * @param objects The objects to put in the model.
      */
-    public SimpleListModel(T[] objects){
+    public SimpleComboBoxModel(T[] objects){
         super();
 
         this.objects = Arrays.asList(objects);
@@ -73,20 +74,8 @@ public class SimpleListModel<T> extends DefaultListModel {
     }
 
     @Override
-    public Object get(int index){
-        return objects.get(index);
-    }
-
-    @Override
     public int getSize(){
         return objects.size();
-    }
-
-    @Override
-    public Object remove(int index){
-        T category = objects.remove(index);
-        fireIntervalRemoved(this, index, index);
-        return category;
     }
 
     @Override
@@ -111,19 +100,14 @@ public class SimpleListModel<T> extends DefaultListModel {
     }
 
     @Override
-    public void clear(){
-        objects.clear();
-        fireContentsChanged(this, 0, getSize());
-    }
-
-    @Override
-    public boolean removeElement(Object obj){
+    public void removeElement(Object obj){
         T category = (T) obj;
 
         int index = objects.indexOf(category);
-        boolean remove = objects.remove(category);
+
+        objects.remove(category);
+
         fireIntervalRemoved(this, index, index);
-        return remove;
     }
 
     @Override
@@ -161,5 +145,10 @@ public class SimpleListModel<T> extends DefaultListModel {
      */
     public Collection<T> getObjects(){
         return objects;
+    }
+
+    @Override
+    public T getSelectedItem(){
+        return (T)super.getSelectedItem();
     }
 }
