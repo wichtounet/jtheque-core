@@ -2,7 +2,6 @@ package org.jtheque.core.managers.event;
 
 import org.jdom.Element;
 import org.jtheque.core.managers.AbstractManager;
-import org.jtheque.core.managers.ManagerException;
 import org.jtheque.core.managers.Managers;
 import org.jtheque.core.utils.file.XMLException;
 import org.jtheque.core.utils.file.XMLReader;

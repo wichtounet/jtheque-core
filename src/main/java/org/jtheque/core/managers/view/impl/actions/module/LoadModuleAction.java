@@ -25,7 +25,6 @@ import org.jtheque.core.managers.view.impl.actions.JThequeAction;
 import org.jtheque.core.utils.CoreUtils;
 import org.jtheque.utils.StringUtils;
 
-import javax.annotation.Resource;
 import java.awt.event.ActionEvent;
 
 /**

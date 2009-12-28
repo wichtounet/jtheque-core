@@ -28,7 +28,7 @@ import java.awt.event.ActionEvent;
  *
  * @author Baptiste Wicht
  */
-public class DisplayBeanViewAction extends JThequeAction {
+public final class DisplayBeanViewAction extends JThequeAction {
     private final String view;
 
     /**

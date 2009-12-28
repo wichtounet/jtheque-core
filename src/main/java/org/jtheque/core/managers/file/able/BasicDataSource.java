@@ -32,7 +32,7 @@ public final class BasicDataSource {
      *
      * @return The version of the file.
      */
-    public final int getFileVersion() {
+    public int getFileVersion() {
         return fileVersion;
     }
 
@@ -41,7 +41,7 @@ public final class BasicDataSource {
      *
      * @param fileVersion The version of the file.
      */
-    public final void setFileVersion(int fileVersion) {
+    public void setFileVersion(int fileVersion) {
         this.fileVersion = fileVersion;
     }
 
@@ -50,7 +50,7 @@ public final class BasicDataSource {
      *
      * @return The version of JTheque.
      */
-    public final Version getVersion() {
+    public Version getVersion() {
         return version;
     }
 
@@ -59,7 +59,7 @@ public final class BasicDataSource {
      *
      * @param version The version of JTheque.
      */
-    public final void setVersion(Version version) {
+    public void setVersion(Version version) {
         this.version = version;
     }
 }

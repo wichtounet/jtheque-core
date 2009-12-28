@@ -3,8 +3,6 @@ package org.jtheque.core.managers.cache;
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.store.MemoryStoreEvictionPolicy;
 import org.jtheque.core.managers.AbstractActivableManager;
-import org.jtheque.core.managers.AbstractManager;
-import org.jtheque.core.managers.ManagerException;
 import org.jtheque.core.managers.Managers;
 import org.jtheque.core.managers.log.ILoggingManager;
 

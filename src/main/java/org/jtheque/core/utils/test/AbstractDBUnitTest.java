@@ -153,7 +153,7 @@ public abstract class AbstractDBUnitTest {
      * @throws DataSetException If an error occurs during dataset reading.
      * @throws SQLException     If an error occurs during populating database.
      */
-    protected final void createHsqldbTables(IDataSet dataSet, Connection connection) throws DataSetException, SQLException {
+    protected static final void createHsqldbTables(IDataSet dataSet, Connection connection) throws DataSetException, SQLException {
         String[] tableNames = dataSet.getTableNames();
 
         StringBuilder sql = new StringBuilder("");
@@ -173,7 +173,7 @@ public abstract class AbstractDBUnitTest {
 
                 String columnName = column.getColumnName();
                 String type = resolveType((String) table.getValue(0, columnName));
-                sql.append(columnName).append(" ").append(type);
+                sql.append(columnName).append(' ').append(type);
 
                 if (first) {
                     if (!columnName.contains("FK")) {
@@ -197,7 +197,7 @@ public abstract class AbstractDBUnitTest {
      */
     private static String resolveType(String str) {
         try {
-            if (new Integer(str).toString().equals(str)) {
+            if (Integer.valueOf(str).equals(str)) {
                 return "int";
             }
         } catch (Exception e) {

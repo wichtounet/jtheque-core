@@ -21,7 +21,7 @@ package org.jtheque.core.managers.resource;
  *
  * @author Baptiste Wicht
  */
-public class ImageDescriptor {
+public final class ImageDescriptor {
     private final String image;
     private final ImageType type;
 

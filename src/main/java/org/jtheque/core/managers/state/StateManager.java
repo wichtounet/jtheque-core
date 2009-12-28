@@ -19,7 +19,6 @@ package org.jtheque.core.managers.state;
 import org.jdom.Attribute;
 import org.jdom.Element;
 import org.jtheque.core.managers.AbstractManager;
-import org.jtheque.core.managers.IManager;
 import org.jtheque.core.managers.ManagerException;
 import org.jtheque.core.managers.Managers;
 import org.jtheque.core.managers.error.IErrorManager;

@@ -30,7 +30,6 @@ import org.jtheque.core.utils.ui.AnimationUtils;
 import org.jtheque.utils.ui.GridBagUtils;
 
 import javax.annotation.PostConstruct;
-import javax.swing.Action;
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JLabel;

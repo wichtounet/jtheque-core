@@ -3,7 +3,6 @@ package org.jtheque.core.managers.view.impl.components.model;
 import org.jtheque.utils.collections.CollectionUtils;
 
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.DefaultListModel;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;

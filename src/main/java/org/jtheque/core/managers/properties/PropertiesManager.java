@@ -17,8 +17,6 @@ package org.jtheque.core.managers.properties;
  */
 
 import org.jtheque.core.managers.AbstractActivableManager;
-import org.jtheque.core.managers.AbstractManager;
-import org.jtheque.core.managers.ManagerException;
 import org.jtheque.utils.bean.EqualsUtils;
 import org.jtheque.utils.bean.ReflectionUtils;
 import org.jtheque.utils.collections.CollectionUtils;

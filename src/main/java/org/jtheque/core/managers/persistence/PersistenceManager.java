@@ -17,7 +17,6 @@ package org.jtheque.core.managers.persistence;
  */
 
 import org.jtheque.core.managers.AbstractActivableManager;
-import org.jtheque.core.managers.ManagerException;
 import org.jtheque.core.managers.persistence.able.DataContainer;
 import org.jtheque.core.managers.persistence.able.DataContainerProvider;
 import org.jtheque.core.managers.persistence.able.Entity;

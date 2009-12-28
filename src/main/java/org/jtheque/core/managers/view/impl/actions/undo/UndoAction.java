@@ -19,7 +19,6 @@ package org.jtheque.core.managers.view.impl.actions.undo;
 import org.jtheque.core.managers.Managers;
 import org.jtheque.core.managers.undo.IUndoRedoManager;
 
-import javax.annotation.Resource;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 

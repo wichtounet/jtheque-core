@@ -17,6 +17,7 @@ package org.jtheque.core.managers.view.impl.frame.abstraction;
  */
 
 import org.jtheque.core.managers.Managers;
+import org.jtheque.core.managers.beans.IBeansManager;
 import org.jtheque.core.managers.error.IErrorManager;
 import org.jtheque.core.managers.error.JThequeError;
 import org.jtheque.core.managers.language.ILanguageManager;
@@ -25,11 +26,13 @@ import org.jtheque.core.managers.resource.IResourceManager;
 import org.jtheque.core.managers.view.able.IViewManager;
 import org.jtheque.core.managers.view.able.IWindowView;
 import org.jtheque.core.managers.view.able.components.IModel;
+import org.jtheque.core.managers.view.impl.actions.ActionFactory;
 import org.jtheque.core.managers.view.impl.components.ExtendedGlassPane;
 import org.jtheque.core.managers.view.impl.components.InfiniteWaitFigure;
 import org.jtheque.core.managers.view.impl.components.WaitFigure;
 import org.jtheque.utils.collections.ArrayUtils;
 
+import javax.swing.Action;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import java.awt.Component;
@@ -146,6 +149,36 @@ public abstract class SwingDialogView extends JDialog implements IWindowView, In
      */
     protected final void setWaitFigure(WaitFigure waitFigure) {
         getExtendedGlassPane().setWaitFigure(waitFigure);
+    }
+
+    /**
+     * Return the view manager.
+     *
+     * @return The view manager.
+     */
+    public static IViewManager getManager(){
+        return Managers.getManager(IViewManager.class);
+    }
+
+    /**
+     * Return the bean with a specific name.
+     *
+     * @param name The name of the bean.
+     * @return The bean.
+     */
+    public static <T> T getBean(String name){
+        return Managers.getManager(IBeansManager.class).<T>getBean(name);
+    }
+
+    /**
+     * Return an action to close this view.
+     *
+     * @param key The i18n key.
+     *
+     * @return An action to close this view.
+     */
+    public Action getCloseAction(String key){
+        return ActionFactory.createCloseViewAction(key, this);
     }
 
     @Override

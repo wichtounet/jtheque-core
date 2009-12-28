@@ -1,6 +1,5 @@
 package org.jtheque.core.managers.language;
 
-import org.jtheque.core.managers.AbstractManager;
 import org.jtheque.core.managers.IManager;
 import org.jtheque.core.managers.ManagerException;
 import org.jtheque.core.managers.Managers;

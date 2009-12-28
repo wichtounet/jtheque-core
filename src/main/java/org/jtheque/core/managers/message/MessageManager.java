@@ -17,8 +17,6 @@ package org.jtheque.core.managers.message;
  */
 
 import org.jtheque.core.managers.AbstractManager;
-import org.jtheque.core.managers.IManager;
-import org.jtheque.core.managers.ManagerException;
 import org.jtheque.core.managers.Managers;
 import org.jtheque.core.managers.log.ILoggingManager;
 import org.jtheque.core.managers.module.IModuleManager;
@@ -34,7 +32,7 @@ import java.util.Collection;
 /**
  * @author Baptiste Wicht
  */
-public final class MessageManager extends AbstractManager implements IMessageManager, IManager {
+public final class MessageManager extends AbstractManager implements IMessageManager {
     private final Collection<Message> messages = new ArrayList<Message>(10);
 
     @Override

@@ -17,7 +17,6 @@ package org.jtheque.core.managers.feature;
  */
 
 import org.jtheque.core.managers.AbstractManager;
-import org.jtheque.core.managers.ManagerException;
 import org.jtheque.core.managers.Managers;
 import org.jtheque.core.managers.feature.Feature.FeatureType;
 import org.jtheque.core.managers.resource.IResourceManager;

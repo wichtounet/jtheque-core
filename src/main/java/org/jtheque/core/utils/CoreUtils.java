@@ -29,7 +29,7 @@ import org.jtheque.core.managers.view.able.IViewManager;
  *
  * @author Baptiste Wicht
  */
-public class CoreUtils {
+public final class CoreUtils {
     /**
      * Utility class, not instanciable. 
      */

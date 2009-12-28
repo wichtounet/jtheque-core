@@ -24,7 +24,6 @@ import org.jtheque.core.managers.view.able.update.IModuleView;
 import org.jtheque.core.managers.view.impl.actions.JThequeAction;
 import org.jtheque.core.utils.CoreUtils;
 
-import javax.annotation.Resource;
 import java.awt.event.ActionEvent;
 
 /**

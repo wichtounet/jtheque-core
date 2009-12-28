@@ -16,12 +16,10 @@ package org.jtheque.core.managers.view.impl.actions.module.repository;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import org.jtheque.core.managers.view.able.IMessageView;
 import org.jtheque.core.managers.view.able.update.IRepositoryView;
 import org.jtheque.core.managers.view.impl.actions.JThequeAction;
 import org.jtheque.core.utils.CoreUtils;
 
-import javax.annotation.Resource;
 import java.awt.event.ActionEvent;
 
 /**

@@ -17,7 +17,6 @@ package org.jtheque.core.managers.beans;
  */
 
 import org.jtheque.core.managers.AbstractManager;
-import org.jtheque.core.managers.IManager;
 import org.jtheque.core.managers.beans.ioc.Ioc;
 import org.springframework.context.ApplicationContext;
 

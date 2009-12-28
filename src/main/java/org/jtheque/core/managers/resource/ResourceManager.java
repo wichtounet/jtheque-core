@@ -17,8 +17,6 @@ package org.jtheque.core.managers.resource;
  */
 
 import org.jtheque.core.managers.AbstractManager;
-import org.jtheque.core.managers.IManager;
-import org.jtheque.core.managers.ManagerException;
 import org.jtheque.core.managers.Managers;
 import org.jtheque.core.managers.beans.IBeansManager;
 import org.jtheque.core.managers.beans.ioc.Ioc;
@@ -42,7 +40,7 @@ import java.util.Map;
  *
  * @author Baptiste Wicht
  */
-public final class ResourceManager extends AbstractManager implements IResourceManager, IManager {
+public final class ResourceManager extends AbstractManager implements IResourceManager {
     private static final int DEFAULT_CACHE_SIZE = 50;
 
     private final Map<String, JThequeImage> cache = new HashMap<String, JThequeImage>(DEFAULT_CACHE_SIZE);

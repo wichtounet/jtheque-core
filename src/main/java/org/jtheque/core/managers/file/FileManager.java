@@ -17,8 +17,6 @@ package org.jtheque.core.managers.file;
  */
 
 import org.jtheque.core.managers.AbstractActivableManager;
-import org.jtheque.core.managers.AbstractManager;
-import org.jtheque.core.managers.ManagerException;
 import org.jtheque.core.managers.file.able.BackupReader;
 import org.jtheque.core.managers.file.able.BackupWriter;
 import org.jtheque.core.managers.file.able.Backuper;
