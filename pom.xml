@@ -10,7 +10,7 @@
     <artifactId>jtheque-core</artifactId>
     <packaging>jar</packaging>
     <name>JTheque Core</name>
-    <version>2.0.3-SNAPSHOT</version>
+    <version>2.0.3</version>
 
     <url>http://jtheque.developpez.com/utilities/core</url>
 
