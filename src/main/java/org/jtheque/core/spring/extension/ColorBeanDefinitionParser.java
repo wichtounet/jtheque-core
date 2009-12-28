@@ -31,15 +31,20 @@ import java.awt.Color;
  * @author Baptiste Wicht
  */
 public final class ColorBeanDefinitionParser extends AbstractSimpleBeanDefinitionParser {
+    /**
+     * The String definition of an int.
+     */
+    private static final String INT_VALUE = "int";
+
     @Override
     protected void doParse(Element element, ParserContext parserContext, BeanDefinitionBuilder builder) {
         ConstructorArgumentValues values = new ConstructorArgumentValues();
-        values.addGenericArgumentValue(Integer.parseInt(element.getAttribute("r")), "int");
-        values.addGenericArgumentValue(Integer.parseInt(element.getAttribute("g")), "int");
-        values.addGenericArgumentValue(Integer.parseInt(element.getAttribute("b")), "int");
+        values.addGenericArgumentValue(Integer.parseInt(element.getAttribute("r")), INT_VALUE);
+        values.addGenericArgumentValue(Integer.parseInt(element.getAttribute("g")), INT_VALUE);
+        values.addGenericArgumentValue(Integer.parseInt(element.getAttribute("b")), INT_VALUE);
 
         if (StringUtils.isNotEmpty(element.getAttribute("alpha"))) {
-            values.addGenericArgumentValue(Integer.parseInt(element.getAttribute("alpha")), "int");
+            values.addGenericArgumentValue(Integer.parseInt(element.getAttribute("alpha")), INT_VALUE);
         }
 
         builder.getBeanDefinition().setConstructorArgumentValues(values);

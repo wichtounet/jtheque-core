@@ -70,7 +70,7 @@ public final class FilthyComboBox extends JComboBox {
      *
      * @author Baptiste Wicht
      */
-    private final static class FilthyRenderer extends DefaultListCellRenderer {
+    private static final class FilthyRenderer extends DefaultListCellRenderer {
         @Override
         public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
             super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);

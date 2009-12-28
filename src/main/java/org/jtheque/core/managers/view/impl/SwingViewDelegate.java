@@ -69,22 +69,12 @@ public final class SwingViewDelegate implements ViewDelegate {
     public void displayError(JThequeError error) {
         final ErrorInfo info = new ErrorInfo("Error", error.getMessage(), error.getDetails(), "", error.getException(), Level.SEVERE, null);
 
-        run(new Runnable(){
-            @Override
-            public void run() {
-                JXErrorPane.showDialog((Component) Managers.getManager(IViewManager.class).getViews().getMainView().getImpl(), info);
-            }
-        });
+        run(new DisplayErrorRunnable(info));
     }
 
     @Override
     public void displayText(final String text) {
-        run(new Runnable(){
-            @Override
-            public void run() {
-                JOptionPane.showMessageDialog((Component) Managers.getManager(IViewManager.class).getViews().getMainView().getImpl(), text);
-            }
-        });
+        run(new DisplayTextRunnable(text));
     }
 
     @Override
@@ -205,5 +195,51 @@ public final class SwingViewDelegate implements ViewDelegate {
         }
 
         return JOptionPane.showInputDialog(parent, text);
+    }
+
+    /**
+     * A Runnable to display an error.
+     *
+     * @author Baptiste Wicht
+     */
+    private static class DisplayErrorRunnable implements Runnable {
+        private final ErrorInfo info;
+
+        /**
+         * The error info to display.
+         *
+         * @param info The error info to display.
+         */
+        public DisplayErrorRunnable(ErrorInfo info){
+            this.info = info;
+        }
+
+        @Override
+        public void run() {
+            JXErrorPane.showDialog((Component) Managers.getManager(IViewManager.class).getViews().getMainView().getImpl(), info);
+        }
+    }
+
+    /**
+     * A Runnable to display a text.
+     *
+     * @author Baptiste Wicht
+     */
+    private static class DisplayTextRunnable implements Runnable {
+        private final String text;
+
+        /**
+         * The text to display.
+         *
+         * @param text The text to display. 
+         */
+        public DisplayTextRunnable(String text){
+            this.text = text;
+        }
+
+        @Override
+        public void run() {
+            JOptionPane.showMessageDialog((Component) Managers.getManager(IViewManager.class).getViews().getMainView().getImpl(), text);
+        }
     }
 }
