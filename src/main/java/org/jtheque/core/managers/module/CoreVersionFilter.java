@@ -40,7 +40,7 @@ final class CoreVersionFilter implements Filter<ModuleContainer> {
                 Managers.getManager(IViewManager.class).displayI18nText("error.module.core.version.greater");
 
                 return false;
-            } else if (!currentVersion.equals(neededVersion) && !Core.getInstance().isNotCompatibleWith(neededVersion)) {
+            } else if (!currentVersion.equals(neededVersion) && Core.getInstance().isNotCompatibleWith(neededVersion)) {
                 return verifyForUpdate(module);
             }
         }

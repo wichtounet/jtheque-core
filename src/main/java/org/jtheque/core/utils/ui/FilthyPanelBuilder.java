@@ -4,6 +4,7 @@ import org.jdesktop.swingx.JXTree;
 import org.jtheque.core.managers.view.impl.components.JThequeI18nLabel;
 import org.jtheque.core.managers.view.impl.components.filthy.FilthyComboBox;
 import org.jtheque.core.managers.view.impl.components.filthy.FilthyList;
+import org.jtheque.core.managers.view.impl.components.filthy.FilthyPanel;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
@@ -66,7 +67,11 @@ public final class FilthyPanelBuilder extends PanelBuilder {
      * @param layout The layout to set to the builded panel.
      */
     public FilthyPanelBuilder(LayoutManager layout){
-        super(layout);
+        super(new FilthyPanel(layout), false);
+    }
+
+    public FilthyPanelBuilder(JPanel panel, boolean layout) {
+        super(panel, layout);
     }
 
     @Override
@@ -98,7 +103,6 @@ public final class FilthyPanelBuilder extends PanelBuilder {
 
     @Override
     void initJThequeDefaults() {
-        getPanel().setLayout(new GridBagLayout());
         getPanel().setOpaque(false);
         getPanel().setBorder(Borders.EMPTY_BORDER);
     }

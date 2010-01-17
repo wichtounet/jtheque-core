@@ -23,7 +23,7 @@ import org.jtheque.utils.bean.Version;
  *
  * @author Baptiste Wicht
  */
-public final class BasicDataSource {
+public class BasicDataSource {
     private int fileVersion;
     private Version version;
 

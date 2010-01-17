@@ -1,8 +1,14 @@
 Versions
 
-Ce document présente les différentes versions de JTheque Core. 
+Ce document présente les différentes versions de JTheque Core.
 
-* 2.0.3.SNAPSHOT Version de travail
+* 2.0.3 29.12.2009 Simplification des modules et UI
+
+    * Ajout des modules du dossier à l'application
+    * Classe utilitaire d'accès aux méthodes courantes
+    * Amélioration du support de Swing
+    * Facilité de construction du menu
+    * Application.xml plus simple
 
 * 2.0.2 29.11.2009 Suppression des modules primaires
 

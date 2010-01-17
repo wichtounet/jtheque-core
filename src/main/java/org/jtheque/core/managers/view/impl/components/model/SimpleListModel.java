@@ -75,29 +75,29 @@ public class SimpleListModel<T> extends DefaultListModel {
     }
 
     @Override
-    public Object getElementAt(int index){
+    public final Object getElementAt(int index){
         return objects.get(index);
     }
 
     @Override
-    public Object get(int index){
+    public final Object get(int index){
         return objects.get(index);
     }
 
     @Override
-    public int getSize(){
+    public final int getSize(){
         return objects.size();
     }
 
     @Override
-    public Object remove(int index){
+    public final Object remove(int index){
         T category = objects.remove(index);
         fireIntervalRemoved(this, index, index);
         return category;
     }
 
     @Override
-    public void addElement(Object obj){
+    public final void addElement(Object obj){
         objects.add((T) obj);
         fireIntervalAdded(this, getSize(), getSize());
     }
@@ -118,13 +118,13 @@ public class SimpleListModel<T> extends DefaultListModel {
     }
 
     @Override
-    public void clear(){
+    public final void clear(){
         objects.clear();
         fireContentsChanged(this, 0, getSize());
     }
 
     @Override
-    public boolean removeElement(Object obj){
+    public final boolean removeElement(Object obj){
         T category = (T) obj;
 
         int index = objects.indexOf(category);
@@ -134,7 +134,7 @@ public class SimpleListModel<T> extends DefaultListModel {
     }
 
     @Override
-    public void removeAllElements(){
+    public final void removeAllElements(){
         objects.clear();
         fireContentsChanged(this, 0, getSize());
     }

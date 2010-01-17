@@ -28,7 +28,7 @@ import java.awt.Graphics2D;
  *
  * @author Baptiste Wicht
  */
-public class InfiniteWaitUI extends BufferedLayerUI<JComponent> {
+public final class InfiniteWaitUI extends BufferedLayerUI<JComponent> {
     private final WaitFigure waitFigure;
 
     private final SizeTracker tracker;

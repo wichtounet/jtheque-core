@@ -4,6 +4,7 @@ import org.jdesktop.swingx.JXErrorPane;
 import org.jdesktop.swingx.error.ErrorInfo;
 import org.jtheque.core.managers.Managers;
 import org.jtheque.core.managers.error.JThequeError;
+import org.jtheque.core.managers.log.ILoggingManager;
 import org.jtheque.core.managers.view.Views;
 import org.jtheque.core.managers.view.able.IView;
 import org.jtheque.core.managers.view.able.IViewManager;
@@ -12,13 +13,12 @@ import org.jtheque.utils.io.SimpleFilter;
 import org.jtheque.utils.ui.SwingUtils;
 
 import javax.annotation.Resource;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
+import javax.swing.*;
 import java.awt.Component;
 import java.awt.GraphicsEnvironment;
 import java.awt.Window;
 import java.io.File;
+import java.lang.reflect.InvocationTargetException;
 import java.util.logging.Level;
 
 /*
@@ -47,18 +47,31 @@ public final class SwingViewDelegate implements ViewDelegate {
     private JFileChooser chooser;
 
     @Override
-    public boolean askYesOrNo(String text, String title) {
+    public boolean askYesOrNo(final String text, final String title) {
         boolean yes = false;
 
-        Window parent = null;
+        final int[] response = new int[1];
 
-        if (Managers.getManager(IViewManager.class).getViews().getMainView() != null) {
-            parent = (Window) Managers.getManager(IViewManager.class).getViews().getMainView().getImpl();
+        try {
+            SwingUtilities.invokeAndWait(new Runnable(){
+                @Override
+                public void run() {
+                    Window parent = null;
+
+                    if (Managers.getManager(IViewManager.class).getViews().getMainView() != null) {
+                        parent = (Window) Managers.getManager(IViewManager.class).getViews().getMainView().getImpl();
+                    }
+
+                    response[0] = JOptionPane.showConfirmDialog(parent, text, title, JOptionPane.YES_NO_OPTION);
+                }
+            });
+        } catch (InterruptedException e) {
+            Managers.getManager(ILoggingManager.class).getLogger(getClass()).error(e);
+        } catch (InvocationTargetException e) {
+            Managers.getManager(ILoggingManager.class).getLogger(getClass()).error(e);
         }
 
-        final int response = JOptionPane.showConfirmDialog(parent, text, title, JOptionPane.YES_NO_OPTION);
-
-        if (response == JOptionPane.YES_OPTION) {
+        if (response[0] == JOptionPane.YES_OPTION) {
             yes = true;
         }
 
@@ -73,7 +86,7 @@ public final class SwingViewDelegate implements ViewDelegate {
     }
 
     @Override
-    public void displayText(final String text) {
+    public void displayText(String text) {
         run(new DisplayTextRunnable(text));
     }
 
@@ -210,7 +223,7 @@ public final class SwingViewDelegate implements ViewDelegate {
          *
          * @param info The error info to display.
          */
-        public DisplayErrorRunnable(ErrorInfo info){
+        DisplayErrorRunnable(ErrorInfo info){
             this.info = info;
         }
 
@@ -233,7 +246,7 @@ public final class SwingViewDelegate implements ViewDelegate {
          *
          * @param text The text to display. 
          */
-        public DisplayTextRunnable(String text){
+        DisplayTextRunnable(String text){
             this.text = text;
         }
 

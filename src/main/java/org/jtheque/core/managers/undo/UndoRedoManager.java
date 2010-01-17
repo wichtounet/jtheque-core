@@ -19,7 +19,6 @@ package org.jtheque.core.managers.undo;
 import org.jtheque.core.managers.ManagerException;
 import org.jtheque.core.managers.Managers;
 import org.jtheque.core.managers.log.ILoggingManager;
-import org.jtheque.core.managers.resource.IResourceManager;
 
 import javax.swing.Action;
 import javax.swing.undo.CannotUndoException;
@@ -49,12 +48,8 @@ public final class UndoRedoManager extends UndoManager implements IUndoRedoManag
 
     @Override
     public void init() throws ManagerException {
-        undoAction = Managers.getManager(IResourceManager.class).getAction("undoAction");
-        redoAction = Managers.getManager(IResourceManager.class).getAction("redoAction");
-
         stateChanged();
     }
-
 
     @Override
     public boolean isEnabled() {
@@ -73,6 +68,16 @@ public final class UndoRedoManager extends UndoManager implements IUndoRedoManag
         stateChanged();
 
         return add;
+    }
+
+    @Override
+    public void setUndoAction(Action undoAction){
+        this.undoAction = undoAction;
+    }
+
+    @Override
+    public void setRedoAction(Action redoAction){
+        this.redoAction = redoAction;
     }
 
     @Override

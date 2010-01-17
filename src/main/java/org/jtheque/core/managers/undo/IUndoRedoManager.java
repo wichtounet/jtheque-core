@@ -18,6 +18,7 @@ package org.jtheque.core.managers.undo;
 
 import org.jtheque.core.managers.ActivableManager;
 
+import javax.swing.Action;
 import javax.swing.undo.UndoableEdit;
 
 /**
@@ -43,4 +44,18 @@ public interface IUndoRedoManager extends ActivableManager {
      * @return true if the action has been added else false.
      */
     boolean addEdit(UndoableEdit edit);
+
+    /**
+     * Set the undo action.
+     *
+     * @param undoAction The undo action.
+     */
+    void setUndoAction(Action undoAction);
+
+    /**
+     * Set the redo action.
+     *
+     * @param redoAction The redo action.
+     */
+    void setRedoAction(Action redoAction);
 }

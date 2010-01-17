@@ -88,7 +88,7 @@ public enum SystemProperty {
      *
      * @param value The value of the property.
      */
-    public void set(final String value) {
+    public final void set(final String value) {
         AccessController.doPrivileged(new PrivilegedAction<String>() {
             @Override
             public String run() {
@@ -102,7 +102,7 @@ public enum SystemProperty {
      *
      * @return The name of the property. 
      */
-    public String getName() {
+    public final String getName() {
         return name;
     }
 }

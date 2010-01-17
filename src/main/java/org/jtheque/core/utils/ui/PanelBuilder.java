@@ -93,7 +93,7 @@ public class PanelBuilder {
      * @param panel The panel to build.
      * @param layout If true set a default layout (GridBagLayout) to the builded panel.
      */
-    private PanelBuilder(JPanel panel, boolean layout){
+    public PanelBuilder(JPanel panel, boolean layout){
         super();
 
         if(layout){

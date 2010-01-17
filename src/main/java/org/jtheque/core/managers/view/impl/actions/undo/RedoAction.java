@@ -33,6 +33,10 @@ public final class RedoAction extends AbstractAction {
      */
     public RedoAction() {
         super("undo.actions.redo", "redo", KeyEvent.VK_Y);
+
+        Managers.getManager(IUndoRedoManager.class).setRedoAction(this);
+
+        setEnabled(false);
     }
 
     @Override

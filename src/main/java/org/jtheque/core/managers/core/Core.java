@@ -42,7 +42,7 @@ import java.util.Collection;
  */
 public final class Core implements ICore {
     private static final String CORE_MESSAGES_FILE = "http://jtheque.developpez.com/public/messages/core.message";
-    private static final Version VERSION = new Version("2.0.2");
+    private static final Version VERSION = new Version("2.0.3.1");
 
     private static final ICore CORE = new Core();
 
@@ -115,7 +115,9 @@ public final class Core implements ICore {
 
     @Override
     public boolean isNotCompatibleWith(Version version) {
-        return !(version.equals(VERSION) || VERSION.isGreaterThan(version));//Only compatible with next versions
+		//Compatible with 2.0.2 and greater versions
+        Version version202 = new Version("2.0.2");
+        return !(version.equals(version202) || version.isGreaterThan(version202));
     }
 
     @Override
@@ -136,11 +138,6 @@ public final class Core implements ICore {
     @Override
     public ILifeCycleManager getLifeCycleManager() {
         return lifeCycleManager;
-    }
-
-    @Override
-    public String getImagesBaseName() {
-        return IMAGES_BASE_NAME;
     }
 
     @Override

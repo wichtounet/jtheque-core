@@ -33,6 +33,10 @@ public final class UndoAction extends AbstractAction {
      */
     public UndoAction() {
         super("undo.actions.undo", "undo", KeyEvent.VK_Z);
+
+        Managers.getManager(IUndoRedoManager.class).setUndoAction(this);
+
+        setEnabled(false);
     }
 
     @Override

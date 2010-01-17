@@ -104,13 +104,6 @@ public interface ICore {
     ILifeCycleManager getLifeCycleManager();
 
     /**
-     * Return the base name for the images.
-     *
-     * @return The base name for the images.
-     */
-    String getImagesBaseName();
-
-    /**
      * Return the configuration of the core.
      *
      * @return The configuration of the core.

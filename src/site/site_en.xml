@@ -1,12 +1,9 @@
 <project name="JTheque Core">
     <skin>
-        <groupId>com.anasoft.os</groupId>
-        <artifactId>m2st-stylus-ext-skin</artifactId>
-        <version>2.0</version>
+        <groupId>org.jtheque</groupId>
+        <artifactId>jtheque-maven-skin</artifactId>
+        <version>1.0</version>
     </skin>
-
-    <publishDate position="right"/>
-    <version position="right"/>
 
     <body>
         <links>
@@ -15,12 +12,10 @@
         </links>
 
         <breadcrumbs>
-            <item name="JTheque Core" href="http://jtheque.developpez.com/utilities/core/"/>
-        </breadcrumbs>
-
-        <menu name="Parent">
+            <item name="JTheque" href="http://jtheque.developpez.com/en/"/>
             <item name="JTheque Utilities" href="http://jtheque.developpez.com/utilities/en/"/>
-        </menu>
+            <item name="JTheque Core" href="http://jtheque.developpez.com/utilities/core/en/"/>
+        </breadcrumbs>
 
         <menu name="JTheque Core">
             <item name="Overview" href="index.html"/>
@@ -35,7 +30,7 @@
         </menu>
 
         <menu name="Others languages">
-            <item name="FranÃ§ais" href="../index.html"/>
+            <item name="Français" href="../index.html"/>
         </menu>
 
         <menu ref="reports"/>

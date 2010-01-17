@@ -75,17 +75,17 @@ public class SimpleComboBoxModel<T> extends DefaultComboBoxModel {
     }
 
     @Override
-    public Object getElementAt(int index){
+    public final Object getElementAt(int index){
         return objects.get(index);
     }
 
     @Override
-    public int getSize(){
+    public final int getSize(){
         return objects.size();
     }
 
     @Override
-    public void addElement(Object obj){
+    public final void addElement(Object obj){
         objects.add((T) obj);
         fireIntervalAdded(this, getSize(), getSize());
     }
@@ -106,7 +106,7 @@ public class SimpleComboBoxModel<T> extends DefaultComboBoxModel {
     }
 
     @Override
-    public void removeElement(Object obj){
+    public final void removeElement(Object obj){
         T category = (T) obj;
 
         int index = objects.indexOf(category);
@@ -117,7 +117,7 @@ public class SimpleComboBoxModel<T> extends DefaultComboBoxModel {
     }
 
     @Override
-    public void removeAllElements(){
+    public final void removeAllElements(){
         objects.clear();
         fireContentsChanged(this, 0, getSize());
     }
@@ -149,12 +149,12 @@ public class SimpleComboBoxModel<T> extends DefaultComboBoxModel {
      *
      * @return A List containing all the objects of the model.
      */
-    public Collection<T> getObjects(){
+    public Iterable<T> getObjects(){
         return objects;
     }
 
     @Override
-    public T getSelectedItem(){
+    public final T getSelectedItem(){
         return (T)super.getSelectedItem();
     }
 }

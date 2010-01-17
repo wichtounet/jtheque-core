@@ -43,7 +43,7 @@ public final class ModuleConfiguration extends AbstractState {
 
     @Override
     public void delegateLoad(Collection<NodeState> nodes) {
-        for (NodeState node : nodes) {
+        for (NodeState node : nodes){
             if ("module".equals(node.getName())) {
                 infos.add(convertToModuleInfo(node));
             } else if("discovery".equals(node.getName())){

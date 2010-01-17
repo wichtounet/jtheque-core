@@ -139,7 +139,7 @@ public final class AboutPane extends AbstractAboutPane implements IAboutView, In
         paintTitle(g2, xStart, yStart, textColor);
 
         if (logo != null) {
-            PaintUtils.drawAlphaImage(g2, logo, xStart, xStart + 65, getAlpha());
+            PaintUtils.drawAlphaImage(g2, logo, xStart, yStart + 65, getAlpha());
         }
 
         int y = paintInfos(g2, yStart + 65);
