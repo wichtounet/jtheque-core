@@ -50,27 +50,33 @@ public final class SwingViewDelegate implements ViewDelegate {
     public boolean askYesOrNo(final String text, final String title) {
         boolean yes = false;
 
+		Window parent = null;
+
+		if (Managers.getManager(IViewManager.class).getViews().getMainView() != null) {
+			parent = (Window) Managers.getManager(IViewManager.class).getViews().getMainView().getImpl();
+		}
+
+		final Window p = parent;
+
         final int[] response = new int[1];
 
-        try {
-            SwingUtilities.invokeAndWait(new Runnable(){
-                @Override
-                public void run() {
-                    Window parent = null;
-
-                    if (Managers.getManager(IViewManager.class).getViews().getMainView() != null) {
-                        parent = (Window) Managers.getManager(IViewManager.class).getViews().getMainView().getImpl();
-                    }
-
-                    response[0] = JOptionPane.showConfirmDialog(parent, text, title, JOptionPane.YES_NO_OPTION);
-                }
-            });
-        } catch (InterruptedException e) {
-            Managers.getManager(ILoggingManager.class).getLogger(getClass()).error(e);
-        } catch (InvocationTargetException e) {
-            Managers.getManager(ILoggingManager.class).getLogger(getClass()).error(e);
-        }
-
+		if(SwingUtilities.isEventDispatchThread()){
+			response[0] = JOptionPane.showConfirmDialog(parent, text, title, JOptionPane.YES_NO_OPTION);
+		} else {
+			try {
+				SwingUtilities.invokeAndWait(new Runnable(){
+					@Override
+					public void run() {
+						response[0] = JOptionPane.showConfirmDialog(p, text, title, JOptionPane.YES_NO_OPTION);
+					}
+				});
+			} catch (InterruptedException e) {
+				Managers.getManager(ILoggingManager.class).getLogger(getClass()).error(e);
+			} catch (InvocationTargetException e) {
+				Managers.getManager(ILoggingManager.class).getLogger(getClass()).error(e);
+			}
+		}
+		
         if (response[0] == JOptionPane.YES_OPTION) {
             yes = true;
         }

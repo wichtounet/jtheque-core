@@ -16,6 +16,8 @@ package org.jtheque.core.managers.persistence.able;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import org.jtheque.core.utils.CoreUtils;
+
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -37,6 +39,8 @@ public final class DataContainerProvider {
      */
     public void addContainer(DataContainer<? extends Entity> container) {
         assert container != null : "Container can't be null";
+
+		CoreUtils.getLogger(getClass()).debug("Add container {} for datatype {}", container, container.getDataType());
 
         containers.add(container);
     }
@@ -84,6 +88,8 @@ public final class DataContainerProvider {
                 break;
             }
         }
+
+		CoreUtils.getLogger(getClass()).debug("Get container {} : return {}", dataType, container );
 
         return container;
     }

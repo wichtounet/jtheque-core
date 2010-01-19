@@ -19,7 +19,6 @@ import javax.swing.ListSelectionModel;
 import javax.swing.tree.TreeCellRenderer;
 import javax.swing.tree.TreeModel;
 import java.awt.Color;
-import java.awt.GridBagLayout;
 import java.awt.LayoutManager;
 
 /*
