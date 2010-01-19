@@ -60,15 +60,6 @@ public abstract class GenericDao<T extends Entity> implements JThequeDao {
     }
 
     /**
-     * Return the persistence manager.
-     *
-     * @return The Persistence Manager.
-     */
-    private IDaoPersistenceContext getPersistenceManager() {
-        return persistenceContext;
-    }
-
-    /**
      * Return all the entity managed by this dao.
      *
      * @return A List containing all the entities managed by the dao.

@@ -197,9 +197,9 @@ public abstract class AbstractDBUnitTest {
      */
     private static String resolveType(String str) {
         try {
-            if (Integer.valueOf(str).equals(str)) {
-                return "int";
-            }
+			Integer.parseInt(str);
+
+			return "int";
         } catch (Exception e) {
             //Nothing to do here
         }

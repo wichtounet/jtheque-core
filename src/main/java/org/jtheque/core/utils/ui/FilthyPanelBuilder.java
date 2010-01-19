@@ -69,6 +69,12 @@ public final class FilthyPanelBuilder extends PanelBuilder {
         super(new FilthyPanel(layout), false);
     }
 
+	/**
+	 * Construct a new FilthyPanelBuilder with a specific panel.
+	 *
+	 * @param panel The panel to build.
+	 * @param layout Indicate if we must set a default layout on the panel or keep the existing one. 
+	 */
     public FilthyPanelBuilder(JPanel panel, boolean layout) {
         super(panel, layout);
     }

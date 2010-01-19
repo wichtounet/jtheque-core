@@ -78,11 +78,6 @@ public class LayerTabbedPane extends JTabbedPane implements ViewComponent {
         addTab(title, layerComponent);
     }
 
-    /**
-     * Return the selected component.
-     *
-     * @return the selected component.
-     */
     @Override
     public final JComponent getSelectedComponent() {
         if (getSelectedIndex() != -1) {
@@ -176,7 +171,6 @@ public class LayerTabbedPane extends JTabbedPane implements ViewComponent {
         }
 
         @Override
-        @SuppressWarnings("unchecked")
         public void stateChanged(ChangeEvent e) {
             LayerTabbedPane pane = (LayerTabbedPane) e.getSource();
             JXLayer<JComponent> layer = pane.getSelectedLayer();

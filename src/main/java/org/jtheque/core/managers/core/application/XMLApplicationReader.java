@@ -228,12 +228,15 @@ public final class XMLApplicationReader {
         if(reader.existsNode(node, reader.getRootElement())){
             Object iconElement = reader.getNode(node, reader.getRootElement());
 
-            String path = SystemProperty.USER_DIR.get() + "images/" + reader.readString("image", iconElement);
+            StringBuilder path = new StringBuilder(SystemProperty.USER_DIR.get());
+			path.append("images/");
+			path.append(reader.readString("image", iconElement));
+
 
             if(reader.existsValue("@image", iconElement)){
-                path += reader.readString("@image", iconElement);
+                path.append(reader.readString("@image", iconElement));
             } else {
-                path += reader.readString("image", iconElement);
+                path.append(reader.readString("image", iconElement));
             }
 
             ImageType type;
@@ -248,7 +251,7 @@ public final class XMLApplicationReader {
                 type = ImageType.PNG;
             }
 
-            return new ImageDescriptor(path, type);
+            return new ImageDescriptor(path.toString(), type);
         }
 
         return new ImageDescriptor(node, ImageType.PNG);

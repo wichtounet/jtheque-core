@@ -41,7 +41,5 @@ public interface ISplashView {
      *
      * @return The implementation of the view.
      */
-    //Component getImpl();
-
     LayerUI<JComponent> getImpl();
 }

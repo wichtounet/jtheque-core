@@ -1,9 +1,9 @@
 package org.jtheque.core.spring.aspect;
 
-import org.apache.log4j.Logger;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.slf4j.LoggerFactory;
 
 /*
  * This file is part of JTheque.
@@ -28,57 +28,69 @@ import org.aspectj.lang.annotation.Aspect;
  */
 @Aspect
 public final class ManagerLoggingAspect {
-    /**
-     * Log the init method of the managers.
-     *
-     * @param joinPoint The join point of the advised method.
-     * @return null
-     * @throws Throwable Throw if the init method throws an exception.
-     */
-    @Around("execution(* org.jtheque.core.managers.*Manager.init())")
-    public Object logInit(ProceedingJoinPoint joinPoint) throws Throwable {
-        Logger.getLogger(getClass()).trace(joinPoint.getSourceLocation().getWithinType().getSimpleName() + " init started");
+	/**
+	 * Log the init method of the managers.
+	 *
+	 * @param joinPoint The join point of the advised method.
+	 *
+	 * @return The return value of the joint point method.
+	 *
+	 * @throws Throwable Throw if the init method throws an exception.
+	 */
+	@Around("execution(* org.jtheque.core.managers.*Manager.init())")
+	public Object logInit(ProceedingJoinPoint joinPoint) throws Throwable{
+		return trace(joinPoint, "init");
+	}
 
-        Object retVal = joinPoint.proceed();
+	/**
+	 * Log the preInit method of the managers.
+	 *
+	 * @param joinPoint The join point of the advised method.
+	 *
+	 * @return The return value of the joint point method.
+	 *
+	 * @throws Throwable Throw if the preInit method throws an exception.
+	 */
+	@Around("execution(* org.jtheque.core.managers.*Manager.preInit())")
+	public Object logPreInit(ProceedingJoinPoint joinPoint) throws Throwable{
+		return trace(joinPoint, "pre-init");
+	}
 
-        Logger.getLogger(getClass()).trace(joinPoint.getSourceLocation().getWithinType().getSimpleName() + " init finished");
+	/**
+	 * Log the close method of the managers.
+	 *
+	 * @param joinPoint The join point of the advised method.
+	 *
+	 * @return The return value of the joint point method.
+	 *
+	 * @throws Throwable Throw if the close method throws an exception.
+	 */
+	@Around("execution(* org.jtheque.core.managers.*Manager.close())")
+	public Object logClose(ProceedingJoinPoint joinPoint) throws Throwable{
+		return trace(joinPoint, "close");
+	}
 
-        return retVal;
-    }
+	/**
+	 * Trace the join point method start and finish
+	 *
+	 * @param joinPoint The join point to trace.
+	 * @param phase The current manager phase.
+	 *
+	 * @return The return value of the joint point method.
+	 *
+	 * @throws Throwable Throw if the traced method throws an exception.
+	 */
+	private Object trace(ProceedingJoinPoint joinPoint, String phase) throws Throwable{
+		LoggerFactory.getLogger(getClass()).trace(
+				"{} {} started",
+				joinPoint.getSourceLocation().getWithinType().getSimpleName(), phase);
 
-    /**
-     * Log the preInit method of the managers.
-     *
-     * @param joinPoint The join point of the advised method.
-     * @return null
-     * @throws Throwable Throw if the preInit method throws an exception.
-     */
-    @Around("execution(* org.jtheque.core.managers.*Manager.preInit())")
-    public Object logPreInit(ProceedingJoinPoint joinPoint) throws Throwable {
-        Logger.getLogger(getClass()).trace(joinPoint.getSourceLocation().getWithinType().getSimpleName() + " pre-init started");
+		Object retVal = joinPoint.proceed();
 
-        Object retVal = joinPoint.proceed();
+		LoggerFactory.getLogger(getClass()).trace(
+				"{} {} finished",
+				joinPoint.getSourceLocation().getWithinType().getSimpleName(), phase);
 
-        Logger.getLogger(getClass()).trace(joinPoint.getSourceLocation().getWithinType().getSimpleName() + " pre-init finished");
-
-        return retVal;
-    }
-
-    /**
-     * Log the close method of the managers.
-     *
-     * @param joinPoint The join point of the advised method.
-     * @return null
-     * @throws Throwable Throw if the close method throws an exception.
-     */
-    @Around("execution(* org.jtheque.core.managers.*Manager.close())")
-    public Object logClose(ProceedingJoinPoint joinPoint) throws Throwable {
-        Logger.getLogger(getClass()).trace(joinPoint.getSourceLocation().getWithinType().getSimpleName() + " close started");
-
-        Object retVal = joinPoint.proceed();
-
-        Logger.getLogger(getClass()).trace(joinPoint.getSourceLocation().getWithinType().getSimpleName() + " close finished");
-
-        return retVal;
-    }
+		return retVal;
+	}
 }
