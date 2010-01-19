@@ -56,6 +56,15 @@ public abstract class AbstractUpdateAction implements UpdateAction {
     }
 
     /**
+     * Return the name of the file.
+     *
+     * @return The name of the file. 
+     */
+    public String getFile() {
+        return file;
+    }
+
+    /**
      * Build the file path with the specified folder and file.
      *
      * @param folder The folder of the file path.

@@ -1,9 +1,16 @@
 News
 
+* 19.01.2010  JTheque Core 2.0.3.1
+
+    J'ai le plaisir de vous annoncer la sortie de la version 2.0.3.1 du core. Cette version corrige quelques
+    bugs de la version précédente et permet de faciliter le passage à JTheque Primary Utils. Cette version
+    est toujours compatible avec les versions 2.0.2 et supérieures.
+
 * 29.12.2009  JTheque Core 2.0.3
 
     La version 2.0.3 du core est maintenant disponible. Cette version facilite le développement d'applications et de
-    modules . Pour plus d'informations, rendez-vous sur la page {{{versions.html} versions}}.
+    modules . Pour plus d'informations, rendez-vous sur la page {{{versions.html} versions}}. Cette version
+    est toujours compatible avec la version 2.0.2.
 
 * 29.11.2009  JTheque Core 2.0.2
 

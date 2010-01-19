@@ -139,7 +139,7 @@
                 <configuration>
                   <locales>fr,en</locales>
                 </configuration>
-                <executions>
+                <!--<executions>
                     <execution>
                         <id>deploy-site</id>
                         <phase>deploy</phase>
@@ -147,7 +147,7 @@
                             <goal>deploy</goal>
                         </goals>
                     </execution>
-                </executions>
+                </executions>-->
             </plugin>
         </plugins>
 

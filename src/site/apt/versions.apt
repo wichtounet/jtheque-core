@@ -2,6 +2,13 @@ Versions
 
 Ce document présente les différentes versions de JTheque Core.
 
+* 2.0.3.1 19.01.2010 Correction de bugs
+
+    * Correction de bugs au lancement
+    * Correction des layouts des builders
+    * Correction de la vue à propos de
+    * Refactorings légers
+
 * 2.0.3 29.12.2009 Simplification des modules et UI
 
     * Ajout des modules du dossier à l'application

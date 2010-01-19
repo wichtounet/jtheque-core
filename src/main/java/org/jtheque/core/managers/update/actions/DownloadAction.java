@@ -17,11 +17,16 @@ package org.jtheque.core.managers.update.actions;
  */
 
 import org.jtheque.core.managers.Managers;
+import org.jtheque.core.managers.error.InternationalizedError;
 import org.jtheque.core.managers.log.ILoggingManager;
+import org.jtheque.core.managers.view.able.IViewManager;
 import org.jtheque.utils.OSUtils;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.io.FileException;
 import org.jtheque.utils.io.FileUtils;
+
+import java.io.File;
+import java.io.FileNotFoundException;
 
 /**
  * An update action that download a file.
@@ -36,9 +41,18 @@ public final class DownloadAction extends AbstractUpdateAction {
     public void execute() {
         if (canBeExecutedOnThisOS()) {
             try {
+                if(!new File(getDestination()).delete()){
+                    setFile("dljt_" + getFile());
+                }
+
                 FileUtils.downloadFile(url, getDestination());
             } catch (FileException e) {
                 Managers.getManager(ILoggingManager.class).getLogger(getClass()).error(e);
+
+                if(e.getCause() instanceof FileNotFoundException){
+                    Managers.getManager(IViewManager.class).displayError(
+                            new InternationalizedError("error.update.download", e.getMessage()));
+                }
             }
         }
     }

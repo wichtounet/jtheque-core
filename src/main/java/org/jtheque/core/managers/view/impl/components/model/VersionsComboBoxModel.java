@@ -32,7 +32,7 @@ import java.util.List;
  * @author Baptiste Wicht
  */
 public final class VersionsComboBoxModel extends DefaultComboBoxModel {
-    private Mode mode = Mode.KERNEL;
+    private Mode mode;
     private ModuleContainer currentModule;
     private Updatable currentUpdatable;
     private final List<Version> versions = new ArrayList<Version>(5);
@@ -71,7 +71,7 @@ public final class VersionsComboBoxModel extends DefaultComboBoxModel {
             mode = Mode.KERNEL;
 
             versions.clear();
-            versions.addAll(Managers.getManager(IUpdateManager.class).getVersions(false));
+            versions.addAll(Managers.getManager(IUpdateManager.class).getVersions(Managers.getCore()));
         }
     }
 
