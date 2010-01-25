@@ -104,6 +104,8 @@ public final class SwingViewDelegate implements ViewDelegate {
             chooser = new JFileChooser();
         }
 
+        chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+
         if (filter == null) {
             chooser.setAcceptAllFileFilterUsed(true);
         } else {

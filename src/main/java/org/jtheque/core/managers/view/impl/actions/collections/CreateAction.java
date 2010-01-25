@@ -38,7 +38,7 @@ public final class CreateAction extends JThequeAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        ICollectionView collectionView = CoreUtils.getBean("collectionView");
+        ICollectionView collectionView = CoreUtils.getBean("collectionPane");
 
         Managers.getCore().getLifeCycleManager().chooseCollection(collectionView.getCollection(), collectionView.getPassword(), true);
     }

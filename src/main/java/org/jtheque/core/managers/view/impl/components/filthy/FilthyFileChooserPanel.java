@@ -203,6 +203,8 @@ public final class FilthyFileChooserPanel extends JPanel implements Internationa
         }
     }
 
+
+
     /**
      * A Browse action.
      *

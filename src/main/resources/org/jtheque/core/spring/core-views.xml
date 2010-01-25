@@ -51,11 +51,7 @@
     <!-- Config panels -->
 
     <bean id="_configAppearanceView" class="org.jtheque.core.managers.view.impl.components.config.JPanelConfigAppearance"/>
-
-    <bean id="_configNetworkView" class="org.jtheque.core.managers.view.impl.components.config.JPanelConfigNetwork">
-        <property name="checkProxyAction" ref="checkProxyAction"/>
-    </bean>
-
+    <bean id="_configNetworkView" class="org.jtheque.core.managers.view.impl.components.config.JPanelConfigNetwork" />
     <bean id="_configOthersView" class="org.jtheque.core.managers.view.impl.components.config.JPanelConfigOthers"/>
 
     <!-- Java2D panes -->

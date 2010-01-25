@@ -42,7 +42,6 @@
         <constructor-arg value="Arial Black" type="java.lang.String"/>
         <constructor-arg value="0" type="int"/>
         <constructor-arg value="30" type="int"/>
-
     </bean>
 
     <bean id="hintFont" class="java.awt.Font">

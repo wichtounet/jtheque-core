@@ -153,7 +153,7 @@ public abstract class AbstractDBUnitTest {
      * @throws DataSetException If an error occurs during dataset reading.
      * @throws SQLException     If an error occurs during populating database.
      */
-    protected static final void createHsqldbTables(IDataSet dataSet, Connection connection) throws DataSetException, SQLException {
+    protected static void createHsqldbTables(IDataSet dataSet, Connection connection) throws DataSetException, SQLException {
         String[] tableNames = dataSet.getTableNames();
 
         StringBuilder sql = new StringBuilder("");
