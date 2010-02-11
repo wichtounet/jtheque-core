@@ -26,24 +26,16 @@
             <url>ftp://developpez.com/utilities/core</url>
         </site>
         <repository>
-            <id>jtheque-web-server</id>
-            <name>JTheque Repository Server</name>
-            <url>ftp://developpez.com/repository</url>
+            <id>Server-PC-releases</id>
+            <name>Server-PC-releases</name>
+            <url>http://wichtounet.homedns.org:8280/artifactory/libs-releases-local</url>
         </repository>
+        <snapshotRepository>
+            <id>Server-PC-snapshots</id>
+            <name>Server-PC-snapshots</name>
+            <url>http://wichtounet.homedns.org:8280/artifactory/libs-snapshots-local</url>
+    </snapshotRepository>
     </distributionManagement>
-
-    <repositories>
-        <repository>
-            <id>JTheque</id>
-            <url>http://jtheque.developpez.com/repository</url>
-        </repository>
-        <repository>
-            <id>Version99</id>
-            <name>Version 99 Does Not Exist Maven repository</name>
-            <layout>default</layout>
-            <url>http://no-commons-logging.zapto.org/mvn2</url>
-        </repository>
-    </repositories>
 
     <scm>
         <url>http://wichtounet.homedns.org/svn/jtheque-core/</url>
@@ -140,13 +132,13 @@
                   <locales>fr,en</locales>
                 </configuration>
                 <executions>
-                    <execution> 
+                    <!-- <execution>
                         <id>deploy-site</id>
                         <phase>deploy</phase>
                         <goals>
                             <goal>deploy</goal>
                         </goals>
-                    </execution>
+                    </execution>-->
                 </executions>
             </plugin>
         </plugins>
@@ -211,7 +203,7 @@
         <dependency>
             <groupId>org.jtheque</groupId>
             <artifactId>jtheque-utils</artifactId>
-            <version>1.1.2</version>
+            <version>1.1.3</version>
         </dependency>
             
         <dependency>
