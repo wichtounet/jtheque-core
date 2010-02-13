@@ -17,22 +17,18 @@ package org.jtheque.core.managers.view.impl.components.renderers;
  */
 
 import org.jdesktop.swingx.JXHyperlink;
-import org.jtheque.core.managers.Managers;
-import org.jtheque.core.managers.language.ILanguageManager;
 import org.jtheque.core.managers.module.beans.ModuleContainer;
-import org.jtheque.core.managers.update.IUpdateManager;
-import org.jtheque.core.managers.view.able.IViewManager;
 import org.jtheque.core.managers.view.impl.actions.utils.OpenSiteLinkAction;
+import org.jtheque.core.managers.view.impl.components.JThequeI18nLabel;
+import org.jtheque.core.utils.ui.Borders;
+import org.jtheque.core.utils.ui.builders.FilthyPanelBuilder;
 import org.jtheque.core.utils.ui.builders.I18nPanelBuilder;
-import org.jtheque.core.utils.ui.builders.JThequePanelBuilder;
 import org.jtheque.core.utils.ui.builders.PanelBuilder;
 import org.jtheque.utils.ui.GridBagUtils;
 
-import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.ListCellRenderer;
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 
@@ -42,19 +38,17 @@ import java.awt.Font;
  * @author Baptiste Wicht
  */
 public final class ModuleListRenderer extends JPanel implements ListCellRenderer {
-    private final JLabel labelName;
-    private final JLabel labelAuthor;
+    private final JThequeI18nLabel labelTitle;
+    private final JThequeI18nLabel labelState;
+    private final JThequeI18nLabel labelCurrentVersion;
+    private final JThequeI18nLabel labelOnlineVersion;
+    private final JXHyperlink labelSite;
 
-    private JLabel labelDate;
-    private JLabel labelState;
-    private JLabel labelCurrentVersion;
-    private JLabel labelOnlineVersion;
-    private JXHyperlink labelSite;
-    private Component labelStateText;
-    private Component labelDateText;
-    private Component labelSiteText;
-    private Component labelCurrentVersionText;
-    private Component labelOnlineVersionText;
+    //Keeps fonts to quickly switch them
+    private Font fontTitle;
+    private Font fontTitleBold;
+    private Font fontLabel;
+    private Font fontLabelBold;
 
     private static final int TITLE_FONT_SIZE = 16;
 
@@ -64,70 +58,17 @@ public final class ModuleListRenderer extends JPanel implements ListCellRenderer
     public ModuleListRenderer() {
         super();
 
-        I18nPanelBuilder builder = new JThequePanelBuilder(this);
+        I18nPanelBuilder builder = new FilthyPanelBuilder(this);
+        builder.setBorder(Borders.createEmptyBorder(2, 2, 2, 10));
 
-        labelName = builder.addLabel(builder.gbcSet(0, 0, PanelBuilder.BOLD, TITLE_FONT_SIZE, GridBagUtils.HORIZONTAL, GridBagUtils.BASELINE_LEADING, 2, 1));
-        labelAuthor = builder.addLabel(builder.gbcSet(4, 0, GridBagUtils.HORIZONTAL, GridBagUtils.BASELINE_LEADING, 2, 1));
+        labelTitle = builder.addI18nLabel("modules.view.label.title", PanelBuilder.NORMAL, TITLE_FONT_SIZE,
+                builder.gbcSet(0, 0, GridBagUtils.HORIZONTAL, GridBagUtils.BASELINE_LEADING, 0, 1, 1.0, 0.0));
 
-        addStateLabels(builder);
-        addDateLabels(builder);
-        addSiteLabels(builder);
-        addCurrentVersionLabels(builder);
-        addOnlineVersionLabels(builder);
-    }
+        labelState = builder.addI18nLabel("modules.view.label.state", builder.gbcSet(0, 1));
+        labelSite = builder.add(new JXHyperlink(), builder.gbcSet(1, 1));
 
-    /**
-     * Add the online version label.
-     *
-     * @param builder The panel builder.
-     */
-    private void addOnlineVersionLabels(I18nPanelBuilder builder) {
-        labelOnlineVersionText = builder.addI18nLabel("modules.view.label.versions.online", builder.gbcSet(2, 2));
-        labelOnlineVersion = builder.addLabel("", builder.gbcSet(3, 2, GridBagUtils.NONE, GridBagUtils.BASELINE_LEADING, 3, 1));
-    }
-
-    /**
-     * Add the current version label.
-     *
-     * @param builder The panel builder.
-     */
-    private void addCurrentVersionLabels(I18nPanelBuilder builder) {
-        labelCurrentVersionText = builder.addI18nLabel("modules.view.label.versions.current", builder.gbcSet(0, 2));
-
-        labelCurrentVersion = builder.addLabel(builder.gbcSet(1, 2));
-    }
-
-    /**
-     * Add the sites version label.
-     *
-     * @param builder The panel builder.
-     */
-    private void addSiteLabels(I18nPanelBuilder builder) {
-        labelSiteText = builder.addI18nLabel("modules.view.label.site", builder.gbcSet(2, 1));
-
-        labelSite = builder.add(new JXHyperlink(), builder.gbcSet(3, 1, GridBagUtils.NONE, GridBagUtils.BASELINE_LEADING, 3, 1));
-    }
-
-    /**
-     * Add the state version label.
-     *
-     * @param builder The panel builder.
-     */
-    private void addStateLabels(I18nPanelBuilder builder) {
-        labelStateText = builder.addI18nLabel("modules.view.label.state", builder.gbcSet(2, 0));
-
-        labelState = builder.addLabel(builder.gbcSet(3, 0));
-    }
-
-    /**
-     * Add the date version label.
-     *
-     * @param builder The panel builder.
-     */
-    private void addDateLabels(I18nPanelBuilder builder) {
-        labelDateText = builder.addI18nLabel("modules.view.label.date", builder.gbcSet(0, 1));
-
-        labelDate = builder.addLabel(builder.gbcSet(1, 1));
+        labelCurrentVersion = builder.addI18nLabel("modules.view.label.versions.current", builder.gbcSet(0, 2));
+        labelOnlineVersion = builder.addI18nLabel("modules.view.label.versions.online", builder.gbcSet(1, 2));
     }
 
     @Override
@@ -144,15 +85,30 @@ public final class ModuleListRenderer extends JPanel implements ListCellRenderer
      * @param isSelected A boolean flag indicating if the current element is selected or not.
      */
     private void updateUI(boolean isSelected) {
-        if (isSelected) {
-            setBackground(Managers.getManager(IViewManager.class).getViewDefaults().getSelectedBackgroundColor());
-            setChildsForeground(Managers.getManager(IViewManager.class).getViewDefaults().getSelectedForegroundColor());
-        } else {
-            setBackground(Managers.getManager(IViewManager.class).getViewDefaults().getBackgroundColor());
-            setChildsForeground(Managers.getManager(IViewManager.class).getViewDefaults().getForegroundColor());
-        }
+        initFonts();
 
-        labelOnlineVersion.setBackground(getBackground());
+        if(isSelected){
+            setFonts(fontTitleBold, fontLabelBold);
+        } else {
+            setFonts(fontTitle, fontLabel);
+        }
+    }
+
+    private void initFonts() {
+        if(fontTitle == null){
+            fontTitle = labelTitle.getFont();
+            fontTitleBold = fontTitle.deriveFont(Font.BOLD);
+
+            fontLabel = labelCurrentVersion.getFont();
+            fontLabelBold = fontLabel.deriveFont(Font.BOLD);
+        }
+    }
+
+    private void setFonts(Font fontTitle, Font fontLabel) {
+        labelTitle.setFont(fontTitle);
+        labelCurrentVersion.setFont(fontLabel);
+        labelOnlineVersion.setFont(fontLabel);
+        labelState.setFont(fontLabel);
     }
 
     /**
@@ -163,28 +119,10 @@ public final class ModuleListRenderer extends JPanel implements ListCellRenderer
     private void updateInfos(Object value) {
         ModuleContainer module = (ModuleContainer) value;
 
-        labelName.setText(module.getName());
-        labelAuthor.setText(Managers.getManager(ILanguageManager.class).getMessage("modules.view.label.author") + " : " +
-                module.getAuthor());
-        labelCurrentVersion.setText(module.getInfos().version());
-        labelState.setText(module.getState().toString());
-
-        setToolTipText(module.getDescription());
-
-        setModuleDefinitionInfos(module);
-    }
-
-    /**
-     * Update the informations with the module definition.
-     *
-     * @param module The module to get the informations from.
-     */
-    private void setModuleDefinitionInfos(ModuleContainer module) {
-        if (module.getInfos().date() == null || module.getInfos().date().isEmpty()) {
-            labelDate.setText("");
-        } else {
-            labelDate.setText(module.getInfos().date());
-        }
+        labelTitle.setTextKey("modules.view.label.title", module.getName(), module.getAuthor());
+        labelState.setTextKey("modules.view.label.state", module.getState().toString());
+        labelCurrentVersion.setTextKey("modules.view.label.versions.current", module.getInfos().version());
+        labelOnlineVersion.setTextKey("modules.view.label.versions.online", module.getMostRecentVersion().getVersion());
 
         if (module.getInfos().url() == null || module.getInfos().url().isEmpty()) {
             labelSite.setAction(null);
@@ -192,26 +130,6 @@ public final class ModuleListRenderer extends JPanel implements ListCellRenderer
             labelSite.setAction(new OpenSiteLinkAction(module.getInfos().url()));
         }
 
-        labelOnlineVersion.setText(Managers.getManager(IUpdateManager.class).getMostRecentVersion(module).getVersion());
-    }
-
-    /**
-     * Set the foregound of the childs.
-     *
-     * @param color The foreground color.
-     */
-    private void setChildsForeground(Color color) {
-        labelName.setForeground(color);
-        labelAuthor.setForeground(color);
-        labelDate.setForeground(color);
-        labelSite.setForeground(color);
-        labelCurrentVersion.setForeground(color);
-        labelCurrentVersionText.setForeground(color);
-        labelOnlineVersion.setForeground(color);
-        labelOnlineVersionText.setForeground(color);
-        labelDateText.setForeground(color);
-        labelSiteText.setForeground(color);
-        labelState.setForeground(color);
-        labelStateText.setForeground(color);
+        setToolTipText(module.getDescription());
     }
 }

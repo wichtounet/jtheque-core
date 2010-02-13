@@ -11,15 +11,14 @@ import org.jtheque.core.managers.view.impl.actions.module.InstallModuleAction;
 import org.jtheque.core.managers.view.impl.actions.module.LoadModuleAction;
 import org.jtheque.core.managers.view.impl.actions.module.UninstallModuleAction;
 import org.jtheque.core.managers.view.impl.actions.module.UpdateModuleAction;
+import org.jtheque.core.managers.view.impl.components.filthy.FilthyBackgroundPanel;
 import org.jtheque.core.managers.view.impl.components.model.ModuleListModel;
 import org.jtheque.core.managers.view.impl.components.renderers.ModuleListRenderer;
-import org.jtheque.core.utils.ui.builders.JThequePanelBuilder;
+import org.jtheque.core.utils.ui.builders.FilthyPanelBuilder;
 import org.jtheque.core.utils.ui.builders.PanelBuilder;
 import org.jtheque.utils.ui.GridBagUtils;
-import org.jtheque.utils.ui.LinedButtonBarBuilder;
 
 import javax.swing.JList;
-import javax.swing.JPanel;
 
 /*
  * This file is part of JTheque.
@@ -40,7 +39,7 @@ import javax.swing.JPanel;
 /**
  * @author Baptiste Wicht
  */
-public final class ModulesPanel extends JPanel implements IModulesPanelView {
+public final class ModulesPanel extends FilthyBackgroundPanel implements IModulesPanelView {
     private final JList modulesList;
 
     /**
@@ -49,19 +48,18 @@ public final class ModulesPanel extends JPanel implements IModulesPanelView {
     public ModulesPanel(){
         super();
 
-        PanelBuilder builder = new JThequePanelBuilder(this);
+        PanelBuilder builder = new FilthyPanelBuilder(this);
 
         builder.add(new KernelInfoPanel(), builder.gbcSet(0, 0, GridBagUtils.HORIZONTAL, GridBagUtils.BASELINE_LEADING, 1.0, 0.0));
 
         modulesList = builder.addScrolledList(new ModuleListModel(), new ModuleListRenderer(), builder.gbcSet(0, 1, GridBagUtils.BOTH, GridBagUtils.BASELINE_LEADING, 1.0, 1.0));
         modulesList.setVisibleRowCount(4);
 
-        LinedButtonBarBuilder barBuilder = new LinedButtonBarBuilder(2);
-
-        barBuilder.addActions(1, new EnableModuleAction(), new DisableModuleAction(), new UninstallModuleAction(), new UpdateModuleAction());
-        barBuilder.addActions(2, new InstallModuleAction(), new LoadModuleAction(), ActionFactory.createDisplayViewAction("modules.actions.repository", "repositoryView"));
-
-        builder.add(barBuilder.getPanel(), builder.gbcSet(0, 2, GridBagUtils.HORIZONTAL, GridBagUtils.BASELINE_LEADING, 1.0, 0.0));
+        builder.addButtonBar(builder.gbcSet(0, 2, GridBagUtils.HORIZONTAL, GridBagUtils.BASELINE_LEADING, 1.0, 0.0),
+                new EnableModuleAction(), new DisableModuleAction(), new UninstallModuleAction(), new UpdateModuleAction());
+        
+        builder.addButtonBar(builder.gbcSet(0, 3, GridBagUtils.HORIZONTAL, GridBagUtils.BASELINE_LEADING, 1.0, 0.0),
+                new InstallModuleAction(), new LoadModuleAction(), ActionFactory.createDisplayViewAction("modules.actions.repository", "repositoryView"));
     }
 
     @Override

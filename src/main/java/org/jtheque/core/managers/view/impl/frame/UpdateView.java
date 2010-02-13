@@ -21,8 +21,9 @@ import org.jtheque.core.managers.update.Updatable;
 import org.jtheque.core.managers.view.able.components.IModel;
 import org.jtheque.core.managers.view.able.update.IUpdateView;
 import org.jtheque.core.managers.view.impl.actions.module.update.AcValidateUpdateView;
+import org.jtheque.core.managers.view.impl.components.filthy.FilthyRenderer;
 import org.jtheque.core.managers.view.impl.components.model.VersionsComboBoxModel;
-import org.jtheque.core.managers.view.impl.frame.abstraction.SwingBuildedDialogView;
+import org.jtheque.core.managers.view.impl.frame.abstraction.SwingFilthyBuildedDialogView;
 import org.jtheque.core.utils.ui.builders.I18nPanelBuilder;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.ui.GridBagUtils;
@@ -32,7 +33,7 @@ import org.jtheque.utils.ui.GridBagUtils;
  *
  * @author Baptiste Wicht
  */
-public final class UpdateView extends SwingBuildedDialogView<IModel> implements IUpdateView {
+public final class UpdateView extends SwingFilthyBuildedDialogView<IModel> implements IUpdateView {
     private VersionsComboBoxModel model;
 
     private Mode mode = Mode.KERNEL;
@@ -60,7 +61,7 @@ public final class UpdateView extends SwingBuildedDialogView<IModel> implements 
 
         model = new VersionsComboBoxModel();
 
-        builder.addComboBox(model, builder.gbcSet(0, 1, GridBagUtils.HORIZONTAL));
+        builder.addComboBox(model, new FilthyRenderer(), builder.gbcSet(0, 1, GridBagUtils.HORIZONTAL));
 
         builder.addButtonBar(builder.gbcSet(0, 2, GridBagUtils.HORIZONTAL), new AcValidateUpdateView(), getCloseAction("update.actions.cancel"));
     }

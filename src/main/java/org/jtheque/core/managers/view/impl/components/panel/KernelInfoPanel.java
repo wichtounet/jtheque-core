@@ -19,14 +19,12 @@ package org.jtheque.core.managers.view.impl.components.panel;
 import org.jtheque.core.managers.Managers;
 import org.jtheque.core.managers.update.IUpdateManager;
 import org.jtheque.core.managers.view.impl.actions.module.UpdateKernelAction;
+import org.jtheque.core.utils.ui.builders.FilthyPanelBuilder;
 import org.jtheque.core.utils.ui.builders.I18nPanelBuilder;
-import org.jtheque.core.utils.ui.builders.JThequePanelBuilder;
 import org.jtheque.core.utils.ui.builders.PanelBuilder;
 import org.jtheque.utils.ui.GridBagUtils;
 
 import javax.swing.JPanel;
-import java.awt.Component;
-import java.awt.Font;
 import java.awt.Insets;
 
 /**
@@ -50,18 +48,18 @@ public final class KernelInfoPanel extends JPanel {
      * Build the GUI.
      */
     private void build() {
-        I18nPanelBuilder builder = new JThequePanelBuilder(this);
+        I18nPanelBuilder builder = new FilthyPanelBuilder(this);
 
         builder.setDefaultInsets(new Insets(4, 4, 4, 4));
 
         builder.addI18nLabel("modules.view.label.kernel", PanelBuilder.BOLD, TITLE_FONT_SIZE,
                 builder.gbcSet(0, 0, GridBagUtils.NONE, GridBagUtils.LINE_START, 1, 3));
 
-        builder.addI18nLabel("modules.view.label.versions.current", builder.gbcSet(1, 0));
+        builder.addI18nLabel("modules.view.core.version.current", builder.gbcSet(1, 0));
 
         builder.addLabel(Managers.getCore().getCoreCurrentVersion().getVersion(), builder.gbcSet(1, 1));
 
-        builder.addI18nLabel("modules.view.label.versions.online", builder.gbcSet(2, 0));
+        builder.addI18nLabel("modules.view.core.version.online", builder.gbcSet(2, 0));
 
         builder.addLabel(Managers.getManager(IUpdateManager.class).getMostRecentVersion(Managers.getCore()).getVersion(), getForeground(),
                 builder.gbcSet(2, 1));

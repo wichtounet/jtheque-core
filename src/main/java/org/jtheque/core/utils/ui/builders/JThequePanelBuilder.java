@@ -7,6 +7,7 @@ import org.jtheque.core.managers.language.ILanguageManager;
 import org.jtheque.core.managers.view.able.IViewManager;
 import org.jtheque.core.managers.view.impl.components.JThequeCheckBox;
 import org.jtheque.core.managers.view.impl.components.JThequeI18nLabel;
+import org.jtheque.core.managers.view.impl.components.JThequeLabel;
 import org.jtheque.core.utils.ui.BorderUpdater;
 import org.jtheque.core.utils.ui.Borders;
 import org.jtheque.utils.ui.ButtonBarBuilder;
@@ -18,6 +19,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.JTable;
@@ -26,6 +28,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.TableModel;
 import javax.swing.tree.TreeCellRenderer;
 import javax.swing.tree.TreeModel;
+import java.awt.Color;
 import java.awt.LayoutManager;
 
 /*
@@ -103,6 +106,43 @@ public class JThequePanelBuilder extends BasicPanelBuilder implements I18nPanelB
     @Override
     public JCheckBox addI18nCheckBox(String key, Object constraints) {
         return add(new JThequeCheckBox(key), constraints);
+    }
+
+    @Override
+    public JLabel addLabel(Object constraints) {
+        return add(new JThequeLabel(""), constraints);
+    }
+
+    @Override
+    public JLabel addLabel(String text, Object constraints) {
+        return add(new JThequeLabel(text), constraints);
+    }
+
+    @Override
+    public JLabel addLabel(String text, Color foreground, Object constraints) {
+        JLabel label = addLabel(text, constraints);
+
+        label.setForeground(foreground);
+
+        return label;
+    }
+
+    @Override
+    public JLabel addLabel(String text, int style, Object constraints) {
+        JLabel label = addLabel(text, constraints);
+
+        applyStyle(style,label);
+
+        return label;
+    }
+
+    @Override
+    public JLabel addLabel(String text, int style, float size, Object constraints) {
+        JLabel label = addLabel(text, style, constraints);
+
+        label.setFont(label.getFont().deriveFont(size));
+
+        return label;
     }
 
     @Override

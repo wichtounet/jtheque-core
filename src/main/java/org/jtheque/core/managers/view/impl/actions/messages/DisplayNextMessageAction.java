@@ -37,6 +37,6 @@ public final class DisplayNextMessageAction extends JThequeAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        CoreUtils.<IMessageView>getBean("messagesView").next();
+        CoreUtils.<IMessageView>getBean("messageView").next();
     }
 }

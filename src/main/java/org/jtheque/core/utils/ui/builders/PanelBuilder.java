@@ -39,6 +39,7 @@ import java.awt.Insets;
 import java.awt.LayoutManager;
 
 public interface PanelBuilder {
+    int NORMAL = 0;
     int BOLD = 1;
     int ITALIC = 2;
 

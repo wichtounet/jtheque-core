@@ -46,7 +46,7 @@ public final class ModuleRepositoryListRenderer implements ListCellRenderer {
         if (panels.get(index) == null) {
             panels.put(index, new ModulePanel(value, isSelected));
         } else {
-            panels.get(index).setSelected(isSelected);
+            panels.get(index).updateUI(isSelected);
         }
 
         return panels.get(index);

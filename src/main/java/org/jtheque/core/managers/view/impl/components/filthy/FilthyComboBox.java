@@ -5,13 +5,11 @@ import org.jtheque.core.managers.resource.IResourceManager;
 import org.jtheque.core.utils.ui.Borders;
 
 import javax.swing.AbstractButton;
-import javax.swing.BorderFactory;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JComboBox;
 import javax.swing.JList;
 import javax.swing.UIManager;
-import javax.swing.border.CompoundBorder;
 import java.awt.Color;
 import java.awt.Component;
 
@@ -50,9 +48,10 @@ public final class FilthyComboBox extends JComboBox {
         setOpaque(false);
         setBackground(resources.getColor("filthyInputColor"));
 
-        setBorder(new CompoundBorder(
+        /* Doesn't work with Substance
+            setBorder(new CompoundBorder(
                 BorderFactory.createLineBorder(resources.getColor("filthyInputBorderColor"), 2),
-                BorderFactory.createEmptyBorder(2, 2, 2, 2)));
+                BorderFactory.createEmptyBorder(2, 2, 2, 2)));*/
 
         UIManager.put("ComboBox.selectionBackground", new Color(0, 0, 0, 0));
 

@@ -21,7 +21,7 @@ import org.jtheque.core.managers.view.able.IMessageView;
 import org.jtheque.core.managers.view.able.components.IModel;
 import org.jtheque.core.managers.view.impl.actions.messages.DisplayNextMessageAction;
 import org.jtheque.core.managers.view.impl.actions.messages.DisplayPreviousMessageAction;
-import org.jtheque.core.managers.view.impl.frame.abstraction.SwingBuildedDialogView;
+import org.jtheque.core.managers.view.impl.frame.abstraction.SwingFilthyBuildedDialogView;
 import org.jtheque.core.managers.view.impl.models.IMessageModel;
 import org.jtheque.core.managers.view.impl.models.MessageModel;
 import org.jtheque.core.utils.ui.builders.I18nPanelBuilder;
@@ -36,7 +36,7 @@ import javax.swing.JTextArea;
  *
  * @author Baptiste Wicht
  */
-public final class MessageView extends SwingBuildedDialogView<IModel> implements IMessageView {
+public final class MessageView extends SwingFilthyBuildedDialogView<IModel> implements IMessageView {
     private JLabel dateLabel;
     private JLabel sourceLabel;
     private JLabel titleLabel;

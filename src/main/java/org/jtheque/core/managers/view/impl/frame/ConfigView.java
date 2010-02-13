@@ -27,7 +27,7 @@ import org.jtheque.core.managers.view.impl.components.config.ConfigTabComponent;
 import org.jtheque.core.managers.view.impl.frame.abstraction.SwingFilthyBuildedDialogView;
 import org.jtheque.core.managers.view.listeners.ConfigTabEvent;
 import org.jtheque.core.managers.view.listeners.ConfigTabListener;
-import org.jtheque.core.utils.ui.builders.PanelBuilder;
+import org.jtheque.core.utils.ui.builders.I18nPanelBuilder;
 import org.jtheque.utils.ui.GridBagUtils;
 
 import java.util.Collection;
@@ -56,7 +56,7 @@ public final class ConfigView extends SwingFilthyBuildedDialogView<IModel> imple
     }
 
     @Override
-    protected void buildView(PanelBuilder builder){
+    protected void buildView(I18nPanelBuilder builder){
         tab = new LayerTabbedPane();
 
         for (ConfigTabComponent component : getManager().getConfigTabComponents()) {

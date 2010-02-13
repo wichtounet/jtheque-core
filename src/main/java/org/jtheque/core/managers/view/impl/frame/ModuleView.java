@@ -25,7 +25,7 @@ import org.jtheque.core.managers.view.able.update.IModuleView;
 import org.jtheque.core.managers.view.impl.components.LayerTabbedPane;
 import org.jtheque.core.managers.view.impl.components.panel.ModulesPanel;
 import org.jtheque.core.managers.view.impl.components.panel.UpdatablesPanel;
-import org.jtheque.core.managers.view.impl.frame.abstraction.SwingBuildedDialogView;
+import org.jtheque.core.managers.view.impl.frame.abstraction.SwingFilthyBuildedDialogView;
 import org.jtheque.core.utils.ui.builders.I18nPanelBuilder;
 import org.jtheque.utils.ui.GridBagUtils;
 
@@ -36,7 +36,7 @@ import javax.swing.JComponent;
  *
  * @author Baptiste Wicht
  */
-public final class ModuleView extends SwingBuildedDialogView<IModel> implements IModuleView {
+public final class ModuleView extends SwingFilthyBuildedDialogView<IModel> implements IModuleView {
     private IModulesPanelView modulesPanel;
     private IUpdatablesPanelView updatablesPanel;
 
@@ -64,7 +64,7 @@ public final class ModuleView extends SwingBuildedDialogView<IModel> implements 
         tabbed.addInternationalizedTab("modules.view.tab.modules", (JComponent) modulesPanel);
         tabbed.addInternationalizedTab("modules.view.tab.updatables", (JComponent) updatablesPanel);
 
-        builder.add(tabbed, builder.gbcSet(0, 0, GridBagUtils.BOTH));
+        builder.add(tabbed, builder.gbcSet(0, 0, GridBagUtils.BOTH, GridBagUtils.BASELINE_LEADING, 1.0, 1.0));
     }
 
     @Override

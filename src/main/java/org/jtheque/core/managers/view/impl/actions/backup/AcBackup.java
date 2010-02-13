@@ -1,11 +1,11 @@
 package org.jtheque.core.managers.view.impl.actions.backup;
 
 import org.jtheque.core.managers.Managers;
+import org.jtheque.core.managers.beans.IBeansManager;
 import org.jtheque.core.managers.error.IErrorManager;
 import org.jtheque.core.managers.file.IFileManager;
 import org.jtheque.core.managers.file.able.FileType;
-import org.jtheque.core.managers.log.IJThequeLogger;
-import org.jtheque.core.managers.log.Logger;
+import org.jtheque.core.managers.log.ILoggingManager;
 import org.jtheque.core.managers.view.able.IViewManager;
 import org.jtheque.core.managers.view.impl.actions.JThequeAction;
 import org.jtheque.utils.io.FileException;
@@ -46,9 +46,6 @@ public abstract class AcBackup extends JThequeAction {
     @Resource
     private IViewManager viewManager;
 
-    @Logger
-    private IJThequeLogger logger;
-
     /**
      * Construct a new AcBackup.
      *
@@ -61,6 +58,8 @@ public abstract class AcBackup extends JThequeAction {
 
         this.filter = filter;
         this.type = type;
+
+        Managers.getManager(IBeansManager.class).inject(this);
     }
 
     @Override
@@ -75,7 +74,7 @@ public abstract class AcBackup extends JThequeAction {
                 try {
                     fileManager.backup(type, file);
                 } catch (FileException e1) {
-                    logger.error(e1);
+                    Managers.getManager(ILoggingManager.class).getLogger(getClass()).error(e1);
                     Managers.getManager(IErrorManager.class).addInternationalizedError("error.backup.error");
                 }
             }

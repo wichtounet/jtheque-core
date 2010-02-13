@@ -94,6 +94,42 @@ public final class FilthyPanelBuilder extends JThequePanelBuilder {
     }
 
     @Override
+    public JLabel addLabel(String text, int style, float size, Object constraints) {
+        JLabel label = super.addLabel(text, style, size, constraints);
+
+        label.setForeground(Color.white);
+
+        return label;
+    }
+
+    @Override
+    public JLabel addLabel(Object constraints) {
+        JLabel label = super.addLabel(constraints);
+
+        label.setForeground(Color.white);
+
+        return label;
+    }
+
+    @Override
+    public JLabel addLabel(String text, Color foreground, Object constraints) {
+        JLabel label = super.addLabel(text, foreground, constraints);
+
+        label.setForeground(Color.white);
+
+        return label;
+    }
+
+    @Override
+    public JLabel addLabel(String text, int style, Object constraints) {
+        JLabel label = super.addLabel(text, style, constraints);
+
+        label.setForeground(Color.white);
+
+        return label;
+    }
+
+    @Override
     public JLabel addLabel(String text, Object constraints) {
         JLabel label = super.addLabel(text, constraints);
 

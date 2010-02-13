@@ -1,6 +1,5 @@
 package org.jtheque.core.utils.ui.builders;
 
-import org.jdesktop.swingx.JXTable;
 import org.jtheque.utils.ui.ButtonBarBuilder;
 
 import javax.swing.Action;

@@ -42,7 +42,7 @@ import java.util.Collection;
  */
 public final class Core implements ICore {
     private static final String CORE_MESSAGES_FILE = "http://jtheque.developpez.com/public/messages/core.message";
-    private static final Version VERSION = new Version("2.0.3.1");
+    private static final Version VERSION = new Version("2.1");
 
     private static final ICore CORE = new Core();
 

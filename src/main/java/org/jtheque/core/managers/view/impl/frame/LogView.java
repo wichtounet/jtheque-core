@@ -5,19 +5,16 @@ import org.jtheque.core.managers.event.EventLog;
 import org.jtheque.core.managers.view.able.ILogView;
 import org.jtheque.core.managers.view.able.components.IModel;
 import org.jtheque.core.managers.view.impl.actions.event.UpdateAction;
+import org.jtheque.core.managers.view.impl.components.filthy.FilthyRenderer;
 import org.jtheque.core.managers.view.impl.components.model.EventsTableModel;
 import org.jtheque.core.managers.view.impl.components.model.LogComboBoxModel;
-import org.jtheque.core.managers.view.impl.frame.abstraction.SwingBuildedDialogView;
-import org.jtheque.core.utils.ui.Borders;
+import org.jtheque.core.managers.view.impl.frame.abstraction.SwingFilthyBuildedDialogView;
 import org.jtheque.core.utils.ui.builders.I18nPanelBuilder;
 import org.jtheque.core.utils.ui.builders.PanelBuilder;
 import org.jtheque.utils.ui.GridBagUtils;
 
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.JTable;
 import javax.swing.JTextArea;
-import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.Insets;
@@ -46,8 +43,8 @@ import java.text.DateFormat;
  *
  * @author Baptiste Wicht
  */
-public final class LogView extends SwingBuildedDialogView<IModel> implements ListSelectionListener, ItemListener, ILogView {
-    private JTable tableEvents;
+public final class LogView extends SwingFilthyBuildedDialogView<IModel> implements ListSelectionListener, ItemListener, ILogView {
+    private JXTable tableEvents;
     private EventsTableModel eventsModel;
 
     private JLabel labelTitle;
@@ -93,7 +90,8 @@ public final class LogView extends SwingBuildedDialogView<IModel> implements Lis
 
         builder.addI18nLabel("log.view.log", builder.gbcSet(0, 0, GridBagUtils.NONE, GridBagUtils.LINE_END));
 
-        builder.addComboBox(new LogComboBoxModel(), builder.gbcSet(1, 0, GridBagUtils.HORIZONTAL, GridBagUtils.LINE_START, 1.0, 0.0)).addItemListener(this);
+        builder.addComboBox(new LogComboBoxModel(), new FilthyRenderer(),
+                builder.gbcSet(1, 0, GridBagUtils.HORIZONTAL, GridBagUtils.LINE_START, 1.0, 0.0)).addItemListener(this);
 
         eventsModel = new EventsTableModel();
         eventsModel.setHeaders(new String[]{
@@ -103,8 +101,9 @@ public final class LogView extends SwingBuildedDialogView<IModel> implements Lis
                 getMessage("log.view.source"),
                 getMessage("log.view.title")});
 
-        tableEvents = builder.addScrolledTable(eventsModel, builder.gbcSet(0, 1, GridBagUtils.BOTH, GridBagUtils.LINE_START, 2, 1, 1.0, 0.67));
+        tableEvents = (JXTable) builder.addScrolledTable(eventsModel, builder.gbcSet(0, 1, GridBagUtils.BOTH, GridBagUtils.LINE_START, 2, 1, 1.0, 0.67));
         tableEvents.getSelectionModel().addListSelectionListener(this);
+        tableEvents.setVisibleRowCount(8);
 
         createInfosPanel(builder);
 
@@ -119,7 +118,7 @@ public final class LogView extends SwingBuildedDialogView<IModel> implements Lis
     private void createInfosPanel(I18nPanelBuilder parent) {
         I18nPanelBuilder builder = parent.addPanel(parent.gbcSet(0, 2, GridBagUtils.BOTH, GridBagUtils.LINE_START, 2, 1, 1.0, 0.33));
 
-        builder.setBorder(Borders.createTitledBorder("log.view.details"));
+        builder.setI18nTitleBorder("log.view.details");
 
         addLabels(builder);
         addFieldLabels(builder);

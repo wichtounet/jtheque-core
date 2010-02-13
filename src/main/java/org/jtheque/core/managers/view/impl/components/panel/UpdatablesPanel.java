@@ -3,14 +3,15 @@ package org.jtheque.core.managers.view.impl.components.panel;
 import org.jtheque.core.managers.update.Updatable;
 import org.jtheque.core.managers.view.able.components.IUpdatablesPanelView;
 import org.jtheque.core.managers.view.impl.actions.module.UpdateUpdatableAction;
+import org.jtheque.core.managers.view.impl.components.filthy.FilthyBackgroundPanel;
 import org.jtheque.core.managers.view.impl.components.model.UpdatableListModel;
 import org.jtheque.core.managers.view.impl.components.renderers.UpdatableListRenderer;
-import org.jtheque.core.utils.ui.builders.JThequePanelBuilder;
+import org.jtheque.core.utils.ui.Borders;
+import org.jtheque.core.utils.ui.builders.FilthyPanelBuilder;
 import org.jtheque.core.utils.ui.builders.PanelBuilder;
 import org.jtheque.utils.ui.GridBagUtils;
 
 import javax.swing.JList;
-import javax.swing.JPanel;
 
 /*
  * This file is part of JTheque.
@@ -33,7 +34,7 @@ import javax.swing.JPanel;
  *
  * @author Baptiste Wicht
  */
-public final class UpdatablesPanel extends JPanel implements IUpdatablesPanelView {
+public final class UpdatablesPanel extends FilthyBackgroundPanel implements IUpdatablesPanelView {
     private final JList updatablesList;
 
     /**
@@ -42,9 +43,11 @@ public final class UpdatablesPanel extends JPanel implements IUpdatablesPanelVie
     public UpdatablesPanel(){
         super();
 
-        PanelBuilder builder = new JThequePanelBuilder(this);
+        PanelBuilder builder = new FilthyPanelBuilder(this);
 
-        updatablesList = builder.addScrolledList(new UpdatableListModel(), new UpdatableListRenderer(), builder.gbcSet(0, 0, GridBagUtils.BOTH, GridBagUtils.FIRST_LINE_START));
+        updatablesList = builder.addScrolledList(new UpdatableListModel(), new UpdatableListRenderer(),
+                builder.gbcSet(0, 0, GridBagUtils.BOTH, GridBagUtils.FIRST_LINE_START, 1.0, 1.0));
+        updatablesList.setBorder(Borders.EMPTY_BORDER);
 
         builder.addButtonBar(builder.gbcSet(0, 1, GridBagUtils.HORIZONTAL, GridBagUtils.FIRST_LINE_START), new UpdateUpdatableAction());
     }

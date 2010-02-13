@@ -20,8 +20,8 @@ import org.jtheque.core.managers.Managers;
 import org.jtheque.core.managers.update.IUpdateManager;
 import org.jtheque.core.managers.update.Updatable;
 import org.jtheque.core.managers.view.able.IViewManager;
+import org.jtheque.core.utils.ui.builders.FilthyPanelBuilder;
 import org.jtheque.core.utils.ui.builders.I18nPanelBuilder;
-import org.jtheque.core.utils.ui.builders.JThequePanelBuilder;
 import org.jtheque.core.utils.ui.builders.PanelBuilder;
 import org.jtheque.utils.ui.GridBagUtils;
 
@@ -31,7 +31,6 @@ import javax.swing.JPanel;
 import javax.swing.ListCellRenderer;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Font;
 
 /**
  * A renderer to display a module in a list.
@@ -53,7 +52,7 @@ public final class UpdatableListRenderer extends JPanel implements ListCellRende
     public UpdatableListRenderer() {
         super();
 
-        I18nPanelBuilder builder = new JThequePanelBuilder(this);
+        I18nPanelBuilder builder = new FilthyPanelBuilder(this);
 
         labelName = builder.addLabel("", PanelBuilder.BOLD, TITLE_FONT_SIZE, builder.gbcSet(0, 0, GridBagUtils.HORIZONTAL, GridBagUtils.BASELINE, 2, 1));
 

@@ -20,7 +20,7 @@ import org.jtheque.core.managers.Managers;
 import org.jtheque.core.managers.view.able.ILicenceView;
 import org.jtheque.core.managers.view.able.components.IModel;
 import org.jtheque.core.managers.view.impl.actions.about.PrintLicenseAction;
-import org.jtheque.core.managers.view.impl.frame.abstraction.SwingBuildedDialogView;
+import org.jtheque.core.managers.view.impl.frame.abstraction.SwingFilthyBuildedDialogView;
 import org.jtheque.core.utils.ui.builders.I18nPanelBuilder;
 import org.jtheque.utils.io.FileUtils;
 import org.jtheque.utils.ui.GridBagUtils;
@@ -30,7 +30,7 @@ import org.jtheque.utils.ui.GridBagUtils;
  *
  * @author Baptiste Wicht
  */
-public final class LicenceView extends SwingBuildedDialogView<IModel> implements ILicenceView {
+public final class LicenceView extends SwingFilthyBuildedDialogView<IModel> implements ILicenceView {
     private static final int DEFAULT_WIDTH = 800;
     private static final int DEFAULT_HEIGHT = 600;
 

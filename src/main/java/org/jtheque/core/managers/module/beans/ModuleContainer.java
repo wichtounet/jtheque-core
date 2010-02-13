@@ -3,6 +3,8 @@ package org.jtheque.core.managers.module.beans;
 import org.jtheque.core.managers.Managers;
 import org.jtheque.core.managers.language.ILanguageManager;
 import org.jtheque.core.managers.module.annotations.Module;
+import org.jtheque.core.managers.update.IUpdateManager;
+import org.jtheque.utils.bean.Version;
 
 import java.io.File;
 
@@ -201,6 +203,10 @@ public final class ModuleContainer {
      */
     public String getDescription() {
         return Managers.getManager(ILanguageManager.class).getMessage(infos.id() + ".description");
+    }
+
+    public Version getMostRecentVersion() {
+        return Managers.getManager(IUpdateManager.class).getMostRecentVersion(this);
     }
 
     @Override

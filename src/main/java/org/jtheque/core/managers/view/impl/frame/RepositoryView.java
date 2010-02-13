@@ -26,19 +26,20 @@ import org.jtheque.core.managers.view.impl.actions.module.repository.InstallRepo
 import org.jtheque.core.managers.view.impl.components.model.ModuleRepositoryListModel;
 import org.jtheque.core.managers.view.impl.components.panel.ModulePanel;
 import org.jtheque.core.managers.view.impl.components.renderers.ModuleRepositoryListRenderer;
-import org.jtheque.core.managers.view.impl.frame.abstraction.SwingBuildedDialogView;
+import org.jtheque.core.managers.view.impl.frame.abstraction.SwingFilthyBuildedDialogView;
 import org.jtheque.core.utils.ui.builders.I18nPanelBuilder;
+import org.jtheque.core.utils.ui.builders.PanelBuilder;
 import org.jtheque.utils.ui.GridBagUtils;
+import org.jtheque.utils.ui.SwingUtils;
 
 import javax.swing.JList;
-import javax.swing.ListSelectionModel;
 
 /**
  * The view to display the repository of the application.
  *
  * @author Baptiste Wicht
  */
-public final class RepositoryView extends SwingBuildedDialogView<IModel> implements IRepositoryView {
+public final class RepositoryView extends SwingFilthyBuildedDialogView<IModel> implements IRepositoryView {
     private JList list;
 
     /**
@@ -58,7 +59,8 @@ public final class RepositoryView extends SwingBuildedDialogView<IModel> impleme
 
     @Override
     protected void buildView(I18nPanelBuilder builder){
-        builder.addLabel(Managers.getManager(IModuleManager.class).getRepository().getTitle().toString(), builder.gbcSet(0, 0, GridBagUtils.HORIZONTAL));
+        builder.addLabel(Managers.getManager(IModuleManager.class).getRepository().getTitle().toString(), PanelBuilder.BOLD, 18f,
+                builder.gbcSet(0, 0, GridBagUtils.HORIZONTAL));
 
         list = builder.addScrolledList(new ModuleRepositoryListModel(), new ModuleRepositoryListRenderer(), builder.gbcSet(0, 1, GridBagUtils.BOTH));
 
@@ -78,5 +80,7 @@ public final class RepositoryView extends SwingBuildedDialogView<IModel> impleme
                         list.getSelectedIndex(), true, true);
 
         renderer.expand();
+
+        SwingUtils.refresh(list);
     }
 }

@@ -22,10 +22,10 @@ import org.jtheque.core.managers.module.IModuleManager;
 import org.jtheque.core.managers.update.repository.ModuleDescription;
 import org.jtheque.core.managers.update.versions.VersionsFile;
 import org.jtheque.core.managers.update.versions.VersionsFileReader;
-import org.jtheque.core.managers.view.able.IViewManager;
-import org.jtheque.core.managers.view.able.ViewDefaults;
-import org.jtheque.core.utils.ui.builders.JThequePanelBuilder;
+import org.jtheque.core.utils.ui.Borders;
+import org.jtheque.core.utils.ui.builders.FilthyPanelBuilder;
 import org.jtheque.core.utils.ui.builders.PanelBuilder;
+import org.jtheque.utils.ui.GridBagUtils;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -45,6 +45,12 @@ public final class ModulePanel extends JPanel {
 
     private final ModuleDescription module;
 
+    //Keeps fonts to quickly switch them
+    private Font fontTitle;
+    private Font fontTitleBold;
+    private Font fontLabel;
+    private Font fontLabelBold;
+
     private static final int TITLE_FONT_SIZE = 16;
 
     /**
@@ -56,32 +62,49 @@ public final class ModulePanel extends JPanel {
     public ModulePanel(Object value, boolean isSelected) {
         super();
 
-        PanelBuilder builder = new JThequePanelBuilder(this);
+        PanelBuilder builder = new FilthyPanelBuilder(this);
+        builder.setBorder(Borders.createEmptyBorder(2, 2, 2, 10));
 
         module = (ModuleDescription) value;
 
-        labelName = builder.addLabel(module.getName(), PanelBuilder.BOLD, TITLE_FONT_SIZE, builder.gbcSet(0, 0));
+        labelName = builder.addLabel(module.getName(),
+                PanelBuilder.NORMAL, TITLE_FONT_SIZE, builder.gbcSet(0, 0, GridBagUtils.HORIZONTAL, GridBagUtils.BASELINE_LEADING, 0, 1, 1.0, 1.0));
         labelDescription = builder.addLabel(module.getDescription().toString(), builder.gbcSet(0, 1));
 
         onlineLabel = builder.addLabel("...", builder.gbcSet(0, 3));
         currentLabel = builder.addLabel("...", builder.gbcSet(0, 4));
 
-        setSelected(isSelected);
+        updateUI(isSelected);
     }
 
     /**
-     * Set selected.
+     * Update the UI.
      *
-     * @param isSelected A boolean tag indicating if the module is selected or not.
+     * @param isSelected A boolean flag indicating if the current element is selected or not.
      */
-    public void setSelected(boolean isSelected) {
-        ViewDefaults defaults = Managers.getManager(IViewManager.class).getViewDefaults();
+    public void updateUI(boolean isSelected) {
+        initFonts();
 
-        if (isSelected) {
-            setColors(defaults.getSelectedBackgroundColor(), defaults.getSelectedForegroundColor());
+        if(isSelected){
+            setFonts(fontTitleBold, fontLabelBold);
         } else {
-            setColors(defaults.getBackgroundColor(), defaults.getForegroundColor());
+            setFonts(fontTitle, fontLabel);
         }
+    }
+
+    private void initFonts() {
+        if(fontTitle == null){
+            fontTitle = labelName.getFont();
+            fontTitleBold = fontTitle.deriveFont(Font.BOLD);
+
+            fontLabel = labelDescription.getFont();
+            fontLabelBold = fontLabel.deriveFont(Font.BOLD);
+        }
+    }
+
+    private void setFonts(Font fontTitle, Font fontLabel) {
+        labelName.setFont(fontTitle);
+        labelDescription.setFont(fontLabel);
     }
 
     /**
