@@ -38,8 +38,8 @@ import java.util.Collection;
  * @author Baptiste Wicht
  */
 public final class JPanelConfigAppearance extends JPanel implements ConfigTabComponent, IAppearanceConfigView {
-    private AvailableLanguagesComboBoxModel modelLanguages;
-    private JCheckBox boxRetainSizeAndPosition;
+    private final AvailableLanguagesComboBoxModel modelLanguages;
+    private final JCheckBox boxRetainSizeAndPosition;
 
     /**
      * Construct a new JPanelConfigAppearance.
@@ -49,44 +49,24 @@ public final class JPanelConfigAppearance extends JPanel implements ConfigTabCom
 
         PanelBuilder builder = new PanelBuilder(this);
 
-        addPanelGeneral(builder);
-        addPanelLookAndFeel(builder);
+        PanelBuilder builder1 = builder.addPanel(builder.gbcSet(0, 0, GridBagUtils.HORIZONTAL, GridBagUtils.FIRST_LINE_START));
+        builder1.getPanel().setBorder(Borders.createTitledBorder("config.appearance.general.title"));
 
+        builder1.addI18nLabel("config.appearance.language", builder.gbcSet(0, 0));
+
+        modelLanguages = new AvailableLanguagesComboBoxModel();
+
+        builder1.addComboBox(modelLanguages, builder.gbcSet(1, 0, GridBagUtils.HORIZONTAL));
+
+        boxRetainSizeAndPosition = builder1.addI18nCheckBox("config.appearance.size",
+                builder.gbcSet(0, 1, GridBagUtils.HORIZONTAL, GridBagUtils.BASELINE_LEADING, 2, 1));
+        
         fillAllFields();
     }
 
     @Override
     public String getTitle() {
         return Managers.getManager(ILanguageManager.class).getMessage("config.view.tab.appearance");
-    }
-
-    /**
-     * Add the panel "generals options".
-     *
-     * @param parent The parent builder.
-     */
-    private void addPanelGeneral(PanelBuilder parent) {
-        PanelBuilder builder = parent.addPanel(parent.gbcSet(0, 0, GridBagUtils.HORIZONTAL, GridBagUtils.FIRST_LINE_START));
-        builder.getPanel().setBorder(Borders.createTitledBorder("config.appearance.general.title"));
-
-        builder.addI18nLabel("config.appearance.language", parent.gbcSet(0, 0));
-
-        modelLanguages = new AvailableLanguagesComboBoxModel();
-
-        builder.addComboBox(modelLanguages, parent.gbcSet(1, 0, GridBagUtils.HORIZONTAL));
-
-        boxRetainSizeAndPosition = builder.addI18nCheckBox("config.appearance.size",
-                parent.gbcSet(0, 1, GridBagUtils.HORIZONTAL, GridBagUtils.BASELINE_LEADING, 2, 1));
-    }
-
-    /**
-     * Add the "look and feel" panel.
-     *
-     * @param parent The parent builder.
-     */
-    private static void addPanelLookAndFeel(PanelBuilder parent) {
-        PanelBuilder builder = parent.addPanel(parent.gbcSet(0, 1, GridBagUtils.HORIZONTAL, GridBagUtils.FIRST_LINE_START));
-        builder.getPanel().setBorder(Borders.createTitledBorder("config.appearance.lookandfeel"));
     }
 
     /**
