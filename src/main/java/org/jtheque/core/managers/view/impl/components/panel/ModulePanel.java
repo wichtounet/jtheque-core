@@ -60,10 +60,8 @@ public final class ModulePanel extends JPanel {
 
         module = (ModuleDescription) value;
 
-        labelName = builder.add(new JLabel(module.getName()), builder.gbcSet(0, 0));
-        labelName.setFont(labelName.getFont().deriveFont(Font.BOLD, TITLE_FONT_SIZE));
-
-        labelDescription = builder.add(new JLabel(module.getDescription().toString()), builder.gbcSet(0, 1));
+        labelName = builder.addLabel(module.getName(), PanelBuilder.BOLD, TITLE_FONT_SIZE, builder.gbcSet(0, 0));
+        labelDescription = builder.addLabel(module.getDescription().toString(), builder.gbcSet(0, 1));
 
         onlineLabel = builder.addLabel("...", builder.gbcSet(0, 3));
         currentLabel = builder.addLabel("...", builder.gbcSet(0, 4));

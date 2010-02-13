@@ -62,8 +62,7 @@ public final class UpdateView extends SwingBuildedDialogView<IModel> implements 
 
         builder.addComboBox(model, builder.gbcSet(0, 1, GridBagUtils.HORIZONTAL));
 
-        builder.addButtonBar(builder.gbcSet(0, 2, GridBagUtils.HORIZONTAL),
-                new AcValidateUpdateView(), getCloseAction("update.actions.cancel"));
+        builder.addButtonBar(builder.gbcSet(0, 2, GridBagUtils.HORIZONTAL), new AcValidateUpdateView(), getCloseAction("update.actions.cancel"));
     }
 
     @Override

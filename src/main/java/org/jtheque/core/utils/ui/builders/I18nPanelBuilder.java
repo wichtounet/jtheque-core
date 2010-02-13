@@ -51,6 +51,18 @@ public interface I18nPanelBuilder extends PanelBuilder {
     JThequeI18nLabel addI18nLabel(String key, int style, Object constraints);
 
     /**
+     * Add an internationalized label with a specified style to the panel.
+     *
+     * @param key         The i18n key.
+     * @param constraints The constraints to use to add to the panel.
+     * @param style       The font style.
+     * @param size        The font size
+     *
+     * @return The added label.
+     */
+    JThequeI18nLabel addI18nLabel(String key, int style, float size, Object constraints);
+
+    /**
      * Add an internationalized separator.
      *
      * @param key         The title key.

@@ -58,19 +58,11 @@ public final class RepositoryView extends SwingBuildedDialogView<IModel> impleme
 
     @Override
     protected void buildView(I18nPanelBuilder builder){
-        builder.addLabel(Managers.getManager(IModuleManager.class).getRepository().getTitle().toString(),
-                builder.gbcSet(0, 0, GridBagUtils.HORIZONTAL));
+        builder.addLabel(Managers.getManager(IModuleManager.class).getRepository().getTitle().toString(), builder.gbcSet(0, 0, GridBagUtils.HORIZONTAL));
 
-        list = new JList();
-        list.setModel(new ModuleRepositoryListModel());
-        list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        list.setCellRenderer(new ModuleRepositoryListRenderer());
-        list.setVisibleRowCount(5);
+        list = builder.addScrolledList(new ModuleRepositoryListModel(), new ModuleRepositoryListRenderer(), builder.gbcSet(0, 1, GridBagUtils.BOTH));
 
-        builder.addScrolled(list, builder.gbcSet(0, 1, GridBagUtils.BOTH));
-
-        builder.addButtonBar(builder.gbcSet(0, 2, GridBagUtils.HORIZONTAL),
-                new ExpandRepositoryModuleAction(), new InstallRepositoryModuleAction());
+        builder.addButtonBar(builder.gbcSet(0, 2, GridBagUtils.HORIZONTAL), new ExpandRepositoryModuleAction(), new InstallRepositoryModuleAction());
     }
 
     @Override

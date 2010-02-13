@@ -46,8 +46,7 @@ public final class UpdatablesPanel extends JPanel implements IUpdatablesPanelVie
 
         updatablesList = builder.addScrolledList(new UpdatableListModel(), new UpdatableListRenderer(), builder.gbcSet(0, 0, GridBagUtils.BOTH, GridBagUtils.FIRST_LINE_START));
 
-        builder.addButtonBar(builder.gbcSet(0, 1, GridBagUtils.HORIZONTAL, GridBagUtils.FIRST_LINE_START),
-                new UpdateUpdatableAction());
+        builder.addButtonBar(builder.gbcSet(0, 1, GridBagUtils.HORIZONTAL, GridBagUtils.FIRST_LINE_START), new UpdateUpdatableAction());
     }
 
     @Override

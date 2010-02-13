@@ -25,6 +25,7 @@ import org.jtheque.core.managers.view.able.IViewManager;
 import org.jtheque.core.managers.view.impl.actions.utils.OpenSiteLinkAction;
 import org.jtheque.core.utils.ui.builders.I18nPanelBuilder;
 import org.jtheque.core.utils.ui.builders.JThequePanelBuilder;
+import org.jtheque.core.utils.ui.builders.PanelBuilder;
 import org.jtheque.utils.ui.GridBagUtils;
 
 import javax.swing.JLabel;
@@ -65,10 +66,8 @@ public final class ModuleListRenderer extends JPanel implements ListCellRenderer
 
         I18nPanelBuilder builder = new JThequePanelBuilder(this);
 
-        labelName = builder.add(new JLabel(), builder.gbcSet(0, 0, GridBagUtils.HORIZONTAL, GridBagUtils.BASELINE_LEADING, 2, 1));
-        labelName.setFont(labelName.getFont().deriveFont(Font.BOLD, TITLE_FONT_SIZE));
-
-        labelAuthor = builder.add(new JLabel(), builder.gbcSet(4, 0, GridBagUtils.HORIZONTAL, GridBagUtils.BASELINE_LEADING, 2, 1));
+        labelName = builder.addLabel(builder.gbcSet(0, 0, PanelBuilder.BOLD, TITLE_FONT_SIZE, GridBagUtils.HORIZONTAL, GridBagUtils.BASELINE_LEADING, 2, 1));
+        labelAuthor = builder.addLabel(builder.gbcSet(4, 0, GridBagUtils.HORIZONTAL, GridBagUtils.BASELINE_LEADING, 2, 1));
 
         addStateLabels(builder);
         addDateLabels(builder);
@@ -95,7 +94,7 @@ public final class ModuleListRenderer extends JPanel implements ListCellRenderer
     private void addCurrentVersionLabels(I18nPanelBuilder builder) {
         labelCurrentVersionText = builder.addI18nLabel("modules.view.label.versions.current", builder.gbcSet(0, 2));
 
-        labelCurrentVersion = builder.add(new JLabel(), builder.gbcSet(1, 2));
+        labelCurrentVersion = builder.addLabel(builder.gbcSet(1, 2));
     }
 
     /**
@@ -117,7 +116,7 @@ public final class ModuleListRenderer extends JPanel implements ListCellRenderer
     private void addStateLabels(I18nPanelBuilder builder) {
         labelStateText = builder.addI18nLabel("modules.view.label.state", builder.gbcSet(2, 0));
 
-        labelState = builder.add(new JLabel(), builder.gbcSet(3, 0));
+        labelState = builder.addLabel(builder.gbcSet(3, 0));
     }
 
     /**
@@ -128,7 +127,7 @@ public final class ModuleListRenderer extends JPanel implements ListCellRenderer
     private void addDateLabels(I18nPanelBuilder builder) {
         labelDateText = builder.addI18nLabel("modules.view.label.date", builder.gbcSet(0, 1));
 
-        labelDate = builder.add(new JLabel(), builder.gbcSet(1, 1));
+        labelDate = builder.addLabel(builder.gbcSet(1, 1));
     }
 
     @Override

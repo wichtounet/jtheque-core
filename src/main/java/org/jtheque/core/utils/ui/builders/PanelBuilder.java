@@ -24,11 +24,13 @@ import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTree;
 import javax.swing.ListCellRenderer;
 import javax.swing.ListModel;
 import javax.swing.border.Border;
+import javax.swing.table.TableModel;
 import javax.swing.tree.TreeCellRenderer;
 import javax.swing.tree.TreeModel;
 import java.awt.Color;
@@ -168,14 +170,39 @@ public interface PanelBuilder {
     JLabel addLabel(String text, Color foreground, Object constraints);
 
     /**
-     * Add an internationalized label with a specified style to the panel.
+     * Add a label with a specified style to the panel.
      *
-     * @param key         The i18n key.
+     * @param text         The text.
      * @param constraints The constraints to use to add to the panel.
      * @param style       The font style.
      * @return The added label.
      */
-    JLabel addLabel(String key, int style, Object constraints);
+    JLabel addLabel(String text, int style, Object constraints);
+
+    /**
+     * Add a label with a specified style to the panel.
+     *
+     * @param text         The text.
+     * @param constraints The constraints to use to add to the panel.
+     * @param style       The font style.
+     * @param size        The font size.
+     *
+     * @return The added label.
+     */
+    JLabel addLabel(String text, int style, float size, Object constraints);
+
+    /**
+     * Add a checkbox to the panel.
+     *
+     * @param text The text of the check box.
+     * @param constraints The constraints to add to the panel.
+     *
+     * @return The added checkbox.
+     */
+    JCheckBox addCheckbox(String text, Object constraints);
+
+    JTable addTable(TableModel model, Object constraints);
+    JTable addScrolledTable(TableModel model, Object constraints);
 
     /**
      * Add a text area.
@@ -265,6 +292,13 @@ public interface PanelBuilder {
      * @param border The border to set to the panel.
      */
     void setBorder(Border border);
+
+    /**
+     * Set title border to the panel.
+     *
+     * @param text The text of the border.
+     */
+    void setTitleBorder(String text);
 
     /**
      * Set the default insets.
@@ -372,21 +406,4 @@ public interface PanelBuilder {
      * @return The layout constraints.
      */
     Object gbcSet(int x, int y);
-
-    /**
-     * Set title border to the panel.
-     *
-     * @param text The text of the border.
-     */
-    void setTitleBorder(String text);
-
-    /**
-     * Add a checkbox to the panel.
-     *
-     * @param text The text of the check box.
-     * @param constraints The constraints to add to the panel.
-     *
-     * @return The added checkbox. 
-     */
-    JCheckBox addCheckbox(String text, Object constraints);
 }

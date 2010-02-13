@@ -21,6 +21,7 @@ import org.jtheque.core.managers.update.IUpdateManager;
 import org.jtheque.core.managers.view.impl.actions.module.UpdateKernelAction;
 import org.jtheque.core.utils.ui.builders.I18nPanelBuilder;
 import org.jtheque.core.utils.ui.builders.JThequePanelBuilder;
+import org.jtheque.core.utils.ui.builders.PanelBuilder;
 import org.jtheque.utils.ui.GridBagUtils;
 
 import javax.swing.JPanel;
@@ -53,8 +54,8 @@ public final class KernelInfoPanel extends JPanel {
 
         builder.setDefaultInsets(new Insets(4, 4, 4, 4));
 
-        Component kernelLabel = builder.addI18nLabel("modules.view.label.kernel", builder.gbcSet(0, 0, GridBagUtils.NONE, GridBagUtils.LINE_START, 1, 3));
-        kernelLabel.setFont(kernelLabel.getFont().deriveFont(Font.BOLD, TITLE_FONT_SIZE));
+        builder.addI18nLabel("modules.view.label.kernel", PanelBuilder.BOLD, TITLE_FONT_SIZE,
+                builder.gbcSet(0, 0, GridBagUtils.NONE, GridBagUtils.LINE_START, 1, 3));
 
         builder.addI18nLabel("modules.view.label.versions.current", builder.gbcSet(1, 0));
 

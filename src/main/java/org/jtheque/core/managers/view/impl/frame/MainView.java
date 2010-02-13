@@ -187,7 +187,7 @@ public final class MainView extends SwingFrameView implements TitleListener, IMa
      */
     private JXLayer<JComponent> buildContentPane() {
         PanelBuilder builder = new JThequePanelBuilder();
-        builder.getPanel().setBorder(Borders.EMPTY_BORDER);
+        builder.setBorder(Borders.EMPTY_BORDER);
 
         if (viewManager.isTabMainComponent()) {
             if (Managers.getManager(IViewManager.class).getTabComponents().isEmpty()) {

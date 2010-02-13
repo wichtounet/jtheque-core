@@ -84,20 +84,14 @@ public final class MessageView extends SwingBuildedDialogView<IModel> implements
      * @param builder The builder to add the fields to.
      */
     private void addFields(PanelBuilder builder) {
-        dateLabel = builder.add(new JLabel(getModel().isDefaultMessage() ? "" : getModel().getCurrentMessage().getDate().getStrDate()),
-                builder.gbcSet(1, 0));
-
-        sourceLabel = builder.add(new JLabel(getModel().isDefaultMessage() ? "" : getModel().getCurrentMessage().getSource()),
-                builder.gbcSet(1, 1));
-
-        titleLabel = builder.add(new JLabel(getModel().isDefaultMessage() ? "" : getModel().getCurrentMessage().getTitle()),
-                builder.gbcSet(1, 2));
-
-        messageArea = new JTextArea(getModel().isDefaultMessage() ? "" : getModel().getCurrentMessage().getMessage());
+        dateLabel = builder.addLabel(getModel().isDefaultMessage() ? "" : getModel().getCurrentMessage().getDate().getStrDate(), builder.gbcSet(1, 0));
+        sourceLabel = builder.addLabel(getModel().isDefaultMessage() ? "" : getModel().getCurrentMessage().getSource(), builder.gbcSet(1, 1));
+        titleLabel = builder.addLabel(getModel().isDefaultMessage() ? "" : getModel().getCurrentMessage().getTitle(), builder.gbcSet(1, 2));
+        
+        messageArea = builder.addScrolledTextArea(getModel().isDefaultMessage() ? "" : getModel().getCurrentMessage().getMessage(),
+                builder.gbcSet(0, 3, GridBagUtils.BOTH, GridBagUtils.LINE_START, 2, 1));
         messageArea.setRows(8);
         messageArea.setEnabled(false);
-
-        builder.addScrolled(messageArea, builder.gbcSet(0, 3, GridBagUtils.BOTH, GridBagUtils.LINE_START, 2, 1));
     }
 
     @Override

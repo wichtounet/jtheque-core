@@ -15,6 +15,7 @@ import org.jtheque.utils.ui.GridBagUtils;
 
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
@@ -46,7 +47,7 @@ import java.text.DateFormat;
  * @author Baptiste Wicht
  */
 public final class LogView extends SwingBuildedDialogView<IModel> implements ListSelectionListener, ItemListener, ILogView {
-    private JXTable tableEvents;
+    private JTable tableEvents;
     private EventsTableModel eventsModel;
 
     private JLabel labelTitle;
@@ -92,8 +93,7 @@ public final class LogView extends SwingBuildedDialogView<IModel> implements Lis
 
         builder.addI18nLabel("log.view.log", builder.gbcSet(0, 0, GridBagUtils.NONE, GridBagUtils.LINE_END));
 
-        JComboBox comboLogs = builder.addComboBox(new LogComboBoxModel(), builder.gbcSet(1, 0, GridBagUtils.HORIZONTAL, GridBagUtils.LINE_START, 1.0, 0.0));
-        comboLogs.addItemListener(this);
+        builder.addComboBox(new LogComboBoxModel(), builder.gbcSet(1, 0, GridBagUtils.HORIZONTAL, GridBagUtils.LINE_START, 1.0, 0.0)).addItemListener(this);
 
         eventsModel = new EventsTableModel();
         eventsModel.setHeaders(new String[]{
@@ -103,14 +103,8 @@ public final class LogView extends SwingBuildedDialogView<IModel> implements Lis
                 getMessage("log.view.source"),
                 getMessage("log.view.title")});
 
-        tableEvents = new JXTable(eventsModel);
+        tableEvents = builder.addScrolledTable(eventsModel, builder.gbcSet(0, 1, GridBagUtils.BOTH, GridBagUtils.LINE_START, 2, 1, 1.0, 0.67));
         tableEvents.getSelectionModel().addListSelectionListener(this);
-        tableEvents.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        tableEvents.setVisibleRowCount(5);
-        tableEvents.setColumnControlVisible(true);
-        tableEvents.packAll();
-
-        builder.addScrolled(tableEvents, builder.gbcSet(0, 1, GridBagUtils.BOTH, GridBagUtils.LINE_START, 2, 1, 1.0, 0.67));
 
         createInfosPanel(builder);
 

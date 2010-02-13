@@ -1,5 +1,6 @@
 package org.jtheque.core.utils.ui.builders;
 
+import org.jdesktop.swingx.JXTable;
 import org.jdesktop.swingx.JXTree;
 import org.jtheque.core.managers.Managers;
 import org.jtheque.core.managers.language.ILanguageManager;
@@ -19,7 +20,10 @@ import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
+import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.border.TitledBorder;
+import javax.swing.table.TableModel;
 import javax.swing.tree.TreeCellRenderer;
 import javax.swing.tree.TreeModel;
 import java.awt.LayoutManager;
@@ -116,6 +120,17 @@ public class JThequePanelBuilder extends BasicPanelBuilder implements I18nPanelB
     }
 
     @Override
+    public JThequeI18nLabel addI18nLabel(String key, int style, float size, Object constraints) {
+        JThequeI18nLabel label = new JThequeI18nLabel(key);
+
+        applyStyle(style, label);
+
+        label.setFont(label.getFont().deriveFont(size));
+
+        return add(label, constraints);
+    }
+
+    @Override
     public JXTree addScrolledTree(TreeModel model, TreeCellRenderer renderer, Object constraints){
         JXTree tree = new JXTree(model);
 
@@ -172,5 +187,34 @@ public class JThequePanelBuilder extends BasicPanelBuilder implements I18nPanelB
         ((JComponent) builder.getPanel()).setOpaque(false);
 
         add(builder.getPanel(), constraints);
+    }
+
+    @Override
+    public JTable addTable(TableModel model, Object constraints) {
+        return add(createTable(model), constraints);
+    }
+
+    @Override
+    public JTable addScrolledTable(TableModel model, Object constraints) {
+        return addScrolled(createTable(model), constraints);
+    }
+
+    /**
+     * Create a JXTable with JTheque defaults.
+     *
+     * @param model The model to use.
+     *
+     * @return The created JXTable. 
+     */
+    private static JXTable createTable(TableModel model) {
+        JXTable table = new JXTable(model);
+
+        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        table.setVisibleRowCount(5);
+        table.setColumnControlVisible(true);
+        table.packAll();
+
+        return table;
     }
 }

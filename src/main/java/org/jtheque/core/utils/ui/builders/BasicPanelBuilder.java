@@ -1,5 +1,6 @@
 package org.jtheque.core.utils.ui.builders;
 
+import org.jdesktop.swingx.JXTable;
 import org.jtheque.utils.ui.ButtonBarBuilder;
 
 import javax.swing.Action;
@@ -12,12 +13,14 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTree;
 import javax.swing.ListCellRenderer;
 import javax.swing.ListModel;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.TitledBorder;
+import javax.swing.table.TableModel;
 import javax.swing.tree.TreeCellRenderer;
 import javax.swing.tree.TreeModel;
 import java.awt.Color;
@@ -173,6 +176,15 @@ public class BasicPanelBuilder extends AbstractPanelBuilder {
         return add(label, constraints);
     }
 
+    @Override
+    public JLabel addLabel(String text, int style, float size, Object constraints) {
+        JLabel label = addLabel(text, style, constraints);
+
+        label.setFont(label.getFont().deriveFont(size));
+
+        return label;
+    }
+
     /**
      * Apply the specified style to the component.
      *
@@ -276,5 +288,21 @@ public class BasicPanelBuilder extends AbstractPanelBuilder {
     @Override
     public JCheckBox addCheckbox(String text, Object constraints) {
         return add(new JCheckBox(text), constraints);
+    }
+
+    @Override
+    public JTable addTable(TableModel model, Object constraints) {
+        JTable table = new JTable(model);
+        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+        return add(table, constraints);
+    }
+
+    @Override
+    public JTable addScrolledTable(TableModel model, Object constraints) {
+        JTable table = new JTable(model);
+        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+        return addScrolled(table, constraints);
     }
 }

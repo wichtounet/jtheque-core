@@ -121,6 +121,15 @@ public final class FilthyPanelBuilder extends JThequePanelBuilder {
     }
 
     @Override
+    public JThequeI18nLabel addI18nLabel(String key, int style, float size, Object constraints) {
+        JThequeI18nLabel label = super.addI18nLabel(key, style, size, constraints);
+
+        label.setForeground(Color.white);
+
+        return label;
+    }
+
+    @Override
     public JList addScrolledList(ListModel model, ListCellRenderer renderer, Object constraints) {
         JList list = new FilthyList(model);
 

@@ -22,6 +22,7 @@ import org.jtheque.core.managers.update.Updatable;
 import org.jtheque.core.managers.view.able.IViewManager;
 import org.jtheque.core.utils.ui.builders.I18nPanelBuilder;
 import org.jtheque.core.utils.ui.builders.JThequePanelBuilder;
+import org.jtheque.core.utils.ui.builders.PanelBuilder;
 import org.jtheque.utils.ui.GridBagUtils;
 
 import javax.swing.JLabel;
@@ -54,14 +55,13 @@ public final class UpdatableListRenderer extends JPanel implements ListCellRende
 
         I18nPanelBuilder builder = new JThequePanelBuilder(this);
 
-        labelName = builder.add(new JLabel(), builder.gbcSet(0, 0, GridBagUtils.HORIZONTAL, GridBagUtils.BASELINE, 2, 1));
-        labelName.setFont(labelName.getFont().deriveFont(Font.BOLD, TITLE_FONT_SIZE));
+        labelName = builder.addLabel("", PanelBuilder.BOLD, TITLE_FONT_SIZE, builder.gbcSet(0, 0, GridBagUtils.HORIZONTAL, GridBagUtils.BASELINE, 2, 1));
 
         labelCurrentVersion1 = builder.addI18nLabel("modules.view.label.versions.current", builder.gbcSet(0, 1));
-        labelCurrentVersion = builder.add(new JLabel(), builder.gbcSet(1, 1));
+        labelCurrentVersion = builder.addLabel(builder.gbcSet(1, 1));
 
         labelOnlineVersion1 = builder.addI18nLabel("modules.view.label.versions.online", builder.gbcSet(0, 2));
-        labelOnlineVersion = builder.addLabel("", builder.gbcSet(1, 2));
+        labelOnlineVersion = builder.addLabel(builder.gbcSet(1, 2));
     }
 
     @Override
