@@ -34,12 +34,12 @@
             <id>Server-PC-snapshots</id>
             <name>Server-PC-snapshots</name>
             <url>http://wichtounet.homedns.org:8280/artifactory/libs-snapshots-local</url>
-    </snapshotRepository>
+        </snapshotRepository>
     </distributionManagement>
 
     <scm>
-        <url>http://wichtounet.homedns.org/svn/jtheque-core/</url>
-        <connection>scm:svn:http://wichtounet.homedns.org/svn/jtheque-core/</connection>
+        <url>http://wichtounet.homedns.org/svn/jtheque-core/trunk/</url>
+        <connection>scm:svn:http://wichtounet.homedns.org/svn/jtheque-core/trunk/</connection>
     </scm>
 
     <build>
