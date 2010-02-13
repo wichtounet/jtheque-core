@@ -5,7 +5,8 @@ import org.jtheque.core.managers.view.able.components.IUpdatablesPanelView;
 import org.jtheque.core.managers.view.impl.actions.module.UpdateUpdatableAction;
 import org.jtheque.core.managers.view.impl.components.model.UpdatableListModel;
 import org.jtheque.core.managers.view.impl.components.renderers.UpdatableListRenderer;
-import org.jtheque.core.utils.ui.PanelBuilder;
+import org.jtheque.core.utils.ui.builders.JThequePanelBuilder;
+import org.jtheque.core.utils.ui.builders.PanelBuilder;
 import org.jtheque.utils.ui.GridBagUtils;
 
 import javax.swing.JList;
@@ -41,9 +42,9 @@ public final class UpdatablesPanel extends JPanel implements IUpdatablesPanelVie
     public UpdatablesPanel(){
         super();
 
-        PanelBuilder builder = new PanelBuilder(this);
+        PanelBuilder builder = new JThequePanelBuilder(this);
 
-        updatablesList = builder.addList(new UpdatableListModel(), new UpdatableListRenderer(), builder.gbcSet(0, 0, GridBagUtils.BOTH, GridBagUtils.FIRST_LINE_START));
+        updatablesList = builder.addScrolledList(new UpdatableListModel(), new UpdatableListRenderer(), builder.gbcSet(0, 0, GridBagUtils.BOTH, GridBagUtils.FIRST_LINE_START));
 
         builder.addButtonBar(builder.gbcSet(0, 1, GridBagUtils.HORIZONTAL, GridBagUtils.FIRST_LINE_START),
                 new UpdateUpdatableAction());

@@ -19,7 +19,8 @@ package org.jtheque.core.managers.view.impl.components.panel;
 import org.jtheque.core.managers.Managers;
 import org.jtheque.core.managers.update.IUpdateManager;
 import org.jtheque.core.managers.view.impl.actions.module.UpdateKernelAction;
-import org.jtheque.core.utils.ui.PanelBuilder;
+import org.jtheque.core.utils.ui.builders.I18nPanelBuilder;
+import org.jtheque.core.utils.ui.builders.JThequePanelBuilder;
 import org.jtheque.utils.ui.GridBagUtils;
 
 import javax.swing.JPanel;
@@ -48,7 +49,7 @@ public final class KernelInfoPanel extends JPanel {
      * Build the GUI.
      */
     private void build() {
-        PanelBuilder builder = new PanelBuilder(this);
+        I18nPanelBuilder builder = new JThequePanelBuilder(this);
 
         builder.setDefaultInsets(new Insets(4, 4, 4, 4));
 

@@ -17,7 +17,7 @@ package org.jtheque.core.managers.view.able.config;
  */
 
 import javax.swing.JCheckBox;
-import javax.swing.JTextField;
+import javax.swing.JComponent;
 
 /**
  * A config view for network specification.
@@ -30,14 +30,14 @@ public interface INetworkConfigView {
      *
      * @return The text field for the port number of the proxy.
      */
-    JTextField getFieldPort();
+    JComponent getFieldPort();
 
     /**
      * Return the text field for the address of the proxy.
      *
      * @return The text field for the address of the proxy.
      */
-    JTextField getFieldAddress();
+    JComponent getFieldAddress();
 
     /**
      * Return the check box who indicates if we use or not a proxy.

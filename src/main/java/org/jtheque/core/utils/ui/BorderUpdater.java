@@ -27,7 +27,7 @@ import javax.swing.border.TitledBorder;
  *
  * @author Baptiste Wicht
  */
-final class BorderUpdater implements Internationalizable {
+public final class BorderUpdater implements Internationalizable {
     private final TitledBorder border;
     private final String key;
 
@@ -37,7 +37,7 @@ final class BorderUpdater implements Internationalizable {
      * @param border The titled border.
      * @param key    The internationalization key.
      */
-    BorderUpdater(TitledBorder border, String key) {
+    public BorderUpdater(TitledBorder border, String key) {
         super();
 
         this.border = border;

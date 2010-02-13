@@ -1,14 +1,20 @@
-package org.jtheque.core.utils.ui;
+package org.jtheque.core.utils.ui.builders;
 
 import org.jdesktop.swingx.JXTree;
+import org.jtheque.core.managers.Managers;
+import org.jtheque.core.managers.language.ILanguageManager;
+import org.jtheque.core.managers.view.impl.components.JThequeCheckBox;
 import org.jtheque.core.managers.view.impl.components.JThequeI18nLabel;
 import org.jtheque.core.managers.view.impl.components.filthy.FilthyComboBox;
 import org.jtheque.core.managers.view.impl.components.filthy.FilthyList;
 import org.jtheque.core.managers.view.impl.components.filthy.FilthyPanel;
+import org.jtheque.core.utils.ui.BorderUpdater;
+import org.jtheque.core.utils.ui.Borders;
 
+import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
-import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -16,9 +22,11 @@ import javax.swing.JScrollPane;
 import javax.swing.ListCellRenderer;
 import javax.swing.ListModel;
 import javax.swing.ListSelectionModel;
+import javax.swing.border.TitledBorder;
 import javax.swing.tree.TreeCellRenderer;
 import javax.swing.tree.TreeModel;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.LayoutManager;
 
 /*
@@ -38,12 +46,12 @@ import java.awt.LayoutManager;
  */
 
 /**
- * A filthy panel builder. It has the same functionality of <code>PanelBuilder</code> but when a filthy component
+ * A filthy panel builder. It has the same functionality of <code>JThequePanelBuilder</code> but when a filthy component
  * exists, the builder use it instead of the normal component.
  *
  * @author Baptiste Wicht
  */
-public final class FilthyPanelBuilder extends PanelBuilder {
+public final class FilthyPanelBuilder extends JThequePanelBuilder {
     /**
      * Construct a new FilthyPanelBuilder for a new panel.
      */
@@ -80,6 +88,12 @@ public final class FilthyPanelBuilder extends PanelBuilder {
     }
 
     @Override
+    void initDefaults() {
+        getPanel().setOpaque(false);
+        getPanel().setBorder(Borders.EMPTY_BORDER);
+    }
+
+    @Override
     public JLabel addLabel(String text, Object constraints) {
         JLabel label = super.addLabel(text, constraints);
 
@@ -107,13 +121,7 @@ public final class FilthyPanelBuilder extends PanelBuilder {
     }
 
     @Override
-    void initJThequeDefaults() {
-        getPanel().setOpaque(false);
-        getPanel().setBorder(Borders.EMPTY_BORDER);
-    }
-
-    @Override
-    public JList addList(ListModel model, ListCellRenderer renderer, Object constraints) {
+    public JList addScrolledList(ListModel model, ListCellRenderer renderer, Object constraints) {
         JList list = new FilthyList(model);
 
         list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -130,7 +138,7 @@ public final class FilthyPanelBuilder extends PanelBuilder {
     }
 
     @Override
-    public void addScrolled(JComponent view, Object constraints) {
+    public <T extends Component> T addScrolled(T view, Object constraints) {
         JScrollPane scrollPane = new JScrollPane(view);
 
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -140,6 +148,8 @@ public final class FilthyPanelBuilder extends PanelBuilder {
         scrollPane.getViewport().setOpaque(false);
 
         add(scrollPane, constraints);
+
+        return view;
     }
 
     @Override
@@ -157,8 +167,8 @@ public final class FilthyPanelBuilder extends PanelBuilder {
     }
 
     @Override
-    public PanelBuilder addPanel(Object constraints) {
-        PanelBuilder builder = new FilthyPanelBuilder();
+    public I18nPanelBuilder addPanel(Object constraints) {
+        I18nPanelBuilder builder = new FilthyPanelBuilder();
 
         add(builder.getPanel(), constraints);
 
@@ -166,8 +176,8 @@ public final class FilthyPanelBuilder extends PanelBuilder {
     }
 
     @Override
-    public PanelBuilder addPanel(LayoutManager layout, Object constraints){
-        PanelBuilder builder = new FilthyPanelBuilder(layout);
+    public I18nPanelBuilder addPanel(LayoutManager layout, Object constraints){
+        I18nPanelBuilder builder = new FilthyPanelBuilder(layout);
 
         add(builder.getPanel(), constraints);
 
@@ -187,8 +197,36 @@ public final class FilthyPanelBuilder extends PanelBuilder {
             tree.setCellRenderer(renderer);
         }
 
-        addScrolled(tree, constraints);
+        return addScrolled(tree, constraints);
+    }
 
-        return tree;
+    @Override
+    public void setTitleBorder(String text) {
+        TitledBorder border = BorderFactory.createTitledBorder(text);
+
+        border.setTitleColor(Color.white);
+
+        setBorder(border);
+    }
+
+    @Override
+    public void setI18nTitleBorder(String key) {
+        TitledBorder border = BorderFactory.createTitledBorder(Managers.getManager(ILanguageManager.class).getMessage(key));
+
+        border.setTitleColor(Color.white);
+
+        Managers.getManager(ILanguageManager.class).addInternationalizable(new BorderUpdater(border, key));
+
+        setBorder(border);
+    }
+
+    @Override
+    public JCheckBox addI18nCheckBox(String key, Object constraints) {
+        JCheckBox checkBox = new JThequeCheckBox(key);
+
+        checkBox.setForeground(Color.white);
+        checkBox.setOpaque(false);
+
+        return add(checkBox, constraints);
     }
 }

@@ -23,7 +23,8 @@ import org.jtheque.core.managers.module.beans.ModuleContainer;
 import org.jtheque.core.managers.update.IUpdateManager;
 import org.jtheque.core.managers.view.able.IViewManager;
 import org.jtheque.core.managers.view.impl.actions.utils.OpenSiteLinkAction;
-import org.jtheque.core.utils.ui.PanelBuilder;
+import org.jtheque.core.utils.ui.builders.I18nPanelBuilder;
+import org.jtheque.core.utils.ui.builders.JThequePanelBuilder;
 import org.jtheque.utils.ui.GridBagUtils;
 
 import javax.swing.JLabel;
@@ -62,7 +63,7 @@ public final class ModuleListRenderer extends JPanel implements ListCellRenderer
     public ModuleListRenderer() {
         super();
 
-        PanelBuilder builder = new PanelBuilder(this);
+        I18nPanelBuilder builder = new JThequePanelBuilder(this);
 
         labelName = builder.add(new JLabel(), builder.gbcSet(0, 0, GridBagUtils.HORIZONTAL, GridBagUtils.BASELINE_LEADING, 2, 1));
         labelName.setFont(labelName.getFont().deriveFont(Font.BOLD, TITLE_FONT_SIZE));
@@ -81,7 +82,7 @@ public final class ModuleListRenderer extends JPanel implements ListCellRenderer
      *
      * @param builder The panel builder.
      */
-    private void addOnlineVersionLabels(PanelBuilder builder) {
+    private void addOnlineVersionLabels(I18nPanelBuilder builder) {
         labelOnlineVersionText = builder.addI18nLabel("modules.view.label.versions.online", builder.gbcSet(2, 2));
         labelOnlineVersion = builder.addLabel("", builder.gbcSet(3, 2, GridBagUtils.NONE, GridBagUtils.BASELINE_LEADING, 3, 1));
     }
@@ -91,7 +92,7 @@ public final class ModuleListRenderer extends JPanel implements ListCellRenderer
      *
      * @param builder The panel builder.
      */
-    private void addCurrentVersionLabels(PanelBuilder builder) {
+    private void addCurrentVersionLabels(I18nPanelBuilder builder) {
         labelCurrentVersionText = builder.addI18nLabel("modules.view.label.versions.current", builder.gbcSet(0, 2));
 
         labelCurrentVersion = builder.add(new JLabel(), builder.gbcSet(1, 2));
@@ -102,7 +103,7 @@ public final class ModuleListRenderer extends JPanel implements ListCellRenderer
      *
      * @param builder The panel builder.
      */
-    private void addSiteLabels(PanelBuilder builder) {
+    private void addSiteLabels(I18nPanelBuilder builder) {
         labelSiteText = builder.addI18nLabel("modules.view.label.site", builder.gbcSet(2, 1));
 
         labelSite = builder.add(new JXHyperlink(), builder.gbcSet(3, 1, GridBagUtils.NONE, GridBagUtils.BASELINE_LEADING, 3, 1));
@@ -113,7 +114,7 @@ public final class ModuleListRenderer extends JPanel implements ListCellRenderer
      *
      * @param builder The panel builder.
      */
-    private void addStateLabels(PanelBuilder builder) {
+    private void addStateLabels(I18nPanelBuilder builder) {
         labelStateText = builder.addI18nLabel("modules.view.label.state", builder.gbcSet(2, 0));
 
         labelState = builder.add(new JLabel(), builder.gbcSet(3, 0));
@@ -124,7 +125,7 @@ public final class ModuleListRenderer extends JPanel implements ListCellRenderer
      *
      * @param builder The panel builder.
      */
-    private void addDateLabels(PanelBuilder builder) {
+    private void addDateLabels(I18nPanelBuilder builder) {
         labelDateText = builder.addI18nLabel("modules.view.label.date", builder.gbcSet(0, 1));
 
         labelDate = builder.add(new JLabel(), builder.gbcSet(1, 1));

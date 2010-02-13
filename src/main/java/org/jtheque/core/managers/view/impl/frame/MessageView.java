@@ -24,7 +24,8 @@ import org.jtheque.core.managers.view.impl.actions.messages.DisplayPreviousMessa
 import org.jtheque.core.managers.view.impl.frame.abstraction.SwingBuildedDialogView;
 import org.jtheque.core.managers.view.impl.models.IMessageModel;
 import org.jtheque.core.managers.view.impl.models.MessageModel;
-import org.jtheque.core.utils.ui.PanelBuilder;
+import org.jtheque.core.utils.ui.builders.I18nPanelBuilder;
+import org.jtheque.core.utils.ui.builders.PanelBuilder;
 import org.jtheque.utils.ui.GridBagUtils;
 
 import javax.swing.JLabel;
@@ -58,7 +59,7 @@ public final class MessageView extends SwingBuildedDialogView<IModel> implements
     }
 
     @Override
-    protected void buildView(PanelBuilder builder){
+    protected void buildView(I18nPanelBuilder builder){
         addLabels(builder);
         addFields(builder);
 
@@ -71,7 +72,7 @@ public final class MessageView extends SwingBuildedDialogView<IModel> implements
      *
      * @param builder The builder to add the labels to.
      */
-    private static void addLabels(PanelBuilder builder) {
+    private static void addLabels(I18nPanelBuilder builder) {
         builder.addI18nLabel("messages.view.data.date", PanelBuilder.BOLD, builder.gbcSet(0, 0, GridBagUtils.NONE, GridBagUtils.LINE_END));
         builder.addI18nLabel("messages.view.data.source", PanelBuilder.BOLD, builder.gbcSet(0, 1, GridBagUtils.NONE, GridBagUtils.LINE_END));
         builder.addI18nLabel("messages.view.data.title", PanelBuilder.BOLD, builder.gbcSet(0, 2, GridBagUtils.NONE, GridBagUtils.LINE_END));

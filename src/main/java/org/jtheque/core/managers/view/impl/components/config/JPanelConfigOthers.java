@@ -20,15 +20,14 @@ import org.jtheque.core.managers.Managers;
 import org.jtheque.core.managers.error.JThequeError;
 import org.jtheque.core.managers.language.ILanguageManager;
 import org.jtheque.core.managers.view.able.config.IOthersConfigView;
-import org.jtheque.core.managers.view.impl.components.JThequeCheckBox;
-import org.jtheque.core.utils.ui.Borders;
-import org.jtheque.core.utils.ui.PanelBuilder;
+import org.jtheque.core.managers.view.impl.components.filthy.FilthyBackgroundPanel;
+import org.jtheque.core.managers.view.impl.components.filthy.FilthyTextField;
+import org.jtheque.core.utils.ui.builders.FilthyPanelBuilder;
+import org.jtheque.core.utils.ui.builders.I18nPanelBuilder;
 import org.jtheque.utils.ui.GridBagUtils;
 
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
 import java.util.Collection;
 
 /**
@@ -36,11 +35,11 @@ import java.util.Collection;
  *
  * @author Baptiste Wicht
  */
-public final class JPanelConfigOthers extends JPanel implements IOthersConfigView, ConfigTabComponent {
+public final class JPanelConfigOthers extends FilthyBackgroundPanel implements IOthersConfigView, ConfigTabComponent {
     private JCheckBox boxDeleteLogs;
     private JCheckBox checkBoxStart;
-    private JTextField fieldEmail;
-    private JTextField fieldSmtpHost;
+    private FilthyTextField fieldEmail;
+    private FilthyTextField fieldSmtpHost;
 
     /**
      * Construct a new JPanelConfigOthers.
@@ -62,13 +61,12 @@ public final class JPanelConfigOthers extends JPanel implements IOthersConfigVie
      * Build the view.
      */
     private void build() {
-        PanelBuilder builder = new PanelBuilder(this);
+        I18nPanelBuilder builder = new FilthyPanelBuilder(this);
 
         addLogsPanel(builder);
         addMailPanel(builder);
 
-        checkBoxStart = new JThequeCheckBox("update.view.verify");
-        add(checkBoxStart, builder.gbcSet(0, 2));
+        checkBoxStart = builder.addI18nCheckBox("update.view.verify", builder.gbcSet(0, 2));
     }
 
     /**
@@ -76,9 +74,9 @@ public final class JPanelConfigOthers extends JPanel implements IOthersConfigVie
      *
      * @param parent The parent builder.
      */
-    private void addLogsPanel(PanelBuilder parent) {
-        PanelBuilder builder = parent.addPanel(parent.gbcSet(0, 0, GridBagUtils.HORIZONTAL, GridBagUtils.FIRST_LINE_START));
-        builder.getPanel().setBorder(Borders.createTitledBorder("config.others.logs.title"));
+    private void addLogsPanel(I18nPanelBuilder parent) {
+        I18nPanelBuilder builder = parent.addPanel(parent.gbcSet(0, 0, GridBagUtils.HORIZONTAL, GridBagUtils.FIRST_LINE_START));
+        builder.setI18nTitleBorder("config.others.logs.title");
 
         boxDeleteLogs = builder.addI18nCheckBox("config.others.logs.delete",
                 builder.gbcSet(0, 0, GridBagUtils.HORIZONTAL, GridBagUtils.BASELINE_LEADING, 2, 1));
@@ -91,15 +89,15 @@ public final class JPanelConfigOthers extends JPanel implements IOthersConfigVie
      *
      * @param parent The parent builder.
      */
-    private void addMailPanel(PanelBuilder parent) {
-        PanelBuilder builder = parent.addPanel(parent.gbcSet(0, 1, GridBagUtils.HORIZONTAL, GridBagUtils.FIRST_LINE_START));
-        builder.getPanel().setBorder(Borders.createTitledBorder("config.others.mail.title"));
+    private void addMailPanel(I18nPanelBuilder parent) {
+        I18nPanelBuilder builder = parent.addPanel(parent.gbcSet(0, 1, GridBagUtils.HORIZONTAL, GridBagUtils.FIRST_LINE_START));
+        builder.setI18nTitleBorder("config.others.mail.title");
 
         builder.addI18nLabel("config.others.mail.userEmail", builder.gbcSet(0, 0, GridBagUtils.NONE, GridBagUtils.BASELINE_TRAILING));
         builder.addI18nLabel("config.others.mail.smtpHost", builder.gbcSet(0, 1, GridBagUtils.NONE, GridBagUtils.BASELINE_TRAILING));
 
-        fieldEmail = builder.add(new JTextField(10), builder.gbcSet(1, 0, GridBagUtils.HORIZONTAL));
-        fieldSmtpHost = builder.add(new JTextField(10), builder.gbcSet(1, 1, GridBagUtils.HORIZONTAL));
+        fieldEmail = builder.add(new FilthyTextField(10), builder.gbcSet(1, 0, GridBagUtils.HORIZONTAL));
+        fieldSmtpHost = builder.add(new FilthyTextField(10), builder.gbcSet(1, 1, GridBagUtils.HORIZONTAL));
     }
 
     /**

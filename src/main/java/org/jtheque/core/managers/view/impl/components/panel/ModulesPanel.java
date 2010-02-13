@@ -13,7 +13,8 @@ import org.jtheque.core.managers.view.impl.actions.module.UninstallModuleAction;
 import org.jtheque.core.managers.view.impl.actions.module.UpdateModuleAction;
 import org.jtheque.core.managers.view.impl.components.model.ModuleListModel;
 import org.jtheque.core.managers.view.impl.components.renderers.ModuleListRenderer;
-import org.jtheque.core.utils.ui.PanelBuilder;
+import org.jtheque.core.utils.ui.builders.JThequePanelBuilder;
+import org.jtheque.core.utils.ui.builders.PanelBuilder;
 import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.utils.ui.LinedButtonBarBuilder;
 
@@ -48,11 +49,11 @@ public final class ModulesPanel extends JPanel implements IModulesPanelView {
     public ModulesPanel(){
         super();
 
-        PanelBuilder builder = new PanelBuilder(this);
+        PanelBuilder builder = new JThequePanelBuilder(this);
 
         builder.add(new KernelInfoPanel(), builder.gbcSet(0, 0, GridBagUtils.HORIZONTAL, GridBagUtils.BASELINE_LEADING, 1.0, 0.0));
 
-        modulesList = builder.addList(new ModuleListModel(), new ModuleListRenderer(), builder.gbcSet(0, 1, GridBagUtils.BOTH, GridBagUtils.BASELINE_LEADING, 1.0, 1.0));
+        modulesList = builder.addScrolledList(new ModuleListModel(), new ModuleListRenderer(), builder.gbcSet(0, 1, GridBagUtils.BOTH, GridBagUtils.BASELINE_LEADING, 1.0, 1.0));
         modulesList.setVisibleRowCount(4);
 
         LinedButtonBarBuilder barBuilder = new LinedButtonBarBuilder(2);

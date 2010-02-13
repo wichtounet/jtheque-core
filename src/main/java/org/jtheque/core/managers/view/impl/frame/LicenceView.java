@@ -21,7 +21,7 @@ import org.jtheque.core.managers.view.able.ILicenceView;
 import org.jtheque.core.managers.view.able.components.IModel;
 import org.jtheque.core.managers.view.impl.actions.about.PrintLicenseAction;
 import org.jtheque.core.managers.view.impl.frame.abstraction.SwingBuildedDialogView;
-import org.jtheque.core.utils.ui.PanelBuilder;
+import org.jtheque.core.utils.ui.builders.I18nPanelBuilder;
 import org.jtheque.utils.io.FileUtils;
 import org.jtheque.utils.ui.GridBagUtils;
 
@@ -49,7 +49,7 @@ public final class LicenceView extends SwingBuildedDialogView<IModel> implements
     }
 
     @Override
-    protected void buildView(PanelBuilder builder){
+    protected void buildView(I18nPanelBuilder builder){
         builder.addScrolledTextArea(FileUtils.getTextOf(Managers.getCore().getApplication().getLicenceFilePath()),
                 builder.gbcSet(0, 0, GridBagUtils.BOTH, GridBagUtils.BELOW_BASELINE_LEADING, 1.0, 1.0));
 

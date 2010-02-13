@@ -21,15 +21,16 @@ import org.jtheque.core.managers.core.CoreConfiguration;
 import org.jtheque.core.managers.error.JThequeError;
 import org.jtheque.core.managers.language.ILanguageManager;
 import org.jtheque.core.managers.view.able.config.IAppearanceConfigView;
+import org.jtheque.core.managers.view.impl.components.filthy.FilthyRenderer;
 import org.jtheque.core.managers.view.impl.components.model.AvailableLanguagesComboBoxModel;
-import org.jtheque.core.utils.ui.Borders;
-import org.jtheque.core.utils.ui.PanelBuilder;
+import org.jtheque.core.managers.view.impl.components.filthy.FilthyBackgroundPanel;
+import org.jtheque.core.utils.ui.builders.FilthyPanelBuilder;
+import org.jtheque.core.utils.ui.builders.I18nPanelBuilder;
 import org.jtheque.core.utils.ui.ValidationUtils;
 import org.jtheque.utils.ui.GridBagUtils;
 
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
-import javax.swing.JPanel;
 import java.util.Collection;
 
 /**
@@ -37,7 +38,7 @@ import java.util.Collection;
  *
  * @author Baptiste Wicht
  */
-public final class JPanelConfigAppearance extends JPanel implements ConfigTabComponent, IAppearanceConfigView {
+public final class JPanelConfigAppearance extends FilthyBackgroundPanel implements ConfigTabComponent, IAppearanceConfigView {
     private final AvailableLanguagesComboBoxModel modelLanguages;
     private final JCheckBox boxRetainSizeAndPosition;
 
@@ -47,19 +48,19 @@ public final class JPanelConfigAppearance extends JPanel implements ConfigTabCom
     public JPanelConfigAppearance() {
         super();
 
-        PanelBuilder builder = new PanelBuilder(this);
+        I18nPanelBuilder baseBuilder = new FilthyPanelBuilder(this);
 
-        PanelBuilder builder1 = builder.addPanel(builder.gbcSet(0, 0, GridBagUtils.HORIZONTAL, GridBagUtils.FIRST_LINE_START));
-        builder1.getPanel().setBorder(Borders.createTitledBorder("config.appearance.general.title"));
+        I18nPanelBuilder builder = baseBuilder.addPanel(baseBuilder.gbcSet(0, 0, GridBagUtils.HORIZONTAL, GridBagUtils.FIRST_LINE_START));
+        builder.setI18nTitleBorder("config.appearance.general.title");
 
-        builder1.addI18nLabel("config.appearance.language", builder.gbcSet(0, 0));
+        builder.addI18nLabel("config.appearance.language", baseBuilder.gbcSet(0, 0));
 
         modelLanguages = new AvailableLanguagesComboBoxModel();
 
-        builder1.addComboBox(modelLanguages, builder.gbcSet(1, 0, GridBagUtils.HORIZONTAL));
+        builder.addComboBox(modelLanguages, new FilthyRenderer(), baseBuilder.gbcSet(1, 0, GridBagUtils.HORIZONTAL));
 
-        boxRetainSizeAndPosition = builder1.addI18nCheckBox("config.appearance.size",
-                builder.gbcSet(0, 1, GridBagUtils.HORIZONTAL, GridBagUtils.BASELINE_LEADING, 2, 1));
+        boxRetainSizeAndPosition = builder.addI18nCheckBox("config.appearance.size",
+                baseBuilder.gbcSet(0, 1, GridBagUtils.HORIZONTAL, GridBagUtils.BASELINE_LEADING, 2, 1));
         
         fillAllFields();
     }

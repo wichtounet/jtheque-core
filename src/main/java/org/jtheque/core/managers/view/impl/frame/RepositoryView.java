@@ -27,7 +27,7 @@ import org.jtheque.core.managers.view.impl.components.model.ModuleRepositoryList
 import org.jtheque.core.managers.view.impl.components.panel.ModulePanel;
 import org.jtheque.core.managers.view.impl.components.renderers.ModuleRepositoryListRenderer;
 import org.jtheque.core.managers.view.impl.frame.abstraction.SwingBuildedDialogView;
-import org.jtheque.core.utils.ui.PanelBuilder;
+import org.jtheque.core.utils.ui.builders.I18nPanelBuilder;
 import org.jtheque.utils.ui.GridBagUtils;
 
 import javax.swing.JList;
@@ -57,7 +57,7 @@ public final class RepositoryView extends SwingBuildedDialogView<IModel> impleme
     }
 
     @Override
-    protected void buildView(PanelBuilder builder){
+    protected void buildView(I18nPanelBuilder builder){
         builder.addLabel(Managers.getManager(IModuleManager.class).getRepository().getTitle().toString(),
                 builder.gbcSet(0, 0, GridBagUtils.HORIZONTAL));
 

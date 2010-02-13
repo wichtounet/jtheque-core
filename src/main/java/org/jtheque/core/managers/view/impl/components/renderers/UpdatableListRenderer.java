@@ -20,7 +20,8 @@ import org.jtheque.core.managers.Managers;
 import org.jtheque.core.managers.update.IUpdateManager;
 import org.jtheque.core.managers.update.Updatable;
 import org.jtheque.core.managers.view.able.IViewManager;
-import org.jtheque.core.utils.ui.PanelBuilder;
+import org.jtheque.core.utils.ui.builders.I18nPanelBuilder;
+import org.jtheque.core.utils.ui.builders.JThequePanelBuilder;
 import org.jtheque.utils.ui.GridBagUtils;
 
 import javax.swing.JLabel;
@@ -51,7 +52,7 @@ public final class UpdatableListRenderer extends JPanel implements ListCellRende
     public UpdatableListRenderer() {
         super();
 
-        PanelBuilder builder = new PanelBuilder(this);
+        I18nPanelBuilder builder = new JThequePanelBuilder(this);
 
         labelName = builder.add(new JLabel(), builder.gbcSet(0, 0, GridBagUtils.HORIZONTAL, GridBagUtils.BASELINE, 2, 1));
         labelName.setFont(labelName.getFont().deriveFont(Font.BOLD, TITLE_FONT_SIZE));

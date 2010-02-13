@@ -24,7 +24,8 @@ import org.jtheque.core.managers.update.versions.VersionsFile;
 import org.jtheque.core.managers.update.versions.VersionsFileReader;
 import org.jtheque.core.managers.view.able.IViewManager;
 import org.jtheque.core.managers.view.able.ViewDefaults;
-import org.jtheque.core.utils.ui.PanelBuilder;
+import org.jtheque.core.utils.ui.builders.JThequePanelBuilder;
+import org.jtheque.core.utils.ui.builders.PanelBuilder;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -55,7 +56,7 @@ public final class ModulePanel extends JPanel {
     public ModulePanel(Object value, boolean isSelected) {
         super();
 
-        PanelBuilder builder = new PanelBuilder(this);
+        PanelBuilder builder = new JThequePanelBuilder(this);
 
         module = (ModuleDescription) value;
 

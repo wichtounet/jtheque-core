@@ -26,7 +26,7 @@ import org.jtheque.core.managers.view.impl.components.LayerTabbedPane;
 import org.jtheque.core.managers.view.impl.components.panel.ModulesPanel;
 import org.jtheque.core.managers.view.impl.components.panel.UpdatablesPanel;
 import org.jtheque.core.managers.view.impl.frame.abstraction.SwingBuildedDialogView;
-import org.jtheque.core.utils.ui.PanelBuilder;
+import org.jtheque.core.utils.ui.builders.I18nPanelBuilder;
 import org.jtheque.utils.ui.GridBagUtils;
 
 import javax.swing.JComponent;
@@ -55,7 +55,7 @@ public final class ModuleView extends SwingBuildedDialogView<IModel> implements 
     }
 
     @Override
-    protected void buildView(PanelBuilder builder){
+    protected void buildView(I18nPanelBuilder builder){
         LayerTabbedPane tabbed = new LayerTabbedPane();
 
         modulesPanel = new ModulesPanel();

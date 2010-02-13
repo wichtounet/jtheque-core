@@ -21,8 +21,9 @@ import org.jtheque.core.managers.error.JThequeError;
 import org.jtheque.core.managers.language.ILanguageManager;
 import org.jtheque.core.managers.view.able.IViewManager;
 import org.jtheque.core.managers.view.able.components.IModel;
-import org.jtheque.core.utils.ui.builders.I18nPanelBuilder;
-import org.jtheque.core.utils.ui.builders.JThequePanelBuilder;
+import org.jtheque.core.managers.view.impl.components.filthy.FilthyBackgroundPanel;
+import org.jtheque.core.utils.ui.builders.FilthyPanelBuilder;
+import org.jtheque.core.utils.ui.builders.PanelBuilder;
 
 import javax.swing.JFrame;
 import java.awt.Container;
@@ -34,11 +35,11 @@ import java.util.Collection;
  *
  * @author Baptiste Wicht
  */
-public abstract class SwingBuildedDialogView<T extends IModel> extends SwingDialogView {
+public abstract class SwingFilthyBuildedDialogView<T extends IModel> extends SwingDialogView {
     /**
      * Construct a SwingDialogView modal to the main view.
      */
-    protected SwingBuildedDialogView(){
+    protected SwingFilthyBuildedDialogView() {
         this((Frame) Managers.getManager(IViewManager.class).getViews().getMainView().getImpl());
     }
 
@@ -47,7 +48,7 @@ public abstract class SwingBuildedDialogView<T extends IModel> extends SwingDial
      *
      * @param frame The parent frame.
      */
-    protected SwingBuildedDialogView(Frame frame) {
+    protected SwingFilthyBuildedDialogView(Frame frame) {
         super(frame);
 
         setModal(true);
@@ -62,7 +63,7 @@ public abstract class SwingBuildedDialogView<T extends IModel> extends SwingDial
     /**
      * Build the view.
      */
-    protected final void build(){
+    protected final void build() {
         initView();
 
         setContentPane(buildContentPane());
@@ -77,21 +78,23 @@ public abstract class SwingBuildedDialogView<T extends IModel> extends SwingDial
      *
      * @return The builded content pane.
      */
-    private Container buildContentPane(){
-        I18nPanelBuilder builder = new JThequePanelBuilder();
+    private Container buildContentPane() {
+        FilthyBackgroundPanel contentPane = new FilthyBackgroundPanel();
+
+        PanelBuilder builder = new FilthyPanelBuilder(contentPane);
 
         buildView(builder);
 
-        return builder.getPanel();
+        return contentPane;
     }
 
     @Override
-    protected void validate(Collection<JThequeError> errors){
+    protected void validate(Collection<JThequeError> errors) {
         //Default empty implementation
     }
 
     @Override
-    public T getModel(){
+    public final T getModel() {
         return (T) super.getModel();
     }
 
@@ -105,5 +108,5 @@ public abstract class SwingBuildedDialogView<T extends IModel> extends SwingDial
      *
      * @param builder The builder to use to build the content pane.
      */
-    protected abstract void buildView(I18nPanelBuilder builder);
+    protected abstract void buildView(PanelBuilder builder);
 }

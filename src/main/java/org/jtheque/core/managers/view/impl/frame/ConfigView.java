@@ -24,10 +24,10 @@ import org.jtheque.core.managers.view.impl.actions.config.ApplyChangesAndCloseAc
 import org.jtheque.core.managers.view.impl.actions.config.CancelChangesAction;
 import org.jtheque.core.managers.view.impl.components.LayerTabbedPane;
 import org.jtheque.core.managers.view.impl.components.config.ConfigTabComponent;
-import org.jtheque.core.managers.view.impl.frame.abstraction.SwingBuildedDialogView;
+import org.jtheque.core.managers.view.impl.frame.abstraction.SwingFilthyBuildedDialogView;
 import org.jtheque.core.managers.view.listeners.ConfigTabEvent;
 import org.jtheque.core.managers.view.listeners.ConfigTabListener;
-import org.jtheque.core.utils.ui.PanelBuilder;
+import org.jtheque.core.utils.ui.builders.PanelBuilder;
 import org.jtheque.utils.ui.GridBagUtils;
 
 import java.util.Collection;
@@ -37,7 +37,7 @@ import java.util.Collection;
  *
  * @author Baptiste Wicht
  */
-public final class ConfigView extends SwingBuildedDialogView<IModel> implements ConfigTabListener, IConfigView {
+public final class ConfigView extends SwingFilthyBuildedDialogView<IModel> implements ConfigTabListener, IConfigView {
     private LayerTabbedPane tab;
 
     /**
@@ -52,6 +52,7 @@ public final class ConfigView extends SwingBuildedDialogView<IModel> implements 
     @Override
     protected void initView(){
         setTitleKey("config.view.title");
+        setResizable(false);
     }
 
     @Override

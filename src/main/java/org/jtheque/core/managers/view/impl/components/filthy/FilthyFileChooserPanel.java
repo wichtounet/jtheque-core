@@ -21,7 +21,8 @@ import org.jtheque.core.managers.language.ILanguageManager;
 import org.jtheque.core.managers.language.Internationalizable;
 import org.jtheque.core.managers.view.able.IViewManager;
 import org.jtheque.core.utils.ui.Borders;
-import org.jtheque.core.utils.ui.PanelBuilder;
+import org.jtheque.core.utils.ui.builders.JThequePanelBuilder;
+import org.jtheque.core.utils.ui.builders.PanelBuilder;
 import org.jtheque.utils.io.SimpleFilter;
 
 import javax.swing.AbstractAction;
@@ -78,7 +79,7 @@ public final class FilthyFileChooserPanel extends JPanel implements Internationa
      * @param displayLabel A boolean tag indicating if we must display the label or not.
      */
     private void build(boolean displayLabel) {
-        PanelBuilder builder = new PanelBuilder(this);
+        PanelBuilder builder = new JThequePanelBuilder(this);
 
         setOpaque(false);
         setBorder(Borders.EMPTY_BORDER);

@@ -20,7 +20,8 @@ import org.jtheque.core.managers.Managers;
 import org.jtheque.core.managers.language.ILanguageManager;
 import org.jtheque.core.managers.language.Internationalizable;
 import org.jtheque.core.managers.view.able.IViewManager;
-import org.jtheque.core.utils.ui.PanelBuilder;
+import org.jtheque.core.utils.ui.builders.JThequePanelBuilder;
+import org.jtheque.core.utils.ui.builders.PanelBuilder;
 import org.jtheque.utils.io.SimpleFilter;
 
 import javax.swing.BorderFactory;
@@ -65,7 +66,7 @@ public final class FileChooserPanel extends JPanel implements Internationalizabl
      * Build the panel.
      */
     private void build() {
-        PanelBuilder builder = new PanelBuilder(this);
+        PanelBuilder builder = new JThequePanelBuilder(this);
 
         builder.setDefaultInsets(new Insets(0, 0, 0, 0));
 

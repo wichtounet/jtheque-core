@@ -23,7 +23,7 @@ import org.jtheque.core.managers.view.able.update.IUpdateView;
 import org.jtheque.core.managers.view.impl.actions.module.update.AcValidateUpdateView;
 import org.jtheque.core.managers.view.impl.components.model.VersionsComboBoxModel;
 import org.jtheque.core.managers.view.impl.frame.abstraction.SwingBuildedDialogView;
-import org.jtheque.core.utils.ui.PanelBuilder;
+import org.jtheque.core.utils.ui.builders.I18nPanelBuilder;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.ui.GridBagUtils;
 
@@ -55,7 +55,7 @@ public final class UpdateView extends SwingBuildedDialogView<IModel> implements 
     }
 
     @Override
-    protected void buildView(PanelBuilder builder){
+    protected void buildView(I18nPanelBuilder builder){
         builder.addI18nLabel("update.view.versions", builder.gbcSet(0, 0, GridBagUtils.HORIZONTAL));
 
         model = new VersionsComboBoxModel();

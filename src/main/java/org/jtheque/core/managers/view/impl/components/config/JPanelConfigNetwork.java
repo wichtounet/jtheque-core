@@ -21,15 +21,15 @@ import org.jtheque.core.managers.error.JThequeError;
 import org.jtheque.core.managers.language.ILanguageManager;
 import org.jtheque.core.managers.view.able.config.INetworkConfigView;
 import org.jtheque.core.managers.view.impl.actions.config.CheckProxyAction;
-import org.jtheque.core.utils.ui.Borders;
-import org.jtheque.core.utils.ui.PanelBuilder;
+import org.jtheque.core.managers.view.impl.components.filthy.FilthyBackgroundPanel;
+import org.jtheque.core.managers.view.impl.components.filthy.FilthyTextField;
+import org.jtheque.core.utils.ui.builders.FilthyPanelBuilder;
+import org.jtheque.core.utils.ui.builders.I18nPanelBuilder;
 import org.jtheque.core.utils.ui.ValidationUtils;
 import org.jtheque.utils.ui.GridBagUtils;
 
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
 import java.util.Collection;
 
 /**
@@ -37,10 +37,10 @@ import java.util.Collection;
  *
  * @author Baptiste Wicht
  */
-public final class JPanelConfigNetwork extends JPanel implements INetworkConfigView, ConfigTabComponent {
+public final class JPanelConfigNetwork extends FilthyBackgroundPanel implements INetworkConfigView, ConfigTabComponent {
     private JCheckBox boxProxy;
-    private JTextField fieldAddress;
-    private JTextField fieldPort;
+    private FilthyTextField fieldAddress;
+    private FilthyTextField fieldPort;
 
     /**
      * Construct a new JPanelConfigNetwork. 
@@ -57,20 +57,20 @@ public final class JPanelConfigNetwork extends JPanel implements INetworkConfigV
      * Add the proxy panel.
      */
     private void addProxyPanel() {
-        PanelBuilder parent = new PanelBuilder(this);
+        I18nPanelBuilder parent = new FilthyPanelBuilder(this);
 
-        PanelBuilder builder = parent.addPanel(parent.gbcSet(0, 0, GridBagUtils.HORIZONTAL, GridBagUtils.FIRST_LINE_START));
-        builder.getPanel().setBorder(Borders.createTitledBorder("config.network.proxy.title"));
+        I18nPanelBuilder builder = parent.addPanel(parent.gbcSet(0, 0, GridBagUtils.HORIZONTAL, GridBagUtils.FIRST_LINE_START));
+        builder.setI18nTitleBorder("config.network.proxy.title");
 
         boxProxy = builder.addI18nCheckBox("config.network.proxy.check",
                 parent.gbcSet(0, 0, GridBagUtils.HORIZONTAL, GridBagUtils.BASELINE_LEADING, 2, 1));
         boxProxy.addActionListener(new CheckProxyAction());
 
         builder.addI18nLabel("config.network.proxy.address", parent.gbcSet(0, 1));
-        fieldAddress = builder.add(new JTextField(10), parent.gbcSet(1, 1, GridBagUtils.HORIZONTAL));
+        fieldAddress = builder.add(new FilthyTextField(10), parent.gbcSet(1, 1, GridBagUtils.HORIZONTAL));
 
         builder.addI18nLabel("config.network.proxy.port", parent.gbcSet(0, 2));
-        fieldPort = builder.add(new JTextField(10), parent.gbcSet(1, 2, GridBagUtils.HORIZONTAL));
+        fieldPort = builder.add(new FilthyTextField(10), parent.gbcSet(1, 2, GridBagUtils.HORIZONTAL));
     }
 
     /**
@@ -100,12 +100,12 @@ public final class JPanelConfigNetwork extends JPanel implements INetworkConfigV
     }
 
     @Override
-    public JTextField getFieldPort() {
+    public JComponent getFieldPort() {
         return fieldPort;
     }
 
     @Override
-    public JTextField getFieldAddress() {
+    public JComponent getFieldAddress() {
         return fieldAddress;
     }
 

@@ -9,7 +9,8 @@ import org.jtheque.core.managers.view.impl.components.model.EventsTableModel;
 import org.jtheque.core.managers.view.impl.components.model.LogComboBoxModel;
 import org.jtheque.core.managers.view.impl.frame.abstraction.SwingBuildedDialogView;
 import org.jtheque.core.utils.ui.Borders;
-import org.jtheque.core.utils.ui.PanelBuilder;
+import org.jtheque.core.utils.ui.builders.I18nPanelBuilder;
+import org.jtheque.core.utils.ui.builders.PanelBuilder;
 import org.jtheque.utils.ui.GridBagUtils;
 
 import javax.swing.JComboBox;
@@ -86,7 +87,7 @@ public final class LogView extends SwingBuildedDialogView<IModel> implements Lis
     }
 
     @Override
-    protected void buildView(PanelBuilder builder){
+    protected void buildView(I18nPanelBuilder builder){
         builder.setDefaultInsets(new Insets(4, 4, 4, 4));
 
         builder.addI18nLabel("log.view.log", builder.gbcSet(0, 0, GridBagUtils.NONE, GridBagUtils.LINE_END));
@@ -121,8 +122,8 @@ public final class LogView extends SwingBuildedDialogView<IModel> implements Lis
      *
      * @param parent The parent builder.
      */
-    private void createInfosPanel(PanelBuilder parent) {
-        PanelBuilder builder = parent.addPanel(parent.gbcSet(0, 2, GridBagUtils.BOTH, GridBagUtils.LINE_START, 2, 1, 1.0, 0.33));
+    private void createInfosPanel(I18nPanelBuilder parent) {
+        I18nPanelBuilder builder = parent.addPanel(parent.gbcSet(0, 2, GridBagUtils.BOTH, GridBagUtils.LINE_START, 2, 1, 1.0, 0.33));
 
         builder.setBorder(Borders.createTitledBorder("log.view.details"));
 
@@ -154,7 +155,7 @@ public final class LogView extends SwingBuildedDialogView<IModel> implements Lis
      *
      * @param builder The frame builder.
      */
-    private static void addLabels(PanelBuilder builder) {
+    private static void addLabels(I18nPanelBuilder builder) {
         builder.addI18nLabel("log.view.log", PanelBuilder.BOLD, builder.gbcSet(0, 1, GridBagUtils.NONE, GridBagUtils.BASELINE_TRAILING));
         builder.addI18nLabel("log.view.source", PanelBuilder.BOLD, builder.gbcSet(0, 2, GridBagUtils.NONE, GridBagUtils.BASELINE_TRAILING));
         builder.addI18nLabel("log.view.level", PanelBuilder.BOLD, builder.gbcSet(0, 3, GridBagUtils.NONE, GridBagUtils.BASELINE_TRAILING));

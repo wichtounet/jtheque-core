@@ -32,7 +32,8 @@ import org.jtheque.core.managers.view.impl.components.ViewContainer;
 import org.jtheque.core.managers.view.impl.components.menu.JMenuBarJTheque;
 import org.jtheque.core.managers.view.impl.frame.abstraction.SwingFrameView;
 import org.jtheque.core.utils.ui.Borders;
-import org.jtheque.core.utils.ui.PanelBuilder;
+import org.jtheque.core.utils.ui.builders.JThequePanelBuilder;
+import org.jtheque.core.utils.ui.builders.PanelBuilder;
 import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.utils.ui.SwingUtils;
 
@@ -185,7 +186,7 @@ public final class MainView extends SwingFrameView implements TitleListener, IMa
      * @return le contentPane
      */
     private JXLayer<JComponent> buildContentPane() {
-        PanelBuilder builder = new PanelBuilder();
+        PanelBuilder builder = new JThequePanelBuilder();
         builder.getPanel().setBorder(Borders.EMPTY_BORDER);
 
         if (viewManager.isTabMainComponent()) {
