@@ -131,15 +131,17 @@
                 <configuration>
                   <locales>fr,en</locales>
                 </configuration>
-                <executions>
-                    <!-- <execution>
-                        <id>deploy-site</id>
-                        <phase>deploy</phase>
-                        <goals>
-                            <goal>deploy</goal>
-                        </goals>
-                    </execution>-->
-                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-scm-plugin</artifactId>
+                <configuration>
+                    <tag>${BUILD_NUMBER}</tag>
+                    <tagBase>http://wichtounet.homedns.org/svn/jtheque-core/continuous/</tagBase>
+                    <username>wichtounet</username>
+                    <password>${svn.password}</password>
+                </configuration>
             </plugin>
         </plugins>
 

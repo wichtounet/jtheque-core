@@ -41,7 +41,9 @@ public final class CoreLauncher {
      * @param args No args will be read.
      */
     public static void main(String[] args){
-        SystemProperty.USER_DIR.set("N:\\Programmation\\WorkDirectory\\JTheque\\Dev\\JTheque Movies Windows\\core\\");
+        if(args.length > 0){
+            SystemProperty.USER_DIR.set(args[0]);
+        }
 
         Application application = new XMLApplicationReader().readApplication(SystemProperty.USER_DIR.get() + "application.xml");
 
