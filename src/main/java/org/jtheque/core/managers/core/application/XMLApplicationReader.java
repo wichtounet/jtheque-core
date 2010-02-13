@@ -231,8 +231,7 @@ public final class XMLApplicationReader {
             StringBuilder path = new StringBuilder(SystemProperty.USER_DIR.get());
 			path.append("images/");
 			path.append(reader.readString("image", iconElement));
-
-
+			
             if(reader.existsValue("@image", iconElement)){
                 path.append(reader.readString("@image", iconElement));
             } else {
