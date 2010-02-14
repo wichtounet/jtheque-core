@@ -143,15 +143,6 @@ public final class ModuleContainer {
     }
 
     /**
-     * Return the file of the module.
-     *
-     * @return The file of the module.
-     */
-    public File getModuleFile() {
-        return new File(Managers.getCore().getFolders().getModulesFolder(), infos.jarFile());
-    }
-
-    /**
      * Return the name of the bean.
      *
      * @return The name of the bean.

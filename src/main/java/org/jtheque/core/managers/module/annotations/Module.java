@@ -62,13 +62,6 @@ public @interface Module {
     String core();
 
     /**
-     * Return the name of the jar file of the module.
-     *
-     * @return The name of the jar file of the module.
-     */
-    String jarFile();
-
-    /**
      * The URL of the module.
      *
      * @return URL url of the module.

@@ -110,11 +110,7 @@ public final class ModuleManager extends AbstractManager implements IModuleManag
             if (module.getState() == ModuleState.UNINSTALLED) {
                 configuration.remove(module);
 
-                //We create a "tag" (a file) to say to the application to delete it at the next launch
-                FileUtils.createEmptyFile(
-                        module.getModuleFile().getAbsolutePath().replace(
-                                module.getModuleFile().getName(),
-                                "deleted" + module.getModuleFile().getName()));
+                //TODO : Delete the file. 
             }
         }
     }
