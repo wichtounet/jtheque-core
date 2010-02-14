@@ -145,4 +145,16 @@ public interface IResourceManager {
      * @return The action of the specified name.
      */
     Action getAction(String name);
+
+    /**
+     * Invalidate the entire cache. 
+     */
+    void invalidateCache();
+
+    /**
+     * Invalidate the specified cached image.
+     *
+     * @param id The id of the image to invalidate. 
+     */
+    void invalidateImage(String id);
 }

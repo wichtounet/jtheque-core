@@ -1,8 +1,7 @@
 package org.jtheque.core.managers.log;
 
 /**
- * A JTheque Logger. The logger is based on SLF4J and the real implementation is the SLF4J Log4J bridge
- * functionality.
+ * A JTheque Logger. The logger is based on SLF4J and the real implementation is LogBack functionality.
  *
  * @author Baptiste Wicht
  */

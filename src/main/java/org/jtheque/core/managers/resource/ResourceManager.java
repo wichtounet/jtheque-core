@@ -127,6 +127,16 @@ public final class ResourceManager extends AbstractManager implements IResourceM
         return stream;
     }
 
+    @Override
+    public void invalidateCache() {
+        cache.clear();
+    }
+
+    @Override
+    public void invalidateImage(String id) {
+        cache.remove(id);
+    }
+
     /* Private utility methods */
 
     /**

@@ -16,6 +16,8 @@ package org.jtheque.core.managers.log;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import org.jtheque.core.managers.AbstractManager;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,23 +26,8 @@ import java.util.Map;
  *
  * @author Baptiste Wicht
  */
-public final class LoggingManager implements ILoggingManager {
+public final class LoggingManager extends AbstractManager implements ILoggingManager {
     private static final Map<Class<?>, IJThequeLogger> LOGGERS = new HashMap<Class<?>, IJThequeLogger>(100);
-
-    @Override
-    public void preInit() {
-        //Nothing to do
-    }
-
-    @Override
-    public void init() {
-        //Nothing to do
-    }
-
-    @Override
-    public void close() {
-        Log4JConfigurator.close();
-    }
 
     @Override
     public IJThequeLogger getLogger(Class<?> classz) {

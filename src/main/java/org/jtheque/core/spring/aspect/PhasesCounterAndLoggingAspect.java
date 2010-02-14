@@ -1,6 +1,5 @@
 package org.jtheque.core.spring.aspect;
 
-import org.apache.log4j.Logger;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
@@ -9,6 +8,7 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.jtheque.core.managers.Managers;
 import org.jtheque.core.managers.lifecycle.JThequeCoreTimer;
 import org.jtheque.core.managers.log.ILoggingManager;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -53,7 +53,7 @@ public final class PhasesCounterAndLoggingAspect {
     public void startCounter(JoinPoint joinPoint) {
         String phase = getPhase(joinPoint);
 
-        Logger.getLogger(getClass()).trace("Phase " + phase + " started");
+        LoggerFactory.getLogger(getClass()).trace("Phase " + phase + " started");
 
         startTimes.put(phase, System.currentTimeMillis());
     }

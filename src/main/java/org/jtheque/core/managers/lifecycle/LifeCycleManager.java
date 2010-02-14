@@ -29,7 +29,7 @@ import org.jtheque.core.managers.lifecycle.listeners.FunctionListener;
 import org.jtheque.core.managers.lifecycle.listeners.TitleEvent;
 import org.jtheque.core.managers.lifecycle.listeners.TitleListener;
 import org.jtheque.core.managers.lifecycle.phases.IPhasesManager;
-import org.jtheque.core.managers.log.Log4JConfigurator;
+import org.jtheque.core.managers.log.LoggerConfigurator;
 import org.jtheque.core.managers.module.IModuleManager;
 import org.jtheque.core.managers.module.loaders.ModuleLoader;
 import org.jtheque.core.managers.view.SplashManager;
@@ -59,7 +59,7 @@ public final class LifeCycleManager implements ILifeCycleManager, Internationali
 
         SplashManager.getInstance().displaySplashScreen();
 
-        Log4JConfigurator.configure();
+        LoggerConfigurator.configure();
 
         ModuleLoader.loadModules();
 

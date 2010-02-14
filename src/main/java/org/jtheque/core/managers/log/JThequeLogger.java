@@ -20,7 +20,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * A JTheque Logger. This logger is based on a Log4J logger.
+ * A JTheque Logger. This logger is based on a SLF4J logger.
  *
  * @author Baptiste Wicht
  */
