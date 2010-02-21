@@ -17,13 +17,9 @@ package org.jtheque.core.managers.feature;
  */
 
 import org.jtheque.core.managers.AbstractManager;
-import org.jtheque.core.managers.Managers;
 import org.jtheque.core.managers.feature.Feature.FeatureType;
-import org.jtheque.core.managers.resource.IResourceManager;
-import org.jtheque.core.managers.resource.ImageType;
 import org.jtheque.utils.collections.CollectionUtils;
 
-import javax.swing.Action;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.EnumMap;
@@ -72,6 +68,21 @@ public final class FeatureManager extends AbstractManager implements IFeatureMan
         }
     }
 
+    /**
+     * Add a feature to the menu.
+     *
+     * @param feature The feature to add.
+     */
+    private void addFeature(Feature feature) {
+        if (feature.getType() != FeatureType.PACK) {
+            throw new IllegalArgumentException("Can only add feature of type pack directly. ");
+        }
+
+        features.add(feature);
+
+        fireFeatureAdded(feature);
+    }
+
     @Override
     public void removeMenu(Menu menu){
         for(CoreFeature feature : CoreFeature.values()){
@@ -85,14 +96,15 @@ public final class FeatureManager extends AbstractManager implements IFeatureMan
         }
     }
 
-    @Override
-    public Feature createFeature(int position, FeatureType type, String key) {
-        Feature feature = new ManagedFeature();
-        feature.setPosition(position);
-        feature.setType(type);
-        feature.setTitleKey(key);
+    /**
+     * Remove the features from the main menu.
+     *
+     * @param feature The feature to remove.
+     */
+    private void removeFeature(Feature feature) {
+        features.remove(feature);
 
-        return feature;
+        fireFeatureRemoved(feature);
     }
 
     /**
@@ -103,65 +115,14 @@ public final class FeatureManager extends AbstractManager implements IFeatureMan
      * @return The added feature.
      */
     private Feature createAndAddFeature(int position, String key) {
-        Feature feature = createFeature(position, FeatureType.PACK, key);
-
-        features.add(feature);
-
-        return feature;
-    }
-
-    @Override
-    public Feature addSubFeature(Feature parent, String actionName, FeatureType type, int position, String baseName, String icon) {
-        Action action = Managers.getManager(IResourceManager.class).getAction(actionName);
-
-        action.putValue(Action.SMALL_ICON, Managers.getManager(IResourceManager.class).getIcon(
-                baseName,
-                icon, ImageType.PNG));
-
-        return addSubFeature(parent, action, type, position);
-    }
-
-    @Override
-    public Feature addSubFeature(Feature parent, String action, FeatureType type, int position) {
-        return addSubFeature(parent, Managers.getManager(IResourceManager.class).getAction(action), type, position);
-    }
-
-    /**
-     * Add a sub feature to the parent feature.
-     *
-     * @param action   The <code>Action</code> to use.
-     * @param parent   The parent feature.
-     * @param type     The type of feature.
-     * @param position The position in the parent feature.
-     * @return The <code>Feature</code>.
-     */
-    private static Feature addSubFeature(Feature parent, Action action, FeatureType type, int position) {
-        Feature feature = new Feature();
-        feature.setType(type);
-        feature.setAction(action);
+        Feature feature = new ManagedFeature();
         feature.setPosition(position);
-
-        parent.addSubFeature(feature);
-
-        return feature;
-    }
-
-    @Override
-    public void addFeature(Feature feature) {
-        if (feature.getType() != FeatureType.PACK) {
-            throw new IllegalArgumentException("Can only add feature of type pack directly. ");
-        }
+        feature.setType(FeatureType.PACK);
+        feature.setTitleKey(key);
 
         features.add(feature);
 
-        fireFeatureAdded(feature);
-    }
-
-    @Override
-    public void removeFeature(Feature feature) {
-        features.remove(feature);
-
-        fireFeatureRemoved(feature);
+        return feature;
     }
 
     @Override
