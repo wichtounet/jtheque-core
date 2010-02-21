@@ -1,8 +1,5 @@
 package org.jtheque.core.managers.view.impl.components.filthy.java2d;
 
-import org.jdesktop.animation.timing.Animator;
-import org.jdesktop.animation.timing.triggers.TimingTrigger;
-import org.jdesktop.animation.timing.triggers.TimingTriggerEvent;
 import org.jdesktop.jxlayer.JXLayer;
 import org.jdesktop.jxlayer.plaf.BufferedLayerUI;
 import org.jdesktop.jxlayer.plaf.LayerUI;
@@ -14,6 +11,7 @@ import org.jtheque.core.utils.ui.AnimationUtils;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.ui.ImageUtils;
 import org.jtheque.utils.ui.PaintUtils;
+import org.pushingpixels.trident.Timeline;
 
 import javax.swing.JComponent;
 import java.awt.Color;
@@ -55,7 +53,7 @@ public final class SplashScreenPane extends BufferedLayerUI<JComponent> implemen
     private final Point pTextName;
     private final Point pTextLoading;
 
-    private final String[] loadings = {"Loading ", "Loading .", "Loading ..", "Loading ...", "Loading ..."};
+    private final String[] loadings = {"Loading ", "Loading .", "Loading ..", "Loading ..."};
     private int current;
 
     private static final int LOADING_FONT_SIZE = 20;
@@ -63,8 +61,8 @@ public final class SplashScreenPane extends BufferedLayerUI<JComponent> implemen
 
     private static final int ANIMATION_DURATION = 2000;
 
-    private Animator waitingAnimation;
-    private Animator fadeAnimation;
+    private Timeline waitingAnimation;
+    private Timeline fadeAnimation;
 
     /**
      * Construct a new SplashScreenPane.
@@ -210,32 +208,29 @@ public final class SplashScreenPane extends BufferedLayerUI<JComponent> implemen
 
     @Override
     public void appearsAndAnimate() {
-        if (fadeAnimation != null && fadeAnimation.isRunning()) {
-            fadeAnimation.stop();
+        if (fadeAnimation != null && !fadeAnimation.isDone()) {
+            fadeAnimation.suspend();
         }
 
         if (waitingAnimation == null) {
-            waitingAnimation = AnimationUtils.createLoopEffect(this, ANIMATION_DURATION, "current", 4);
-            waitingAnimation.setResolution(ANIMATION_DURATION / 4);
+            waitingAnimation = AnimationUtils.createInterpolationAnimation(this, ANIMATION_DURATION,
+                    "current", 0, 4);
         }
 
-        fadeAnimation = AnimationUtils.createFadeInAnimator(this);
+        fadeAnimation = AnimationUtils.startFadeIn(this);
 
-        TimingTrigger.addTrigger(fadeAnimation, waitingAnimation, TimingTriggerEvent.STOP);
-
-        fadeAnimation.start();
+        AnimationUtils.startsLoopWhenStop(fadeAnimation, waitingAnimation);
     }
 
     @Override
     public void disappear() {
-        if (fadeAnimation != null && fadeAnimation.isRunning()) {
-            fadeAnimation.stop();
+        if (fadeAnimation != null && !fadeAnimation.isDone()) {
+            fadeAnimation.suspend();
         }
 
-        waitingAnimation.stop();
+        waitingAnimation.suspend();
 
-        fadeAnimation = AnimationUtils.createFadeOutAnimator(this);
-        fadeAnimation.start();
+        fadeAnimation = AnimationUtils.startFadeOut(this);
     }
 
     @Override

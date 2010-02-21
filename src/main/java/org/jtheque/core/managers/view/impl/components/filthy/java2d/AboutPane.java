@@ -1,9 +1,5 @@
 package org.jtheque.core.managers.view.impl.components.filthy.java2d;
 
-import org.jdesktop.animation.timing.Animator;
-import org.jdesktop.animation.timing.TimingTargetAdapter;
-import org.jdesktop.animation.timing.triggers.TimingTrigger;
-import org.jdesktop.animation.timing.triggers.TimingTriggerEvent;
 import org.jtheque.core.managers.Managers;
 import org.jtheque.core.managers.core.application.Application;
 import org.jtheque.core.managers.language.ILanguageManager;
@@ -17,6 +13,8 @@ import org.jtheque.utils.ui.ImageUtils;
 import org.jtheque.utils.ui.PaintUtils;
 import org.jtheque.utils.ui.SizeTracker;
 import org.jtheque.utils.ui.SwingUtils;
+import org.pushingpixels.trident.Timeline;
+import org.pushingpixels.trident.callback.TimelineCallbackAdapter;
 
 import javax.annotation.PostConstruct;
 import java.awt.Color;
@@ -111,7 +109,7 @@ public final class AboutPane extends AbstractAboutPane implements IAboutView, In
         addMouseListener(new MouseController());
         addMouseMotionListener(new MouseMotionController());
 
-        setAnimator(AnimationUtils.createLoopEffect(this, 4 * 1000, "start", getCreditsHeight()));
+        setTimeline(AnimationUtils.createInterpolationAnimation(this, 4 * 1000, "start", 0, getCreditsHeight()));
 
         shapes.put("licence", new GeneralPath()); //Set a default path to avoid NPE if display licence is false
     }
@@ -415,23 +413,26 @@ public final class AboutPane extends AbstractAboutPane implements IAboutView, In
 
     @Override
     public void appear() {
-        Animator fadeIn = AnimationUtils.createFadeInAnimator(this);
-        TimingTrigger.addTrigger(fadeIn, getAnimator(), TimingTriggerEvent.STOP);
-        fadeIn.start();
+        Timeline fadeAnimation = AnimationUtils.createFadeInAnimation(this);
+        AnimationUtils.startsLoopWhenStop(fadeAnimation, getTimeline());
+        fadeAnimation.play();
     }
 
     @Override
     public void disappear() {
-        getAnimator().pause();
+        getTimeline().suspend();
 
-        Animator fadeOut = AnimationUtils.createFadeOutAnimator(this);
-        fadeOut.addTarget(new TimingTargetAdapter() {
+        Timeline fadeOut = AnimationUtils.createFadeOutAnimation(this);
+        fadeOut.addCallback(new TimelineCallbackAdapter() {
             @Override
-            public void end() {
-                setVisible(false);
+            public void onTimelineStateChanged(Timeline.TimelineState oldState, Timeline.TimelineState newState,
+                                               float durationFraction, float timelinePosition) {
+                if(newState == Timeline.TimelineState.DONE){
+                    setVisible(false);
+                }
             }
         });
-        fadeOut.start();
+        fadeOut.play();
     }
 
     @Override

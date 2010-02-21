@@ -1,9 +1,9 @@
 package org.jtheque.core.managers.view.impl.components.filthy.java2d;
 
-import org.jdesktop.animation.timing.Animator;
 import org.jdesktop.swingx.JXPanel;
 import org.jtheque.core.managers.Managers;
 import org.jtheque.core.managers.language.ILanguageManager;
+import org.pushingpixels.trident.Timeline;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,7 +31,7 @@ import java.util.Collection;
  * @author Baptiste Wicht
  */
 public abstract class AbstractAboutPane extends JXPanel {
-    private Animator animator;
+    private Timeline timeline;
 
     private String licence;
     private String copyright;
@@ -76,21 +76,21 @@ public abstract class AbstractAboutPane extends JXPanel {
     }
 
     /**
-     * The animator of the view.
+     * The timeline of the view.
      *
-     * @return The animator of the view.
+     * @return The timeline of the view.
      */
-    public final Animator getAnimator() {
-        return animator;
+    public final Timeline getTimeline() {
+        return timeline;
     }
 
     /**
-     * Set the animator of the view.
+     * Set the timeline of the view.
      *
-     * @param animator The animator of the view.
+     * @param timeline The timeline of the view.
      */
-    final void setAnimator(Animator animator) {
-        this.animator = animator;
+    final void setTimeline(Timeline timeline) {
+        this.timeline = timeline;
     }
 
     /**

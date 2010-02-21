@@ -1,8 +1,7 @@
 package org.jtheque.core.utils.ui;
 
-import org.jdesktop.animation.timing.Animator;
-import org.jdesktop.animation.timing.Animator.RepeatBehavior;
-import org.jdesktop.animation.timing.interpolation.PropertySetter;
+import org.pushingpixels.trident.Timeline;
+import org.pushingpixels.trident.callback.TimelineCallbackAdapter;
 
 /*
  * This file is part of JTheque.
@@ -26,8 +25,6 @@ import org.jdesktop.animation.timing.interpolation.PropertySetter;
  * @author Baptiste Wicht
  */
 public final class AnimationUtils {
-    private static final float LONG_ACCELERATION = 0.4f;
-    private static final float SHORT_ACCELERATION = 0.2f;
     private static final int SPRING_EFFECT_DURATION = 400;
 
     /**
@@ -41,80 +38,102 @@ public final class AnimationUtils {
      * Create a Fade Out animator for the view.
      *
      * @param view The view to fade out.
-     * @return The animator.
+     *
+     * @return The timeline animation.
      */
-    public static Animator createFadeOutAnimator(Object view) {
-        Animator fadeOut = PropertySetter.createAnimator(1000, view, "alpha", 0.0f);
-
-        fadeOut.setAcceleration(SHORT_ACCELERATION);
-        fadeOut.setDeceleration(LONG_ACCELERATION);
-
-        return fadeOut;
+    public static Timeline createFadeOutAnimation(Object view) {
+        return createInterpolationAnimation(view, 1000, "alpha", 1.0f, 0.0f);
     }
 
     /**
      * Create a fade in animator for a view.
      *
      * @param view The view to fade in.
-     * @return The animator.
+     *
+     * @return The timeline animation.
      */
-    public static Animator createFadeInAnimator(Object view) {
-        Animator fadeIn = PropertySetter.createAnimator(1000, view, "alpha", 1.0f);
-
-        fadeIn.setAcceleration(LONG_ACCELERATION);
-        fadeIn.setDeceleration(SHORT_ACCELERATION);
-
-        return fadeIn;
+    public static Timeline createFadeInAnimation(Object view) {
+        return createInterpolationAnimation(view, 1000, "alpha", 0.0f, 1.0f);
     }
 
     /**
      * Create a spring effect animator for a view.
      *
      * @param view The view to animate.
-     * @return The animator.
+     *
+     * @return The timeline animation.
      */
-    public static Animator createSpringEffectAnimator(Object view) {
-        Animator springEffect = PropertySetter.createAnimator(SPRING_EFFECT_DURATION, view, "zoom", 0.0f, 1.0f);
-
-        springEffect.setAcceleration(SHORT_ACCELERATION);
-        springEffect.setDeceleration(LONG_ACCELERATION);
-
-        return springEffect;
+    public static Timeline createSpringEffectAnimation(Object view) {
+        return createInterpolationAnimation(view, SPRING_EFFECT_DURATION, "zoom", 0.0f, 1.0f);
     }
 
     /**
-     * Create a simple loop effect for the view.
+     * Create an animation to interpolate a property.
      *
-     * @param view     The view to animate.
+     * @param object The bean on which the property must be interpolated.
      * @param duration The duration of the animation.
-     * @param property The property to loop.
-     * @param to       The to value.
-     * @return The animator.
+     * @param property The property to interpolate.
+     * @param from The from value.
+     * @param to The to value.
+     *
+     * @param <T> The type of property to interpolate.
+     *
+     * @return The timeline animation.
      */
-    public static Animator createLoopEffect(Object view, int duration, String property, int to) {
-        Animator loop = PropertySetter.createAnimator(duration, view, property, to);
+    public static <T> Timeline createInterpolationAnimation(Object object, int duration, String property, T from, T to) {
+        Timeline timeline = new Timeline(object);
 
-        loop.setRepeatBehavior(RepeatBehavior.LOOP);
-        loop.setRepeatCount(Animator.INFINITE);
+        timeline.addPropertyToInterpolate(property, from, to);
+        timeline.setDuration(duration);
 
-        return loop;
+        return timeline;
     }
 
     /**
      * Fade in the view.
      *
      * @param view The view to fade in.
+     *
+     * @return The timeline animation.
      */
-    public static void startFadeIn(Object view) {
-        createFadeInAnimator(view).start();
+    public static Timeline startFadeIn(Object view) {
+        Timeline animation = createFadeInAnimation(view);
+
+        animation.play();
+
+        return animation;
     }
 
     /**
      * Fade out the view.
      *
      * @param view The view to fade out.
+     *
+     * @return The timeline animation.
      */
-    public static void startFadeOut(Object view) {
-        createFadeOutAnimator(view).start();
+    public static Timeline startFadeOut(Object view) {
+        Timeline animation = createFadeOutAnimation(view);
+
+        animation.play();
+
+        return animation;
+    }
+
+    /**
+     * Starts looping of the target when the source animation is done.
+     *
+     * @param source The source animation.
+     * @param target The target animation. 
+     */
+    public static void startsLoopWhenStop(Timeline source, final Timeline target) {
+        source.addCallback(new TimelineCallbackAdapter(){
+            @Override
+            public void onTimelineStateChanged(Timeline.TimelineState oldState, Timeline.TimelineState newState,
+                                               float durationFraction, float timelinePosition) {
+                if(newState == Timeline.TimelineState.DONE){
+                    target.playLoop(Timeline.RepeatBehavior.LOOP);
+                }
+            }
+        });
     }
 }
