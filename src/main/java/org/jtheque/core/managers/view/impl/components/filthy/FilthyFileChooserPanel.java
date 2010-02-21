@@ -2,10 +2,10 @@ package org.jtheque.core.managers.view.impl.components.filthy;
 
 /*
  * This file is part of JTheque.
- * 	   
+ *
  * JTheque is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License. 
+ * the Free Software Foundation, either version 3 of the License.
  *
  * JTheque is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -17,9 +17,9 @@ package org.jtheque.core.managers.view.impl.components.filthy;
  */
 
 import org.jtheque.core.managers.Managers;
-import org.jtheque.core.managers.language.ILanguageManager;
 import org.jtheque.core.managers.language.Internationalizable;
 import org.jtheque.core.managers.view.able.IViewManager;
+import org.jtheque.core.utils.CoreUtils;
 import org.jtheque.core.utils.ui.Borders;
 import org.jtheque.core.utils.ui.builders.JThequePanelBuilder;
 import org.jtheque.core.utils.ui.builders.PanelBuilder;
@@ -32,6 +32,7 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
@@ -54,6 +55,8 @@ public final class FilthyFileChooserPanel extends JPanel implements Internationa
     private boolean directoriesOnly;
 
     private String key;
+
+    private static final int FIELD_COLUMNS = 15;
 
     /**
      * Construct a new FileChooserPanel.
@@ -100,7 +103,7 @@ public final class FilthyFileChooserPanel extends JPanel implements Internationa
         panel.setOpaque(false);
         panel.setBorder(BorderFactory.createEtchedBorder(1));
 
-        fieldFilePath = new FilthyTextField(15);
+        fieldFilePath = new FilthyTextField(FIELD_COLUMNS);
         Insets insets = fieldFilePath.getField().getMargin();
         fieldFilePath.setBorder(BorderFactory.createEmptyBorder(insets.top, insets.left, insets.bottom, insets.right));
         panel.add(fieldFilePath, BorderLayout.CENTER);
@@ -144,7 +147,7 @@ public final class FilthyFileChooserPanel extends JPanel implements Internationa
     public void setTextKey(String key) {
         this.key = key;
 
-        setText(Managers.getManager(ILanguageManager.class).getMessage(key));
+        setText(CoreUtils.getMessage(key));
     }
 
     /**
@@ -165,6 +168,29 @@ public final class FilthyFileChooserPanel extends JPanel implements Internationa
         fieldFilePath.setText(path);
     }
 
+    /**
+     * Set the file filter.
+     *
+     * @param filter The file filter.
+     */
+    public void setFileFilter(SimpleFilter filter) {
+        this.filter = filter;
+    }
+
+    /**
+     * Set if the chooser search only for directories or not.
+     */
+    public void setDirectoriesOnly() {
+        directoriesOnly = true;
+    }
+
+    /**
+     * Set that the chooser search only for files.
+     */
+    public void setFilesOnly() {
+        directoriesOnly = false;
+    }
+
     @Override
     public void setEnabled(boolean enable) {
         super.setEnabled(enable);
@@ -176,7 +202,7 @@ public final class FilthyFileChooserPanel extends JPanel implements Internationa
     @Override
     public void refreshText() {
         if (key != null) {
-            setText(Managers.getManager(ILanguageManager.class).getMessage(key));
+            setText(CoreUtils.getMessage(key));
         }
     }
 
@@ -186,6 +212,8 @@ public final class FilthyFileChooserPanel extends JPanel implements Internationa
      * @author Baptiste Wicht
      */
     private static final class BrowseButton extends JButton {
+        private static final int BUTTON_WIDTH = 20;
+
         /**
          * Construct a new BrowseButton.
          *
@@ -198,13 +226,22 @@ public final class FilthyFileChooserPanel extends JPanel implements Internationa
         @Override
         public Dimension getPreferredSize() {
             Dimension size = super.getPreferredSize();
+
             size.height = 10;
-            size.width = 20;
+            size.width = BUTTON_WIDTH;
+
             return size;
         }
     }
 
-
+    /**
+     * Return the text field of the file chooser.
+     *
+     * @return The text field of the file chooser.
+     */
+    public JTextField getTextField() {
+        return fieldFilePath.getField();
+    }
 
     /**
      * A Browse action.
