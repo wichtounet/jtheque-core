@@ -37,6 +37,11 @@ public final class BeansManager extends AbstractManager implements IBeansManager
     }
 
     @Override
+    public <T> T getBean(Class<T> classz) {
+        return Ioc.getContainer().getApplicationContext().getBean(classz);
+    }
+
+    @Override
     public void inject(Object bean) {
         Ioc.getContainer().inject(bean);
     }

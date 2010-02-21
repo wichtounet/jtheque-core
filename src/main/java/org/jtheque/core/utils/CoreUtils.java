@@ -44,7 +44,19 @@ public final class CoreUtils {
      * @return The bean.
      */
     public static <T> T getBean(String name){
-        return Managers.getManager(IBeansManager.class).<T>getBean(name);
+        return Managers.getManager(IBeansManager.class).getBean(name);
+    }
+
+    /**
+     * Return the bean of the specified type.
+     *
+     * @param classz The class to search for.
+     * @param <T> The type of class.
+     *
+     * @return The bean of the specified type if there is one otherwise null. 
+     */
+    public static <T> T getBean(Class<T> classz){
+        return Managers.getManager(IBeansManager.class).getBean(classz);
     }
 
     /**

@@ -32,6 +32,16 @@ public interface IBeansManager {
     <T> T getBean(String name);
 
     /**
+     * Return the bean of the specified class.
+     *
+     * @param classz The classz of the bean to get.
+     * @param <T> The type of class.
+     *
+     * @return The bean of this class if there is one otherwise null. 
+     */
+    <T> T getBean(Class<T> classz);
+
+    /**
      * Inject the dependencies into the object. A dependency is habitually declared with the
      * Resource annotation.
      *
