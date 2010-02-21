@@ -44,7 +44,7 @@ public final class CoreUtils {
      * @return The bean.
      */
     public static <T> T getBean(String name){
-        return Managers.getManager(IBeansManager.class).getBean(name);
+        return Managers.getManager(IBeansManager.class).<T>getBean(name);
     }
 
     /**
@@ -56,7 +56,7 @@ public final class CoreUtils {
      * @return The bean of the specified type if there is one otherwise null. 
      */
     public static <T> T getBean(Class<T> classz){
-        return Managers.getManager(IBeansManager.class).getBean(classz);
+        return Managers.getManager(IBeansManager.class).<T>getBean(classz);
     }
 
     /**
