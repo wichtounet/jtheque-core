@@ -101,7 +101,7 @@ public final class FilthyFileChooserPanel extends JPanel implements Internationa
         panel.setBorder(BorderFactory.createEtchedBorder(1));
 
         fieldFilePath = new FilthyTextField(15);
-        Insets insets = fieldFilePath.getTextField().getMargin();
+        Insets insets = fieldFilePath.getField().getMargin();
         fieldFilePath.setBorder(BorderFactory.createEmptyBorder(insets.top, insets.left, insets.bottom, insets.right));
         panel.add(fieldFilePath, BorderLayout.CENTER);
 

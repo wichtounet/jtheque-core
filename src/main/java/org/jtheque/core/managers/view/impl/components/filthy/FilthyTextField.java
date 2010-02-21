@@ -87,7 +87,7 @@ public final class FilthyTextField extends AbstractFilthyField {
      *
      * @return The text field.
      */
-    public JTextField getTextField() {
+    public JTextField getField() {
         return textField;
     }
 

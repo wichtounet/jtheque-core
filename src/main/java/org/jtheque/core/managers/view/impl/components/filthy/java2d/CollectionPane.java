@@ -28,12 +28,10 @@ import org.jtheque.core.managers.view.impl.components.filthy.FilthyPasswordField
 import org.jtheque.core.managers.view.impl.components.filthy.FilthyTextField;
 import org.jtheque.core.utils.ui.AnimationUtils;
 import org.jtheque.utils.ui.GridBagUtils;
+import org.jtheque.utils.ui.SwingUtils;
 
 import javax.annotation.PostConstruct;
-import javax.swing.Box;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+import javax.swing.*;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
@@ -57,6 +55,8 @@ public final class CollectionPane extends JXPanel implements ICollectionView {
 
     private Font hintFont;
     private static final int LEFT_MARGIN_WIDTH = 200;
+
+    private final Action chooseAction = new ChooseAction();
 
     /**
      * Build the view.
@@ -103,22 +103,29 @@ public final class CollectionPane extends JXPanel implements ICollectionView {
     }
 
     /**
-     * Add the button bar to the view.
+     * Add the collection field to the view.
      *
      * @param gbc The grid bag utils constraints object.
      */
-    private void addButtonBar(GridBagUtils gbc) {
-        Container buttonsPanel = new JPanel();
+    private void addCollectionField(GridBagUtils gbc) {
+        Component labelCollection = new JThequeI18nLabel("collections.name");
 
-        buttonsPanel.add(new JButton(new CreateAction()));
-        buttonsPanel.add(new JButton(new ChooseAction()));
-        buttonsPanel.add(new JButton(new CancelAction()));
+        labelCollection.setForeground(hintColor);
+        labelCollection.setFont(hintFont);
 
-        buttonsPanel.setBackground(backgroundColor);
+        gbc.setDefaultInsets(new Insets(0, 0, 2, 6));
+
+        add(labelCollection, gbc.gbcSet(1, 2, GridBagConstraints.NONE, GridBagConstraints.LINE_START));
 
         gbc.setDefaultInsets(new Insets(0, 0, 0, 0));
 
-        add(buttonsPanel, gbc.gbcSet(1, 4, GridBagConstraints.NONE, GridBagConstraints.LINE_END, 2, 1, 1.0, 0.0));
+        textField = new FilthyTextField();
+
+        SwingUtils.addFieldValidateAction(textField.getField(), chooseAction);
+
+        gbc.setDefaultInsets(new Insets(0, 2, 6, 2));
+
+        add(textField, gbc.gbcSet(2, 2, GridBagConstraints.HORIZONTAL, GridBagConstraints.LINE_START, 1.0, 0.0));
     }
 
     /**
@@ -138,33 +145,30 @@ public final class CollectionPane extends JXPanel implements ICollectionView {
 
         passwordField = new FilthyPasswordField();
 
+        SwingUtils.addFieldValidateAction(passwordField.getField(), chooseAction);
+
         gbc.setDefaultInsets(new Insets(0, 2, 6, 2));
 
         add(passwordField, gbc.gbcSet(2, 3, GridBagConstraints.HORIZONTAL, GridBagConstraints.LINE_START, 1.0, 0.0));
     }
 
     /**
-     * Add the collection field to the view.
+     * Add the button bar to the view.
      *
      * @param gbc The grid bag utils constraints object.
      */
-    private void addCollectionField(GridBagUtils gbc) {
-        Component labelCollection = new JThequeI18nLabel("collections.name");
+    private void addButtonBar(GridBagUtils gbc) {
+        Container buttonsPanel = new JPanel();
 
-        labelCollection.setForeground(hintColor);
-        labelCollection.setFont(hintFont);
+        buttonsPanel.add(new JButton(new CreateAction()));
+        buttonsPanel.add(new JButton(new ChooseAction()));
+        buttonsPanel.add(new JButton(new CancelAction()));
 
-        gbc.setDefaultInsets(new Insets(0, 0, 2, 6));
-
-        add(labelCollection, gbc.gbcSet(1, 2, GridBagConstraints.NONE, GridBagConstraints.LINE_START));
+        buttonsPanel.setBackground(backgroundColor);
 
         gbc.setDefaultInsets(new Insets(0, 0, 0, 0));
 
-        textField = new FilthyTextField();
-
-        gbc.setDefaultInsets(new Insets(0, 2, 6, 2));
-
-        add(textField, gbc.gbcSet(2, 2, GridBagConstraints.HORIZONTAL, GridBagConstraints.LINE_START, 1.0, 0.0));
+        add(buttonsPanel, gbc.gbcSet(1, 4, GridBagConstraints.NONE, GridBagConstraints.LINE_END, 2, 1, 1.0, 0.0));
     }
 
     @Override

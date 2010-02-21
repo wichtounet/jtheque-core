@@ -43,4 +43,13 @@ public final class FilthyPasswordField extends AbstractFilthyField {
     public String getPassword() {
         return new String(passwordField.getPassword());
     }
+
+    /**
+     * Return the real field of this filty component.
+     *
+     * @return The field of this filthy component.
+     */
+    public JPasswordField getField() {
+        return passwordField;
+    }
 }
