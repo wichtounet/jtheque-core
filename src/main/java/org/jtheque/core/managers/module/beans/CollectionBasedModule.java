@@ -18,26 +18,9 @@ package org.jtheque.core.managers.module.beans;
 
 /**
  * A module based on collection choose. If a module implements this interface, the core will display
- * a collection choose view and after the choose of the collection, the plugCollection method is called.
+ * a collection choose view and after the choose of the collection, the plug method is called.
  *
  * @author Baptiste Wicht
  */
 public interface CollectionBasedModule {
-    /**
-     * Plug a collection. This method must only make the choose collection process and return the
-     * result of the choose. This method must not expensive cost process launch. All the
-     * module loading treatments must be made in the plugCollection() method.
-     *
-     * @param collection The collection to use.
-     * @param password   The entered password.
-     * @param create     Indicate if we must create the collection or only select it.
-     * @return true if the collection choose process has been good processed.
-     */
-    boolean chooseCollection(String collection, String password, boolean create);
-
-    /**
-     * Plug the module after the collection choose. This method can expensive cost operations execute.
-     * During this method, the view will not be blocked.
-     */
-    void plugCollection();
 }

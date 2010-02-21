@@ -84,6 +84,11 @@
 
     <bean id="daoPersistenceContext" class="org.jtheque.core.managers.persistence.context.DaoPersistenceContext"/>
 
+    <!-- Collection beans -->
+    
+    <bean id="daoCollections" class="org.jtheque.core.managers.collection.DaoCollections"/>
+    <bean id="collectionsService" class="org.jtheque.core.managers.collection.CollectionsService" lazy-init="false"/>
+
     <!-- Formatters -->
 
     <bean id="dateFormat" class="java.text.SimpleDateFormat">

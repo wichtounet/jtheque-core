@@ -18,7 +18,9 @@ package org.jtheque.core.managers.lifecycle;
 
 import org.jdesktop.swingx.event.WeakEventListenerList;
 import org.jtheque.core.managers.Managers;
+import org.jtheque.core.managers.beans.IBeansManager;
 import org.jtheque.core.managers.beans.ioc.Ioc;
+import org.jtheque.core.managers.collection.ICollectionsService;
 import org.jtheque.core.managers.event.EventLevel;
 import org.jtheque.core.managers.event.EventLog;
 import org.jtheque.core.managers.event.IEventManager;
@@ -153,7 +155,9 @@ public final class LifeCycleManager implements ILifeCycleManager, Internationali
 
     @Override
     public void chooseCollection(String collection, String password, boolean create) {
-        boolean chosen = Managers.getManager(IModuleManager.class).chooseCollection(collection, password, create);
+        final ICollectionsService service = Managers.getManager(IBeansManager.class).getBean(ICollectionsService.class);
+
+        boolean chosen = service.chooseCollection(collection, password, create);
 
         if (chosen) {
             new Thread(new Runnable() {
@@ -161,7 +165,7 @@ public final class LifeCycleManager implements ILifeCycleManager, Internationali
                 public void run() {
                     Managers.getManager(IViewManager.class).getSplashManager().displaySplashScreen();
 
-                    Managers.getManager(IModuleManager.class).plugCollection();
+                    Managers.getManager(IModuleManager.class).plugModules();
 
                     launchNextPhase();
                 }

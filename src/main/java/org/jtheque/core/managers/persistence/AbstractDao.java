@@ -21,6 +21,7 @@ import org.jtheque.core.managers.persistence.able.Dao;
 import org.jtheque.core.managers.persistence.able.DataListener;
 import org.jtheque.core.managers.persistence.able.Entity;
 import org.jtheque.core.managers.persistence.context.IDaoPersistenceContext;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
 
 import javax.annotation.Resource;
@@ -66,7 +67,7 @@ public abstract class AbstractDao<T extends Entity> implements Dao<T> {
      */
     protected abstract QueryMapper getQueryMapper();
 
-    protected abstract ParameterizedRowMapper<T> getRowMapper();
+    protected abstract RowMapper<T> getRowMapper();
 
     /**
      * Return the persistence context for this dao.

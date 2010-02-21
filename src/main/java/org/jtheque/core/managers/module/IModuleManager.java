@@ -152,20 +152,5 @@ public interface IModuleManager {
      *
      * @return true if the primary module is collection based else false.
      */
-    boolean isCollectionModule();
-
-    /**
-     * Plug the collection.
-     *
-     * @param collection The collection to use.
-     * @param password   The password of the collection.
-     * @param create     A boolean flag indicating if we must create the collection or not.
-     * @return true if the process has been correctly made else false.
-     */
-    boolean chooseCollection(String collection, String password, boolean create);
-
-    /**
-     * Plug the collection.
-     */
-    void plugCollection();
+    boolean hasCollectionModule();
 }

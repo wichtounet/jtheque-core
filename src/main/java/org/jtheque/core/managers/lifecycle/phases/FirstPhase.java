@@ -46,11 +46,11 @@ public final class FirstPhase implements LifeCyclePhase {
 
         Managers.initManagers();
 
-        Managers.getManager(IModuleManager.class).plugModules();
-
-        if (Managers.getManager(IModuleManager.class).isCollectionModule()) {
+        if (Managers.getManager(IModuleManager.class).hasCollectionModule()) {
             Managers.getManager(IViewManager.class).execute(new DisplayCollectionViewTask());
         } else {
+            Managers.getManager(IModuleManager.class).plugModules();
+
             Managers.getCore().getLifeCycleManager().launchNextPhase();
         }
     }

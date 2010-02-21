@@ -71,7 +71,7 @@
     <orderEntry type="library" exported="" name="Maven: xerces:xercesImpl:2.9.1" level="project" />
     <orderEntry type="library" exported="" name="Maven: org.swinglabs:jxlayer:3.0.4" level="project" />
     <orderEntry type="library" exported="" name="Maven: org.dbunit:dbunit:2.4.4" level="project" />
-    <orderEntry type="library" exported="" name="Maven: junit:junit:4.4" level="project" />
+    <orderEntry type="library" exported="" name="Maven: junit:junit:4.7" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.springframework:spring-test:3.0.0.RELEASE" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.easymock:easymock:2.4" level="project" />
   </component>

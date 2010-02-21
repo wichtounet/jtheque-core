@@ -56,11 +56,6 @@ public final class ModuleManager extends AbstractManager implements IModuleManag
     private Repository repository;
 
     /**
-     * The module who needs collection choices, if there is one.
-     */
-    private CollectionBasedModule collectionModule;
-
-    /**
      * The configuration of the module manager. It seems the informations about the modules who're
      * installed or disabled.
      */
@@ -76,6 +71,11 @@ public final class ModuleManager extends AbstractManager implements IModuleManag
      * Indicate if we must refresh the list of the modules to load.
      */
     private boolean mustRefresh = true;
+
+    /**
+     * Indicate if there is a collection module.
+     */
+    private boolean collectionModule = false;
 
     @Override
     public void preInit() {
@@ -98,7 +98,7 @@ public final class ModuleManager extends AbstractManager implements IModuleManag
             Managers.getManager(ILanguageManager.class).addBaseName(module.getInfos().i18n());
 
             if (CollectionBasedModule.class.isAssignableFrom(module.getModule().getClass())) {
-                collectionModule = (CollectionBasedModule) module.getModule();
+                collectionModule = true;
             }
         }
     }
@@ -469,17 +469,7 @@ public final class ModuleManager extends AbstractManager implements IModuleManag
     }
 
     @Override
-    public boolean isCollectionModule() {
-        return collectionModule != null;
-    }
-
-    @Override
-    public boolean chooseCollection(String collection, String password, boolean create) {
-        return collectionModule.chooseCollection(collection, password, create);
-    }
-
-    @Override
-    public void plugCollection() {
-        collectionModule.plugCollection();
+    public boolean hasCollectionModule() {
+        return collectionModule;
     }
 }
