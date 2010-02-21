@@ -37,7 +37,6 @@ import org.jtheque.core.managers.view.able.IViewManager;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.collections.CollectionUtils;
-import org.jtheque.utils.io.FileUtils;
 
 import javax.annotation.Resource;
 import java.io.File;

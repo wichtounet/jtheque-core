@@ -6,8 +6,6 @@ import org.jtheque.core.managers.module.annotations.Module;
 import org.jtheque.core.managers.update.IUpdateManager;
 import org.jtheque.utils.bean.Version;
 
-import java.io.File;
-
 /*
  * This file is part of JTheque.
  *
