@@ -2,7 +2,8 @@ package org.jtheque.core.managers.persistence.context;
 
 import org.jtheque.core.managers.persistence.QueryMapper;
 import org.jtheque.core.managers.persistence.able.Entity;
-import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 
 import java.util.Collection;
 
@@ -36,7 +37,7 @@ public interface IDaoPersistenceContext {
      * @param mapper The row mapper.
      * @return A List sorted by entity displayable text containing all the entity of the class.
      */
-    <T extends Entity> Collection<T> getSortedList(String table, ParameterizedRowMapper<T> mapper);
+    <T extends Entity> Collection<T> getSortedList(String table, RowMapper<T> mapper);
 
     /**
      * Return an entity of a specific ID.
@@ -47,7 +48,7 @@ public interface IDaoPersistenceContext {
      * @param mapper The row mapper.
      * @return The entity.
      */
-    <T extends Entity> T getDataByID(String table, int id, ParameterizedRowMapper<T> mapper);
+    <T extends Entity> T getDataByID(String table, int id, RowMapper<T> mapper);
 
     /**
      * Delete an entity of a specific ID.
@@ -83,4 +84,6 @@ public interface IDaoPersistenceContext {
      * @param table The entity table.
      */
     void deleteAll(String table);
+
+    SimpleJdbcTemplate getTemplate();
 }

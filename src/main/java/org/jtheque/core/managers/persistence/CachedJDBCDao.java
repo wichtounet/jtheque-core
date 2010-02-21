@@ -16,15 +16,9 @@ package org.jtheque.core.managers.persistence;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import org.jdesktop.swingx.event.WeakEventListenerList;
-import org.jtheque.core.managers.persistence.able.DataListener;
 import org.jtheque.core.managers.persistence.able.Entity;
-import org.jtheque.core.managers.persistence.able.JThequeDao;
-import org.jtheque.core.managers.persistence.context.IDaoPersistenceContext;
 import org.jtheque.utils.collections.CollectionUtils;
-import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
 
-import javax.annotation.Resource;
 import java.util.Collection;
 import java.util.Map;
 
@@ -34,37 +28,24 @@ import java.util.Map;
  * @author Baptiste Wicht
  * @param <T> The class managed by the dao.
  */
-public abstract class GenericDao<T extends Entity> implements JThequeDao {
-    @Resource
-    private IDaoPersistenceContext persistenceContext;
-
-    private final String table;
-
+public abstract class CachedJDBCDao<T extends Entity> extends AbstractDao<T> {
     private final Map<Integer, T> cache;
 
     private boolean cacheEntirelyLoaded;
 
-    private final WeakEventListenerList listenerList = new WeakEventListenerList();
-
     /**
-     * Construct a new GenericDao.
+     * Construct a new CachedJDBCDao.
      *
      * @param table The database Table.
      */
-    protected GenericDao(String table) {
-        super();
-
-        this.table = table;
+    protected CachedJDBCDao(String table) {
+        super(table);
 
         cache = new CacheHashMap<Integer, T>(50);
     }
 
-    /**
-     * Return all the entity managed by this dao.
-     *
-     * @return A List containing all the entities managed by the dao.
-     */
-    protected final Collection<T> getAll() {
+    @Override
+    public final Collection<T> getAll() {
         load();
 
         return CollectionUtils.copyOf(cache.values());
@@ -100,27 +81,8 @@ public abstract class GenericDao<T extends Entity> implements JThequeDao {
      */
     protected abstract void load(int i);
 
-    /**
-     * Return the row mapper for the DAO.
-     *
-     * @return The row mapper for the DAO.
-     */
-    protected abstract ParameterizedRowMapper<T> getRowMapper();
-
-    /**
-     * Return the query mapper for the DAO.
-     *
-     * @return The query mapper for the DAO.
-     */
-    protected abstract QueryMapper getQueryMapper();
-
-    /**
-     * Return the entity of a specific id.
-     *
-     * @param id The id for which we search the entity.
-     * @return The Entity.
-     */
-    protected final T get(int id) {
+    @Override
+    public final T get(int id) {
         if (isNotInCache(id)) {
             load(id);
         }
@@ -128,38 +90,25 @@ public abstract class GenericDao<T extends Entity> implements JThequeDao {
         return cache.get(id);
     }
 
-    /**
-     * Create the entity.
-     *
-     * @param entity The entity to create.
-     */
+    @Override
     public void create(T entity) {
-        persistenceContext.saveOrUpdate(entity, getQueryMapper());
+        getContext().saveOrUpdate(entity, getQueryMapper());
 
         cache.put(entity.getId(), entity);
 
         fireDataChanged();
     }
 
-    /**
-     * Save the entity.
-     *
-     * @param entity The entity to save.
-     */
+    @Override
     public void save(T entity) {
-        persistenceContext.saveOrUpdate(entity, getQueryMapper());
+        getContext().saveOrUpdate(entity, getQueryMapper());
 
         fireDataChanged();
     }
 
-    /**
-     * Delete the entity.
-     *
-     * @param entity The entity to delete.
-     * @return true if the object is deleted else false.
-     */
+    @Override
     public boolean delete(T entity) {
-        boolean deleted = persistenceContext.delete(table, entity);
+        boolean deleted = getContext().delete(getTable(), entity);
 
         if (deleted) {
             cache.remove(entity.getId());
@@ -170,14 +119,9 @@ public abstract class GenericDao<T extends Entity> implements JThequeDao {
         return deleted;
     }
 
-    /**
-     * Delete the entity with the specified ID.
-     *
-     * @param id The id of the entity to delete.
-     * @return true if the entity has been deleted else false.
-     */
+    @Override
     public boolean delete(int id) {
-        boolean deleted = persistenceContext.delete(table, id);
+        boolean deleted = getContext().delete(getTable(), id);
 
         if (deleted) {
             fireDataChanged();
@@ -193,7 +137,7 @@ public abstract class GenericDao<T extends Entity> implements JThequeDao {
      */
     @Override
     public final void clearAll() {
-        persistenceContext.deleteAll(table);
+        getContext().deleteAll(getTable());
 
         cache.clear();
     }
@@ -213,7 +157,7 @@ public abstract class GenericDao<T extends Entity> implements JThequeDao {
      *
      * @return true if the cache is entirely loaded else false.
      */
-    final boolean isCacheEntirelyLoaded() {
+    protected final boolean isCacheEntirelyLoaded() {
         return cacheEntirelyLoaded;
     }
 
@@ -224,24 +168,4 @@ public abstract class GenericDao<T extends Entity> implements JThequeDao {
         cacheEntirelyLoaded = true;
     }
 
-    @Override
-    public final void addDataListener(DataListener listener) {
-        listenerList.add(DataListener.class, listener);
-    }
-
-    @Override
-    public final void removeDataListener(DataListener listener) {
-        listenerList.remove(DataListener.class, listener);
-    }
-
-    /**
-     * Avert the listeners that the data have changed.
-     */
-    final void fireDataChanged() {
-        DataListener[] listeners = listenerList.getListeners(DataListener.class);
-
-        for (DataListener listener : listeners) {
-            listener.dataChanged();
-        }
-    }
 }

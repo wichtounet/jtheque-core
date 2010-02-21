@@ -3,7 +3,7 @@ package org.jtheque.core.managers.persistence.context;
 import org.jtheque.core.managers.persistence.Query;
 import org.jtheque.core.managers.persistence.QueryMapper;
 import org.jtheque.core.managers.persistence.able.Entity;
-import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 
 import javax.annotation.Resource;
@@ -37,7 +37,7 @@ public final class DaoPersistenceContext implements IDaoPersistenceContext {
     private SimpleJdbcTemplate jdbcTemplate;
 
     @Override
-    public <T extends Entity> Collection<T> getSortedList(String table, ParameterizedRowMapper<T> mapper) {
+    public <T extends Entity> Collection<T> getSortedList(String table, RowMapper<T> mapper) {
         List<T> data = jdbcTemplate.query("SELECT * FROM " + table, mapper);
 
         Collections.sort(data);
@@ -46,7 +46,7 @@ public final class DaoPersistenceContext implements IDaoPersistenceContext {
     }
 
     @Override
-    public <T extends Entity> T getDataByID(String table, int id, ParameterizedRowMapper<T> mapper) {
+    public <T extends Entity> T getDataByID(String table, int id, RowMapper<T> mapper) {
         List<T> results = jdbcTemplate.query("SELECT * FROM " + table + " WHERE ID = ?", mapper, id);
 
         if (results.isEmpty()) {
@@ -69,7 +69,7 @@ public final class DaoPersistenceContext implements IDaoPersistenceContext {
     @Override
     public boolean saveOrUpdate(Entity entity, QueryMapper mapper) {
         if (entity == null) {
-            throw new IllegalArgumentException("AbstractEntity cannot be null");
+            throw new IllegalArgumentException("Entity cannot be null");
         }
 
         if (entity.isSaved()) {
@@ -90,5 +90,10 @@ public final class DaoPersistenceContext implements IDaoPersistenceContext {
     @Override
     public void deleteAll(String table) {
         jdbcTemplate.update("DELETE FROM " + table);
+    }
+
+    @Override
+    public SimpleJdbcTemplate getTemplate() {
+        return jdbcTemplate;
     }
 }
