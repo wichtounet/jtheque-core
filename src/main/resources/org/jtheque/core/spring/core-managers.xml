@@ -49,9 +49,9 @@
     <bean id="viewManager" class="org.jtheque.core.managers.view.ViewManager">
         <property name="configPanels">
             <list>
-                <jtheque:proxy id="configAppearanceView" type="org.jtheque.core.managers.view.impl.components.config.JPanelConfigAppearance"/>
-                <jtheque:proxy id="configOthersView" type="org.jtheque.core.managers.view.impl.components.config.JPanelConfigOthers"/>
-                <jtheque:proxy id="configNetworkView" type="org.jtheque.core.managers.view.impl.components.config.JPanelConfigNetwork"/>
+                <ref bean="configAppearanceView" />
+                <ref bean="configNetworkView" />
+                <ref bean="configOthersView" />
             </list>
         </property>
         <property name="viewDelegate">

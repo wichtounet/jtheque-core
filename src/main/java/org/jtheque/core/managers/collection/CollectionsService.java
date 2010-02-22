@@ -16,6 +16,7 @@ package org.jtheque.core.managers.collection;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import org.jtheque.core.managers.core.Core;
 import org.jtheque.core.managers.persistence.able.DataListener;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.io.FileUtils;
@@ -36,17 +37,18 @@ public final class CollectionsService implements ICollectionsService {
     public boolean chooseCollection(String collection, String password, boolean create) {
         if (create) {
             createCollection(collection, password);
+
             daoCollections.setCurrentCollection(daoCollections.getCollection(collection));
-        } else {
-            if (!login(collection, password)) {
-                return false;
-            }
+
+            Core.getInstance().getConfiguration().setLastCollection(collection);
+        } else if (!login(collection, password)) {
+            return false;
         }
 
         return true;
     }
 
-	/**
+    /**
 	 * Create a collection.
 	 *
 	 * @param title The title of the collection.
@@ -84,7 +86,9 @@ public final class CollectionsService implements ICollectionsService {
 
 		daoCollections.setCurrentCollection(daoCollections.getCollection(title));
 
-		return true;
+        Core.getInstance().getConfiguration().setLastCollection(title);
+
+        return true;
 	}
 
 	/**
@@ -113,7 +117,7 @@ public final class CollectionsService implements ICollectionsService {
 		return false;
 	}
 
-	@Override
+    @Override
 	public java.util.Collection<Collection> getDatas(){
 		return daoCollections.getCollections();
 	}

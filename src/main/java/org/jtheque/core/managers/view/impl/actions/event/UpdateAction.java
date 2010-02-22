@@ -37,6 +37,6 @@ public final class UpdateAction extends JThequeAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        CoreUtils.<ILogView>getBean("logView").refresh();
+        CoreUtils.getBean(ILogView.class).refresh();
     }
 }

@@ -1,6 +1,8 @@
 package org.jtheque.core.spring.factory;
 
 import org.springframework.beans.factory.config.AbstractFactoryBean;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.GenericApplicationContext;
 
 import java.lang.reflect.Proxy;
 
@@ -29,6 +31,7 @@ public final class LazyFactoryBean extends AbstractFactoryBean {
     private final String beanName;
     private final boolean swing;
     private final Class<?> beanClass;
+    private final GenericApplicationContext context;
 
     /**
      * Construct a new LazyFactoryBean.
@@ -36,13 +39,15 @@ public final class LazyFactoryBean extends AbstractFactoryBean {
      * @param beanName  The name of the bean to keep the proxy for.
      * @param swing A boolean tag indicating if the bean is swing bean.
      * @param beanClass The class of the bean to keep the proxy for.
+     * @param context The application context of the bean. 
      */
-    public LazyFactoryBean(String beanName, boolean swing, Class<?> beanClass) {
+    public LazyFactoryBean(String beanName, boolean swing, Class<?> beanClass, GenericApplicationContext context) {
         super();
 
         this.beanName = beanName;
         this.swing = swing;
         this.beanClass = beanClass;
+        this.context = context;
     }
 
     @Override
@@ -55,6 +60,6 @@ public final class LazyFactoryBean extends AbstractFactoryBean {
         return Proxy.newProxyInstance(
                 ClassLoader.getSystemClassLoader(),
                 beanClass.getInterfaces(),
-                new LazyProxyHandler(beanName, swing));
+                new LazyProxyHandler(beanName, swing, context));
     }
 }

@@ -1,5 +1,7 @@
 package org.jtheque.core.utils.test;
 
+import ch.qos.logback.classic.Level;
+import ch.qos.logback.classic.Logger;
 import org.dbunit.database.DatabaseDataSourceConnection;
 import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.dataset.Column;
@@ -10,6 +12,7 @@ import org.dbunit.dataset.ITableMetaData;
 import org.dbunit.dataset.xml.FlatXmlDataSet;
 import org.dbunit.operation.DatabaseOperation;
 import org.junit.Before;
+import org.slf4j.LoggerFactory;
 
 import javax.sql.DataSource;
 import java.io.IOException;

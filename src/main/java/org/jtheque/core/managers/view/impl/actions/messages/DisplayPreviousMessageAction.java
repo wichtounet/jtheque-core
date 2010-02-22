@@ -37,6 +37,6 @@ public final class DisplayPreviousMessageAction extends JThequeAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        CoreUtils.<IMessageView>getBean("messageView").previous();
+        CoreUtils.getBean(IMessageView.class).previous();
     }
 }

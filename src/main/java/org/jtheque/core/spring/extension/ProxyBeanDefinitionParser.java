@@ -18,9 +18,16 @@ package org.jtheque.core.spring.extension;
 
 import org.jtheque.core.spring.factory.LazyFactoryBean;
 import org.jtheque.utils.StringUtils;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.config.BeanDefinitionHolder;
+import org.springframework.beans.factory.config.BeanPostProcessor;
+import org.springframework.beans.factory.support.AbstractBeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
-import org.springframework.beans.factory.xml.AbstractSimpleBeanDefinitionParser;
+import org.springframework.beans.factory.xml.AbstractBeanDefinitionParser;
 import org.springframework.beans.factory.xml.ParserContext;
+import org.springframework.context.annotation.CommonAnnotationBeanPostProcessor;
+import org.springframework.context.support.GenericApplicationContext;
+import org.springframework.util.xml.DomUtils;
 import org.w3c.dom.Element;
 
 /**
@@ -28,32 +35,46 @@ import org.w3c.dom.Element;
  *
  * @author Baptiste Wicht
  */
-public final class ProxyBeanDefinitionParser extends AbstractSimpleBeanDefinitionParser {
+public final class ProxyBeanDefinitionParser extends AbstractBeanDefinitionParser {
+    private static final BeanPostProcessor PROCESSOR = new CommonAnnotationBeanPostProcessor();
+
     @Override
-    protected void doParse(Element element, ParserContext parserContext, BeanDefinitionBuilder builder) {
-        String id = element.getAttribute("id");
+    protected AbstractBeanDefinition parseInternal(Element element, ParserContext parserContext) {
+        if(element == null){
+            return null;
+        }
 
-        builder.addConstructorArgValue('_' + id);
+        LoggerFactory.getLogger(getClass()).debug("Parse Proxy ({}) : {}", element.getAttribute(""), element);
 
-        builder.getBeanDefinition().setPrimary(true);
+        BeanDefinitionBuilder factory = BeanDefinitionBuilder.rootBeanDefinition(LazyFactoryBean.class);
+
+        String beanName = '_' + element.getAttribute("id");
+
+        factory.addConstructorArgValue(beanName);
 
         String swing = element.getAttribute("swing");
 
         if(StringUtils.isNotEmpty(swing)){
-            builder.addConstructorArgValue(Boolean.valueOf(swing));
+            factory.addConstructorArgValue(Boolean.valueOf(swing));
         } else {
-            builder.addConstructorArgValue(false);
+            factory.addConstructorArgValue(false);
         }
 
         try {
-            builder.addConstructorArgValue(Class.forName(element.getAttribute("type")));
+            factory.addConstructorArgValue(Class.forName(element.getAttribute("type")));
         } catch (ClassNotFoundException e) {
             parserContext.getReaderContext().error("Class not found", element, e);
         }
-    }
 
-    @Override
-    protected Class<?> getBeanClass(Element element) {
-        return LazyFactoryBean.class;
+        Element targetElement = DomUtils.getChildElementByTagName(element, "bean");
+
+        BeanDefinitionHolder definition = parserContext.getDelegate().parseBeanDefinitionElement(targetElement);
+        GenericApplicationContext appContext = new GenericApplicationContext();
+        appContext.registerBeanDefinition(beanName, definition.getBeanDefinition());
+        appContext.getDefaultListableBeanFactory().addBeanPostProcessor(PROCESSOR);
+
+        factory.addConstructorArgValue(appContext);
+
+        return factory.getBeanDefinition();
     }
 }

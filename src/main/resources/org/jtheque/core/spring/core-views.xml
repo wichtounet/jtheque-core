@@ -15,55 +15,67 @@
 
     <!-- Proxy views -->
 
-    <jtheque:proxy id="mainView" type="org.jtheque.core.managers.view.impl.frame.MainView"/>
-    <jtheque:proxy id="configView" type="org.jtheque.core.managers.view.impl.frame.ConfigView"/>
-    <jtheque:proxy id="licenceView" type="org.jtheque.core.managers.view.impl.frame.LicenceView"/>
-    <jtheque:proxy id="logView" type="org.jtheque.core.managers.view.impl.frame.LogView"/>
-    <jtheque:proxy id="messageView" type="org.jtheque.core.managers.view.impl.frame.MessageView"/>
-    <jtheque:proxy id="moduleView" type="org.jtheque.core.managers.view.impl.frame.ModuleView"/>
-    <jtheque:proxy id="repositoryView" type="org.jtheque.core.managers.view.impl.frame.RepositoryView"/>
-    <jtheque:proxy id="updateView" type="org.jtheque.core.managers.view.impl.frame.UpdateView"/>
+    <jtheque:proxy id="mainView" type="org.jtheque.core.managers.view.impl.frame.MainView">
+        <bean class="org.jtheque.core.managers.view.impl.frame.MainView" factory-method="get"/>
+    </jtheque:proxy>
 
-    <jtheque:proxy id="collectionPane" type="org.jtheque.core.managers.view.impl.components.filthy.java2d.CollectionPane"/>
-    <jtheque:proxy id="aboutPane" type="org.jtheque.core.managers.view.impl.components.filthy.java2d.AboutPane"/>
+    <jtheque:proxy id="configView" type="org.jtheque.core.managers.view.impl.frame.ConfigView">
+        <bean class="org.jtheque.core.managers.view.impl.frame.ConfigView" />
+    </jtheque:proxy>
 
-    <!-- Real views -->
+    <jtheque:proxy id="licenceView" type="org.jtheque.core.managers.view.impl.frame.LicenceView">
+        <bean class="org.jtheque.core.managers.view.impl.frame.LicenceView" />
+    </jtheque:proxy>
 
-    <bean id="_mainView" class="org.jtheque.core.managers.view.impl.frame.MainView" factory-method="get"/>
+    <jtheque:proxy id="logView" type="org.jtheque.core.managers.view.impl.frame.LogView">
+        <bean class="org.jtheque.core.managers.view.impl.frame.LogView">
+            <constructor-arg ref="dateFormat" />
+            <constructor-arg ref="timeFormat" />
+        </bean>
+    </jtheque:proxy>
 
-    <bean id="_configView" class="org.jtheque.core.managers.view.impl.frame.ConfigView" />
+    <jtheque:proxy id="messageView" type="org.jtheque.core.managers.view.impl.frame.MessageView">
+        <bean class="org.jtheque.core.managers.view.impl.frame.MessageView" />
+    </jtheque:proxy>
 
-    <bean id="_licenceView" class="org.jtheque.core.managers.view.impl.frame.LicenceView" />
+    <jtheque:proxy id="moduleView" type="org.jtheque.core.managers.view.impl.frame.ModuleView">
+        <bean class="org.jtheque.core.managers.view.impl.frame.ModuleView" />
+    </jtheque:proxy>
 
-    <bean id="_logView" class="org.jtheque.core.managers.view.impl.frame.LogView">
-        <constructor-arg ref="dateFormat" />
-        <constructor-arg ref="timeFormat" />
-    </bean>
+    <jtheque:proxy id="repositoryView" type="org.jtheque.core.managers.view.impl.frame.RepositoryView">
+        <bean class="org.jtheque.core.managers.view.impl.frame.RepositoryView" />
+    </jtheque:proxy>
 
-    <bean id="_messageView" class="org.jtheque.core.managers.view.impl.frame.MessageView" />
-
-    <bean id="_moduleView" class="org.jtheque.core.managers.view.impl.frame.ModuleView" />
-
-    <bean id="_repositoryView" class="org.jtheque.core.managers.view.impl.frame.RepositoryView" />
-
-    <bean id="_updateView" class="org.jtheque.core.managers.view.impl.frame.UpdateView" />
-
-    <!-- Config panels -->
-
-    <bean id="_configAppearanceView" class="org.jtheque.core.managers.view.impl.components.config.JPanelConfigAppearance"/>
-    <bean id="_configNetworkView" class="org.jtheque.core.managers.view.impl.components.config.JPanelConfigNetwork" />
-    <bean id="_configOthersView" class="org.jtheque.core.managers.view.impl.components.config.JPanelConfigOthers"/>
+    <jtheque:proxy id="updateView" type="org.jtheque.core.managers.view.impl.frame.UpdateView">
+        <bean class="org.jtheque.core.managers.view.impl.frame.UpdateView" />
+    </jtheque:proxy>
 
     <!-- Java2D panes -->
 
-    <bean id="_aboutPane" class="org.jtheque.core.managers.view.impl.components.filthy.java2d.AboutPane"/>
+    <jtheque:proxy id="collectionPane" type="org.jtheque.core.managers.view.impl.components.filthy.java2d.CollectionPane">
+        <bean class="org.jtheque.core.managers.view.impl.components.filthy.java2d.CollectionPane">
+            <property name="hintColor" ref="white"/>
+            <property name="backgroundColor" ref="black"/>
+            <property name="errorColor" ref="red"/>
+            <property name="hintFont" ref="hintFont"/>
+        </bean>
+    </jtheque:proxy>
 
-    <bean id="_collectionPane" class="org.jtheque.core.managers.view.impl.components.filthy.java2d.CollectionPane">
-        <property name="hintColor" ref="white"/>
-        <property name="backgroundColor" ref="black"/>
-        <property name="errorColor" ref="red"/>
-        <property name="hintFont" ref="hintFont"/>
-    </bean>
+    <jtheque:proxy id="aboutPane" type="org.jtheque.core.managers.view.impl.components.filthy.java2d.AboutPane">
+        <bean class="org.jtheque.core.managers.view.impl.components.filthy.java2d.AboutPane"/>
+    </jtheque:proxy>
+
+    <!-- Config views -->
+    
+    <jtheque:proxy id="configAppearanceView" type="org.jtheque.core.managers.view.impl.components.config.JPanelConfigAppearance">
+        <bean class="org.jtheque.core.managers.view.impl.components.config.JPanelConfigAppearance"/>
+    </jtheque:proxy>
+    <jtheque:proxy id="configOthersView" type="org.jtheque.core.managers.view.impl.components.config.JPanelConfigOthers">
+        <bean class="org.jtheque.core.managers.view.impl.components.config.JPanelConfigNetwork" />
+    </jtheque:proxy>
+    <jtheque:proxy id="configNetworkView" type="org.jtheque.core.managers.view.impl.components.config.JPanelConfigNetwork">
+        <bean class="org.jtheque.core.managers.view.impl.components.config.JPanelConfigOthers"/>
+    </jtheque:proxy>
 
     <!-- UI Defaults -->
 

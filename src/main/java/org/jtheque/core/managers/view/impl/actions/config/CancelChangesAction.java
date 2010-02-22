@@ -37,7 +37,7 @@ public final class CancelChangesAction extends JThequeAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        IConfigView configView = CoreUtils.getBean("configView");
+        IConfigView configView = CoreUtils.getBean(IConfigView.class);
 
         configView.getSelectedPanelConfig().cancel();
         configView.closeDown();

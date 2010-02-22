@@ -43,7 +43,7 @@ public final class EnableModuleAction extends JThequeAction {
 
     @Override
     public void actionPerformed(ActionEvent arg0) {
-        IModuleView moduleView = CoreUtils.getBean("moduleView");
+        IModuleView moduleView = CoreUtils.getBean(IModuleView.class);
 
         ModuleContainer module = moduleView.getSelectedModule();
 

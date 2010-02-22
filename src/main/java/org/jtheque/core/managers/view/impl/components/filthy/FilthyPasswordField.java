@@ -45,6 +45,15 @@ public final class FilthyPasswordField extends AbstractFilthyField {
     }
 
     /**
+     * Set the password of the field.
+     *
+     * @param password The password. 
+     */
+    public void setPassword(String password){
+        passwordField.setText(password);
+    }
+
+    /**
      * Return the real field of this filty component.
      *
      * @return The field of this filthy component.

@@ -1,5 +1,7 @@
 package org.jtheque.core.utils.file;
 
+import org.jdom.CDATA;
+import org.jdom.DocType;
 import org.jdom.Document;
 import org.jdom.Element;
 
@@ -86,6 +88,14 @@ public final class XMLWriter {
         Element newElement = new Element(element);
 
         newElement.setText(text);
+
+        current.addContent(newElement);
+    }
+
+    public void addOnlyWithCDATA(String element, String text) {
+        Element newElement = new Element(element);
+
+        newElement.setContent(new CDATA(text));
 
         current.addContent(newElement);
     }

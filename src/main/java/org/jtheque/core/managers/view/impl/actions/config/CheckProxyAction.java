@@ -31,7 +31,7 @@ import java.awt.event.ActionEvent;
 public final class CheckProxyAction extends JThequeSimpleAction {
     @Override
     public void actionPerformed(ActionEvent e) {
-        INetworkConfigView config = (INetworkConfigView) CoreUtils.<IConfigView>getBean("configView").getSelectedPanelConfig();
+        INetworkConfigView config = (INetworkConfigView) CoreUtils.getBean(IConfigView.class).getSelectedPanelConfig();
 
         boolean selected = config.getBoxProxy().isSelected();
         config.getFieldAddress().setEnabled(selected);

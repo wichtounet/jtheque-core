@@ -37,6 +37,6 @@ public final class ExpandRepositoryModuleAction extends JThequeAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        CoreUtils.<IRepositoryView>getBean("repositoryView").expandSelectedModule();
+        CoreUtils.getBean(IRepositoryView.class).expandSelectedModule();
     }
 }

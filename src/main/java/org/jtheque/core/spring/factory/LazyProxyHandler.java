@@ -19,6 +19,8 @@ package org.jtheque.core.spring.factory;
 import org.jtheque.core.managers.Managers;
 import org.jtheque.core.managers.beans.IBeansManager;
 import org.jtheque.core.managers.log.ILoggingManager;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.GenericApplicationContext;
 
 import javax.swing.SwingUtilities;
 import java.lang.reflect.InvocationHandler;
@@ -33,6 +35,7 @@ import java.lang.reflect.Method;
 final class LazyProxyHandler implements InvocationHandler {
     private final String beanName;
     private final boolean swing;
+    private final GenericApplicationContext context;
 
     private Object instance;
 
@@ -41,12 +44,14 @@ final class LazyProxyHandler implements InvocationHandler {
      *
      * @param beanName The name of the bean.
      * @param swing A boolean tag indicating if the bean is swing bean.
+     * @param context The application context of the target. 
      */
-    LazyProxyHandler(String beanName, boolean swing) {
+    LazyProxyHandler(String beanName, boolean swing, GenericApplicationContext context) {
         super();
 
         this.beanName = beanName;
         this.swing = swing;
+        this.context = context;
     }
 
     @Override
@@ -54,19 +59,21 @@ final class LazyProxyHandler implements InvocationHandler {
         if (instance == null) {
             Managers.getManager(ILoggingManager.class).getLogger(getClass()).debug("Init {} due to call to {}", beanName, method.toGenericString());
 
+            context.setParent(Managers.getManager(IBeansManager.class).getApplicationContext());
+
             if(swing && !SwingUtilities.isEventDispatchThread()){
                 try {
                     SwingUtilities.invokeAndWait(new Runnable(){
                         @Override
                         public void run() {
-                            instance = Managers.getManager(IBeansManager.class).getBean(beanName);
+                            instance = context.getBean(beanName);
                         }
                     });
                 } catch (InterruptedException e) {
                     Managers.getManager(ILoggingManager.class).getLogger(getClass()).error(e);
                 }
             } else {
-                instance = Managers.getManager(IBeansManager.class).getBean(beanName);
+                instance = context.getBean(beanName);
             }
         }
 

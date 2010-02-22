@@ -18,6 +18,7 @@ package org.jtheque.core.managers.view.impl.components.filthy.java2d;
 
 import org.jdesktop.swingx.JXPanel;
 import org.jtheque.core.managers.Managers;
+import org.jtheque.core.managers.core.Core;
 import org.jtheque.core.managers.view.able.ICollectionView;
 import org.jtheque.core.managers.view.able.IViewManager;
 import org.jtheque.core.managers.view.impl.actions.collections.CancelAction;
@@ -120,6 +121,7 @@ public final class CollectionPane extends JXPanel implements ICollectionView {
         gbc.setDefaultInsets(new Insets(0, 0, 0, 0));
 
         textField = new FilthyTextField();
+        textField.setText(Core.getInstance().getConfiguration().getLastCollection());
 
         SwingUtils.addFieldValidateAction(textField.getField(), chooseAction);
 

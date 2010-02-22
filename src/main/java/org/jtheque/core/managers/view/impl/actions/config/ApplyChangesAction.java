@@ -37,8 +37,8 @@ public final class ApplyChangesAction extends JThequeAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (CoreUtils.<IConfigView>getBean("configView").validateContent()) {
-            CoreUtils.<IConfigView>getBean("configView").getSelectedPanelConfig().apply();
+        if (CoreUtils.getBean(IConfigView.class).validateContent()) {
+            CoreUtils.getBean(IConfigView.class).getSelectedPanelConfig().apply();
         }
     }
 }

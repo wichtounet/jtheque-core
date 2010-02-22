@@ -41,7 +41,7 @@ public final class InstallRepositoryModuleAction extends JThequeAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        ModuleDescription description = CoreUtils.<IRepositoryView>getBean("repositoryView").getSelectedModule();
+        ModuleDescription description = CoreUtils.getBean(IRepositoryView.class).getSelectedModule();
 
         if (description.getCoreVersion().isGreaterThan(Managers.getCore().getCoreCurrentVersion())) {
             Managers.getManager(IViewManager.class).displayI18nText("error.module.version.core");

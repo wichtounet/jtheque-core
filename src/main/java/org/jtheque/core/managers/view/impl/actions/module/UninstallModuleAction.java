@@ -41,7 +41,7 @@ public final class UninstallModuleAction extends JThequeAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        IModuleView moduleView = CoreUtils.getBean("moduleView");
+        IModuleView moduleView = CoreUtils.getBean(IModuleView.class);
 
         ModuleContainer module = moduleView.getSelectedModule();
 

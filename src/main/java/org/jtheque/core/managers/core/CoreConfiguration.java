@@ -208,6 +208,14 @@ public final class CoreConfiguration extends AbstractState {
         return getProperty("smtpHost");
     }
 
+    public void setLastCollection(String value) {
+        setProperty("last-collection", value);
+    }
+
+    public String getLastCollection() {
+        return getProperty("last-collection");
+    }
+
     /**
      * Set the date of the last reading of the messages.
      *
@@ -243,6 +251,7 @@ public final class CoreConfiguration extends AbstractState {
         setRetainSizeAndPositionOfWindow(true);
         setSmtpHost("");
         setUserEmail("");
+        setLastCollection("");
         setMessagesLastRead("20000101");
         setVerifyUpdateOnStartup(false);
     }

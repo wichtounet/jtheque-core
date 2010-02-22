@@ -37,7 +37,7 @@ public final class ApplyChangesAndCloseAction extends JThequeAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        IConfigView configView = CoreUtils.getBean("configView");
+        IConfigView configView = CoreUtils.getBean(IConfigView.class);
 
         if (configView.validateContent()) {
             configView.getSelectedPanelConfig().apply();
