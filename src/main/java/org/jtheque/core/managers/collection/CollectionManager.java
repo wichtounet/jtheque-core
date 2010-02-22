@@ -21,9 +21,9 @@ import org.jtheque.core.managers.schema.ISchemaManager;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-public class CollectionManager extends AbstractManager {
+public class CollectionManager extends AbstractManager implements ICollectionManager {
     @Override
-    public void init() throws ManagerException {
+    public void preInit() {
         Managers.getManager(ISchemaManager.class).registerSchema(new CollectionSchema());
     }
 }

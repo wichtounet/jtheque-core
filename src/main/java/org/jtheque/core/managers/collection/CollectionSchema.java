@@ -27,8 +27,8 @@ public class CollectionSchema extends DefaultSchema {
     @Override
     public void install() {
         updateTable(IDaoCollections.TABLE,
-                "CREATE TABLE {} IF NOT EXISTS (ID INT IDENTITY PRIMARY KEY, TITLE VARCHAR(150) NOT NULL UNIQUE, PROTECTED BOOLEAN, PASSWORD VARCHAR(150))");
-	    updateTable(IDaoCollections.TABLE, "CREATE INDEX COLLECTIONS_IDX ON {} (ID)");
+                "CREATE TABLE IF NOT EXISTS {} (ID INT IDENTITY PRIMARY KEY, TITLE VARCHAR(150) NOT NULL UNIQUE, PROTECTED BOOLEAN, PASSWORD VARCHAR(150))");
+	    updateTable(IDaoCollections.TABLE, "CREATE INDEX IF NOT EXISTS COLLECTIONS_IDX ON {} (ID)");
     }
 
     @Override

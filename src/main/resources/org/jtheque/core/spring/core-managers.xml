@@ -16,6 +16,8 @@
 
     <bean id="beansManager" class="org.jtheque.core.managers.beans.BeansManager"/>
 
+    <bean id="collectionManager" class="org.jtheque.core.managers.collection.CollectionManager"/>
+
     <bean id="errorManager" class="org.jtheque.core.managers.error.ErrorManager"/>
 
     <bean id="eventManager" class="org.jtheque.core.managers.event.EventManager"/>
@@ -116,6 +118,7 @@
                 <entry value-ref="undoRedoManager" key="org.jtheque.core.managers.undo.IUndoRedoManager"/>
                 <entry value-ref="updateManager" key="org.jtheque.core.managers.update.IUpdateManager"/>
                 <entry value-ref="viewManager" key="org.jtheque.core.managers.view.able.IViewManager"/>
+                <entry value-ref="collectionManager" key="org.jtheque.core.managers.collection.ICollectionManager"/>
             </util:map>
         </constructor-arg>
     </bean>

@@ -43,7 +43,7 @@ public abstract class AbstractSchema implements Schema {
      */
     protected SimpleJdbcTemplate getJdbcTemplate(){
         if(jdbcTemplate == null){
-            jdbcTemplate = CoreUtils.getBean("jdbcTemplate");
+            jdbcTemplate = CoreUtils.getBean(SimpleJdbcTemplate.class);
         }
 
         return jdbcTemplate;
