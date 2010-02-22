@@ -1,7 +1,6 @@
 package org.jtheque.core.spring.factory;
 
 import org.springframework.beans.factory.config.AbstractFactoryBean;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.GenericApplicationContext;
 
 import java.lang.reflect.Proxy;

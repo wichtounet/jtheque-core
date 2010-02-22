@@ -64,20 +64,7 @@
 
     <bean id="_cacheManager" class="org.jtheque.core.managers.cache.CacheManager"/>
 
-    <bean id="_fileManager" class="org.jtheque.core.managers.file.FileManager">
-        <property name="restorers">
-            <list>
-                <bean class="org.jtheque.core.managers.file.impl.XMLRestorer"/>
-                <bean class="org.jtheque.core.managers.file.impl.JTDRestorer"/>
-            </list>
-        </property>
-        <property name="backupers">
-            <list>
-                <bean class="org.jtheque.core.managers.file.impl.XMLBackuper"/>
-                <bean class="org.jtheque.core.managers.file.impl.JTDBackuper"/>
-            </list>
-        </property>
-    </bean>
+    <bean id="_fileManager" class="org.jtheque.core.managers.file.FileManager" />
 
     <bean id="_persistenceManager" class="org.jtheque.core.managers.persistence.PersistenceManager"/>
 

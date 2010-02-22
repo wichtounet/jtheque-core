@@ -18,38 +18,33 @@ package org.jtheque.core.managers.file.impl;
 
 import org.jtheque.core.managers.Managers;
 import org.jtheque.core.managers.file.IFileManager.XmlBackupVersion;
-import org.jtheque.core.managers.file.able.BackupWriter;
-import org.jtheque.core.managers.file.able.Backuper;
-import org.jtheque.core.managers.file.able.FileType;
+import org.jtheque.core.managers.file.able.ModuleBackup;
 import org.jtheque.core.utils.file.XMLWriter;
 import org.jtheque.utils.bean.IntDate;
 import org.jtheque.utils.io.FileException;
 
 import java.io.File;
-import java.util.Collection;
 
 /**
- * A Backuper for the XML format.
+ * A FileBackuper for the XML format.
  *
  * @author Baptiste Wicht
  */
-public final class XMLBackuper implements Backuper {
-    @Override
-    public void backup(File file, Collection<BackupWriter> writers) throws FileException {
+public final class XMLBackuper {
+    private XMLBackuper() {
+        super();
+    }
+
+    public static void backup(File file, Iterable<ModuleBackup> backups) throws FileException {
         XMLWriter writer = new XMLWriter();
 
         writeHeader(writer);
 
-        for (BackupWriter backupWriter : writers) {
-            backupWriter.write(writer);
+        for (ModuleBackup backup : backups) {
+            writeBackup(writer, backup);
         }
 
         writer.write(file.getAbsolutePath());
-    }
-
-    @Override
-    public boolean canExportTo(FileType fileType) {
-        return fileType == FileType.XML;
     }
 
     /**
@@ -61,9 +56,13 @@ public final class XMLBackuper implements Backuper {
         writer.add("header");
 
         writer.addOnly("date", Integer.toString(IntDate.today().intValue()));
-        writer.addOnly("file-version", Integer.toString(XmlBackupVersion.SECOND.ordinal()));
+        writer.addOnly("file-version", Integer.toString(XmlBackupVersion.THIRD.ordinal()));
         writer.addOnly("jtheque-version", Managers.getCore().getApplication().getVersion().getVersion());
 
         writer.switchToParent();
+    }
+
+    private static void writeBackup(XMLWriter writer, ModuleBackup backup) {
+        //TODO Write the backup to the file
     }
 }

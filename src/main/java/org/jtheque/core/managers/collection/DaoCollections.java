@@ -16,7 +16,6 @@ package org.jtheque.core.managers.collection;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import org.jtheque.core.managers.collection.IDaoCollections;
 import org.jtheque.core.managers.persistence.CachedJDBCDao;
 import org.jtheque.core.managers.persistence.Query;
 import org.jtheque.core.managers.persistence.QueryMapper;

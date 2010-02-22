@@ -18,19 +18,21 @@ package org.jtheque.core.managers.view.impl.actions.backup;
 
 import org.jtheque.core.managers.Managers;
 import org.jtheque.core.managers.beans.IBeansManager;
+import org.jtheque.core.managers.core.Core;
 import org.jtheque.core.managers.error.IErrorManager;
 import org.jtheque.core.managers.file.IFileManager;
-import org.jtheque.core.managers.file.able.FileType;
 import org.jtheque.core.managers.log.ILoggingManager;
 import org.jtheque.core.managers.persistence.IPersistenceManager;
+import org.jtheque.core.managers.resource.IResourceManager;
+import org.jtheque.core.managers.resource.ImageType;
 import org.jtheque.core.managers.view.able.IMainView;
 import org.jtheque.core.managers.view.able.IViewManager;
 import org.jtheque.core.managers.view.edt.SimpleTask;
 import org.jtheque.core.managers.view.impl.actions.JThequeAction;
+import org.jtheque.core.utils.CoreUtils;
 import org.jtheque.utils.io.FileException;
 import org.jtheque.utils.io.SimpleFilter;
 
-import javax.annotation.Resource;
 import java.awt.event.ActionEvent;
 import java.io.File;
 
@@ -40,53 +42,32 @@ import java.io.File;
  * @author Baptiste Wicht
  */
 public class AcRestore extends JThequeAction {
-    private final SimpleFilter filter;
-    private final FileType type;
-
-    @Resource
-    private IMainView mainView;
-
-    @Resource
-    private IFileManager fileManager;
-
-    @Resource
-    private IViewManager viewManager;
-
     /**
-     * Construct a new AcRestoreFromJTD.
-     *
-     * @param key    The internationalization key.
-     * @param filter The file filter.
-     * @param type   The file type.
+     * Construct a new AcRestore.
      */
-    AcRestore(String key, SimpleFilter filter, FileType type) {
-        super(key);
-
-        this.filter = filter;
-        this.type = type;
+    public AcRestore() {
+        super("menu.restore");
+        
+        setIcon(Managers.getManager(IResourceManager.class).getIcon(Core.IMAGES_BASE_NAME, "xml", ImageType.PNG));
 
         Managers.getManager(IBeansManager.class).inject(this);
     }
 
     @Override
     public final void actionPerformed(ActionEvent arg0) {
-        if (fileManager.isRestorePossible(type)) {
-            final File file = new File(viewManager.chooseFile(filter));
+        final File file = new File(CoreUtils.getBean(IViewManager.class).chooseFile(new SimpleFilter("XML(*.xml)", ".xml")));
 
-            final boolean yes = viewManager.askI18nUserForConfirmation(
-                    "dialogs.confirm.clear.database", "dialogs.confirm.clear.database.title");
+        final boolean yes = CoreUtils.getBean(IViewManager.class).askI18nUserForConfirmation(
+                "dialogs.confirm.clear.database", "dialogs.confirm.clear.database.title");
 
-            viewManager.execute(new SimpleTask() {
-                @Override
-                public void run() {
-                    mainView.startWait();
+        CoreUtils.getBean(IViewManager.class).execute(new SimpleTask() {
+            @Override
+            public void run() {
+                CoreUtils.getBean(IMainView.class).startWait();
 
-                    new Thread(new RestoreRunnable(yes, file)).start();
-                }
-            });
-        } else {
-            viewManager.displayI18nText("error.restore.nothing");
-        }
+                new Thread(new RestoreRunnable(yes, file)).start();
+            }
+        });
     }
 
     /**
@@ -94,7 +75,7 @@ public class AcRestore extends JThequeAction {
      *
      * @author Baptiste Wicht
      */
-    private final class RestoreRunnable implements Runnable {
+    private static final class RestoreRunnable implements Runnable {
         private final boolean clear;
         private final File file;
 
@@ -118,16 +99,16 @@ public class AcRestore extends JThequeAction {
             }
 
             try {
-                fileManager.restore(type, file);
+                CoreUtils.getBean(IFileManager.class).restore(file);
             } catch (FileException e) {
                 Managers.getManager(ILoggingManager.class).getLogger(getClass()).error(e);
                 Managers.getManager(IErrorManager.class).addInternationalizedError("error.restore.error");
             }
 
-            viewManager.execute(new SimpleTask() {
+            CoreUtils.getBean(IViewManager.class).execute(new SimpleTask() {
                 @Override
                 public void run() {
-                    mainView.stopWait();
+                    CoreUtils.getBean(IMainView.class).stopWait();
                 }
             });
         }

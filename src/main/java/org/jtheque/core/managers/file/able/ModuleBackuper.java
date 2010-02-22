@@ -16,23 +16,26 @@ package org.jtheque.core.managers.file.able;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import org.jtheque.utils.io.FileException;
-
-import java.io.File;
-import java.util.Collection;
-
 /**
- * A Backuper.
+ * A Backup Reader. It seems an object who read a backup file and persist the data from the file.
  *
  * @author Baptiste Wicht
  */
-public interface Backuper extends Exporter {
+public interface ModuleBackuper {
     /**
-     * Backup the data to a file using the specified collection of writers.
+     * Return the name of the schema.
      *
-     * @param file    The file.
-     * @param writers The writers to use.
-     * @throws FileException When an error occurs during the backup process.
+     * @return The name of the schema.
      */
-    void backup(File file, Collection<BackupWriter> writers) throws FileException;
+    String getId();
+
+    /**
+     * Return all the dependencies of the schema.
+     *
+     * @return An array containing all the dependencies of the schema.
+     */
+    String[] getDependencies();
+
+    ModuleBackup backup();
+    void restore(ModuleBackup backup);
 }

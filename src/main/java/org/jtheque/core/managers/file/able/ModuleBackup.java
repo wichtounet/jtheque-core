@@ -1,8 +1,6 @@
-package org.jtheque.core.managers.collection;
+package org.jtheque.core.managers.file.able;
 
-import org.jtheque.core.managers.AbstractManager;
-import org.jtheque.core.managers.Managers;
-import org.jtheque.core.managers.schema.ISchemaManager;
+import org.jtheque.utils.bean.Version;
 
 /*
  * This file is part of JTheque.
@@ -20,9 +18,21 @@ import org.jtheque.core.managers.schema.ISchemaManager;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-public class CollectionManager extends AbstractManager implements ICollectionManager {
-    @Override
-    public void preInit() {
-        Managers.getManager(ISchemaManager.class).registerSchema(new CollectionSchema());
-    }
+public interface ModuleBackup {
+    /**
+     * Return the version of the schema.
+     *
+     * @return The version of the schema.
+     *
+     * @see Version
+     */
+    Version getVersion();
+
+    /**
+     * Return the name of the schema.
+     *
+     * @return The name of the schema.
+     */
+    String getId();
+
 }

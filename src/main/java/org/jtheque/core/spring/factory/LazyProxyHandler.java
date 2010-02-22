@@ -19,7 +19,6 @@ package org.jtheque.core.spring.factory;
 import org.jtheque.core.managers.Managers;
 import org.jtheque.core.managers.beans.IBeansManager;
 import org.jtheque.core.managers.log.ILoggingManager;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.GenericApplicationContext;
 
 import javax.swing.SwingUtilities;

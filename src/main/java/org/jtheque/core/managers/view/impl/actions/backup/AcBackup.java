@@ -2,16 +2,18 @@ package org.jtheque.core.managers.view.impl.actions.backup;
 
 import org.jtheque.core.managers.Managers;
 import org.jtheque.core.managers.beans.IBeansManager;
+import org.jtheque.core.managers.core.Core;
 import org.jtheque.core.managers.error.IErrorManager;
 import org.jtheque.core.managers.file.IFileManager;
-import org.jtheque.core.managers.file.able.FileType;
 import org.jtheque.core.managers.log.ILoggingManager;
+import org.jtheque.core.managers.resource.IResourceManager;
+import org.jtheque.core.managers.resource.ImageType;
 import org.jtheque.core.managers.view.able.IViewManager;
 import org.jtheque.core.managers.view.impl.actions.JThequeAction;
+import org.jtheque.core.utils.CoreUtils;
 import org.jtheque.utils.io.FileException;
 import org.jtheque.utils.io.SimpleFilter;
 
-import javax.annotation.Resource;
 import java.awt.event.ActionEvent;
 import java.io.File;
 
@@ -36,50 +38,32 @@ import java.io.File;
  *
  * @author Baptiste Wicht
  */
-public abstract class AcBackup extends JThequeAction {
-    private final SimpleFilter filter;
-    private final FileType type;
-
-    @Resource
-    private IFileManager fileManager;
-
-    @Resource
-    private IViewManager viewManager;
-
+public class AcBackup extends JThequeAction {
     /**
      * Construct a new AcBackup.
-     *
-     * @param key    The internationalization key.
-     * @param filter The file filter.
-     * @param type   The file type.
      */
-    AcBackup(String key, SimpleFilter filter, FileType type) {
-        super(key);
+    public AcBackup() {
+        super("menu.backup");
 
-        this.filter = filter;
-        this.type = type;
+        setIcon(Managers.getManager(IResourceManager.class).getIcon(Core.IMAGES_BASE_NAME, "xml", ImageType.PNG));
 
         Managers.getManager(IBeansManager.class).inject(this);
     }
 
     @Override
     public final void actionPerformed(ActionEvent e) {
-        if (fileManager.isBackupPossible(type)) {
-            final boolean yes = viewManager.askI18nUserForConfirmation(
+        final boolean yes = CoreUtils.getBean(IViewManager.class).askI18nUserForConfirmation(
                     "dialogs.confirm.backup", "dialogs.confirm.backup.title");
 
-            if (yes) {
-                File file = new File(viewManager.chooseFile(filter));
+        if (yes) {
+            File file = new File(CoreUtils.getBean(IViewManager.class).chooseFile(new SimpleFilter("XML(*.xml)", ".xml")));
 
-                try {
-                    fileManager.backup(type, file);
-                } catch (FileException e1) {
-                    Managers.getManager(ILoggingManager.class).getLogger(getClass()).error(e1);
-                    Managers.getManager(IErrorManager.class).addInternationalizedError("error.backup.error");
-                }
+            try {
+                CoreUtils.getBean(IFileManager.class).backup(file);
+            } catch (FileException e1) {
+                Managers.getManager(ILoggingManager.class).getLogger(getClass()).error(e1);
+                Managers.getManager(IErrorManager.class).addInternationalizedError("error.backup.error");
             }
-        } else {
-            viewManager.displayI18nText("error.backup.nothing");
         }
     }
 }

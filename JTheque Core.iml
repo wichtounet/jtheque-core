@@ -35,8 +35,6 @@
     <orderEntry type="library" exported="" name="Maven: commons-logging:commons-logging:99.0-does-not-exist" level="project" />
     <orderEntry type="library" exported="" name="Maven: org.slf4j:jcl-over-slf4j:1.5.8" level="project" />
     <orderEntry type="library" exported="" name="Maven: aopalliance:aopalliance:1.0" level="project" />
-    <orderEntry type="library" exported="" name="Maven: org.aspectj:aspectjrt:1.5.4" level="project" />
-    <orderEntry type="library" exported="" name="Maven: org.aspectj:aspectjweaver:1.5.4" level="project" />
     <orderEntry type="library" exported="" name="Maven: com.apple:javaextensions:1.0" level="project" />
     <orderEntry type="library" exported="" name="Maven: org.swinglabs:swingx:1.6" level="project" />
     <orderEntry type="library" exported="" name="Maven: com.lowagie:itext:2.1.0" level="project" />

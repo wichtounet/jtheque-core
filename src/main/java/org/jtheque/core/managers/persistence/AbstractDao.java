@@ -22,7 +22,6 @@ import org.jtheque.core.managers.persistence.able.DataListener;
 import org.jtheque.core.managers.persistence.able.Entity;
 import org.jtheque.core.managers.persistence.context.IDaoPersistenceContext;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
 
 import javax.annotation.Resource;
 

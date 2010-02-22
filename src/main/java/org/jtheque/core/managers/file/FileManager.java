@@ -17,20 +17,19 @@ package org.jtheque.core.managers.file;
  */
 
 import org.jtheque.core.managers.AbstractActivableManager;
-import org.jtheque.core.managers.file.able.BackupReader;
-import org.jtheque.core.managers.file.able.BackupWriter;
-import org.jtheque.core.managers.file.able.Backuper;
-import org.jtheque.core.managers.file.able.FileType;
-import org.jtheque.core.managers.file.able.Restorer;
+import org.jtheque.core.managers.file.able.ModuleBackup;
+import org.jtheque.core.managers.file.able.ModuleBackuper;
+import org.jtheque.core.managers.file.impl.XMLBackuper;
+import org.jtheque.core.managers.file.impl.XMLRestorer;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.io.FileException;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.EnumMap;
-import java.util.Map;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 /**
  * A FileManager implementation.
@@ -38,150 +37,72 @@ import java.util.Map;
  * @author Baptiste Wicht
  */
 public final class FileManager extends AbstractActivableManager implements IFileManager {
-    private Backuper[] backupers;
-    private Restorer[] restorers;
-
-    private final Map<FileType, Collection<BackupWriter>> backupWriters;
-    private final Map<FileType, Collection<BackupReader>> backupReaders;
-
-    /**
-     * Construct a new FileManager.
-     */
-    public FileManager() {
-        super();
-
-        backupWriters = new EnumMap<FileType, Collection<BackupWriter>>(FileType.class);
-        backupReaders = new EnumMap<FileType, Collection<BackupReader>>(FileType.class);
-    }
+    private final List<ModuleBackuper> backupers = new ArrayList<ModuleBackuper>(5);
 
     @Override
-    public void backup(FileType format, File file) throws FileException {
-        Backuper backuper = getBackuperFor(format);
+    public void backup(File file) throws FileException {
+        Collection<ModuleBackup> backups = new ArrayList<ModuleBackup>(backupers.size());
 
-        if (backuper == null) {
-            throw new IllegalArgumentException("No backuper can be found for this format");
+        Collections.sort(backupers, new ModuleBackupComparator());
+
+        for(ModuleBackuper backuper : backupers){
+            backups.add(backuper.backup());
         }
 
-        backuper.backup(file, backupWriters.get(format));
+        XMLBackuper.backup(file, backups);
     }
 
     @Override
-    public void restore(FileType format, File file) throws FileException {
-        Restorer restorer = getRestorerFor(format);
+    public void restore(File file) throws FileException {
+        List<ModuleBackup> restores = XMLRestorer.restore(file);
 
-        if (restorer == null) {
-            throw new IllegalArgumentException("No restorer can be found for this format");
-        }
+        Collections.sort(backupers, new ModuleBackupComparator());
 
-        restorer.restore(file, backupReaders.get(format));
-    }
-
-    @Override
-    public void registerBackupWriter(FileType format, BackupWriter writer) {
-        Collection<BackupWriter> list = backupWriters.get(format);
-
-        if (list == null) {
-            list = new ArrayList<BackupWriter>(10);
-            backupWriters.put(format, list);
-        }
-
-        list.add(writer);
-    }
-
-    @Override
-    public String formatUTFToWrite(String utf) {
-        return StringUtils.isEmpty(utf) ? IFileManager.UTF_NULL : utf;
-    }
-
-    @Override
-    public String formatUTFToRead(String utf) {
-        return IFileManager.UTF_NULL.equals(utf) ? "" : utf;
-    }
-
-    @Override
-    public void registerBackupReader(FileType format, BackupReader reader) {
-        Collection<BackupReader> list = backupReaders.get(format);
-
-        if (list == null) {
-            list = new ArrayList<BackupReader>(10);
-            backupReaders.put(format, list);
-        }
-
-        list.add(reader);
-    }
-
-    @Override
-    public void unregisterBackupReader(FileType format, BackupReader reader) {
-        backupReaders.get(format).remove(reader);
-    }
-
-    @Override
-    public void unregisterBackupWriter(FileType format, BackupWriter writer) {
-        backupWriters.get(format).remove(writer);
-    }
-
-    @Override
-    public Collection<BackupReader> getBackupReaders(FileType format) {
-        return backupReaders.get(format);
-    }
-
-    @Override
-    public boolean isBackupPossible(FileType format) {
-        return backupReaders.get(format) != null;
-    }
-
-    @Override
-    public boolean isRestorePossible(FileType format) {
-        return backupWriters.get(format) != null;
-    }
-
-    /**
-     * Set the backupers. This is not for use, this is only for Spring Injection.
-     *
-     * @param backupers The backupers to set.
-     */
-    public void setBackupers(Backuper[] backupers) {
-        this.backupers = Arrays.copyOf(backupers, backupers.length);
-    }
-
-    /**
-     * Set the restorers.  This is not for use, this is only for Spring Injection.
-     *
-     * @param restorers The restorers to set.
-     */
-    public void setRestorers(Restorer[] restorers) {
-        this.restorers = Arrays.copyOf(restorers, restorers.length);
-    }
-
-    /**
-     * Return the Restorer for the format.
-     *
-     * @param format The format to search.
-     * @return The Restorer.
-     */
-    private Restorer getRestorerFor(FileType format) {
-        for (Restorer b : restorers) {
-            if (b.canImportFrom(format)) {
-                return b;
+        for(ModuleBackuper backuper : backupers){
+            for(ModuleBackup backup : restores){
+                if(backup.getId().equals(backuper.getId())){
+                    backuper.restore(backup);
+                    break;
+                }
             }
         }
-
-        return null;
+    }
+    
+    @Override
+    public void registerBackuper(ModuleBackuper backuper) {
+        backupers.add(backuper);
     }
 
-    /**
-     * Return the Backuper for the format.
-     *
-     * @param format The format to search.
-     * @return The Backuper.
-     */
-    private Backuper getBackuperFor(FileType format) {
-        for (Backuper b : backupers) {
-            if (b.canExportTo(format)) {
-                return b;
-            }
-        }
+    @Override
+    public void unregisterBackuper(ModuleBackuper backuper) {
+        backupers.remove(backuper);
+    }
 
-        return null;
+    private static class ModuleBackupComparator implements Comparator<ModuleBackuper> {
+        @Override
+        public int compare(ModuleBackuper backup1, ModuleBackuper backup2) {
+            boolean hasDependency = StringUtils.isNotEmpty(backup1.getDependencies());
+            boolean hasOtherDependency = StringUtils.isNotEmpty(backup2.getDependencies());
+
+            if (hasDependency && !hasOtherDependency) {
+                return 1;
+            } else if (!hasDependency && hasOtherDependency) {
+                return -1;
+            } else if(hasDependency && hasOtherDependency){
+                for (String dependency : backup2.getDependencies()) {
+                    if (dependency.equals(backup1.getId())) {//The other depends on me
+                        return -1;
+                    }
+                }
+
+                for (String dependency : backup1.getDependencies()) {
+                    if (dependency.equals(backup2.getId())) {//I depends on the other
+                        return 1;
+                    }
+                }
+            }
+
+            return 0;
+        }
     }
 }

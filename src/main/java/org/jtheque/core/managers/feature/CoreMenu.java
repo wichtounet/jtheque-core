@@ -5,10 +5,8 @@ import org.jtheque.core.managers.view.impl.actions.about.DisplayAboutViewAction;
 import org.jtheque.core.managers.view.impl.actions.author.AcInformOfABug;
 import org.jtheque.core.managers.view.impl.actions.author.AcOpenHelp;
 import org.jtheque.core.managers.view.impl.actions.author.AcProposeImprovement;
-import org.jtheque.core.managers.view.impl.actions.backup.AcBackupToJTD;
-import org.jtheque.core.managers.view.impl.actions.backup.AcBackupToXML;
-import org.jtheque.core.managers.view.impl.actions.backup.AcRestoreFromJTD;
-import org.jtheque.core.managers.view.impl.actions.backup.AcRestoreFromXML;
+import org.jtheque.core.managers.view.impl.actions.backup.AcBackup;
+import org.jtheque.core.managers.view.impl.actions.backup.AcRestore;
 import org.jtheque.core.managers.view.impl.actions.core.ExitAction;
 import org.jtheque.core.managers.view.impl.actions.undo.RedoAction;
 import org.jtheque.core.managers.view.impl.actions.undo.UndoAction;
@@ -40,12 +38,8 @@ public final class CoreMenu extends AbstractMenu {
     @Override
     protected List<Feature> getFileMenuSubFeatures(){
         return features(
-                createSeparatedSubFeature(200, "menu.backup",
-                        createSubFeature(1, new AcBackupToJTD()),
-                        createSubFeature(2, new AcBackupToXML())),
-                createSubFeature(201, "menu.restore",
-                        createSubFeature(1, new AcRestoreFromJTD()),
-                        createSubFeature(2, new AcRestoreFromXML())),
+                createSeparatedSubFeature(200, new AcBackup()),
+                createSubFeature(201, new AcRestore()),
                 createSeparatedSubFeature(1000, new ExitAction())
         );
     }

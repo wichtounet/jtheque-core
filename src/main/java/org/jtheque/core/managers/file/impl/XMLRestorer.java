@@ -17,25 +17,37 @@ package org.jtheque.core.managers.file.impl;
  */
 
 import org.jtheque.core.managers.file.IFileManager.XmlBackupVersion;
-import org.jtheque.core.managers.file.able.BackupReader;
-import org.jtheque.core.managers.file.able.FileType;
-import org.jtheque.core.managers.file.able.Restorer;
+import org.jtheque.core.managers.file.able.ModuleBackup;
 import org.jtheque.core.utils.file.XMLException;
 import org.jtheque.core.utils.file.XMLReader;
 import org.jtheque.utils.io.FileException;
 import org.jtheque.utils.io.FileUtils;
 
 import java.io.File;
-import java.util.Collection;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A Restorer for the XML format.
  *
  * @author Baptiste Wicht
  */
-public final class XMLRestorer implements Restorer {
-    @Override
-    public void restore(File file, Collection<BackupReader> readers) throws FileException {
+public final class XMLRestorer {
+    private XMLRestorer() {
+        super();
+    }
+
+    /**
+     * Import all the data from the file.
+     *
+     * @param file    The file.
+     * @throws FileException When an error occurs during the restore process.
+     *
+     * @return
+     */
+    public static List<ModuleBackup> restore(File file) throws FileException {
+        List<ModuleBackup> backups = new ArrayList<ModuleBackup>(10);
+
         XMLReader reader = new XMLReader();
 
         try {
@@ -47,22 +59,17 @@ public final class XMLRestorer implements Restorer {
 
             int version = reader.readInt("./header/file-version", reader.getRootElement());
 
-            if (version != XmlBackupVersion.FIRST.ordinal() && version != XmlBackupVersion.SECOND.ordinal()) {
+            if (version != XmlBackupVersion.THIRD.ordinal()) {
                 throw new FileException("Unsupported version");
             }
 
-            for (BackupReader r : readers) {
-                r.readBackup(reader.getRootElement());
-            }
+            //Todo get all the backups
         } catch (XMLException e) {
             throw new FileException("File corrupted", e);
         } finally {
             FileUtils.close(reader);
         }
-    }
 
-    @Override
-    public boolean canImportFrom(FileType fileType) {
-        return fileType == FileType.XML;
+        return backups;
     }
 }

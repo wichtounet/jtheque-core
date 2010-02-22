@@ -16,8 +16,6 @@
             http://www.springframework.org/schema/tx/spring-tx-3.0.xsd"
        default-lazy-init="true">
 
-    <aop:aspectj-autoproxy/>
-
     <context:annotation-config/>
 
     <tx:annotation-driven transaction-manager="transactionManager"/>
@@ -98,12 +96,6 @@
     <bean id="timeFormat" class="java.text.SimpleDateFormat">
         <constructor-arg value="${patterns.time}"/>
     </bean>
-
-    <!-- Aspects -->
-
-    <bean class="org.jtheque.core.spring.aspect.ManagerLoggingAspect"/>
-
-    <bean class="org.jtheque.core.spring.aspect.PhasesCounterAndLoggingAspect"/>
 
     <!-- Import sub-files -->
 

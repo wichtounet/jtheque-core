@@ -1,7 +1,6 @@
 package org.jtheque.core.utils.file;
 
 import org.jdom.CDATA;
-import org.jdom.DocType;
 import org.jdom.Document;
 import org.jdom.Element;
 

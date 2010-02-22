@@ -16,8 +16,6 @@
             http://www.springframework.org/schema/tx/spring-tx-2.5.xsd"
        default-lazy-init="true">
 
-    <aop:aspectj-autoproxy/>
-
     <context:annotation-config/>
 
     <tx:annotation-driven transaction-manager="transactionManager"/>

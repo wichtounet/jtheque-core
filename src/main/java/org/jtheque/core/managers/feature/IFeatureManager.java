@@ -16,8 +16,6 @@ package org.jtheque.core.managers.feature;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import org.jtheque.core.managers.feature.Feature.FeatureType;
-
 import java.util.Collection;
 
 /**

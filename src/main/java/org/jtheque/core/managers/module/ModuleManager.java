@@ -75,7 +75,7 @@ public final class ModuleManager extends AbstractManager implements IModuleManag
     /**
      * Indicate if there is a collection module.
      */
-    private boolean collectionModule = false;
+    private boolean collectionModule;
 
     @Override
     public void preInit() {
