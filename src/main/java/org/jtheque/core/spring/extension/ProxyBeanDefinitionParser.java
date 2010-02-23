@@ -25,6 +25,7 @@ import org.springframework.beans.factory.support.AbstractBeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.xml.AbstractBeanDefinitionParser;
 import org.springframework.beans.factory.xml.ParserContext;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.CommonAnnotationBeanPostProcessor;
 import org.springframework.context.support.GenericApplicationContext;
 import org.springframework.util.xml.DomUtils;
@@ -43,8 +44,6 @@ public final class ProxyBeanDefinitionParser extends AbstractBeanDefinitionParse
         if(element == null){
             return null;
         }
-
-        LoggerFactory.getLogger(getClass()).debug("Parse Proxy ({}) : {}", element.getAttribute(""), element);
 
         BeanDefinitionBuilder factory = BeanDefinitionBuilder.rootBeanDefinition(LazyFactoryBean.class);
 
@@ -69,6 +68,7 @@ public final class ProxyBeanDefinitionParser extends AbstractBeanDefinitionParse
         Element targetElement = DomUtils.getChildElementByTagName(element, "bean");
 
         BeanDefinitionHolder definition = parserContext.getDelegate().parseBeanDefinitionElement(targetElement);
+        
         GenericApplicationContext appContext = new GenericApplicationContext();
         appContext.registerBeanDefinition(beanName, definition.getBeanDefinition());
         appContext.getDefaultListableBeanFactory().addBeanPostProcessor(PROCESSOR);

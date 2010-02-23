@@ -20,6 +20,7 @@ import org.jtheque.core.managers.Managers;
 import org.jtheque.core.managers.file.IFileManager.XmlBackupVersion;
 import org.jtheque.core.managers.file.able.ModuleBackup;
 import org.jtheque.core.utils.file.XMLWriter;
+import org.jtheque.core.utils.file.nodes.NodeSaver;
 import org.jtheque.utils.bean.IntDate;
 import org.jtheque.utils.io.FileException;
 
@@ -36,7 +37,7 @@ public final class XMLBackuper {
     }
 
     public static void backup(File file, Iterable<ModuleBackup> backups) throws FileException {
-        XMLWriter writer = new XMLWriter();
+        XMLWriter writer = new XMLWriter("jtheque-backup");
 
         writeHeader(writer);
 
@@ -63,6 +64,17 @@ public final class XMLBackuper {
     }
 
     private static void writeBackup(XMLWriter writer, ModuleBackup backup) {
-        //TODO Write the backup to the file
+        writer.add("backup");
+
+        writer.addOnly("id", backup.getId());
+        writer.addOnly("version", backup.getVersion().getVersion());
+
+        writer.add("nodes");
+
+        NodeSaver.writeNodes(writer, backup.getNodes());
+
+        writer.switchToParent(); //Out from "nodes"
+
+        writer.switchToParent(); //Out from "backup"
     }
 }

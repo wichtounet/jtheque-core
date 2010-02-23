@@ -31,15 +31,6 @@ public final class XMLWriter {
     private Element current;
 
     /**
-     * Construct a new XMLWriter.
-     */
-    public XMLWriter() {
-        super();
-
-        document = new Document();
-    }
-
-    /**
      * Construct a new XML writer.
      *
      * @param root The name of the root element.

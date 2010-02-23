@@ -1,4 +1,4 @@
-package org.jtheque.core.managers.state;
+package org.jtheque.core.utils.file.nodes;
 
 /*
  * This file is part of JTheque.
@@ -21,17 +21,17 @@ package org.jtheque.core.managers.state;
  *
  * @author Baptiste Wicht
  */
-public final class NodeStateAttribute {
+public final class NodeAttribute {
     private String key;
     private String value;
 
     /**
-     * Construct a new NodeStateAttribute.
+     * Construct a new NodeAttribute.
      *
      * @param key   The key of the attribute.
      * @param value The value of the attribute.
      */
-    public NodeStateAttribute(String key, String value) {
+    public NodeAttribute(String key, String value) {
         super();
 
         this.key = key;

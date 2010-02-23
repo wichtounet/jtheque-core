@@ -1,6 +1,11 @@
 package org.jtheque.core.managers.file.able;
 
+import org.jtheque.core.utils.file.nodes.Node;
 import org.jtheque.utils.bean.Version;
+import org.jtheque.utils.collections.CollectionUtils;
+
+import java.util.Collection;
+import java.util.List;
 
 /*
  * This file is part of JTheque.
@@ -18,21 +23,32 @@ import org.jtheque.utils.bean.Version;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-public interface ModuleBackup {
-    /**
-     * Return the version of the schema.
-     *
-     * @return The version of the schema.
-     *
-     * @see Version
-     */
-    Version getVersion();
+public class ModuleBackup {
+    private Version version;
+    private String id;
+    private List<Node> nodes;
 
-    /**
-     * Return the name of the schema.
-     *
-     * @return The name of the schema.
-     */
-    String getId();
+    public String getId() {
+        return id;
+    }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public List<Node> getNodes() {
+        return nodes;
+    }
+
+    public void setNodes(Collection<Node> nodes) {
+        this.nodes = CollectionUtils.copyOf(nodes);
+    }
+
+    public Version getVersion() {
+        return version;
+    }
+
+    public void setVersion(Version version) {
+        this.version = version;
+    }
 }

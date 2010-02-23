@@ -16,6 +16,8 @@ package org.jtheque.core.managers.state;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import org.jtheque.core.utils.file.nodes.Node;
+
 import java.util.Collection;
 
 /**
@@ -68,14 +70,14 @@ public interface IState {
     /**
      * Delegate the save.
      *
-     * @return A List of NodeState to write.
+     * @return A List of Node to write.
      */
-    Collection<NodeState> delegateSave();
+    Collection<Node> delegateSave();
 
     /**
      * Delegate the load.
      *
      * @param nodes The nodes of the state.
      */
-    void delegateLoad(Collection<NodeState> nodes);
+    void delegateLoad(Collection<Node> nodes);
 }

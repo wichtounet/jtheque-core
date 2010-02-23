@@ -64,4 +64,6 @@ public interface IDaoCollections extends Dao<Collection> {
 	 * @param collection The current collection to set.
 	 */
 	void setCurrentCollection(Collection collection);
+
+    Collection getCollectionByTemporaryId(int id);
 }

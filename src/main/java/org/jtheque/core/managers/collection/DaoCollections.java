@@ -56,12 +56,6 @@ public final class DaoCollections extends CachedJDBCDao<Collection> implements I
 	public DaoCollections(){
 		super(TABLE);
 	}
-
-	@Override
-	public void create(Collection entity){
-		super.create(entity);
-	}
-
 	@Override
 	public java.util.Collection<Collection> getCollections(){
 		return getAll();
@@ -71,6 +65,17 @@ public final class DaoCollections extends CachedJDBCDao<Collection> implements I
 	public Collection getCollection(int id){
 		return get(id);
 	}
+
+    @Override
+    public Collection getCollectionByTemporaryId(int id) {
+        for(Collection collection : getAll()){
+            if(collection.getTemporaryContext().getId() == id){
+                return collection;
+            }
+        }
+
+        return null;
+    }
 
     @Override
     public boolean exists(Collection entity) {

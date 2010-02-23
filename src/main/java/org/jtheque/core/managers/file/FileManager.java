@@ -17,8 +17,10 @@ package org.jtheque.core.managers.file;
  */
 
 import org.jtheque.core.managers.AbstractActivableManager;
+import org.jtheque.core.managers.ManagerException;
 import org.jtheque.core.managers.file.able.ModuleBackup;
 import org.jtheque.core.managers.file.able.ModuleBackuper;
+import org.jtheque.core.managers.file.impl.CoreBackuper;
 import org.jtheque.core.managers.file.impl.XMLBackuper;
 import org.jtheque.core.managers.file.impl.XMLRestorer;
 import org.jtheque.utils.StringUtils;
@@ -38,6 +40,11 @@ import java.util.List;
  */
 public final class FileManager extends AbstractActivableManager implements IFileManager {
     private final List<ModuleBackuper> backupers = new ArrayList<ModuleBackuper>(5);
+
+    @Override
+    public void init() throws ManagerException {
+        backupers.add(new CoreBackuper());
+    }
 
     @Override
     public void backup(File file) throws FileException {

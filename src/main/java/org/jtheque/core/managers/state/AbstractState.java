@@ -16,6 +16,7 @@ package org.jtheque.core.managers.state;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import org.jtheque.core.utils.file.nodes.Node;
 import org.jtheque.utils.collections.CollectionUtils;
 
 import java.util.Collection;
@@ -62,12 +63,12 @@ public abstract class AbstractState implements IState {
     }
 
     @Override
-    public Collection<NodeState> delegateSave() {
+    public Collection<Node> delegateSave() {
         return null;
     }
 
     @Override
-    public void delegateLoad(Collection<NodeState> nodes) {
+    public void delegateLoad(Collection<Node> nodes) {
         //Nothing by default
     }
 }

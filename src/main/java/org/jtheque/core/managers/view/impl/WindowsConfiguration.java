@@ -2,8 +2,8 @@ package org.jtheque.core.managers.view.impl;
 
 import org.jtheque.core.managers.Managers;
 import org.jtheque.core.managers.state.AbstractState;
-import org.jtheque.core.managers.state.NodeState;
-import org.jtheque.core.managers.state.NodeStateAttribute;
+import org.jtheque.core.utils.file.nodes.Node;
+import org.jtheque.core.utils.file.nodes.NodeAttribute;
 import org.jtheque.core.managers.view.able.IView;
 import org.jtheque.core.managers.view.able.IViewManager;
 
@@ -43,12 +43,12 @@ public final class WindowsConfiguration extends AbstractState {
     }
 
     @Override
-    public void delegateLoad(Collection<NodeState> nodes) {
-        for (NodeState node : nodes) {
+    public void delegateLoad(Collection<Node> nodes) {
+        for (Node node : nodes) {
             if ("window".equals(node.getName())) {
                 WindowConfiguration configuration = new WindowConfiguration();
 
-                for (NodeState child : node.getChildrens()) {
+                for (Node child : node.getChildrens()) {
                     applyValueFromChild(configuration, child);
                 }
 
@@ -63,7 +63,7 @@ public final class WindowsConfiguration extends AbstractState {
      * @param configuration The window configuration.
      * @param child         The child.
      */
-    private static void applyValueFromChild(WindowConfiguration configuration, NodeState child) {
+    private static void applyValueFromChild(WindowConfiguration configuration, Node child) {
         if ("width".equals(child.getName())) {
             configuration.setWidth(Integer.parseInt(child.getText()));
         } else if ("height".equals(child.getName())) {
@@ -76,17 +76,17 @@ public final class WindowsConfiguration extends AbstractState {
     }
 
     @Override
-    public Collection<NodeState> delegateSave() {
-        Collection<NodeState> states = new ArrayList<NodeState>(10);
+    public Collection<Node> delegateSave() {
+        Collection<Node> states = new ArrayList<Node>(10);
 
         for (Entry<String, WindowConfiguration> configuration : configurations.entrySet()) {
-            NodeState state = new NodeState("window");
+            Node state = new Node("window");
 
-            state.getAttributes().add(new NodeStateAttribute("name", configuration.getKey()));
-            state.getChildrens().add(new NodeState("width", Integer.toString(configuration.getValue().getWidth())));
-            state.getChildrens().add(new NodeState("height", Integer.toString(configuration.getValue().getHeight())));
-            state.getChildrens().add(new NodeState("posX", Integer.toString(configuration.getValue().getPositionX())));
-            state.getChildrens().add(new NodeState("posY", Integer.toString(configuration.getValue().getPositionY())));
+            state.getAttributes().add(new NodeAttribute("name", configuration.getKey()));
+            state.getChildrens().add(new Node("width", Integer.toString(configuration.getValue().getWidth())));
+            state.getChildrens().add(new Node("height", Integer.toString(configuration.getValue().getHeight())));
+            state.getChildrens().add(new Node("posX", Integer.toString(configuration.getValue().getPositionX())));
+            state.getChildrens().add(new Node("posY", Integer.toString(configuration.getValue().getPositionY())));
 
             states.add(state);
         }

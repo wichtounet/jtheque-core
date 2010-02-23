@@ -31,9 +31,11 @@
 
     <xsd:element name="activable">
         <xsd:complexType>
-            <xsd:complexContent>
-                <xsd:extension base="beans:identifiedType"/>
-            </xsd:complexContent>
+            <xsd:choice minOccurs="0" maxOccurs="unbounded">
+                <xsd:element ref="beans:bean"/>
+             </xsd:choice>
+            <xsd:attribute name="id" type="xsd:ID" use="required"/>
+            <xsd:attribute name="type" type="xsd:string" use="required"/>
         </xsd:complexType>
     </xsd:element>
 

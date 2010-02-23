@@ -2,7 +2,11 @@ package org.jtheque.core.spring.factory;
 
 import org.apache.commons.logging.LogFactory;
 import org.jtheque.core.managers.ActivableManager;
+import org.jtheque.core.managers.Managers;
+import org.jtheque.core.managers.beans.IBeansManager;
+import org.jtheque.core.managers.beans.ioc.Ioc;
 import org.springframework.beans.factory.config.AbstractFactoryBean;
+import org.springframework.context.support.GenericApplicationContext;
 
 import java.lang.reflect.Proxy;
 
@@ -28,33 +32,32 @@ import java.lang.reflect.Proxy;
  * @author Baptiste Wicht
  */
 public final class ActivableManagerFactoryBean extends AbstractFactoryBean {
-    private ActivableManager manager;
+    private final String manager;
+    private final Class<?> managerClass;
+    private final GenericApplicationContext context;
 
-    /**
-     * Set the manager to factor.
-     *
-     * @param manager The activable manager to factor.
-     */
-    public void setManager(ActivableManager manager) {
+    public ActivableManagerFactoryBean(String manager, Class<?> managerClass, GenericApplicationContext context) {
+        super();
+
+        this.managerClass = managerClass;
+        this.context = context;
         this.manager = manager;
     }
 
     @Override
     public Class<?> getObjectType() {
-        if (manager == null) { //Property not already set by Spring
-            LogFactory.getLog(getClass()).error("Manager is null");
-
-            return null;
-        }
-
-        return manager.getClass();
+        return managerClass;
     }
 
     @Override
     protected Object createInstance() {
+        context.setParent(Ioc.getContainer().getApplicationContext());
+
+        ActivableManager activableManager = (ActivableManager)context.getBean(manager);
+        
         return Proxy.newProxyInstance(
                 ClassLoader.getSystemClassLoader(),
-                manager.getClass().getInterfaces(),
-                new ActivableManagerHandler(manager));
+                activableManager.getClass().getInterfaces(),
+                new ActivableManagerHandler(activableManager));
     }
 }

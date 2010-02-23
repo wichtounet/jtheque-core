@@ -16,10 +16,13 @@ package org.jtheque.core.managers.file.impl;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import org.jdom.Element;
 import org.jtheque.core.managers.file.IFileManager.XmlBackupVersion;
 import org.jtheque.core.managers.file.able.ModuleBackup;
 import org.jtheque.core.utils.file.XMLException;
 import org.jtheque.core.utils.file.XMLReader;
+import org.jtheque.core.utils.file.nodes.NodeLoader;
+import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.io.FileException;
 import org.jtheque.utils.io.FileUtils;
 
@@ -43,7 +46,7 @@ public final class XMLRestorer {
      * @param file    The file.
      * @throws FileException When an error occurs during the restore process.
      *
-     * @return
+     * @return All the module backups. 
      */
     public static List<ModuleBackup> restore(File file) throws FileException {
         List<ModuleBackup> backups = new ArrayList<ModuleBackup>(10);
@@ -53,17 +56,20 @@ public final class XMLRestorer {
         try {
             reader.openFile(file);
 
-            if (reader.getRootElement() == null) {
-                throw new FileException("File corrupted (no root element)");
-            }
-
             int version = reader.readInt("./header/file-version", reader.getRootElement());
 
             if (version != XmlBackupVersion.THIRD.ordinal()) {
                 throw new FileException("Unsupported version");
             }
 
-            //Todo get all the backups
+            for(Element backupElement : reader.getNodes("//backup", reader.getRootElement())){
+                ModuleBackup backup = new ModuleBackup();
+
+                backup.setId(reader.readString("id", backupElement));
+                backup.setVersion(new Version(reader.readString("version", backupElement)));
+
+                backup.setNodes(NodeLoader.resolveNodeStates(reader.getNodes("nodes/*", backupElement)));
+            }
         } catch (XMLException e) {
             throw new FileException("File corrupted", e);
         } finally {

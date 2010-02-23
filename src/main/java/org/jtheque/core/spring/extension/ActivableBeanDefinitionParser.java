@@ -17,9 +17,17 @@ package org.jtheque.core.spring.extension;
  */
 
 import org.jtheque.core.spring.factory.ActivableManagerFactoryBean;
+import org.springframework.beans.factory.BeanFactory;
+import org.springframework.beans.factory.config.BeanDefinitionHolder;
+import org.springframework.beans.factory.config.BeanPostProcessor;
+import org.springframework.beans.factory.support.AbstractBeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
-import org.springframework.beans.factory.xml.AbstractSimpleBeanDefinitionParser;
+import org.springframework.beans.factory.xml.AbstractBeanDefinitionParser;
 import org.springframework.beans.factory.xml.ParserContext;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.CommonAnnotationBeanPostProcessor;
+import org.springframework.context.support.GenericApplicationContext;
+import org.springframework.util.xml.DomUtils;
 import org.w3c.dom.Element;
 
 /**
@@ -27,18 +35,37 @@ import org.w3c.dom.Element;
  *
  * @author Baptiste Wicht
  */
-public final class ActivableBeanDefinitionParser extends AbstractSimpleBeanDefinitionParser {
-    @Override
-    protected void doParse(Element element, ParserContext parserContext, BeanDefinitionBuilder builder) {
-        String id = element.getAttribute("id");
-
-        builder.addPropertyReference("manager", '_' + id);
-
-        builder.getBeanDefinition().setPrimary(true);
-    }
+public final class ActivableBeanDefinitionParser extends AbstractBeanDefinitionParser {
+    private static final BeanPostProcessor PROCESSOR = new CommonAnnotationBeanPostProcessor();
 
     @Override
-    protected Class<?> getBeanClass(Element element) {
-        return ActivableManagerFactoryBean.class;
+    protected AbstractBeanDefinition parseInternal(Element element, ParserContext parserContext) {
+        if(element == null){
+            return null;
+        }
+
+        BeanDefinitionBuilder factory = BeanDefinitionBuilder.rootBeanDefinition(ActivableManagerFactoryBean.class);
+
+        String beanName = '_' + element.getAttribute("id");
+
+        factory.addConstructorArgValue(beanName);
+
+        try {
+            factory.addConstructorArgValue(Class.forName(element.getAttribute("type")));
+        } catch (ClassNotFoundException e) {
+            parserContext.getReaderContext().error("Class not found", element, e);
+        }
+
+        Element targetElement = DomUtils.getChildElementByTagName(element, "bean");
+
+        BeanDefinitionHolder definition = parserContext.getDelegate().parseBeanDefinitionElement(targetElement);
+        
+        GenericApplicationContext appContext = new GenericApplicationContext();
+        appContext.registerBeanDefinition(beanName, definition.getBeanDefinition());
+        appContext.getDefaultListableBeanFactory().addBeanPostProcessor(PROCESSOR);
+
+        factory.addConstructorArgValue(appContext);
+
+        return factory.getBeanDefinition();
     }
 }

@@ -19,7 +19,7 @@ package org.jtheque.core.managers.module;
 import org.jtheque.core.managers.module.beans.ModuleContainer;
 import org.jtheque.core.managers.module.beans.ModuleState;
 import org.jtheque.core.managers.state.AbstractState;
-import org.jtheque.core.managers.state.NodeState;
+import org.jtheque.core.utils.file.nodes.Node;
 import org.jtheque.core.managers.update.InstallationResult;
 import org.jtheque.utils.StringUtils;
 
@@ -42,8 +42,8 @@ public final class ModuleConfiguration extends AbstractState {
     }
 
     @Override
-    public void delegateLoad(Collection<NodeState> nodes) {
-        for (NodeState node : nodes){
+    public void delegateLoad(Collection<Node> nodes) {
+        for (Node node : nodes){
             if ("module".equals(node.getName())) {
                 infos.add(convertToModuleInfo(node));
             } else if("discovery".equals(node.getName())){
@@ -59,13 +59,13 @@ public final class ModuleConfiguration extends AbstractState {
      *
      * @return The ModuleInfo.
      */
-    private static ModuleInfo convertToModuleInfo(NodeState node) {
+    private static ModuleInfo convertToModuleInfo(Node node) {
         ModuleInfo info = new ModuleInfo(node.getAttributeValue("id"));
 
         if(StringUtils.isNotEmpty(node.getAttributeValue("state"))){
             info.setState(ModuleState.valueOf(node.getIntAttributeValue("state")));
         } else {
-            for (NodeState child : node.getChildrens()) {
+            for (Node child : node.getChildrens()) {
                 if ("state".equals(child.getName())) {
                     info.setState(ModuleState.valueOf(Integer.parseInt(child.getText())));
                 }
@@ -80,11 +80,11 @@ public final class ModuleConfiguration extends AbstractState {
     }
 
     @Override
-    public Collection<NodeState> delegateSave() {
-        Collection<NodeState> states = new ArrayList<NodeState>(25);
+    public Collection<Node> delegateSave() {
+        Collection<Node> states = new ArrayList<Node>(25);
 
         if(discovery){
-            states.add(new NodeState("discovery"));
+            states.add(new Node("discovery"));
         }
 
         for (ModuleInfo info : infos) {
@@ -101,8 +101,8 @@ public final class ModuleConfiguration extends AbstractState {
      *
      * @return The node state.
      */
-    private static NodeState convertToNodeState(ModuleInfo info) {
-        NodeState state = new NodeState("module");
+    private static Node convertToNodeState(ModuleInfo info) {
+        Node state = new Node("module");
 
         state.setAttribute("id", info.getModuleId());
         state.setAttribute("state", Integer.toString(info.getState().ordinal()));

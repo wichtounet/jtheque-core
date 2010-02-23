@@ -60,26 +60,31 @@
         <property name="viewDefaults" ref="uiDefaults"/>
     </bean>
 
-    <bean id="_undoRedoManager" class="org.jtheque.core.managers.undo.UndoRedoManager"/>
-
-    <bean id="_cacheManager" class="org.jtheque.core.managers.cache.CacheManager"/>
-
-    <bean id="_fileManager" class="org.jtheque.core.managers.file.FileManager" />
-
-    <bean id="_persistenceManager" class="org.jtheque.core.managers.persistence.PersistenceManager"/>
-
-    <bean id="_propertiesManager" class="org.jtheque.core.managers.properties.PropertiesManager"/>
-
-    <bean id="_schemaManager" class="org.jtheque.core.managers.schema.SchemaManager"/>
-
     <!-- Activables managers -->
 
-    <jtheque:activable id="undoRedoManager"/>
-    <jtheque:activable id="cacheManager"/>
-    <jtheque:activable id="fileManager"/>
-    <jtheque:activable id="persistenceManager"/>
-    <jtheque:activable id="propertiesManager"/>
-    <jtheque:activable id="schemaManager"/>
+    <jtheque:activable id="undoRedoManager" type="org.jtheque.core.managers.undo.UndoRedoManager">
+        <bean class="org.jtheque.core.managers.undo.UndoRedoManager"/>
+    </jtheque:activable>
+
+    <jtheque:activable id="cacheManager" type="org.jtheque.core.managers.cache.CacheManager">
+        <bean class="org.jtheque.core.managers.cache.CacheManager"/>
+    </jtheque:activable>
+
+    <jtheque:activable id="fileManager" type="org.jtheque.core.managers.file.FileManager">
+        <bean class="org.jtheque.core.managers.file.FileManager"/>
+    </jtheque:activable>
+
+    <jtheque:activable id="persistenceManager" type="org.jtheque.core.managers.persistence.PersistenceManager">
+        <bean class="org.jtheque.core.managers.persistence.PersistenceManager"/>
+    </jtheque:activable>
+
+    <jtheque:activable id="propertiesManager" type="org.jtheque.core.managers.properties.PropertiesManager">
+        <bean class="org.jtheque.core.managers.properties.PropertiesManager"/>
+    </jtheque:activable>
+
+    <jtheque:activable id="schemaManager" type="org.jtheque.core.managers.schema.SchemaManager">
+        <bean class="org.jtheque.core.managers.schema.SchemaManager"/>
+    </jtheque:activable>
 
     <!-- The Managers class -->
 

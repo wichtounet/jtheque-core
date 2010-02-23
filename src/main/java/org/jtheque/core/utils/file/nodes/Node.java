@@ -1,4 +1,4 @@
-package org.jtheque.core.managers.state;
+package org.jtheque.core.utils.file.nodes;
 
 /*
  * This file is part of JTheque.
@@ -27,40 +27,40 @@ import java.util.Collection;
  *
  * @author Baptiste Wicht
  */
-public final class NodeState {
+public final class Node {
     private final String name;
-    private Collection<NodeState> childrens;
+    private Collection<Node> childrens;
     private String text;
-    private Collection<NodeStateAttribute> attributes;
+    private Collection<NodeAttribute> attributes;
 
     /**
-     * Construct a new NodeState.
+     * Construct a new Node.
      *
      * @param name The name of the node.
      */
-    public NodeState(String name) {
+    public Node(String name) {
         super();
 
         this.name = name;
 
-        childrens = new ArrayList<NodeState>(10);
-        attributes = new ArrayList<NodeStateAttribute>(10);
+        childrens = new ArrayList<Node>(10);
+        attributes = new ArrayList<NodeAttribute>(10);
     }
 
     /**
-     * Construct a new NodeState.
+     * Construct a new Node.
      *
      * @param name The name of the node.
      * @param text The text of the node.
      */
-    public NodeState(String name, String text) {
+    public Node(String name, String text) {
         super();
 
         this.name = name;
         this.text = text;
 
-        childrens = new ArrayList<NodeState>(10);
-        attributes = new ArrayList<NodeStateAttribute>(10);
+        childrens = new ArrayList<Node>(10);
+        attributes = new ArrayList<NodeAttribute>(10);
     }
 
     /**
@@ -75,9 +75,9 @@ public final class NodeState {
     /**
      * Return the childrens of the node.
      *
-     * @return A List containing all the NodeState children.
+     * @return A List containing all the Node children.
      */
-    public Collection<NodeState> getChildrens() {
+    public Collection<Node> getChildrens() {
         return childrens;
     }
 
@@ -86,7 +86,7 @@ public final class NodeState {
      *
      * @param childrens The childrens.
      */
-    public void setChildrens(Collection<NodeState> childrens) {
+    public void setChildrens(Collection<Node> childrens) {
         this.childrens = CollectionUtils.copyOf(childrens);
     }
 
@@ -97,7 +97,15 @@ public final class NodeState {
      * @param value The value of the node.
      */
     public void addSimpleChildValue(String name, String value) {
-        childrens.add(new NodeState(name, value));
+        childrens.add(new Node(name, value));
+    }
+
+    public void addSimpleChildValue(String name, int value) {
+        childrens.add(new Node(name, Integer.toString(value)));
+    }
+
+    public void addSimpleChildValue(String s, long value) {
+        childrens.add(new Node(name, Long.toString(value)));
     }
 
     /**
@@ -107,6 +115,10 @@ public final class NodeState {
      */
     public String getText() {
         return text;
+    }
+
+    public int getInt() {
+        return Integer.parseInt(text);
     }
 
     /**
@@ -123,7 +135,7 @@ public final class NodeState {
      *
      * @return A List containing all the attributes.
      */
-    public Collection<NodeStateAttribute> getAttributes() {
+    public Collection<NodeAttribute> getAttributes() {
         return attributes;
     }
 
@@ -132,7 +144,7 @@ public final class NodeState {
      *
      * @param attributes A List containing all the attributes.
      */
-    public void setAttributes(Collection<NodeStateAttribute> attributes) {
+    public void setAttributes(Collection<NodeAttribute> attributes) {
         this.attributes = CollectionUtils.copyOf(attributes);
     }
 
@@ -161,7 +173,7 @@ public final class NodeState {
      * @param value The value of the attribute.
      */
     public void setAttribute(String key, String value) {
-        NodeStateAttribute attribute = new NodeStateAttribute(key, value);
+        NodeAttribute attribute = new NodeAttribute(key, value);
 
         attributes.add(attribute);
     }
@@ -176,7 +188,7 @@ public final class NodeState {
     public String getAttributeValue(String key) {
         String value = null;
 
-        for (NodeStateAttribute attribute : attributes) {
+        for (NodeAttribute attribute : attributes) {
             if (attribute.getKey().equals(key)) {
                 value = attribute.getValue();
                 break;
@@ -201,5 +213,27 @@ public final class NodeState {
         }
 
         return 0;
+    }
+
+    public String getChildValue(String name) {
+        for(Node child : childrens){
+            if(name.equals(child.name)){
+                return child.text;
+            }
+        }
+
+        return null;
+    }
+
+    public int getChildIntValue(String name) {
+        String value = getChildValue(name);
+
+        return value == null ? 0 : Integer.parseInt(value);
+    }
+
+    public long getChildLongValue(String name) {
+        String value = getChildValue(name);
+
+        return value == null ? 0 : Long.parseLong(value);
     }
 }
