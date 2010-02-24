@@ -6,7 +6,9 @@ import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.collections.ArrayUtils;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /*
  * This file is part of JTheque.
@@ -38,8 +40,11 @@ public final class XMLApplication implements Application {
     private ImageDescriptor logo;
 
     private boolean displayLicence;
+    private boolean moduleDiscovery;
 
     private String[] supportedLanguages = {"fr", "en"};
+
+    private final Set<String> modules = new HashSet<String>(5);
 
     private final Map<String, String> properties = new HashMap<String, String>(5);
 
@@ -128,6 +133,16 @@ public final class XMLApplication implements Application {
         return getProperty("application.folder.path");
     }
 
+    @Override
+    public boolean isModuleDiscovery() {
+        return moduleDiscovery;
+    }
+
+    @Override
+    public Set<String> getModules() {
+        return modules;
+    }
+
     //Package protected methods to fill the application
 
     /**
@@ -183,5 +198,9 @@ public final class XMLApplication implements Application {
     void setImages(ImageDescriptor logo, ImageDescriptor icon){
         this.logo = logo;
         this.icon = icon;
+    }
+
+    public void setAutoDiscovery(boolean discovery) {
+        moduleDiscovery = discovery;
     }
 }

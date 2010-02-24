@@ -3,6 +3,8 @@ package org.jtheque.core.managers.core.application;
 import org.jtheque.core.managers.resource.ImageType;
 import org.jtheque.utils.bean.Version;
 
+import java.util.Set;
+
 /*
  * This file is part of JTheque.
  *
@@ -145,4 +147,8 @@ public interface Application {
      * @return The value of the property or empty string if there is no property with this key.
      */
     String getProperty(String key);
+
+    boolean isModuleDiscovery();
+
+    Set<String> getModules();
 }

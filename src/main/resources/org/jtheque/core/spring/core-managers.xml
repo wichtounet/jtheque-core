@@ -78,10 +78,6 @@
         <bean class="org.jtheque.core.managers.persistence.PersistenceManager"/>
     </jtheque:activable>
 
-    <jtheque:activable id="propertiesManager" type="org.jtheque.core.managers.properties.PropertiesManager">
-        <bean class="org.jtheque.core.managers.properties.PropertiesManager"/>
-    </jtheque:activable>
-
     <jtheque:activable id="schemaManager" type="org.jtheque.core.managers.schema.SchemaManager">
         <bean class="org.jtheque.core.managers.schema.SchemaManager"/>
     </jtheque:activable>
@@ -103,7 +99,6 @@
                 <entry value-ref="moduleManager" key="org.jtheque.core.managers.module.IModuleManager"/>
                 <entry value-ref="patchManager" key="org.jtheque.core.managers.patch.IPatchManager"/>
                 <entry value-ref="persistenceManager" key="org.jtheque.core.managers.persistence.IPersistenceManager"/>
-                <entry value-ref="propertiesManager" key="org.jtheque.core.managers.properties.IPropertiesManager"/>
                 <entry value-ref="resourceManager" key="org.jtheque.core.managers.resource.IResourceManager"/>
                 <entry value-ref="schemaManager" key="org.jtheque.core.managers.schema.ISchemaManager"/>
                 <entry value-ref="stateManager" key="org.jtheque.core.managers.state.IStateManager"/>

@@ -16,29 +16,26 @@ package org.jtheque.core;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import org.jtheque.core.managers.properties.IPropertiesManager;
-import org.jtheque.core.managers.properties.PropertiesManager;
+import org.jtheque.core.utils.PropertiesUtils;
 import org.jtheque.utils.Constants;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-public class PropertiesManagerTest {
-    private final IPropertiesManager propertiesManager = new PropertiesManager();
-
+public class PropertiesUtilsTest {
     @Test
     public void testGetPropertyQuickly() {
         TestClass instance = new TestClass();
 
-        Object property1 = propertiesManager.getPropertyQuickly(instance, "property1");
+        Object property1 = PropertiesUtils.getPropertyQuickly(instance, "property1");
 
         assertTrue(property1 instanceof Integer);
         assertEquals(0, property1);
 
         instance.setProperty1(33);
 
-        property1 = propertiesManager.getPropertyQuickly(instance, "property1");
+        property1 = PropertiesUtils.getPropertyQuickly(instance, "property1");
 
         assertEquals(33, property1);
     }
@@ -49,7 +46,7 @@ public class PropertiesManagerTest {
 
         instance1.setProperty1(88);
 
-        TestClass memento = propertiesManager.createMemento(instance1);
+        TestClass memento = PropertiesUtils.createMemento(instance1);
 
         assertEquals(instance1.getProperty1(), memento.getProperty1());
 
@@ -62,11 +59,11 @@ public class PropertiesManagerTest {
     public void testRestoreMemento() {
         TestClass instance1 = new TestClass();
 
-        TestClass memento = propertiesManager.createMemento(instance1);
+        TestClass memento = PropertiesUtils.createMemento(instance1);
 
         instance1.setProperty1(88);
 
-        propertiesManager.restoreMemento(instance1, memento);
+        PropertiesUtils.restoreMemento(instance1, memento);
 
         assertEquals(0, instance1.getProperty1());
     }
@@ -75,13 +72,13 @@ public class PropertiesManagerTest {
     public void testToString() {
         TestClass instance = new TestClass();
 
-        assertEquals("TestClass{property1=0, property2=0, property3=null}", propertiesManager.toString(instance));
+        assertEquals("TestClass{property1=0, property2=0, property3=null}", PropertiesUtils.toString(instance));
 
         instance.setProperty1(3);
         instance.setProperty2(44);
         instance.setProperty3("test");
 
-        assertEquals("TestClass{property1=3, property2=44, property3=test}", propertiesManager.toString(instance));
+        assertEquals("TestClass{property1=3, property2=44, property3=test}", PropertiesUtils.toString(instance));
     }
 
     //Must be public to be accessible by reflection

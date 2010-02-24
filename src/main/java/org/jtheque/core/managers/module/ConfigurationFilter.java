@@ -16,6 +16,7 @@ package org.jtheque.core.managers.module;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import org.jtheque.core.managers.core.Core;
 import org.jtheque.core.managers.module.beans.ModuleContainer;
 import org.jtheque.core.managers.module.beans.ModuleState;
 import org.jtheque.utils.collections.Filter;
@@ -45,10 +46,11 @@ final class ConfigurationFilter implements Filter<ModuleContainer> {
             module.setState(configuration.getState(module.getId()));
 
             return true;
-        } else if(configuration.isDiscovery()){
+        } else if(Core.getInstance().getApplication().isModuleDiscovery() ||
+                Core.getInstance().getApplication().getModules().contains(module.getId())){
             module.setState(ModuleState.INSTALLED);
             configuration.add(module);
-            
+
             return true;
         }
 

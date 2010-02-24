@@ -1,4 +1,4 @@
-package org.jtheque.core.managers.properties;
+package org.jtheque.core.utils;
 
 /*
  * This file is part of JTheque.
@@ -16,7 +16,7 @@ package org.jtheque.core.managers.properties;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import org.jtheque.core.managers.AbstractActivableManager;
+import org.jtheque.core.utils.CoreUtils;
 import org.jtheque.utils.bean.EqualsUtils;
 import org.jtheque.utils.bean.ReflectionUtils;
 import org.jtheque.utils.collections.CollectionUtils;
@@ -31,9 +31,17 @@ import java.util.List;
  *
  * @author Baptiste Wicht
  */
-public final class PropertiesManager extends AbstractActivableManager implements IPropertiesManager {
-    @Override
-    public <T> T createMemento(T bean) {
+public final class PropertiesUtils {
+    /**
+     * Create a memento for the bean. A memento is a clone of all the properties of the bean.
+     * <p/>
+     * Note : The properties of the Object class are not retrieved.
+     *
+     * @param bean The bean to create the memento from.
+     * @param <T>  The class of the bean.
+     * @return The memento.
+     */
+    public static <T> T createMemento(T bean) {
         T instance = null;
 
         try {
@@ -49,14 +57,21 @@ public final class PropertiesManager extends AbstractActivableManager implements
                 setValue(instance, property, value);
             }
         } catch (Exception e) {
-            getLogger().error(e);
+            CoreUtils.getLogger(PropertiesUtils.class).error(e);
         }
 
         return instance;
     }
 
-    @Override
-    public void restoreMemento(Object bean, Object memento) {
+    /**
+     * Restore the state of the memento. It seems to copy all the properties values from the memento to the bean.
+     * <p/>
+     * Note : The properties of the Object class are not retrieved.
+     *
+     * @param bean    The bean.
+     * @param memento The memento.
+     */
+    public static void restoreMemento(Object bean, Object memento) {
         try {
             for (PropertyDescriptor property : ReflectionUtils.getProperties(bean)) {
                 if (property.getReadMethod() == null || property.getWriteMethod() == null) {
@@ -68,14 +83,22 @@ public final class PropertiesManager extends AbstractActivableManager implements
                 setValue(bean, property, value);
             }
         } catch (InvocationTargetException e) {
-            getLogger().error(e);
+            CoreUtils.getLogger(PropertiesUtils.class).error(e);
         } catch (IllegalAccessException e) {
-            getLogger().error(e);
+            CoreUtils.getLogger(PropertiesUtils.class).error(e);
         }
     }
 
-    @Override
-    public boolean areEquals(Object bean, Object other, String... properties) {
+    /**
+     * Test if two object are equals referring to a certain list of properties.
+     *
+     * @param bean       The first bean.
+     * @param other      The other bean.
+     * @param properties The properties to use.
+     *
+     * @return <code>true</code> if the two objects are equals else <code>false</code>.
+     */
+    public static boolean areEquals(Object bean, Object other, String... properties) {
         if (bean == other) {
             return true;
         }
@@ -100,35 +123,41 @@ public final class PropertiesManager extends AbstractActivableManager implements
         return true;
     }
 
-    @Override
-    public Object getProperty(Object bean, String property){
+    /**
+     * Return the value of the property. This method parse the entire class, but use a cache, so it's better to
+     * use it when we have to access a lot of times the same class.
+     *
+     * @param bean     The bean to get the property value from.
+     * @param property The property.
+     *
+     * @return the value of the property.
+     */
+    public static Object getProperty(Object bean, String property){
         return ReflectionUtils.getProperty(bean, property);
     }
 
-    @Override
-    public Object getPropertyQuickly(Object bean, String property) {
+    /**
+     * Return the value of the property. This method doesn't parse the entire class, so it's quicker than
+     * getProperty() but it doesn't use cache so if you've to use it many times, use getProperty().
+     *
+     * @param bean     The bean to get the property value from.
+     * @param property The property.
+     *
+     * @return the value of the property.
+     */
+    public static Object getPropertyQuickly(Object bean, String property) {
         return ReflectionUtils.getPropertyValue(bean, property);
     }
 
     /**
-     * Set the value to the bean on the bean.
+     * Generate a toString() String based on all the properties of the bean.
+     * <p/>
+     * Note : The properties of the Object class are not retrieved.
      *
-     * @param bean     The bean to edit.
-     * @param property The property to set.
-     * @param value    The value to set to the property.
-     * @throws IllegalAccessException    If the property cannot be accessed.
-     * @throws InvocationTargetException If there is a problem during the setting process.
+     * @param bean The bean.
+     * @return A String representation of all the properties of the bean.
      */
-    private static void setValue(Object bean, PropertyDescriptor property, Object value) throws IllegalAccessException, InvocationTargetException {
-        if (value != null && List.class.isAssignableFrom(value.getClass())) {
-            property.getWriteMethod().invoke(bean, CollectionUtils.copyOf((Collection<?>) value));
-        } else {
-            property.getWriteMethod().invoke(bean, value);
-        }
-    }
-
-    @Override
-    public String toString(Object bean) {
+    public static String toString(Object bean) {
         StringBuilder builder = new StringBuilder(bean.getClass().getSimpleName());
 
         builder.append('{');
@@ -148,5 +177,22 @@ public final class PropertiesManager extends AbstractActivableManager implements
         builder.append('}');
 
         return builder.toString();
+    }
+
+    /**
+     * Set the value to the bean on the bean.
+     *
+     * @param bean     The bean to edit.
+     * @param property The property to set.
+     * @param value    The value to set to the property.
+     * @throws IllegalAccessException    If the property cannot be accessed.
+     * @throws InvocationTargetException If there is a problem during the setting process.
+     */
+    private static void setValue(Object bean, PropertyDescriptor property, Object value) throws IllegalAccessException, InvocationTargetException {
+        if (value != null && List.class.isAssignableFrom(value.getClass())) {
+            property.getWriteMethod().invoke(bean, CollectionUtils.copyOf((Collection<?>) value));
+        } else {
+            property.getWriteMethod().invoke(bean, value);
+        }
     }
 }

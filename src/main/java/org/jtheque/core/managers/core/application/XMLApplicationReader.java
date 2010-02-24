@@ -89,6 +89,7 @@ public final class XMLApplicationReader {
         readApplicationValues(application);
         readInternationalization(application);
         application.setImages(readImageDescriptor("logo"), readImageDescriptor("icon"));
+        readModules(application);
         readOptions(application);
         readProperties(application);
     }
@@ -254,6 +255,22 @@ public final class XMLApplicationReader {
         }
 
         return new ImageDescriptor(node, ImageType.PNG);
+    }
+
+    private void readModules(XMLApplication application) throws XMLException{
+        if(reader.existsNode("modules", reader.getRootElement())){
+            Object modulesElement = reader.getNode("modules", reader.getRootElement());
+
+            if(reader.existsValue("@discovery", modulesElement) && StringUtils.isNotEmpty(reader.readString("@discovery", modulesElement))){
+                String discovery = reader.readString("@discovery", modulesElement);
+
+                application.setAutoDiscovery("true".equals(discovery));
+            }
+
+            for (Element child : reader.getNodes("*", modulesElement)){
+                application.getModules().add(child.getName());
+            }
+        }
     }
 
     /**

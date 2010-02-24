@@ -1,7 +1,6 @@
 package org.jtheque.core.managers.schema;
 
-import org.jtheque.core.managers.Managers;
-import org.jtheque.core.managers.properties.IPropertiesManager;
+import org.jtheque.core.utils.PropertiesUtils;
 import org.jtheque.core.utils.CoreUtils;
 import org.jtheque.utils.Constants;
 import org.jtheque.utils.StringUtils;
@@ -146,7 +145,7 @@ public abstract class AbstractSchema implements Schema {
 
     @Override
     public boolean equals(Object obj) {
-        return Managers.getManager(IPropertiesManager.class).areEquals(this, obj, "id", "version");
+        return PropertiesUtils.areEquals(this, obj, "id", "version");
     }
 
     @Override

@@ -35,8 +35,6 @@ import java.util.Collection;
 public final class ModuleConfiguration extends AbstractState {
     private final Collection<ModuleInfo> infos = new ArrayList<ModuleInfo>(20);
 
-    private boolean discovery;
-
     @Override
     public boolean isDelegated() {
         return true;
@@ -47,8 +45,6 @@ public final class ModuleConfiguration extends AbstractState {
         for (Node node : nodes){
             if ("module".equals(node.getName())) {
                 infos.add(convertToModuleInfo(node));
-            } else if("discovery".equals(node.getName())){
-                discovery = true;
             }
         }
     }
@@ -83,10 +79,6 @@ public final class ModuleConfiguration extends AbstractState {
     @Override
     public Collection<Node> delegateSave() {
         Collection<Node> states = new ArrayList<Node>(25);
-
-        if(discovery){
-            states.add(new Node("discovery"));
-        }
 
         for (ModuleInfo info : infos) {
             states.add(convertToNodeState(info));
@@ -126,15 +118,6 @@ public final class ModuleConfiguration extends AbstractState {
         }
 
         return null;
-    }
-
-    /**
-     * Indicate if we must add the modules not listed in the XML File or not.
-     *
-     * @return <code>true</code> if we must add the modules not listed in the configuration else <code>false</code>. 
-     */
-    public boolean isDiscovery(){
-        return discovery;
     }
 
     /**
