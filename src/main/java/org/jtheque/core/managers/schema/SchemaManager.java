@@ -8,6 +8,7 @@ import org.jtheque.core.managers.module.ModuleResourceCache;
 import org.jtheque.core.managers.module.beans.ModuleContainer;
 import org.jtheque.core.managers.module.beans.ModuleState;
 import org.jtheque.core.managers.state.IStateManager;
+import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.bean.Version;
 
 import java.io.File;
@@ -131,7 +132,9 @@ public final class SchemaManager extends AbstractActivableManager implements ISc
     public void registerSchema(String moduleId, Schema schema) {
         schemas.add(schema);
 
-        ModuleResourceCache.addResource(moduleId, Schema.class, schema);
+        if(StringUtils.isNotEmpty(moduleId)){
+            ModuleResourceCache.addResource(moduleId, Schema.class, schema);
+        }
     }
 
     @Override

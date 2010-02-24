@@ -23,6 +23,6 @@ import org.jtheque.core.managers.schema.ISchemaManager;
 public class CollectionManager extends AbstractManager implements ICollectionManager {
     @Override
     public void preInit() {
-        Managers.getManager(ISchemaManager.class).registerSchema(new CollectionSchema());
+        Managers.getManager(ISchemaManager.class).registerSchema("", new CollectionSchema());
     }
 }

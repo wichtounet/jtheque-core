@@ -303,6 +303,8 @@ public final class ModuleManager extends AbstractManager implements IModuleManag
 
         moduleContainers.add(container);
 
+        fireModuleStateChanged(container, container.getState(), null);
+
         configuration.add(container);
 
         return true;

@@ -50,7 +50,7 @@ public final class SwingViewDelegate implements ViewDelegate {
     private JFileChooser chooser;
 
     @Override
-    public boolean askYesOrNo(final String text, final String title) {
+    public boolean askUserForConfirmation(final String text, final String title) {
         boolean yes = false;
 
 		Window parent = null;

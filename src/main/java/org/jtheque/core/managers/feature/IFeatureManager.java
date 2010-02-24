@@ -43,13 +43,6 @@ public interface IFeatureManager {
     void addMenu(String moduleId, Menu menu);
 
     /**
-     * Remove the menu from the application.
-     *
-     * @param menu The menu to remove. 
-     */
-    void removeMenu(Menu menu);
-
-    /**
      * Return all the features of the application.
      *
      * @return A List containing all the features.

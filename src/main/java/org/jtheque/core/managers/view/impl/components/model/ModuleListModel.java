@@ -20,6 +20,7 @@ import org.jtheque.core.managers.Managers;
 import org.jtheque.core.managers.module.IModuleManager;
 import org.jtheque.core.managers.module.ModuleListener;
 import org.jtheque.core.managers.module.beans.ModuleContainer;
+import org.jtheque.core.managers.module.beans.ModuleState;
 import org.jtheque.utils.collections.CollectionUtils;
 
 import javax.swing.DefaultListModel;
@@ -61,19 +62,20 @@ public final class ModuleListModel extends DefaultListModel implements ModuleLis
     }
 
     @Override
-    public void moduleAdded() {
-        modules.clear();
-        modules.addAll(Managers.getManager(IModuleManager.class).getModules());
+    public void moduleStateChanged(ModuleContainer module, ModuleState newState, ModuleState oldState) {
+        if(newState == ModuleState.UNINSTALLED){
+            int index = modules.indexOf(module);
 
-        fireContentsChanged(this, 0, modules.size());
-    }
+            modules.remove(module);
 
-    @Override
-    public void moduleRemoved(ModuleContainer module) {
-        int index = modules.indexOf(module);
+            fireIntervalRemoved(this, index, index);
+        }
 
-        modules.remove(module);
+        if(oldState == null){
+            modules.clear();
+            modules.addAll(Managers.getManager(IModuleManager.class).getModules());
 
-        fireIntervalRemoved(this, index, index);
+            fireContentsChanged(this, 0, modules.size());
+        }
     }
 }

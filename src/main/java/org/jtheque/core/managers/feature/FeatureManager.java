@@ -93,8 +93,7 @@ public final class FeatureManager extends AbstractManager implements IFeatureMan
         fireFeatureAdded(feature);
     }
 
-    @Override
-    public void removeMenu(Menu menu){
+    private void removeMenu(Menu menu){
         for(CoreFeature feature : CoreFeature.values()){
             for(Feature f : menu.getSubFeatures(feature)){
                 getFeature(feature).removeSubFeature(f);
