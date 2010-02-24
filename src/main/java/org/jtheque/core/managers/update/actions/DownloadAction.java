@@ -50,7 +50,7 @@ public final class DownloadAction extends AbstractUpdateAction {
                 Managers.getManager(ILoggingManager.class).getLogger(getClass()).error(e);
 
                 if(e.getCause() instanceof FileNotFoundException){
-                    Managers.getManager(IViewManager.class).displayError(
+                    Managers.getManager(IViewManager.class).getDelegate().displayError(
                             new InternationalizedError("error.update.download", e.getMessage()));
                 }
             }

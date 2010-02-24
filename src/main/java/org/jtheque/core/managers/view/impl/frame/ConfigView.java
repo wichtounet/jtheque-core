@@ -25,8 +25,6 @@ import org.jtheque.core.managers.view.impl.actions.config.CancelChangesAction;
 import org.jtheque.core.managers.view.impl.components.LayerTabbedPane;
 import org.jtheque.core.managers.view.impl.components.config.ConfigTabComponent;
 import org.jtheque.core.managers.view.impl.frame.abstraction.SwingFilthyBuildedDialogView;
-import org.jtheque.core.managers.view.listeners.ConfigTabEvent;
-import org.jtheque.core.managers.view.listeners.ConfigTabListener;
 import org.jtheque.core.utils.ui.builders.I18nPanelBuilder;
 import org.jtheque.utils.ui.GridBagUtils;
 
@@ -37,7 +35,7 @@ import java.util.Collection;
  *
  * @author Baptiste Wicht
  */
-public final class ConfigView extends SwingFilthyBuildedDialogView<IModel> implements ConfigTabListener, IConfigView {
+public final class ConfigView extends SwingFilthyBuildedDialogView<IModel> implements IConfigView {
     private LayerTabbedPane tab;
 
     /**
@@ -63,8 +61,6 @@ public final class ConfigView extends SwingFilthyBuildedDialogView<IModel> imple
             tab.addLayeredTab(component.getTitle(), component.getComponent());
         }
 
-        getManager().addConfigTabListener(this);
-
         builder.add(tab, builder.gbcSet(0, 0, GridBagUtils.BOTH));
 
         builder.addButtonBar(builder.gbcSet(0, 1, GridBagUtils.HORIZONTAL),
@@ -77,13 +73,16 @@ public final class ConfigView extends SwingFilthyBuildedDialogView<IModel> imple
     }
 
     @Override
-    public void tabAdded(ConfigTabEvent event) {
-        tab.addLayeredTab(event.getComponent().getTitle(), event.getComponent().getComponent());
-    }
+    public void sendMessage(String message, Object value) {
+        if("remove".equals(message)){
+            ConfigTabComponent component = (ConfigTabComponent)value;
 
-    @Override
-    public void tabRemoved(ConfigTabEvent event) {
-        tab.removeTabAt(tab.indexOfTab(event.getComponent().getTitle()));
+            tab.addLayeredTab(component.getTitle(), component.getComponent());
+        } else if("add".equals(message)){
+            ConfigTabComponent component = (ConfigTabComponent)value;
+
+            tab.removeTabAt(tab.indexOfTab(component.getTitle()));
+        }
     }
 
     @Override

@@ -258,7 +258,8 @@ public final class FilthyFileChooserPanel extends JPanel implements Internationa
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            String file = directoriesOnly ? Managers.getManager(IViewManager.class).chooseDirectory() : Managers.getManager(IViewManager.class).chooseFile(filter);
+            String file = directoriesOnly ? Managers.getManager(IViewManager.class).getDelegate().chooseDirectory() :
+                    Managers.getManager(IViewManager.class).getDelegate().chooseFile(filter);
 
             if (file != null) {
                 fieldFilePath.setText(file);

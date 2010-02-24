@@ -203,7 +203,7 @@ public abstract class SwingDialogView extends JDialog implements IWindowView, In
 
     @Override
     public final void refresh() {
-        Managers.getManager(IViewManager.class).refresh(this);
+        Managers.getManager(IViewManager.class).getDelegate().refresh(this);
     }
 
     /**

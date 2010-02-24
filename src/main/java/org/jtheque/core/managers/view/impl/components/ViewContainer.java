@@ -1,6 +1,6 @@
 package org.jtheque.core.managers.view.impl.components;
 
-import org.jtheque.core.managers.view.ViewComponent;
+import org.jtheque.core.managers.view.able.components.ViewComponent;
 
 /*
  * This file is part of JTheque.

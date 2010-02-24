@@ -22,7 +22,7 @@ import org.jtheque.core.managers.view.able.ILicenceView;
 import org.jtheque.core.managers.view.able.IMainView;
 import org.jtheque.core.managers.view.able.IMessageView;
 import org.jtheque.core.managers.view.able.IViewManager;
-import org.jtheque.core.managers.view.able.components.TabComponent;
+import org.jtheque.core.managers.view.able.components.MainComponent;
 import org.jtheque.core.managers.view.able.update.IModuleView;
 
 import javax.annotation.Resource;
@@ -47,17 +47,17 @@ public final class WindowManager implements Views {
     private IMessageView messageView;
 
     @Override
-    public void setSelectedView(TabComponent component) {
+    public void setSelectedView(MainComponent component) {
         getMainView().setSelectedComponent(component.getComponent());
     }
 
     @Override
-    public TabComponent getSelectedView() {
-        TabComponent selected = null;
+    public MainComponent getSelectedView() {
+        MainComponent selected = null;
 
         JComponent component = getMainView().getSelectedComponent();
 
-        for (TabComponent tab : Managers.getManager(IViewManager.class).getTabComponents()) {
+        for (MainComponent tab : Managers.getManager(IViewManager.class).getMainComponents()) {
             if (tab.getComponent().equals(component)) {
                 selected = tab;
                 break;

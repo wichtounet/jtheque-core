@@ -23,8 +23,10 @@ import java.util.Collection;
  */
 
 public class NodeLoader {
-
-
+    private NodeLoader() {
+        super();
+    }
+    
     /**
      * Resolve the node states from the XML elements.
      *

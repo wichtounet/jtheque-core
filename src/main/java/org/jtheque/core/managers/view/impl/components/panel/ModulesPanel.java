@@ -69,6 +69,6 @@ public final class ModulesPanel extends FilthyBackgroundPanel implements IModule
 
     @Override
     public void refresh() {
-        Managers.getManager(IViewManager.class).refresh(modulesList);
+        Managers.getManager(IViewManager.class).getDelegate().refresh(modulesList);
     }
 }

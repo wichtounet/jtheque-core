@@ -115,7 +115,7 @@ public final class WindowsConfiguration extends AbstractState {
             WindowConfiguration configuration = get(name);
 
             if (configuration != null) {
-                Managers.getManager(IViewManager.class).getViewDelegate().fill(configuration, view);
+                Managers.getManager(IViewManager.class).getDelegate().fill(configuration, view);
             }
         }
     }
@@ -153,9 +153,9 @@ public final class WindowsConfiguration extends AbstractState {
                 add(name, configuration);
             }
 
-            Managers.getManager(IViewManager.class).getViewDelegate().configure(configuration, view);
+            Managers.getManager(IViewManager.class).getDelegate().configure(configuration, view);
         } else {
-            Managers.getManager(IViewManager.class).getViewDelegate().setSize(view, defaultWidth, defaultHeight);
+            Managers.getManager(IViewManager.class).getDelegate().setSize(view, defaultWidth, defaultHeight);
         }
     }
 }

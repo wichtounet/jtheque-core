@@ -1,6 +1,6 @@
 package org.jtheque.core.managers.view.able;
 
-import org.jtheque.core.managers.view.ViewComponent;
+import org.jtheque.core.managers.view.able.components.ViewComponent;
 import org.jtheque.core.managers.view.able.components.IModel;
 
 

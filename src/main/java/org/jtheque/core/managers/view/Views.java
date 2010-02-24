@@ -20,7 +20,7 @@ import org.jtheque.core.managers.view.able.IConfigView;
 import org.jtheque.core.managers.view.able.ILicenceView;
 import org.jtheque.core.managers.view.able.IMainView;
 import org.jtheque.core.managers.view.able.IMessageView;
-import org.jtheque.core.managers.view.able.components.TabComponent;
+import org.jtheque.core.managers.view.able.components.MainComponent;
 import org.jtheque.core.managers.view.able.update.IModuleView;
 
 /**
@@ -55,14 +55,14 @@ public interface Views {
      *
      * @param component The view to select.
      */
-    void setSelectedView(TabComponent component);
+    void setSelectedView(MainComponent component);
 
     /**
      * Return the selected view.
      *
      * @return The selected view.
      */
-    TabComponent getSelectedView();
+    MainComponent getSelectedView();
 
     /**
      * Return the module view.

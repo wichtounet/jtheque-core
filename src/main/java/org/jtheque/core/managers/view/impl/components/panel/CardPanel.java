@@ -64,7 +64,7 @@ public class CardPanel<T extends Component> extends JPanel {
      *
      * @return A <code>Collection</code> containing all the layers of the panel.
      */
-    public Collection<T> getLayers() {
+    public Iterable<T> getLayers() {
         return layers.values();
     }
 

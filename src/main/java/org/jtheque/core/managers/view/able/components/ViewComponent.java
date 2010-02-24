@@ -2,10 +2,10 @@ package org.jtheque.core.managers.view.able.components;
 
 /*
  * This file is part of JTheque.
- *
+ * 	   
  * JTheque is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License.
+ * the Free Software Foundation, either version 3 of the License. 
  *
  * JTheque is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -16,32 +16,16 @@ package org.jtheque.core.managers.view.able.components;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import javax.swing.JComponent;
-
 /**
- * A tab component.
+ * A view component. It seems an object that provide a component for the view.
  *
  * @author Baptiste Wicht
  */
-public interface TabComponent {
+public interface ViewComponent {
     /**
-     * Return the component of the tab.
+     * Return the implementation of the view.
      *
-     * @return The component.
+     * @return The implementation of the view.
      */
-    JComponent getComponent();
-
-    /**
-     * Return the position of the tab component.
-     *
-     * @return An Integer representing the position of the tab component.
-     */
-    Integer getPosition();
-
-    /**
-     * Return the title key of the tab component.
-     *
-     * @return The internationalization key.
-     */
-    String getTitleKey();
+    Object getImpl();
 }

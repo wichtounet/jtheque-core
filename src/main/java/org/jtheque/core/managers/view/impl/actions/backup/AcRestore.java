@@ -55,7 +55,7 @@ public class AcRestore extends JThequeAction {
 
     @Override
     public final void actionPerformed(ActionEvent arg0) {
-        final File file = new File(CoreUtils.getBean(IViewManager.class).chooseFile(new SimpleFilter("XML(*.xml)", ".xml")));
+        final File file = new File(CoreUtils.getBean(IViewManager.class).getDelegate().chooseFile(new SimpleFilter("XML(*.xml)", ".xml")));
 
         final boolean yes = CoreUtils.getBean(IViewManager.class).askI18nUserForConfirmation(
                 "dialogs.confirm.clear.database", "dialogs.confirm.clear.database.title");

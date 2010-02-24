@@ -20,7 +20,7 @@ import org.jdesktop.jxlayer.JXLayer;
 import org.jdesktop.jxlayer.plaf.BufferedLayerUI;
 import org.jtheque.core.managers.Managers;
 import org.jtheque.core.managers.language.ILanguageManager;
-import org.jtheque.core.managers.view.ViewComponent;
+import org.jtheque.core.managers.view.able.components.ViewComponent;
 
 import javax.swing.JComponent;
 import javax.swing.JTabbedPane;
@@ -111,7 +111,7 @@ public class LayerTabbedPane extends JTabbedPane implements ViewComponent {
     final JXLayer<JComponent> getLayerAt(int index) {
         return components.get(index);
     }
-
+    
     /**
      * A listener to animate the tabbed pane.
      *

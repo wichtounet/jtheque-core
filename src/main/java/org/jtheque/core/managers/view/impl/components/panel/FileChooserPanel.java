@@ -32,7 +32,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import java.awt.BorderLayout;
 import java.awt.Container;
-import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
@@ -182,27 +181,6 @@ public final class FileChooserPanel extends JPanel implements Internationalizabl
     }
 
     /**
-     * A button to integrate in the component.
-     *
-     * @author Baptiste Wicht
-     */
-    private static final class BrowseButton extends JButton {
-        /**
-         * Construct a new BrowseButton with a specific text.
-         */
-        private BrowseButton() {
-            super("...");
-        }
-
-        @Override
-        public Dimension getPreferredSize() {
-            Dimension size = super.getPreferredSize();
-            size.height = 0;
-            return size;
-        }
-    }
-
-    /**
      * A Browse action.
      *
      * @author Baptiste Wicht
@@ -210,7 +188,8 @@ public final class FileChooserPanel extends JPanel implements Internationalizabl
     private final class BrowseAction implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            String file = directoriesOnly ? Managers.getManager(IViewManager.class).chooseDirectory() : Managers.getManager(IViewManager.class).chooseFile(filter);
+            String file = directoriesOnly ? Managers.getManager(IViewManager.class).getDelegate().chooseDirectory() :
+                    Managers.getManager(IViewManager.class).getDelegate().chooseFile(filter);
 
             if (file != null) {
                 fieldFilePath.setText(file);

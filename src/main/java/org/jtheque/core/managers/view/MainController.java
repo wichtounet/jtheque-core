@@ -47,7 +47,7 @@ public final class MainController extends WindowAdapter implements ChangeListene
 
     @Override
     public void windowClosing(WindowEvent e) {
-        boolean yes = Managers.getManager(IViewManager.class).askUserForConfirmation(
+        boolean yes = Managers.getManager(IViewManager.class).getDelegate().askUserForConfirmation(
                 Managers.getManager(ILanguageManager.class).getMessage("dialogs.confirm.exit",
                         Managers.getCore().getApplication().getName()),
                 Managers.getManager(ILanguageManager.class).getMessage("dialogs.confirm.exit.title",

@@ -16,19 +16,12 @@ package org.jtheque.core.managers.view.able;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import org.jtheque.core.managers.error.JThequeError;
-import org.jtheque.core.managers.view.ViewComponent;
 import org.jtheque.core.managers.view.Views;
 import org.jtheque.core.managers.view.able.components.StateBarComponent;
-import org.jtheque.core.managers.view.able.components.TabComponent;
+import org.jtheque.core.managers.view.able.components.MainComponent;
 import org.jtheque.core.managers.view.edt.SimpleTask;
 import org.jtheque.core.managers.view.edt.Task;
-import org.jtheque.core.managers.view.impl.WindowsConfiguration;
 import org.jtheque.core.managers.view.impl.components.config.ConfigTabComponent;
-import org.jtheque.core.managers.view.listeners.ConfigTabListener;
-import org.jtheque.core.managers.view.listeners.StateBarListener;
-import org.jtheque.core.managers.view.listeners.TabListener;
-import org.jtheque.utils.io.SimpleFilter;
 
 import java.util.Collection;
 
@@ -48,23 +41,10 @@ public interface IViewManager {
     /**
      * Add a state bar component.
      *
+     * @param moduleId The id of the module who adds this state bar.
      * @param component The component to add to the state bar.
      */
     void addStateBarComponent(String moduleId, StateBarComponent component);
-
-    /**
-     * Add a state bar listener.
-     *
-     * @param listener The listener to add.
-     */
-    void addStateBarListener(StateBarListener listener);
-
-    /**
-     * Remove a state bar listener.
-     *
-     * @param listener The listener to remove.
-     */
-    void removeStateBarListener(StateBarListener listener);
 
     /**
      * Return all the state bar components.
@@ -74,27 +54,19 @@ public interface IViewManager {
     Collection<StateBarComponent> getStateBarComponents();
 
     /**
-     * Return all the tab components.
+     * Return all the main components.
      *
-     * @return A List containing all the tab components.
+     * @return A List containing all the main components.
      */
-    Collection<TabComponent> getTabComponents();
+    Collection<MainComponent> getMainComponents();
 
     /**
-     * Add a tab component.
+     * Add a main component.
      *
-     * @param component The tab to add.
+     * @param moduleId The id of the module who adds this state bar.
+     * @param component The main component to add.
      */
-    void addTabComponent(String moduleId, TabComponent component);
-
-    /**
-     * Ask user for confirmation.
-     *
-     * @param text  The question.
-     * @param title The title.
-     * @return true if the user has accepted else false.
-     */
-    boolean askUserForConfirmation(String text, String title);
+    void addMainComponent(String moduleId, MainComponent component);
 
     /**
      * Ask the user for confirmation with internationalized message.
@@ -106,28 +78,6 @@ public interface IViewManager {
     boolean askI18nUserForConfirmation(String textKey, String titleKey);
 
     /**
-     * Ask the user for a text.
-     *
-     * @param text The text prompt.
-     * @return The text of the user.
-     */
-    String askUserForText(String text);
-
-    /**
-     * Display a text.
-     *
-     * @param text The text to display.
-     */
-    void displayText(String text);
-
-    /**
-     * Display an error.
-     *
-     * @param error The error to display.
-     */
-    void displayError(JThequeError error);
-
-    /**
      * Display a internationalized.
      *
      * @param key The internationalization key.
@@ -135,54 +85,12 @@ public interface IViewManager {
     void displayI18nText(String key);
 
     /**
-     * Choose a file.
-     *
-     * @param filter A file filter.
-     * @return The path to the selected file.
-     */
-    String chooseFile(SimpleFilter filter);
-
-    /**
-     * Choose a directory.
-     *
-     * @return The path to the selected directory.
-     */
-    String chooseDirectory();
-
-    /**
      * Add config tab component.
      *
+     * @param moduleId The id of the module who adds this state bar.
      * @param component The config tab component to add.
      */
     void addConfigTabComponent(String moduleId, ConfigTabComponent component);
-
-    /**
-     * Add a ConfigTabListener.
-     *
-     * @param listener The listener to add.
-     */
-    void addConfigTabListener(ConfigTabListener listener);
-
-    /**
-     * Remove the specified ConfigTabListener.
-     *
-     * @param listener The listener to remove.
-     */
-    void removeConfigTabListener(ConfigTabListener listener);
-
-    /**
-     * Add a TabListener.
-     *
-     * @param listener The listener to add.
-     */
-    void addTabListener(TabListener listener);
-
-    /**
-     * Remove the specified TabListener.
-     *
-     * @param listener The listener to remove.
-     */
-    void removeTabListener(TabListener listener);
 
     /**
      * Return all the config tab components.
@@ -199,13 +107,6 @@ public interface IViewManager {
     Views getViews();
 
     /**
-     * Return all window configuration.
-     *
-     * @return A configuration who encapsulate the configuration of different views.
-     */
-    WindowsConfiguration getConfigurations();
-
-    /**
      * Execute a task in the EDT.
      *
      * @param task The task to execute.
@@ -220,34 +121,6 @@ public interface IViewManager {
      * @return The result of the task.
      */
     <T> T execute(Task<T> task);
-
-    /**
-     * Refresh the component.
-     *
-     * @param c The component to refresh.
-     */
-    void refresh(Object c);
-
-    /**
-     * Set the main component of the main view.
-     *
-     * @param component The main component of the main view.
-     */
-    void setMainComponent(String moduleId, ViewComponent component);
-
-    /**
-     * Indicate if the tab is the main component or not.
-     *
-     * @return true if the tab is the main component else false.
-     */
-    boolean isTabMainComponent();
-
-    /**
-     * Return the main component.
-     *
-     * @return The main component.
-     */
-    ViewComponent getMainComponent();
 
     /**
      * Display the about view.
@@ -296,5 +169,7 @@ public interface IViewManager {
      *
      * @return The delegate view manager.
      */
-    ViewDelegate getViewDelegate();
+    ViewDelegate getDelegate();
+
+    void setSelectedMainComponent(MainComponent component);
 }

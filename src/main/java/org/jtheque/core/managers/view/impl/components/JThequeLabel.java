@@ -16,7 +16,7 @@ package org.jtheque.core.managers.view.impl.components;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import org.jtheque.core.managers.view.ViewComponent;
+import org.jtheque.core.managers.view.able.components.ViewComponent;
 
 import javax.swing.JLabel;
 import java.awt.Color;

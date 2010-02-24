@@ -84,7 +84,7 @@ public final class ModuleManager extends AbstractManager implements IModuleManag
         loadModuleBeans();
 
         for (JThequeError error : ModuleLoader.getErrors()) {
-            Managers.getManager(IViewManager.class).displayError(error);
+            Managers.getManager(IViewManager.class).getDelegate().displayError(error);
         }
     }
 

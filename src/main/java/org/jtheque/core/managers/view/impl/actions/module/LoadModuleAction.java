@@ -52,7 +52,7 @@ public final class LoadModuleAction extends JThequeAction {
             Managers.getManager(IModuleManager.class).loadModule(module);
             moduleView.refreshList();
         } else {
-            Managers.getManager(IViewManager.class).displayText(error);
+            Managers.getManager(IViewManager.class).getDelegate().displayText(error);
         }
     }
 }

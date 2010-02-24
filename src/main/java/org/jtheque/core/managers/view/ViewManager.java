@@ -17,7 +17,6 @@ package org.jtheque.core.managers.view;
  */
 
 import org.jtheque.core.managers.AbstractManager;
-import org.jtheque.core.managers.error.JThequeError;
 import org.jtheque.core.managers.module.ModuleListener;
 import org.jtheque.core.managers.module.ModuleResourceCache;
 import org.jtheque.core.managers.module.beans.ModuleContainer;
@@ -29,20 +28,14 @@ import org.jtheque.core.managers.view.able.IView;
 import org.jtheque.core.managers.view.able.IViewManager;
 import org.jtheque.core.managers.view.able.ViewDefaults;
 import org.jtheque.core.managers.view.able.ViewDelegate;
+import org.jtheque.core.managers.view.able.components.MainComponent;
 import org.jtheque.core.managers.view.able.components.StateBarComponent;
-import org.jtheque.core.managers.view.able.components.TabComponent;
+import org.jtheque.core.managers.view.able.components.ViewComponent;
 import org.jtheque.core.managers.view.edt.SimpleTask;
 import org.jtheque.core.managers.view.edt.Task;
 import org.jtheque.core.managers.view.impl.WindowsConfiguration;
 import org.jtheque.core.managers.view.impl.components.config.ConfigTabComponent;
-import org.jtheque.core.managers.view.listeners.ConfigTabEvent;
-import org.jtheque.core.managers.view.listeners.ConfigTabListener;
-import org.jtheque.core.managers.view.listeners.StateBarEvent;
-import org.jtheque.core.managers.view.listeners.StateBarListener;
-import org.jtheque.core.managers.view.listeners.TabEvent;
-import org.jtheque.core.managers.view.listeners.TabListener;
 import org.jtheque.utils.collections.CollectionUtils;
-import org.jtheque.utils.io.SimpleFilter;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -55,7 +48,7 @@ import java.util.Collection;
  */
 public final class ViewManager extends AbstractManager implements IViewManager, ModuleListener {
     private final Collection<StateBarComponent> stateBarComponents = new ArrayList<StateBarComponent>(5);
-    private final Collection<TabComponent> tabComponents = new ArrayList<TabComponent>(5);
+    private final Collection<MainComponent> mainComponents = new ArrayList<MainComponent>(5);
     private Collection<ConfigTabComponent> configPanels;
 
     private ViewComponent mainComponent;
@@ -100,27 +93,6 @@ public final class ViewManager extends AbstractManager implements IViewManager, 
     }
 
     @Override
-    public void setMainComponent(String moduleId, ViewComponent component) {
-        mainComponent = component;
-
-        ModuleResourceCache.addResource(moduleId, ViewComponent.class, component);
-    }
-
-    @Override
-    public boolean isTabMainComponent() {
-        return mainComponent == null;
-    }
-
-    @Override
-    public ViewComponent getMainComponent() {
-        if (isTabMainComponent()) {
-            return windowManager.getMainView().getTabbedPane();
-        }
-
-        return mainComponent;
-    }
-
-    @Override
     public void close() {
         if (windowManager != null && windowManager.getMainView() != null) {
             windowManager.getMainView().closeDown();
@@ -132,11 +104,6 @@ public final class ViewManager extends AbstractManager implements IViewManager, 
         MacOSXConfiguration.configureForMac();
 
         configuration = getStates().getOrCreateState(WindowsConfiguration.class);
-    }
-
-    @Override
-    public WindowsConfiguration getConfigurations() {
-        return configuration;
     }
 
     @Override
@@ -154,7 +121,7 @@ public final class ViewManager extends AbstractManager implements IViewManager, 
         if (component != null && component.getComponent() != null) {
             stateBarComponents.add(component);
 
-            fireStateBarComponentAdded();
+            windowManager.getMainView().getStateBar().addComponent(component);
 
             ModuleResourceCache.addResource(moduleId, StateBarComponent.class, component);
         }
@@ -166,26 +133,24 @@ public final class ViewManager extends AbstractManager implements IViewManager, 
     }
 
     @Override
-    public void addTabComponent(String moduleId, TabComponent component) {
-        if (isTabMainComponent()) {
-            tabComponents.add(component);
+    public void addMainComponent(String moduleId, MainComponent component) {
+        mainComponents.add(component);
 
-            fireTabComponentAdded();
+        windowManager.getMainView().sendMessage("add", component);
 
-            ModuleResourceCache.addResource(moduleId, TabComponent.class, component);
-        }
+        ModuleResourceCache.addResource(moduleId, MainComponent.class, component);
     }
 
     @Override
-    public Collection<TabComponent> getTabComponents() {
-        return CollectionUtils.copyOf(tabComponents);
+    public Collection<MainComponent> getMainComponents() {
+        return CollectionUtils.copyOf(mainComponents);
     }
 
     @Override
     public void addConfigTabComponent(String moduleId, ConfigTabComponent component) {
         configPanels.add(component);
 
-        fireConfigTabComponentAdded(component);
+        windowManager.getConfigView().sendMessage("add", component);
 
         ModuleResourceCache.addResource(moduleId, ConfigTabComponent.class, component);
     }
@@ -196,78 +161,25 @@ public final class ViewManager extends AbstractManager implements IViewManager, 
     }
 
     @Override
-    public boolean askUserForConfirmation(String text, String title) {
-        return viewDelegate.askYesOrNo(text, title);
-    }
-
-    @Override
     public boolean askI18nUserForConfirmation(String textKey, String titleKey) {
-        return viewDelegate.askYesOrNo(getMessage(textKey), getMessage(titleKey));
-    }
-
-    @Override
-    public String askUserForText(String text) {
-        return viewDelegate.askText(text);
-    }
-
-    @Override
-    public void displayText(String text) {
-        viewDelegate.displayText(text);
-    }
-
-    @Override
-    public String chooseFile(SimpleFilter filter) {
-        return viewDelegate.chooseFile(filter);
-    }
-
-    @Override
-    public String chooseDirectory() {
-        return viewDelegate.chooseDirectory();
+        return viewDelegate.askUserForConfirmation(getMessage(textKey), getMessage(titleKey));
     }
 
     @Override
     public void displayI18nText(String key) {
-        displayText(getMessage(key));
+        viewDelegate.displayText(getMessage(key));
     }
 
     @Override
-    public void addStateBarListener(StateBarListener listener) {
-        getListeners().add(StateBarListener.class, listener);
-    }
-
-    @Override
-    public void removeStateBarListener(StateBarListener listener) {
-        getListeners().remove(StateBarListener.class, listener);
-    }
-
-    @Override
-    public void addConfigTabListener(ConfigTabListener listener) {
-        getListeners().add(ConfigTabListener.class, listener);
-    }
-
-    @Override
-    public void removeConfigTabListener(ConfigTabListener listener) {
-        getListeners().remove(ConfigTabListener.class, listener);
-    }
-
-    @Override
-    public void addTabListener(TabListener listener) {
-        getListeners().add(TabListener.class, listener);
-    }
-
-    @Override
-    public void removeTabListener(TabListener listener) {
-        getListeners().remove(TabListener.class, listener);
-    }
-
-    @Override
-    public void displayError(JThequeError error) {
-        viewDelegate.displayError(error);
-    }
-
-    @Override
-    public ViewDelegate getViewDelegate() {
+    public ViewDelegate getDelegate() {
         return viewDelegate;
+    }
+
+    @Override
+    public void setSelectedMainComponent(MainComponent component) {
+        if(getMainComponents().size() > 1){
+            windowManager.getMainView().getTabbedPane().setSelectedComponent(component.getComponent());
+        }
     }
 
     @Override
@@ -279,7 +191,7 @@ public final class ViewManager extends AbstractManager implements IViewManager, 
                 removeStateBarComponent(component);
             }
 
-            for(TabComponent component : ModuleResourceCache.getResource(module.getId(), TabComponent.class)){
+            for(MainComponent component : ModuleResourceCache.getResource(module.getId(), MainComponent.class)){
                 removeTabComponent(component);
             }
 
@@ -292,7 +204,7 @@ public final class ViewManager extends AbstractManager implements IViewManager, 
             }
 
             ModuleResourceCache.removeResourceOfType(module.getId(), StateBarComponent.class);
-            ModuleResourceCache.removeResourceOfType(module.getId(), TabComponent.class);
+            ModuleResourceCache.removeResourceOfType(module.getId(), MainComponent.class);
             ModuleResourceCache.removeResourceOfType(module.getId(), ConfigTabComponent.class);
             ModuleResourceCache.removeResourceOfType(module.getId(), ViewComponent.class);
         }
@@ -302,107 +214,25 @@ public final class ViewManager extends AbstractManager implements IViewManager, 
         stateBarComponents.remove(component);
 
         if (component != null && component.getComponent() != null) {
-            fireStateBarComponentRemoved(component);
+            windowManager.getMainView().getStateBar().removeComponent(component);
         }
     }
 
-    private void removeTabComponent(TabComponent component) {
-        tabComponents.remove(component);
+    private void removeTabComponent(MainComponent component) {
+        mainComponents.remove(component);
 
-        fireTabComponentRemoved(component);
+        windowManager.getMainView().sendMessage("remove", component);
     }
 
     private void removeConfigTabComponent(ConfigTabComponent component) {
         configPanels.remove(component);
 
-        fireConfigTabComponentRemoved(component);
+        windowManager.getConfigView().sendMessage("remove", component);
     }
 
     private void removeMainComponent(ViewComponent component) {
         if (mainComponent == component) {
             mainComponent = null;
-        }
-    }
-
-    /**
-     * Fire a state bar component added event.
-     */
-    private static void fireStateBarComponentAdded() {
-        StateBarListener[] l = getListeners().getListeners(StateBarListener.class);
-
-        for (StateBarListener listener : l) {
-            listener.componentAdded();
-        }
-    }
-
-    /**
-     * Fire a state bar component removed event.
-     *
-     * @param component The state bar component who's been removed.
-     */
-    private void fireStateBarComponentRemoved(StateBarComponent component) {
-        StateBarListener[] l = getListeners().getListeners(StateBarListener.class);
-
-        StateBarEvent event = new StateBarEvent(this, component);
-
-        for (StateBarListener listener : l) {
-            listener.componentRemoved(event);
-        }
-    }
-
-    /**
-     * Fire a config tab component added event.
-     *
-     * @param component The config tab component who's been added.
-     */
-    private void fireConfigTabComponentAdded(ConfigTabComponent component) {
-        ConfigTabListener[] l = getListeners().getListeners(ConfigTabListener.class);
-
-        ConfigTabEvent event = new ConfigTabEvent(this, component);
-
-        for (ConfigTabListener listener : l) {
-            listener.tabAdded(event);
-        }
-    }
-
-    /**
-     * Fire a config tab component removed event.
-     *
-     * @param component The config tab component who's been removed.
-     */
-    private void fireConfigTabComponentRemoved(ConfigTabComponent component) {
-        ConfigTabListener[] l = getListeners().getListeners(ConfigTabListener.class);
-
-        ConfigTabEvent event = new ConfigTabEvent(this, component);
-
-        for (ConfigTabListener listener : l) {
-            listener.tabRemoved(event);
-        }
-    }
-
-    /**
-     * Fire a tab component added event.
-     */
-    private static void fireTabComponentAdded() {
-        TabListener[] l = getListeners().getListeners(TabListener.class);
-
-        for (TabListener listener : l) {
-            listener.tabAdded();
-        }
-    }
-
-    /**
-     * Fire a tab component removed event.
-     *
-     * @param component The tab component who's been removed.
-     */
-    private void fireTabComponentRemoved(TabComponent component) {
-        TabListener[] l = getListeners().getListeners(TabListener.class);
-
-        TabEvent event = new TabEvent(this, component);
-
-        for (TabListener listener : l) {
-            listener.tabRemoved(event);
         }
     }
 
@@ -416,11 +246,6 @@ public final class ViewManager extends AbstractManager implements IViewManager, 
         viewDelegate.run(task.asRunnable());
 
         return task.getResult();
-    }
-
-    @Override
-    public void refresh(Object c) {
-        viewDelegate.refresh(c);
     }
 
     @Override

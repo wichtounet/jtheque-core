@@ -24,16 +24,17 @@ import org.jtheque.core.managers.view.MainController;
 import org.jtheque.core.managers.view.SplashManager;
 import org.jtheque.core.managers.view.able.IMainView;
 import org.jtheque.core.managers.view.able.IViewManager;
+import org.jtheque.core.managers.view.able.components.MainComponent;
 import org.jtheque.core.managers.view.impl.components.InfiniteWaitUI;
 import org.jtheque.core.managers.view.impl.components.JThequeStateBar;
 import org.jtheque.core.managers.view.impl.components.LayerTabbedPane;
 import org.jtheque.core.managers.view.impl.components.MainTabbedPane;
-import org.jtheque.core.managers.view.impl.components.ViewContainer;
 import org.jtheque.core.managers.view.impl.components.menu.JMenuBarJTheque;
 import org.jtheque.core.managers.view.impl.frame.abstraction.SwingFrameView;
 import org.jtheque.core.utils.ui.Borders;
 import org.jtheque.core.utils.ui.builders.JThequePanelBuilder;
 import org.jtheque.core.utils.ui.builders.PanelBuilder;
+import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.utils.ui.SwingUtils;
 
@@ -48,6 +49,7 @@ import java.awt.Insets;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.util.Collection;
 
 /**
  * The main view of JTheque.
@@ -55,7 +57,7 @@ import java.awt.event.WindowListener;
  * @author Baptiste Wicht
  */
 public final class MainView extends SwingFrameView implements TitleListener, IMainView {
-    private LayerTabbedPane tab;
+    private MainTabbedPane tab;
 
     private MainController controller;
 
@@ -68,6 +70,10 @@ public final class MainView extends SwingFrameView implements TitleListener, IMa
     private JXLayer<JComponent> content;
 
     private InfiniteWaitUI waitUI;
+
+    private int current;
+
+    private JThequeStateBar stateBar;
 
     /**
      * Construct a new MainView.
@@ -189,28 +195,96 @@ public final class MainView extends SwingFrameView implements TitleListener, IMa
         PanelBuilder builder = new JThequePanelBuilder();
         builder.setBorder(Borders.EMPTY_BORDER);
 
-        if (viewManager.isTabMainComponent()) {
-            if (Managers.getManager(IViewManager.class).getTabComponents().isEmpty()) {
-                Component emptyPanel = new JPanel();
-                emptyPanel.setBackground(viewManager.getViewDefaults().getBackgroundColor());
+        Collection<MainComponent> components = Managers.getManager(IViewManager.class).getMainComponents();
 
-                viewManager.setMainComponent(new ViewContainer(emptyPanel));
+        if(components.isEmpty()){
+            Component emptyPanel = new JPanel();
+            emptyPanel.setBackground(viewManager.getViewDefaults().getBackgroundColor());
 
-                builder.add(emptyPanel, builder.gbcSet(0, 0, GridBagUtils.BOTH, GridBagUtils.FIRST_LINE_START, 1.0, 1.0));
-            } else {
-                tab = new MainTabbedPane();
-                tab.addChangeListener(controller);
-
-                builder.add(tab, builder.gbcSet(0, 0, GridBagUtils.BOTH, GridBagUtils.FIRST_LINE_START, 1.0, 1.0));
-            }
-        } else {
+            builder.add(emptyPanel, builder.gbcSet(0, 0, GridBagUtils.BOTH, GridBagUtils.FIRST_LINE_START, 1.0, 1.0));
+        } else if (components.size() == 1) {
             builder.setDefaultInsets(new Insets(0, 0, 0, 0));
-            builder.add((Component) viewManager.getMainComponent().getImpl(), builder.gbcSet(0, 0, GridBagUtils.BOTH, GridBagUtils.FIRST_LINE_START, 1.0, 1.0));
+            builder.add(CollectionUtils.first(components).getComponent(),
+                    builder.gbcSet(0, 0, GridBagUtils.BOTH, GridBagUtils.FIRST_LINE_START, 1.0, 1.0));
+        } else {
+            tab = new MainTabbedPane();
+            tab.addChangeListener(controller);
+
+            builder.add(tab, builder.gbcSet(0, 0, GridBagUtils.BOTH, GridBagUtils.FIRST_LINE_START, 1.0, 1.0));
         }
 
-        builder.add(new JThequeStateBar(), builder.gbcSet(0, 1, GridBagUtils.HORIZONTAL, GridBagUtils.LAST_LINE_START));
+        current = components.size();
+
+        stateBar = new JThequeStateBar();
+
+        builder.add(stateBar, builder.gbcSet(0, 1, GridBagUtils.HORIZONTAL, GridBagUtils.LAST_LINE_START));
 
         return new JXLayer<JComponent>(builder.getPanel());
+    }
+
+    @Override
+    public void sendMessage(String message, Object value) {
+        if("add".equals(message)){
+            addComponent();
+        } else if("remove".equals(message)){
+            removeComponent((MainComponent) value);
+        }
+    }
+
+    private void addComponent() {
+        if(current == 0){
+            content.getView().removeAll();
+
+            GridBagUtils gbc = new GridBagUtils();
+
+            Collection<MainComponent> components = Managers.getManager(IViewManager.class).getMainComponents();
+
+            content.getView().add(CollectionUtils.first(components).getComponent(),
+                    gbc.gbcSet(0, 0, GridBagUtils.BOTH, GridBagUtils.FIRST_LINE_START, 1.0, 1.0));
+
+            content.getView().add(stateBar, gbc.gbcSet(0, 1, GridBagUtils.HORIZONTAL, GridBagUtils.LAST_LINE_START));
+        } else if(current == 1){
+            content.getView().removeAll();
+
+            GridBagUtils gbc = new GridBagUtils();
+
+            tab = new MainTabbedPane();
+            tab.addChangeListener(controller);
+
+            content.getView().add(tab, gbc.gbcSet(0, 0, GridBagUtils.BOTH, GridBagUtils.FIRST_LINE_START, 1.0, 1.0));
+
+            content.getView().add(stateBar, gbc.gbcSet(0, 1, GridBagUtils.HORIZONTAL, GridBagUtils.LAST_LINE_START));
+        } else {
+            tab.refreshComponents();
+        }
+    }
+
+    private void removeComponent(MainComponent component) {
+        if(current == 1){
+            content.getView().removeAll();
+
+            GridBagUtils gbc = new GridBagUtils();
+
+            Component emptyPanel = new JPanel();
+            emptyPanel.setBackground(viewManager.getViewDefaults().getBackgroundColor());
+
+            content.getView().add(emptyPanel, gbc.gbcSet(0, 0, GridBagUtils.BOTH, GridBagUtils.FIRST_LINE_START, 1.0, 1.0));
+
+            content.getView().add(stateBar, gbc.gbcSet(0, 1, GridBagUtils.HORIZONTAL, GridBagUtils.LAST_LINE_START));
+        } else if(current == 2){
+            content.getView().removeAll();
+
+            GridBagUtils gbc = new GridBagUtils();
+
+            Collection<MainComponent> components = Managers.getManager(IViewManager.class).getMainComponents();
+
+            content.getView().add(CollectionUtils.first(components).getComponent(),
+                    gbc.gbcSet(0, 0, GridBagUtils.BOTH, GridBagUtils.FIRST_LINE_START, 1.0, 1.0));
+
+            content.getView().add(stateBar, gbc.gbcSet(0, 1, GridBagUtils.HORIZONTAL, GridBagUtils.LAST_LINE_START));
+        } else {
+            tab.removeMainComponent(component);
+        }
     }
 
     @Override
@@ -246,7 +320,12 @@ public final class MainView extends SwingFrameView implements TitleListener, IMa
     public JComponent getSelectedComponent() {
         return tab.getSelectedComponent();
     }
-    
+
+    @Override
+    public JThequeStateBar getStateBar() {
+        return stateBar;
+    }
+
     /**
      * Return the instance of the main view.
      *

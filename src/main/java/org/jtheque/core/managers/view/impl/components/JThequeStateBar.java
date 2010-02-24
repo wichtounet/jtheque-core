@@ -19,8 +19,6 @@ package org.jtheque.core.managers.view.impl.components;
 import org.jtheque.core.managers.Managers;
 import org.jtheque.core.managers.view.able.IViewManager;
 import org.jtheque.core.managers.view.able.components.StateBarComponent;
-import org.jtheque.core.managers.view.listeners.StateBarEvent;
-import org.jtheque.core.managers.view.listeners.StateBarListener;
 import org.jtheque.utils.ui.GridBagUtils;
 
 import javax.swing.Box;
@@ -40,7 +38,7 @@ import java.util.List;
  *
  * @author Baptiste Wicht
  */
-public final class JThequeStateBar extends JPanel implements StateBarListener {
+public final class JThequeStateBar extends JPanel {
     private int currentColumn;
 
     private final GridBagUtils gbc = new GridBagUtils();
@@ -79,8 +77,6 @@ public final class JThequeStateBar extends JPanel implements StateBarListener {
             addCenterComponents(components);
             addRightComponents(components);
         }
-
-        Managers.getManager(IViewManager.class).addStateBarListener(this);
     }
 
     /**
@@ -167,22 +163,20 @@ public final class JThequeStateBar extends JPanel implements StateBarListener {
         add(separator, gbc.gbcSet(currentColumn++, 1));
     }
 
-    @Override
-    public void componentAdded() {
-        build();
-
-        Managers.getManager(IViewManager.class).refresh(this);
-    }
-
-    @Override
-    public void componentRemoved(StateBarEvent event) {
-        remove(event.getComponent().getComponent());
+    public void removeComponent(StateBarComponent component) {
+        remove(component.getComponent());
 
         if (Managers.getManager(IViewManager.class).getStateBarComponents().isEmpty()) {
             setVisible(false);
         }
 
-        Managers.getManager(IViewManager.class).refresh(this);
+        Managers.getManager(IViewManager.class).getDelegate().refresh(this);
+    }
+
+    public void addComponent(StateBarComponent component) {
+        build();
+
+        Managers.getManager(IViewManager.class).getDelegate().refresh(this);
     }
 
     /**

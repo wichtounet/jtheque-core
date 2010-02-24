@@ -31,7 +31,7 @@ public interface ViewDelegate {
      * @param title The question title.
      * @return true if the user has answered yes else false.
      */
-    boolean askYesOrNo(String text, String title);
+    boolean askUserForConfirmation(String text, String title);
 
     /**
      * Display an error.

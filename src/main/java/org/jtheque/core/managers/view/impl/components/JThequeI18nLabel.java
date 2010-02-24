@@ -19,7 +19,7 @@ package org.jtheque.core.managers.view.impl.components;
 import org.jtheque.core.managers.Managers;
 import org.jtheque.core.managers.language.ILanguageManager;
 import org.jtheque.core.managers.language.Internationalizable;
-import org.jtheque.core.managers.view.ViewComponent;
+import org.jtheque.core.managers.view.able.components.ViewComponent;
 import org.jtheque.utils.collections.ArrayUtils;
 
 import javax.swing.JLabel;

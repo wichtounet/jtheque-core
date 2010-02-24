@@ -47,7 +47,7 @@ public final class ErrorManager extends AbstractManager implements IErrorManager
     public void addError(JThequeError error) {
         errors.add(error);
 
-        viewManager.displayError(error);
+        viewManager.getDelegate().displayError(error);
     }
 
     @Override
@@ -58,7 +58,7 @@ public final class ErrorManager extends AbstractManager implements IErrorManager
     @Override
     public void displayErrors() {
         for (JThequeError error : errors) {
-            viewManager.displayError(error);
+            viewManager.getDelegate().displayError(error);
         }
     }
 

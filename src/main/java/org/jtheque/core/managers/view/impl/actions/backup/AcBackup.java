@@ -56,7 +56,7 @@ public class AcBackup extends JThequeAction {
                     "dialogs.confirm.backup", "dialogs.confirm.backup.title");
 
         if (yes) {
-            File file = new File(CoreUtils.getBean(IViewManager.class).chooseFile(new SimpleFilter("XML(*.xml)", ".xml")));
+            File file = new File(CoreUtils.getBean(IViewManager.class).getDelegate().chooseFile(new SimpleFilter("XML(*.xml)", ".xml")));
 
             try {
                 CoreUtils.getBean(IFileManager.class).backup(file);

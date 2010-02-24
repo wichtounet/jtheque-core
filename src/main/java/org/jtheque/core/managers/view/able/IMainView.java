@@ -16,9 +16,10 @@ package org.jtheque.core.managers.view.able;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import org.jtheque.core.managers.view.ViewComponent;
+import org.jtheque.core.managers.view.impl.components.JThequeStateBar;
 
 import javax.swing.JComponent;
+import javax.swing.JTabbedPane;
 import java.awt.Component;
 
 /**
@@ -33,7 +34,7 @@ public interface IMainView extends IView {
      *
      * @return The tabbed pane who display the principal data.
      */
-    ViewComponent getTabbedPane();
+    JTabbedPane getTabbedPane();
 
     /**
      * Build the entire view with the final content.
@@ -77,4 +78,6 @@ public interface IMainView extends IView {
      * @return The selected component.
      */
     JComponent getSelectedComponent();
+
+    JThequeStateBar getStateBar();
 }

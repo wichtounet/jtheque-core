@@ -40,7 +40,7 @@ public final class InstallModuleAction extends JThequeAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        File file = new File(Managers.getManager(IViewManager.class).chooseFile(new SimpleFilter("JAR File (*.jar)", "jar")));
+        File file = new File(Managers.getManager(IViewManager.class).getDelegate().chooseFile(new SimpleFilter("JAR File (*.jar)", "jar")));
 
         boolean installed = Managers.getManager(IModuleManager.class).installModule(file);
 

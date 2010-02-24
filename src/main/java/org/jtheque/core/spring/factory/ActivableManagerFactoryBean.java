@@ -1,9 +1,6 @@
 package org.jtheque.core.spring.factory;
 
-import org.apache.commons.logging.LogFactory;
 import org.jtheque.core.managers.ActivableManager;
-import org.jtheque.core.managers.Managers;
-import org.jtheque.core.managers.beans.IBeansManager;
 import org.jtheque.core.managers.beans.ioc.Ioc;
 import org.springframework.beans.factory.config.AbstractFactoryBean;
 import org.springframework.context.support.GenericApplicationContext;

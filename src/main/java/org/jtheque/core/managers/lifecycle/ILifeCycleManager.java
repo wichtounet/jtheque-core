@@ -89,13 +89,6 @@ public interface ILifeCycleManager {
     void setCurrentFunction(String function);
 
     /**
-     * Indicate if the second phase is done or not.
-     *
-     * @return true if the second phase is done else false.
-     */
-    boolean isSecondPhaseDone();
-
-    /**
      * Choose a collection.
      *
      * @param name     The name of the collection.

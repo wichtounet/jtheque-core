@@ -4,9 +4,7 @@ import org.jtheque.core.managers.Managers;
 import org.jtheque.core.managers.language.ILanguageManager;
 import org.jtheque.core.managers.language.TabTitleUpdater;
 import org.jtheque.core.managers.view.able.IViewManager;
-import org.jtheque.core.managers.view.able.components.TabComponent;
-import org.jtheque.core.managers.view.listeners.TabEvent;
-import org.jtheque.core.managers.view.listeners.TabListener;
+import org.jtheque.core.managers.view.able.components.MainComponent;
 import org.jtheque.utils.collections.CollectionUtils;
 
 import javax.swing.JComponent;
@@ -39,7 +37,7 @@ import java.util.Map;
  *
  * @author Baptiste Wicht
  */
-public final class MainTabbedPane extends LayerTabbedPane implements TabListener {
+public final class MainTabbedPane extends LayerTabbedPane {
     /**
      * Construct a new MainTabbedPane.
      */
@@ -48,55 +46,48 @@ public final class MainTabbedPane extends LayerTabbedPane implements TabListener
 
         setTabPlacement(JTabbedPane.TOP);
 
-        List<TabComponent> components = CollectionUtils.copyOf(Managers.getManager(IViewManager.class).getTabComponents());
+        List<MainComponent> components = CollectionUtils.copyOf(Managers.getManager(IViewManager.class).getMainComponents());
         Collections.sort(components, new PositionComparator());
 
         Map<JComponent, String> cs = new HashMap<JComponent, String>(components.size());
 
-        for (TabComponent component : components) {
+        for (MainComponent component : components) {
             addLayeredTab(Managers.getManager(ILanguageManager.class).getMessage(component.getTitleKey()), component.getComponent());
+
             cs.put(component.getComponent(), component.getTitleKey());
         }
-
-        Managers.getManager(IViewManager.class).addTabListener(this);
 
         Managers.getManager(ILanguageManager.class).addInternationalizable(new TabTitleUpdater(this, cs));
     }
 
-    @Override
-    public void tabAdded() {
-        if (Managers.getManager(IViewManager.class).isTabMainComponent()) {
-            removeAll();
+    public void refreshComponents() {
+        removeAll();
 
-            List<TabComponent> components = CollectionUtils.copyOf(Managers.getManager(IViewManager.class).getTabComponents());
+        List<MainComponent> components = CollectionUtils.copyOf(Managers.getManager(IViewManager.class).getMainComponents());
 
-            Collections.sort(components, new PositionComparator());
+        Collections.sort(components, new PositionComparator());
 
-            for (TabComponent component : components) {
-                addLayeredTab(Managers.getManager(ILanguageManager.class).getMessage(component.getTitleKey()), component.getComponent());
-            }
-
-            Managers.getManager(IViewManager.class).refresh(this);
+        for (MainComponent component : components) {
+            addLayeredTab(Managers.getManager(ILanguageManager.class).getMessage(component.getTitleKey()), component.getComponent());
         }
+
+        Managers.getManager(IViewManager.class).getDelegate().refresh(this);
     }
 
-    @Override
-    public void tabRemoved(TabEvent event) {
-        if (Managers.getManager(IViewManager.class).isTabMainComponent()) {
-            removeTabAt(indexOfTab(Managers.getManager(ILanguageManager.class).getMessage(event.getComponent().getTitleKey())));
+    public void removeMainComponent(MainComponent component) {
+        removeTabAt(indexOfTab(Managers.getManager(ILanguageManager.class).getMessage(component.getTitleKey())));
 
-            Managers.getManager(IViewManager.class).refresh(this);
-        }
+        Managers.getManager(IViewManager.class).getDelegate().refresh(this);
     }
 
     /**
-     * A comparator to sort the TabComponent by position.
+     * A comparator to sort the MainComponent by position.
      *
      * @author Baptiste Wicht
      */
-    private static final class PositionComparator implements Comparator<TabComponent>, Serializable {
+    private static final class PositionComparator implements Comparator<MainComponent>, Serializable {
         @Override
-        public int compare(TabComponent component, TabComponent other) {
+        public int compare(MainComponent component, MainComponent other) {
             return component.getPosition().compareTo(other.getPosition());
         }
     }

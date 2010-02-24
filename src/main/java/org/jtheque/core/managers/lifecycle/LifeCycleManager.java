@@ -260,11 +260,6 @@ public final class LifeCycleManager implements ILifeCycleManager, Internationali
         refreshTitle();
     }
 
-    @Override
-    public boolean isSecondPhaseDone() {
-        return phasesManager.isDone();
-    }
-
     /**
      * An updater to reflect the locale in the title when a change occurs.
      *

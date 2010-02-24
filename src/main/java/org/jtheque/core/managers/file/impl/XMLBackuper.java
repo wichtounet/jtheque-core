@@ -36,7 +36,7 @@ public final class XMLBackuper {
         super();
     }
 
-    public static void backup(File file, Iterable<ModuleBackup> backups) throws FileException {
+    public static void backup(File file, Iterable<ModuleBackup> backups){
         XMLWriter writer = new XMLWriter("jtheque-backup");
 
         writeHeader(writer);
