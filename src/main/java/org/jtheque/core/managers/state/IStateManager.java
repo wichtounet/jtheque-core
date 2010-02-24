@@ -42,23 +42,25 @@ public interface IStateManager {
 
     /**
      * Return the state of a certain class. If the state has not been yet created, it would be created.
+     * If there is a problem during the creation, the error will be displayed.
      *
      * @param <T> The state type.
      * @param c   The state class.
-     * @return The state.
-     * @throws StateException If an error occurs during the state getting.
+     *
+     * @return The state or null if there was a problem during the creation.
      */
-    <T extends IState> T getOrCreateState(Class<T> c) throws StateException;
+    <T extends IState> T getOrCreateState(Class<T> c);
 
     /**
      * Create and return a state.
+     * If there is a problem during the creation, the error will be displayed.
      *
      * @param <T> The state type.
      * @param c   The state class.
+     *
      * @return The state.
-     * @throws StateException If an error occurs during the state creation.
      */
-    <T extends IState> T createState(Class<T> c) throws StateException;
+    <T extends IState> T createState(Class<T> c);
 
     /**
      * Load the states.

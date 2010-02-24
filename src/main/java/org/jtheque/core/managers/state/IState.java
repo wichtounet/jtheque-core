@@ -60,6 +60,13 @@ public interface IState {
     Collection<String> getProperties();
 
     /**
+     * Init the defaults of the state. This method will be called after the creation of the
+     * configuration. 
+     *
+     */
+    void setDefaults();
+
+    /**
      * Indicate if the write and read operations are delegated to the state or are standard managed by the
      * state manager.
      *

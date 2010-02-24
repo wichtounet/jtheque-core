@@ -42,4 +42,9 @@ public final class LanguageState extends AbstractState {
     public String getLanguage() {
         return getProperty("language");
     }
+
+    @Override
+    public void setDefaults() {
+        setLanguage("fr");
+    }
 }

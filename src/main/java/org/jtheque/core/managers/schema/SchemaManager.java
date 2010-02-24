@@ -3,11 +3,7 @@ package org.jtheque.core.managers.schema;
 import org.jtheque.core.managers.AbstractActivableManager;
 import org.jtheque.core.managers.ManagerException;
 import org.jtheque.core.managers.Managers;
-import org.jtheque.core.managers.error.IErrorManager;
-import org.jtheque.core.managers.error.InternationalizedError;
-import org.jtheque.core.managers.log.ILoggingManager;
 import org.jtheque.core.managers.state.IStateManager;
-import org.jtheque.core.managers.state.StateException;
 import org.jtheque.utils.bean.Version;
 
 import java.io.File;
@@ -45,7 +41,7 @@ public final class SchemaManager extends AbstractActivableManager implements ISc
 
     @Override
     public void init() throws ManagerException {
-        loadConfiguration();
+        configuration = Managers.getManager(IStateManager.class).getOrCreateState(SchemaConfiguration.class);
 
         Collections.sort(schemas);
 
@@ -124,19 +120,6 @@ public final class SchemaManager extends AbstractActivableManager implements ISc
         }
 
         return dataToRecover;
-    }
-
-    /**
-     * Load the configuration.
-     */
-    private void loadConfiguration() {
-        try {
-            configuration = Managers.getManager(IStateManager.class).getOrCreateState(SchemaConfiguration.class);
-        } catch (StateException e) {
-            configuration = new SchemaConfiguration();
-            Managers.getManager(ILoggingManager.class).getLogger(getClass()).error(e);
-            Managers.getManager(IErrorManager.class).addStartupError(new InternationalizedError("error.loading.configuration"));
-        }
     }
 
     @Override

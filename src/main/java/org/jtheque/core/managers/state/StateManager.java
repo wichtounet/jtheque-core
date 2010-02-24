@@ -181,36 +181,33 @@ public final class StateManager extends AbstractManager implements IStateManager
 
     @Override
     public <T extends IState> T getState(Class<T> c) {
-        T state = null;
-
-        if (states.containsKey(c)) {
-            state = (T) states.get(c);
-        }
-
-        return state;
+        return states.containsKey(c) ? (T) states.get(c) : null;
     }
 
     @Override
-    public <T extends IState> T getOrCreateState(Class<T> c) throws StateException {
+    public <T extends IState> T getOrCreateState(Class<T> c){
         return states.containsKey(c) ? (T) states.get(c) : createState(c);
     }
 
     @Override
-    public <T extends IState> T createState(Class<T> c) throws StateException {
-        T state;
+    public <T extends IState> T createState(Class<T> c){
         try {
-            Object o = c.newInstance();
+            T state = c.newInstance();
 
-            state = (T) o;
+            state.setDefaults();
+
+            states.put(c, state);
+
+            return state;
         } catch (InstantiationException e) {
-            throw new StateException(e);
+            getLogger().error(e);
+            Managers.getManager(IErrorManager.class).addError(new JThequeError(e));
         } catch (IllegalAccessException e) {
-            throw new StateException(e);
+            getLogger().error(e);
+            Managers.getManager(IErrorManager.class).addError(new JThequeError(e));
         }
 
-        states.put(c, state);
-
-        return state;
+        return null;
     }
 
     @Override

@@ -22,14 +22,10 @@ import org.jtheque.core.managers.core.io.Files;
 import org.jtheque.core.managers.core.io.Folders;
 import org.jtheque.core.managers.core.io.IFilesContainer;
 import org.jtheque.core.managers.core.io.IFoldersContainer;
-import org.jtheque.core.managers.error.IErrorManager;
-import org.jtheque.core.managers.error.InternationalizedError;
 import org.jtheque.core.managers.lifecycle.ILifeCycleManager;
 import org.jtheque.core.managers.lifecycle.JThequeCoreTimer;
 import org.jtheque.core.managers.lifecycle.LifeCycleManager;
-import org.jtheque.core.managers.log.ILoggingManager;
 import org.jtheque.core.managers.state.IStateManager;
-import org.jtheque.core.managers.state.StateException;
 import org.jtheque.utils.bean.Version;
 
 import java.util.ArrayList;
@@ -117,6 +113,7 @@ public final class Core implements ICore {
     public boolean isNotCompatibleWith(Version version) {
 		//Compatible with 2.0.2 and greater versions
         Version version202 = new Version("2.0.2");
+
         return !(version.equals(version202) || version.isGreaterThan(version202));
     }
 
@@ -143,28 +140,9 @@ public final class Core implements ICore {
     @Override
     public CoreConfiguration getConfiguration() {
         if (configuration == null) {
-            configuration = Managers.getManager(IStateManager.class).getState(CoreConfiguration.class);
-
-            if (configuration == null) {
-                initConfiguration();
-            }
+            configuration = Managers.getManager(IStateManager.class).getOrCreateState(CoreConfiguration.class);
         }
 
         return configuration;
-    }
-
-    /**
-     * Init the core configuration.
-     */
-    private void initConfiguration() {
-        try {
-            configuration = Managers.getManager(IStateManager.class).createState(CoreConfiguration.class);
-        } catch (StateException e) {
-            Managers.getManager(ILoggingManager.class).getLogger(getClass()).error(e);
-            configuration = new CoreConfiguration();
-            Managers.getManager(IErrorManager.class).addError(new InternationalizedError("error.loading.configuration"));
-        }
-
-        configuration.setDefaults();
     }
 }

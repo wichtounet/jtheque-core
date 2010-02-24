@@ -238,9 +238,7 @@ public final class CoreConfiguration extends AbstractState {
         return new IntDate(Integer.parseInt(getProperty("messagesLastRead")));
     }
 
-    /**
-     * Set the configuration to the default values.
-     */
+    @Override
     public void setDefaults() {
         setAlwaysLookAndFeel(true);
         setHasAProxy(false);

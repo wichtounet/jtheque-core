@@ -6,7 +6,6 @@ import org.jtheque.core.managers.Managers;
 import org.jtheque.core.managers.beans.IBeansManager;
 import org.jtheque.core.managers.log.ILoggingManager;
 import org.jtheque.core.managers.state.IStateManager;
-import org.jtheque.core.managers.state.StateException;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.collections.ArrayUtils;
 import org.springframework.context.MessageSource;
@@ -86,9 +85,7 @@ public final class LanguageManager implements ILanguageManager, IManager {
 
     @Override
     public void init() throws ManagerException {
-        if (state == null) {
-            initConfiguration();
-        }
+        state = Managers.getManager(IStateManager.class).getOrCreateState(LanguageState.class);
 
         locale = languages.get(state.getLanguage());
 
@@ -99,24 +96,6 @@ public final class LanguageManager implements ILanguageManager, IManager {
         }
 
         Locale.setDefault(locale);
-    }
-
-    /**
-     * Init the language configuration.
-     *
-     * @throws ManagerException If an error occurs during the state creation or loading.
-     */
-    private void initConfiguration() throws ManagerException {
-        state = Managers.getManager(IStateManager.class).getState(LanguageState.class);
-
-        if (state == null) {
-            try {
-                state = Managers.getManager(IStateManager.class).createState(LanguageState.class);
-                state.setLanguage("fr");
-            } catch (StateException e) {
-                throw new ManagerException(e);
-            }
-        }
     }
 
     @Override

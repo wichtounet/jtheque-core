@@ -71,4 +71,9 @@ public abstract class AbstractState implements IState {
     public void delegateLoad(Collection<Node> nodes) {
         //Nothing by default
     }
+
+    @Override
+    public void setDefaults() {
+        //Nothing by default
+    }
 }
