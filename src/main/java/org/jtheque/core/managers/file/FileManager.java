@@ -23,6 +23,10 @@ import org.jtheque.core.managers.file.able.ModuleBackuper;
 import org.jtheque.core.managers.file.impl.CoreBackuper;
 import org.jtheque.core.managers.file.impl.XMLBackuper;
 import org.jtheque.core.managers.file.impl.XMLRestorer;
+import org.jtheque.core.managers.module.ModuleListener;
+import org.jtheque.core.managers.module.ModuleResourceCache;
+import org.jtheque.core.managers.module.beans.ModuleContainer;
+import org.jtheque.core.managers.module.beans.ModuleState;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.io.FileException;
 
@@ -32,13 +36,14 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
 
 /**
  * A FileManager implementation.
  *
  * @author Baptiste Wicht
  */
-public final class FileManager extends AbstractActivableManager implements IFileManager {
+public final class FileManager extends AbstractActivableManager implements IFileManager, ModuleListener {
     private final List<ModuleBackuper> backupers = new ArrayList<ModuleBackuper>(5);
 
     @Override
@@ -76,13 +81,22 @@ public final class FileManager extends AbstractActivableManager implements IFile
     }
     
     @Override
-    public void registerBackuper(ModuleBackuper backuper) {
+    public void registerBackuper(String moduleId, ModuleBackuper backuper) {
         backupers.add(backuper);
     }
 
     @Override
-    public void unregisterBackuper(ModuleBackuper backuper) {
-        backupers.remove(backuper);
+    public void moduleStateChanged(ModuleContainer module, ModuleState newState, ModuleState oldState) {
+        if(oldState == ModuleState.LOADED && (newState == ModuleState.INSTALLED ||
+                newState == ModuleState.DISABLED || newState == ModuleState.UNINSTALLED)){
+            Set<ModuleBackuper> resources = ModuleResourceCache.getResource(module.getId(), ModuleBackuper.class);
+
+            for(ModuleBackuper backuper : resources){
+                backupers.remove(backuper);
+            }
+
+            ModuleResourceCache.removeResourceOfType(module.getId(), ModuleBackuper.class);
+        }
     }
 
     private static class ModuleBackupComparator implements Comparator<ModuleBackuper> {

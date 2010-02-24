@@ -27,18 +27,10 @@ public interface ISchemaManager extends ActivableManager {
     /**
      * Register a schema.
      *
+     * @param moduleId The module id. 
      * @param schema The schema to add.
      *
      * @see Schema
      */
-    void registerSchema(Schema schema);
-
-    /**
-     * Unregister a schema.
-     *
-     * @param schema The schema to remove.
-     *
-     * @see Schema
-     */
-    void unregisterSchema(Schema schema);
+    void registerSchema(String moduleId, Schema schema);
 }

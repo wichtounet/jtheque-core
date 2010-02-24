@@ -196,6 +196,8 @@ public final class ModuleManager extends AbstractManager implements IModuleManag
                 module.getUnPlugMethod().run();
 
                 setState(module, ModuleState.INSTALLED);
+
+                ModuleResourceCache.removeModule(module.getId());
             }
 
             Managers.getManager(ILanguageManager.class).removeBaseName(module.getInfos().i18n());
@@ -206,33 +208,12 @@ public final class ModuleManager extends AbstractManager implements IModuleManag
      * Configure the modules.
      */
     private void configureModules() {
-        configuration = getStates().getState(ModuleConfiguration.class);
-
-        if (configuration == null) {
-            initConfiguration();
-        }
+        configuration = getStates().getOrCreateState(ModuleConfiguration.class);
 
         CollectionUtils.filter(moduleContainers, new ConfigurationFilter(configuration));
         CollectionUtils.filter(moduleContainers, new CoreVersionFilter());
 
         CollectionUtils.sort(moduleContainers, new ModuleComparator());
-    }
-
-    /**
-     * Init the configuration of the modules.
-     */
-    private void initConfiguration() {
-        try {
-            configuration = getStates().createState(ModuleConfiguration.class);
-        } catch (Exception e) {
-            configuration = new ModuleConfiguration();
-            getLogger().error(e);
-            getErrorManager().addInternationalizedError("error.loading.configuration");
-        }
-
-        for (ModuleContainer module : moduleContainers) {
-            configuration.add(module, ModuleState.INSTALLED);
-        }
     }
 
     @Override
@@ -261,7 +242,12 @@ public final class ModuleManager extends AbstractManager implements IModuleManag
      * @param state  The state.
      */
     void setState(ModuleContainer module, ModuleState state) {
+        ModuleState oldState = module.getState();
+
         module.setState(state);
+
+        fireModuleStateChanged(module, state, oldState);
+
         configuration.setState(module.getId(), state);
     }
 
@@ -294,6 +280,8 @@ public final class ModuleManager extends AbstractManager implements IModuleManag
 
         module.getUnPlugMethod().run();
 
+        ModuleResourceCache.removeModule(module.getId());
+
         mustRefresh = true;
     }
 
@@ -317,8 +305,6 @@ public final class ModuleManager extends AbstractManager implements IModuleManag
 
         configuration.add(container);
 
-        fireModuleAdded();
-
         return true;
     }
 
@@ -339,8 +325,6 @@ public final class ModuleManager extends AbstractManager implements IModuleManag
             moduleContainers.add(container);
 
             configuration.add(result);
-
-            fireModuleAdded();
 
             getManager(IViewManager.class).displayI18nText("message.module.repository.installed");
         } else {
@@ -377,7 +361,7 @@ public final class ModuleManager extends AbstractManager implements IModuleManag
 
         module.getUnPlugMethod().run();
 
-        fireModuleRemoved(module);
+        ModuleResourceCache.removeModule(module.getId());
     }
 
     @Override
@@ -390,27 +374,11 @@ public final class ModuleManager extends AbstractManager implements IModuleManag
         getListeners().remove(ModuleListener.class, listener);
     }
 
-    /**
-     * Fire a module added event.
-     */
-    private static void fireModuleAdded() {
+    private static void fireModuleStateChanged(ModuleContainer container, ModuleState newState, ModuleState oldState) {
         ModuleListener[] l = getListeners().getListeners(ModuleListener.class);
 
         for (ModuleListener listener : l) {
-            listener.moduleAdded();
-        }
-    }
-
-    /**
-     * Fire a module removed event.
-     *
-     * @param module The removed module.
-     */
-    private static void fireModuleRemoved(ModuleContainer module) {
-        ModuleListener[] l = getListeners().getListeners(ModuleListener.class);
-
-        for (ModuleListener listener : l) {
-            listener.moduleRemoved(module);
+            listener.moduleStateChanged(container, newState, oldState);
         }
     }
 

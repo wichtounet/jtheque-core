@@ -40,7 +40,7 @@ public interface IFeatureManager {
      *
      * @param menu The menu to add to the application.
      */
-    void addMenu(Menu menu);
+    void addMenu(String moduleId, Menu menu);
 
     /**
      * Remove the menu from the application.

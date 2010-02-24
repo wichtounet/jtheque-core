@@ -59,6 +59,5 @@ public interface IFileManager extends ActivableManager {
      */
     void restore(File file) throws FileException;
 
-    void registerBackuper(ModuleBackuper backuper);
-    void unregisterBackuper(ModuleBackuper backuper);
+    void registerBackuper(String moduleId, ModuleBackuper backuper);
 }

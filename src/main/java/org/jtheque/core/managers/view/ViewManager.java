@@ -18,6 +18,10 @@ package org.jtheque.core.managers.view;
 
 import org.jtheque.core.managers.AbstractManager;
 import org.jtheque.core.managers.error.JThequeError;
+import org.jtheque.core.managers.module.ModuleListener;
+import org.jtheque.core.managers.module.ModuleResourceCache;
+import org.jtheque.core.managers.module.beans.ModuleContainer;
+import org.jtheque.core.managers.module.beans.ModuleState;
 import org.jtheque.core.managers.view.able.IAboutView;
 import org.jtheque.core.managers.view.able.ICollectionView;
 import org.jtheque.core.managers.view.able.ISplashManager;
@@ -49,8 +53,7 @@ import java.util.Collection;
  *
  * @author Baptiste Wicht
  */
-public final class ViewManager extends AbstractManager implements IViewManager {
-    /* Components */
+public final class ViewManager extends AbstractManager implements IViewManager, ModuleListener {
     private final Collection<StateBarComponent> stateBarComponents = new ArrayList<StateBarComponent>(5);
     private final Collection<TabComponent> tabComponents = new ArrayList<TabComponent>(5);
     private Collection<ConfigTabComponent> configPanels;
@@ -97,15 +100,10 @@ public final class ViewManager extends AbstractManager implements IViewManager {
     }
 
     @Override
-    public void setMainComponent(ViewComponent component) {
+    public void setMainComponent(String moduleId, ViewComponent component) {
         mainComponent = component;
-    }
 
-    @Override
-    public void removeMainComponent(ViewComponent component) {
-        if (mainComponent == component) {
-            mainComponent = null;
-        }
+        ModuleResourceCache.addResource(moduleId, ViewComponent.class, component);
     }
 
     @Override
@@ -133,17 +131,7 @@ public final class ViewManager extends AbstractManager implements IViewManager {
     public void init() {
         MacOSXConfiguration.configureForMac();
 
-        configuration = getStates().getState(WindowsConfiguration.class);
-
-        if (configuration == null) {
-            try {
-                configuration = getStates().createState(WindowsConfiguration.class);
-            } catch (Exception e) {
-                getLogger().error(e, "Unable to retrieve configuration");
-                configuration = new WindowsConfiguration();
-                getErrorManager().addInternationalizedError("error.loading.configuration");
-            }
-        }
+        configuration = getStates().getOrCreateState(WindowsConfiguration.class);
     }
 
     @Override
@@ -162,20 +150,13 @@ public final class ViewManager extends AbstractManager implements IViewManager {
     }
 
     @Override
-    public void addStateBarComponent(StateBarComponent component) {
-        stateBarComponents.add(component);
-
+    public void addStateBarComponent(String moduleId, StateBarComponent component) {
         if (component != null && component.getComponent() != null) {
+            stateBarComponents.add(component);
+
             fireStateBarComponentAdded();
-        }
-    }
 
-    @Override
-    public void removeStateBarComponent(StateBarComponent component) {
-        stateBarComponents.remove(component);
-
-        if (component != null && component.getComponent() != null) {
-            fireStateBarComponentRemoved(component);
+            ModuleResourceCache.addResource(moduleId, StateBarComponent.class, component);
         }
     }
 
@@ -185,20 +166,13 @@ public final class ViewManager extends AbstractManager implements IViewManager {
     }
 
     @Override
-    public void addTabComponent(TabComponent component) {
+    public void addTabComponent(String moduleId, TabComponent component) {
         if (isTabMainComponent()) {
             tabComponents.add(component);
 
             fireTabComponentAdded();
-        }
-    }
 
-    @Override
-    public void removeTabComponent(TabComponent component) {
-        if (isTabMainComponent()) {
-            tabComponents.remove(component);
-
-            fireTabComponentRemoved(component);
+            ModuleResourceCache.addResource(moduleId, TabComponent.class, component);
         }
     }
 
@@ -208,17 +182,12 @@ public final class ViewManager extends AbstractManager implements IViewManager {
     }
 
     @Override
-    public void addConfigTabComponent(ConfigTabComponent component) {
+    public void addConfigTabComponent(String moduleId, ConfigTabComponent component) {
         configPanels.add(component);
 
         fireConfigTabComponentAdded(component);
-    }
 
-    @Override
-    public void removeConfigTabComponent(ConfigTabComponent component) {
-        configPanels.remove(component);
-
-        fireConfigTabComponentRemoved(component);
+        ModuleResourceCache.addResource(moduleId, ConfigTabComponent.class, component);
     }
 
     @Override
@@ -299,6 +268,60 @@ public final class ViewManager extends AbstractManager implements IViewManager {
     @Override
     public ViewDelegate getViewDelegate() {
         return viewDelegate;
+    }
+
+    @Override
+    public void moduleStateChanged(ModuleContainer module, ModuleState newState, ModuleState oldState) {
+        if(oldState == ModuleState.LOADED && (newState == ModuleState.INSTALLED ||
+                newState == ModuleState.DISABLED || newState == ModuleState.UNINSTALLED)){
+
+            for(StateBarComponent component : ModuleResourceCache.getResource(module.getId(), StateBarComponent.class)){
+                removeStateBarComponent(component);
+            }
+
+            for(TabComponent component : ModuleResourceCache.getResource(module.getId(), TabComponent.class)){
+                removeTabComponent(component);
+            }
+
+            for(ConfigTabComponent component : ModuleResourceCache.getResource(module.getId(), ConfigTabComponent.class)){
+                removeConfigTabComponent(component);
+            }
+
+            for(ViewComponent component : ModuleResourceCache.getResource(module.getId(), ViewComponent.class)){
+                removeMainComponent(component);
+            }
+
+            ModuleResourceCache.removeResourceOfType(module.getId(), StateBarComponent.class);
+            ModuleResourceCache.removeResourceOfType(module.getId(), TabComponent.class);
+            ModuleResourceCache.removeResourceOfType(module.getId(), ConfigTabComponent.class);
+            ModuleResourceCache.removeResourceOfType(module.getId(), ViewComponent.class);
+        }
+    }
+
+    private void removeStateBarComponent(StateBarComponent component) {
+        stateBarComponents.remove(component);
+
+        if (component != null && component.getComponent() != null) {
+            fireStateBarComponentRemoved(component);
+        }
+    }
+
+    private void removeTabComponent(TabComponent component) {
+        tabComponents.remove(component);
+
+        fireTabComponentRemoved(component);
+    }
+
+    private void removeConfigTabComponent(ConfigTabComponent component) {
+        configPanels.remove(component);
+
+        fireConfigTabComponentRemoved(component);
+    }
+
+    private void removeMainComponent(ViewComponent component) {
+        if (mainComponent == component) {
+            mainComponent = null;
+        }
     }
 
     /**

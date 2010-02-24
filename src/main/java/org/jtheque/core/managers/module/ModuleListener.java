@@ -17,6 +17,7 @@ package org.jtheque.core.managers.module;
  */
 
 import org.jtheque.core.managers.module.beans.ModuleContainer;
+import org.jtheque.core.managers.module.beans.ModuleState;
 
 import java.util.EventListener;
 
@@ -26,15 +27,5 @@ import java.util.EventListener;
  * @author Baptiste Wicht
  */
 public interface ModuleListener extends EventListener {
-    /**
-     * A module has been added.
-     */
-    void moduleAdded();
-
-    /**
-     * A module has been removed.
-     *
-     * @param module The removed module.
-     */
-    void moduleRemoved(ModuleContainer module);
+    void moduleStateChanged(ModuleContainer module, ModuleState newState, ModuleState oldState);
 }

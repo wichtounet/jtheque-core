@@ -50,14 +50,7 @@ public interface IViewManager {
      *
      * @param component The component to add to the state bar.
      */
-    void addStateBarComponent(StateBarComponent component);
-
-    /**
-     * Remove the specified state bar component.
-     *
-     * @param component The component to remove of to the state bar.
-     */
-    void removeStateBarComponent(StateBarComponent component);
+    void addStateBarComponent(String moduleId, StateBarComponent component);
 
     /**
      * Add a state bar listener.
@@ -92,14 +85,7 @@ public interface IViewManager {
      *
      * @param component The tab to add.
      */
-    void addTabComponent(TabComponent component);
-
-    /**
-     * Remove a tab component.
-     *
-     * @param component The tab to remove.
-     */
-    void removeTabComponent(TabComponent component);
+    void addTabComponent(String moduleId, TabComponent component);
 
     /**
      * Ask user for confirmation.
@@ -168,14 +154,7 @@ public interface IViewManager {
      *
      * @param component The config tab component to add.
      */
-    void addConfigTabComponent(ConfigTabComponent component);
-
-    /**
-     * Remove the specified config tab component.
-     *
-     * @param component The config tab component to remove.
-     */
-    void removeConfigTabComponent(ConfigTabComponent component);
+    void addConfigTabComponent(String moduleId, ConfigTabComponent component);
 
     /**
      * Add a ConfigTabListener.
@@ -254,14 +233,7 @@ public interface IViewManager {
      *
      * @param component The main component of the main view.
      */
-    void setMainComponent(ViewComponent component);
-
-    /**
-     * Remove the main component of the main view.
-     *
-     * @param component The main component to remove.
-     */
-    void removeMainComponent(ViewComponent component);
+    void setMainComponent(String moduleId, ViewComponent component);
 
     /**
      * Indicate if the tab is the main component or not.

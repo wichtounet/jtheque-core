@@ -3,6 +3,10 @@ package org.jtheque.core.managers.schema;
 import org.jtheque.core.managers.AbstractActivableManager;
 import org.jtheque.core.managers.ManagerException;
 import org.jtheque.core.managers.Managers;
+import org.jtheque.core.managers.module.ModuleListener;
+import org.jtheque.core.managers.module.ModuleResourceCache;
+import org.jtheque.core.managers.module.beans.ModuleContainer;
+import org.jtheque.core.managers.module.beans.ModuleState;
 import org.jtheque.core.managers.state.IStateManager;
 import org.jtheque.utils.bean.Version;
 
@@ -11,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 /*
  * This file is part of JTheque.
@@ -34,7 +39,7 @@ import java.util.List;
  * @author Baptiste Wicht
  * @see ISchemaManager
  */
-public final class SchemaManager extends AbstractActivableManager implements ISchemaManager {
+public final class SchemaManager extends AbstractActivableManager implements ISchemaManager, ModuleListener {
     private final List<Schema> schemas = new ArrayList<Schema>(10);
 
     private SchemaConfiguration configuration;
@@ -123,12 +128,23 @@ public final class SchemaManager extends AbstractActivableManager implements ISc
     }
 
     @Override
-    public void registerSchema(Schema schema) {
+    public void registerSchema(String moduleId, Schema schema) {
         schemas.add(schema);
+
+        ModuleResourceCache.addResource(moduleId, Schema.class, schema);
     }
 
     @Override
-    public void unregisterSchema(Schema schema) {
-        schemas.remove(schema);
+    public void moduleStateChanged(ModuleContainer module, ModuleState newState, ModuleState oldState) {
+        if(oldState == ModuleState.LOADED && (newState == ModuleState.INSTALLED ||
+                newState == ModuleState.DISABLED || newState == ModuleState.UNINSTALLED)){
+            Set<Schema> resources = ModuleResourceCache.getResource(module.getId(), Schema.class);
+
+            for(Schema schema : resources){
+                schemas.remove(schema);
+            }
+
+            ModuleResourceCache.removeResourceOfType(module.getId(), Schema.class);
+        }
     }
 }

@@ -16,6 +16,7 @@ package org.jtheque.core.managers.module;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import org.jtheque.core.managers.Managers;
 import org.jtheque.core.managers.module.beans.ModuleContainer;
 import org.jtheque.core.managers.module.beans.ModuleState;
 import org.jtheque.core.managers.state.AbstractState;
@@ -233,5 +234,12 @@ public final class ModuleConfiguration extends AbstractState {
         info.setState(state);
 
         infos.add(info);
+    }
+
+    @Override
+    public void setDefaults() {
+        for (ModuleContainer module : Managers.getManager(IModuleManager.class).getModules()) {
+            add(module, ModuleState.INSTALLED);
+        }
     }
 }

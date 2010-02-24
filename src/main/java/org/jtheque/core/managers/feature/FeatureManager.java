@@ -18,19 +18,25 @@ package org.jtheque.core.managers.feature;
 
 import org.jtheque.core.managers.AbstractManager;
 import org.jtheque.core.managers.feature.Feature.FeatureType;
+import org.jtheque.core.managers.module.ModuleListener;
+import org.jtheque.core.managers.module.ModuleResourceCache;
+import org.jtheque.core.managers.module.beans.ModuleContainer;
+import org.jtheque.core.managers.module.beans.ModuleState;
+import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.collections.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.EnumMap;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * A Feature manager.
  *
  * @author Baptiste Wicht
  */
-public final class FeatureManager extends AbstractManager implements IFeatureManager {
+public final class FeatureManager extends AbstractManager implements IFeatureManager, ModuleListener {
     private final Collection<Feature> features;
 
     private final Map<CoreFeature, Feature> coreFeatures;
@@ -52,11 +58,11 @@ public final class FeatureManager extends AbstractManager implements IFeatureMan
         coreFeatures.put(CoreFeature.ADVANCED, createAndAddFeature(990, "menu.advanced"));
         coreFeatures.put(CoreFeature.HELP, createAndAddFeature(1000, "menu.help"));
 
-        addMenu(new CoreMenu());
+        addMenu("", new CoreMenu());
     }
 
     @Override
-    public void addMenu(Menu menu){
+    public void addMenu(String moduleId, Menu menu){
         for(CoreFeature feature : CoreFeature.values()){
             for(Feature f : menu.getSubFeatures(feature)){
                 getFeature(feature).addSubFeature(f);
@@ -65,6 +71,10 @@ public final class FeatureManager extends AbstractManager implements IFeatureMan
 
         for(Feature f : menu.getMainFeatures()){
             addFeature(f);
+        }
+
+        if(StringUtils.isNotEmpty(moduleId)){
+            ModuleResourceCache.addResource(moduleId, Menu.class, menu);
         }
     }
 
@@ -172,6 +182,20 @@ public final class FeatureManager extends AbstractManager implements IFeatureMan
 
         for (FeatureListener listener : l) {
             listener.featureRemoved(event);
+        }
+    }
+
+    @Override
+    public void moduleStateChanged(ModuleContainer module, ModuleState newState, ModuleState oldState) {
+        if(oldState == ModuleState.LOADED && (newState == ModuleState.INSTALLED ||
+                newState == ModuleState.DISABLED || newState == ModuleState.UNINSTALLED)){
+            Set<Menu> resources = ModuleResourceCache.getResource(module.getId(), Menu.class);
+
+            for(Menu menu : resources){
+                removeMenu(menu);
+            }
+
+            ModuleResourceCache.removeResourceOfType(module.getId(), Menu.class);
         }
     }
 

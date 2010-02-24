@@ -115,13 +115,6 @@ public final class StateManager extends AbstractManager implements IStateManager
 
     @Override
     public void close(){
-        saveStates();
-    }
-
-    /**
-     * Save the states.
-     */
-    private void saveStates() {
         XMLWriter writer = new XMLWriter("states");
 
         for (IState state : states.values()) {
