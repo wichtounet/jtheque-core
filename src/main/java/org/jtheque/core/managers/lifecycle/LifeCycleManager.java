@@ -170,8 +170,6 @@ public final class LifeCycleManager implements ILifeCycleManager, Internationali
                     launchNextPhase();
                 }
             }).start();
-        } else {
-            Managers.getManager(IViewManager.class).getCollectionView().setErrorMessage(Managers.getManager(ILanguageManager.class).getMessage("error.module.collection"));
         }
     }
 

@@ -16,8 +16,12 @@ package org.jtheque.core.managers.collection;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import org.jtheque.core.managers.Managers;
 import org.jtheque.core.managers.core.Core;
+import org.jtheque.core.managers.language.ILanguageManager;
 import org.jtheque.core.managers.persistence.able.DataListener;
+import org.jtheque.core.managers.view.able.IViewManager;
+import org.jtheque.core.utils.CoreUtils;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.io.FileUtils;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,12 +40,20 @@ public final class CollectionsService implements ICollectionsService {
     @Override
     public boolean chooseCollection(String collection, String password, boolean create) {
         if (create) {
-            createCollection(collection, password);
+            if(daoCollections.exists(collection)){
+                Managers.getManager(IViewManager.class).getCollectionView().setErrorMessage(
+                        CoreUtils.getMessage("error.module.collection.exists"));
+            } else {
+                createCollection(collection, password);
 
-            daoCollections.setCurrentCollection(daoCollections.getCollection(collection));
+                daoCollections.setCurrentCollection(daoCollections.getCollection(collection));
 
-            Core.getInstance().getConfiguration().setLastCollection(collection);
+                Core.getInstance().getConfiguration().setLastCollection(collection);
+            }
         } else if (!login(collection, password)) {
+            Managers.getManager(IViewManager.class).getCollectionView().setErrorMessage(
+                    CoreUtils.getMessage("error.module.collection"));
+
             return false;
         }
 

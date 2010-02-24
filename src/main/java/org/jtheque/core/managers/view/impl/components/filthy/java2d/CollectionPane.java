@@ -102,7 +102,7 @@ public final class CollectionPane extends JXPanel implements ICollectionView {
         labelError = new JLabel();
         labelError.setForeground(errorColor);
         labelError.setVisible(false);
-        labelError.setFont(hintFont);
+        labelError.setFont(hintFont.deriveFont(hintFont.getSize() - 2.0f));
 
         add(labelError, gbc.gbcSet(1, 1, GridBagConstraints.NONE, GridBagConstraints.LINE_START, 2, 1));
     }

@@ -78,8 +78,13 @@ public final class DaoCollections extends CachedJDBCDao<Collection> implements I
     }
 
     @Override
-    public boolean exists(Collection entity) {
-        return getCollection(entity.getTitle()) != null;
+    public boolean exists(String collection) {
+        return getCollection(collection) != null;
+    }
+
+    @Override
+    public boolean exists(Collection collection) {
+        return exists(collection.getTitle());
     }
 
     @Override

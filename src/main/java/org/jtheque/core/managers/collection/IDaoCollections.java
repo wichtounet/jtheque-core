@@ -66,4 +66,6 @@ public interface IDaoCollections extends Dao<Collection> {
 	void setCurrentCollection(Collection collection);
 
     Collection getCollectionByTemporaryId(int id);
+
+    boolean exists(String collection);
 }
