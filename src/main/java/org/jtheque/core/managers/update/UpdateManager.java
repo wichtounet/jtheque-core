@@ -228,7 +228,7 @@ public final class UpdateManager extends AbstractManager implements IUpdateManag
         boolean upToDate = true;
 
         for (Version version : getKernelVersions()) {
-            if (!Managers.getCore().getApplication().getVersion().isGreaterThan(version)) {
+            if (!Managers.getCore().getCoreCurrentVersion().isGreaterThan(version)) {
                 upToDate = false;
                 break;
             }

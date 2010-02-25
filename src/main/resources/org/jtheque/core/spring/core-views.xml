@@ -19,7 +19,7 @@
         <bean class="org.jtheque.core.managers.view.impl.frame.MainView" factory-method="get"/>
     </jtheque:proxy>
 
-    <jtheque:proxy id="configView" type="org.jtheque.core.managers.view.impl.frame.ConfigView">
+    <jtheque:proxy id="configView" type="org.jtheque.core.managers.view.impl.frame.ConfigView" swing="true">
         <bean class="org.jtheque.core.managers.view.impl.frame.ConfigView" />
     </jtheque:proxy>
 

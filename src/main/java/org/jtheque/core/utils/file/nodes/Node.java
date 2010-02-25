@@ -104,7 +104,7 @@ public final class Node {
         childrens.add(new Node(name, Integer.toString(value)));
     }
 
-    public void addSimpleChildValue(String s, long value) {
+    public void addSimpleChildValue(String name, long value) {
         childrens.add(new Node(name, Long.toString(value)));
     }
 

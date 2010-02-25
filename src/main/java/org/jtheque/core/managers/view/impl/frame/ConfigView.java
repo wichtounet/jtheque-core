@@ -25,6 +25,7 @@ import org.jtheque.core.managers.view.impl.actions.config.CancelChangesAction;
 import org.jtheque.core.managers.view.impl.components.LayerTabbedPane;
 import org.jtheque.core.managers.view.impl.components.config.ConfigTabComponent;
 import org.jtheque.core.managers.view.impl.frame.abstraction.SwingFilthyBuildedDialogView;
+import org.jtheque.core.utils.SimplePropertiesCache;
 import org.jtheque.core.utils.ui.builders.I18nPanelBuilder;
 import org.jtheque.utils.ui.GridBagUtils;
 
@@ -65,6 +66,8 @@ public final class ConfigView extends SwingFilthyBuildedDialogView<IModel> imple
 
         builder.addButtonBar(builder.gbcSet(0, 1, GridBagUtils.HORIZONTAL),
                 new ApplyChangesAndCloseAction(), new ApplyChangesAction(), new CancelChangesAction());
+
+        SimplePropertiesCache.put("config-view-loaded", "true");
     }
 
     @Override

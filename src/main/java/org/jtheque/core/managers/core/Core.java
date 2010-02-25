@@ -23,7 +23,6 @@ import org.jtheque.core.managers.core.io.Folders;
 import org.jtheque.core.managers.core.io.IFilesContainer;
 import org.jtheque.core.managers.core.io.IFoldersContainer;
 import org.jtheque.core.managers.lifecycle.ILifeCycleManager;
-import org.jtheque.core.managers.lifecycle.JThequeCoreTimer;
 import org.jtheque.core.managers.lifecycle.LifeCycleManager;
 import org.jtheque.core.managers.state.IStateManager;
 import org.jtheque.utils.bean.Version;
@@ -84,8 +83,6 @@ public final class Core implements ICore {
     @Override
     public void launchJThequeCore(Application application) {
         this.application = application;
-
-        JThequeCoreTimer.start();
 
         Thread.currentThread().setName("JTheque Main Thread");
 

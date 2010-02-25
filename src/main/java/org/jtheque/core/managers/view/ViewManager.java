@@ -35,6 +35,7 @@ import org.jtheque.core.managers.view.edt.SimpleTask;
 import org.jtheque.core.managers.view.edt.Task;
 import org.jtheque.core.managers.view.impl.WindowsConfiguration;
 import org.jtheque.core.managers.view.impl.components.config.ConfigTabComponent;
+import org.jtheque.core.utils.SimplePropertiesCache;
 import org.jtheque.utils.collections.CollectionUtils;
 
 import javax.annotation.Resource;
@@ -121,8 +122,10 @@ public final class ViewManager extends AbstractManager implements IViewManager, 
         if (component != null && component.getComponent() != null) {
             stateBarComponents.add(component);
 
-            windowManager.getMainView().getStateBar().addComponent(component);
-
+            if("true".equals(SimplePropertiesCache.get("statebar-loaded"))){
+                windowManager.getMainView().getStateBar().addComponent(component);
+            }
+            
             ModuleResourceCache.addResource(moduleId, StateBarComponent.class, component);
         }
     }
@@ -150,7 +153,9 @@ public final class ViewManager extends AbstractManager implements IViewManager, 
     public void addConfigTabComponent(String moduleId, ConfigTabComponent component) {
         configPanels.add(component);
 
-        windowManager.getConfigView().sendMessage("add", component);
+        if("true".equals(SimplePropertiesCache.get("config-view-loaded"))){
+            windowManager.getConfigView().sendMessage("add", component);
+        }
 
         ModuleResourceCache.addResource(moduleId, ConfigTabComponent.class, component);
     }

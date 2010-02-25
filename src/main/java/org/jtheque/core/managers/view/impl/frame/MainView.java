@@ -31,6 +31,7 @@ import org.jtheque.core.managers.view.impl.components.LayerTabbedPane;
 import org.jtheque.core.managers.view.impl.components.MainTabbedPane;
 import org.jtheque.core.managers.view.impl.components.menu.JMenuBarJTheque;
 import org.jtheque.core.managers.view.impl.frame.abstraction.SwingFrameView;
+import org.jtheque.core.utils.SimplePropertiesCache;
 import org.jtheque.core.utils.ui.Borders;
 import org.jtheque.core.utils.ui.builders.JThequePanelBuilder;
 import org.jtheque.core.utils.ui.builders.PanelBuilder;
@@ -216,6 +217,8 @@ public final class MainView extends SwingFrameView implements TitleListener, IMa
         current = components.size();
 
         stateBar = new JThequeStateBar();
+
+        SimplePropertiesCache.put("statebar-loaded", "true");
 
         builder.add(stateBar, builder.gbcSet(0, 1, GridBagUtils.HORIZONTAL, GridBagUtils.LAST_LINE_START));
 

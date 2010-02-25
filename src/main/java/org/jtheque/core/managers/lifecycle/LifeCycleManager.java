@@ -36,6 +36,7 @@ import org.jtheque.core.managers.module.IModuleManager;
 import org.jtheque.core.managers.module.loaders.ModuleLoader;
 import org.jtheque.core.managers.view.SplashManager;
 import org.jtheque.core.managers.view.able.IViewManager;
+import org.jtheque.core.osgi.FelixServer;
 import org.jtheque.utils.DesktopUtils;
 
 /**
@@ -55,6 +56,8 @@ public final class LifeCycleManager implements ILifeCycleManager, Internationali
 
     private IPhasesManager phasesManager;
 
+    private FelixServer server;
+
     @Override
     public void initCycles() {
         registerApplication();
@@ -63,7 +66,14 @@ public final class LifeCycleManager implements ILifeCycleManager, Internationali
 
         LoggerConfigurator.configure();
 
-        ModuleLoader.loadModules();
+        //ModuleLoader.loadModules();
+
+        server = new FelixServer();
+        server.start();
+
+        server.installBundle("/media/WICHTOUNET/Programmation/WorkDirectory/JTheque/Dev/Debug/bundles/jtheque-memory-module.jar");
+
+        
 
         Ioc.getContainer().loadContext();
 
