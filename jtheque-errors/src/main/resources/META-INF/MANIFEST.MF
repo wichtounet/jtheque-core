@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: jtheque-states
+Bundle-SymbolicName: jtheque-states
+Bundle-Version: 1.0.0
+Bundle-Vendor: Baptiste Wicht
+Bundle-Localization: plugin
+Export-Package: org.jtheque.errors
+Import-Package: org.jtheque.logging, org.jtheque.i18n , org.jtheque.utils, org.jtheque.utils.ui 
