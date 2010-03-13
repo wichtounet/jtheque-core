@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>jtheque-messages</artifactId>
+    <name>jtheque-messages</name>
+    <packaging>jar</packaging>
+
+    <parent>
+        <artifactId>jtheque-core-parent</artifactId>
+        <groupId>org.jtheque</groupId>
+        <version>2.1-SNAPSHOT</version>
+    </parent>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.osgi</groupId>
+            <artifactId>org.osgi.core</artifactId>
+            <version>4.2.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.osgi</groupId>
+            <artifactId>spring-osgi-core</artifactId>
+            <version>1.2.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jtheque</groupId>
+            <artifactId>jtheque-logging</artifactId>
+            <version>2.1-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jtheque</groupId>
+            <artifactId>jtheque-modules</artifactId>
+            <version>2.1-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jtheque</groupId>
+            <artifactId>jtheque-core-utils</artifactId>
+            <version>2.1-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jtheque</groupId>
+            <artifactId>jtheque-io</artifactId>
+            <version>2.1-SNAPSHOT</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.jtheque</groupId>
+            <artifactId>jtheque-utils</artifactId>
+            <version>1.1.4-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <directory>${env.BUILD_HOME}/bundles/jtheque-events</directory>
+
+        <outputDirectory>${env.BUILD_HOME}/bundles/jtheque-events/classes/production</outputDirectory>
+
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifestFile>src/main/resources/META-INF/MANIFEST.MF</manifestFile>
+                    </archive>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
