@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: jtheque-core
+Bundle-SymbolicName: jtheque-core
+Bundle-Version: 1.0.0
+Bundle-Vendor: Baptiste Wicht
+Bundle-Localization: plugin
+Import-Package: org.jtheque.utils.io, org.osgi.framework, org.jtheque.utils.bean, org.jdom,org.jdom.input,org.jtheque.logging,
+ org.jtheque.states, org.jtheque.core.utils, org.jtheque.i18n, org.jtheque.utils, org.jtheque.core.utils
+Export-Package: org.jtheque.core, org.jtheque.core.application, org.jtheque.core.lifecycle
+Bundle-Activator: org.jtheque.core.CoreActivator
