@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: jtheque-logging
+Bundle-SymbolicName: jtheque-logging
+Bundle-Version: 1.0.0
+Bundle-Activator: org.jtheque.logging.LoggingActivator
+Bundle-Vendor: Baptiste Wicht
+Bundle-Localization: plugin
+Import-Package: org.osgi.framework, org.jtheque.core,org.slf4j, ch.qos.logback.classic, org.jtheque.core.utils
+Export-Package: org.jtheque.logging
