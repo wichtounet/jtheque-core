@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:osgi="http://www.springframework.org/schema/osgi"
+       xsi:schemaLocation="
+            http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+            http://www.springframework.org/schema/osgi
+            http://www.springframework.org/schema/osgi/spring-osgi.xsd">
+
+    <bean id="collectionsServiceImpl" class="org.jtheque.collections.CollectionsService" />
+
+    <osgi:service id="collectionsService" ref="collectionsServiceImpl" interface="org.jtheque.collections.ICollectionsService"/>
+
+    <bean id="daoCollectionsImpl" class="org.jtheque.collections.DaoCollections" />
+
+    <osgi:service id="daoCollections" ref="daoCollectionsImpl" interface="org.jtheque.collections.IDaoCollections"/>
+
+</beans>
