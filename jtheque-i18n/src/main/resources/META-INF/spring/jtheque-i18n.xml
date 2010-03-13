@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:osgi="http://www.springframework.org/schema/osgi"
+       xsi:schemaLocation="
+            http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+            http://www.springframework.org/schema/osgi
+            http://www.springframework.org/schema/osgi/spring-osgi.xsd">
+
+    <bean id="languageManager" class="org.jtheque.i18n.LanguageManager" />
+
+    <osgi:service id="languageManagerService" ref="languageManager" interface="org.jtheque.i18n.ILanguageManager"/>
+
+    <osgi:reference id="stateManager" interface="org.jtheque.states.IStateManager" />
+    <osgi:reference id="loggingManager" interface="org.jtheque.logging.ILoggingManager" />
+
+    <!-- Internationalization -->
+
+    <bean id="messageSource" class="org.jtheque.i18n.JThequeResourceBundle">
+        <property name="coreBaseNames">
+            <list>
+                <value>classpath:org/jtheque/i18n/core</value>
+                <value>classpath:org/jtheque/i18n/dialogs</value>
+                <value>classpath:org/jtheque/i18n/errors</value>
+                <value>classpath:org/jtheque/i18n/messages</value>
+            </list>
+        </property>
+        <property name="cacheSeconds" value="-1"/>
+        <property name="fileEncodings" value="UTF-8"/>
+        <property name="defaultEncoding" value="UTF-8"/>
+        <property name="useCodeAsDefaultMessage" value="true"/>
+    </bean>
+</beans>
