@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: jtheque-persistence
+Bundle-SymbolicName: jtheque-persistence
+Bundle-Version: 1.0.0
+Bundle-Vendor: Baptiste Wicht
+Bundle-Localization: plugin
+Import-Package: org.jtheque.utils.io, org.jtheque.i18n
+Export-Package: org.jtheque.core.persistence, org.jtheque.core.persistence.able, org.jtheque.core.persistence.context
+Bundle-Activator: org.jtheque.persistence.PersistenceActivator
