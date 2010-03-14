@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: jtheque-spring-utils
+Bundle-SymbolicName: jtheque-spring-utils
+Bundle-Version: 1.0.0
+Bundle-Vendor: Baptiste Wicht
+Bundle-Localization: plugin
+Export-Package: org.jtheque.spring.utils
+Import-Package: org.jtheque.utils.io, org.jtheque.i18n, org.jtheque.utils.bean, org.jtheque.states,
+ org.jtheque.core.utils, org.jtheque.utils, org.jtheque.modules.able, org.jtheque.modules.utils 
