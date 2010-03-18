@@ -1,4 +1,4 @@
-package org.jtheque.ui.utils;
+package org.jtheque.ui.utils.components;
 
 import org.jtheque.i18n.ILanguageManager;
 import org.jtheque.i18n.Internationalizable;

@@ -16,7 +16,7 @@ package org.jtheque.views.impl.filthy;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import org.jtheque.ui.utils.Borders;
+import org.jtheque.ui.utils.components.Borders;
 import org.jtheque.views.impl.panel.CardPanel;
 
 import javax.swing.JComponent;

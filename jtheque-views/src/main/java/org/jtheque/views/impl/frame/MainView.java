@@ -21,7 +21,7 @@ import org.jtheque.core.ICore;
 import org.jtheque.core.lifecycle.TitleEvent;
 import org.jtheque.core.lifecycle.TitleListener;
 import org.jtheque.core.utils.SimplePropertiesCache;
-import org.jtheque.ui.utils.Borders;
+import org.jtheque.ui.utils.components.Borders;
 import org.jtheque.ui.utils.builders.JThequePanelBuilder;
 import org.jtheque.ui.utils.builders.PanelBuilder;
 import org.jtheque.ui.utils.frames.SwingFrameView;

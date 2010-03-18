@@ -1,6 +1,6 @@
 package org.jtheque.ui.utils.filthy;
 
-import org.jtheque.ui.utils.Borders;
+import org.jtheque.ui.utils.components.Borders;
 
 import javax.swing.JPanel;
 import java.awt.AlphaComposite;

@@ -1,6 +1,6 @@
 package org.jtheque.views.impl.filthy;
 
-import org.jtheque.ui.utils.Borders;
+import org.jtheque.ui.utils.components.Borders;
 import org.jtheque.ui.utils.filthy.Filthy;
 
 import javax.swing.DefaultListCellRenderer;

@@ -18,7 +18,7 @@ package org.jtheque.views.impl.components.renderers;
 
 import org.jdesktop.swingx.JXHyperlink;
 import org.jtheque.modules.able.Module;
-import org.jtheque.ui.utils.Borders;
+import org.jtheque.ui.utils.components.Borders;
 import org.jtheque.ui.utils.actions.OpenSiteLinkAction;
 import org.jtheque.ui.utils.builders.FilthyPanelBuilder;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;

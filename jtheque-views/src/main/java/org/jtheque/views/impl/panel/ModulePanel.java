@@ -19,7 +19,7 @@ package org.jtheque.views.impl.panel;
 import org.jtheque.i18n.ILanguageManager;
 import org.jtheque.modules.able.IModuleManager;
 import org.jtheque.modules.impl.ModuleDescription;
-import org.jtheque.ui.utils.Borders;
+import org.jtheque.ui.utils.components.Borders;
 import org.jtheque.ui.utils.builders.FilthyPanelBuilder;
 import org.jtheque.ui.utils.builders.PanelBuilder;
 import org.jtheque.update.versions.VersionsFile;

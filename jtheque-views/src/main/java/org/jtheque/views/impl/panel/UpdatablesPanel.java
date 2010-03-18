@@ -1,6 +1,6 @@
 package org.jtheque.views.impl.panel;
 
-import org.jtheque.ui.utils.Borders;
+import org.jtheque.ui.utils.components.Borders;
 import org.jtheque.ui.utils.builders.FilthyPanelBuilder;
 import org.jtheque.ui.utils.builders.PanelBuilder;
 import org.jtheque.ui.utils.components.FilthyBackgroundPanel;
