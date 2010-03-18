@@ -17,7 +17,7 @@ package org.jtheque.views.able;
  */
 
 import org.jtheque.views.able.components.MainComponent;
-import org.jtheque.views.able.frame.*;
+import org.jtheque.views.able.windows.*;
 import org.jtheque.views.able.panel.IModuleView;
 import org.jtheque.views.able.panel.IRepositoryView;
 

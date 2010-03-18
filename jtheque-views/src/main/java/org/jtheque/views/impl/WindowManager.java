@@ -20,7 +20,7 @@ import org.jtheque.views.ViewsServices;
 import org.jtheque.views.able.IViewManager;
 import org.jtheque.views.able.Views;
 import org.jtheque.views.able.components.MainComponent;
-import org.jtheque.views.able.frame.*;
+import org.jtheque.views.able.windows.*;
 import org.jtheque.views.able.panel.IModuleView;
 import org.jtheque.views.able.panel.IRepositoryView;
 

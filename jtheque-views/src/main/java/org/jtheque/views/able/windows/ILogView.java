@@ -1,6 +1,6 @@
-package org.jtheque.views.able.frame;
+package org.jtheque.views.able.windows;
 
-import java.awt.Component;
+import org.jtheque.ui.able.IView;
 
 /*
  * This file is part of JTheque.
@@ -19,26 +19,8 @@ import java.awt.Component;
  */
 
 /**
- * An about view specification.
- *
  * @author Baptiste Wicht
  */
-public interface IAboutView {
+public interface ILogView extends IView {
 
-    /**
-     * Make the view appears.
-     */
-    void appear();
-
-    /**
-     * Make the view disappears.
-     */
-    void disappear();
-
-    /**
-     * Return the implementation of the view.
-     *
-     * @return The implementation of the view.
-     */
-    Component getImpl();
 }

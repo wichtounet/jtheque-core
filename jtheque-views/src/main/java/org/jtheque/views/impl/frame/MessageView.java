@@ -21,7 +21,7 @@ import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.ui.utils.builders.PanelBuilder;
 import org.jtheque.ui.utils.windows.frames.SwingFilthyBuildedDialogView;
 import org.jtheque.utils.ui.GridBagUtils;
-import org.jtheque.views.able.frame.IMessageView;
+import org.jtheque.views.able.windows.IMessageView;
 import org.jtheque.views.impl.actions.messages.DisplayNextMessageAction;
 import org.jtheque.views.impl.actions.messages.DisplayPreviousMessageAction;
 import org.jtheque.views.impl.models.IMessageModel;

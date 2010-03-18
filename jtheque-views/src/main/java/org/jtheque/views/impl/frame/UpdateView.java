@@ -23,7 +23,7 @@ import org.jtheque.ui.utils.windows.frames.SwingFilthyBuildedDialogView;
 import org.jtheque.update.Updatable;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.ui.GridBagUtils;
-import org.jtheque.views.able.frame.IUpdateView;
+import org.jtheque.views.able.windows.IUpdateView;
 import org.jtheque.views.impl.actions.module.update.AcValidateUpdateView;
 import org.jtheque.views.impl.filthy.FilthyRenderer;
 import org.jtheque.views.impl.models.VersionsComboBoxModel;

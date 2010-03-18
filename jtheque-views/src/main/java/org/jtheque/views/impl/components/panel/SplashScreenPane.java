@@ -1,4 +1,4 @@
-package org.jtheque.views.impl.panel;
+package org.jtheque.views.impl.components.panel;
 
 import org.jdesktop.jxlayer.JXLayer;
 import org.jdesktop.jxlayer.plaf.BufferedLayerUI;

@@ -125,8 +125,8 @@
 
     <!-- Java2D panes -->
 
-    <jtheque:proxy id="collectionPane" type="org.jtheque.views.impl.panel.CollectionPane">
-        <bean class="org.jtheque.views.impl.panel.CollectionPane">
+    <jtheque:proxy id="collectionPane" type="org.jtheque.views.impl.components.panel.CollectionPane">
+        <bean class="org.jtheque.views.impl.components.panel.CollectionPane">
             <property name="hintColor" ref="white"/>
             <property name="backgroundColor" ref="black"/>
             <property name="errorColor" ref="red"/>
@@ -134,8 +134,8 @@
         </bean>
     </jtheque:proxy>
 
-    <jtheque:proxy id="aboutPane" type="org.jtheque.views.impl.panel.AboutPane">
-        <bean class="org.jtheque.views.impl.panel.AboutPane"/>
+    <jtheque:proxy id="aboutPane" type="org.jtheque.views.impl.components.panel.AboutPane">
+        <bean class="org.jtheque.views.impl.components.panel.AboutPane"/>
     </jtheque:proxy>
 
     <!-- UI Defaults -->

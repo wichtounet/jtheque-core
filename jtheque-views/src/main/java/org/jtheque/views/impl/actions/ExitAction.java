@@ -1,4 +1,4 @@
-package org.jtheque.views.impl.actions.core;
+package org.jtheque.views.impl.actions;
 
 /*
  * This file is part of JTheque.

@@ -1,7 +1,6 @@
-package org.jtheque.views.able.frame;
+package org.jtheque.views.able.windows;
 
-import org.jtheque.ui.able.IView;
-import org.jtheque.ui.able.WaitableView;
+import java.awt.Component;
 
 /*
  * This file is part of JTheque.
@@ -19,6 +18,27 @@ import org.jtheque.ui.able.WaitableView;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-public interface ILicenceView extends IView, WaitableView {
+/**
+ * An about view specification.
+ *
+ * @author Baptiste Wicht
+ */
+public interface IAboutView {
 
+    /**
+     * Make the view appears.
+     */
+    void appear();
+
+    /**
+     * Make the view disappears.
+     */
+    void disappear();
+
+    /**
+     * Return the implementation of the view.
+     *
+     * @return The implementation of the view.
+     */
+    Component getImpl();
 }

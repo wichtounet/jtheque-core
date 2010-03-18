@@ -17,7 +17,7 @@ package org.jtheque.views.impl.filthy;
  */
 
 import org.jtheque.ui.utils.components.Borders;
-import org.jtheque.views.impl.panel.CardPanel;
+import org.jtheque.views.impl.components.panel.CardPanel;
 
 import javax.swing.JComponent;
 import java.awt.AlphaComposite;

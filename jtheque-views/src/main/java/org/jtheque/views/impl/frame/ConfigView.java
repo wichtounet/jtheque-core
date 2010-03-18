@@ -25,7 +25,7 @@ import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.views.ViewsServices;
 import org.jtheque.views.able.IViewManager;
 import org.jtheque.views.able.components.ConfigTabComponent;
-import org.jtheque.views.able.frame.IConfigView;
+import org.jtheque.views.able.windows.IConfigView;
 import org.jtheque.views.impl.actions.config.ApplyChangesAction;
 import org.jtheque.views.impl.actions.config.ApplyChangesAndCloseAction;
 import org.jtheque.views.impl.actions.config.CancelChangesAction;

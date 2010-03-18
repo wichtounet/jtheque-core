@@ -31,7 +31,7 @@ import org.jtheque.utils.ui.SwingUtils;
 import org.jtheque.views.ViewsServices;
 import org.jtheque.views.able.IViewManager;
 import org.jtheque.views.able.components.MainComponent;
-import org.jtheque.views.able.frame.IMainView;
+import org.jtheque.views.able.windows.IMainView;
 import org.jtheque.views.impl.MainController;
 import org.jtheque.views.impl.components.InfiniteWaitUI;
 import org.jtheque.views.impl.components.LayerTabbedPane;

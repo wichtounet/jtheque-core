@@ -34,7 +34,7 @@ import org.jtheque.views.able.Views;
 import org.jtheque.views.able.components.ConfigTabComponent;
 import org.jtheque.views.able.components.MainComponent;
 import org.jtheque.views.able.components.StateBarComponent;
-import org.jtheque.views.able.frame.IAboutView;
+import org.jtheque.views.able.windows.IAboutView;
 import org.jtheque.views.able.panel.ICollectionView;
 
 import javax.annotation.Resource;

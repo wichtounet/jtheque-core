@@ -21,7 +21,7 @@ import org.jtheque.ui.utils.actions.JThequeAction;
 import org.jtheque.update.IUpdateManager;
 import org.jtheque.views.ViewsServices;
 import org.jtheque.views.able.IViewManager;
-import org.jtheque.views.able.frame.IUpdateView;
+import org.jtheque.views.able.windows.IUpdateView;
 import org.jtheque.ui.utils.edt.SimpleTask;
 
 import java.awt.event.ActionEvent;

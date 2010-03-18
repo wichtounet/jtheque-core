@@ -1,4 +1,4 @@
-package org.jtheque.views.impl.menu;
+package org.jtheque.views.impl.components.menu;
 
 import java.util.Arrays;
 import java.util.HashMap;

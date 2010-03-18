@@ -6,7 +6,7 @@ import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.ui.utils.actions.JThequeAction;
 import org.jtheque.views.ViewsServices;
 import org.jtheque.views.able.IViewManager;
-import org.jtheque.views.able.frame.IUpdateView;
+import org.jtheque.views.able.windows.IUpdateView;
 
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;

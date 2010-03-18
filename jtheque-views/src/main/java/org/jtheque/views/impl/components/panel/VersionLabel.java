@@ -1,6 +1,6 @@
-package org.jtheque.views.able.frame;
+package org.jtheque.views.impl.components.panel;
 
-import org.jtheque.ui.able.IView;/*
+/*
  * This file is part of JTheque.
  *
  * JTheque is free software: you can redistribute it and/or modify
@@ -16,19 +16,29 @@ import org.jtheque.ui.able.IView;/*
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import org.jtheque.update.IUpdateManager;
+import org.jtheque.views.ViewsServices;
+
+import javax.swing.JLabel;
+import java.awt.Color;
+
 /**
- * A message view specification.
+ * A label to display the version of the kernel.
  *
  * @author Baptiste Wicht
  */
-public interface IMessageView extends IView {
+public final class VersionLabel extends JLabel {
     /**
-     * Display the next message.
+     * Construct a new KernelVersionLabel.
+     *
+     * @param object     The object to display the version for.
+     * @param foreground The foreground color.
      */
-    void next();
+    public VersionLabel(Object object, Color foreground) {
+        super();
 
-    /**
-     * Display the previous message.
-     */
-    void previous();
+        setForeground(foreground);
+
+        setText(ViewsServices.get(IUpdateManager.class).getMostRecentVersion(object).getVersion());
+    }
 }

@@ -1,4 +1,7 @@
-package org.jtheque.views.able.frame;
+package org.jtheque.views.able.windows;
+
+import org.jtheque.ui.able.IView;
+import org.jtheque.ui.able.WaitableView;
 
 /*
  * This file is part of JTheque.
@@ -16,19 +19,6 @@ package org.jtheque.views.able.frame;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import org.jtheque.ui.able.IView;
-import org.jtheque.views.able.components.ConfigTabComponent;
+public interface ILicenceView extends IView, WaitableView {
 
-/**
- * A config view specification.
- *
- * @author Baptiste Wicht
- */
-public interface IConfigView extends IView {
-    /**
-     * Return the selected config panel.
-     *
-     * @return The selected config panel.
-     */
-    ConfigTabComponent getSelectedPanelConfig();
 }

@@ -16,7 +16,7 @@ package org.jtheque.views.impl.components.renderers;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import org.jtheque.views.impl.panel.ModulePanel;
+import org.jtheque.views.impl.components.panel.ModulePanel;
 
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;

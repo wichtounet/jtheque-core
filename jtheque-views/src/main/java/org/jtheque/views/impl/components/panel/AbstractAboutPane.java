@@ -1,4 +1,4 @@
-package org.jtheque.views.impl.panel;
+package org.jtheque.views.impl.components.panel;
 
 import org.jdesktop.swingx.JXPanel;
 import org.jtheque.core.ICore;

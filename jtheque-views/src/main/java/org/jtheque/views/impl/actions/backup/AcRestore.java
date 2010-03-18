@@ -26,7 +26,7 @@ import org.jtheque.resources.IResourceManager;
 import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.ui.utils.actions.JThequeAction;
 import org.jtheque.views.ViewsServices;
-import org.jtheque.views.able.frame.IMainView;
+import org.jtheque.views.able.windows.IMainView;
 import org.jtheque.ui.utils.edt.SimpleTask;
 import org.jtheque.utils.io.SimpleFilter;
 

@@ -1,4 +1,4 @@
-package org.jtheque.views.impl.panel;
+package org.jtheque.views.impl.components.panel;
 
 import org.jtheque.core.ICore;
 import org.jtheque.core.application.Application;
@@ -13,7 +13,7 @@ import org.jtheque.utils.ui.SizeTracker;
 import org.jtheque.utils.ui.SwingUtils;
 import org.jtheque.views.ViewsServices;
 import org.jtheque.views.able.IViewManager;
-import org.jtheque.views.able.frame.IAboutView;
+import org.jtheque.views.able.windows.IAboutView;
 import org.pushingpixels.trident.Timeline;
 import org.pushingpixels.trident.callback.TimelineCallbackAdapter;
 

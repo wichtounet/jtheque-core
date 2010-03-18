@@ -8,7 +8,7 @@ import org.jtheque.ui.utils.builders.PanelBuilder;
 import org.jtheque.ui.utils.windows.dialogs.SwingDialogView;
 import org.jtheque.ui.utils.windows.frames.SwingFilthyBuildedDialogView;
 import org.jtheque.utils.ui.GridBagUtils;
-import org.jtheque.views.able.frame.ILogView;
+import org.jtheque.views.able.windows.ILogView;
 import org.jtheque.views.impl.actions.event.UpdateAction;
 import org.jtheque.views.impl.filthy.FilthyRenderer;
 import org.jtheque.views.impl.models.EventsTableModel;

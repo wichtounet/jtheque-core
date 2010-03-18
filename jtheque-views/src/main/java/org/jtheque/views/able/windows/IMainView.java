@@ -1,4 +1,4 @@
-package org.jtheque.views.able.frame;
+package org.jtheque.views.able.windows;
 
 /*
  * This file is part of JTheque.

@@ -1,4 +1,6 @@
-package org.jtheque.views.able.controller;
+package org.jtheque.views.impl;
+
+import org.jtheque.views.able.Controller;
 
 /*
  * This file is part of JTheque.

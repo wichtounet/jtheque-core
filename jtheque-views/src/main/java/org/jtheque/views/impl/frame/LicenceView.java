@@ -24,7 +24,7 @@ import org.jtheque.utils.io.FileUtils;
 import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.views.ViewsServices;
 import org.jtheque.views.able.IViewManager;
-import org.jtheque.views.able.frame.ILicenceView;
+import org.jtheque.views.able.windows.ILicenceView;
 import org.jtheque.views.impl.actions.about.PrintLicenseAction;
 
 /**

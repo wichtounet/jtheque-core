@@ -26,8 +26,8 @@ import org.jtheque.views.able.components.IModulesPanelView;
 import org.jtheque.views.able.components.IUpdatablesPanelView;
 import org.jtheque.views.able.panel.IModuleView;
 import org.jtheque.views.impl.components.LayerTabbedPane;
-import org.jtheque.views.impl.panel.ModulesPanel;
-import org.jtheque.views.impl.panel.UpdatablesPanel;
+import org.jtheque.views.impl.components.panel.ModulesPanel;
+import org.jtheque.views.impl.components.panel.UpdatablesPanel;
 
 import javax.swing.JComponent;
 

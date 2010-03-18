@@ -1,4 +1,4 @@
-package org.jtheque.views.impl.menu;
+package org.jtheque.views.impl.components.menu;
 
 import org.jtheque.core.Core;
 import org.jtheque.features.Feature;
@@ -8,7 +8,7 @@ import org.jtheque.views.impl.actions.author.AcOpenHelp;
 import org.jtheque.views.impl.actions.author.AcProposeImprovement;
 import org.jtheque.views.impl.actions.backup.AcBackup;
 import org.jtheque.views.impl.actions.backup.AcRestore;
-import org.jtheque.views.impl.actions.core.ExitAction;
+import org.jtheque.views.impl.actions.ExitAction;
 import org.jtheque.views.impl.actions.undo.RedoAction;
 import org.jtheque.views.impl.actions.undo.UndoAction;
 

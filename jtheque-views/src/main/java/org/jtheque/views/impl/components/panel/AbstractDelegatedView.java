@@ -1,4 +1,4 @@
-package org.jtheque.views.impl.panel;
+package org.jtheque.views.impl.components.panel;
 
 import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.ui.able.IView;

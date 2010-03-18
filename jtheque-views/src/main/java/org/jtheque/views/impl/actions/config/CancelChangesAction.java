@@ -19,7 +19,7 @@ package org.jtheque.views.impl.actions.config;
 import org.jtheque.ui.utils.actions.JThequeAction;
 import org.jtheque.views.ViewsServices;
 import org.jtheque.views.able.IViewManager;
-import org.jtheque.views.able.frame.IConfigView;
+import org.jtheque.views.able.windows.IConfigView;
 
 import java.awt.event.ActionEvent;
 

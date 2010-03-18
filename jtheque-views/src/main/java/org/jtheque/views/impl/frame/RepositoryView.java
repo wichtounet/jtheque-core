@@ -28,9 +28,9 @@ import org.jtheque.views.ViewsServices;
 import org.jtheque.views.able.panel.IRepositoryView;
 import org.jtheque.views.impl.actions.module.repository.ExpandRepositoryModuleAction;
 import org.jtheque.views.impl.actions.module.repository.InstallRepositoryModuleAction;
+import org.jtheque.views.impl.components.panel.ModulePanel;
 import org.jtheque.views.impl.components.renderers.ModuleRepositoryListRenderer;
 import org.jtheque.views.impl.models.ModuleRepositoryListModel;
-import org.jtheque.views.impl.panel.ModulePanel;
 
 import javax.swing.JList;
 

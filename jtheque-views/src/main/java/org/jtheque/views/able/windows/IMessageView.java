@@ -1,8 +1,6 @@
-package org.jtheque.views.able.frame;
+package org.jtheque.views.able.windows;
 
-import org.jtheque.ui.able.IView;
-
-/*
+import org.jtheque.ui.able.IView;/*
  * This file is part of JTheque.
  *
  * JTheque is free software: you can redistribute it and/or modify
@@ -19,8 +17,18 @@ import org.jtheque.ui.able.IView;
  */
 
 /**
+ * A message view specification.
+ *
  * @author Baptiste Wicht
  */
-public interface ILogView extends IView {
+public interface IMessageView extends IView {
+    /**
+     * Display the next message.
+     */
+    void next();
 
+    /**
+     * Display the previous message.
+     */
+    void previous();
 }
