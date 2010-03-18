@@ -1,4 +1,4 @@
-package org.jtheque.ui.utils.frames;
+package org.jtheque.ui.utils.dialogs;
 
 /*
  * This file is part of JTheque.
@@ -19,7 +19,7 @@ package org.jtheque.ui.utils.frames;
 import org.jtheque.core.utils.SimplePropertiesCache;
 import org.jtheque.errors.JThequeError;
 import org.jtheque.i18n.ILanguageManager;
-import org.jtheque.ui.IModel;
+import org.jtheque.ui.able.IModel;
 import org.jtheque.ui.ViewsUtilsServices;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.ui.utils.builders.JThequePanelBuilder;

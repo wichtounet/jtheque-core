@@ -4,7 +4,7 @@ import org.jtheque.core.ICore;
 import org.jtheque.io.Node;
 import org.jtheque.io.NodeAttribute;
 import org.jtheque.states.AbstractState;
-import org.jtheque.ui.IView;
+import org.jtheque.ui.able.IView;
 import org.jtheque.views.ViewsServices;
 import org.jtheque.views.able.IViewManager;
 

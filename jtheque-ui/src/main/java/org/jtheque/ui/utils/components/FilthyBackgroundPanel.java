@@ -16,7 +16,7 @@ package org.jtheque.ui.utils.components;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import org.jtheque.ui.utils.FilthyUtils;
+import org.jtheque.ui.utils.filthy.FilthyUtils;
 import org.jtheque.utils.ui.SizeTracker;
 
 import javax.swing.JPanel;

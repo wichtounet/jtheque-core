@@ -1,4 +1,4 @@
-package org.jtheque.ui.utils;
+package org.jtheque.ui.utils.filthy;
 
 import org.jtheque.core.ICore;
 import org.jtheque.core.utils.ImageType;

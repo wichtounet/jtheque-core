@@ -1,7 +1,7 @@
 package org.jtheque.views.impl.panel;
 
-import org.jtheque.ui.IModel;
-import org.jtheque.ui.IView;
+import org.jtheque.ui.able.IModel;
+import org.jtheque.ui.able.IView;
 
 import javax.swing.JPanel;
 

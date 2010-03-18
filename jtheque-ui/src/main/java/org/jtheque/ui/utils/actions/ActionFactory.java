@@ -1,6 +1,6 @@
-package org.jtheque.ui.utils;
+package org.jtheque.ui.utils.actions;
 
-import org.jtheque.ui.IView;
+import org.jtheque.ui.able.IView;
 import org.jtheque.ui.utils.actions.CloseBeanViewAction;
 import org.jtheque.ui.utils.actions.CloseViewAction;
 import org.jtheque.ui.utils.actions.DisplayBeanViewAction;

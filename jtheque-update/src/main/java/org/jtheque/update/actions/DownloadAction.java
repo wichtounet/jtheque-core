@@ -19,7 +19,7 @@ package org.jtheque.update.actions;
 import org.jtheque.errors.InternationalizedError;
 import org.jtheque.i18n.ILanguageManager;
 import org.jtheque.logging.ILoggingManager;
-import org.jtheque.ui.IUIUtils;
+import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.update.UpdateServices;
 import org.jtheque.utils.OSUtils;
 import org.jtheque.utils.StringUtils;

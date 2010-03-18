@@ -17,7 +17,7 @@ package org.jtheque.views.impl.frame;
  */
 
 import org.jtheque.core.ICore;
-import org.jtheque.ui.IModel;
+import org.jtheque.ui.able.IModel;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.ui.utils.frames.SwingFilthyBuildedDialogView;
 import org.jtheque.utils.io.FileUtils;

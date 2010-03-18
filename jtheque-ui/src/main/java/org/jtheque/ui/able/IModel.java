@@ -1,4 +1,4 @@
-package org.jtheque.ui;
+package org.jtheque.ui.able;
 
 /*
  * This file is part of JTheque.

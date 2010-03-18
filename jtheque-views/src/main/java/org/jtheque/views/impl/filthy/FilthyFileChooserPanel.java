@@ -18,8 +18,8 @@ package org.jtheque.views.impl.filthy;
 
 import org.jtheque.i18n.ILanguageManager;
 import org.jtheque.i18n.Internationalizable;
-import org.jtheque.ui.IUIUtils;
-import org.jtheque.ui.utils.Borders;
+import org.jtheque.ui.able.IUIUtils;
+import org.jtheque.ui.utils.components.Borders;
 import org.jtheque.ui.utils.builders.JThequePanelBuilder;
 import org.jtheque.ui.utils.builders.PanelBuilder;
 import org.jtheque.views.ViewsServices;

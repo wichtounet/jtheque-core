@@ -1,7 +1,7 @@
 package org.jtheque.views.able.panel;
 
 import org.jtheque.modules.impl.ModuleDescription;
-import org.jtheque.ui.IView;
+import org.jtheque.ui.able.IView;
 
 /*
  * This file is part of JTheque.

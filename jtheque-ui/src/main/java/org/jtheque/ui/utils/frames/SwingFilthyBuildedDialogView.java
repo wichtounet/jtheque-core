@@ -18,11 +18,12 @@ package org.jtheque.ui.utils.frames;
 
 import org.jtheque.errors.JThequeError;
 import org.jtheque.i18n.ILanguageManager;
-import org.jtheque.ui.IModel;
+import org.jtheque.ui.able.IModel;
 import org.jtheque.ui.ViewsUtilsServices;
 import org.jtheque.ui.utils.builders.FilthyPanelBuilder;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.ui.utils.components.FilthyBackgroundPanel;
+import org.jtheque.ui.utils.dialogs.SwingDialogView;
 
 import java.awt.Container;
 import java.awt.Frame;

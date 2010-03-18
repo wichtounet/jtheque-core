@@ -16,7 +16,7 @@ package org.jtheque.views.impl.components.panel;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import org.jtheque.ui.IUIUtils;
+import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.views.ViewsServices;
 import org.jtheque.views.able.IViewManager;

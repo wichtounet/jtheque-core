@@ -1,6 +1,6 @@
 package org.jtheque.views.able.frame;
 
-import org.jtheque.ui.IView;/*
+import org.jtheque.ui.able.IView;/*
  * This file is part of JTheque.
  *
  * JTheque is free software: you can redistribute it and/or modify

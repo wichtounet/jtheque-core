@@ -16,7 +16,7 @@ package org.jtheque.ui.utils.components;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import org.jtheque.ui.ViewComponent;
+import org.jtheque.ui.able.ViewComponent;
 
 import javax.swing.JLabel;
 import java.awt.Color;

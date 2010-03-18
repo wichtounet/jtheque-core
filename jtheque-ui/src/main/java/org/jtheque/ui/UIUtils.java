@@ -1,6 +1,8 @@
 package org.jtheque.ui;
 
 import org.jtheque.i18n.ILanguageManager;
+import org.jtheque.ui.able.IUIUtils;
+import org.jtheque.ui.able.ViewDelegate;
 import org.jtheque.ui.utils.edt.SimpleTask;
 import org.jtheque.ui.utils.edt.Task;
 

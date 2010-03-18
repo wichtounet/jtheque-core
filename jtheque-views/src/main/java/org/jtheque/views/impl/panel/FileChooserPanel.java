@@ -18,7 +18,7 @@ package org.jtheque.views.impl.panel;
 
 import org.jtheque.i18n.ILanguageManager;
 import org.jtheque.i18n.Internationalizable;
-import org.jtheque.ui.IUIUtils;
+import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.ui.utils.builders.JThequePanelBuilder;
 import org.jtheque.ui.utils.builders.PanelBuilder;
 import org.jtheque.utils.io.SimpleFilter;

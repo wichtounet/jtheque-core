@@ -18,7 +18,7 @@ package org.jtheque.views.impl;
 
 import org.jtheque.core.ICore;
 import org.jtheque.i18n.ILanguageManager;
-import org.jtheque.ui.IUIUtils;
+import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.views.ViewsServices;
 
 import javax.swing.JTabbedPane;

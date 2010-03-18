@@ -17,7 +17,7 @@ package org.jtheque.modules.impl;
  */
 
 import org.jtheque.core.ICore;
-import org.jtheque.ui.IUIUtils;
+import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.collections.Filter;
 

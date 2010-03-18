@@ -1,4 +1,4 @@
-package org.jtheque.ui;
+package org.jtheque.ui.able;
 
 import org.jtheque.ui.utils.edt.SimpleTask;
 import org.jtheque.ui.utils.edt.Task;

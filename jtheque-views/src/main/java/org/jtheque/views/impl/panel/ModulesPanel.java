@@ -1,8 +1,8 @@
 package org.jtheque.views.impl.panel;
 
 import org.jtheque.modules.able.Module;
-import org.jtheque.ui.IUIUtils;
-import org.jtheque.ui.utils.ActionFactory;
+import org.jtheque.ui.able.IUIUtils;
+import org.jtheque.ui.utils.actions.ActionFactory;
 import org.jtheque.ui.utils.builders.FilthyPanelBuilder;
 import org.jtheque.ui.utils.builders.PanelBuilder;
 import org.jtheque.ui.utils.components.FilthyBackgroundPanel;

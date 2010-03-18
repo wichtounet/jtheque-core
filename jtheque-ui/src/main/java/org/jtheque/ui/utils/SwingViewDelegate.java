@@ -5,7 +5,7 @@ import org.jdesktop.swingx.error.ErrorInfo;
 import org.jtheque.core.utils.SimplePropertiesCache;
 import org.jtheque.errors.JThequeError;
 import org.jtheque.logging.ILoggingManager;
-import org.jtheque.ui.ViewDelegate;
+import org.jtheque.ui.able.ViewDelegate;
 import org.jtheque.ui.ViewsUtilsServices;
 import org.jtheque.utils.io.SimpleFilter;
 import org.jtheque.utils.ui.SwingUtils;

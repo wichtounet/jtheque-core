@@ -16,7 +16,7 @@ package org.jtheque.views.able.frame;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import org.jtheque.ui.IView;
+import org.jtheque.ui.able.IView;
 import org.jtheque.views.able.components.ConfigTabComponent;
 
 /**

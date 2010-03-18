@@ -23,7 +23,7 @@ import org.jtheque.modules.able.IModuleManager;
 import org.jtheque.modules.able.Module;
 import org.jtheque.modules.impl.InstallationResult;
 import org.jtheque.states.IStateManager;
-import org.jtheque.ui.IUIUtils;
+import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.update.actions.UpdateAction;
 import org.jtheque.update.versions.IVersionsLoader;
 import org.jtheque.update.versions.InstallVersion;
@@ -48,10 +48,7 @@ public final class UpdateManager implements IUpdateManager {
     private IVersionsLoader versionsLoader;
 
     private WeakEventListenerList listeners = new WeakEventListenerList();
-
-    /**
-     * Private constructor, the instance of the class is accessible by getInstance() method.
-     */
+    
     public UpdateManager() {
         super();
 

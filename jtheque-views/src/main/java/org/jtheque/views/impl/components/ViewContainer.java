@@ -1,6 +1,6 @@
 package org.jtheque.views.impl.components;
 
-import org.jtheque.ui.ViewComponent;
+import org.jtheque.ui.able.ViewComponent;
 
 /*
  * This file is part of JTheque.

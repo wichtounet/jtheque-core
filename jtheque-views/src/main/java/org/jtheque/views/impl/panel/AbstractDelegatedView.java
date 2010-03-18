@@ -1,7 +1,7 @@
 package org.jtheque.views.impl.panel;
 
-import org.jtheque.ui.IUIUtils;
-import org.jtheque.ui.IView;
+import org.jtheque.ui.able.IUIUtils;
+import org.jtheque.ui.able.IView;
 import org.jtheque.ui.utils.edt.SimpleTask;
 import org.jtheque.views.ViewsServices;
 

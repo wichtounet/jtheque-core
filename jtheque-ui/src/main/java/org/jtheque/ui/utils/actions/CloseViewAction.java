@@ -16,7 +16,7 @@ package org.jtheque.ui.utils.actions;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import org.jtheque.ui.IView;
+import org.jtheque.ui.able.IView;
 import org.jtheque.ui.utils.actions.JThequeAction;
 
 import java.awt.event.ActionEvent;

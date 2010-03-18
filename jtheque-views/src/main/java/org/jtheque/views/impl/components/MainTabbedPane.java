@@ -1,8 +1,8 @@
 package org.jtheque.views.impl.components;
 
 import org.jtheque.i18n.ILanguageManager;
-import org.jtheque.ui.IUIUtils;
-import org.jtheque.ui.utils.TabTitleUpdater;
+import org.jtheque.ui.able.IUIUtils;
+import org.jtheque.ui.utils.components.TabTitleUpdater;
 import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.views.ViewsServices;
 import org.jtheque.views.able.IViewManager;

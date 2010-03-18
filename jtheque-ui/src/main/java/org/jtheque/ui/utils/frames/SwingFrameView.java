@@ -19,8 +19,8 @@ package org.jtheque.ui.utils.frames;
 import org.jtheque.core.ICore;
 import org.jtheque.core.application.Application;
 import org.jtheque.resources.IResourceManager;
-import org.jtheque.ui.IModel;
-import org.jtheque.ui.IWindowView;
+import org.jtheque.ui.able.IModel;
+import org.jtheque.ui.able.IWindowView;
 import org.jtheque.utils.ui.SwingUtils;
 import org.jtheque.ui.ViewsUtilsServices;
 

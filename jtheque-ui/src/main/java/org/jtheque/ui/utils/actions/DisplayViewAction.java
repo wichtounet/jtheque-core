@@ -1,6 +1,6 @@
 package org.jtheque.ui.utils.actions;
 
-import org.jtheque.ui.IView;
+import org.jtheque.ui.able.IView;
 import org.jtheque.ui.utils.actions.JThequeAction;
 
 import java.awt.event.ActionEvent;

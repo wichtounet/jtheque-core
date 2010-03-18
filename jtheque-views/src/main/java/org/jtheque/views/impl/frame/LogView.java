@@ -2,10 +2,10 @@ package org.jtheque.views.impl.frame;
 
 import org.jdesktop.swingx.JXTable;
 import org.jtheque.events.EventLog;
-import org.jtheque.ui.IModel;
+import org.jtheque.ui.able.IModel;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.ui.utils.builders.PanelBuilder;
-import org.jtheque.ui.utils.frames.SwingDialogView;
+import org.jtheque.ui.utils.dialogs.SwingDialogView;
 import org.jtheque.ui.utils.frames.SwingFilthyBuildedDialogView;
 import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.views.able.frame.ILogView;

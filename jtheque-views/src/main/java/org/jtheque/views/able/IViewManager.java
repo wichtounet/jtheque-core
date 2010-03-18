@@ -16,7 +16,7 @@ package org.jtheque.views.able;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import org.jtheque.ui.IView;
+import org.jtheque.ui.able.IView;
 import org.jtheque.views.able.components.ConfigTabComponent;
 import org.jtheque.views.able.components.MainComponent;
 import org.jtheque.views.able.components.StateBarComponent;

@@ -2,8 +2,8 @@ package org.jtheque.views.impl.components;
 
 import org.jdesktop.jxlayer.JXLayer;
 import org.jdesktop.jxlayer.plaf.BufferedLayerUI;
-import org.jtheque.ui.WaitFigure;
-import org.jtheque.ui.utils.frames.InfiniteWaitFigure;
+import org.jtheque.ui.able.WaitFigure;
+import org.jtheque.ui.utils.windows.InfiniteWaitFigure;
 import org.jtheque.utils.ui.SizeTracker;
 
 import javax.swing.JComponent;

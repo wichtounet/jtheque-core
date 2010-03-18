@@ -2,7 +2,7 @@ package org.jtheque.views.impl.actions.module;
 
 import org.jtheque.errors.IErrorManager;
 import org.jtheque.logging.ILoggingManager;
-import org.jtheque.ui.IUIUtils;
+import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.ui.utils.actions.JThequeAction;
 import org.jtheque.views.ViewsServices;
 import org.jtheque.views.able.IViewManager;

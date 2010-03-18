@@ -19,7 +19,7 @@ package org.jtheque.views.impl.components;
 import org.jdesktop.jxlayer.JXLayer;
 import org.jdesktop.jxlayer.plaf.BufferedLayerUI;
 import org.jtheque.i18n.ILanguageManager;
-import org.jtheque.ui.ViewComponent;
+import org.jtheque.ui.able.ViewComponent;
 import org.jtheque.views.ViewsServices;
 
 import javax.swing.JComponent;

@@ -13,7 +13,7 @@ import org.jtheque.events.IEventManager;
 import org.jtheque.lifecycle.application.XMLApplicationReader;
 import org.jtheque.messages.IMessageManager;
 import org.jtheque.modules.able.IModuleManager;
-import org.jtheque.ui.IUIUtils;
+import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.update.IUpdateManager;
 import org.jtheque.views.able.ISplashManager;
 import org.jtheque.views.able.IViewManager;

@@ -18,7 +18,7 @@ package org.jtheque.ui.utils.components;
 
 import org.jtheque.i18n.ILanguageManager;
 import org.jtheque.i18n.Internationalizable;
-import org.jtheque.ui.ViewComponent;
+import org.jtheque.ui.able.ViewComponent;
 import org.jtheque.ui.ViewsUtilsServices;
 import org.jtheque.utils.collections.ArrayUtils;
 

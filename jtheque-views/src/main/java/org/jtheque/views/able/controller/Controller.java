@@ -1,6 +1,6 @@
 package org.jtheque.views.able.controller;
 
-import org.jtheque.ui.IView;
+import org.jtheque.ui.able.IView;
 
 
 /*

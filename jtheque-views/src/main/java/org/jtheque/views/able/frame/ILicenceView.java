@@ -1,7 +1,7 @@
 package org.jtheque.views.able.frame;
 
-import org.jtheque.ui.IView;
-import org.jtheque.ui.WaitableView;
+import org.jtheque.ui.able.IView;
+import org.jtheque.ui.able.WaitableView;
 
 /*
  * This file is part of JTheque.

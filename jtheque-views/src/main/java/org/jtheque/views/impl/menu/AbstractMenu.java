@@ -10,8 +10,8 @@ import org.jtheque.features.Feature;
 import org.jtheque.features.IFeatureManager;
 import org.jtheque.features.Menu;
 import org.jtheque.resources.IResourceManager;
-import org.jtheque.ui.IView;
-import org.jtheque.ui.utils.ActionFactory;
+import org.jtheque.ui.able.IView;
+import org.jtheque.ui.utils.actions.ActionFactory;
 import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.views.ViewsServices;
 

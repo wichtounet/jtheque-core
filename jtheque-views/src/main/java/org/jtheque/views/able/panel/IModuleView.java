@@ -1,7 +1,7 @@
 package org.jtheque.views.able.panel;
 
 import org.jtheque.modules.able.Module;
-import org.jtheque.ui.IView;
+import org.jtheque.ui.able.IView;
 import org.jtheque.update.Updatable;
 
 /*

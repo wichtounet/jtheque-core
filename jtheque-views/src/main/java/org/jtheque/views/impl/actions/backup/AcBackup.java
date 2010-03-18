@@ -7,10 +7,9 @@ import org.jtheque.file.IFileManager;
 import org.jtheque.io.XMLException;
 import org.jtheque.logging.ILoggingManager;
 import org.jtheque.resources.IResourceManager;
-import org.jtheque.ui.IUIUtils;
+import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.ui.utils.actions.JThequeAction;
 import org.jtheque.views.ViewsServices;
-import org.jtheque.utils.io.FileException;
 import org.jtheque.utils.io.SimpleFilter;
 
 import java.awt.event.ActionEvent;

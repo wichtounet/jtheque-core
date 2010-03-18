@@ -1,4 +1,4 @@
-package org.jtheque.ui.utils.frames;
+package org.jtheque.ui.utils.dialogs;
 
 /*
  * This file is part of JTheque.
@@ -23,7 +23,13 @@ import org.jtheque.i18n.ILanguageManager;
 import org.jtheque.i18n.Internationalizable;
 import org.jtheque.resources.IResourceManager;
 import org.jtheque.ui.*;
-import org.jtheque.ui.utils.ActionFactory;
+import org.jtheque.ui.able.IModel;
+import org.jtheque.ui.able.IUIUtils;
+import org.jtheque.ui.able.IWindowView;
+import org.jtheque.ui.able.WaitFigure;
+import org.jtheque.ui.utils.actions.ActionFactory;
+import org.jtheque.ui.utils.windows.ExtendedGlassPane;
+import org.jtheque.ui.utils.windows.InfiniteWaitFigure;
 import org.jtheque.utils.collections.ArrayUtils;
 
 import javax.swing.Action;

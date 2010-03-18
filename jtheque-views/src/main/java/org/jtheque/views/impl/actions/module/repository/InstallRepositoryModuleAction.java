@@ -19,7 +19,7 @@ package org.jtheque.views.impl.actions.module.repository;
 import org.jtheque.core.ICore;
 import org.jtheque.modules.able.IModuleManager;
 import org.jtheque.modules.impl.ModuleDescription;
-import org.jtheque.ui.IUIUtils;
+import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.ui.utils.actions.JThequeAction;
 import org.jtheque.views.ViewsServices;
 import org.jtheque.views.able.IViewManager;

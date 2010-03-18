@@ -17,7 +17,7 @@ package org.jtheque.views.impl.actions.module;
  */
 
 import org.jtheque.modules.able.IModuleManager;
-import org.jtheque.ui.IUIUtils;
+import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.ui.utils.actions.JThequeAction;
 import org.jtheque.utils.io.SimpleFilter;
 import org.jtheque.views.ViewsServices;

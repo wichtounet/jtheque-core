@@ -1,7 +1,7 @@
-package org.jtheque.ui;
+package org.jtheque.ui.able;
 
-import org.jtheque.ui.IModel;
-import org.jtheque.ui.ViewComponent;
+import org.jtheque.ui.able.IModel;
+import org.jtheque.ui.able.ViewComponent;
 
 
 /*

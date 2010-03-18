@@ -17,8 +17,8 @@ package org.jtheque.views.able.frame;
  */
 
 import org.jtheque.modules.able.Module;
-import org.jtheque.ui.IView;
-import org.jtheque.ui.WaitableView;
+import org.jtheque.ui.able.IView;
+import org.jtheque.ui.able.WaitableView;
 import org.jtheque.update.Updatable;
 import org.jtheque.utils.bean.Version;
 
