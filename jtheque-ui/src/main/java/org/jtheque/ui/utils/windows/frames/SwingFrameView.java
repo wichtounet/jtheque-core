@@ -1,4 +1,4 @@
-package org.jtheque.ui.utils.frames;
+package org.jtheque.ui.utils.windows.frames;
 
 /*
  * This file is part of JTheque.

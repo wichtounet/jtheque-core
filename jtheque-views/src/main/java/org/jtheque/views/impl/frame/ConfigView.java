@@ -20,7 +20,7 @@ import org.jtheque.core.utils.SimplePropertiesCache;
 import org.jtheque.errors.JThequeError;
 import org.jtheque.ui.able.IModel;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
-import org.jtheque.ui.utils.frames.SwingFilthyBuildedDialogView;
+import org.jtheque.ui.utils.windows.frames.SwingFilthyBuildedDialogView;
 import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.views.ViewsServices;
 import org.jtheque.views.able.IViewManager;

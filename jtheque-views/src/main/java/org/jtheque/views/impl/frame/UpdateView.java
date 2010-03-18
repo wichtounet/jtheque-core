@@ -19,7 +19,7 @@ package org.jtheque.views.impl.frame;
 import org.jtheque.modules.impl.ModuleContainer;
 import org.jtheque.ui.able.IModel;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
-import org.jtheque.ui.utils.frames.SwingFilthyBuildedDialogView;
+import org.jtheque.ui.utils.windows.frames.SwingFilthyBuildedDialogView;
 import org.jtheque.update.Updatable;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.ui.GridBagUtils;

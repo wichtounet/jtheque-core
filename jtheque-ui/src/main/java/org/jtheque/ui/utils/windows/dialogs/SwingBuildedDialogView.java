@@ -1,4 +1,4 @@
-package org.jtheque.ui.utils.frames;
+package org.jtheque.ui.utils.windows.dialogs;
 
 /*
  * This file is part of JTheque.
@@ -16,15 +16,15 @@ package org.jtheque.ui.utils.frames;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import org.jtheque.core.utils.SimplePropertiesCache;
 import org.jtheque.errors.JThequeError;
 import org.jtheque.i18n.ILanguageManager;
 import org.jtheque.ui.able.IModel;
 import org.jtheque.ui.ViewsUtilsServices;
-import org.jtheque.ui.utils.builders.FilthyPanelBuilder;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
-import org.jtheque.ui.utils.components.FilthyBackgroundPanel;
-import org.jtheque.ui.utils.dialogs.SwingDialogView;
+import org.jtheque.ui.utils.builders.JThequePanelBuilder;
 
+import javax.swing.JFrame;
 import java.awt.Container;
 import java.awt.Frame;
 import java.util.Collection;
@@ -34,13 +34,12 @@ import java.util.Collection;
  *
  * @author Baptiste Wicht
  */
-public abstract class SwingFilthyBuildedDialogView<T extends IModel> extends SwingDialogView {
+public abstract class SwingBuildedDialogView<T extends IModel> extends SwingDialogView {
     /**
      * Construct a SwingDialogView modal to the main view.
      */
-    protected SwingFilthyBuildedDialogView() {
-        //TODO get main view
-        this(null);
+    protected SwingBuildedDialogView(){
+        this(SimplePropertiesCache.<Frame>get("mainView"));
     }
 
     /**
@@ -48,7 +47,7 @@ public abstract class SwingFilthyBuildedDialogView<T extends IModel> extends Swi
      *
      * @param frame The parent frame.
      */
-    protected SwingFilthyBuildedDialogView(Frame frame) {
+    protected SwingBuildedDialogView(Frame frame) {
         super(frame);
 
         setModal(true);
@@ -56,14 +55,14 @@ public abstract class SwingFilthyBuildedDialogView<T extends IModel> extends Swi
 
         ViewsUtilsServices.get(ILanguageManager.class).addInternationalizable(this);
 
-        setDefaultCloseOperation(HIDE_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         setIconImage(getDefaultWindowIcon());
     }
 
     /**
      * Build the view.
      */
-    protected final void build() {
+    protected final void build(){
         initView();
 
         setContentPane(buildContentPane());
@@ -78,23 +77,21 @@ public abstract class SwingFilthyBuildedDialogView<T extends IModel> extends Swi
      *
      * @return The builded content pane.
      */
-    private Container buildContentPane() {
-        FilthyBackgroundPanel contentPane = new FilthyBackgroundPanel();
-
-        I18nPanelBuilder builder = new FilthyPanelBuilder(contentPane);
+    private Container buildContentPane(){
+        I18nPanelBuilder builder = new JThequePanelBuilder();
 
         buildView(builder);
 
-        return contentPane;
+        return builder.getPanel();
     }
 
     @Override
-    protected void validate(Collection<JThequeError> errors) {
+    protected void validate(Collection<JThequeError> errors){
         //Default empty implementation
     }
 
     @Override
-    public T getModel() {
+    public T getModel(){
         return (T) super.getModel();
     }
 

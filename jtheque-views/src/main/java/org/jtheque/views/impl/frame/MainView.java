@@ -24,7 +24,7 @@ import org.jtheque.core.utils.SimplePropertiesCache;
 import org.jtheque.ui.utils.components.Borders;
 import org.jtheque.ui.utils.builders.JThequePanelBuilder;
 import org.jtheque.ui.utils.builders.PanelBuilder;
-import org.jtheque.ui.utils.frames.SwingFrameView;
+import org.jtheque.ui.utils.windows.frames.SwingFrameView;
 import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.utils.ui.SwingUtils;

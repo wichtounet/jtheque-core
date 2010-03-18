@@ -1,4 +1,4 @@
-package org.jtheque.ui.utils.dialogs;
+package org.jtheque.ui.utils.windows.dialogs;
 
 /*
  * This file is part of JTheque.
