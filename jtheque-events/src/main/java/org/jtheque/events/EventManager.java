@@ -6,9 +6,9 @@ import org.jtheque.core.utils.OSGiUtils;
 import org.jtheque.io.XMLException;
 import org.jtheque.io.XMLReader;
 import org.jtheque.io.XMLWriter;
-import org.jtheque.logging.ILoggingManager;
 import org.jtheque.utils.io.FileUtils;
 import org.osgi.framework.BundleContext;
+import org.slf4j.LoggerFactory;
 import org.springframework.osgi.context.BundleContextAware;
 
 import java.io.File;
@@ -100,7 +100,7 @@ public final class EventManager implements IEventManager, BundleContextAware {
                 }
             }
         } catch (XMLException e) {
-            OSGiUtils.getService(bundleContext, ILoggingManager.class).getLogger(getClass()).error(e);
+            LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
         } finally {
             FileUtils.close(reader);
         }

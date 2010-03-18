@@ -17,8 +17,8 @@ package org.jtheque.resources;
  */
 
 import org.jtheque.core.utils.ImageType;
-import org.jtheque.logging.ILoggingManager;
 import org.jtheque.utils.ui.ImageUtils;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -44,14 +44,6 @@ public final class ResourceManager implements IResourceManager, ApplicationConte
     private final Map<String, JThequeImage> cache = new HashMap<String, JThequeImage>(DEFAULT_CACHE_SIZE);
 
     private ApplicationContext applicationContext;
-
-    private final ILoggingManager loggingManager;
-
-    public ResourceManager(ILoggingManager loggingManager) {
-        super();
-
-        this.loggingManager = loggingManager;
-    }
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
@@ -123,8 +115,8 @@ public final class ResourceManager implements IResourceManager, ApplicationConte
         try {
             stream = getResource(path).getInputStream();
         } catch (IOException e) {
-            loggingManager.getLogger(getClass()).error("Unable to load stream for {}", path);
-            loggingManager.getLogger(getClass()).error(e);
+            LoggerFactory.getLogger(getClass()).error("Unable to load stream for {}", path);
+            LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
         }
 
         return stream;

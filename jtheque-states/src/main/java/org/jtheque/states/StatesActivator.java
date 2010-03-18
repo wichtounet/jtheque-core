@@ -1,7 +1,5 @@
 package org.jtheque.states;
 
-import org.jtheque.core.utils.OSGiUtils;
-import org.jtheque.logging.ILoggingManager;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
@@ -30,7 +28,6 @@ public class StatesActivator implements BundleActivator {
     @Override
     public void start(BundleContext bundleContext) throws Exception {
         manager = new StateManager();
-        manager.setLogger(OSGiUtils.getService(bundleContext, ILoggingManager.class).getLogger(StateManager.class));
         manager.loadStates();
 
         registration = bundleContext.registerService(IStateManager.class.getName(), manager, null);

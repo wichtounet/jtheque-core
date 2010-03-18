@@ -50,7 +50,7 @@
     <orderEntry type="module" module-name="jtheque-core-utils" exported="" />
     <orderEntry type="library" exported="" name="Maven: javax.mail:mail:1.4.1" level="project" />
     <orderEntry type="library" exported="" name="Maven: javax.activation:activation:1.1" level="project" />
-    <orderEntry type="module" module-name="jtheque-logging" exported="" />
+    <orderEntry type="library" exported="" name="Maven: org.jtheque:jtheque-logging:2.1-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="Maven: ch.qos.logback:logback-core:0.9.18" level="project" />
     <orderEntry type="library" exported="" name="Maven: ch.qos.logback:logback-classic:0.9.18" level="project" />
     <orderEntry type="module" module-name="jtheque-jdom" exported="" />

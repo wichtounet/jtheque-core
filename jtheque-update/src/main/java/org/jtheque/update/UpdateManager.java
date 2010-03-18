@@ -18,7 +18,6 @@ package org.jtheque.update;
 
 import org.jtheque.core.ICore;
 import org.jtheque.core.utils.WeakEventListenerList;
-import org.jtheque.logging.ILoggingManager;
 import org.jtheque.modules.able.IModuleManager;
 import org.jtheque.modules.able.Module;
 import org.jtheque.modules.impl.InstallationResult;
@@ -29,6 +28,7 @@ import org.jtheque.update.versions.IVersionsLoader;
 import org.jtheque.update.versions.InstallVersion;
 import org.jtheque.update.versions.OnlineVersion;
 import org.jtheque.utils.bean.Version;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -133,7 +133,7 @@ public final class UpdateManager implements IUpdateManager {
             result.setName(version.getTitle());
             result.setInstalled(true);
         } catch (Exception e) {
-            UpdateServices.get(ILoggingManager.class).getLogger(getClass()).error(e);
+            LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
             result.setInstalled(false);
         }
 

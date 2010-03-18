@@ -20,7 +20,6 @@ import org.jtheque.core.ICore;
 import org.jtheque.core.utils.ImageType;
 import org.jtheque.file.IFileManager;
 import org.jtheque.io.XMLException;
-import org.jtheque.logging.ILoggingManager;
 import org.jtheque.persistence.able.IPersistenceManager;
 import org.jtheque.resources.IResourceManager;
 import org.jtheque.ui.able.IUIUtils;
@@ -29,6 +28,7 @@ import org.jtheque.views.ViewsServices;
 import org.jtheque.views.able.windows.IMainView;
 import org.jtheque.ui.utils.edt.SimpleTask;
 import org.jtheque.utils.io.SimpleFilter;
+import org.slf4j.LoggerFactory;
 
 import java.awt.event.ActionEvent;
 import java.io.File;
@@ -94,9 +94,9 @@ public class AcRestore extends JThequeAction {
             }
 
             try {
-            ViewsServices.get(IFileManager.class).restore(file);
+                ViewsServices.get(IFileManager.class).restore(file);
             } catch (XMLException e){
-                ViewsServices.get(ILoggingManager.class).getLogger(getClass()).error(e);
+                LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
             }
 
             ViewsServices.get(IUIUtils.class).execute(new SimpleTask() {

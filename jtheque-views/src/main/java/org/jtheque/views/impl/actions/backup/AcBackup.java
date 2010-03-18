@@ -5,12 +5,12 @@ import org.jtheque.core.utils.ImageType;
 import org.jtheque.errors.IErrorManager;
 import org.jtheque.file.IFileManager;
 import org.jtheque.io.XMLException;
-import org.jtheque.logging.ILoggingManager;
 import org.jtheque.resources.IResourceManager;
 import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.ui.utils.actions.JThequeAction;
 import org.jtheque.views.ViewsServices;
 import org.jtheque.utils.io.SimpleFilter;
+import org.slf4j.LoggerFactory;
 
 import java.awt.event.ActionEvent;
 import java.io.File;
@@ -57,7 +57,7 @@ public class AcBackup extends JThequeAction {
             try {
                 ViewsServices.get(IFileManager.class).backup(file);
             } catch (XMLException e1) {
-                ViewsServices.get(ILoggingManager.class).getLogger(getClass()).error(e1);
+                LoggerFactory.getLogger(getClass()).error(e1.getMessage(), e1);
                 ViewsServices.get(IErrorManager.class).addInternationalizedError("error.backup.error");
             }
         }

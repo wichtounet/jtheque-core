@@ -20,10 +20,8 @@ import org.jdom.Element;
 import org.jtheque.core.ICore;
 import org.jtheque.io.XMLReader;
 import org.jtheque.io.XMLException;
-import org.jtheque.logging.ILoggingManager;
 import org.jtheque.modules.able.Module;
 import org.jtheque.update.Updatable;
-import org.jtheque.update.UpdateServices;
 import org.jtheque.update.actions.AbstractUpdateAction;
 import org.jtheque.update.actions.DeleteAction;
 import org.jtheque.update.actions.DownloadAction;
@@ -32,6 +30,7 @@ import org.jtheque.update.actions.UpdateAction;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.io.FileUtils;
+import org.slf4j.LoggerFactory;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -113,7 +112,7 @@ public final class VersionsFileReader {
         try {
             return readVersionsFile(new URL(strUrl));
         } catch (MalformedURLException e) {
-            UpdateServices.get(ILoggingManager.class).getLogger(getClass()).error(e, "Unable to read versions file");
+            LoggerFactory.getLogger(getClass()).error("Unable to read versions file", e);
         }
 
         return null;
@@ -156,7 +155,7 @@ public final class VersionsFileReader {
 
             versionsFile.setVersions(onlineVersions);
         } catch (XMLException e) {
-            UpdateServices.get(ILoggingManager.class).getLogger(getClass()).error(e, "Unable to read versions file");
+            LoggerFactory.getLogger(getClass()).error("Unable to read versions file", e);
         } finally {
             FileUtils.close(reader);
         }

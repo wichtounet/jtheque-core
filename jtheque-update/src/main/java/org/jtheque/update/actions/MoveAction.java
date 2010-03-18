@@ -16,10 +16,9 @@ package org.jtheque.update.actions;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import org.jtheque.logging.ILoggingManager;
-import org.jtheque.update.UpdateServices;
 import org.jtheque.utils.io.CopyException;
 import org.jtheque.utils.io.FileUtils;
+import org.slf4j.LoggerFactory;
 
 /**
  * An update action that move a file.
@@ -35,7 +34,7 @@ public final class MoveAction extends AbstractUpdateAction {
         try {
             FileUtils.move(getSource(), getDestination());
         } catch (CopyException e) {
-            UpdateServices.get(ILoggingManager.class).getLogger(getClass()).debug("The file ({}) can not be moved.", getSource());
+            LoggerFactory.getLogger(getClass()).debug("The file ({}) can not be moved.", getSource());
         }
     }
 

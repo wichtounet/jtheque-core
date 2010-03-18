@@ -16,7 +16,7 @@ package org.jtheque.undo;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import org.jtheque.logging.ILoggingManager;
+import org.slf4j.LoggerFactory;
 
 import javax.swing.Action;
 import javax.swing.undo.CannotUndoException;
@@ -32,12 +32,8 @@ public final class UndoRedoManager extends UndoManager implements IUndoRedoManag
     private Action undoAction;
     private Action redoAction;
 
-    private final ILoggingManager logging;
-
-    public UndoRedoManager(ILoggingManager logging) {
+    public UndoRedoManager() {
         super();
-
-        this.logging = logging;
 
         stateChanged();
     }
@@ -66,7 +62,7 @@ public final class UndoRedoManager extends UndoManager implements IUndoRedoManag
         try {
             super.undo();
         } catch (CannotUndoException e) {
-            logging.getLogger(getClass()).error(e);
+            LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
         } finally {
             stateChanged();
         }
@@ -77,7 +73,7 @@ public final class UndoRedoManager extends UndoManager implements IUndoRedoManag
         try {
             super.redo();
         } catch (CannotUndoException e) {
-            logging.getLogger(getClass()).error(e);
+            LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
         } finally {
             stateChanged();
         }

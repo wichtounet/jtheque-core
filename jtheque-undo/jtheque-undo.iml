@@ -23,6 +23,9 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="Maven: org.osgi:org.osgi.core:4.2.0" level="project" />
+    <orderEntry type="library" exported="" name="Maven: org.jtheque:jtheque-logging:2.1-SNAPSHOT" level="project" />
+    <orderEntry type="module" module-name="jtheque-core-utils" exported="" />
+    <orderEntry type="module" module-name="JTheque Utils" scope="TEST" />
     <orderEntry type="library" exported="" name="Maven: org.slf4j:slf4j-api:1.5.8" level="project" />
     <orderEntry type="library" exported="" name="Maven: javax.mail:mail:1.4.1" level="project" />
     <orderEntry type="library" exported="" name="Maven: javax.activation:activation:1.1" level="project" />

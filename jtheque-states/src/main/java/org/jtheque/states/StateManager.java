@@ -23,8 +23,8 @@ import org.jtheque.io.NodeSaver;
 import org.jtheque.io.XMLException;
 import org.jtheque.io.XMLReader;
 import org.jtheque.io.XMLWriter;
-import org.jtheque.logging.IJThequeLogger;
 import org.jtheque.utils.io.FileUtils;
+import org.slf4j.LoggerFactory;
 
 import javax.swing.JOptionPane;
 import java.io.File;
@@ -39,8 +39,6 @@ import java.util.Map;
  */
 public final class StateManager implements IStateManager {
     private final Map<Class<? extends IState>, IState> states = new HashMap<Class<? extends IState>, IState>(10);
-
-    private IJThequeLogger logger;
 
     /**
      * Load the states.
@@ -182,10 +180,10 @@ public final class StateManager implements IStateManager {
 
             return state;
         } catch (InstantiationException e) {
-            logger.error(e);
+            LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
             JOptionPane.showMessageDialog(null, e.getMessage(), e.getMessage(), JOptionPane.ERROR_MESSAGE);
         } catch (IllegalAccessException e) {
-            logger.error(e);
+            LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
             JOptionPane.showMessageDialog(null, e.getMessage(), e.getMessage(), JOptionPane.ERROR_MESSAGE);
         }
 
@@ -195,9 +193,5 @@ public final class StateManager implements IStateManager {
     @Override
     public void registerState(IState state) {
         states.put(state.getClass(), state);
-    }
-
-    public void setLogger(IJThequeLogger logger) {
-        this.logger = logger;
     }
 }

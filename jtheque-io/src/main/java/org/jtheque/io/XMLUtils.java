@@ -4,14 +4,13 @@ import org.jdom.Document;
 import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
 import org.jtheque.utils.io.FileUtils;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-
-import org.jtheque.logging.ILoggingManager;
 
 /*
  * This file is part of JTheque.
@@ -60,7 +59,7 @@ public final class XMLUtils {
                 fileOk = f.createNewFile();
             } catch (IOException e) {
                 fileOk = false;
-                IOServices.get(ILoggingManager.class).getLogger(XMLUtils.class).error(e);
+                LoggerFactory.getLogger(XMLUtils.class).error(e.getMessage(), e);
             }
         }
 
@@ -71,9 +70,9 @@ public final class XMLUtils {
 
                 sortie.output(doc, stream);
             } catch (FileNotFoundException e) {
-                IOServices.get(ILoggingManager.class).getLogger(XMLUtils.class).error(e);
+                LoggerFactory.getLogger(XMLUtils.class).error(e.getMessage(), e);
             } catch (IOException e) {
-                IOServices.get(ILoggingManager.class).getLogger(XMLUtils.class).error(e);
+                LoggerFactory.getLogger(XMLUtils.class).error(e.getMessage(), e);
             } finally {
                 FileUtils.close(stream);
             }

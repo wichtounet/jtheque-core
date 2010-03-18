@@ -18,13 +18,13 @@ package org.jtheque.messages;
 
 import org.jtheque.core.ICore;
 import org.jtheque.io.XMLException;
-import org.jtheque.logging.ILoggingManager;
 import org.jtheque.modules.able.IModuleManager;
 import org.jtheque.modules.able.Module;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.core.utils.OSGiUtils;
 import org.jtheque.utils.bean.IntDate;
 import org.osgi.framework.BundleContext;
+import org.slf4j.LoggerFactory;
 import org.springframework.osgi.context.BundleContextAware;
 
 import java.util.ArrayList;
@@ -114,7 +114,7 @@ public final class MessageManager implements IMessageManager, BundleContextAware
 
             messages.addAll(file.getMessages());
         } catch (XMLException e) {
-            OSGiUtils.getService(bundleContext, ILoggingManager.class).getLogger(getClass()).error(e);
+            LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
         }
     }
 }

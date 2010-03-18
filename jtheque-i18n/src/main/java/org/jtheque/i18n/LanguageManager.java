@@ -1,15 +1,13 @@
 package org.jtheque.i18n;
 
 import org.jtheque.core.utils.OSGiUtils;
-import org.jtheque.logging.ILoggingManager;
 import org.jtheque.states.IStateManager;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.collections.ArrayUtils;
-import org.osgi.framework.BundleContext;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.NoSuchMessageException;
-import org.springframework.osgi.context.BundleContextAware;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -39,7 +37,7 @@ import java.util.Set;
 /**
  * @author Baptiste Wicht
  */
-public final class LanguageManager implements ILanguageManager, ApplicationContextAware, BundleContextAware {
+public final class LanguageManager implements ILanguageManager, ApplicationContextAware {
     private final Map<String, Locale> languages;
     private Locale locale = Locale.getDefault();
 
@@ -50,7 +48,6 @@ public final class LanguageManager implements ILanguageManager, ApplicationConte
     private static final String[] ZERO_LENGTH_ARRAY = new String[0];
 
     private ApplicationContext applicationContext;
-    private BundleContext bundleContext;
 
     /**
      * Construct a new ResourceManager.
@@ -82,7 +79,7 @@ public final class LanguageManager implements ILanguageManager, ApplicationConte
         locale = languages.get(state.getLanguage());
 
         if (locale == null) {
-            applicationContext.getBean(ILoggingManager.class).getLogger(getClass()).error("Unable to get the locale");
+            LoggerFactory.getLogger(getClass()).error("Unable to get the locale");
 
             locale = Locale.FRENCH;
         }
@@ -190,8 +187,7 @@ public final class LanguageManager implements ILanguageManager, ApplicationConte
         } catch (NoSuchMessageException e) {
             message = key;
 
-            applicationContext.getBean(ILoggingManager.class).getLogger(getClass()).warn(
-                    "No message found for {} with locale {}", key, locale.getDisplayName());
+            LoggerFactory.getLogger(getClass()).warn("No message found for {} with locale {}", key, locale.getDisplayName());
         }
 
         return message;
@@ -229,8 +225,7 @@ public final class LanguageManager implements ILanguageManager, ApplicationConte
         } catch (NoSuchMessageException e) {
             message = key;
 
-            OSGiUtils.getService(bundleContext, ILoggingManager.class).getLogger(getClass()).error(
-                    "No message found for {} with locale {}", key, locale.getDisplayName());
+            LoggerFactory.getLogger(getClass()).error("No message found for {} with locale {}", key, locale.getDisplayName());
         }
 
         return message;
@@ -239,10 +234,5 @@ public final class LanguageManager implements ILanguageManager, ApplicationConte
     @Override
     public void setApplicationContext(ApplicationContext applicationContext){
         this.applicationContext = applicationContext;
-    }
-
-    @Override
-    public void setBundleContext(BundleContext bundleContext) {
-        this.bundleContext = bundleContext;
     }
 }

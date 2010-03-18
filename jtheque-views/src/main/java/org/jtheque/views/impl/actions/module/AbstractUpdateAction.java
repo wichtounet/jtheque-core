@@ -1,12 +1,12 @@
 package org.jtheque.views.impl.actions.module;
 
 import org.jtheque.errors.IErrorManager;
-import org.jtheque.logging.ILoggingManager;
 import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.ui.utils.actions.JThequeAction;
 import org.jtheque.views.ViewsServices;
 import org.jtheque.views.able.IViewManager;
 import org.jtheque.views.able.windows.IUpdateView;
+import org.slf4j.LoggerFactory;
 
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
@@ -54,7 +54,7 @@ public abstract class AbstractUpdateAction extends JThequeAction {
                 updateView.display();
             }
         } catch (HeadlessException e2) {
-            ViewsServices.get(ILoggingManager.class).getLogger(getClass()).error(e2);
+            LoggerFactory.getLogger(getClass()).error(e2.getMessage(), e2);
             ViewsServices.get(IErrorManager.class).addInternationalizedError("error.update.internet");
         }
     }

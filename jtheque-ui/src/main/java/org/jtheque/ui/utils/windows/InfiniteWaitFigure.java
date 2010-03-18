@@ -16,9 +16,8 @@ package org.jtheque.ui.utils.windows;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import org.jtheque.logging.ILoggingManager;
-import org.jtheque.ui.ViewsUtilsServices;
 import org.jtheque.ui.able.WaitFigure;
+import org.slf4j.LoggerFactory;
 
 import javax.swing.JComponent;
 import javax.swing.RootPaneContainer;
@@ -216,7 +215,7 @@ public final class InfiniteWaitFigure implements WaitFigure, ActionListener {
                     makeSnapshot();
                     glassPane.setOpaque(true);
                 } catch (AWTException e1) {
-                    ViewsUtilsServices.get(ILoggingManager.class).getLogger(getClass()).error(e1);
+                    LoggerFactory.getLogger(getClass()).error(e1.getMessage(), e1);
                 }
             } else {
                 --iterate;

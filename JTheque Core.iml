@@ -34,7 +34,6 @@
     <orderEntry type="library" scope="TEST" name="Maven: junit:junit:4.4" level="project" />
     <orderEntry type="module" module-name="JTheque Utils" scope="TEST" />
     <orderEntry type="library" scope="TEST" name="Maven: org.slf4j:slf4j-api:1.5.8" level="project" />
-    <orderEntry type="module" module-name="jtheque-i18n" />
   </component>
   <component name="org.twodividedbyzero.idea.findbugs">
     <option name="_basePreferences">

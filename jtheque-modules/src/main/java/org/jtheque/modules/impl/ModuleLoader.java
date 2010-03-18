@@ -4,7 +4,6 @@ import org.jtheque.core.ICore;
 import org.jtheque.core.utils.OSGiUtils;
 import org.jtheque.errors.IErrorManager;
 import org.jtheque.errors.JThequeError;
-import org.jtheque.logging.ILoggingManager;
 import org.jtheque.modules.able.IModuleLoader;
 import org.jtheque.modules.able.Module;
 import org.jtheque.utils.StringUtils;
@@ -12,6 +11,7 @@ import org.jtheque.utils.bean.Version;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleException;
+import org.slf4j.LoggerFactory;
 import org.springframework.osgi.context.BundleContextAware;
 
 import java.io.File;
@@ -111,7 +111,7 @@ public final class ModuleLoader implements IModuleLoader, BundleContextAware {
 
             modules.add(container);
         } catch (BundleException e) {
-            OSGiUtils.getService(bundleContext, ILoggingManager.class).getLogger(getClass()).error(e);
+            LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
             OSGiUtils.getService(bundleContext, IErrorManager.class).addError(new JThequeError(e));
         }
     }

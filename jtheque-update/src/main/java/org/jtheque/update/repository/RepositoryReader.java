@@ -20,14 +20,13 @@ import org.jdom.Element;
 import org.jtheque.core.ICore;
 import org.jtheque.io.XMLException;
 import org.jtheque.io.XMLReader;
-import org.jtheque.logging.ILoggingManager;
 import org.jtheque.modules.impl.ModuleDescription;
 import org.jtheque.modules.impl.Repository;
-import org.jtheque.update.UpdateServices;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.bean.InternationalString;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.io.FileUtils;
+import org.slf4j.LoggerFactory;
 
 /**
  * A reader for repository XML file.
@@ -60,7 +59,7 @@ public final class RepositoryReader {
 
             read();
         } catch (XMLException e) {
-            UpdateServices.get(ILoggingManager.class).getLogger(getClass()).error(e, "Unable to get information from repository");
+            LoggerFactory.getLogger(getClass()).error(e, "Unable to get information from repository");
         } finally {
             FileUtils.close(reader);
         }

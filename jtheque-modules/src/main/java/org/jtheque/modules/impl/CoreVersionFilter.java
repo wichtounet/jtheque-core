@@ -30,7 +30,7 @@ final class CoreVersionFilter implements Filter<ModuleContainer> {
     @Override
     public boolean accept(ModuleContainer module) {
         Version neededVersion = module.getCoreVersion();
-        Version currentVersion = ModulesServices.get(ICore.class).getCoreCurrentVersion();
+        Version currentVersion = ICore.VERSION;
 
         if (neededVersion != null && !currentVersion.equals(neededVersion)) {
             if (neededVersion.isGreaterThan(currentVersion)) {

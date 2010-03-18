@@ -13,7 +13,6 @@
     <osgi:service id="languageManagerService" ref="languageManager" interface="org.jtheque.i18n.ILanguageManager"/>
 
     <osgi:reference id="stateManager" interface="org.jtheque.states.IStateManager" />
-    <osgi:reference id="loggingManager" interface="org.jtheque.logging.ILoggingManager" />
 
     <!-- Internationalization -->
 

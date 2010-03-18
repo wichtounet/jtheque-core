@@ -30,7 +30,7 @@
     <orderEntry type="library" exported="" name="Maven: org.springframework:org.springframework.beans:2.5.6.SEC01" level="project" />
     <orderEntry type="library" exported="" name="Maven: org.springframework:org.springframework.core:2.5.6.SEC01" level="project" />
     <orderEntry type="library" exported="" name="Maven: org.springframework:org.springframework.context:2.5.6.SEC01" level="project" />
-    <orderEntry type="module" module-name="jtheque-logging" exported="" />
+    <orderEntry type="library" exported="" name="Maven: org.jtheque:jtheque-logging:2.1-SNAPSHOT" level="project" />
     <orderEntry type="module" module-name="jtheque-core-utils" exported="" />
     <orderEntry type="module" module-name="JTheque Utils" exported="" />
     <orderEntry type="library" exported="" name="Maven: org.slf4j:slf4j-api:1.5.8" level="project" />

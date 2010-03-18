@@ -1,5 +1,7 @@
 package org.jtheque.lifecycle;
 
+import ch.qos.logback.classic.Level;
+import ch.qos.logback.classic.Logger;
 import org.jtheque.collections.CollectionListener;
 import org.jtheque.collections.ICollectionsService;
 import org.jtheque.core.ICore;
@@ -20,6 +22,7 @@ import org.jtheque.views.able.IViewManager;
 import org.jtheque.ui.utils.edt.SimpleTask;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -45,6 +48,8 @@ public class LifeCycleActivator implements BundleActivator, CollectionListener {
     @Override
     public void start(BundleContext context) throws Exception {
         this.context = context;
+
+        configureLogging();
 
         Application application = new XMLApplicationReader().readApplication(SystemProperty.USER_DIR.get() + "/application.xml");
 
@@ -72,6 +77,18 @@ public class LifeCycleActivator implements BundleActivator, CollectionListener {
         } else {
             startSecondPhase();
         }
+    }
+
+    private void configureLogging() {
+        Logger rootLogger = (Logger) LoggerFactory.getLogger("root");
+
+        String level = "ERROR";
+
+        if (SystemProperty.JTHEQUE_LOG.get() != null) {
+            level = SystemProperty.JTHEQUE_LOG.get();
+        }
+
+        rootLogger.setLevel(Level.toLevel(level));
     }
 
     private <T> T getService(Class<T> classz) {

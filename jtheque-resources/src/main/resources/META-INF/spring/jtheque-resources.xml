@@ -8,9 +8,7 @@
             http://www.springframework.org/schema/osgi
             http://www.springframework.org/schema/osgi/spring-osgi.xsd">
 
-    <bean id="resourcesManager" class="org.jtheque.resources.ResourceManager">
-        <constructor-arg><osgi:reference interface="org.jtheque.logging.ILoggingManager" /></constructor-arg>
-    </bean>
+    <bean id="resourcesManager" class="org.jtheque.resources.ResourceManager"/>
 
     <osgi:service id="resourcesManagerService" ref="resourcesManager" interface="org.jtheque.resources.IResourceManager"/>
 

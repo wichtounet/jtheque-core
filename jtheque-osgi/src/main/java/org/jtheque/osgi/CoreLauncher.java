@@ -102,10 +102,8 @@ public final class CoreLauncher implements Closeable {
     private void launchJTheque() {
         installIfNecessary("jtheque-utils", "/bundles/jtheque-utils-1.1.4-SNAPSHOT.jar");
         installIfNecessary("jtheque-core", "/bundles/jtheque-core-2.1-SNAPSHOT.jar");
-        installIfNecessary("jtheque-logging", "/bundles/jtheque-logging-2.1-SNAPSHOT.jar");
         installIfNecessary("jtheque-lifecycle", "/bundles/jtheque-lifecycle-2.1-SNAPSHOT.jar");
-
-        startIfNotStarted("jtheque-logging");
+        
         startIfNotStarted("jtheque-lifecycle");
     }
 

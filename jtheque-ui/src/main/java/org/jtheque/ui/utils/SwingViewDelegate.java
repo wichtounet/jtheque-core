@@ -4,11 +4,10 @@ import org.jdesktop.swingx.JXErrorPane;
 import org.jdesktop.swingx.error.ErrorInfo;
 import org.jtheque.core.utils.SimplePropertiesCache;
 import org.jtheque.errors.JThequeError;
-import org.jtheque.logging.ILoggingManager;
 import org.jtheque.ui.able.ViewDelegate;
-import org.jtheque.ui.ViewsUtilsServices;
 import org.jtheque.utils.io.SimpleFilter;
 import org.jtheque.utils.ui.SwingUtils;
+import org.slf4j.LoggerFactory;
 
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -67,9 +66,9 @@ public final class SwingViewDelegate implements ViewDelegate {
 					}
 				});
 			} catch (InterruptedException e) {
-				ViewsUtilsServices.get(ILoggingManager.class).getLogger(getClass()).error(e);
+				LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
 			} catch (InvocationTargetException e) {
-				ViewsUtilsServices.get(ILoggingManager.class).getLogger(getClass()).error(e);
+				LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
 			}
 		}
 		

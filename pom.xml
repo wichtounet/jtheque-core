@@ -14,7 +14,6 @@
 
     <modules>
         <module>jtheque-osgi</module>
-        <module>jtheque-logging</module>
         <module>jtheque-core</module>
         <module>jtheque-lifecycle</module>
         <module>jtheque-views</module>

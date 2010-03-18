@@ -3,7 +3,7 @@ package org.jtheque.cache;
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.store.MemoryStoreEvictionPolicy;
 import org.jtheque.core.ICore;
-import org.jtheque.logging.ILoggingManager;
+import org.slf4j.LoggerFactory;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -35,12 +35,10 @@ public final class CacheManager implements ICacheManager {
     private static final long TWO_MINUTES = 120;
 
     private final ICore core;
-    private final ILoggingManager loggingManager;
 
-    public CacheManager(ILoggingManager loggingManager, ICore core) {
+    public CacheManager(ICore core) {
         super();
 
-        this.loggingManager = loggingManager;
         this.core = core;
     }
 
@@ -113,7 +111,7 @@ public final class CacheManager implements ICacheManager {
 
             m.set(manager, cacheFolder.getAbsolutePath());
         } catch (Exception e) {
-            loggingManager.getLogger(getClass()).error(e, "Unable to set disk store path for cache");
+            LoggerFactory.getLogger(getClass()).error("Unable to set disk store path for cache", e);
         }
     }
 }
