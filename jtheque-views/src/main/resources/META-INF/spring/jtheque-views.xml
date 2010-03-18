@@ -38,7 +38,7 @@
         </constructor-arg>
     </bean>
 
-    <bean id="mainView" class="org.jtheque.views.impl.frame.MainView" />
+    <bean id="mainView" class="org.jtheque.views.impl.windows.MainView" />
 
     <!-- Services -->
 
@@ -92,35 +92,35 @@
 
     <!-- Proxy views -->
 
-    <jtheque:proxy id="configView" type="org.jtheque.views.impl.frame.ConfigView" swing="true">
-        <bean class="org.jtheque.views.impl.frame.ConfigView" />
+    <jtheque:proxy id="configView" type="org.jtheque.views.impl.windows.ConfigView" swing="true">
+        <bean class="org.jtheque.views.impl.windows.ConfigView" />
     </jtheque:proxy>
 
-    <jtheque:proxy id="licenceView" type="org.jtheque.views.impl.frame.LicenceView">
-        <bean class="org.jtheque.views.impl.frame.LicenceView" />
+    <jtheque:proxy id="licenceView" type="org.jtheque.views.impl.windows.LicenceView">
+        <bean class="org.jtheque.views.impl.windows.LicenceView" />
     </jtheque:proxy>
 
-    <jtheque:proxy id="logView" type="org.jtheque.views.impl.frame.LogView">
-        <bean class="org.jtheque.views.impl.frame.LogView">
+    <jtheque:proxy id="logView" type="org.jtheque.views.impl.windows.LogView">
+        <bean class="org.jtheque.views.impl.windows.LogView">
             <constructor-arg ref="dateFormat" />
             <constructor-arg ref="timeFormat" />
         </bean>
     </jtheque:proxy>
 
-    <jtheque:proxy id="messageView" type="org.jtheque.views.impl.frame.MessageView">
-        <bean class="org.jtheque.views.impl.frame.MessageView" />
+    <jtheque:proxy id="messageView" type="org.jtheque.views.impl.windows.MessageView">
+        <bean class="org.jtheque.views.impl.windows.MessageView" />
     </jtheque:proxy>
 
-    <jtheque:proxy id="moduleView" type="org.jtheque.views.impl.frame.ModuleView">
-        <bean class="org.jtheque.views.impl.frame.ModuleView" />
+    <jtheque:proxy id="moduleView" type="org.jtheque.views.impl.windows.ModuleView">
+        <bean class="org.jtheque.views.impl.windows.ModuleView" />
     </jtheque:proxy>
 
-    <jtheque:proxy id="repositoryView" type="org.jtheque.views.impl.frame.RepositoryView">
-        <bean class="org.jtheque.views.impl.frame.RepositoryView" />
+    <jtheque:proxy id="repositoryView" type="org.jtheque.views.impl.windows.RepositoryView">
+        <bean class="org.jtheque.views.impl.windows.RepositoryView" />
     </jtheque:proxy>
 
-    <jtheque:proxy id="updateView" type="org.jtheque.views.impl.frame.UpdateView">
-        <bean class="org.jtheque.views.impl.frame.UpdateView" />
+    <jtheque:proxy id="updateView" type="org.jtheque.views.impl.windows.UpdateView">
+        <bean class="org.jtheque.views.impl.windows.UpdateView" />
     </jtheque:proxy>
 
     <!-- Java2D panes -->

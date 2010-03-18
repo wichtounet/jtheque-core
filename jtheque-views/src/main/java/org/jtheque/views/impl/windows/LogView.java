@@ -1,4 +1,4 @@
-package org.jtheque.views.impl.frame;
+package org.jtheque.views.impl.windows;
 
 import org.jdesktop.swingx.JXTable;
 import org.jtheque.events.EventLog;

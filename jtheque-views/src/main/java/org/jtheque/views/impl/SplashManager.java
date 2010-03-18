@@ -4,7 +4,7 @@ import org.jtheque.utils.ui.SwingUtils;
 import org.jtheque.views.able.ISplashManager;
 import org.jtheque.views.able.panel.ISplashView;
 import org.jtheque.views.impl.components.panel.SplashScreenPane;
-import org.jtheque.views.impl.frame.MainView;
+import org.jtheque.views.impl.windows.MainView;
 import org.pushingpixels.substance.api.SubstanceLookAndFeel;
 import org.pushingpixels.substance.api.skin.BusinessBlackSteelSkin;
 
