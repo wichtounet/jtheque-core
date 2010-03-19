@@ -16,17 +16,9 @@ package org.jtheque.modules.able;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import org.jtheque.modules.able.ModuleState;
 import org.jtheque.utils.bean.Version;
 import org.osgi.framework.Bundle;
 
-/**
- * Created by IntelliJ IDEA.
- * User: wichtounet
- * Date: Mar 3, 2010
- * Time: 6:27:19 PM
- * To change this template use File | Settings | File Templates.
- */
 public interface Module {
     /**
      * Return the real module.
@@ -91,6 +83,11 @@ public interface Module {
     void setCollection(boolean collection);
 
     boolean isCollection();
-
+    
+    /**
+     * Set the state of the module.
+     *
+     * @param state The state of the module.
+     */
     void setState(ModuleState state);
 }

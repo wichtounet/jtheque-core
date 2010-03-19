@@ -44,6 +44,8 @@ final class MessageFileReader {
      *
      * @param strUrl The URL of the file.
      * @return The versions file.
+     *
+     * @throws XMLException If there is an error reading the messages file.
      */
     public static MessageFile readMessagesFile(String strUrl) throws XMLException{
         URL url = null;

@@ -70,52 +70,18 @@ public final class CoreLauncher implements Closeable {
     }
 
     private void launchSpring() {
-        //Spring OSGi bundles
-        installIfNecessary("org.springframework.osgi.extender", "/bundles/spring-osgi-extender-1.2.1.jar");
-        installIfNecessary("org.springframework.osgi.core", "/bundles/spring-osgi-core-1.2.1.jar");
-        installIfNecessary("org.springframework.osgi.io", "/bundles/spring-osgi-io-1.2.1.jar");
-
-        //Spring bundles
-        installIfNecessary("org.springframework.core", "/bundles/spring-core-3.0.0.jar");
-        installIfNecessary("org.springframework.context", "/bundles/spring-context-3.0.0.jar");
-        installIfNecessary("org.springframework.beans", "/bundles/spring-beans-3.0.0.jar");
-        installIfNecessary("org.springframework.aop", "/bundles/spring-aop-3.0.0.jar");
-        installIfNecessary("org.springframework.asm", "/bundles/spring-asm-3.0.0.jar");
-        installIfNecessary("org.springframework.expression", "/bundles/spring-expression-3.0.0.jar");
-
-        //Logging bundles
-        installIfNecessary("ch.qos.logback.core", "/bundles/logback-core-0.9.18.jar");
-        installIfNecessary("ch.qos.logback.classic", "/bundles/logback-classic-0.9.18.jar");
-        installIfNecessary("com.springsource.slf4j.api", "/bundles/com.springsource.slf4j.api-1.5.6.jar");
-        installIfNecessary("com.springsource.slf4j.org.apache.commons.logging",
-                "/bundles/com.springsource.slf4j.org.apache.commons.logging-1.5.6.jar");
-
-        //Others bundles
-        installIfNecessary("com.springsource.net.sf.cglib", "/bundles/com.springsource.net.sf.cglib-2.1.3.jar");
-        installIfNecessary("com.springsource.org.aopalliance", "/bundles/com.springsource.org.aopalliance-1.0.0.jar");
-
         startIfNotStarted("org.springframework.osgi.extender");
         startIfNotStarted("org.springframework.osgi.core");
         startIfNotStarted("org.springframework.osgi.io");
     }
 
     private void launchJTheque() {
-        installIfNecessary("jtheque-utils", "/bundles/jtheque-utils-1.1.4-SNAPSHOT.jar");
-        installIfNecessary("jtheque-core", "/bundles/jtheque-core-2.1-SNAPSHOT.jar");
-        installIfNecessary("jtheque-lifecycle", "/bundles/jtheque-lifecycle-2.1-SNAPSHOT.jar");
-        
         startIfNotStarted("jtheque-lifecycle");
     }
 
     private void startIfNotStarted(String name) {
         if(server.getState(name) != BundleState.ACTIVE){
             server.startBundle(name);
-        }
-    }
-
-    private void installIfNecessary(String name, String path) {
-        if(!server.isInstalled(name)){
-            server.installBundle(System.getProperty("user.dir") + path);
         }
     }
 

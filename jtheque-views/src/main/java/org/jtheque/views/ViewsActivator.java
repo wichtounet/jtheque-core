@@ -1,6 +1,8 @@
 package org.jtheque.views;
 
+import org.jtheque.features.IFeatureManager;
 import org.jtheque.views.impl.MacOSXConfiguration;
+import org.jtheque.views.impl.components.menu.CoreMenu;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 
@@ -26,6 +28,8 @@ public class ViewsActivator implements BundleActivator {
         ViewsServices.setContext(bundleContext);
 
         MacOSXConfiguration.configureForMac();
+
+        ViewsServices.get(IFeatureManager.class).addMenu("", new CoreMenu());
     }
 
     @Override

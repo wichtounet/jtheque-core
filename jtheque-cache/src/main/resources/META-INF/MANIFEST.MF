@@ -1,9 +1,0 @@
-Manifest-Version: 1.0
-Bundle-ManifestVersion: 2
-Bundle-Name: jtheque-cache
-Bundle-SymbolicName: jtheque-cache
-Bundle-Version: 1.0.0
-Bundle-Vendor: Baptiste Wicht
-Bundle-Localization: plugin
-Export-Package: org.jtheque.cache
-Import-Package: org.jtheque.logging

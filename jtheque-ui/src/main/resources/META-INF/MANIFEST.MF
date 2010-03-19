@@ -1,9 +1,0 @@
-Manifest-Version: 1.0
-Bundle-ManifestVersion: 2
-Bundle-Name: jtheque-lifecycle
-Bundle-SymbolicName: jtheque-lifecycle
-Bundle-Version: 1.0.0
-Bundle-Vendor: Baptiste Wicht
-Bundle-Localization: plugin
-Import-Package: org.jtheque.utils.ui, org.jtheque.i18n
-Bundle-Activator: org.jtheque.ui.ViewsUtilsActivator

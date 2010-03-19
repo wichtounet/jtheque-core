@@ -9,8 +9,11 @@
       </configuration>
     </facet>
     <facet type="Osmorc" name="OSGi">
-      <configuration osmorcControlsManifest="false" manifestLocation="src/main/resources/META-INF/MANIFEST.MF" jarfileLocation="/home/wichtounet/Builds/bundles/jtheque-views/classes/jtheque-views.jar" useBndFile="false" bndFileLocation="" bundleActivator="" bundleSymbolicName="" bundleVersion="1.0.0" ignoreFilePattern="" useProjectDefaultManifestFileLocation="false" alwaysRebuildBundleJAR="false">
-        <additionalProperties />
+      <configuration osmorcControlsManifest="true" manifestLocation="src/main/resources/META-INF/MANIFEST.MF" jarfileLocation="/home/wichtounet/Builds/bundles/jtheque-views/classes/jtheque-views.jar" useBndFile="false" bndFileLocation="" bundleActivator="org.jtheque.views.ViewsActivator" bundleSymbolicName="jtheque-views" bundleVersion="2.1-SNAPSHOT" ignoreFilePattern="" useProjectDefaultManifestFileLocation="false" alwaysRebuildBundleJAR="false">
+        <additionalProperties>
+          <property key="Bundle-Vendor" value="Baptiste Wicht" />
+          <property key="Export-Package" value="org.jtheque.views" />
+        </additionalProperties>
         <additionalJARContents />
       </configuration>
     </facet>
@@ -19,10 +22,8 @@
     <output url="file:///home/wichtounet/Builds/bundles/jtheque-views/classes/production" />
     <output-test url="file:///home/wichtounet/Builds/utils/jtheque-core/classes/test" />
     <content url="file://$MODULE_DIR$">
-      <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/resources" isTestSource="false" />
-      <excludeFolder url="file://$MODULE_DIR$/${env.BUILD_HOME}/bundles/jtheque-views" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
@@ -50,9 +51,6 @@
     <orderEntry type="module" module-name="jtheque-core-utils" exported="" />
     <orderEntry type="library" exported="" name="Maven: javax.mail:mail:1.4.1" level="project" />
     <orderEntry type="library" exported="" name="Maven: javax.activation:activation:1.1" level="project" />
-    <orderEntry type="library" exported="" name="Maven: org.jtheque:jtheque-logging:2.1-SNAPSHOT" level="project" />
-    <orderEntry type="library" exported="" name="Maven: ch.qos.logback:logback-core:0.9.18" level="project" />
-    <orderEntry type="library" exported="" name="Maven: ch.qos.logback:logback-classic:0.9.18" level="project" />
     <orderEntry type="module" module-name="jtheque-jdom" exported="" />
     <orderEntry type="library" exported="" name="Maven: org.jdom:jdom:1.1" level="project" />
     <orderEntry type="module" module-name="jtheque-xercesImpl" exported="" />
@@ -82,7 +80,7 @@
     <orderEntry type="library" exported="" name="Maven: org.springframework:spring-tx:3.0.0.RELEASE" level="project" />
     <orderEntry type="library" exported="" name="Maven: aopalliance:aopalliance:1.0" level="project" />
     <orderEntry type="library" exported="" name="Maven: org.springframework:spring-aop:3.0.0.RELEASE" level="project" />
-    <orderEntry type="module" module-name="jtheque-collections (2)" exported="" />
+    <orderEntry type="module" module-name="jtheque-collections" exported="" />
     <orderEntry type="module" module-name="jtheque-schemas" exported="" />
     <orderEntry type="module" module-name="jtheque-file" exported="" />
     <orderEntry type="module" module-name="jtheque-features" exported="" />

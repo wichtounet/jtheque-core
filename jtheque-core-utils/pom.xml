@@ -6,7 +6,7 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>jtheque-core-utils</artifactId>
     <name>jtheque-core-utils</name>
-    <packaging>jar</packaging>
+    <packaging>bundle</packaging>
 
     <parent>
         <artifactId>jtheque-core-parent</artifactId>
@@ -26,7 +26,7 @@
             <artifactId>jtheque-utils</artifactId>
             <version>1.1.4-SNAPSHOT</version>
         </dependency>
-        
+
         <dependency>
             <groupId>javax.mail</groupId>
             <artifactId>mail</artifactId>
@@ -41,12 +41,16 @@
 
         <plugins>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <extensions>true</extensions>
                 <configuration>
-                    <archive>
-                        <manifestFile>src/main/resources/META-INF/MANIFEST.MF</manifestFile>
-                    </archive>
+                    <instructions>
+                        <Bundle-SymbolicName>${pom.artifactId}</Bundle-SymbolicName>
+                        <Export-Package>org.jtheque.core.utils, org.jtheque.core.utils.ui</Export-Package>
+                        <Bundle-Activator>org.jtheque.core.utils.UtilsActivator</Bundle-Activator>
+                        <Bundle-Vendor>Baptiste Wicht</Bundle-Vendor>
+                    </instructions>
                 </configuration>
             </plugin>
         </plugins>

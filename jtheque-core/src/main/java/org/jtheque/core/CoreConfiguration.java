@@ -29,24 +29,6 @@ public final class CoreConfiguration extends AbstractState {
     private static final String FALSE = "false";
 
     /**
-     * The preferred look and feel of the user.
-     *
-     * @return The preferred look and feel.
-     */
-    public String getPreferredLookAndFeel() {
-        return getProperty("lookAndFeel");
-    }
-
-    /**
-     * Set the preferred look and feel.
-     *
-     * @param lookAndFeel The preferred look and feel.
-     */
-    public void setPreferredLookAndFeel(String lookAndFeel) {
-        setProperty("lookAndFeel", lookAndFeel);
-    }
-
-    /**
      * Indicate if we verify the updates at the application startup.
      *
      * @return <code>true</code> if verify updates on startup else <code>false</code>
@@ -243,7 +225,6 @@ public final class CoreConfiguration extends AbstractState {
         setAlwaysLookAndFeel(true);
         setHasAProxy(false);
         setMustDeleteLogs(false);
-        setPreferredLookAndFeel("Metal");
         setProxyAddress("");
         setProxyPort("");
         setRetainSizeAndPositionOfWindow(true);

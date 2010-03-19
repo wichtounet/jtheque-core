@@ -25,7 +25,6 @@ import org.jtheque.modules.able.ModuleListener;
 import org.jtheque.modules.able.ModuleState;
 import org.jtheque.modules.utils.ModuleResourceCache;
 import org.jtheque.utils.StringUtils;
-import org.jtheque.utils.io.FileException;
 
 import org.jtheque.io.XMLException;
 
@@ -46,7 +45,7 @@ public final class FileManager implements IFileManager, ModuleListener {
     private final List<ModuleBackuper> backupers = new ArrayList<ModuleBackuper>(5);
 
     @Override
-    public void backup(File file) throws XMLException{
+    public void backup(File file) {
         Collection<ModuleBackup> backups = new ArrayList<ModuleBackup>(backupers.size());
 
         Collections.sort(backupers, new ModuleBackupComparator());

@@ -16,8 +16,6 @@ package org.jtheque.undo;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import org.slf4j.LoggerFactory;
-
 import javax.swing.Action;
 import javax.swing.undo.CannotUndoException;
 import javax.swing.undo.UndoManager;

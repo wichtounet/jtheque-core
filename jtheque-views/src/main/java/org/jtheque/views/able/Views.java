@@ -17,9 +17,14 @@ package org.jtheque.views.able;
  */
 
 import org.jtheque.views.able.components.MainComponent;
-import org.jtheque.views.able.windows.*;
 import org.jtheque.views.able.panel.IModuleView;
 import org.jtheque.views.able.panel.IRepositoryView;
+import org.jtheque.views.able.windows.IConfigView;
+import org.jtheque.views.able.windows.ILicenceView;
+import org.jtheque.views.able.windows.ILogView;
+import org.jtheque.views.able.windows.IMainView;
+import org.jtheque.views.able.windows.IMessageView;
+import org.jtheque.views.able.windows.IUpdateView;
 
 /**
  * A views manager.

@@ -20,9 +20,14 @@ import org.jtheque.views.ViewsServices;
 import org.jtheque.views.able.IViewManager;
 import org.jtheque.views.able.Views;
 import org.jtheque.views.able.components.MainComponent;
-import org.jtheque.views.able.windows.*;
 import org.jtheque.views.able.panel.IModuleView;
 import org.jtheque.views.able.panel.IRepositoryView;
+import org.jtheque.views.able.windows.IConfigView;
+import org.jtheque.views.able.windows.ILicenceView;
+import org.jtheque.views.able.windows.ILogView;
+import org.jtheque.views.able.windows.IMainView;
+import org.jtheque.views.able.windows.IMessageView;
+import org.jtheque.views.able.windows.IUpdateView;
 
 import javax.annotation.Resource;
 import javax.swing.JComponent;

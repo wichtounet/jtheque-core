@@ -1,6 +1,5 @@
 package org.jtheque.schemas;
 
-import org.jtheque.core.utils.OSGiUtils;
 import org.jtheque.modules.able.Module;
 import org.jtheque.modules.able.ModuleListener;
 import org.jtheque.modules.able.ModuleState;

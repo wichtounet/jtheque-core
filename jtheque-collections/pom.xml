@@ -6,7 +6,7 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>jtheque-collections</artifactId>
     <name>jtheque-collections</name>
-    <packaging>jar</packaging>
+    <packaging>bundle</packaging>
 
     <parent>
         <artifactId>jtheque-core-parent</artifactId>
@@ -66,12 +66,16 @@
 
         <plugins>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <extensions>true</extensions>
                 <configuration>
-                    <archive>
-                        <manifestFile>src/main/resources/META-INF/MANIFEST.MF</manifestFile>
-                    </archive>
+                    <instructions>
+                        <Bundle-SymbolicName>${pom.artifactId}</Bundle-SymbolicName>
+                        <Export-Package>org.jtheque.collections</Export-Package>
+                        <Bundle-Vendor>Baptiste Wicht</Bundle-Vendor>
+                        <Bundle-Activator>org.jtheque.collections.CollectionsActivator</Bundle-Activator>
+                    </instructions>
                 </configuration>
             </plugin>
         </plugins>

@@ -116,9 +116,4 @@ public final class MessageView extends SwingFilthyBuildedDialogView<IMessageMode
             messageArea.setText(message.getMessage());
         }
     }
-
-    @Override
-    public IMessageModel getModel() {
-        return (IMessageModel) super.getModel();
-    }
 }

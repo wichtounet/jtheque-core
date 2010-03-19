@@ -1,6 +1,5 @@
 package org.jtheque.update;
 
-import org.jtheque.ui.ViewsUtilsServices;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 

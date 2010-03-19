@@ -43,6 +43,7 @@ import java.awt.GraphicsEnvironment;
 import java.awt.Window;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * A view manager implementation.
@@ -68,7 +69,7 @@ public final class ViewManager implements IViewManager, ModuleListener {
     @Resource
     private IAboutView aboutPane;
 
-    public ViewManager(Collection<ConfigTabComponent> configPanels, ViewDefaults viewDefaults, Views windowManager, IUIUtils utils) {
+    public ViewManager(List<ConfigTabComponent> configPanels, ViewDefaults viewDefaults, Views windowManager, IUIUtils utils) {
         super();
 
         this.configPanels = configPanels;

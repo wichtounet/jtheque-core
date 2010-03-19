@@ -30,6 +30,8 @@ public interface IModuleLoader {
 
     /**
      * Load the modules.
+     * 
+     * @return All the loaded modules.
      */
     List<ModuleContainer> loadModules();
 

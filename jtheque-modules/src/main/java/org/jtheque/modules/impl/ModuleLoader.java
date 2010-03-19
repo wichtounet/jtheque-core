@@ -75,6 +75,7 @@ public final class ModuleLoader implements IModuleLoader, BundleContextAware {
      * Load a module from the file.
      *
      * @param file The Jar File of a module.
+     * @param modules The modules to add the new modules to.
      */
     private void loadModule(File file, Collection<ModuleContainer> modules) {
         try {
@@ -118,6 +119,6 @@ public final class ModuleLoader implements IModuleLoader, BundleContextAware {
 
     @Override
     public ModuleContainer installModule(File file) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return null;  //Todo install a file
     }
 }

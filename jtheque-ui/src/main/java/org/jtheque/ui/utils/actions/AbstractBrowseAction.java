@@ -1,6 +1,5 @@
 package org.jtheque.ui.utils.actions;
 
-import org.jtheque.ui.utils.actions.JThequeAction;
 import org.jtheque.utils.DesktopUtils;
 
 import java.awt.event.ActionEvent;

@@ -38,6 +38,7 @@ public interface IFeatureManager {
      * Add a menu to the application. It's an object who contains some features that will be
      * added to the menu bar.
      *
+     * @param moduleId The id of the module who did the add. 
      * @param menu The menu to add to the application.
      */
     void addMenu(String moduleId, Menu menu);

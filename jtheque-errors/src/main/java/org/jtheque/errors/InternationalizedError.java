@@ -33,6 +33,7 @@ public final class InternationalizedError extends JThequeError {
     /**
      * Construct a new InternationalizedError.
      *
+     * @param languageManager The language manager to use to internationalize the error.
      * @param message The message key.
      */
     public InternationalizedError(ILanguageManager languageManager, String message) {
@@ -44,6 +45,7 @@ public final class InternationalizedError extends JThequeError {
     /**
      * Construct a new InternationalizedError.
      *
+     * @param languageManager The language manager to use to internationalize the error.
      * @param message  The message key.
      * @param replaces The replaces for the internationalization variable arguments of the message.
      */
@@ -57,6 +59,7 @@ public final class InternationalizedError extends JThequeError {
     /**
      * Construct a new InternationalizedError.
      *
+     * @param languageManager The language manager to use to internationalize the error.
      * @param message The message key.
      * @param details The details key.
      */
@@ -69,6 +72,7 @@ public final class InternationalizedError extends JThequeError {
     /**
      * Construct a new InternationalizedError.
      *
+     * @param languageManager The language manager to use to internationalize the error.
      * @param message  The message key.
      * @param replaces The replaces for the internationalization variable arguments of the message.
      * @param details  The details key.
@@ -83,6 +87,7 @@ public final class InternationalizedError extends JThequeError {
     /**
      * Construct a new InternationalizedError.
      *
+     * @param languageManager The language manager to use to internationalize the error. 
      * @param message         The message key.
      * @param replaces        The replaces for the internationalization variable arguments of the message.
      * @param details         The details key.

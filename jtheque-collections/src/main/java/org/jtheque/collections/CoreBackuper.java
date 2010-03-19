@@ -1,6 +1,5 @@
 package org.jtheque.collections;
 
-import org.jtheque.collections.IDaoCollections;
 import org.jtheque.file.able.ModuleBackup;
 import org.jtheque.file.able.ModuleBackuper;
 import org.jtheque.io.Node;

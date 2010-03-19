@@ -59,7 +59,7 @@ public final class RepositoryReader {
 
             read();
         } catch (XMLException e) {
-            LoggerFactory.getLogger(getClass()).error(e, "Unable to get information from repository");
+            LoggerFactory.getLogger(getClass()).error("Unable to get information from repository", e);
         } finally {
             FileUtils.close(reader);
         }

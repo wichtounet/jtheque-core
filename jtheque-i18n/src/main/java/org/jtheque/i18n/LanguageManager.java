@@ -1,6 +1,5 @@
 package org.jtheque.i18n;
 
-import org.jtheque.core.utils.OSGiUtils;
 import org.jtheque.states.IStateManager;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.collections.ArrayUtils;

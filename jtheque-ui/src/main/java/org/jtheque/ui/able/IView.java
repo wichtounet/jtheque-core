@@ -1,8 +1,5 @@
 package org.jtheque.ui.able;
 
-import org.jtheque.ui.able.IModel;
-import org.jtheque.ui.able.ViewComponent;
-
 
 /*
  * This file is part of JTheque.

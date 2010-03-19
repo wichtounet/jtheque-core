@@ -90,7 +90,7 @@ public class WeakEventListenerList implements Serializable {
      * Returns a list of strongly referenced EventListeners. Removes
      * internal weak references to garbage collected listeners.
      *
-     * @return
+     * @return All the strongly references listeners.
      */
     @SuppressWarnings("unchecked")
     private synchronized <T extends EventListener> List<T> cleanReferences() {

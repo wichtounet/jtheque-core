@@ -31,6 +31,7 @@ import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.collections.CollectionUtils;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleException;
+import org.slf4j.LoggerFactory;
 import org.springframework.osgi.context.BundleContextAware;
 
 import java.io.File;
@@ -121,7 +122,7 @@ public final class ModuleManager implements IModuleManager, BundleContextAware {
             try {
                 module.getModule().start();
             } catch (BundleException e) {
-                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
             }
         }
     }
@@ -178,7 +179,7 @@ public final class ModuleManager implements IModuleManager, BundleContextAware {
                 try {
                     module.getModule().start();
                 } catch (BundleException e) {
-                    e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                    LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
                 }
 
                 setState(module, ModuleState.INSTALLED);
@@ -253,7 +254,7 @@ public final class ModuleManager implements IModuleManager, BundleContextAware {
         try {
             module.getModule().start();
         } catch (BundleException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
         }
     }
 
@@ -274,7 +275,7 @@ public final class ModuleManager implements IModuleManager, BundleContextAware {
         try {
             module.getModule().stop();
         } catch (BundleException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
         }
 
         ModuleResourceCache.removeModule(module.getId());
@@ -341,7 +342,7 @@ public final class ModuleManager implements IModuleManager, BundleContextAware {
         try {
             module.getModule().stop();
         } catch (BundleException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
         }
 
         ModuleResourceCache.removeModule(module.getId());

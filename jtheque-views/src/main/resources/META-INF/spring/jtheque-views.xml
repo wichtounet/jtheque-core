@@ -3,11 +3,14 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:osgi="http://www.springframework.org/schema/osgi"
        xmlns:jtheque="http://www.jtheque.com/schema/jtheque"
+       xmlns:util="http://www.springframework.org/schema/util"
        xsi:schemaLocation="
             http://www.springframework.org/schema/beans
             http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
             http://www.springframework.org/schema/osgi
             http://www.springframework.org/schema/osgi/spring-osgi.xsd
+            http://www.springframework.org/schema/util
+            http://www.springframework.org/schema/util/spring-util.xsd
             http://www.jtheque.com/schema/jtheque
             http://www.jtheque.com/schema/jtheque/jtheque.xsd">
 
@@ -17,7 +20,7 @@
 
     <bean id="viewManager" class="org.jtheque.views.impl.ViewManager">
         <constructor-arg>
-            <list>
+            <util:list>
                 <jtheque:proxy id="configAppearanceView" type="org.jtheque.views.impl.components.config.JPanelConfigAppearance">
                     <bean class="org.jtheque.views.impl.components.config.JPanelConfigAppearance"/>
                 </jtheque:proxy>
@@ -27,20 +30,20 @@
                 <jtheque:proxy id="configNetworkView" type="org.jtheque.views.impl.components.config.JPanelConfigNetwork">
                     <bean class="org.jtheque.views.impl.components.config.JPanelConfigOthers"/>
                 </jtheque:proxy>
-            </list>
+            </util:list>
         </constructor-arg>
-        <constructor-arg><bean class="org.jtheque.ui.utils.SwingViewDelegate" /></constructor-arg>
         <constructor-arg ref="uiDefaults"/>
         <constructor-arg>
-            <bean class="org.jtheque.views.impl.WindowManager">
-                <constructor-arg ref="mainView" />
-            </bean>
+            <bean class="org.jtheque.views.impl.WindowManager"><constructor-arg ref="mainView"/></bean>
+        </constructor-arg>
+        <constructor-arg>
+            <osgi:reference interface="org.jtheque.ui.able.IUIUtils" />
         </constructor-arg>
     </bean>
 
     <bean id="mainView" class="org.jtheque.views.impl.windows.MainView" />
 
-    <!-- Services -->
+    <!-- OSGi Services -->
 
     <osgi:service id="splashManagerService" ref="splashManager" interface="org.jtheque.views.able.ISplashManager"/>
 

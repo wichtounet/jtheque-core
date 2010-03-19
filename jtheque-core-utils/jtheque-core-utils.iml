@@ -2,8 +2,12 @@
 <module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" type="JAVA_MODULE" version="4">
   <component name="FacetManager">
     <facet type="Osmorc" name="OSGi">
-      <configuration osmorcControlsManifest="false" manifestLocation="src/main/resources/META-INF/MANIFEST.MF" jarfileLocation="/home/wichtounet/Builds/utils/jtheque-core/classes/jtheque-core-utils.jar" useBndFile="false" bndFileLocation="" bundleActivator="" bundleSymbolicName="" bundleVersion="1.0.0" ignoreFilePattern="" useProjectDefaultManifestFileLocation="false" alwaysRebuildBundleJAR="false">
-        <additionalProperties />
+      <configuration osmorcControlsManifest="true" manifestLocation="src/main/resources/META-INF/MANIFEST.MF" jarfileLocation="/home/wichtounet/Builds/utils/jtheque-core/classes/jtheque-core-utils.jar" useBndFile="false" bndFileLocation="" bundleActivator="org.jtheque.core.utils.UtilsActivator" bundleSymbolicName="jtheque-core-utils" bundleVersion="2.1-SNAPSHOT" ignoreFilePattern="" useProjectDefaultManifestFileLocation="false" alwaysRebuildBundleJAR="false">
+        <additionalProperties>
+          <property key="Bundle-Vendor" value="Baptiste Wicht" />
+          <property key="Private-Package" value="org.foo.myproject.*" />
+          <property key="Export-Package" value="org.jtheque.core.utils, org.jtheque.core.utils.ui" />
+        </additionalProperties>
         <additionalJARContents />
       </configuration>
     </facet>
@@ -15,7 +19,6 @@
       <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/resources" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
-      <excludeFolder url="file://$MODULE_DIR$/${env.BUILD_HOME}/bundles/jtheque-core-utils" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

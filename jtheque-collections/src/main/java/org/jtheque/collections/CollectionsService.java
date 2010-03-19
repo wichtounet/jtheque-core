@@ -20,7 +20,6 @@ import org.jtheque.core.ICore;
 import org.jtheque.core.utils.OSGiUtils;
 import org.jtheque.core.utils.Response;
 import org.jtheque.core.utils.WeakEventListenerList;
-import org.jtheque.i18n.ILanguageManager;
 import org.jtheque.persistence.able.DataListener;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.io.FileUtils;

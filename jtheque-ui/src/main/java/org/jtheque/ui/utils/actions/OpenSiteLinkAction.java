@@ -16,7 +16,6 @@ package org.jtheque.ui.utils.actions;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import org.jtheque.ui.utils.actions.JThequeSimpleAction;
 import org.jtheque.utils.DesktopUtils;
 
 import java.awt.event.ActionEvent;

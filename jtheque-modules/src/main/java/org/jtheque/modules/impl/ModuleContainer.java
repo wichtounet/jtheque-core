@@ -58,11 +58,7 @@ public final class ModuleContainer implements Module {
         return state;
     }
 
-    /**
-     * Set the state of the module.
-     *
-     * @param state The state of the module.
-     */
+    @Override
     public void setState(ModuleState state) {
         this.state = state;
     }

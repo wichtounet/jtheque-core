@@ -8,9 +8,7 @@
             http://www.springframework.org/schema/osgi
             http://www.springframework.org/schema/osgi/spring-osgi.xsd">
 
-    <bean id="fileManager" class="org.jtheque.file.FileManager">
-        <constructor-arg><osgi:reference interface="org.jtheque.collections.IDaoCollections"/></constructor-arg>
-    </bean>
+    <bean id="fileManager" class="org.jtheque.file.FileManager" />
 
     <osgi:service id="fileManagerService" ref="fileManager" interface="org.jtheque.file.IFileManager"/>
 

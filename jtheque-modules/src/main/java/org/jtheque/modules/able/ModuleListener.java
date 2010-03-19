@@ -16,8 +16,6 @@ package org.jtheque.modules.able;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import org.jtheque.modules.able.ModuleState;
-
 import java.util.EventListener;
 
 /**

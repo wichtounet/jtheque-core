@@ -6,7 +6,7 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>jtheque-messages</artifactId>
     <name>jtheque-messages</name>
-    <packaging>jar</packaging>
+    <packaging>bundle</packaging>
 
     <parent>
         <artifactId>jtheque-core-parent</artifactId>
@@ -25,12 +25,6 @@
             <groupId>org.springframework.osgi</groupId>
             <artifactId>spring-osgi-core</artifactId>
             <version>1.2.1</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.jtheque</groupId>
-            <artifactId>jtheque-logging</artifactId>
-            <version>2.1-SNAPSHOT</version>
         </dependency>
 
         <dependency>
@@ -59,18 +53,21 @@
     </dependencies>
 
     <build>
-        <directory>${env.BUILD_HOME}/bundles/jtheque-events</directory>
+        <directory>${env.BUILD_HOME}/bundles/jtheque-messages</directory>
 
-        <outputDirectory>${env.BUILD_HOME}/bundles/jtheque-events/classes/production</outputDirectory>
+        <outputDirectory>${env.BUILD_HOME}/bundles/jtheque-messages/classes/production</outputDirectory>
 
         <plugins>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <extensions>true</extensions>
                 <configuration>
-                    <archive>
-                        <manifestFile>src/main/resources/META-INF/MANIFEST.MF</manifestFile>
-                    </archive>
+                    <instructions>
+                        <Bundle-SymbolicName>${pom.artifactId}</Bundle-SymbolicName>
+                        <Export-Package>org.jtheque.messages</Export-Package>
+                        <Bundle-Vendor>Baptiste Wicht</Bundle-Vendor>
+                    </instructions>
                 </configuration>
             </plugin>
         </plugins>

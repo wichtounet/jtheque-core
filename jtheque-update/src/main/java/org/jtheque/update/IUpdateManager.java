@@ -54,6 +54,8 @@ public interface IUpdateManager {
 
     /**
      * Verify if there is a new update available and if the user want to update the application.
+     *
+     * @return An empty list if there were no updates therefore a list containing i18n messages to display about the state of updates. 
      */
     List<String> getPossibleUpdates();
 

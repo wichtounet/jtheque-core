@@ -32,9 +32,13 @@ import java.util.List;
  * @author Baptiste Wicht
  */
 public final class PropertiesUtils {
+    private PropertiesUtils() {
+        super();
+    }
+
     /**
      * Create a memento for the bean. A memento is a clone of all the properties of the bean.
-     * <p/>
+     *
      * Note : The properties of the Object class are not retrieved.
      *
      * @param bean The bean to create the memento from.
@@ -65,7 +69,7 @@ public final class PropertiesUtils {
 
     /**
      * Restore the state of the memento. It seems to copy all the properties values from the memento to the bean.
-     * <p/>
+     *
      * Note : The properties of the Object class are not retrieved.
      *
      * @param bean    The bean.
@@ -151,7 +155,7 @@ public final class PropertiesUtils {
 
     /**
      * Generate a toString() String based on all the properties of the bean.
-     * <p/>
+     *
      * Note : The properties of the Object class are not retrieved.
      *
      * @param bean The bean.

@@ -1,6 +1,5 @@
 package org.jtheque.i18n;
 
-import java.util.Collection;
 import java.util.Locale;
 
 /*

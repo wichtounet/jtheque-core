@@ -22,7 +22,7 @@ import org.jtheque.errors.JThequeError;
 import org.jtheque.i18n.ILanguageManager;
 import org.jtheque.i18n.Internationalizable;
 import org.jtheque.resources.IResourceManager;
-import org.jtheque.ui.*;
+import org.jtheque.ui.ViewsUtilsServices;
 import org.jtheque.ui.able.IModel;
 import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.ui.able.IWindowView;

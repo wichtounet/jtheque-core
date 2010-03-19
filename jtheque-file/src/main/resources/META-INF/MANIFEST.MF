@@ -1,9 +1,0 @@
-Manifest-Version: 1.0
-Bundle-ManifestVersion: 2
-Bundle-Name: jtheque-file
-Bundle-SymbolicName: jtheque-file
-Bundle-Version: 1.0.0
-Bundle-Vendor: Baptiste Wicht
-Bundle-Localization: plugin
-Export-Package: org.jtheque.file
-Import-Package: org.jtheque.logging

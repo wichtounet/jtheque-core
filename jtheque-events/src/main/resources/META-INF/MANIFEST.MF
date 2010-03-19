@@ -1,9 +1,0 @@
-Manifest-Version: 1.0
-Bundle-ManifestVersion: 2
-Bundle-Name: jtheque-events
-Bundle-SymbolicName: jtheque-events
-Bundle-Version: 1.0.0
-Bundle-Vendor: Baptiste Wicht
-Bundle-Localization: plugin
-Export-Package: org.jtheque.events
-Import-Package: org.jtheque.logging

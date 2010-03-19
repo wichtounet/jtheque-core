@@ -1,7 +1,5 @@
 package org.jtheque.lifecycle;
 
-import ch.qos.logback.classic.Level;
-import ch.qos.logback.classic.Logger;
 import org.jtheque.collections.CollectionListener;
 import org.jtheque.collections.ICollectionsService;
 import org.jtheque.core.ICore;

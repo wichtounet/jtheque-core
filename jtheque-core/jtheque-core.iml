@@ -2,8 +2,11 @@
 <module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" type="JAVA_MODULE" version="4">
   <component name="FacetManager">
     <facet type="Osmorc" name="OSGi">
-      <configuration osmorcControlsManifest="false" manifestLocation="src/main/resources/META-INF/MANIFEST.MF" jarfileLocation="/home/wichtounet/Builds/utils/jtheque-core/classes/jtheque-core.jar" useBndFile="false" bndFileLocation="" bundleActivator="" bundleSymbolicName="" bundleVersion="1.0.0" ignoreFilePattern="" useProjectDefaultManifestFileLocation="false" alwaysRebuildBundleJAR="false">
-        <additionalProperties />
+      <configuration osmorcControlsManifest="true" manifestLocation="src/main/resources/META-INF/MANIFEST.MF" jarfileLocation="/home/wichtounet/Builds/utils/jtheque-core/classes/jtheque-core.jar" useBndFile="false" bndFileLocation="" bundleActivator="org.jtheque.core.CoreActivator" bundleSymbolicName="jtheque-core" bundleVersion="2.1-SNAPSHOT" ignoreFilePattern="" useProjectDefaultManifestFileLocation="false" alwaysRebuildBundleJAR="false">
+        <additionalProperties>
+          <property key="Bundle-Vendor" value="Baptiste Wicht" />
+          <property key="Export-Package" value="org.jtheque.core, org.jtheque.core.application, org.jtheque.core.lifecycle" />
+        </additionalProperties>
         <additionalJARContents />
       </configuration>
     </facet>
@@ -14,7 +17,6 @@
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/resources" isTestSource="false" />
-      <excludeFolder url="file://$MODULE_DIR$/${env.BUILD_HOME}/bundles/jtheque-core" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
@@ -24,9 +26,6 @@
     <orderEntry type="module" module-name="jtheque-core-utils" exported="" />
     <orderEntry type="library" exported="" name="Maven: javax.mail:mail:1.4.1" level="project" />
     <orderEntry type="library" exported="" name="Maven: javax.activation:activation:1.1" level="project" />
-    <orderEntry type="library" exported="" name="Maven: org.jtheque:jtheque-logging:2.1-SNAPSHOT" level="project" />
-    <orderEntry type="library" exported="" name="Maven: ch.qos.logback:logback-core:0.9.18" level="project" />
-    <orderEntry type="library" exported="" name="Maven: ch.qos.logback:logback-classic:0.9.18" level="project" />
     <orderEntry type="module" module-name="jtheque-i18n" exported="" />
     <orderEntry type="library" exported="" name="Maven: org.springframework:spring-context-support:3.0.0.RELEASE" level="project" />
     <orderEntry type="library" exported="" name="Maven: org.springframework:spring-beans:3.0.0.RELEASE" level="project" />

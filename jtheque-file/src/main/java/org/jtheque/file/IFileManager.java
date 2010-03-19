@@ -44,12 +44,14 @@ public interface IFileManager {
      *
      * @param file   The file to backup to.
      */
-    void backup(File file) throws XMLException;
+    void backup(File file);
 
     /**
      * Restore the data from a File.
      *
      * @param file   The file to restore from.
+     *
+     * @throws XMLException If there is a problem reading the backup.
      */
     void restore(File file) throws XMLException;
 

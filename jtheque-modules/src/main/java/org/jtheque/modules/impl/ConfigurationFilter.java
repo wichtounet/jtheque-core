@@ -33,6 +33,7 @@ final class ConfigurationFilter implements Filter<ModuleContainer> {
      * Construct a new configuration filter.
      *
      * @param configuration The current module configuration.
+     * @param application The current application. 
      */
     ConfigurationFilter(ModuleConfiguration configuration, Application application) {
         super();
