@@ -17,7 +17,7 @@ package org.jtheque.update.actions;
  */
 
 import org.jtheque.errors.InternationalizedError;
-import org.jtheque.i18n.ILanguageManager;
+import org.jtheque.i18n.ILanguageService;
 import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.update.UpdateServices;
 import org.jtheque.utils.OSUtils;
@@ -52,7 +52,7 @@ public final class DownloadAction extends AbstractUpdateAction {
 
                 if(e.getCause() instanceof FileNotFoundException){
                     UpdateServices.get(IUIUtils.class).getDelegate().displayError(
-                            new InternationalizedError(UpdateServices.get(ILanguageManager.class), "error.update.download", e.getMessage()));
+                            new InternationalizedError(UpdateServices.get(ILanguageService.class), "error.update.download", e.getMessage()));
                 }
             }
         }

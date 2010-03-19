@@ -23,7 +23,7 @@ import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.ui.utils.windows.frames.SwingFilthyBuildedDialogView;
 import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.views.ViewsServices;
-import org.jtheque.views.able.IViewManager;
+import org.jtheque.views.able.IViewService;
 import org.jtheque.views.able.components.ConfigTabComponent;
 import org.jtheque.views.able.windows.IConfigView;
 import org.jtheque.views.impl.actions.config.ApplyChangesAction;
@@ -60,7 +60,7 @@ public final class ConfigView extends SwingFilthyBuildedDialogView<IModel> imple
     protected void buildView(I18nPanelBuilder builder){
         tab = new LayerTabbedPane();
 
-        for (ConfigTabComponent component : ViewsServices.get(IViewManager.class).getConfigTabComponents()) {
+        for (ConfigTabComponent component : ViewsServices.get(IViewService.class).getConfigTabComponents()) {
             tab.addLayeredTab(component.getTitle(), component.getComponent());
         }
 

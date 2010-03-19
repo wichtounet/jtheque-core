@@ -19,7 +19,7 @@ package org.jtheque.views.impl.components.config;
 import org.jtheque.core.CoreConfiguration;
 import org.jtheque.core.ICore;
 import org.jtheque.errors.JThequeError;
-import org.jtheque.i18n.ILanguageManager;
+import org.jtheque.i18n.ILanguageService;
 import org.jtheque.ui.utils.ValidationUtils;
 import org.jtheque.ui.utils.builders.FilthyPanelBuilder;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
@@ -69,14 +69,14 @@ public final class JPanelConfigAppearance extends FilthyBackgroundPanel implemen
 
     @Override
     public String getTitle() {
-        return ViewsServices.get(ILanguageManager.class).getMessage("config.view.tab.appearance");
+        return ViewsServices.get(ILanguageService.class).getMessage("config.view.tab.appearance");
     }
 
     /**
      * Fill the all fields with the current configurations.
      */
     private void fillAllFields() {
-        modelLanguages.setSelectedItem(ViewsServices.get(ILanguageManager.class).getCurrentLanguage());
+        modelLanguages.setSelectedItem(ViewsServices.get(ILanguageService.class).getCurrentLanguage());
         boxRetainSizeAndPosition.setSelected(ViewsServices.get(ICore.class).getConfiguration().retainSizeAndPositionOfWindow());
     }
 
@@ -84,7 +84,7 @@ public final class JPanelConfigAppearance extends FilthyBackgroundPanel implemen
     public void apply() {
         CoreConfiguration configuration = ViewsServices.get(ICore.class).getConfiguration();
 
-        ViewsServices.get(ILanguageManager.class).setCurrentLanguage(modelLanguages.getSelectedLanguage());
+        ViewsServices.get(ILanguageService.class).setCurrentLanguage(modelLanguages.getSelectedLanguage());
         configuration.setRetainSizeAndPositionOfWindow(boxRetainSizeAndPosition.isSelected());
     }
 

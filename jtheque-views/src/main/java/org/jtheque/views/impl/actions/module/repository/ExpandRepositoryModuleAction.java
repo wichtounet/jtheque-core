@@ -18,7 +18,7 @@ package org.jtheque.views.impl.actions.module.repository;
 
 import org.jtheque.ui.utils.actions.JThequeAction;
 import org.jtheque.views.ViewsServices;
-import org.jtheque.views.able.IViewManager;
+import org.jtheque.views.able.IViewService;
 
 import java.awt.event.ActionEvent;
 
@@ -38,6 +38,6 @@ public final class ExpandRepositoryModuleAction extends JThequeAction {
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        ViewsServices.get(IViewManager.class).getViews().getRepositoryView().expandSelectedModule();
+        ViewsServices.get(IViewService.class).getViews().getRepositoryView().expandSelectedModule();
     }
 }

@@ -16,7 +16,7 @@ package org.jtheque.ui.utils.components;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import org.jtheque.i18n.ILanguageManager;
+import org.jtheque.i18n.ILanguageService;
 import org.jtheque.i18n.Internationalizable;
 import org.jtheque.ui.ViewsUtilsServices;
 
@@ -43,13 +43,13 @@ public final class JThequeCheckBox extends JCheckBox implements Internationaliza
 
         textKey = key;
 
-        setText(ViewsUtilsServices.get(ILanguageManager.class).getMessage(key));
+        setText(ViewsUtilsServices.get(ILanguageService.class).getMessage(key));
 
-        ViewsUtilsServices.get(ILanguageManager.class).addInternationalizable(this);
+        ViewsUtilsServices.get(ILanguageService.class).addInternationalizable(this);
     }
 
     @Override
     public void refreshText() {
-        setText(ViewsUtilsServices.get(ILanguageManager.class).getMessage(textKey));
+        setText(ViewsUtilsServices.get(ILanguageService.class).getMessage(textKey));
     }
 }

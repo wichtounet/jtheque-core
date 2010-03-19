@@ -6,17 +6,17 @@ import org.jtheque.core.ICore;
 import org.jtheque.core.utils.SystemProperty;
 import org.jtheque.core.application.Application;
 import org.jtheque.core.utils.OSGiUtils;
-import org.jtheque.errors.IErrorManager;
+import org.jtheque.errors.IErrorService;
 import org.jtheque.events.EventLevel;
 import org.jtheque.events.EventLog;
-import org.jtheque.events.IEventManager;
+import org.jtheque.events.IEventService;
 import org.jtheque.lifecycle.application.XMLApplicationReader;
-import org.jtheque.messages.IMessageManager;
-import org.jtheque.modules.able.IModuleManager;
+import org.jtheque.messages.IMessageService;
+import org.jtheque.modules.able.IModuleService;
 import org.jtheque.ui.able.IUIUtils;
-import org.jtheque.update.IUpdateManager;
-import org.jtheque.views.able.ISplashManager;
-import org.jtheque.views.able.IViewManager;
+import org.jtheque.update.IUpdateService;
+import org.jtheque.views.able.ISplashService;
+import org.jtheque.views.able.IViewService;
 import org.jtheque.ui.utils.edt.SimpleTask;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
@@ -53,23 +53,23 @@ public class LifeCycleActivator implements BundleActivator, CollectionListener {
 
         getService(ICore.class).setApplication(application);
 
-        getService(ISplashManager.class).displaySplashScreen();
+        getService(ISplashService.class).displaySplashScreen();
 
-        getService(IEventManager.class).addEventLog("JTheque Core", new EventLog(EventLevel.INFO, "User", "events.start"));
+        getService(IEventService.class).addEventLog("JTheque Core", new EventLog(EventLevel.INFO, "User", "events.start"));
 
         OSGiUtils.getBundle(context, "jtheque-modules").start();
 
-        getService(IModuleManager.class).load();
+        getService(IModuleService.class).load();
 
-        if(OSGiUtils.getService(context, IModuleManager.class).hasCollectionModule()){
+        if(OSGiUtils.getService(context, IModuleService.class).hasCollectionModule()){
             OSGiUtils.getBundle(context, "jtheque-collections").start();
 
             getService(IUIUtils.class).execute(new SimpleTask() {
                 @Override
                 public void run() {
-                    getService(ISplashManager.class).closeSplashScreen();
+                    getService(ISplashService.class).closeSplashScreen();
                     getService(ICollectionsService.class).addCollectionListener(LifeCycleActivator.this);
-                    getService(IViewManager.class).displayCollectionView();
+                    getService(IViewService.class).displayCollectionView();
                 }
             });
         } else {
@@ -101,27 +101,27 @@ public class LifeCycleActivator implements BundleActivator, CollectionListener {
     }
 
     private void startSecondPhase() {
-        OSGiUtils.getService(context, IModuleManager.class).plugModules();
+        OSGiUtils.getService(context, IModuleService.class).plugModules();
 
         getService(ICore.class).getLifeCycle().initTitle();
 
-        getService(ISplashManager.class).closeSplashScreen();
-        getService(ISplashManager.class).fillMainView();
+        getService(ISplashService.class).closeSplashScreen();
+        getService(ISplashService.class).fillMainView();
 
-        getService(IErrorManager.class).displayErrors();
+        getService(IErrorService.class).displayErrors();
 
-        getService(IMessageManager.class).loadMessages();
+        getService(IMessageService.class).loadMessages();
 
-        if(getService(IMessageManager.class).isDisplayNeeded()){
-            getService(IViewManager.class).getViews().getMessagesView().display();
+        if(getService(IMessageService.class).isDisplayNeeded()){
+            getService(IViewService.class).getViews().getMessagesView().display();
         }
 
         if (getService(ICore.class).getConfiguration().verifyUpdateOnStartup()) {
-            List<String> messages = getService(IUpdateManager.class).getPossibleUpdates();
+            List<String> messages = getService(IUpdateService.class).getPossibleUpdates();
 
             for(String message : messages){
                 if(getService(IUIUtils.class).askI18nUserForConfirmation(message, message + ".title")){
-                    getService(IViewManager.class).getViews().getModuleView().display();
+                    getService(IViewService.class).getViews().getModuleView().display();
                     break;
                 }
             }

@@ -38,6 +38,8 @@ public class FelixServer implements OSGiServer {
 
         configMap.put("felix.cache.bufsize", "8192");
         configMap.put("org.osgi.framework.storage", System.getProperty("user.dir") + "/bundles/cache/");
+        configMap.put("felix.auto.deploy.dir", System.getProperty("user.dir") + "/bundles/");
+        configMap.put("felix.auto.deploy.action", "install");
 
         try{
             felix = new Felix(configMap);

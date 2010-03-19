@@ -20,7 +20,7 @@ import org.jtheque.core.ICore;
 import org.jtheque.ui.utils.builders.FilthyPanelBuilder;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.ui.utils.builders.PanelBuilder;
-import org.jtheque.update.IUpdateManager;
+import org.jtheque.update.IUpdateService;
 import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.views.ViewsServices;
 import org.jtheque.views.impl.actions.module.UpdateKernelAction;
@@ -62,7 +62,7 @@ public final class KernelInfoPanel extends JPanel {
 
         builder.addI18nLabel("modules.view.core.version.online", builder.gbcSet(2, 0));
 
-        builder.addLabel(ViewsServices.get(IUpdateManager.class).getMostRecentVersion(ViewsServices.get(ICore.class)).getVersion(), getForeground(),
+        builder.addLabel(ViewsServices.get(IUpdateService.class).getMostRecentVersion(ViewsServices.get(ICore.class)).getVersion(), getForeground(),
                 builder.gbcSet(2, 1));
 
         builder.addButton(new UpdateKernelAction(), builder.gbcSet(4, 0, GridBagUtils.NONE, GridBagUtils.LINE_START, 1, 3));

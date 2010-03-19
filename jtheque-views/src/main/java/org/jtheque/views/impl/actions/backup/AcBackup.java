@@ -2,10 +2,10 @@ package org.jtheque.views.impl.actions.backup;
 
 import org.jtheque.core.ICore;
 import org.jtheque.core.utils.ImageType;
-import org.jtheque.errors.IErrorManager;
-import org.jtheque.file.IFileManager;
+import org.jtheque.errors.IErrorService;
+import org.jtheque.file.IFileService;
 import org.jtheque.io.XMLException;
-import org.jtheque.resources.IResourceManager;
+import org.jtheque.resources.IResourceService;
 import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.ui.utils.actions.JThequeAction;
 import org.jtheque.views.ViewsServices;
@@ -43,7 +43,7 @@ public class AcBackup extends JThequeAction {
     public AcBackup() {
         super("menu.backup");
 
-        setIcon(ViewsServices.get(IResourceManager.class).getIcon(ICore.IMAGES_BASE_NAME, "xml", ImageType.PNG));
+        setIcon(ViewsServices.get(IResourceService.class).getIcon(ICore.IMAGES_BASE_NAME, "xml", ImageType.PNG));
     }
 
     @Override
@@ -55,10 +55,10 @@ public class AcBackup extends JThequeAction {
             File file = new File(ViewsServices.get(IUIUtils.class).getDelegate().chooseFile(new SimpleFilter("XML(*.xml)", ".xml")));
 
             try {
-                ViewsServices.get(IFileManager.class).backup(file);
+                ViewsServices.get(IFileService.class).backup(file);
             } catch (XMLException e1) {
                 LoggerFactory.getLogger(getClass()).error(e1.getMessage(), e1);
-                ViewsServices.get(IErrorManager.class).addInternationalizedError("error.backup.error");
+                ViewsServices.get(IErrorService.class).addInternationalizedError("error.backup.error");
             }
         }
     }

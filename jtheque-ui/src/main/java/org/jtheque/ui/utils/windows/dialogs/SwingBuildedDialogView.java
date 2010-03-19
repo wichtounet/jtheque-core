@@ -18,7 +18,7 @@ package org.jtheque.ui.utils.windows.dialogs;
 
 import org.jtheque.core.utils.SimplePropertiesCache;
 import org.jtheque.errors.JThequeError;
-import org.jtheque.i18n.ILanguageManager;
+import org.jtheque.i18n.ILanguageService;
 import org.jtheque.ui.able.IModel;
 import org.jtheque.ui.ViewsUtilsServices;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
@@ -53,7 +53,7 @@ public abstract class SwingBuildedDialogView<T extends IModel> extends SwingDial
         setModal(true);
         setResizable(true);
 
-        ViewsUtilsServices.get(ILanguageManager.class).addInternationalizable(this);
+        ViewsUtilsServices.get(ILanguageService.class).addInternationalizable(this);
 
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         setIconImage(getDefaultWindowIcon());

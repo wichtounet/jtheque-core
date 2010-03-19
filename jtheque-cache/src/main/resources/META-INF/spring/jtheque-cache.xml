@@ -8,10 +8,10 @@
             http://www.springframework.org/schema/osgi
             http://www.springframework.org/schema/osgi/spring-osgi.xsd">
 
-    <bean id="cacheManager" class="org.jtheque.cache.CacheManager">
+    <bean id="cacheManager" class="org.jtheque.cache.CacheService">
         <constructor-arg><osgi:reference interface="org.jtheque.core.ICore"/></constructor-arg>
     </bean>
 
-    <osgi:service id="cacheManagerService" ref="cacheManager" interface="org.jtheque.cache.CacheManager"/>
+    <osgi:service id="cacheManagerService" ref="cacheManager" interface="org.jtheque.cache.CacheService"/>
 
 </beans>

@@ -18,7 +18,7 @@ package org.jtheque.views.impl.actions.config;
 
 import org.jtheque.ui.utils.actions.JThequeSimpleAction;
 import org.jtheque.views.ViewsServices;
-import org.jtheque.views.able.IViewManager;
+import org.jtheque.views.able.IViewService;
 import org.jtheque.views.able.config.INetworkConfigView;
 
 import java.awt.event.ActionEvent;
@@ -31,7 +31,7 @@ import java.awt.event.ActionEvent;
 public final class CheckProxyAction extends JThequeSimpleAction {
     @Override
     public void actionPerformed(ActionEvent e) {
-        INetworkConfigView config = (INetworkConfigView) ViewsServices.get(IViewManager.class).getViews().getConfigView().getSelectedPanelConfig();
+        INetworkConfigView config = (INetworkConfigView) ViewsServices.get(IViewService.class).getViews().getConfigView().getSelectedPanelConfig();
 
         boolean selected = config.getBoxProxy().isSelected();
         config.getFieldAddress().setEnabled(selected);

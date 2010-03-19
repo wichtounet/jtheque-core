@@ -8,10 +8,10 @@
             http://www.springframework.org/schema/osgi
             http://www.springframework.org/schema/osgi/spring-osgi.xsd">
 
-    <bean id="schemaManager" class="org.jtheque.schemas.SchemaManager">
-        <property name="stateManager"><osgi:reference interface="org.jtheque.states.IStateManager" /></property>
+    <bean id="schemaManager" class="org.jtheque.schemas.SchemaService">
+        <property name="stateManager"><osgi:reference interface="org.jtheque.states.IStateService" /></property>
     </bean>
 
-    <osgi:service id="schemaManagerService" ref="schemaManager" interface="org.jtheque.schemas.ISchemaManager"/>
+    <osgi:service id="schemaManagerService" ref="schemaManager" interface="org.jtheque.schemas.ISchemaService"/>
 
 </beans>

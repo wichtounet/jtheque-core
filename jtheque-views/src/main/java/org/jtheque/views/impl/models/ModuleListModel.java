@@ -16,7 +16,7 @@ package org.jtheque.views.impl.models;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import org.jtheque.modules.able.IModuleManager;
+import org.jtheque.modules.able.IModuleService;
 import org.jtheque.modules.able.Module;
 import org.jtheque.modules.able.ModuleListener;
 import org.jtheque.modules.able.ModuleState;
@@ -40,9 +40,9 @@ public final class ModuleListModel extends DefaultListModel implements ModuleLis
     public ModuleListModel() {
         super();
 
-        ViewsServices.get(IModuleManager.class).addModuleListener(this);
+        ViewsServices.get(IModuleService.class).addModuleListener(this);
 
-        modules = new ArrayList<Module>(ViewsServices.get(IModuleManager.class).getModules());
+        modules = new ArrayList<Module>(ViewsServices.get(IModuleService.class).getModules());
     }
 
     @Override
@@ -72,7 +72,7 @@ public final class ModuleListModel extends DefaultListModel implements ModuleLis
 
         if(oldState == null){
             modules.clear();
-            modules.addAll(ViewsServices.get(IModuleManager.class).getModules());
+            modules.addAll(ViewsServices.get(IModuleService.class).getModules());
 
             fireContentsChanged(this, 0, modules.size());
         }

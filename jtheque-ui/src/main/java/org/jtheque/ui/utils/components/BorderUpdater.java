@@ -17,7 +17,7 @@ package org.jtheque.ui.utils.components;
  */
 
 import org.jtheque.core.utils.UtilsServices;
-import org.jtheque.i18n.ILanguageManager;
+import org.jtheque.i18n.ILanguageService;
 import org.jtheque.i18n.Internationalizable;
 
 import javax.swing.border.TitledBorder;
@@ -46,6 +46,6 @@ public final class BorderUpdater implements Internationalizable {
 
     @Override
     public void refreshText() {
-        border.setTitle(UtilsServices.get(ILanguageManager.class).getMessage(key));
+        border.setTitle(UtilsServices.get(ILanguageService.class).getMessage(key));
     }
 }

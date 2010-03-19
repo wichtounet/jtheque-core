@@ -8,11 +8,11 @@
             http://www.springframework.org/schema/osgi
             http://www.springframework.org/schema/osgi/spring-osgi.xsd">
 
-    <bean id="languageManager" class="org.jtheque.i18n.LanguageManager" />
+    <bean id="languageManager" class="org.jtheque.i18n.LanguageService" />
 
-    <osgi:service id="languageManagerService" ref="languageManager" interface="org.jtheque.i18n.ILanguageManager"/>
+    <osgi:service id="languageManagerService" ref="languageManager" interface="org.jtheque.i18n.ILanguageService"/>
 
-    <osgi:reference id="stateManager" interface="org.jtheque.states.IStateManager" />
+    <osgi:reference id="stateManager" interface="org.jtheque.states.IStateService" />
 
     <!-- Internationalization -->
 

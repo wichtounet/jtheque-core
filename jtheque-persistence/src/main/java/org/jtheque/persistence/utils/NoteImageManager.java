@@ -3,7 +3,7 @@ package org.jtheque.persistence.utils;
 import org.jtheque.core.ICore;
 import org.jtheque.core.utils.ImageType;
 import org.jtheque.persistence.PersistenceServices;
-import org.jtheque.resources.IResourceManager;
+import org.jtheque.resources.IResourceService;
 
 import java.awt.Image;
 import java.awt.image.BufferedImage;
@@ -43,7 +43,7 @@ public final class NoteImageManager {
         STARS = new BufferedImage[7];
 
         for (int i = 0; i < 7; ++i) {
-            STARS[i] = PersistenceServices.get(IResourceManager.class).getImage(ICore.IMAGES_BASE_NAME, "Star" + (i + 1), ImageType.PNG);
+            STARS[i] = PersistenceServices.get(IResourceService.class).getImage(ICore.IMAGES_BASE_NAME, "Star" + (i + 1), ImageType.PNG);
         }
     }
 

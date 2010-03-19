@@ -17,12 +17,12 @@ package org.jtheque.views.impl.actions.module.repository;
  */
 
 import org.jtheque.core.ICore;
-import org.jtheque.modules.able.IModuleManager;
+import org.jtheque.modules.able.IModuleService;
 import org.jtheque.modules.impl.ModuleDescription;
 import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.ui.utils.actions.JThequeAction;
 import org.jtheque.views.ViewsServices;
-import org.jtheque.views.able.IViewManager;
+import org.jtheque.views.able.IViewService;
 
 import java.awt.event.ActionEvent;
 
@@ -41,15 +41,15 @@ public final class InstallRepositoryModuleAction extends JThequeAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        ModuleDescription description = ViewsServices.get(IViewManager.class).getViews().getRepositoryView().getSelectedModule();
+        ModuleDescription description = ViewsServices.get(IViewService.class).getViews().getRepositoryView().getSelectedModule();
 
         if (description.getCoreVersion().isGreaterThan(ICore.VERSION)) {
             ViewsServices.get(IUIUtils.class).displayI18nText("error.module.version.core");
         } else {
-            if (ViewsServices.get(IModuleManager.class).isInstalled(description.getId())) {
+            if (ViewsServices.get(IModuleService.class).isInstalled(description.getId())) {
                 ViewsServices.get(IUIUtils.class).displayI18nText("message.repository.module.installed");
             } else {
-                ViewsServices.get(IModuleManager.class).install(description.getVersionsFileURL());
+                ViewsServices.get(IModuleService.class).install(description.getVersionsFileURL());
             }
         }
     }

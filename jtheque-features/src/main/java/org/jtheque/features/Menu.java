@@ -2,7 +2,7 @@ package org.jtheque.features;
 
 import java.util.List;
 
-import org.jtheque.features.IFeatureManager.CoreFeature;
+import org.jtheque.features.IFeatureService.CoreFeature;
 
 /*
  * This file is part of JTheque.

@@ -16,13 +16,13 @@ package org.jtheque.views.impl.actions.module;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import org.jtheque.modules.able.IModuleManager;
+import org.jtheque.modules.able.IModuleService;
 import org.jtheque.modules.able.Module;
 import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.ui.utils.actions.JThequeAction;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.views.ViewsServices;
-import org.jtheque.views.able.IViewManager;
+import org.jtheque.views.able.IViewService;
 import org.jtheque.views.able.panel.IModuleView;
 
 import java.awt.event.ActionEvent;
@@ -42,14 +42,14 @@ public final class LoadModuleAction extends JThequeAction {
 
     @Override
     public void actionPerformed(ActionEvent arg0) {
-        IModuleView moduleView = ViewsServices.get(IViewManager.class).getViews().getModuleView();
+        IModuleView moduleView = ViewsServices.get(IViewService.class).getViews().getModuleView();
 
         Module module = moduleView.getSelectedModule();
 
-        String error = ViewsServices.get(IModuleManager.class).canModuleLaunched(module);
+        String error = ViewsServices.get(IModuleService.class).canModuleLaunched(module);
 
         if (StringUtils.isEmpty(error)) {
-            ViewsServices.get(IModuleManager.class).loadModule(module);
+            ViewsServices.get(IModuleService.class).loadModule(module);
             moduleView.refreshList();
         } else {
             ViewsServices.get(IUIUtils.class).getDelegate().displayText(error);

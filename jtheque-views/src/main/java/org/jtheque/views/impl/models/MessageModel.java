@@ -16,7 +16,7 @@ package org.jtheque.views.impl.models;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import org.jtheque.messages.IMessageManager;
+import org.jtheque.messages.IMessageService;
 import org.jtheque.messages.Message;
 import org.jtheque.utils.bean.IntDate;
 import org.jtheque.utils.collections.CollectionUtils;
@@ -31,7 +31,7 @@ import java.util.ListIterator;
  * @author Baptiste Wicht
  */
 public final class MessageModel implements IMessageModel {
-    private final IMessageManager manager;
+    private final IMessageService service;
     private final Message defaultMessage;
 
     private final ListIterator<Message> iterator;
@@ -42,9 +42,9 @@ public final class MessageModel implements IMessageModel {
     public MessageModel() {
         super();
 
-        manager = ViewsServices.get(IMessageManager.class);
+        service = ViewsServices.get(IMessageService.class);
 
-        iterator = new ArrayList<Message>(manager.getMessages()).listIterator();
+        iterator = new ArrayList<Message>(service.getMessages()).listIterator();
 
         defaultMessage = new Message();
         defaultMessage.setDate(IntDate.today());
@@ -60,7 +60,7 @@ public final class MessageModel implements IMessageModel {
             CollectionUtils.goToFirst(iterator);
         }
 
-        return manager.getMessages().isEmpty() ? defaultMessage : iterator.next();
+        return service.getMessages().isEmpty() ? defaultMessage : iterator.next();
     }
 
     @Override
@@ -69,7 +69,7 @@ public final class MessageModel implements IMessageModel {
             CollectionUtils.goToLast(iterator);
         }
 
-        return manager.getMessages().isEmpty() ? defaultMessage : iterator.previous();
+        return service.getMessages().isEmpty() ? defaultMessage : iterator.previous();
     }
 
     @Override
@@ -78,11 +78,11 @@ public final class MessageModel implements IMessageModel {
             CollectionUtils.goToFirst(iterator);
         }
 
-        return manager.getMessages().isEmpty() ? defaultMessage : iterator.next();
+        return service.getMessages().isEmpty() ? defaultMessage : iterator.next();
     }
 
     @Override
     public boolean isDefaultMessage() {
-        return manager.getMessages().isEmpty();
+        return service.getMessages().isEmpty();
     }
 }

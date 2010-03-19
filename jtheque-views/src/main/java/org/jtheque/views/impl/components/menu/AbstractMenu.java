@@ -7,9 +7,9 @@ import java.util.Map;
 
 import org.jtheque.core.utils.ImageType;
 import org.jtheque.features.Feature;
-import org.jtheque.features.IFeatureManager;
+import org.jtheque.features.IFeatureService;
 import org.jtheque.features.Menu;
-import org.jtheque.resources.IResourceManager;
+import org.jtheque.resources.IResourceService;
 import org.jtheque.ui.able.IView;
 import org.jtheque.ui.utils.actions.ActionFactory;
 import org.jtheque.utils.collections.CollectionUtils;
@@ -46,29 +46,29 @@ public abstract class AbstractMenu implements Menu {
     //Public methods
 
     @Override
-    public final List<Feature> getSubFeatures(IFeatureManager.CoreFeature feature){
+    public final List<Feature> getSubFeatures(IFeatureService.CoreFeature feature){
         switch (feature){
             case FILE:
-                if(!cache.containsKey(IFeatureManager.CoreFeature.FILE.name())){
-                    cache.put(IFeatureManager.CoreFeature.FILE.name(), getFileMenuSubFeatures());
+                if(!cache.containsKey(IFeatureService.CoreFeature.FILE.name())){
+                    cache.put(IFeatureService.CoreFeature.FILE.name(), getFileMenuSubFeatures());
                 }
 
                 break;
             case EDIT:
-                if(!cache.containsKey(IFeatureManager.CoreFeature.EDIT.name())){
-                    cache.put(IFeatureManager.CoreFeature.EDIT.name(), getEditMenuSubFeatures());
+                if(!cache.containsKey(IFeatureService.CoreFeature.EDIT.name())){
+                    cache.put(IFeatureService.CoreFeature.EDIT.name(), getEditMenuSubFeatures());
                 }
 
                 break;
             case ADVANCED:
-                if(!cache.containsKey(IFeatureManager.CoreFeature.ADVANCED.name())){
-                    cache.put(IFeatureManager.CoreFeature.ADVANCED.name(), getAdvancedMenuSubFeatures());
+                if(!cache.containsKey(IFeatureService.CoreFeature.ADVANCED.name())){
+                    cache.put(IFeatureService.CoreFeature.ADVANCED.name(), getAdvancedMenuSubFeatures());
                 }
 
                 break;
             case HELP:
-                if(!cache.containsKey(IFeatureManager.CoreFeature.HELP.name())){
-                    cache.put(IFeatureManager.CoreFeature.HELP.name(), getHelpMenuSubFeatures());
+                if(!cache.containsKey(IFeatureService.CoreFeature.HELP.name())){
+                    cache.put(IFeatureService.CoreFeature.HELP.name(), getHelpMenuSubFeatures());
                 }
 
                 break;
@@ -364,7 +364,7 @@ public abstract class AbstractMenu implements Menu {
      * @param f The feature.
      */
     private static void putIconOnAction(String imagesBaseName, String image, Feature f){
-        f.getAction().putValue(Action.SMALL_ICON, ViewsServices.get(IResourceManager.class).getIcon(
+        f.getAction().putValue(Action.SMALL_ICON, ViewsServices.get(IResourceService.class).getIcon(
                 imagesBaseName,
                 image, ImageType.PNG));
     }

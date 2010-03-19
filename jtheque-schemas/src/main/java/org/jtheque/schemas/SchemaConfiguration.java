@@ -24,7 +24,7 @@ import org.jtheque.utils.bean.Version;
  *
  * @author Baptiste Wicht
  */
-//Must be public for StateManager
+//Must be public for StateService
 public final class SchemaConfiguration extends AbstractState {
     /**
      * Return the version of the schema.

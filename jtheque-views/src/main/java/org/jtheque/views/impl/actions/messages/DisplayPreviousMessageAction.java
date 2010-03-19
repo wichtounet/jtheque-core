@@ -18,7 +18,7 @@ package org.jtheque.views.impl.actions.messages;
 
 import org.jtheque.ui.utils.actions.JThequeAction;
 import org.jtheque.views.ViewsServices;
-import org.jtheque.views.able.IViewManager;
+import org.jtheque.views.able.IViewService;
 
 import java.awt.event.ActionEvent;
 
@@ -37,6 +37,6 @@ public final class DisplayPreviousMessageAction extends JThequeAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        ViewsServices.get(IViewManager.class).getViews().getMessagesView().previous();
+        ViewsServices.get(IViewService.class).getViews().getMessagesView().previous();
     }
 }

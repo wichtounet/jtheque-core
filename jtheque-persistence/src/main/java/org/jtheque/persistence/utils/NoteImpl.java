@@ -16,7 +16,7 @@ package org.jtheque.persistence.utils;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import org.jtheque.i18n.ILanguageManager;
+import org.jtheque.i18n.ILanguageService;
 import org.jtheque.persistence.PersistenceServices;
 import org.jtheque.persistence.utils.DaoNotes.NoteType;
 import org.jtheque.utils.Constants;
@@ -46,7 +46,7 @@ public final class NoteImpl implements Note {
 
     @Override
     public String getInternationalizedText() {
-        return PersistenceServices.get(ILanguageManager.class).getMessage(key);
+        return PersistenceServices.get(ILanguageService.class).getMessage(key);
     }
 
     @Override

@@ -2,7 +2,7 @@ package org.jtheque.views.impl.components.panel;
 
 import org.jdesktop.swingx.JXPanel;
 import org.jtheque.core.ICore;
-import org.jtheque.i18n.ILanguageManager;
+import org.jtheque.i18n.ILanguageService;
 import org.jtheque.views.ViewsServices;
 import org.pushingpixels.trident.Timeline;
 
@@ -60,7 +60,7 @@ public abstract class AbstractAboutPane extends JXPanel {
         credits = new ArrayList<String>(ViewsServices.get(ICore.class).getCreditsMessage().size() * 4);
 
         for (String key : ViewsServices.get(ICore.class).getCreditsMessage()) {
-            String[] messages = ViewsServices.get(ILanguageManager.class).getLinesMessage(key);
+            String[] messages = ViewsServices.get(ILanguageService.class).getLinesMessage(key);
 
             credits.addAll(Arrays.asList(messages));
         }
@@ -73,7 +73,7 @@ public abstract class AbstractAboutPane extends JXPanel {
      * @return The internationalized message.
      */
     private static String getMessage(String key) {
-        return ViewsServices.get(ILanguageManager.class).getMessage(key);
+        return ViewsServices.get(ILanguageService.class).getMessage(key);
     }
 
     /**

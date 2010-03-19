@@ -85,6 +85,12 @@ public final class CoreLauncher implements Closeable {
         }
     }
 
+    private void installIfNecessary(String name, String path) {
+        if(!server.isInstalled(name)){
+            server.installBundle(System.getProperty("user.dir") + path);
+        }
+    }
+
     private class StopServerHook extends Thread {
         @Override
         public void run(){

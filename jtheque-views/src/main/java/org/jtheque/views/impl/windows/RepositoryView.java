@@ -16,7 +16,7 @@ package org.jtheque.views.impl.windows;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import org.jtheque.modules.able.IModuleManager;
+import org.jtheque.modules.able.IModuleService;
 import org.jtheque.modules.impl.ModuleDescription;
 import org.jtheque.ui.able.IModel;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
@@ -53,13 +53,13 @@ public final class RepositoryView extends SwingFilthyBuildedDialogView<IModel> i
 
     @Override
     protected void initView(){
-        setTitleKey("repository.view.title", ViewsServices.get(IModuleManager.class).getRepository().getApplication());
+        setTitleKey("repository.view.title", ViewsServices.get(IModuleService.class).getRepository().getApplication());
         setResizable(false);
     }
 
     @Override
     protected void buildView(I18nPanelBuilder builder){
-        builder.addLabel(ViewsServices.get(IModuleManager.class).getRepository().getTitle().toString(), PanelBuilder.BOLD, 18f,
+        builder.addLabel(ViewsServices.get(IModuleService.class).getRepository().getTitle().toString(), PanelBuilder.BOLD, 18f,
                 builder.gbcSet(0, 0, GridBagUtils.HORIZONTAL));
 
         list = builder.addScrolledList(new ModuleRepositoryListModel(), new ModuleRepositoryListRenderer(), builder.gbcSet(0, 1, GridBagUtils.BOTH));

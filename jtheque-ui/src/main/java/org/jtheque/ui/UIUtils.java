@@ -1,6 +1,6 @@
 package org.jtheque.ui;
 
-import org.jtheque.i18n.ILanguageManager;
+import org.jtheque.i18n.ILanguageService;
 import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.ui.able.ViewDelegate;
 import org.jtheque.ui.utils.edt.SimpleTask;
@@ -34,13 +34,13 @@ public class UIUtils implements IUIUtils {
     @Override
     public boolean askI18nUserForConfirmation(String textKey, String titleKey) {
         return viewDelegate.askUserForConfirmation(
-                ViewsUtilsServices.get(ILanguageManager.class).getMessage(textKey),
-                ViewsUtilsServices.get(ILanguageManager.class).getMessage(titleKey));
+                ViewsUtilsServices.get(ILanguageService.class).getMessage(textKey),
+                ViewsUtilsServices.get(ILanguageService.class).getMessage(titleKey));
     }
 
     @Override
     public void displayI18nText(String key) {
-        viewDelegate.displayText(ViewsUtilsServices.get(ILanguageManager.class).getMessage(key));
+        viewDelegate.displayText(ViewsUtilsServices.get(ILanguageService.class).getMessage(key));
     }
 
     @Override

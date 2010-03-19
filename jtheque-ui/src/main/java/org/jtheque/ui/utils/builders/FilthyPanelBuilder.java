@@ -1,7 +1,7 @@
 package org.jtheque.ui.utils.builders;
 
 import org.jdesktop.swingx.JXTree;
-import org.jtheque.i18n.ILanguageManager;
+import org.jtheque.i18n.ILanguageService;
 import org.jtheque.ui.ViewsUtilsServices;
 import org.jtheque.ui.utils.components.BorderUpdater;
 import org.jtheque.ui.utils.components.Borders;
@@ -256,11 +256,11 @@ public final class FilthyPanelBuilder extends JThequePanelBuilder {
 
     @Override
     public void setI18nTitleBorder(String key) {
-        TitledBorder border = BorderFactory.createTitledBorder(ViewsUtilsServices.get(ILanguageManager.class).getMessage(key));
+        TitledBorder border = BorderFactory.createTitledBorder(ViewsUtilsServices.get(ILanguageService.class).getMessage(key));
 
         border.setTitleColor(Color.white);
 
-        ViewsUtilsServices.get(ILanguageManager.class).addInternationalizable(new BorderUpdater(border, key));
+        ViewsUtilsServices.get(ILanguageService.class).addInternationalizable(new BorderUpdater(border, key));
 
         setBorder(border);
     }

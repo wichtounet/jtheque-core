@@ -1,6 +1,6 @@
 package org.jtheque.views.impl.models;
 
-import org.jtheque.events.IEventManager;
+import org.jtheque.events.IEventService;
 import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.views.ViewsServices;
 
@@ -37,7 +37,7 @@ public final class LogComboBoxModel extends DefaultComboBoxModel {
     public LogComboBoxModel() {
         super();
 
-        logs = CollectionUtils.copyOf(ViewsServices.get(IEventManager.class).getLogs());
+        logs = CollectionUtils.copyOf(ViewsServices.get(IEventService.class).getLogs());
     }
 
     @Override

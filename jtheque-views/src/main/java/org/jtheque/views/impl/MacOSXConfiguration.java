@@ -21,7 +21,7 @@ import com.apple.eawt.ApplicationAdapter;
 import com.apple.eawt.ApplicationEvent;
 import org.jtheque.core.ICore;
 import org.jtheque.views.ViewsServices;
-import org.jtheque.views.able.IViewManager;
+import org.jtheque.views.able.IViewService;
 
 /**
  * Configuration to improve the compatibility with mac.
@@ -61,14 +61,14 @@ public final class MacOSXConfiguration {
 
         @Override
         public void handleAbout(ApplicationEvent ev) {
-            ViewsServices.get(IViewManager.class).displayAboutView();
+            ViewsServices.get(IViewService.class).displayAboutView();
 
             ev.setHandled(true);
         }
 
         @Override
         public void handlePreferences(ApplicationEvent ev) {
-            ViewsServices.get(IViewManager.class).getViews().getConfigView().display();
+            ViewsServices.get(IViewService.class).getViews().getConfigView().display();
 
             ev.setHandled(true);
         }

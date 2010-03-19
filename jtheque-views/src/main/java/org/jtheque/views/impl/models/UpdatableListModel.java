@@ -16,7 +16,7 @@ package org.jtheque.views.impl.models;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import org.jtheque.update.IUpdateManager;
+import org.jtheque.update.IUpdateService;
 import org.jtheque.update.Updatable;
 import org.jtheque.update.UpdatableListener;
 import org.jtheque.utils.collections.CollectionUtils;
@@ -39,9 +39,9 @@ public final class UpdatableListModel extends DefaultListModel implements Updata
     public UpdatableListModel() {
         super();
 
-        updatables = CollectionUtils.copyOf(ViewsServices.get(IUpdateManager.class).getUpdatables());
+        updatables = CollectionUtils.copyOf(ViewsServices.get(IUpdateService.class).getUpdatables());
 
-        ViewsServices.get(IUpdateManager.class).addUpdatableListener(this);
+        ViewsServices.get(IUpdateService.class).addUpdatableListener(this);
     }
 
     @Override
@@ -62,6 +62,6 @@ public final class UpdatableListModel extends DefaultListModel implements Updata
     @Override
     public void updatableAdded() {
         updatables.clear();
-        updatables.addAll(ViewsServices.get(IUpdateManager.class).getUpdatables());
+        updatables.addAll(ViewsServices.get(IUpdateService.class).getUpdatables());
     }
 }

@@ -19,7 +19,7 @@ package org.jtheque.views.impl.components.panel;
 import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.views.ViewsServices;
-import org.jtheque.views.able.IViewManager;
+import org.jtheque.views.able.IViewService;
 import org.jtheque.views.able.components.StateBarComponent;
 
 import javax.swing.Box;
@@ -180,8 +180,8 @@ public final class JThequeStateBar extends JPanel {
         ViewsServices.get(IUIUtils.class).getDelegate().refresh(this);
     }
 
-    private static IViewManager getManager() {
-        return ViewsServices.get(IViewManager.class);
+    private static IViewService getManager() {
+        return ViewsServices.get(IViewService.class);
     }
 
     /**

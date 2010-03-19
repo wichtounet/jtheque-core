@@ -16,7 +16,7 @@ package org.jtheque.views.impl.filthy;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import org.jtheque.i18n.ILanguageManager;
+import org.jtheque.i18n.ILanguageService;
 import org.jtheque.i18n.Internationalizable;
 import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.ui.utils.components.Borders;
@@ -147,7 +147,7 @@ public final class FilthyFileChooserPanel extends JPanel implements Internationa
     public void setTextKey(String key) {
         this.key = key;
 
-        setText(ViewsServices.get(ILanguageManager.class).getMessage(key));
+        setText(ViewsServices.get(ILanguageService.class).getMessage(key));
     }
 
     /**
@@ -202,7 +202,7 @@ public final class FilthyFileChooserPanel extends JPanel implements Internationa
     @Override
     public void refreshText() {
         if (key != null) {
-            setText(ViewsServices.get(ILanguageManager.class).getMessage(key));
+            setText(ViewsServices.get(ILanguageService.class).getMessage(key));
         }
     }
 

@@ -18,10 +18,10 @@ package org.jtheque.views.impl.actions.backup;
 
 import org.jtheque.core.ICore;
 import org.jtheque.core.utils.ImageType;
-import org.jtheque.file.IFileManager;
+import org.jtheque.file.IFileService;
 import org.jtheque.io.XMLException;
-import org.jtheque.persistence.able.IPersistenceManager;
-import org.jtheque.resources.IResourceManager;
+import org.jtheque.persistence.able.IPersistenceService;
+import org.jtheque.resources.IResourceService;
 import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.ui.utils.actions.JThequeAction;
 import org.jtheque.views.ViewsServices;
@@ -45,7 +45,7 @@ public class AcRestore extends JThequeAction {
     public AcRestore() {
         super("menu.restore");
         
-        setIcon(ViewsServices.get(IResourceManager.class).getIcon(ICore.IMAGES_BASE_NAME, "xml", ImageType.PNG));
+        setIcon(ViewsServices.get(IResourceService.class).getIcon(ICore.IMAGES_BASE_NAME, "xml", ImageType.PNG));
     }
 
     @Override
@@ -90,11 +90,11 @@ public class AcRestore extends JThequeAction {
         @Override
         public void run() {
             if (clear) {
-                ViewsServices.get(IPersistenceManager.class).clearDatabase();
+                ViewsServices.get(IPersistenceService.class).clearDatabase();
             }
 
             try {
-                ViewsServices.get(IFileManager.class).restore(file);
+                ViewsServices.get(IFileService.class).restore(file);
             } catch (XMLException e){
                 LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
             }

@@ -2,7 +2,7 @@ package org.jtheque.views.impl.components.panel;
 
 import org.jtheque.core.ICore;
 import org.jtheque.core.application.Application;
-import org.jtheque.i18n.ILanguageManager;
+import org.jtheque.i18n.ILanguageService;
 import org.jtheque.i18n.Internationalizable;
 import org.jtheque.ui.utils.AnimationUtils;
 import org.jtheque.utils.DesktopUtils;
@@ -12,7 +12,7 @@ import org.jtheque.utils.ui.PaintUtils;
 import org.jtheque.utils.ui.SizeTracker;
 import org.jtheque.utils.ui.SwingUtils;
 import org.jtheque.views.ViewsServices;
-import org.jtheque.views.able.IViewManager;
+import org.jtheque.views.able.IViewService;
 import org.jtheque.views.able.windows.IAboutView;
 import org.pushingpixels.trident.Timeline;
 import org.pushingpixels.trident.callback.TimelineCallbackAdapter;
@@ -96,7 +96,7 @@ public final class AboutPane extends AbstractAboutPane implements IAboutView, In
         setOpaque(false);
         setVisible(true);
 
-        ViewsServices.get(ILanguageManager.class).addInternationalizable(this);
+        ViewsServices.get(ILanguageService.class).addInternationalizable(this);
 
         Application application = ViewsServices.get(ICore.class).getApplication();
 
@@ -466,7 +466,7 @@ public final class AboutPane extends AbstractAboutPane implements IAboutView, In
                 }
             } else if (shapes.get("licence").contains(event.getPoint())) {
                 disappear();
-                ViewsServices.get(IViewManager.class).getViews().getLicenceView().display();
+                ViewsServices.get(IViewService.class).getViews().getLicenceView().display();
             }
         }
     }

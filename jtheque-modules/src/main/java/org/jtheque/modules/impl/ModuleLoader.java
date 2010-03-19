@@ -2,7 +2,7 @@ package org.jtheque.modules.impl;
 
 import org.jtheque.core.ICore;
 import org.jtheque.core.utils.OSGiUtils;
-import org.jtheque.errors.IErrorManager;
+import org.jtheque.errors.IErrorService;
 import org.jtheque.errors.JThequeError;
 import org.jtheque.modules.able.IModuleLoader;
 import org.jtheque.modules.able.Module;
@@ -113,7 +113,7 @@ public final class ModuleLoader implements IModuleLoader, BundleContextAware {
             modules.add(container);
         } catch (BundleException e) {
             LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
-            OSGiUtils.getService(bundleContext, IErrorManager.class).addError(new JThequeError(e));
+            OSGiUtils.getService(bundleContext, IErrorService.class).addError(new JThequeError(e));
         }
     }
 

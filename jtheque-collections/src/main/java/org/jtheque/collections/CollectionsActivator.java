@@ -1,7 +1,7 @@
 package org.jtheque.collections;
 
 import org.jtheque.core.utils.OSGiUtils;
-import org.jtheque.schemas.ISchemaManager;
+import org.jtheque.schemas.ISchemaService;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 
@@ -24,7 +24,7 @@ import org.osgi.framework.BundleContext;
 public class CollectionsActivator implements BundleActivator {
     @Override
     public void start(BundleContext bundleContext) throws Exception {
-        OSGiUtils.getService(bundleContext, ISchemaManager.class).registerSchema("", new CollectionSchema());
+        OSGiUtils.getService(bundleContext, ISchemaService.class).registerSchema("", new CollectionSchema());
     }
 
     @Override

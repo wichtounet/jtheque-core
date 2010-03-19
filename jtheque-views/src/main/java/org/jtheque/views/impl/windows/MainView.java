@@ -29,7 +29,7 @@ import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.utils.ui.SwingUtils;
 import org.jtheque.views.ViewsServices;
-import org.jtheque.views.able.IViewManager;
+import org.jtheque.views.able.IViewService;
 import org.jtheque.views.able.components.MainComponent;
 import org.jtheque.views.able.windows.IMainView;
 import org.jtheque.views.impl.MainController;
@@ -66,7 +66,7 @@ public final class MainView extends SwingFrameView implements TitleListener, IMa
     private static final int DEFAULT_HEIGHT = 645;
 
     private WindowListener tempListener;
-    private IViewManager viewManager;
+    private IViewService viewService;
 
     private JXLayer<JComponent> content;
 
@@ -115,7 +115,7 @@ public final class MainView extends SwingFrameView implements TitleListener, IMa
 
     @Override
     public void fill() {
-        viewManager = ViewsServices.get(IViewManager.class);
+        viewService = ViewsServices.get(IViewService.class);
 
         setIconImage(getDefaultWindowIcon());
         setResizable(true);
@@ -134,7 +134,7 @@ public final class MainView extends SwingFrameView implements TitleListener, IMa
 
                 addWindowListener(controller);
 
-                viewManager.configureView(MainView.this, "main", DEFAULT_WIDTH, DEFAULT_HEIGHT);
+                viewService.configureView(MainView.this, "main", DEFAULT_WIDTH, DEFAULT_HEIGHT);
             }
         });
     }
@@ -188,11 +188,11 @@ public final class MainView extends SwingFrameView implements TitleListener, IMa
         PanelBuilder builder = new JThequePanelBuilder();
         builder.setBorder(Borders.EMPTY_BORDER);
 
-        Collection<MainComponent> components = ViewsServices.get(IViewManager.class).getMainComponents();
+        Collection<MainComponent> components = ViewsServices.get(IViewService.class).getMainComponents();
 
         if(components.isEmpty()){
             Component emptyPanel = new JPanel();
-            emptyPanel.setBackground(viewManager.getViewDefaults().getBackgroundColor());
+            emptyPanel.setBackground(viewService.getViewDefaults().getBackgroundColor());
 
             builder.add(emptyPanel, builder.gbcSet(0, 0, GridBagUtils.BOTH, GridBagUtils.FIRST_LINE_START, 1.0, 1.0));
         } else if (components.size() == 1) {
@@ -232,7 +232,7 @@ public final class MainView extends SwingFrameView implements TitleListener, IMa
 
             GridBagUtils gbc = new GridBagUtils();
 
-            Collection<MainComponent> components = ViewsServices.get(IViewManager.class).getMainComponents();
+            Collection<MainComponent> components = ViewsServices.get(IViewService.class).getMainComponents();
 
             content.getView().add(CollectionUtils.first(components).getComponent(),
                     gbc.gbcSet(0, 0, GridBagUtils.BOTH, GridBagUtils.FIRST_LINE_START, 1.0, 1.0));
@@ -261,7 +261,7 @@ public final class MainView extends SwingFrameView implements TitleListener, IMa
             GridBagUtils gbc = new GridBagUtils();
 
             Component emptyPanel = new JPanel();
-            emptyPanel.setBackground(viewManager.getViewDefaults().getBackgroundColor());
+            emptyPanel.setBackground(viewService.getViewDefaults().getBackgroundColor());
 
             content.getView().add(emptyPanel, gbc.gbcSet(0, 0, GridBagUtils.BOTH, GridBagUtils.FIRST_LINE_START, 1.0, 1.0));
 
@@ -271,7 +271,7 @@ public final class MainView extends SwingFrameView implements TitleListener, IMa
 
             GridBagUtils gbc = new GridBagUtils();
 
-            Collection<MainComponent> components = ViewsServices.get(IViewManager.class).getMainComponents();
+            Collection<MainComponent> components = ViewsServices.get(IViewService.class).getMainComponents();
 
             content.getView().add(CollectionUtils.first(components).getComponent(),
                     gbc.gbcSet(0, 0, GridBagUtils.BOTH, GridBagUtils.FIRST_LINE_START, 1.0, 1.0));
@@ -294,8 +294,8 @@ public final class MainView extends SwingFrameView implements TitleListener, IMa
 
     @Override
     public void closeDown() {
-        if (viewManager != null) {
-            viewManager.saveState(this, "main");
+        if (viewService != null) {
+            viewService.saveState(this, "main");
         }
 
         super.closeDown();

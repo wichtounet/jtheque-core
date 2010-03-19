@@ -18,7 +18,7 @@ package org.jtheque.views.impl.components;
 
 import org.jdesktop.jxlayer.JXLayer;
 import org.jdesktop.jxlayer.plaf.BufferedLayerUI;
-import org.jtheque.i18n.ILanguageManager;
+import org.jtheque.i18n.ILanguageService;
 import org.jtheque.ui.able.ViewComponent;
 import org.jtheque.views.ViewsServices;
 
@@ -62,7 +62,7 @@ public class LayerTabbedPane extends JTabbedPane implements ViewComponent {
      * @param component The component to add.
      */
     public final void addInternationalizedTab(String key, JComponent component) {
-        addLayeredTab(ViewsServices.get(ILanguageManager.class).getMessage(key), component);
+        addLayeredTab(ViewsServices.get(ILanguageService.class).getMessage(key), component);
     }
 
     /**

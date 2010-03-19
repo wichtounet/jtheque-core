@@ -16,7 +16,7 @@ package org.jtheque.views.impl.components.panel;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import org.jtheque.update.IUpdateManager;
+import org.jtheque.update.IUpdateService;
 import org.jtheque.views.ViewsServices;
 
 import javax.swing.JLabel;
@@ -39,6 +39,6 @@ public final class VersionLabel extends JLabel {
 
         setForeground(foreground);
 
-        setText(ViewsServices.get(IUpdateManager.class).getMostRecentVersion(object).getVersion());
+        setText(ViewsServices.get(IUpdateService.class).getMostRecentVersion(object).getVersion());
     }
 }

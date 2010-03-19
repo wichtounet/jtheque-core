@@ -1,7 +1,7 @@
 package org.jtheque.modules.impl;
 
 import org.jtheque.core.utils.OSGiUtils;
-import org.jtheque.i18n.ILanguageManager;
+import org.jtheque.i18n.ILanguageService;
 import org.jtheque.modules.able.Module;
 import org.jtheque.modules.able.ModuleState;
 import org.jtheque.utils.bean.Version;
@@ -74,17 +74,17 @@ public final class ModuleContainer implements Module {
 
     @Override
     public String getName() {
-        return OSGiUtils.getService(module.getBundleContext(), ILanguageManager.class).getMessage(id + ".name");
+        return OSGiUtils.getService(module.getBundleContext(), ILanguageService.class).getMessage(id + ".name");
     }
 
     @Override
     public String getAuthor() {
-        return OSGiUtils.getService(module.getBundleContext(), ILanguageManager.class).getMessage(id + ".author");
+        return OSGiUtils.getService(module.getBundleContext(), ILanguageService.class).getMessage(id + ".author");
     }
 
     @Override
     public String getDescription() {
-        return OSGiUtils.getService(module.getBundleContext(), ILanguageManager.class).getMessage(id + ".description");
+        return OSGiUtils.getService(module.getBundleContext(), ILanguageService.class).getMessage(id + ".description");
     }
 
     @Override

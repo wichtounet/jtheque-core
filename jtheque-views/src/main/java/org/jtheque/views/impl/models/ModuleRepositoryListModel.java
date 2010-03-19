@@ -16,7 +16,7 @@ package org.jtheque.views.impl.models;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import org.jtheque.modules.able.IModuleManager;
+import org.jtheque.modules.able.IModuleService;
 import org.jtheque.modules.impl.ModuleDescription;
 import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.views.ViewsServices;
@@ -38,7 +38,7 @@ public final class ModuleRepositoryListModel extends DefaultListModel {
     public ModuleRepositoryListModel() {
         super();
 
-        modules = CollectionUtils.copyOf(ViewsServices.get(IModuleManager.class).getModulesFromRepository());
+        modules = CollectionUtils.copyOf(ViewsServices.get(IModuleService.class).getModulesFromRepository());
     }
 
     @Override

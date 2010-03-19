@@ -19,11 +19,11 @@ package org.jtheque.views.impl.components.renderers;
 import org.jtheque.ui.utils.builders.FilthyPanelBuilder;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.ui.utils.builders.PanelBuilder;
-import org.jtheque.update.IUpdateManager;
+import org.jtheque.update.IUpdateService;
 import org.jtheque.update.Updatable;
 import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.views.ViewsServices;
-import org.jtheque.views.able.IViewManager;
+import org.jtheque.views.able.IViewService;
 
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -66,11 +66,11 @@ public final class UpdatableListRenderer extends JPanel implements ListCellRende
     @Override
     public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
         if (isSelected) {
-            setBackground(ViewsServices.get(IViewManager.class).getViewDefaults().getSelectedBackgroundColor());
-            setChildsForeground(ViewsServices.get(IViewManager.class).getViewDefaults().getSelectedForegroundColor());
+            setBackground(ViewsServices.get(IViewService.class).getViewDefaults().getSelectedBackgroundColor());
+            setChildsForeground(ViewsServices.get(IViewService.class).getViewDefaults().getSelectedForegroundColor());
         } else {
-            setBackground(ViewsServices.get(IViewManager.class).getViewDefaults().getBackgroundColor());
-            setChildsForeground(ViewsServices.get(IViewManager.class).getViewDefaults().getForegroundColor());
+            setBackground(ViewsServices.get(IViewService.class).getViewDefaults().getBackgroundColor());
+            setChildsForeground(ViewsServices.get(IViewService.class).getViewDefaults().getForegroundColor());
         }
 
         labelOnlineVersion.setBackground(getBackground());
@@ -80,7 +80,7 @@ public final class UpdatableListRenderer extends JPanel implements ListCellRende
 
         labelName.setText(updatable.getName());
         labelCurrentVersion.setText(updatable.getVersion().getVersion());
-        labelOnlineVersion.setText(ViewsServices.get(IUpdateManager.class).getMostRecentVersion(updatable).getVersion());
+        labelOnlineVersion.setText(ViewsServices.get(IUpdateService.class).getMostRecentVersion(updatable).getVersion());
 
         return this;
     }

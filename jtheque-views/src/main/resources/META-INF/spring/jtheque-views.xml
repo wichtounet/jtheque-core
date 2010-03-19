@@ -14,11 +14,11 @@
             http://www.jtheque.com/schema/jtheque
             http://www.jtheque.com/schema/jtheque/jtheque.xsd">
 
-    <bean id="splashManager" class="org.jtheque.views.impl.SplashManager">
+    <bean id="splashManager" class="org.jtheque.views.impl.SplashService">
         <constructor-arg ref="mainView"/>
     </bean>
 
-    <bean id="viewManager" class="org.jtheque.views.impl.ViewManager">
+    <bean id="viewManager" class="org.jtheque.views.impl.ViewService">
         <constructor-arg>
             <util:list>
                 <jtheque:proxy id="configAppearanceView" type="org.jtheque.views.impl.components.config.JPanelConfigAppearance">
@@ -45,9 +45,9 @@
 
     <!-- OSGi Services -->
 
-    <osgi:service id="splashManagerService" ref="splashManager" interface="org.jtheque.views.able.ISplashManager"/>
+    <osgi:service id="splashManagerService" ref="splashManager" interface="org.jtheque.views.able.ISplashService"/>
 
-    <osgi:service id="viewManagerService" ref="viewManager" interface="org.jtheque.views.able.IViewManager"/>
+    <osgi:service id="viewManagerService" ref="viewManager" interface="org.jtheque.views.able.IViewService"/>
 
     <!-- Resources -->
 

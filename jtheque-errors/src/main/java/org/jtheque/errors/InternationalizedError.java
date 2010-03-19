@@ -1,6 +1,6 @@
 package org.jtheque.errors;
 
-import org.jtheque.i18n.ILanguageManager;
+import org.jtheque.i18n.ILanguageService;
 import org.jtheque.utils.StringUtils;
 
 /*
@@ -28,77 +28,77 @@ public final class InternationalizedError extends JThequeError {
     private Object[] messageReplaces;
     private Object[] detailsReplaces;
 
-    private final ILanguageManager languageManager;
+    private final ILanguageService languageService;
 
     /**
      * Construct a new InternationalizedError.
      *
-     * @param languageManager The language manager to use to internationalize the error.
+     * @param languageService The language manager to use to internationalize the error.
      * @param message The message key.
      */
-    public InternationalizedError(ILanguageManager languageManager, String message) {
+    public InternationalizedError(ILanguageService languageService, String message) {
         super(message);
 
-        this.languageManager = languageManager;
+        this.languageService = languageService;
     }
 
     /**
      * Construct a new InternationalizedError.
      *
-     * @param languageManager The language manager to use to internationalize the error.
+     * @param languageService The language manager to use to internationalize the error.
      * @param message  The message key.
      * @param replaces The replaces for the internationalization variable arguments of the message.
      */
-    public InternationalizedError(ILanguageManager languageManager, String message, Object... replaces) {
+    public InternationalizedError(ILanguageService languageService, String message, Object... replaces) {
         super(message);
 
         messageReplaces = replaces.clone();
-        this.languageManager = languageManager;
+        this.languageService = languageService;
     }
 
     /**
      * Construct a new InternationalizedError.
      *
-     * @param languageManager The language manager to use to internationalize the error.
+     * @param languageService The language manager to use to internationalize the error.
      * @param message The message key.
      * @param details The details key.
      */
-    public InternationalizedError(ILanguageManager languageManager, String message, String details) {
+    public InternationalizedError(ILanguageService languageService, String message, String details) {
         super(message, details);
 
-        this.languageManager = languageManager;
+        this.languageService = languageService;
     }
 
     /**
      * Construct a new InternationalizedError.
      *
-     * @param languageManager The language manager to use to internationalize the error.
+     * @param languageService The language manager to use to internationalize the error.
      * @param message  The message key.
      * @param replaces The replaces for the internationalization variable arguments of the message.
      * @param details  The details key.
      */
-    public InternationalizedError(ILanguageManager languageManager, String message, Object[] replaces, String details) {
+    public InternationalizedError(ILanguageService languageService, String message, Object[] replaces, String details) {
         super(message, details);
 
         messageReplaces = replaces.clone();
-        this.languageManager = languageManager;
+        this.languageService = languageService;
     }
 
     /**
      * Construct a new InternationalizedError.
      *
-     * @param languageManager The language manager to use to internationalize the error. 
+     * @param languageService The language manager to use to internationalize the error.
      * @param message         The message key.
      * @param replaces        The replaces for the internationalization variable arguments of the message.
      * @param details         The details key.
      * @param replacesDetails The replaces for the internationalization variable arguments of the details.
      */
-    public InternationalizedError(ILanguageManager languageManager, String message, Object[] replaces, String details, Object[] replacesDetails) {
+    public InternationalizedError(ILanguageService languageService, String message, Object[] replaces, String details, Object[] replacesDetails) {
         super(message, details);
 
         messageReplaces = replaces.clone();
         detailsReplaces = replacesDetails.clone();
-        this.languageManager = languageManager;
+        this.languageService = languageService;
     }
 
     @Override
@@ -106,7 +106,7 @@ public final class InternationalizedError extends JThequeError {
         String details = null;
 
         if (!StringUtils.isEmpty(super.getDetails())) {
-            details = languageManager.getMessage(super.getDetails(), detailsReplaces);
+            details = languageService.getMessage(super.getDetails(), detailsReplaces);
         }
 
         return details;
@@ -114,6 +114,6 @@ public final class InternationalizedError extends JThequeError {
 
     @Override
     public String getMessage() {
-        return languageManager.getMessage(super.getMessage(), messageReplaces);
+        return languageService.getMessage(super.getMessage(), messageReplaces);
     }
 }

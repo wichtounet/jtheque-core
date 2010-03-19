@@ -2,7 +2,7 @@ package org.jtheque.ui.utils.filthy;
 
 import org.jtheque.core.ICore;
 import org.jtheque.core.utils.ImageType;
-import org.jtheque.resources.IResourceManager;
+import org.jtheque.resources.IResourceService;
 import org.jtheque.utils.ui.ImageUtils;
 import org.jtheque.utils.ui.SizeTracker;
 import org.jtheque.ui.ViewsUtilsServices;
@@ -49,7 +49,7 @@ public final class FilthyUtils {
         BACKGROUND_PAINT = new LinearGradientPaint(new Point2D.Float(0, 0), new Point2D.Float(0, 584),
                 new float[]{0.22f, 0.9f}, new Color[]{new Color(32, 39, 55), new Color(133, 144, 165)});
         
-        LIGHT = ViewsUtilsServices.get(IResourceManager.class).getImage(ICore.IMAGES_BASE_NAME, "light", ImageType.PNG);
+        LIGHT = ViewsUtilsServices.get(IResourceService.class).getImage(ICore.IMAGES_BASE_NAME, "light", ImageType.PNG);
     }
 
     /**

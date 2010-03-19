@@ -23,7 +23,7 @@ import org.jtheque.ui.utils.components.JThequeI18nLabel;
 import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.utils.ui.SwingUtils;
 import org.jtheque.views.ViewsServices;
-import org.jtheque.views.able.IViewManager;
+import org.jtheque.views.able.IViewService;
 import org.jtheque.views.able.panel.ICollectionView;
 import org.jtheque.views.impl.actions.collections.CancelAction;
 import org.jtheque.views.impl.actions.collections.ChooseAction;
@@ -77,7 +77,7 @@ public final class CollectionPane extends JXPanel implements ICollectionView {
 
         gbc.setDefaultInsets(new Insets(0, 0, 0, 0));
 
-        add(Box.createVerticalStrut(ViewsServices.get(IViewManager.class).getViews().getMainView().getHeight() / 3),
+        add(Box.createVerticalStrut(ViewsServices.get(IViewService.class).getViews().getMainView().getHeight() / 3),
                 gbc.gbcSet(0, 0, GridBagConstraints.NONE, GridBagConstraints.CENTER, 4, 1, 1.0, 0.0));
 
         add(Box.createHorizontalStrut(LEFT_MARGIN_WIDTH), gbc.gbcSet(0, 1, GridBagConstraints.HORIZONTAL, GridBagConstraints.CENTER, 1, 4, 0.3, 0.0));

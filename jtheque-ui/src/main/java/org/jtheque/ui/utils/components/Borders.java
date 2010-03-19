@@ -1,7 +1,7 @@
 package org.jtheque.ui.utils.components;
 
 import org.jtheque.core.utils.UtilsServices;
-import org.jtheque.i18n.ILanguageManager;
+import org.jtheque.i18n.ILanguageService;
 
 import javax.swing.BorderFactory;
 import javax.swing.border.Border;
@@ -46,9 +46,9 @@ public final class Borders {
      * @return The border.
      */
     public static Border createTitledBorder(String key) {
-        TitledBorder border = BorderFactory.createTitledBorder(UtilsServices.get(ILanguageManager.class).getMessage(key));
+        TitledBorder border = BorderFactory.createTitledBorder(UtilsServices.get(ILanguageService.class).getMessage(key));
 
-        UtilsServices.get(ILanguageManager.class).addInternationalizable(new BorderUpdater(border, key));
+        UtilsServices.get(ILanguageService.class).addInternationalizable(new BorderUpdater(border, key));
 
         return border;
     }

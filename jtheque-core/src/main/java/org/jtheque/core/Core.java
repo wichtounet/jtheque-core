@@ -19,7 +19,7 @@ package org.jtheque.core;
 import org.jtheque.core.application.Application;
 import org.jtheque.core.lifecycle.ILifeCycle;
 import org.jtheque.core.lifecycle.LifeCycle;
-import org.jtheque.states.IStateManager;
+import org.jtheque.states.IStateService;
 import org.jtheque.utils.bean.Version;
 
 import java.util.ArrayList;
@@ -108,7 +108,7 @@ public final class Core implements ICore {
     @Override
     public CoreConfiguration getConfiguration() {
         if (configuration == null) {
-            configuration = CoreServices.get(IStateManager.class).getOrCreateState(CoreConfiguration.class);
+            configuration = CoreServices.get(IStateService.class).getOrCreateState(CoreConfiguration.class);
         }
 
         return configuration;

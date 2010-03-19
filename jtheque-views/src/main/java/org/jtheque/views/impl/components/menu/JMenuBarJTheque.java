@@ -19,9 +19,9 @@ package org.jtheque.views.impl.components.menu;
 import org.jtheque.core.utils.ImageType;
 import org.jtheque.features.Feature;
 import org.jtheque.features.FeatureListener;
-import org.jtheque.features.IFeatureManager;
-import org.jtheque.i18n.ILanguageManager;
-import org.jtheque.resources.IResourceManager;
+import org.jtheque.features.IFeatureService;
+import org.jtheque.i18n.ILanguageService;
+import org.jtheque.resources.IResourceService;
 import org.jtheque.views.ViewsServices;
 
 import javax.swing.AbstractButton;
@@ -67,7 +67,7 @@ public final class JMenuBarJTheque extends JMenuBar implements FeatureListener {
      * Build the menu.
      */
     private void buildMenu() {
-        List<Feature> features = new ArrayList<Feature>(ViewsServices.get(IFeatureManager.class).getFeatures());
+        List<Feature> features = new ArrayList<Feature>(ViewsServices.get(IFeatureService.class).getFeatures());
 
         Collections.sort(features, featureComparator);
 
@@ -77,7 +77,7 @@ public final class JMenuBarJTheque extends JMenuBar implements FeatureListener {
             }
         }
 
-        ViewsServices.get(IFeatureManager.class).addFeatureListener(this);
+        ViewsServices.get(IFeatureService.class).addFeatureListener(this);
     }
 
 
@@ -149,7 +149,7 @@ public final class JMenuBarJTheque extends JMenuBar implements FeatureListener {
         JMenu subMenu = new JThequeMenu(feature.getTitleKey());
 
         if (feature.getIcon() != null) {
-            subMenu.setIcon(ViewsServices.get(IResourceManager.class).getIcon(feature.getBaseName(), feature.getIcon(), ImageType.PNG));
+            subMenu.setIcon(ViewsServices.get(IResourceService.class).getIcon(feature.getBaseName(), feature.getIcon(), ImageType.PNG));
         }
 
         for (Feature subFeature : feature.getSubFeatures()) {
@@ -218,7 +218,7 @@ public final class JMenuBarJTheque extends JMenuBar implements FeatureListener {
      */
     private static boolean isCorrespondingMenu(Feature feature, AbstractButton menu) {
         return menu != null &&
-                menu.getText().equals(ViewsServices.get(ILanguageManager.class).getMessage(feature.getTitleKey()));
+                menu.getText().equals(ViewsServices.get(ILanguageService.class).getMessage(feature.getTitleKey()));
     }
 
     @Override
@@ -274,7 +274,7 @@ public final class JMenuBarJTheque extends JMenuBar implements FeatureListener {
 
     private static String getSubtitle(Feature subFeature) {
         if (subFeature.getAction() == null) {
-            return ViewsServices.get(ILanguageManager.class).getMessage(subFeature.getTitleKey());
+            return ViewsServices.get(ILanguageService.class).getMessage(subFeature.getTitleKey());
         } else {
             return (String) subFeature.getAction().getValue(Action.NAME);
         }

@@ -3,7 +3,7 @@ package org.jtheque.core.lifecycle;
 import org.jtheque.core.CoreServices;
 import org.jtheque.core.ICore;
 import org.jtheque.core.utils.WeakEventListenerList;
-import org.jtheque.i18n.ILanguageManager;
+import org.jtheque.i18n.ILanguageService;
 import org.jtheque.i18n.Internationalizable;
 import org.jtheque.utils.DesktopUtils;
 
@@ -43,7 +43,7 @@ public class LifeCycle implements ILifeCycle {
     public void initTitle() {
         refreshTitle();
         
-        CoreServices.get(ILanguageManager.class).addInternationalizable(new TitleUpdater());
+        CoreServices.get(ILanguageService.class).addInternationalizable(new TitleUpdater());
     }
 
     @Override

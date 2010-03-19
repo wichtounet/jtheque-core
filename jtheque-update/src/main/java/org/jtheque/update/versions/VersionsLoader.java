@@ -1,6 +1,6 @@
 package org.jtheque.update.versions;
 
-import org.jtheque.errors.IErrorManager;
+import org.jtheque.errors.IErrorService;
 import org.jtheque.modules.able.Module;
 import org.jtheque.update.Updatable;
 import org.jtheque.utils.bean.Version;
@@ -38,7 +38,7 @@ public final class VersionsLoader implements IVersionsLoader {
     private static final int CACHE_INITIAL_SIZE = 20;
 
     @Resource
-    private IErrorManager errorManager;
+    private IErrorService errorService;
 
     /**
      * Construct a new VersionsLoader.
@@ -124,7 +124,7 @@ public final class VersionsLoader implements IVersionsLoader {
             cache.put(object, new VersionsFileReader().read(object));
 
             if (!cache.containsKey(object)) {
-                errorManager.addInternationalizedError("error.update.internet");
+                errorService.addInternationalizedError("error.update.internet");
             }
         }
 

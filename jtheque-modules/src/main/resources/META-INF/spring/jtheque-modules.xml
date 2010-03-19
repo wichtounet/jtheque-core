@@ -8,10 +8,10 @@
             http://www.springframework.org/schema/osgi
             http://www.springframework.org/schema/osgi/spring-osgi.xsd">
 
-    <bean id="modulesManager" class="org.jtheque.modules.impl.ModuleManager">
+    <bean id="modulesManager" class="org.jtheque.modules.impl.ModuleService">
         <constructor-arg><bean class="org.jtheque.modules.impl.ModuleLoader"/></constructor-arg>
     </bean>
 
-    <osgi:service id="modulesManagerService" ref="modulesManager" interface="org.jtheque.modules.able.IModuleManager"/>
+    <osgi:service id="modulesManagerService" ref="modulesManager" interface="org.jtheque.modules.able.IModuleService"/>
 
 </beans>

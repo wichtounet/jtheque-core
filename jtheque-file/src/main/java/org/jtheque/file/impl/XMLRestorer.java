@@ -17,7 +17,7 @@ package org.jtheque.file.impl;
  */
 
 import org.jdom.Element;
-import org.jtheque.file.IFileManager.XmlBackupVersion;
+import org.jtheque.file.IFileService.XmlBackupVersion;
 import org.jtheque.file.able.ModuleBackup;
 import org.jtheque.io.NodeLoader;
 import org.jtheque.io.XMLException;

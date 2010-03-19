@@ -16,7 +16,7 @@ package org.jtheque.ui.utils.actions;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import org.jtheque.i18n.ILanguageManager;
+import org.jtheque.i18n.ILanguageService;
 import org.jtheque.ui.ViewsUtilsServices;
 
 import javax.swing.AbstractAction;
@@ -35,7 +35,7 @@ public abstract class JThequeSimpleAction extends AbstractAction {
      * @param key The internationalization key.
      */
     protected final void setTextKey(String key) {
-        setText(ViewsUtilsServices.get(ILanguageManager.class).getMessage(key));
+        setText(ViewsUtilsServices.get(ILanguageService.class).getMessage(key));
     }
 
     /**

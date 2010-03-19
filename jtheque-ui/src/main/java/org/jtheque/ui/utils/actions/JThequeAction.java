@@ -16,7 +16,7 @@ package org.jtheque.ui.utils.actions;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import org.jtheque.i18n.ILanguageManager;
+import org.jtheque.i18n.ILanguageService;
 import org.jtheque.i18n.Internationalizable;
 import org.jtheque.utils.collections.ArrayUtils;
 import org.jtheque.ui.ViewsUtilsServices;
@@ -54,7 +54,7 @@ public abstract class JThequeAction extends AbstractAction implements Internatio
     protected JThequeAction(String key, Object... replaces) {
         super();
 
-        ViewsUtilsServices.get(ILanguageManager.class).addInternationalizable(this);
+        ViewsUtilsServices.get(ILanguageService.class).addInternationalizable(this);
 
         this.key = key;
 
@@ -73,7 +73,7 @@ public abstract class JThequeAction extends AbstractAction implements Internatio
      * @param key The internationalization key.
      */
     final void setTextKey(String key) {
-        setText(ViewsUtilsServices.get(ILanguageManager.class).getMessage(key));
+        setText(ViewsUtilsServices.get(ILanguageService.class).getMessage(key));
     }
 
     /**
@@ -83,7 +83,7 @@ public abstract class JThequeAction extends AbstractAction implements Internatio
      * @param replaces The replacements on the message resource.
      */
     final void setTextKey(String key, Object... replaces) {
-        setText(ViewsUtilsServices.get(ILanguageManager.class).getMessage(key, replaces));
+        setText(ViewsUtilsServices.get(ILanguageService.class).getMessage(key, replaces));
     }
 
     /**

@@ -19,7 +19,7 @@ package org.jtheque.views.impl.actions.about;
 import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.ui.utils.actions.JThequeAction;
 import org.jtheque.views.ViewsServices;
-import org.jtheque.views.able.IViewManager;
+import org.jtheque.views.able.IViewService;
 import org.jtheque.ui.utils.edt.SimpleTask;
 import org.jtheque.utils.print.PrintUtils;
 
@@ -43,7 +43,7 @@ public final class PrintLicenseAction extends JThequeAction {
         ViewsServices.get(IUIUtils.class).execute(new SimpleTask() {
             @Override
             public void run() {
-                ViewsServices.get(IViewManager.class).getViews().getLicenceView().startWait();
+                ViewsServices.get(IViewService.class).getViews().getLicenceView().startWait();
 
                 new Thread(new PrintRunnable()).start();
             }
@@ -73,7 +73,7 @@ public final class PrintLicenseAction extends JThequeAction {
     private final class StopWaitTask extends SimpleTask {
         @Override
         public void run() {
-            ViewsServices.get(IViewManager.class).getViews().getLicenceView().stopWait();
+            ViewsServices.get(IViewService.class).getViews().getLicenceView().stopWait();
         }
     }
 }

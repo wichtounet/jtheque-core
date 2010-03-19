@@ -17,7 +17,7 @@ package org.jtheque.views.impl.models;
  */
 
 import org.jtheque.core.ICore;
-import org.jtheque.update.IUpdateManager;
+import org.jtheque.update.IUpdateService;
 import org.jtheque.update.Updatable;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.modules.able.Module;
@@ -72,7 +72,7 @@ public final class VersionsComboBoxModel extends DefaultComboBoxModel {
             mode = Mode.KERNEL;
 
             versions.clear();
-            versions.addAll(ViewsServices.get(IUpdateManager.class).getVersions(ViewsServices.get(ICore.class)));
+            versions.addAll(ViewsServices.get(IUpdateService.class).getVersions(ViewsServices.get(ICore.class)));
         }
     }
 
@@ -87,7 +87,7 @@ public final class VersionsComboBoxModel extends DefaultComboBoxModel {
             currentModule = value;
 
             versions.clear();
-            versions.addAll(ViewsServices.get(IUpdateManager.class).getVersions(currentModule));
+            versions.addAll(ViewsServices.get(IUpdateService.class).getVersions(currentModule));
         }
     }
 
@@ -102,7 +102,7 @@ public final class VersionsComboBoxModel extends DefaultComboBoxModel {
             currentUpdatable = value;
 
             versions.clear();
-            versions.addAll(ViewsServices.get(IUpdateManager.class).getVersions(currentUpdatable));
+            versions.addAll(ViewsServices.get(IUpdateService.class).getVersions(currentUpdatable));
         }
     }
 

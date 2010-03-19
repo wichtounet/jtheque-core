@@ -6,7 +6,7 @@ import org.jtheque.io.NodeAttribute;
 import org.jtheque.states.AbstractState;
 import org.jtheque.ui.able.IView;
 import org.jtheque.views.ViewsServices;
-import org.jtheque.views.able.IViewManager;
+import org.jtheque.views.able.IViewService;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -116,7 +116,7 @@ public final class WindowsConfiguration extends AbstractState {
             WindowConfiguration configuration = get(name);
 
             if (configuration != null) {
-                ViewsServices.get(IViewManager.class).fill(configuration, view);
+                ViewsServices.get(IViewService.class).fill(configuration, view);
             }
         }
     }
@@ -154,9 +154,9 @@ public final class WindowsConfiguration extends AbstractState {
                 add(name, configuration);
             }
 
-            ViewsServices.get(IViewManager.class).configure(configuration, view);
+            ViewsServices.get(IViewService.class).configure(configuration, view);
         } else {
-            ViewsServices.get(IViewManager.class).setSize(view, defaultWidth, defaultHeight);
+            ViewsServices.get(IViewService.class).setSize(view, defaultWidth, defaultHeight);
         }
     }
 }

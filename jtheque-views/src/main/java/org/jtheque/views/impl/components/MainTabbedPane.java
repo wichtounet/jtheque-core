@@ -1,11 +1,11 @@
 package org.jtheque.views.impl.components;
 
-import org.jtheque.i18n.ILanguageManager;
+import org.jtheque.i18n.ILanguageService;
 import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.ui.utils.components.TabTitleUpdater;
 import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.views.ViewsServices;
-import org.jtheque.views.able.IViewManager;
+import org.jtheque.views.able.IViewService;
 import org.jtheque.views.able.components.MainComponent;
 
 import javax.swing.JComponent;
@@ -46,36 +46,36 @@ public final class MainTabbedPane extends LayerTabbedPane {
 
         setTabPlacement(TOP);
 
-        List<MainComponent> components = CollectionUtils.copyOf(ViewsServices.get(IViewManager.class).getMainComponents());
+        List<MainComponent> components = CollectionUtils.copyOf(ViewsServices.get(IViewService.class).getMainComponents());
         Collections.sort(components, new PositionComparator());
 
         Map<JComponent, String> cs = new HashMap<JComponent, String>(components.size());
 
         for (MainComponent component : components) {
-            addLayeredTab(ViewsServices.get(ILanguageManager.class).getMessage(component.getTitleKey()), component.getComponent());
+            addLayeredTab(ViewsServices.get(ILanguageService.class).getMessage(component.getTitleKey()), component.getComponent());
 
             cs.put(component.getComponent(), component.getTitleKey());
         }
 
-        ViewsServices.get(ILanguageManager.class).addInternationalizable(new TabTitleUpdater(this, cs));
+        ViewsServices.get(ILanguageService.class).addInternationalizable(new TabTitleUpdater(this, cs));
     }
 
     public void refreshComponents() {
         removeAll();
 
-        List<MainComponent> components = CollectionUtils.copyOf(ViewsServices.get(IViewManager.class).getMainComponents());
+        List<MainComponent> components = CollectionUtils.copyOf(ViewsServices.get(IViewService.class).getMainComponents());
 
         Collections.sort(components, new PositionComparator());
 
         for (MainComponent component : components) {
-            addLayeredTab(ViewsServices.get(ILanguageManager.class).getMessage(component.getTitleKey()), component.getComponent());
+            addLayeredTab(ViewsServices.get(ILanguageService.class).getMessage(component.getTitleKey()), component.getComponent());
         }
 
         ViewsServices.get(IUIUtils.class).getDelegate().refresh(this);
     }
 
     public void removeMainComponent(MainComponent component) {
-        removeTabAt(indexOfTab(ViewsServices.get(ILanguageManager.class).getMessage(component.getTitleKey())));
+        removeTabAt(indexOfTab(ViewsServices.get(ILanguageService.class).getMessage(component.getTitleKey())));
 
         ViewsServices.get(IUIUtils.class).getDelegate().refresh(this);
     }

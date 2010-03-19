@@ -18,10 +18,10 @@ package org.jtheque.views.impl.actions.collections;
 
 import org.jtheque.collections.ICollectionsService;
 import org.jtheque.core.utils.Response;
-import org.jtheque.i18n.ILanguageManager;
+import org.jtheque.i18n.ILanguageService;
 import org.jtheque.ui.utils.actions.JThequeAction;
 import org.jtheque.views.ViewsServices;
-import org.jtheque.views.able.IViewManager;
+import org.jtheque.views.able.IViewService;
 import org.jtheque.views.able.panel.ICollectionView;
 
 import java.awt.event.ActionEvent;
@@ -41,12 +41,12 @@ public final class CreateAction extends JThequeAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        ICollectionView collectionView = ViewsServices.get(IViewManager.class).getCollectionView();
+        ICollectionView collectionView = ViewsServices.get(IViewService.class).getCollectionView();
 
         Response response = ViewsServices.get(ICollectionsService.class).chooseCollection(collectionView.getCollection(), collectionView.getPassword(), true);
 
         if(!response.isOk()){
-            collectionView.setErrorMessage(ViewsServices.get(ILanguageManager.class).getMessage(response.getKey(), response.getReplaces()));
+            collectionView.setErrorMessage(ViewsServices.get(ILanguageService.class).getMessage(response.getKey(), response.getReplaces()));
         }
     }
 }

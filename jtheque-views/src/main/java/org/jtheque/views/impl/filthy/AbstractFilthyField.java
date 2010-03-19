@@ -3,7 +3,7 @@ package org.jtheque.views.impl.filthy;
 import org.jtheque.ui.utils.components.Borders;
 import org.jtheque.ui.utils.filthy.Filthy;
 import org.jtheque.views.ViewsServices;
-import org.jtheque.views.able.IViewManager;
+import org.jtheque.views.able.IViewService;
 import org.jtheque.views.able.ViewDefaults;
 
 import javax.swing.BorderFactory;
@@ -62,7 +62,7 @@ public abstract class AbstractFilthyField extends JPanel implements Filthy {
      * @param field The field to make filthy.
      */
     static void makeFilthy(JTextComponent field) {
-        ViewDefaults defaults = ViewsServices.get(IViewManager.class).getViewDefaults();
+        ViewDefaults defaults = ViewsServices.get(IViewService.class).getViewDefaults();
 
         Font inputFont = defaults.getFilthyInputFont();
 

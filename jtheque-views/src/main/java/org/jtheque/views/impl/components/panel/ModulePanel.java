@@ -16,8 +16,8 @@ package org.jtheque.views.impl.components.panel;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import org.jtheque.i18n.ILanguageManager;
-import org.jtheque.modules.able.IModuleManager;
+import org.jtheque.i18n.ILanguageService;
+import org.jtheque.modules.able.IModuleService;
 import org.jtheque.modules.impl.ModuleDescription;
 import org.jtheque.ui.utils.components.Borders;
 import org.jtheque.ui.utils.builders.FilthyPanelBuilder;
@@ -133,16 +133,16 @@ public final class ModulePanel extends JPanel {
     public void expand() {
         VersionsFile file = new VersionsFileReader().readURL(module.getVersionsFileURL());
 
-        onlineLabel.setText(ViewsServices.get(ILanguageManager.class).getMessage(
+        onlineLabel.setText(ViewsServices.get(ILanguageService.class).getMessage(
                 "repository.module.online",
                 file.getMostRecentVersion().getStringVersion()));
 
-        if (ViewsServices.get(IModuleManager.class).isInstalled(module.getId())) {
-            currentLabel.setText(ViewsServices.get(ILanguageManager.class).getMessage(
+        if (ViewsServices.get(IModuleService.class).isInstalled(module.getId())) {
+            currentLabel.setText(ViewsServices.get(ILanguageService.class).getMessage(
                     "repository.module.current",
-                    ViewsServices.get(IModuleManager.class).getModuleById(module.getId()).getVersion().getVersion()));
+                    ViewsServices.get(IModuleService.class).getModuleById(module.getId()).getVersion().getVersion()));
         } else {
-            currentLabel.setText(ViewsServices.get(ILanguageManager.class).getMessage("repository.module.current.notinstalled"));
+            currentLabel.setText(ViewsServices.get(ILanguageService.class).getMessage("repository.module.current.notinstalled"));
         }
     }
 }

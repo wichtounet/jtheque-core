@@ -19,7 +19,7 @@ package org.jtheque.views.impl.components.config;
 import org.jtheque.core.CoreConfiguration;
 import org.jtheque.core.ICore;
 import org.jtheque.errors.JThequeError;
-import org.jtheque.i18n.ILanguageManager;
+import org.jtheque.i18n.ILanguageService;
 import org.jtheque.ui.utils.ValidationUtils;
 import org.jtheque.ui.utils.builders.FilthyPanelBuilder;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
@@ -89,7 +89,7 @@ public final class JPanelConfigNetwork extends FilthyBackgroundPanel implements 
 
     @Override
     public String getTitle() {
-        return ViewsServices.get(ILanguageManager.class).getMessage("config.view.tab.network");
+        return ViewsServices.get(ILanguageService.class).getMessage("config.view.tab.network");
     }
 
     @Override

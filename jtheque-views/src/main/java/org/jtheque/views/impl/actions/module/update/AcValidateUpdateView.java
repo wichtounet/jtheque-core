@@ -18,9 +18,9 @@ package org.jtheque.views.impl.actions.module.update;
 
 import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.ui.utils.actions.JThequeAction;
-import org.jtheque.update.IUpdateManager;
+import org.jtheque.update.IUpdateService;
 import org.jtheque.views.ViewsServices;
-import org.jtheque.views.able.IViewManager;
+import org.jtheque.views.able.IViewService;
 import org.jtheque.views.able.windows.IUpdateView;
 import org.jtheque.ui.utils.edt.SimpleTask;
 
@@ -44,7 +44,7 @@ public final class AcValidateUpdateView extends JThequeAction {
         ViewsServices.get(IUIUtils.class).execute(new SimpleTask() {
             @Override
             public void run() {
-                ViewsServices.get(IViewManager.class).getViews().getUpdateView().startWait();
+                ViewsServices.get(IViewService.class).getViews().getUpdateView().startWait();
 
                 new Thread(new UpdateRunnable()).start();
             }
@@ -59,14 +59,14 @@ public final class AcValidateUpdateView extends JThequeAction {
     private final class UpdateRunnable implements Runnable {
         @Override
         public void run() {
-            IUpdateView updateView = ViewsServices.get(IViewManager.class).getViews().getUpdateView();
+            IUpdateView updateView = ViewsServices.get(IViewService.class).getViews().getUpdateView();
 
             if (updateView.getMode() == IUpdateView.Mode.KERNEL) {
-                ViewsServices.get(IUpdateManager.class).update(updateView.getSelectedVersion());
+                ViewsServices.get(IUpdateService.class).update(updateView.getSelectedVersion());
             } else if (updateView.getMode() == IUpdateView.Mode.MODULE) {
-                ViewsServices.get(IUpdateManager.class).update(updateView.getModule(), updateView.getSelectedVersion());
+                ViewsServices.get(IUpdateService.class).update(updateView.getModule(), updateView.getSelectedVersion());
             } else {
-                ViewsServices.get(IUpdateManager.class).update(updateView.getUpdatable(), updateView.getSelectedVersion());
+                ViewsServices.get(IUpdateService.class).update(updateView.getUpdatable(), updateView.getSelectedVersion());
             }
 
             ViewsServices.get(IUIUtils.class).execute(new StopWaitTask());
@@ -81,7 +81,7 @@ public final class AcValidateUpdateView extends JThequeAction {
     private final class StopWaitTask extends SimpleTask {
         @Override
         public void run() {
-            ViewsServices.get(IViewManager.class).getViews().getUpdateView().stopWait();
+            ViewsServices.get(IViewService.class).getViews().getUpdateView().stopWait();
         }
     }
 }

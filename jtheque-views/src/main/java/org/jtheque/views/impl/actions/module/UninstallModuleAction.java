@@ -16,12 +16,12 @@ package org.jtheque.views.impl.actions.module;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import org.jtheque.modules.able.IModuleManager;
+import org.jtheque.modules.able.IModuleService;
 import org.jtheque.modules.able.Module;
 import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.ui.utils.actions.JThequeAction;
 import org.jtheque.views.ViewsServices;
-import org.jtheque.views.able.IViewManager;
+import org.jtheque.views.able.IViewService;
 import org.jtheque.views.able.panel.IModuleView;
 
 import java.awt.event.ActionEvent;
@@ -41,7 +41,7 @@ public final class UninstallModuleAction extends JThequeAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        IModuleView moduleView = ViewsServices.get(IViewManager.class).getViews().getModuleView();
+        IModuleView moduleView = ViewsServices.get(IViewService.class).getViews().getModuleView();
 
         Module module = moduleView.getSelectedModule();
 
@@ -50,7 +50,7 @@ public final class UninstallModuleAction extends JThequeAction {
                 "dialogs.confirm.uninstall.title");
 
         if (confirm) {
-            ViewsServices.get(IModuleManager.class).uninstallModule(module);
+            ViewsServices.get(IModuleService.class).uninstallModule(module);
 
             moduleView.refreshList();
         }

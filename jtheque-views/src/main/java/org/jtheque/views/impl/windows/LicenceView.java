@@ -23,7 +23,7 @@ import org.jtheque.ui.utils.windows.frames.SwingFilthyBuildedDialogView;
 import org.jtheque.utils.io.FileUtils;
 import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.views.ViewsServices;
-import org.jtheque.views.able.IViewManager;
+import org.jtheque.views.able.IViewService;
 import org.jtheque.views.able.windows.ILicenceView;
 import org.jtheque.views.impl.actions.about.PrintLicenseAction;
 
@@ -58,6 +58,6 @@ public final class LicenceView extends SwingFilthyBuildedDialogView<IModel> impl
         builder.addButtonBar(builder.gbcSet(0, 1, GridBagUtils.HORIZONTAL),
                 new PrintLicenseAction(), getCloseAction("licence.actions.close"));
 
-        ViewsServices.get(IViewManager.class).configureView(this, "licence", DEFAULT_WIDTH, DEFAULT_HEIGHT);
+        ViewsServices.get(IViewService.class).configureView(this, "licence", DEFAULT_WIDTH, DEFAULT_HEIGHT);
     }
 }

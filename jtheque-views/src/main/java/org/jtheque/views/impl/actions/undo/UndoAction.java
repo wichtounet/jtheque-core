@@ -16,7 +16,7 @@ package org.jtheque.views.impl.actions.undo;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import org.jtheque.undo.IUndoRedoManager;
+import org.jtheque.undo.IUndoRedoService;
 import org.jtheque.views.ViewsServices;
 
 import java.awt.event.ActionEvent;
@@ -34,13 +34,13 @@ public final class UndoAction extends AbstractAction {
     public UndoAction() {
         super("undo.actions.undo", "undo", KeyEvent.VK_Z);
 
-        ViewsServices.get(IUndoRedoManager.class).setUndoAction(this);
+        ViewsServices.get(IUndoRedoService.class).setUndoAction(this);
 
         setEnabled(false);
     }
 
     @Override
     public void actionPerformed(ActionEvent ae) {
-        ViewsServices.get(IUndoRedoManager.class).undo();
+        ViewsServices.get(IUndoRedoService.class).undo();
     }
 }

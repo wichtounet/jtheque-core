@@ -21,17 +21,17 @@ import org.osgi.framework.ServiceRegistration;
  */
 
 public class EventsActivator implements BundleActivator {
-    private EventManager manager;
+    private EventService manager;
 
     private ServiceRegistration registration;
 
     @Override
     public void start(BundleContext bundleContext) throws Exception {
-        manager = new EventManager();
+        manager = new EventService();
 
         manager.importFromXML();
 
-        registration = bundleContext.registerService(IEventManager.class.getName(), manager, null);
+        registration = bundleContext.registerService(IEventService.class.getName(), manager, null);
     }
 
     @Override

@@ -16,7 +16,7 @@ package org.jtheque.ui.utils.components;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import org.jtheque.i18n.ILanguageManager;
+import org.jtheque.i18n.ILanguageService;
 import org.jtheque.i18n.Internationalizable;
 import org.jtheque.ui.able.ViewComponent;
 import org.jtheque.ui.ViewsUtilsServices;
@@ -49,7 +49,7 @@ public final class JThequeI18nLabel extends JLabel implements Internationalizabl
 
         setTextKey(textKey, replaces);
 
-        ViewsUtilsServices.get(ILanguageManager.class).addInternationalizable(this);
+        ViewsUtilsServices.get(ILanguageService.class).addInternationalizable(this);
     }
 
     /**
@@ -94,9 +94,9 @@ public final class JThequeI18nLabel extends JLabel implements Internationalizabl
     @Override
     public void refreshText() {
         if (ArrayUtils.isEmpty(replaces)) {
-            setText(ViewsUtilsServices.get(ILanguageManager.class).getMessage(textKey));
+            setText(ViewsUtilsServices.get(ILanguageService.class).getMessage(textKey));
         } else {
-            setText(ViewsUtilsServices.get(ILanguageManager.class).getMessage(textKey, replaces));
+            setText(ViewsUtilsServices.get(ILanguageService.class).getMessage(textKey, replaces));
         }
     }
 

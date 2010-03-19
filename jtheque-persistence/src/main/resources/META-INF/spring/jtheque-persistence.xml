@@ -8,9 +8,9 @@
             http://www.springframework.org/schema/osgi
             http://www.springframework.org/schema/osgi/spring-osgi.xsd">
 
-    <bean id="persistenceManager" class="org.jtheque.persistence.PersistenceManager" />
+    <bean id="persistenceManager" class="org.jtheque.persistence.PersistenceService" />
 
-    <osgi:service id="persistenceManagerService" ref="persistenceManager" interface="org.jtheque.persistence.able.IPersistenceManager"/>
+    <osgi:service id="persistenceManagerService" ref="persistenceManager" interface="org.jtheque.persistence.able.IPersistenceService"/>
 
     <bean class="org.jtheque.persistence.DataContainerPostProcessor" />
 

@@ -18,7 +18,7 @@ package org.jtheque.views.impl.actions.config;
 
 import org.jtheque.ui.utils.actions.JThequeAction;
 import org.jtheque.views.ViewsServices;
-import org.jtheque.views.able.IViewManager;
+import org.jtheque.views.able.IViewService;
 import org.jtheque.views.able.windows.IConfigView;
 
 import java.awt.event.ActionEvent;
@@ -38,7 +38,7 @@ public final class ApplyChangesAndCloseAction extends JThequeAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        IConfigView configView = ViewsServices.get(IViewManager.class).getViews().getConfigView();
+        IConfigView configView = ViewsServices.get(IViewService.class).getViews().getConfigView();
 
         if (configView.validateContent()) {
             configView.getSelectedPanelConfig().apply();

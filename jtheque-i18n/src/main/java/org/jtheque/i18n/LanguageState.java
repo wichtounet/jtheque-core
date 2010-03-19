@@ -23,7 +23,7 @@ import org.jtheque.states.AbstractState;
  *
  * @author Baptiste Wicht
  */
-//Must be public for StateManager
+//Must be public for StateService
 public final class LanguageState extends AbstractState {
     /**
      * Set the language.

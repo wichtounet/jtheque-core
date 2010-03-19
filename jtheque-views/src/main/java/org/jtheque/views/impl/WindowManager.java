@@ -17,7 +17,7 @@ package org.jtheque.views.impl;
  */
 
 import org.jtheque.views.ViewsServices;
-import org.jtheque.views.able.IViewManager;
+import org.jtheque.views.able.IViewService;
 import org.jtheque.views.able.Views;
 import org.jtheque.views.able.components.MainComponent;
 import org.jtheque.views.able.panel.IModuleView;
@@ -78,7 +78,7 @@ public final class WindowManager implements Views {
 
         JComponent component = mainView.getSelectedComponent();
 
-        for (MainComponent tab : ViewsServices.get(IViewManager.class).getMainComponents()) {
+        for (MainComponent tab : ViewsServices.get(IViewService.class).getMainComponents()) {
             if (tab.getComponent().equals(component)) {
                 selected = tab;
                 break;

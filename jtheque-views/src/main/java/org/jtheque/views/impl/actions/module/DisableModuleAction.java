@@ -16,13 +16,13 @@ package org.jtheque.views.impl.actions.module;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import org.jtheque.modules.able.IModuleManager;
+import org.jtheque.modules.able.IModuleService;
 import org.jtheque.modules.able.Module;
 import org.jtheque.modules.able.ModuleState;
 import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.ui.utils.actions.JThequeAction;
 import org.jtheque.views.ViewsServices;
-import org.jtheque.views.able.IViewManager;
+import org.jtheque.views.able.IViewService;
 import org.jtheque.views.able.panel.IModuleView;
 
 import java.awt.event.ActionEvent;
@@ -42,14 +42,14 @@ public final class DisableModuleAction extends JThequeAction {
 
     @Override
     public void actionPerformed(ActionEvent arg0) {
-        IModuleView moduleView = ViewsServices.get(IViewManager.class).getViews().getModuleView();
+        IModuleView moduleView = ViewsServices.get(IViewService.class).getViews().getModuleView();
 
         Module module = moduleView.getSelectedModule();
 
         if (module.getState() == ModuleState.DISABLED) {
             ViewsServices.get(IUIUtils.class).displayI18nText("error.module.not.enabled");
         } else {
-            ViewsServices.get(IModuleManager.class).disableModule(module);
+            ViewsServices.get(IModuleService.class).disableModule(module);
             moduleView.refreshList();
 
             ViewsServices.get(IUIUtils.class).displayI18nText("message.module.disabled");

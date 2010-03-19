@@ -17,11 +17,11 @@ package org.jtheque.ui.utils.windows.dialogs;
  */
 
 import org.jtheque.core.ICore;
-import org.jtheque.errors.IErrorManager;
+import org.jtheque.errors.IErrorService;
 import org.jtheque.errors.JThequeError;
-import org.jtheque.i18n.ILanguageManager;
+import org.jtheque.i18n.ILanguageService;
 import org.jtheque.i18n.Internationalizable;
-import org.jtheque.resources.IResourceManager;
+import org.jtheque.resources.IResourceService;
 import org.jtheque.ui.ViewsUtilsServices;
 import org.jtheque.ui.able.IModel;
 import org.jtheque.ui.able.IUIUtils;
@@ -74,7 +74,7 @@ public abstract class SwingDialogView extends JDialog implements IWindowView, In
         setModal(true);
         setResizable(true);
 
-        ViewsUtilsServices.get(ILanguageManager.class).addInternationalizable(this);
+        ViewsUtilsServices.get(ILanguageService.class).addInternationalizable(this);
 
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         setIconImage(getDefaultWindowIcon());
@@ -138,7 +138,7 @@ public abstract class SwingDialogView extends JDialog implements IWindowView, In
      * @return The default window icon.
      */
     protected static Image getDefaultWindowIcon() {
-        return ViewsUtilsServices.get(IResourceManager.class).getImage(
+        return ViewsUtilsServices.get(IResourceService.class).getImage(
                 "file:" + ViewsUtilsServices.get(ICore.class).getApplication().getWindowIcon(),
                 ViewsUtilsServices.get(ICore.class).getApplication().getWindowIconType());
     }
@@ -237,7 +237,7 @@ public abstract class SwingDialogView extends JDialog implements IWindowView, In
         validate(errors);
 
         for (JThequeError error : errors) {
-            ViewsUtilsServices.get(IErrorManager.class).addError(error);
+            ViewsUtilsServices.get(IErrorService.class).addError(error);
         }
 
         return errors.isEmpty();
@@ -250,7 +250,7 @@ public abstract class SwingDialogView extends JDialog implements IWindowView, In
      * @return The internationalized message.
      */
     protected static String getMessage(String key) {
-        return ViewsUtilsServices.get(ILanguageManager.class).getMessage(key);
+        return ViewsUtilsServices.get(ILanguageService.class).getMessage(key);
     }
 
     /**
@@ -261,7 +261,7 @@ public abstract class SwingDialogView extends JDialog implements IWindowView, In
      * @return the internationalized message.
      */
     protected static String getMessage(String key, Object... replaces) {
-        return ViewsUtilsServices.get(ILanguageManager.class).getMessage(key, replaces);
+        return ViewsUtilsServices.get(ILanguageService.class).getMessage(key, replaces);
     }
 
     /**

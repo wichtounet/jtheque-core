@@ -21,16 +21,16 @@ import org.osgi.framework.ServiceRegistration;
  */
 
 public class StatesActivator implements BundleActivator {
-    private StateManager manager;
+    private StateService manager;
 
     private ServiceRegistration registration;
 
     @Override
     public void start(BundleContext bundleContext) throws Exception {
-        manager = new StateManager();
+        manager = new StateService();
         manager.loadStates();
 
-        registration = bundleContext.registerService(IStateManager.class.getName(), manager, null);
+        registration = bundleContext.registerService(IStateService.class.getName(), manager, null);
     }
 
     @Override

@@ -17,7 +17,7 @@ package org.jtheque.modules.impl;
  */
 
 import org.jtheque.io.Node;
-import org.jtheque.modules.able.IModuleManager;
+import org.jtheque.modules.able.IModuleService;
 import org.jtheque.modules.able.Module;
 import org.jtheque.modules.able.ModuleState;
 import org.jtheque.states.AbstractState;
@@ -220,7 +220,7 @@ public final class ModuleConfiguration extends AbstractState {
 
     @Override
     public void setDefaults() {
-        for (Module module : ModulesServices.get(IModuleManager.class).getModules()) {
+        for (Module module : ModulesServices.get(IModuleService.class).getModules()) {
             add(module, ModuleState.INSTALLED);
         }
     }

@@ -18,7 +18,7 @@ package org.jtheque.ui.utils.windows.frames;
 
 import org.jtheque.core.ICore;
 import org.jtheque.core.application.Application;
-import org.jtheque.resources.IResourceManager;
+import org.jtheque.resources.IResourceService;
 import org.jtheque.ui.able.IModel;
 import org.jtheque.ui.able.IWindowView;
 import org.jtheque.utils.ui.SwingUtils;
@@ -59,7 +59,7 @@ public abstract class SwingFrameView extends JFrame implements IWindowView {
     protected static Image getDefaultWindowIcon() {
         Application application = ViewsUtilsServices.get(ICore.class).getApplication();
 
-        return ViewsUtilsServices.get(IResourceManager.class).getImage(
+        return ViewsUtilsServices.get(IResourceService.class).getImage(
                 "file:" + application.getWindowIcon(), application.getWindowIconType());
     }
 

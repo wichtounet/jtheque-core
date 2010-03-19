@@ -17,7 +17,7 @@ package org.jtheque.views.impl;
  */
 
 import org.jtheque.core.ICore;
-import org.jtheque.i18n.ILanguageManager;
+import org.jtheque.i18n.ILanguageService;
 import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.views.ViewsServices;
 
@@ -49,9 +49,9 @@ public final class MainController extends WindowAdapter implements ChangeListene
     @Override
     public void windowClosing(WindowEvent e) {
         boolean yes = ViewsServices.get(IUIUtils.class).getDelegate().askUserForConfirmation(
-                ViewsServices.get(ILanguageManager.class).getMessage("dialogs.confirm.exit",
+                ViewsServices.get(ILanguageService.class).getMessage("dialogs.confirm.exit",
                         ViewsServices.get(ICore.class).getApplication().getName()),
-                ViewsServices.get(ILanguageManager.class).getMessage("dialogs.confirm.exit.title",
+                ViewsServices.get(ILanguageService.class).getMessage("dialogs.confirm.exit.title",
                         ViewsServices.get(ICore.class).getApplication().getName()));
 
         if (yes) {

@@ -16,7 +16,7 @@ package org.jtheque.modules.able;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import org.jtheque.i18n.ILanguageManager;
+import org.jtheque.i18n.ILanguageService;
 import org.jtheque.modules.impl.ModulesServices;
 
 /**
@@ -56,19 +56,19 @@ public enum ModuleState {
 
         switch (valueOf(ordinal())) {
             case LOADED:
-                state = ModulesServices.get(ILanguageManager.class).getMessage("modules.state.loaded");
+                state = ModulesServices.get(ILanguageService.class).getMessage("modules.state.loaded");
 
                 break;
             case INSTALLED:
-                state = ModulesServices.get(ILanguageManager.class).getMessage("modules.state.installed");
+                state = ModulesServices.get(ILanguageService.class).getMessage("modules.state.installed");
 
                 break;
             case DISABLED:
-                state = ModulesServices.get(ILanguageManager.class).getMessage("modules.state.disabled");
+                state = ModulesServices.get(ILanguageService.class).getMessage("modules.state.disabled");
 
                 break;
             case UNINSTALLED:
-                state = ModulesServices.get(ILanguageManager.class).getMessage("modules.state.uninstalled");
+                state = ModulesServices.get(ILanguageService.class).getMessage("modules.state.uninstalled");
 
                 break;
             default:

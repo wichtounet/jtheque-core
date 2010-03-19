@@ -16,7 +16,7 @@ package org.jtheque.views.impl.actions.module;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import org.jtheque.modules.able.IModuleManager;
+import org.jtheque.modules.able.IModuleService;
 import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.ui.utils.actions.JThequeAction;
 import org.jtheque.utils.io.SimpleFilter;
@@ -42,7 +42,7 @@ public final class InstallModuleAction extends JThequeAction {
     public void actionPerformed(ActionEvent e) {
         File file = new File(ViewsServices.get(IUIUtils.class).getDelegate().chooseFile(new SimpleFilter("JAR File (*.jar)", "jar")));
 
-        boolean installed = ViewsServices.get(IModuleManager.class).installModule(file);
+        boolean installed = ViewsServices.get(IModuleService.class).installModule(file);
 
         if (installed) {
             ViewsServices.get(IUIUtils.class).displayI18nText("message.module.installed");
