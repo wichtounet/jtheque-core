@@ -29,7 +29,7 @@
 
         <dependency>
             <groupId>javax.mail</groupId>
-            <artifactId>mail</artifactId>
+            <artifactId>org.jtheque.javamail</artifactId>
             <version>1.4.1</version>
         </dependency>
     </dependencies>

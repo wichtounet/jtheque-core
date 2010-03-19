@@ -131,36 +131,26 @@
 
         <dependency>
             <groupId>org.substance</groupId>
-            <artifactId>substance</artifactId>
-            <version>6.0</version>
+            <artifactId>org.jtheque.substance</artifactId>
+            <version>6.0.0</version>
         </dependency>
 
         <dependency>
             <groupId>org.trident</groupId>
-            <artifactId>trident</artifactId>
-            <version>1.2</version>
+            <artifactId>org.jtheque.trident</artifactId>
+            <version>1.2.0</version>
         </dependency>
 
         <dependency>
             <groupId>org.swinglabs</groupId>
-            <artifactId>jxlayer</artifactId>
+            <artifactId>org.jtheque.jxlayer</artifactId>
             <version>3.0.4</version>
         </dependency>
 
         <dependency>
             <groupId>org.swinglabs</groupId>
-            <artifactId>swingx</artifactId>
-            <version>1.6</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.jhlabs</groupId>
-                    <artifactId>filters</artifactId>
-                </exclusion>
-                <exclusion>
-                   <groupId>org.swinglabs</groupId>
-                   <artifactId>swing-worker</artifactId>
-                </exclusion>
-            </exclusions>
+            <artifactId>org.jtheque.swingx</artifactId>
+            <version>1.6.0</version>
         </dependency>
     </dependencies>
 

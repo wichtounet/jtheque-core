@@ -27,6 +27,7 @@
     <orderEntry type="module" module-name="jtheque-core-utils" exported="" />
     <orderEntry type="module" module-name="JTheque Utils" scope="TEST" />
     <orderEntry type="library" scope="TEST" name="Maven: org.slf4j:slf4j-api:1.5.8" level="project" />
+    <orderEntry type="module" module-name="jtheque-javamail" exported="" />
     <orderEntry type="library" exported="" name="Maven: javax.mail:mail:1.4.1" level="project" />
     <orderEntry type="library" exported="" name="Maven: javax.activation:activation:1.1" level="project" />
     <orderEntry type="module" module-name="jtheque-persistence" exported="" />
@@ -68,11 +69,14 @@
     <orderEntry type="module" module-name="jtheque-modules" exported="" />
     <orderEntry type="module" module-name="jtheque-ui" exported="" />
     <orderEntry type="module" module-name="jtheque-errors" exported="" />
+    <orderEntry type="module" module-name="jtheque-swingx" exported="" />
     <orderEntry type="library" exported="" name="Maven: org.swinglabs:swingx:1.6" level="project" />
-    <orderEntry type="module" module-name="jtheque-apple-extensions" exported="" />
+    <orderEntry type="module" module-name="jtheque-substance" exported="" />
     <orderEntry type="library" exported="" name="Maven: com.apple:javaextensions:1.0" level="project" />
-    <orderEntry type="library" exported="" name="Maven: org.substance:substance:6.0" level="project" />
+    <orderEntry type="library" exported="" name="Maven: org.substance:org.jtheque.substance:6.0.0" level="project" />
+    <orderEntry type="module" module-name="jtheque-trident" exported="" />
     <orderEntry type="library" exported="" name="Maven: org.trident:trident:1.2" level="project" />
+    <orderEntry type="module" module-name="jtheque-jxlayer" exported="" />
     <orderEntry type="library" exported="" name="Maven: org.swinglabs:jxlayer:3.0.4" level="project" />
     <orderEntry type="module" module-name="jtheque-file" exported="" />
     <orderEntry type="library" scope="TEST" name="Maven: junit:junit:4.4" level="project" />
