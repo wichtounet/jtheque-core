@@ -1,6 +1,7 @@
 package org.jtheque.cache;
 
 import net.sf.ehcache.Cache;
+import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.store.MemoryStoreEvictionPolicy;
 import org.jtheque.core.ICore;
 import org.slf4j.LoggerFactory;
@@ -44,7 +45,7 @@ public final class CacheService implements ICacheService {
 
     @PostConstruct
     public void preInit() {
-        net.sf.ehcache.CacheManager manager = net.sf.ehcache.CacheManager.create();
+        CacheManager manager = CacheManager.create();
 
         setDiskStorePath(manager, core.getFolders().getCacheFolder());
     }
@@ -59,8 +60,8 @@ public final class CacheService implements ICacheService {
      *
      * @return The EhCache CacheService instance.
      */
-    private static net.sf.ehcache.CacheManager getCacheManager() {
-        return net.sf.ehcache.CacheManager.getInstance();
+    private static CacheManager getCacheManager() {
+        return CacheManager.getInstance();
     }
 
     @Override

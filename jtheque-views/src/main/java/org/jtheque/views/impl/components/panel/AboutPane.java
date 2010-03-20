@@ -179,10 +179,10 @@ public final class AboutPane extends AbstractAboutPane implements IAboutView, In
      * Create the image of the informations to improve performance. The image is only modified when the size of the window
      * has changed.
      *
-     * @param yStart The y position to start painting.
+     * @param startY The y position to start painting.
      * @param startX The x position to start painting.
      */
-    private void createBufferInfosImage(int yStart, int startX) {
+    private void createBufferInfosImage(int startY, int startX) {
         infosImage = ImageUtils.createCompatibleImage(paintWidth - 30, getInfos().length * (INFO_HEIGHT + 2), BufferedImage.TRANSLUCENT);
 
         Graphics g = infosImage.getGraphics();
@@ -205,7 +205,7 @@ public final class AboutPane extends AbstractAboutPane implements IAboutView, In
 
                 PaintUtils.drawString(g, info.getRight(), x, y, fontInfos.deriveFont(attributes));
 
-                Rectangle rectangle = new Rectangle(startX, yStart + y - 10, info.getRightWidth(), CREDIT_HEIGHT);
+                Rectangle rectangle = new Rectangle(startX, startY + y - 10, info.getRightWidth(), CREDIT_HEIGHT);
 
                 urlPath.append(rectangle, false);
 

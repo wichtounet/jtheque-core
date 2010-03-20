@@ -1,6 +1,7 @@
 package org.jtheque.ui.utils.filthy;
 
 import java.awt.Color;
+import java.awt.Font;
 
 /*
  * This file is part of JTheque.
@@ -19,6 +20,13 @@ import java.awt.Color;
  */
 
 public interface Filthy {
-    Color inputColor = new Color(70, 70, 70);
-    Color inputBorderColor = new Color(220, 220, 220);
+    Color INPUT_COLOR = new Color(70, 70, 70);
+    Color INPUT_BORDER_COLOR = new Color(220, 220, 220);
+
+    Color HINT_COLOR = Color.white;
+    Color BACKGROUND_COLOR = Color.black;
+    Color ERROR_COLOR = Color.red;
+
+    Font HINT_FONT = new Font(null, 1, 22);
+    Font ERROR_FONT = new Font(null, 1, 20);
 }

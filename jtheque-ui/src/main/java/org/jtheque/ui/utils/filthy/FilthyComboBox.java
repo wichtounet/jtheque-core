@@ -42,7 +42,7 @@ public final class FilthyComboBox extends JComboBox implements Filthy {
         super(model);
 
         setOpaque(false);
-        setBackground(inputColor);
+        setBackground(INPUT_COLOR);
 
         /* Doesn't work with Substance
             setBorder(new CompoundBorder(

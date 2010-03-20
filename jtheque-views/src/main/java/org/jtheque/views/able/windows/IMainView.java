@@ -37,13 +37,6 @@ public interface IMainView extends IView {
      */
     JTabbedPane getTabbedPane();
 
-    void build();
-
-    /**
-     * Build the entire view with the final content.
-     */
-    void fill();
-
     /**
      * Set the glass pane of the view.
      *

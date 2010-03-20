@@ -3,7 +3,7 @@ package org.jtheque.views.impl.components.panel;
 import org.jtheque.ui.utils.components.Borders;
 import org.jtheque.ui.utils.builders.FilthyPanelBuilder;
 import org.jtheque.ui.utils.builders.PanelBuilder;
-import org.jtheque.ui.utils.components.FilthyBackgroundPanel;
+import org.jtheque.ui.utils.filthy.FilthyBackgroundPanel;
 import org.jtheque.update.Updatable;
 import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.views.able.components.IUpdatablesPanelView;

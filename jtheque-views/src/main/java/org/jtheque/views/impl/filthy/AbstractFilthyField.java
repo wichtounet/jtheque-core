@@ -43,9 +43,9 @@ public abstract class AbstractFilthyField extends JPanel implements Filthy {
         super();
 
         setLayout(new BorderLayout());
-        setBackground(inputColor);
+        setBackground(INPUT_COLOR);
         setBorder(new CompoundBorder(
-                BorderFactory.createLineBorder(inputBorderColor, 2),
+                BorderFactory.createLineBorder(INPUT_BORDER_COLOR, 2),
                 BorderFactory.createEmptyBorder(2, 2, 2, 2)));
 
         initComponent();

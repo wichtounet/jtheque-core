@@ -79,7 +79,6 @@ public final class MainView extends SwingFrameView implements TitleListener, IMa
     /**
      * Build the view.
      */
-    @Override
     public void build() {
         setTitle(ViewsServices.get(ICore.class).getLifeCycle().getTitle());
         setResizable(false);
@@ -113,7 +112,9 @@ public final class MainView extends SwingFrameView implements TitleListener, IMa
         return content;
     }
 
-    @Override
+    /**
+     * Build the entire view with the final content.
+     */
     public void fill() {
         viewService = ViewsServices.get(IViewService.class);
 

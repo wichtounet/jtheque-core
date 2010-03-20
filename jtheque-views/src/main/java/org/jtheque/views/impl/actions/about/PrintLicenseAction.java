@@ -70,7 +70,7 @@ public final class PrintLicenseAction extends JThequeAction {
      *
      * @author Baptiste Wicht
      */
-    private final class StopWaitTask extends SimpleTask {
+    private static final class StopWaitTask extends SimpleTask {
         @Override
         public void run() {
             ViewsServices.get(IViewService.class).getViews().getLicenceView().stopWait();

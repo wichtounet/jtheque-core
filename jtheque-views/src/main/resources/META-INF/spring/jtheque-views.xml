@@ -36,10 +36,10 @@
         <constructor-arg>
             <bean class="org.jtheque.views.impl.WindowManager"><constructor-arg ref="mainView"/></bean>
         </constructor-arg>
-        <constructor-arg>
-            <osgi:reference interface="org.jtheque.ui.able.IUIUtils" />
-        </constructor-arg>
+        <constructor-arg ref="uiUtils" />
     </bean>
+
+    <osgi:reference id="uiUtils" interface="org.jtheque.ui.able.IUIUtils" />
 
     <bean id="mainView" class="org.jtheque.views.impl.windows.MainView" />
 
@@ -129,12 +129,7 @@
     <!-- Java2D panes -->
 
     <jtheque:proxy id="collectionPane" type="org.jtheque.views.impl.components.panel.CollectionPane">
-        <bean class="org.jtheque.views.impl.components.panel.CollectionPane">
-            <property name="hintColor" ref="white"/>
-            <property name="backgroundColor" ref="black"/>
-            <property name="errorColor" ref="red"/>
-            <property name="hintFont" ref="hintFont"/>
-        </bean>
+        <bean class="org.jtheque.views.impl.components.panel.CollectionPane" />
     </jtheque:proxy>
 
     <jtheque:proxy id="aboutPane" type="org.jtheque.views.impl.components.panel.AboutPane">

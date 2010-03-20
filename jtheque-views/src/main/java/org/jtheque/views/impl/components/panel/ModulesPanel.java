@@ -5,7 +5,7 @@ import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.ui.utils.actions.ActionFactory;
 import org.jtheque.ui.utils.builders.FilthyPanelBuilder;
 import org.jtheque.ui.utils.builders.PanelBuilder;
-import org.jtheque.ui.utils.components.FilthyBackgroundPanel;
+import org.jtheque.ui.utils.filthy.FilthyBackgroundPanel;
 import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.views.ViewsServices;
 import org.jtheque.views.able.components.IModulesPanelView;

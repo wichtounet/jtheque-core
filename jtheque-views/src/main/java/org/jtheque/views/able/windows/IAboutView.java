@@ -24,16 +24,10 @@ import java.awt.Component;
  * @author Baptiste Wicht
  */
 public interface IAboutView {
-
     /**
      * Make the view appears.
      */
     void appear();
-
-    /**
-     * Make the view disappears.
-     */
-    void disappear();
 
     /**
      * Return the implementation of the view.

@@ -1,5 +1,7 @@
 package org.jtheque.lifecycle;
 
+import ch.qos.logback.classic.Level;
+import ch.qos.logback.classic.Logger;
 import org.jtheque.collections.CollectionListener;
 import org.jtheque.collections.ICollectionsService;
 import org.jtheque.core.ICore;
@@ -53,6 +55,7 @@ public class LifeCycleActivator implements BundleActivator, CollectionListener {
 
         getService(ICore.class).setApplication(application);
 
+        getService(ISplashService.class).initViews();
         getService(ISplashService.class).displaySplashScreen();
 
         getService(IEventService.class).addEventLog("JTheque Core", new EventLog(EventLevel.INFO, "User", "events.start"));
@@ -77,8 +80,8 @@ public class LifeCycleActivator implements BundleActivator, CollectionListener {
         }
     }
 
-    private void configureLogging() {
-        Logger rootLogger = (Logger) LoggerFactory.getLogger("root");
+    private static void configureLogging() {
+        Logger rootLogger = (Logger)LoggerFactory.getLogger("root");
 
         String level = "ERROR";
 

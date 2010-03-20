@@ -43,8 +43,6 @@ import java.util.regex.Pattern;
  * @author Baptiste Wicht
  */
 public final class ModuleLoader implements IModuleLoader, BundleContextAware {
-    private static final Collection<JThequeError> ERRORS = new ArrayList<JThequeError>(10);
-    private static final Collection<Module> MODULES = new ArrayList<Module>(10);
     private static final Pattern COMMA_DELIMITER_PATTERN = Pattern.compile(";");
 
     private BundleContext bundleContext;

@@ -65,24 +65,6 @@ public final class CoreConfiguration extends AbstractState {
     }
 
     /**
-     * Indicate if we must use always use the same look and feel.
-     *
-     * @return <code>true</code> if we use always the same look and feel else <code>false</code>
-     */
-    public boolean alwaysLookAndFeel() {
-        return Boolean.parseBoolean(getProperty("alwaysLookAndFeel", TRUE));
-    }
-
-    /**
-     * Set if we must always use the same look and feel or not.
-     *
-     * @param value A boolean tag indicating if we must always use the same look and feel.
-     */
-    public void setAlwaysLookAndFeel(boolean value) {
-        setProperty("alwaysLookAndFeel", Boolean.toString(value));
-    }
-
-    /**
      * Indicate if there is a proxy or not.
      *
      * @return <code>true</code> if there is a proxy else <code>false</code>
@@ -222,7 +204,6 @@ public final class CoreConfiguration extends AbstractState {
 
     @Override
     public void setDefaults() {
-        setAlwaysLookAndFeel(true);
         setHasAProxy(false);
         setMustDeleteLogs(false);
         setProxyAddress("");

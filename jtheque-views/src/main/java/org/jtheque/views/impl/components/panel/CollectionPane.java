@@ -20,6 +20,7 @@ import org.jdesktop.swingx.JXPanel;
 import org.jtheque.core.ICore;
 import org.jtheque.ui.utils.AnimationUtils;
 import org.jtheque.ui.utils.components.JThequeI18nLabel;
+import org.jtheque.ui.utils.filthy.Filthy;
 import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.utils.ui.SwingUtils;
 import org.jtheque.views.ViewsServices;
@@ -40,7 +41,6 @@ import javax.swing.JPanel;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -49,16 +49,11 @@ import java.awt.Insets;
 /**
  * @author Baptiste Wicht
  */
-public final class CollectionPane extends JXPanel implements ICollectionView {
+public final class CollectionPane extends JXPanel implements ICollectionView, Filthy {
     private FilthyTextField textField;
     private FilthyPasswordField passwordField;
     private JLabel labelError;
 
-    private Color hintColor;
-    private Color backgroundColor;
-    private Color errorColor;
-
-    private Font hintFont;
     private static final int LEFT_MARGIN_WIDTH = 200;
 
     private final Action chooseAction = new ChooseAction();
@@ -69,7 +64,7 @@ public final class CollectionPane extends JXPanel implements ICollectionView {
     @PostConstruct
     void build() {
         setOpaque(true);
-        setBackground(backgroundColor);
+        setBackground(BACKGROUND_COLOR);
         setAlpha(1.0f);
         setLayout(new GridBagLayout());
 
@@ -100,9 +95,9 @@ public final class CollectionPane extends JXPanel implements ICollectionView {
      */
     private void addErrorLabel(GridBagUtils gbc) {
         labelError = new JLabel();
-        labelError.setForeground(errorColor);
+        labelError.setForeground(ERROR_COLOR);
         labelError.setVisible(false);
-        labelError.setFont(hintFont.deriveFont(hintFont.getSize() - 2.0f));
+        labelError.setFont(ERROR_FONT);
 
         add(labelError, gbc.gbcSet(1, 1, GridBagConstraints.NONE, GridBagConstraints.LINE_START, 2, 1));
     }
@@ -115,8 +110,8 @@ public final class CollectionPane extends JXPanel implements ICollectionView {
     private void addCollectionField(GridBagUtils gbc) {
         Component labelCollection = new JThequeI18nLabel("collections.name");
 
-        labelCollection.setForeground(hintColor);
-        labelCollection.setFont(hintFont);
+        labelCollection.setForeground(HINT_COLOR);
+        labelCollection.setFont(HINT_FONT);
 
         gbc.setDefaultInsets(new Insets(0, 0, 2, 6));
 
@@ -142,8 +137,8 @@ public final class CollectionPane extends JXPanel implements ICollectionView {
     private void addPasswordField(GridBagUtils gbc) {
         Component labelPassword = new JThequeI18nLabel("collections.password");
 
-        labelPassword.setForeground(hintColor);
-        labelPassword.setFont(hintFont);
+        labelPassword.setForeground(HINT_COLOR);
+        labelPassword.setFont(HINT_FONT);
 
         gbc.setDefaultInsets(new Insets(0, 0, 2, 6));
 
@@ -170,7 +165,7 @@ public final class CollectionPane extends JXPanel implements ICollectionView {
         buttonsPanel.add(new JButton(new ChooseAction()));
         buttonsPanel.add(new JButton(new CancelAction()));
 
-        buttonsPanel.setBackground(backgroundColor);
+        buttonsPanel.setBackground(BACKGROUND_COLOR);
 
         gbc.setDefaultInsets(new Insets(0, 0, 0, 0));
 
@@ -204,42 +199,6 @@ public final class CollectionPane extends JXPanel implements ICollectionView {
         g.fillRect(0, 0, getWidth(), getHeight());
 
         super.paintComponent(g);
-    }
-
-    /**
-     * Set the hint color. Not for use, only for Spring injection.
-     *
-     * @param hintColor The hint color.
-     */
-    public void setHintColor(Color hintColor) {
-        this.hintColor = hintColor;
-    }
-
-    /**
-     * Set the background color. Not for use, only for Spring injection.
-     *
-     * @param backgroundColor The background color.
-     */
-    public void setBackgroundColor(Color backgroundColor) {
-        this.backgroundColor = backgroundColor;
-    }
-
-    /**
-     * Set the error color. Not for use, only for Spring injection.
-     *
-     * @param errorColor The error text color.
-     */
-    public void setErrorColor(Color errorColor) {
-        this.errorColor = errorColor;
-    }
-
-    /**
-     * Set the hint font. Not for use, only for Spring injection.
-     *
-     * @param hintFont The hint font.
-     */
-    public void setHintFont(Font hintFont) {
-        this.hintFont = hintFont;
     }
 
     @Override

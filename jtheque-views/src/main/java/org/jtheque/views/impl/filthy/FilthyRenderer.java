@@ -54,7 +54,7 @@ public final class FilthyRenderer extends DefaultListCellRenderer implements Fil
         if (isSelected) {
             setBackground(selectionBackground);
         } else {
-            setBackground(inputColor);
+            setBackground(INPUT_COLOR);
         }
 
         return this;

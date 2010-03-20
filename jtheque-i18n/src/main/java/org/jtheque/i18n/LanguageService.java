@@ -61,15 +61,8 @@ public final class LanguageService implements ILanguageService, ApplicationConte
         languages.put("de", Locale.GERMAN);
 
         internationalizables = new HashSet<Internationalizable>(100);
-    }
 
-    /**
-     * Return the resource bundle.
-     *
-     * @return The resource bundle.
-     */
-    private EditableResourceBundle getResourceBundle() {
-        return (EditableResourceBundle) applicationContext.getBean("messageSource");
+        init();
     }
 
     public void init(){
@@ -84,6 +77,15 @@ public final class LanguageService implements ILanguageService, ApplicationConte
         }
 
         Locale.setDefault(locale);
+    }
+
+    /**
+     * Return the resource bundle.
+     *
+     * @return The resource bundle.
+     */
+    private EditableResourceBundle getResourceBundle() {
+        return (EditableResourceBundle) applicationContext.getBean("messageSource");
     }
 
     @Override

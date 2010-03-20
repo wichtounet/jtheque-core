@@ -22,7 +22,7 @@ import org.jtheque.ui.able.IModel;
 import org.jtheque.ui.ViewsUtilsServices;
 import org.jtheque.ui.utils.builders.FilthyPanelBuilder;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
-import org.jtheque.ui.utils.components.FilthyBackgroundPanel;
+import org.jtheque.ui.utils.filthy.FilthyBackgroundPanel;
 import org.jtheque.ui.utils.windows.dialogs.SwingDialogView;
 
 import java.awt.Container;

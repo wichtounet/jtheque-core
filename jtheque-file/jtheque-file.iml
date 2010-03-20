@@ -65,9 +65,10 @@
     <orderEntry type="module" module-name="jtheque-errors" exported="" />
     <orderEntry type="module" module-name="jtheque-swingx" exported="" />
     <orderEntry type="library" exported="" name="Maven: org.swinglabs:swingx:1.6" level="project" />
-    <orderEntry type="module" module-name="jtheque-substance" exported="" />
+    <orderEntry type="module" module-name="org.jtheque.apple-extensions" exported="" />
     <orderEntry type="library" exported="" name="Maven: com.apple:javaextensions:1.0" level="project" />
-    <orderEntry type="library" exported="" name="Maven: org.substance:org.jtheque.substance:6.0.0" level="project" />
+    <orderEntry type="module" module-name="jtheque-apple-extensions" exported="" />
+    <orderEntry type="library" exported="" name="Maven: org.substance:substance:6.0" level="project" />
     <orderEntry type="module" module-name="jtheque-trident" exported="" />
     <orderEntry type="library" exported="" name="Maven: org.trident:trident:1.2" level="project" />
     <orderEntry type="module" module-name="jtheque-jxlayer" exported="" />

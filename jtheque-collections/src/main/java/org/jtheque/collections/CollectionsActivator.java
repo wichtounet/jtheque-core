@@ -1,6 +1,7 @@
 package org.jtheque.collections;
 
 import org.jtheque.core.utils.OSGiUtils;
+import org.jtheque.file.IFileService;
 import org.jtheque.schemas.ISchemaService;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
@@ -25,6 +26,8 @@ public class CollectionsActivator implements BundleActivator {
     @Override
     public void start(BundleContext bundleContext) throws Exception {
         OSGiUtils.getService(bundleContext, ISchemaService.class).registerSchema("", new CollectionSchema());
+        OSGiUtils.getService(bundleContext, IFileService.class).registerBackuper("",
+                new CoreBackuper(OSGiUtils.getService(bundleContext, IDaoCollections.class)));
     }
 
     @Override

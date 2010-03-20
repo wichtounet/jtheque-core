@@ -126,6 +126,7 @@ public class WeakEventListenerList implements Serializable {
      * Return an array of all the listeners of the given type.
      * As a side-effect, cleans out any
      * garbage collected listeners before building the array.
+     * @param t the class to get the listeners from. 
      * @return all of the listeners of the specified type.
      * @exception  ClassCastException if the supplied class
      *          is not assignable to EventListener
