@@ -69,9 +69,9 @@ public interface IDaoPersistenceContext {
     boolean delete(String table, Entity d);
 
     /**
-     * Save or update an entity.
+     * Save or org.jtheque.update an entity.
      *
-     * @param entity The entity to save or update.
+     * @param entity The entity to save or org.jtheque.update.
      * @param mapper The query mapper.
      * @return true if the object is saved else false.
      * @throws IllegalArgumentException if entity is null.

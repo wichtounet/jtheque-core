@@ -418,8 +418,7 @@ public final class AboutPane extends AbstractAboutPane implements IAboutView, In
         AnimationUtils.startsLoopWhenStop(fadeAnimation, getTimeline());
         fadeAnimation.play();
     }
-
-    @Override
+    
     public void disappear() {
         getTimeline().suspend();
 

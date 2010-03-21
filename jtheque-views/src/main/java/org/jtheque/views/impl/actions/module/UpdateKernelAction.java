@@ -20,7 +20,7 @@ import org.jtheque.views.ViewsServices;
  */
 
 /**
- * An action to update the kernel.
+ * An action to org.jtheque.update the kernel.
  *
  * @author Baptiste Wicht
  */

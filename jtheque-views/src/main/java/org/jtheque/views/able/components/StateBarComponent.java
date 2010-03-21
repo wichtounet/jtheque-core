@@ -53,15 +53,6 @@ public final class StateBarComponent {
     }
 
     /**
-     * Construct a new StateBarComponent with a default position.
-     *
-     * @param component The component.
-     */
-    public StateBarComponent(JComponent component) {
-        this(component, Position.LEFT);
-    }
-
-    /**
      * Return the component.
      *
      * @return The component.

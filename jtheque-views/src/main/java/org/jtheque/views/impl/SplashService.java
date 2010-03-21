@@ -35,7 +35,7 @@ import javax.swing.UIManager;
  */
 public final class SplashService implements ISplashService {
     private ISplashView splashScreenPane;
-    private MainView mainView;
+    private final MainView mainView;
     private boolean mainDisplayed;
 
     public SplashService(MainView mainView) {

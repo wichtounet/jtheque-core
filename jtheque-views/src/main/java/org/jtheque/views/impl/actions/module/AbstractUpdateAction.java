@@ -28,7 +28,7 @@ import java.awt.event.ActionEvent;
  */
 
 /**
- * An abstract update action.
+ * An abstract org.jtheque.update action.
  *
  * @author Baptiste Wicht
  */

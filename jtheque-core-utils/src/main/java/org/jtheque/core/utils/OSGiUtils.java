@@ -21,6 +21,10 @@ import org.osgi.framework.ServiceReference;
  */
 
 public class OSGiUtils {
+    private OSGiUtils() {
+        super();
+    }
+
     public static <T> T getService(BundleContext context, Class<T> classz){
         ServiceReference ref = context.getServiceReference(classz.getName());
 

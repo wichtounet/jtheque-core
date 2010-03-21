@@ -29,7 +29,7 @@ import org.jtheque.views.impl.filthy.FilthyRenderer;
 import org.jtheque.views.impl.models.VersionsComboBoxModel;
 
 /**
- * An update view.
+ * An org.jtheque.update view.
  *
  * @author Baptiste Wicht
  */

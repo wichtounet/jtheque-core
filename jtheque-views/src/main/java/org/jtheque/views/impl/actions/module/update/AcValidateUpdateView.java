@@ -27,7 +27,7 @@ import org.jtheque.ui.utils.edt.SimpleTask;
 import java.awt.event.ActionEvent;
 
 /**
- * An action to validate the update view.
+ * An action to validate the org.jtheque.update view.
  *
  * @author Baptiste Wicht
  */
@@ -52,11 +52,11 @@ public final class AcValidateUpdateView extends JThequeAction {
     }
 
     /**
-     * A runnable to update the module or the kernel.
+     * A runnable to org.jtheque.update the module or the kernel.
      *
      * @author Baptiste Wicht
      */
-    private final class UpdateRunnable implements Runnable {
+    private static final class UpdateRunnable implements Runnable {
         @Override
         public void run() {
             IUpdateView updateView = ViewsServices.get(IViewService.class).getViews().getUpdateView();

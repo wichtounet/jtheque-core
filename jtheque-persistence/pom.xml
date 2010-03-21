@@ -4,12 +4,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>jtheque-persistence</artifactId>
-    <name>jtheque-persistence</name>
+    <artifactId>org.jtheque.persistence</artifactId>
+    <name>org.jtheque.persistence</name>
     <packaging>bundle</packaging>
 
     <parent>
-        <artifactId>jtheque-core-parent</artifactId>
+        <artifactId>org.jtheque.core.parent</artifactId>
         <groupId>org.jtheque</groupId>
         <version>2.1-SNAPSHOT</version>
     </parent>
@@ -29,31 +29,31 @@
 
         <dependency>
             <groupId>org.jtheque</groupId>
-            <artifactId>jtheque-core-utils</artifactId>
+            <artifactId>org.jtheque.core.utils</artifactId>
             <version>2.1-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>org.jtheque</groupId>
-            <artifactId>jtheque-i18n</artifactId>
+            <artifactId>org.jtheque.i18n</artifactId>
             <version>2.1-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>org.jtheque</groupId>
-            <artifactId>jtheque-resources</artifactId>
+            <artifactId>org.jtheque.resources</artifactId>
             <version>2.1-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>org.jtheque</groupId>
-            <artifactId>jtheque-core</artifactId>
+            <artifactId>org.jtheque.core</artifactId>
             <version>2.1-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>org.jtheque</groupId>
-            <artifactId>jtheque-utils</artifactId>
+            <artifactId>org.jtheque.utils</artifactId>
             <version>1.1.4-SNAPSHOT</version>
         </dependency>
     </dependencies>

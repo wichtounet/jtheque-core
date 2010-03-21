@@ -3,6 +3,9 @@ package org.jtheque.core.lifecycle;
 import org.jtheque.core.CoreServices;
 import org.jtheque.core.ICore;
 import org.jtheque.core.utils.WeakEventListenerList;
+import org.jtheque.events.EventLevel;
+import org.jtheque.events.EventLog;
+import org.jtheque.events.IEventService;
 import org.jtheque.i18n.ILanguageService;
 import org.jtheque.i18n.Internationalizable;
 import org.jtheque.utils.DesktopUtils;
@@ -113,7 +116,7 @@ public class LifeCycle implements ILifeCycle {
      * Start the exit process but not stop the application.
      */
     private void releaseAll() {
-        //TODO : Managers.getManager(IEventManager.class).addEventLog("JTheque Core", new EventLog(EventLevel.INFO, "User", "events.close"));
+        CoreServices.get(IEventService.class).addEventLog("JTheque Core", new EventLog(EventLevel.INFO, "User", "events.close"));
     }
 
     /**
@@ -123,6 +126,7 @@ public class LifeCycle implements ILifeCycle {
         Runtime.getRuntime().removeShutdownHook(shutdownHook);
 
         //TODO : Quitter le serveur
+
         System.exit(0);
     }
 

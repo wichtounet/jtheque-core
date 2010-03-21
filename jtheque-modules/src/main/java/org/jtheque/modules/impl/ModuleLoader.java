@@ -5,7 +5,6 @@ import org.jtheque.core.utils.OSGiUtils;
 import org.jtheque.errors.IErrorService;
 import org.jtheque.errors.JThequeError;
 import org.jtheque.modules.able.IModuleLoader;
-import org.jtheque.modules.able.Module;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.bean.Version;
 import org.osgi.framework.Bundle;

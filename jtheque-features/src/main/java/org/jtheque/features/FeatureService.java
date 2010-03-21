@@ -25,6 +25,7 @@ import org.jtheque.modules.utils.ModuleResourceCache;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.collections.CollectionUtils;
 
+import javax.swing.Action;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.EnumMap;
@@ -121,10 +122,7 @@ public final class FeatureService implements IFeatureService, ModuleListener {
      * @return The added feature.
      */
     private Feature createAndAddFeature(int position, String key) {
-        Feature feature = new ManagedFeature();
-        feature.setPosition(position);
-        feature.setType(FeatureType.PACK);
-        feature.setTitleKey(key);
+        Feature feature = new ManagedFeature(FeatureType.PACK, key, position);
 
         features.add(feature);
 
@@ -197,6 +195,14 @@ public final class FeatureService implements IFeatureService, ModuleListener {
      * @author Baptiste Wicht
      */
     protected final class ManagedFeature extends Feature {
+        public ManagedFeature(FeatureType type, Integer position, Action action) {
+            super(type, position, action);
+        }
+
+        public ManagedFeature(FeatureType type, String titleKey, Integer position) {
+            super(type, titleKey, position);
+        }
+
         @Override
         public void addSubFeature(Feature feature) {
             super.addSubFeature(feature);

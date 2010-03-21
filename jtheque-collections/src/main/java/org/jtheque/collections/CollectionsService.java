@@ -63,7 +63,15 @@ public final class CollectionsService implements ICollectionsService, BundleCont
             return new Response(false, "error.module.collection");
         }
 
+        fireCollectionChoosed();
+
         return new Response(true);
+    }
+
+    private void fireCollectionChoosed() {
+        for(CollectionListener listener : listeners.getListeners(CollectionListener.class)){
+            listener.collectionChoosed();
+        }
     }
 
     @Override

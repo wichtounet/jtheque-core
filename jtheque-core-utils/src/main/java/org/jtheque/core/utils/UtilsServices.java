@@ -21,6 +21,10 @@ import org.osgi.framework.BundleContext;
 public class UtilsServices {
     private static BundleContext context;
 
+    private UtilsServices() {
+        super();
+    }
+
     public static void setContext(BundleContext context) {
         UtilsServices.context = context;
     }

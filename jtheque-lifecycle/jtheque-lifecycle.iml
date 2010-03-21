@@ -2,7 +2,7 @@
 <module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" type="JAVA_MODULE" version="4">
   <component name="FacetManager">
     <facet type="Osmorc" name="OSGi">
-      <configuration osmorcControlsManifest="true" manifestLocation="src/main/resources/META-INF/MANIFEST.MF" jarfileLocation="/home/wichtounet/Builds/bundles/jtheque-lifecycle/classes/jtheque-lifecycle.jar" useBndFile="false" bndFileLocation="" bundleActivator="org.jtheque.lifecycle.LifeCycleActivator" bundleSymbolicName="jtheque-lifecycle" bundleVersion="2.1-SNAPSHOT" ignoreFilePattern="" useProjectDefaultManifestFileLocation="false" alwaysRebuildBundleJAR="false">
+      <configuration osmorcControlsManifest="true" manifestLocation="src/main/resources/META-INF/MANIFEST.MF" jarfileLocation="/home/wichtounet/Builds/bundles/jtheque-lifecycle/classes/jtheque-lifecycle.jar" useBndFile="false" bndFileLocation="" bundleActivator="org.jtheque.lifecycle.LifeCycleActivator" bundleSymbolicName="org.jtheque.lifecycle" bundleVersion="2.1-SNAPSHOT" ignoreFilePattern="" useProjectDefaultManifestFileLocation="false" alwaysRebuildBundleJAR="false">
         <additionalProperties>
           <property key="Bundle-Vendor" value="Baptiste Wicht" />
           <property key="Export-Package" value="org.jtheque.i18n" />
@@ -56,6 +56,7 @@
     <orderEntry type="library" exported="" name="Maven: org.jdom:jaxen-core:1.0-FCS" level="project" />
     <orderEntry type="module" module-name="jtheque-jaxen-jdom" exported="" />
     <orderEntry type="library" exported="" name="Maven: org.jdom:jaxen-jdom:1.0-FCS" level="project" />
+    <orderEntry type="module" module-name="jtheque-events" exported="" />
     <orderEntry type="module" module-name="jtheque-modules" exported="" />
     <orderEntry type="module" module-name="jtheque-ui" exported="" />
     <orderEntry type="module" module-name="jtheque-resources" exported="" />
@@ -78,7 +79,6 @@
     <orderEntry type="library" exported="" name="Maven: org.springframework:spring-aop:3.0.0.RELEASE" level="project" />
     <orderEntry type="module" module-name="jtheque-schemas" exported="" />
     <orderEntry type="module" module-name="jtheque-file" exported="" />
-    <orderEntry type="module" module-name="jtheque-events" exported="" />
     <orderEntry type="module" module-name="jtheque-views" exported="" />
     <orderEntry type="module" module-name="jtheque-update" exported="" />
     <orderEntry type="module" module-name="jtheque-undo" exported="" />

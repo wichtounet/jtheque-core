@@ -17,6 +17,7 @@ package org.jtheque.ui.utils.windows.dialogs;
  */
 
 import org.jtheque.core.ICore;
+import org.jtheque.core.utils.SimplePropertiesCache;
 import org.jtheque.errors.IErrorService;
 import org.jtheque.errors.JThequeError;
 import org.jtheque.i18n.ILanguageService;
@@ -59,8 +60,7 @@ public abstract class SwingDialogView extends JDialog implements IWindowView, In
      * Construct a SwingDialogView modal to the main view.
      */
     protected SwingDialogView(){
-        //TODO Get main view
-        this(null);
+        this(SimplePropertiesCache.<Frame>get("mainView"));
     }
 
     /**

@@ -23,7 +23,7 @@ import java.awt.event.ActionEvent;
  */
 
 /**
- * An action to update the event view.
+ * An action to org.jtheque.update the event view.
  *
  * @author Baptiste Wicht
  */

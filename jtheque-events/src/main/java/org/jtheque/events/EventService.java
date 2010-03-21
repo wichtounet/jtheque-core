@@ -1,15 +1,14 @@
 package org.jtheque.events;
 
 import org.jdom.Element;
-import org.jtheque.core.ICore;
 import org.jtheque.core.utils.OSGiUtils;
+import org.jtheque.core.utils.SystemProperty;
 import org.jtheque.io.XMLException;
 import org.jtheque.io.XMLReader;
 import org.jtheque.io.XMLWriter;
 import org.jtheque.utils.io.FileUtils;
 import org.osgi.framework.BundleContext;
 import org.slf4j.LoggerFactory;
-import org.springframework.osgi.context.BundleContextAware;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -40,15 +39,8 @@ import java.util.Set;
  *
  * @author Baptiste Wicht
  */
-public final class EventService implements IEventService, BundleContextAware {
+public final class EventService implements IEventService {
     private final Map<String, Collection<EventLog>> logs = new HashMap<String, Collection<EventLog>>(10);
-
-    private BundleContext bundleContext;
-
-    @Override
-    public void setBundleContext(BundleContext bundleContext) {
-        this.bundleContext = bundleContext;
-    }
 
     @Override
     public Set<String> getLogs() {
@@ -75,7 +67,7 @@ public final class EventService implements IEventService, BundleContextAware {
      * Import from XML.
      */
     public void importFromXML() {
-        File f = new File(OSGiUtils.getService(bundleContext, ICore.class).getFolders().getApplicationFolder(), "/core/logs.xml");
+        File f = new File(SystemProperty.USER_DIR.get(), "/core/logs.xml");
 
         if (!f.exists()) {
             createEmptyEventFile(f);
@@ -155,7 +147,7 @@ public final class EventService implements IEventService, BundleContextAware {
             writer.switchToParent();
         }
 
-        writer.write(OSGiUtils.getService(bundleContext, ICore.class).getFolders().getApplicationFolder().getAbsolutePath() + "/core/logs.xml");
+        writer.write(SystemProperty.USER_DIR.get() + "/core/logs.xml");
     }
 
     /**

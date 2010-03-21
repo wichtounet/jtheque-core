@@ -2,7 +2,7 @@
 <module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" type="JAVA_MODULE" version="4">
   <component name="FacetManager">
     <facet type="Osmorc" name="OSGi">
-      <configuration osmorcControlsManifest="true" manifestLocation="src/main/resources/META-INF/MANIFEST.MF" jarfileLocation="/home/wichtounet/Builds/bundles/jtheque-persistence/classes/jtheque-persistence.jar" useBndFile="false" bndFileLocation="" bundleActivator="org.jtheque.persistence.PersistenceActivator" bundleSymbolicName="jtheque-persistence" bundleVersion="2.1-SNAPSHOT" ignoreFilePattern="" useProjectDefaultManifestFileLocation="false" alwaysRebuildBundleJAR="false">
+      <configuration osmorcControlsManifest="true" manifestLocation="src/main/resources/META-INF/MANIFEST.MF" jarfileLocation="/home/wichtounet/Builds/bundles/jtheque-persistence/classes/jtheque-persistence.jar" useBndFile="false" bndFileLocation="" bundleActivator="org.jtheque.persistence.PersistenceActivator" bundleSymbolicName="org.jtheque.persistence" bundleVersion="2.1-SNAPSHOT" ignoreFilePattern="" useProjectDefaultManifestFileLocation="false" alwaysRebuildBundleJAR="false">
         <additionalProperties>
           <property key="Bundle-Vendor" value="Baptiste Wicht" />
           <property key="Export-Package" value="org.jtheque.core.persistence, org.jtheque.core.persistence.able, org.jtheque.core.persistence.context" />
@@ -65,6 +65,7 @@
     <orderEntry type="library" exported="" name="Maven: org.jdom:jaxen-jdom:1.0-FCS" level="project" />
     <orderEntry type="module" module-name="jtheque-resources" exported="" />
     <orderEntry type="module" module-name="jtheque-core" exported="" />
+    <orderEntry type="module" module-name="jtheque-events" exported="" />
     <orderEntry type="library" scope="TEST" name="Maven: junit:junit:4.4" level="project" />
   </component>
 </module>

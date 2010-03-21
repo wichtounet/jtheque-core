@@ -184,7 +184,7 @@ public class LayerTabbedPane extends JTabbedPane implements ViewComponent {
                 oldLayer.setUI(layer.getUI());
                 layer.setUI(layerUI);
 
-                //painter.update();            
+                //painter.org.jtheque.update();
                 timer.start();
                 index = pane.getSelectedIndex();
             }

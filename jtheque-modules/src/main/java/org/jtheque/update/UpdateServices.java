@@ -1,6 +1,6 @@
-package org.jtheque.io;
+package org.jtheque.update;
 
-import org.osgi.framework.BundleActivator;
+import org.jtheque.core.utils.OSGiUtils;
 import org.osgi.framework.BundleContext;
 
 /*
@@ -19,14 +19,18 @@ import org.osgi.framework.BundleContext;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-public class IOActivator implements BundleActivator {
-    @Override
-    public void start(BundleContext bundleContext) throws Exception {
-        IOServices.setContext(bundleContext);
+public class UpdateServices {
+    private static BundleContext context;
+
+    private UpdateServices() {
+        super();
     }
 
-    @Override
-    public void stop(BundleContext bundleContext) throws Exception {
-        //Nothing to stop
+    public static void setContext(BundleContext context) {
+        UpdateServices.context = context;
+    }
+
+    public static <T> T get(Class<T> clasz){
+        return OSGiUtils.getService(context, clasz);
     }
 }

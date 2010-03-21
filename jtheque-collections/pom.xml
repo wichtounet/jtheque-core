@@ -4,12 +4,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>jtheque-collections</artifactId>
-    <name>jtheque-collections</name>
+    <artifactId>org.jtheque.collections</artifactId>
+    <name>org.jtheque.collections</name>
     <packaging>bundle</packaging>
 
     <parent>
-        <artifactId>jtheque-core-parent</artifactId>
+        <artifactId>org.jtheque.core.parent</artifactId>
         <groupId>org.jtheque</groupId>
         <version>2.1-SNAPSHOT</version>
     </parent>
@@ -23,37 +23,31 @@
 
         <dependency>
             <groupId>org.jtheque</groupId>
-            <artifactId>jtheque-core-utils</artifactId>
+            <artifactId>org.jtheque.persistence</artifactId>
             <version>2.1-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>org.jtheque</groupId>
-            <artifactId>jtheque-persistence</artifactId>
+            <artifactId>org.jtheque.core.utils</artifactId>
             <version>2.1-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>org.jtheque</groupId>
-            <artifactId>jtheque-core-utils</artifactId>
+            <artifactId>org.jtheque.schemas</artifactId>
             <version>2.1-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>org.jtheque</groupId>
-            <artifactId>jtheque-schemas</artifactId>
+            <artifactId>org.jtheque.ui</artifactId>
             <version>2.1-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>org.jtheque</groupId>
-            <artifactId>jtheque-ui</artifactId>
-            <version>2.1-SNAPSHOT</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.jtheque</groupId>
-            <artifactId>jtheque-file</artifactId>
+            <artifactId>org.jtheque.file</artifactId>
             <version>2.1-SNAPSHOT</version>
         </dependency>
     </dependencies>

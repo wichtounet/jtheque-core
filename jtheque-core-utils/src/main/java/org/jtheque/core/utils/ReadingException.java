@@ -1,4 +1,4 @@
-package org.jtheque.core.utils.io;
+package org.jtheque.core.utils;
 
 /*
  * This file is part of JTheque.

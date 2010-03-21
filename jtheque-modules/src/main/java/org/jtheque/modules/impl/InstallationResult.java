@@ -22,7 +22,6 @@ package org.jtheque.modules.impl;
  * @author Baptiste Wicht
  */
 public final class InstallationResult {
-    private boolean mustRestart;
     private boolean installed;
     private String jarFile;
     private String name;
@@ -43,22 +42,6 @@ public final class InstallationResult {
      */
     public void setInstalled(boolean installed) {
         this.installed = installed;
-    }
-
-    /**
-     * Indicate if we need restart the application.
-     *
-     * @return true if the application need to be restarted.
-     */
-    public boolean isMustRestart() {
-        return mustRestart;
-    }
-
-    /**
-     * Set if the we need to restart the application.
-     */
-    public void setMustRestart() {
-        mustRestart = true;
     }
 
     /**

@@ -22,6 +22,10 @@ import org.osgi.framework.BundleContext;
 public class ViewsServices {
     private static BundleContext context;
 
+    private ViewsServices() {
+        super();
+    }
+
     public static void setContext(BundleContext context) {
         ViewsServices.context = context;
     }

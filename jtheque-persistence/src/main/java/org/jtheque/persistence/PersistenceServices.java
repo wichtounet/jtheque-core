@@ -22,6 +22,10 @@ import org.osgi.framework.BundleContext;
 public class PersistenceServices {
     private static BundleContext context;
 
+    private PersistenceServices() {
+        super();
+    }
+
     public static void setContext(BundleContext context) {
         PersistenceServices.context = context;
     }

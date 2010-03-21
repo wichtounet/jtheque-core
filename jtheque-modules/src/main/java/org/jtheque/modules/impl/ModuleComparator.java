@@ -27,14 +27,27 @@ import java.util.Comparator;
 final class ModuleComparator implements Comparator<ModuleContainer> {
     @Override
     public int compare(ModuleContainer o1, ModuleContainer o2) {
-        //First the modules without dependency
-        if (hasDependency(o1) && !hasDependency(o2)) {
+        boolean hasDependency = StringUtils.isNotEmpty(o1.getDependencies());
+        boolean hasOtherDependency = StringUtils.isNotEmpty(o2.getDependencies());
+
+        if (hasDependency && !hasOtherDependency) {
+            return 1;
+        } else if (!hasDependency && hasOtherDependency) {
             return -1;
+        } else {
+            for (String dependency : o2.getDependencies()) {
+                if (dependency.equals(o1.getId())) { //The other depends on me
+                    return -1;
+                }
+            }
+
+            for (String dependency : o1.getDependencies()) {
+                if (dependency.equals(o2.getId())) { //I depends on the other
+                    return 1;
+                }
+            }
         }
 
-        //TODO Improve that on the base of the schema comparator
-
-        //And finally all the others
         return 0;
     }
 

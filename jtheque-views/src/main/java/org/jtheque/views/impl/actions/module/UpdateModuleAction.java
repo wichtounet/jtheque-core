@@ -22,7 +22,7 @@ import org.jtheque.views.able.IViewService;
  */
 
 /**
- * An action to update a module.
+ * An action to org.jtheque.update a module.
  *
  * @author Baptiste Wicht
  */

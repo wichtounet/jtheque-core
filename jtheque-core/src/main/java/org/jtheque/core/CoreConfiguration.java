@@ -25,7 +25,6 @@ import org.jtheque.utils.bean.IntDate;
  * @author Baptiste Wicht
  */
 public final class CoreConfiguration extends AbstractState {
-    private static final String TRUE = "true";
     private static final String FALSE = "false";
 
     /**

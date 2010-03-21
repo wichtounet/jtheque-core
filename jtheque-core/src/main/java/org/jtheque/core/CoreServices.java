@@ -22,6 +22,10 @@ import org.osgi.framework.BundleContext;
 public class CoreServices {
     private static BundleContext context;
 
+    private CoreServices() {
+        super();
+    }
+
     public static void setContext(BundleContext context) {
         CoreServices.context = context;
     }

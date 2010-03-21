@@ -4,12 +4,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>jtheque-views</artifactId>
-    <name>jtheque-views</name>
+    <artifactId>org.jtheque.views</artifactId>
+    <name>org.jtheque.views</name>
     <packaging>bundle</packaging>
 
     <parent>
-        <artifactId>jtheque-core-parent</artifactId>
+        <artifactId>org.jtheque.core.parent</artifactId>
         <groupId>org.jtheque</groupId>
         <version>2.1-SNAPSHOT</version>
     </parent>
@@ -23,103 +23,103 @@
 
         <dependency>
             <groupId>org.jtheque</groupId>
-            <artifactId>jtheque-utils</artifactId>
+            <artifactId>org.jtheque.utils</artifactId>
             <version>1.1.4-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>org.jtheque</groupId>
-            <artifactId>jtheque-ui</artifactId>
+            <artifactId>org.jtheque.ui</artifactId>
             <version>2.1-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>org.jtheque</groupId>
-            <artifactId>jtheque-events</artifactId>
+            <artifactId>org.jtheque.events</artifactId>
             <version>2.1-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>org.jtheque</groupId>
-            <artifactId>jtheque-update</artifactId>
+            <artifactId>org.jtheque.update</artifactId>
             <version>2.1-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>org.jtheque</groupId>
-            <artifactId>jtheque-core</artifactId>
+            <artifactId>org.jtheque.core</artifactId>
             <version>2.1-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>org.jtheque</groupId>
-            <artifactId>jtheque-states</artifactId>
+            <artifactId>org.jtheque.states</artifactId>
             <version>2.1-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>org.jtheque</groupId>
-            <artifactId>jtheque-undo</artifactId>
+            <artifactId>org.jtheque.undo</artifactId>
             <version>2.1-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>org.jtheque</groupId>
-            <artifactId>jtheque-persistence</artifactId>
+            <artifactId>org.jtheque.persistence</artifactId>
             <version>2.1-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>org.jtheque</groupId>
-            <artifactId>jtheque-collections</artifactId>
+            <artifactId>org.jtheque.collections</artifactId>
             <version>2.1-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>org.jtheque</groupId>
-            <artifactId>jtheque-modules</artifactId>
+            <artifactId>org.jtheque.modules</artifactId>
             <version>2.1-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>org.jtheque</groupId>
-            <artifactId>jtheque-resources</artifactId>
+            <artifactId>org.jtheque.resources</artifactId>
             <version>2.1-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>org.jtheque</groupId>
-            <artifactId>jtheque-features</artifactId>
+            <artifactId>org.jtheque.features</artifactId>
             <version>2.1-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>org.jtheque</groupId>
-            <artifactId>jtheque-io</artifactId>
+            <artifactId>org.jtheque.io</artifactId>
             <version>2.1-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>org.jtheque</groupId>
-            <artifactId>jtheque-collections</artifactId>
+            <artifactId>org.jtheque.collections</artifactId>
             <version>2.1-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>org.jtheque</groupId>
-            <artifactId>jtheque-file</artifactId>
+            <artifactId>org.jtheque.file</artifactId>
             <version>2.1-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>org.jtheque</groupId>
-            <artifactId>jtheque-messages</artifactId>
+            <artifactId>org.jtheque.messages</artifactId>
             <version>2.1-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>org.jtheque</groupId>
-            <artifactId>jtheque-i18n</artifactId>
+            <artifactId>org.jtheque.i18n</artifactId>
             <version>2.1-SNAPSHOT</version>
         </dependency>
 

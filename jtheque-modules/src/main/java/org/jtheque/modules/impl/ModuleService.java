@@ -27,6 +27,8 @@ import org.jtheque.modules.able.ModuleListener;
 import org.jtheque.modules.able.ModuleState;
 import org.jtheque.modules.utils.ModuleResourceCache;
 import org.jtheque.states.IStateService;
+import org.jtheque.ui.able.IUIUtils;
+import org.jtheque.update.IUpdateService;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.collections.CollectionUtils;
 import org.osgi.framework.BundleContext;
@@ -220,7 +222,7 @@ public final class ModuleService implements IModuleService, BundleContextAware {
     @Override
     public Repository getRepository() {
         if (repository == null) {
-            //TODO repository = new RepositoryReader().read(Managers.getCore().getApplication().getRepository());
+            repository = new RepositoryReader().read(ModulesServices.get(ICore.class).getApplication().getRepository());
         }
 
         return repository;
@@ -308,26 +310,24 @@ public final class ModuleService implements IModuleService, BundleContextAware {
 
     @Override
     public void install(String versionsFileURL) {
-        /* todo InstallationResult result = Managers.getManager(IUpdateManager.class).install(versionsFileURL);
+        InstallationResult result = ModulesServices.get(IUpdateService.class).install(versionsFileURL);
 
-        if (result.isInstalled() && result.isMustRestart()) {
-            configuration.add(result);
+        if (result.isInstalled()) {
+            /* TODO install 
 
-            Managers.getManager(IViewManager.class).displayI18nText("message.module.repository.installed.restart");
-        } else if (result.isInstalled()) {
-            Object module = moduleLoader.loadModule(new File(
-                    Managers.getCore().getFolders().getModulesFolder(), result.getJarFile()));
+             Object module = moduleLoader.loadModule(new File(
+                    ModulesServices.get(ICore.class).getFolders().getModulesFolder(), result.getJarFile()));
 
             ModuleContainer container = createSimpleContainer(module);
 
-            modules.add(container);
+            modules.add(container);*/
 
             configuration.add(result);
 
-            AbstractManager.getManager(IViewManager.class).displayI18nText("message.module.repository.installed");
+            ModulesServices.get(IUIUtils.class).displayI18nText("message.module.repository.installed");
         } else {
-            AbstractManager.getManager(IViewManager.class).displayI18nText("error.repository.module.not.installed");
-        } */
+            ModulesServices.get(IUIUtils.class).displayI18nText("error.repository.module.not.installed");
+        }
     }
 
     /**

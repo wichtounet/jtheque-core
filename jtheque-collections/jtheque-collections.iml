@@ -2,7 +2,7 @@
 <module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" type="JAVA_MODULE" version="4">
   <component name="FacetManager">
     <facet type="Osmorc" name="OSGi">
-      <configuration osmorcControlsManifest="true" manifestLocation="src/main/resources/META-INF/MANIFEST.MF" jarfileLocation="/home/wichtounet/Builds/bundles/jtheque-collections/classes/jtheque-collections.jar" useBndFile="false" bndFileLocation="" bundleActivator="org.jtheque.collections.CollectionsActivator" bundleSymbolicName="jtheque-collections" bundleVersion="2.1-SNAPSHOT" ignoreFilePattern="" useProjectDefaultManifestFileLocation="false" alwaysRebuildBundleJAR="false">
+      <configuration osmorcControlsManifest="true" manifestLocation="src/main/resources/META-INF/MANIFEST.MF" jarfileLocation="/home/wichtounet/Builds/bundles/jtheque-collections/classes/jtheque-collections.jar" useBndFile="false" bndFileLocation="" bundleActivator="org.jtheque.collections.CollectionsActivator" bundleSymbolicName="org.jtheque.collections" bundleVersion="2.1-SNAPSHOT" ignoreFilePattern="" useProjectDefaultManifestFileLocation="false" alwaysRebuildBundleJAR="false">
         <additionalProperties>
           <property key="Bundle-Vendor" value="Baptiste Wicht" />
           <property key="Export-Package" value="org.jtheque.collections" />
@@ -24,12 +24,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="Maven: org.osgi:org.osgi.core:4.2.0" level="project" />
-    <orderEntry type="module" module-name="jtheque-core-utils" exported="" />
-    <orderEntry type="module" module-name="JTheque Utils" exported="" />
-    <orderEntry type="library" exported="" name="Maven: org.slf4j:slf4j-api:1.5.8" level="project" />
-    <orderEntry type="module" module-name="jtheque-javamail" exported="" />
-    <orderEntry type="library" exported="" name="Maven: javax.mail:mail:1.4.1" level="project" />
-    <orderEntry type="library" exported="" name="Maven: javax.activation:activation:1.1" level="project" />
     <orderEntry type="module" module-name="jtheque-persistence" exported="" />
     <orderEntry type="library" exported="" name="Maven: org.springframework:spring-jdbc:3.0.0.RELEASE" level="project" />
     <orderEntry type="library" exported="" name="Maven: org.springframework:spring-beans:3.0.0.RELEASE" level="project" />
@@ -41,6 +35,12 @@
     <orderEntry type="library" exported="" name="Maven: org.springframework:spring-aop:3.0.0.RELEASE" level="project" />
     <orderEntry type="library" exported="" name="Maven: org.springframework:spring-context:3.0.0.RELEASE" level="project" />
     <orderEntry type="library" exported="" name="Maven: org.springframework:spring-expression:3.0.0.RELEASE" level="project" />
+    <orderEntry type="module" module-name="jtheque-core-utils" exported="" />
+    <orderEntry type="module" module-name="JTheque Utils" exported="" />
+    <orderEntry type="library" exported="" name="Maven: org.slf4j:slf4j-api:1.5.8" level="project" />
+    <orderEntry type="module" module-name="jtheque-javamail" exported="" />
+    <orderEntry type="library" exported="" name="Maven: javax.mail:mail:1.4.1" level="project" />
+    <orderEntry type="library" exported="" name="Maven: javax.activation:activation:1.1" level="project" />
     <orderEntry type="module" module-name="jtheque-i18n" exported="" />
     <orderEntry type="library" exported="" name="Maven: org.springframework:spring-context-support:3.0.0.RELEASE" level="project" />
     <orderEntry type="library" exported="" name="Maven: org.springframework.osgi:spring-osgi-core:1.2.1" level="project" />
@@ -65,6 +65,7 @@
     <orderEntry type="library" exported="" name="Maven: org.jdom:jaxen-jdom:1.0-FCS" level="project" />
     <orderEntry type="module" module-name="jtheque-resources" exported="" />
     <orderEntry type="module" module-name="jtheque-core" exported="" />
+    <orderEntry type="module" module-name="jtheque-events" exported="" />
     <orderEntry type="module" module-name="jtheque-schemas" exported="" />
     <orderEntry type="module" module-name="jtheque-modules" exported="" />
     <orderEntry type="module" module-name="jtheque-ui" exported="" />

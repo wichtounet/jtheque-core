@@ -16,6 +16,7 @@ package org.jtheque.ui.utils.windows.frames;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import org.jtheque.core.utils.SimplePropertiesCache;
 import org.jtheque.errors.JThequeError;
 import org.jtheque.i18n.ILanguageService;
 import org.jtheque.ui.able.IModel;
@@ -39,8 +40,7 @@ public abstract class SwingFilthyBuildedDialogView<T extends IModel> extends Swi
      * Construct a SwingDialogView modal to the main view.
      */
     protected SwingFilthyBuildedDialogView() {
-        //TODO get main view
-        this(null);
+        this(SimplePropertiesCache.<Frame>get("mainView"));
     }
 
     /**

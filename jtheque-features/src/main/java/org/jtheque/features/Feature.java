@@ -28,19 +28,12 @@ import java.util.Collection;
 public class Feature {
     private FeatureType type;
     private String titleKey;
-    private Action action;
     private Integer position;
     private String icon;
     private String baseName;
 
     private final Collection<Feature> subFeatures = new ArrayList<Feature>(20);
-
-    /**
-     * Construct a new Feature.
-     */
-    public Feature(){
-        super();
-    }
+    private final Action action;
 
     /**
      * Construct a new Feature for an action.
@@ -67,6 +60,7 @@ public class Feature {
     public Feature(FeatureType type, String titleKey, Integer position){
         super();
 
+        action = null;
         this.type = type;
         this.titleKey = titleKey;
         this.position = position;
@@ -128,15 +122,6 @@ public class Feature {
      */
     public final Action getAction() {
         return action;
-    }
-
-    /**
-     * Set the action of the feature.
-     *
-     * @param action The action.
-     */
-    public final void setAction(Action action) {
-        this.action = action;
     }
 
     /**

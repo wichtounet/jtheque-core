@@ -55,7 +55,7 @@ public final class PrintLicenseAction extends JThequeAction {
      *
      * @author Baptiste Wicht
      */
-    private final class PrintRunnable implements Runnable {
+    private static final class PrintRunnable implements Runnable {
         @Override
         public void run() {
             PrintUtils.printLineFiles(getClass().getClassLoader().

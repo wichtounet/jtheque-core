@@ -4,12 +4,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>jtheque-modules</artifactId>
-    <name>jtheque-modules</name>
+    <artifactId>org.jtheque.modules</artifactId>
+    <name>org.jtheque.modules</name>
     <packaging>bundle</packaging>
 
     <parent>
-        <artifactId>jtheque-core-parent</artifactId>
+        <artifactId>org.jtheque.core.parent</artifactId>
         <groupId>org.jtheque</groupId>
         <version>2.1-SNAPSHOT</version>
     </parent>
@@ -23,43 +23,43 @@
 
         <dependency>
             <groupId>org.jtheque</groupId>
-            <artifactId>jtheque-utils</artifactId>
+            <artifactId>org.jtheque.utils</artifactId>
             <version>1.1.4-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>org.jtheque</groupId>
-            <artifactId>jtheque-core-utils</artifactId>
+            <artifactId>org.jtheque.core.utils</artifactId>
             <version>2.1-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>org.jtheque</groupId>
-            <artifactId>jtheque-i18n</artifactId>
+            <artifactId>org.jtheque.i18n</artifactId>
             <version>2.1-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>org.jtheque</groupId>
-            <artifactId>jtheque-ui</artifactId>
+            <artifactId>org.jtheque.ui</artifactId>
             <version>2.1-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>org.jtheque</groupId>
-            <artifactId>jtheque-core</artifactId>
+            <artifactId>org.jtheque.core</artifactId>
             <version>2.1-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>org.jtheque</groupId>
-            <artifactId>jtheque-states</artifactId>
+            <artifactId>org.jtheque.states</artifactId>
             <version>2.1-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>org.jtheque</groupId>
-            <artifactId>jtheque-io</artifactId>
+            <artifactId>org.jtheque.io</artifactId>
             <version>2.1-SNAPSHOT</version>
         </dependency>
 

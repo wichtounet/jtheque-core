@@ -23,13 +23,13 @@ import org.jtheque.update.Updatable;
 import org.jtheque.utils.bean.Version;
 
 /**
- * An update view specification.
+ * An org.jtheque.update view specification.
  *
  * @author Baptiste Wicht
  */
 public interface IUpdateView extends IView, WaitableView {
     /**
-     * The mode of the update view.
+     * The mode of the org.jtheque.update view.
      */
     enum Mode {
         KERNEL,

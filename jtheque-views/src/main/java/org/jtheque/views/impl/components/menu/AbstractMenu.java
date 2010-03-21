@@ -5,15 +5,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.jtheque.core.utils.ImageType;
 import org.jtheque.features.Feature;
 import org.jtheque.features.IFeatureService;
 import org.jtheque.features.Menu;
-import org.jtheque.resources.IResourceService;
 import org.jtheque.ui.able.IView;
 import org.jtheque.ui.utils.actions.ActionFactory;
 import org.jtheque.utils.collections.CollectionUtils;
-import org.jtheque.views.ViewsServices;
 
 import javax.swing.Action;
 
@@ -210,7 +207,8 @@ public abstract class AbstractMenu implements Menu {
     protected static Feature createSeparatedSubFeature(int position, String action, String imagesBaseName, String image){
         Feature f = createSeparatedSubFeature(position, action);
 
-        putIconOnAction(imagesBaseName, image, f);
+        f.setBaseName(imagesBaseName);
+        f.setIcon(image);
 
         return f;
     }
@@ -228,7 +226,8 @@ public abstract class AbstractMenu implements Menu {
     protected static Feature createSeparatedSubFeature(int position, Action action, String imagesBaseName, String image){
         Feature f = createSeparatedSubFeature(position, action);
 
-        putIconOnAction(imagesBaseName, image, f);
+        f.setBaseName(imagesBaseName);
+        f.setIcon(image);
 
         return f;
     }
@@ -258,7 +257,8 @@ public abstract class AbstractMenu implements Menu {
     protected static Feature createSubFeature(int position, String action, String imagesBaseName, String image){
         Feature f = createSubFeature(position, action);
 
-        putIconOnAction(imagesBaseName, image, f);
+        f.setBaseName(imagesBaseName);
+        f.setIcon(image);
 
         return f;
     }
@@ -276,7 +276,8 @@ public abstract class AbstractMenu implements Menu {
     protected static Feature createSubFeature(int position, Action action, String imagesBaseName, String image){
         Feature f = createSubFeature(position, action);
 
-        putIconOnAction(imagesBaseName, image, f);
+        f.setBaseName(imagesBaseName);
+        f.setIcon(image);
 
         return f;
     }
@@ -352,20 +353,5 @@ public abstract class AbstractMenu implements Menu {
      */
     public static Action createDisplayViewAction(String key, String view){
         return ActionFactory.createDisplayViewAction(key, view);
-    }
-
-    //Private methods
-
-    /**
-     * Put an icon in the action of the feature.  
-     *
-     * @param imagesBaseName The images base name.
-     * @param image The image name.
-     * @param f The feature.
-     */
-    private static void putIconOnAction(String imagesBaseName, String image, Feature f){
-        f.getAction().putValue(Action.SMALL_ICON, ViewsServices.get(IResourceService.class).getIcon(
-                imagesBaseName,
-                image, ImageType.PNG));
     }
 }

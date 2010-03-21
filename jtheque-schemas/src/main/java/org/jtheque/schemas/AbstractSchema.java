@@ -82,8 +82,8 @@ public abstract class AbstractSchema implements Schema {
     /**
      * Update the database. All the {} will be replaced with the name of the specified table.
      *
-     * @param table The table to update.
-     * @param command The command to use to update the database with.
+     * @param table The table to org.jtheque.update.
+     * @param command The command to use to org.jtheque.update the database with.
      * @param args The args to fill the command with.
      */
     protected void updateTable(CharSequence table, String command, Object... args){
@@ -111,7 +111,7 @@ public abstract class AbstractSchema implements Schema {
             return 1;
         } else if (!hasDependency && hasOtherDependency) {
             return -1;
-        } else if(hasDependency && hasOtherDependency){
+        } else {
             for (String dependency : other.getDependencies()) {
                 if (dependency.equals(getId())) {//The other depends on me
                     return -1;

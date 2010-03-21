@@ -4,6 +4,7 @@ import org.jtheque.core.utils.OSGiUtils;
 import org.jtheque.i18n.ILanguageService;
 import org.jtheque.modules.able.Module;
 import org.jtheque.modules.able.ModuleState;
+import org.jtheque.update.IUpdateService;
 import org.jtheque.utils.bean.Version;
 import org.osgi.framework.Bundle;
 
@@ -161,9 +162,7 @@ public final class ModuleContainer implements Module {
 
     @Override
     public Version getMostRecentVersion() {
-        //TODO : return Managers.getManager(IUpdateManager.class).getMostRecentVersion(this);
-
-        return null;
+        return ModulesServices.get(IUpdateService.class).getMostRecentVersion(this);
     }
 
     @Override

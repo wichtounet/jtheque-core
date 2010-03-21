@@ -136,7 +136,7 @@ public class WeakEventListenerList implements Serializable {
     @SuppressWarnings("unchecked")
     public <T extends EventListener> T[] getListeners(Class<T> t) {
         List<T> liveListeners = cleanReferences();
-        List<T> listeners = new ArrayList<T>();
+        List<T> listeners = new ArrayList<T>(5);
         for (int i = 0; i < liveListeners.size(); i++) {
             if (getClasses().get(i) == t) {
                 listeners.add(liveListeners.get(i));

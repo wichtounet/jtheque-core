@@ -34,8 +34,6 @@ public interface IFileService {
      * @author Baptiste Wicht
      */
     enum XmlBackupVersion {
-        FIRST,
-        SECOND, //JTheque Core 2.0
         THIRD   //JTheque Core 2.1
     }
 

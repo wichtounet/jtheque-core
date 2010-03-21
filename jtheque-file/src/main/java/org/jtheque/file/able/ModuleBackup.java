@@ -36,7 +36,7 @@ public class ModuleBackup {
         this.id = id;
     }
 
-    public List<Node> getNodes() {
+    public Iterable<Node> getNodes() {
         return nodes;
     }
 

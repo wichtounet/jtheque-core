@@ -4,12 +4,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>jtheque-undo</artifactId>
-    <name>jtheque-undo</name>
+    <artifactId>org.jtheque.undo</artifactId>
+    <name>org.jtheque.undo</name>
     <packaging>bundle</packaging>
 
     <parent>
-        <artifactId>jtheque-core-parent</artifactId>
+        <artifactId>org.jtheque.core.parent</artifactId>
         <groupId>org.jtheque</groupId>
         <version>2.1-SNAPSHOT</version>
     </parent>
