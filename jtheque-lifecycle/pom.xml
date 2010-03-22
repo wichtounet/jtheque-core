@@ -76,12 +76,6 @@
         </dependency>
 
         <dependency>
-            <groupId>org.jtheque</groupId>
-            <artifactId>org.jtheque.update</artifactId>
-            <version>2.1-SNAPSHOT</version>
-        </dependency>
-
-        <dependency>
             <groupId>org.apache.felix</groupId>
             <artifactId>org.apache.felix.framework</artifactId>
             <version>2.0.2</version>
@@ -98,7 +92,6 @@
             <artifactId>logback-classic</artifactId>
             <version>0.9.18</version>
         </dependency>
-        
     </dependencies>
 
     <build>
@@ -117,6 +110,19 @@
                         <Bundle-Vendor>Baptiste Wicht</Bundle-Vendor>
                         <Bundle-Activator>org.jtheque.lifecycle.LifeCycleActivator</Bundle-Activator>
                     </instructions>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>*</exclude>
+                    </excludes>
+                    <includes>
+                        <include>**/org/jtheque/lifecycle/**/*Test.java</include>
+                    </includes>
                 </configuration>
             </plugin>
         </plugins>
