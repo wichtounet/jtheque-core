@@ -67,6 +67,28 @@
             <groupId>org.springframework.osgi</groupId>
             <artifactId>spring-osgi-core</artifactId>
             <version>1.2.1</version>
+            <exclusions>
+                <exclusion>
+                  <groupId>org.springframework.osgi</groupId>
+                  <artifactId>spring-osgi-io</artifactId>
+                </exclusion>
+                <exclusion>
+                  <groupId>org.springframework</groupId>
+                  <artifactId>org.springframework.aop</artifactId>
+                </exclusion>
+                <exclusion>
+                  <groupId>org.springframework</groupId>
+                  <artifactId>org.springframework.beans</artifactId>
+                </exclusion>
+                <exclusion>
+                  <groupId>org.springframework</groupId>
+                  <artifactId>org.springframework.context</artifactId>
+                </exclusion>
+                <exclusion>
+                  <groupId>org.springframework</groupId>
+                  <artifactId>org.springframework.core</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 
@@ -86,6 +108,20 @@
                         <Export-Package>org.jtheque.modules.able, org.jtheque.modules.utils, org.jtheque.modules</Export-Package>
                         <Bundle-Vendor>Baptiste Wicht</Bundle-Vendor>
                     </instructions>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>*</exclude>
+                    </excludes>
+                    <includes>
+                        <include>**/org/jtheque/modules/**/*Test.java</include>
+                        <include>**/org/jtheque/update/**/*Test.java</include>
+                    </includes>
                 </configuration>
             </plugin>
         </plugins>

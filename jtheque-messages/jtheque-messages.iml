@@ -2,7 +2,7 @@
 <module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" type="JAVA_MODULE" version="4">
   <component name="FacetManager">
     <facet type="Osmorc" name="OSGi">
-      <configuration osmorcControlsManifest="true" manifestLocation="src/main/resources/META-INF/MANIFEST.MF" jarfileLocation="/home/wichtounet/Builds/bundles/jtheque-events/classes/jtheque-messages.jar" useBndFile="false" bndFileLocation="" bundleActivator="" bundleSymbolicName="org.jtheque.messages" bundleVersion="2.1-SNAPSHOT" ignoreFilePattern="" useProjectDefaultManifestFileLocation="false" alwaysRebuildBundleJAR="false">
+      <configuration osmorcControlsManifest="true" manifestLocation="src/main/resources/META-INF/MANIFEST.MF" jarfileLocation="/home/wichtounet/Builds/bundles/jtheque-events/classes/jtheque-messages.jar" useBndFile="false" bndFileLocation="" bundleActivator="org.jtheque.persistence.PersistenceActivator" bundleSymbolicName="org.jtheque.messages" bundleVersion="2.1-SNAPSHOT" ignoreFilePattern="" useProjectDefaultManifestFileLocation="false" alwaysRebuildBundleJAR="false">
         <additionalProperties>
           <property key="Bundle-Vendor" value="Baptiste Wicht" />
           <property key="Export-Package" value="org.jtheque.messages" />
@@ -25,12 +25,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="Maven: org.osgi:org.osgi.core:4.2.0" level="project" />
     <orderEntry type="library" exported="" name="Maven: org.springframework.osgi:spring-osgi-core:1.2.1" level="project" />
-    <orderEntry type="library" exported="" name="Maven: org.springframework.osgi:spring-osgi-io:1.2.1" level="project" />
-    <orderEntry type="library" exported="" name="Maven: org.springframework:org.springframework.aop:2.5.6.SEC01" level="project" />
-    <orderEntry type="library" exported="" name="Maven: org.aopalliance:com.springsource.org.aopalliance:1.0.0" level="project" />
-    <orderEntry type="library" exported="" name="Maven: org.springframework:org.springframework.beans:2.5.6.SEC01" level="project" />
-    <orderEntry type="library" exported="" name="Maven: org.springframework:org.springframework.core:2.5.6.SEC01" level="project" />
-    <orderEntry type="library" exported="" name="Maven: org.springframework:org.springframework.context:2.5.6.SEC01" level="project" />
     <orderEntry type="module" module-name="jtheque-modules" exported="" />
     <orderEntry type="module" module-name="JTheque Utils" exported="" />
     <orderEntry type="library" exported="" name="Maven: org.slf4j:slf4j-api:1.5.8" level="project" />

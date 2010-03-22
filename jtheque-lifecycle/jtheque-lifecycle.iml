@@ -5,7 +5,7 @@
       <configuration osmorcControlsManifest="true" manifestLocation="src/main/resources/META-INF/MANIFEST.MF" jarfileLocation="/home/wichtounet/Builds/bundles/jtheque-lifecycle/classes/jtheque-lifecycle.jar" useBndFile="false" bndFileLocation="" bundleActivator="org.jtheque.lifecycle.LifeCycleActivator" bundleSymbolicName="org.jtheque.lifecycle" bundleVersion="2.1-SNAPSHOT" ignoreFilePattern="" useProjectDefaultManifestFileLocation="false" alwaysRebuildBundleJAR="false">
         <additionalProperties>
           <property key="Bundle-Vendor" value="Baptiste Wicht" />
-          <property key="Export-Package" value="org.jtheque.i18n" />
+          <property key="Export-Package" value="org.jtheque.core.persistence, org.jtheque.core.persistence.able, org.jtheque.core.persistence.context" />
         </additionalProperties>
         <additionalJARContents />
       </configuration>
@@ -37,12 +37,6 @@
     <orderEntry type="library" exported="" name="Maven: javax.activation:activation:1.1" level="project" />
     <orderEntry type="module" module-name="jtheque-i18n" exported="" />
     <orderEntry type="library" exported="" name="Maven: org.springframework.osgi:spring-osgi-core:1.2.1" level="project" />
-    <orderEntry type="library" exported="" name="Maven: org.springframework.osgi:spring-osgi-io:1.2.1" level="project" />
-    <orderEntry type="library" exported="" name="Maven: org.springframework:org.springframework.aop:2.5.6.SEC01" level="project" />
-    <orderEntry type="library" exported="" name="Maven: org.aopalliance:com.springsource.org.aopalliance:1.0.0" level="project" />
-    <orderEntry type="library" exported="" name="Maven: org.springframework:org.springframework.beans:2.5.6.SEC01" level="project" />
-    <orderEntry type="library" exported="" name="Maven: org.springframework:org.springframework.core:2.5.6.SEC01" level="project" />
-    <orderEntry type="library" exported="" name="Maven: org.springframework:org.springframework.context:2.5.6.SEC01" level="project" />
     <orderEntry type="module" module-name="jtheque-states" exported="" />
     <orderEntry type="module" module-name="jtheque-io" exported="" />
     <orderEntry type="module" module-name="jtheque-jdom" exported="" />
@@ -80,7 +74,6 @@
     <orderEntry type="module" module-name="jtheque-schemas" exported="" />
     <orderEntry type="module" module-name="jtheque-file" exported="" />
     <orderEntry type="module" module-name="jtheque-views" exported="" />
-    <orderEntry type="module" module-name="jtheque-update" exported="" />
     <orderEntry type="module" module-name="jtheque-undo" exported="" />
     <orderEntry type="module" module-name="jtheque-features" exported="" />
     <orderEntry type="module" module-name="jtheque-messages" exported="" />

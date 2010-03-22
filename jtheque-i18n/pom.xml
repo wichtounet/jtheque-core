@@ -31,6 +31,28 @@
             <groupId>org.springframework.osgi</groupId>
             <artifactId>spring-osgi-core</artifactId>
             <version>1.2.1</version>
+            <exclusions>
+                <exclusion>
+                  <groupId>org.springframework.osgi</groupId>
+                  <artifactId>spring-osgi-io</artifactId>
+                </exclusion>
+                <exclusion>
+                  <groupId>org.springframework</groupId>
+                  <artifactId>org.springframework.aop</artifactId>
+                </exclusion>
+                <exclusion>
+                  <groupId>org.springframework</groupId>
+                  <artifactId>org.springframework.beans</artifactId>
+                </exclusion>
+                <exclusion>
+                  <groupId>org.springframework</groupId>
+                  <artifactId>org.springframework.context</artifactId>
+                </exclusion>
+                <exclusion>
+                  <groupId>org.springframework</groupId>
+                  <artifactId>org.springframework.core</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
