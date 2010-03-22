@@ -33,7 +33,6 @@
         <module>jtheque-schemas</module>
         <module>jtheque-file</module>
         <module>jtheque-cache</module>
-        <module>jtheque-update</module>
         <module>jtheque-spring-utils</module>
         <module>jtheque-ui</module>
     </modules>
@@ -81,16 +80,6 @@
                 <configuration>
                     <source>1.6</source>
                     <target>1.6</target>
-                </configuration>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <configuration>
-                    <archive>
-                        <manifestFile>MANIFEST.MF</manifestFile>
-                    </archive>
                 </configuration>
             </plugin>
 
@@ -167,6 +156,18 @@
                     <tagBase>http://wichtounet.homedns.org/svn/jtheque-core/continuous/</tagBase>
                     <username>wichtounet</username>
                     <password>${svn.password}</password>
+                </configuration>
+            </plugin>
+            
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <extensions>true</extensions>
+                <configuration>
+                    <instructions>
+                        <Bundle-SymbolicName>${pom.artifactId}</Bundle-SymbolicName>
+                        <Bundle-Vendor>Baptiste Wicht</Bundle-Vendor>
+                    </instructions>
                 </configuration>
             </plugin>
         </plugins>

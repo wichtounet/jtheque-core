@@ -54,12 +54,7 @@ public class AcBackup extends JThequeAction {
         if (yes) {
             File file = new File(ViewsServices.get(IUIUtils.class).getDelegate().chooseFile(new SimpleFilter("XML(*.xml)", ".xml")));
 
-            try {
-                ViewsServices.get(IFileService.class).backup(file);
-            } catch (XMLException e1) {
-                LoggerFactory.getLogger(getClass()).error(e1.getMessage(), e1);
-                ViewsServices.get(IErrorService.class).addInternationalizedError("error.backup.error");
-            }
+            ViewsServices.get(IFileService.class).backup(file);
         }
     }
 }

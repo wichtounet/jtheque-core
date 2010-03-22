@@ -77,8 +77,6 @@
     <orderEntry type="library" exported="" name="Maven: org.trident:trident:1.2" level="project" />
     <orderEntry type="module" module-name="jtheque-jxlayer" exported="" />
     <orderEntry type="library" exported="" name="Maven: org.swinglabs:jxlayer:3.0.4" level="project" />
-    <orderEntry type="module" module-name="jtheque-update" exported="" />
-    <orderEntry type="module" module-name="jtheque-modules" exported="" />
     <orderEntry type="module" module-name="jtheque-undo" exported="" />
     <orderEntry type="module" module-name="jtheque-persistence" exported="" />
     <orderEntry type="library" exported="" name="Maven: org.springframework:spring-jdbc:3.0.0.RELEASE" level="project" />
@@ -87,6 +85,7 @@
     <orderEntry type="library" exported="" name="Maven: org.springframework:spring-aop:3.0.0.RELEASE" level="project" />
     <orderEntry type="module" module-name="jtheque-collections" exported="" />
     <orderEntry type="module" module-name="jtheque-schemas" exported="" />
+    <orderEntry type="module" module-name="jtheque-modules" exported="" />
     <orderEntry type="module" module-name="jtheque-file" exported="" />
     <orderEntry type="module" module-name="jtheque-features" exported="" />
     <orderEntry type="module" module-name="jtheque-messages" exported="" />
