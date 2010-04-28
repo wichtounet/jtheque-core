@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" type="JAVA_MODULE" version="4">
+  <component name="FacetManager">
+    <facet type="Osmorc" name="OSGi">
+      <configuration osmorcControlsManifest="true" manifestLocation="" jarfileLocation="C:/Server/builds/bundles/jtheque-defaults/classes/jtheque-defaults.jar" useBndFile="false" bndFileLocation="" bundleActivator="org.jtheque.defaults.DefaultsActivator" bundleSymbolicName="org.jtheque.defaults" bundleVersion="2.1-SNAPSHOT" ignoreFilePattern="" useProjectDefaultManifestFileLocation="true" alwaysRebuildBundleJAR="false">
+        <additionalProperties>
+          <property key="Bundle-Vendor" value="Baptiste Wicht" />
+        </additionalProperties>
+        <additionalJARContents />
+      </configuration>
+    </facet>
+    <facet type="Osmorc" name="OSGi">
+      <configuration osmorcControlsManifest="true" manifestLocation="" jarfileLocation="C:/Server/builds/bundles/jtheque-defaults/classes/jtheque-defaults.jar" useBndFile="false" bndFileLocation="" bundleActivator="org.jtheque.defaults.DefaultsActivator" bundleSymbolicName="org.jtheque.defaults" bundleVersion="2.1-SNAPSHOT" ignoreFilePattern="" useProjectDefaultManifestFileLocation="true" alwaysRebuildBundleJAR="false">
+        <additionalProperties>
+          <property key="Bundle-Vendor" value="Baptiste Wicht" />
+        </additionalProperties>
+        <additionalJARContents />
+      </configuration>
+    </facet>
+  </component>
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_6" inherit-compiler-output="false">
+    <output url="file:///home/wichtounet/Builds/bundles/jtheque-defaults/classes/production" />
+    <output-test url="file:///home/wichtounet/Builds/utils/jtheque-core/classes/test" />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" exported="" name="Maven: org.osgi:org.osgi.core:4.2.0" level="project" />
+    <orderEntry type="module" module-name="jtheque-apple-extensions" exported="" />
+    <orderEntry type="library" exported="" name="Maven: net.substance:substance:6.0.0" level="project" />
+    <orderEntry type="module" module-name="jtheque-trident" exported="" />
+    <orderEntry type="library" exported="" name="Maven: net.trident:trident:1.2.0" level="project" />
+    <orderEntry type="module" module-name="JTheque Utils" exported="" />
+    <orderEntry type="library" exported="" name="Maven: org.slf4j:slf4j-api:1.5.8" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: junit:junit:4.4" level="project" />
+  </component>
+</module>
+
