@@ -19,19 +19,17 @@ package org.jtheque.views.impl.components.config;
 import org.jtheque.core.CoreConfiguration;
 import org.jtheque.core.ICore;
 import org.jtheque.errors.JThequeError;
-import org.jtheque.spring.utils.injection.Init;
-import org.jtheque.spring.utils.injection.Injectable;
+import org.jtheque.i18n.ILanguageService;
 import org.jtheque.ui.utils.ValidationUtils;
-import org.jtheque.ui.utils.builders.FilthyPanelBuilder;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
-import org.jtheque.ui.utils.filthy.FilthyBackgroundPanel;
+import org.jtheque.ui.utils.filthy.FilthyBuildedPanel;
+import org.jtheque.ui.utils.filthy.IFilthyUtils;
 import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.views.able.components.ConfigTabComponent;
 import org.jtheque.views.able.config.INetworkConfigView;
 import org.jtheque.views.impl.actions.config.CheckProxyAction;
 import org.jtheque.views.impl.filthy.FilthyTextField;
 
-import javax.annotation.Resource;
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import java.util.Collection;
@@ -41,27 +39,23 @@ import java.util.Collection;
  *
  * @author Baptiste Wicht
  */
-public final class JPanelConfigNetwork extends FilthyBackgroundPanel implements INetworkConfigView, ConfigTabComponent, Injectable {
+public final class JPanelConfigNetwork extends FilthyBuildedPanel implements INetworkConfigView, ConfigTabComponent {
     private JCheckBox boxProxy;
     private FilthyTextField fieldAddress;
     private FilthyTextField fieldPort;
 
-    @Resource
-    private ICore core;
+    private final ICore core;
 
-    @Init(swing = true)
-    public void init(){
-        addProxyPanel();
+    public JPanelConfigNetwork(IFilthyUtils filthyUtils, ILanguageService languageService, ICore core) {
+        super(filthyUtils, languageService);
 
-        fillAllFields();
+        this.core = core;
+
+        build();
     }
 
-    /**
-     * Add the proxy panel.
-     */
-    private void addProxyPanel() {
-        I18nPanelBuilder parent = new FilthyPanelBuilder(this);
-
+    @Override
+    protected void buildView(I18nPanelBuilder parent) {
         I18nPanelBuilder builder = parent.addPanel(parent.gbcSet(0, 0, GridBagUtils.HORIZONTAL, GridBagUtils.FIRST_LINE_START));
         builder.setI18nTitleBorder("config.network.proxy.title");
 
@@ -74,6 +68,8 @@ public final class JPanelConfigNetwork extends FilthyBackgroundPanel implements 
 
         builder.addI18nLabel("config.network.proxy.port", parent.gbcSet(0, 2));
         fieldPort = builder.add(new FilthyTextField(10), parent.gbcSet(1, 2, GridBagUtils.HORIZONTAL));
+
+        fillAllFields();
     }
 
     /**

@@ -1,9 +1,10 @@
 package org.jtheque.views.impl.components.panel;
 
+import org.jtheque.i18n.ILanguageService;
+import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.ui.utils.components.Borders;
-import org.jtheque.ui.utils.builders.FilthyPanelBuilder;
-import org.jtheque.ui.utils.builders.PanelBuilder;
-import org.jtheque.ui.utils.filthy.FilthyBackgroundPanel;
+import org.jtheque.ui.utils.filthy.FilthyBuildedPanel;
+import org.jtheque.ui.utils.filthy.IFilthyUtils;
 import org.jtheque.update.IUpdateService;
 import org.jtheque.update.Updatable;
 import org.jtheque.utils.ui.GridBagUtils;
@@ -35,17 +36,24 @@ import javax.swing.JList;
  *
  * @author Baptiste Wicht
  */
-public final class UpdatablesPanel extends FilthyBackgroundPanel implements IUpdatablesPanelView {
-    private final JList updatablesList;
+public final class UpdatablesPanel extends FilthyBuildedPanel implements IUpdatablesPanelView {
+    private JList updatablesList;
+
+    private final IUpdateService updateService;
 
     /**
      * Construct a new UpdatablesPanel. 
      */
-    public UpdatablesPanel(IUpdateService updateService){
-        super();
+    public UpdatablesPanel(IUpdateService updateService, ILanguageService languageService, IFilthyUtils utils){
+        super(utils, languageService);
 
-        PanelBuilder builder = new FilthyPanelBuilder(this);
+        this.updateService = updateService;
 
+        build();
+    }
+
+    @Override
+    protected void buildView(I18nPanelBuilder builder) {
         updatablesList = builder.addScrolledList(new UpdatableListModel(updateService), new UpdatableListRenderer(updateService),
                 builder.gbcSet(0, 0, GridBagUtils.BOTH, GridBagUtils.FIRST_LINE_START, 1.0, 1.0));
         updatablesList.setBorder(Borders.EMPTY_BORDER);

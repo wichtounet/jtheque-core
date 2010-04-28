@@ -30,10 +30,15 @@ import java.awt.Image;
  */
 public class FilthyBackgroundPanel extends JPanel {
     private final SizeTracker tracker = new SizeTracker(this);
+    private final IFilthyUtils filthyUtils;
+    
     private Image gradientImage;
 
-    @Resource
-    private IFilthyUtils filthyUtils;
+    public FilthyBackgroundPanel(IFilthyUtils filthyUtils) {
+        super();
+
+        this.filthyUtils = filthyUtils;
+    }
 
     @Override
     public void paintComponent(Graphics g) {

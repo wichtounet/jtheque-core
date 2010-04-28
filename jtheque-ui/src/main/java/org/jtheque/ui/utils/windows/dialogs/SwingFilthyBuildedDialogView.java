@@ -21,6 +21,7 @@ import org.jtheque.ui.able.IModel;
 import org.jtheque.ui.utils.builders.FilthyPanelBuilder;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.ui.utils.filthy.FilthyBackgroundPanel;
+import org.jtheque.ui.utils.filthy.IFilthyUtils;
 
 import java.awt.Container;
 import java.util.Collection;
@@ -48,7 +49,7 @@ public abstract class SwingFilthyBuildedDialogView<T extends IModel> extends Swi
      * @return The builded content pane.
      */
     private Container buildContentPane() {
-        FilthyBackgroundPanel contentPane = new FilthyBackgroundPanel();
+        FilthyBackgroundPanel contentPane = new FilthyBackgroundPanel(getService(IFilthyUtils.class));
 
         I18nPanelBuilder builder = new FilthyPanelBuilder(contentPane);
 

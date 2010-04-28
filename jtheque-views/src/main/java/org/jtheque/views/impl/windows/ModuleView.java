@@ -16,9 +16,11 @@ package org.jtheque.views.impl.windows;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import org.jtheque.i18n.ILanguageService;
 import org.jtheque.modules.able.Module;
 import org.jtheque.ui.able.IModel;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
+import org.jtheque.ui.utils.filthy.IFilthyUtils;
 import org.jtheque.ui.utils.windows.dialogs.SwingFilthyBuildedDialogView;
 import org.jtheque.update.IUpdateService;
 import org.jtheque.update.Updatable;
@@ -50,8 +52,8 @@ public final class ModuleView extends SwingFilthyBuildedDialogView<IModel> imple
     protected void buildView(I18nPanelBuilder builder){
         LayerTabbedPane tabbed = new LayerTabbedPane();
 
-        modulesPanel = new ModulesPanel(getService(IUpdateService.class));
-        updatablesPanel = new UpdatablesPanel(getService(IUpdateService.class));
+        modulesPanel = new ModulesPanel(getService(IUpdateService.class), getService(ILanguageService.class), getService(IFilthyUtils.class));
+        updatablesPanel = new UpdatablesPanel(getService(IUpdateService.class), getService(ILanguageService.class), getService(IFilthyUtils.class));
 
         tabbed.addInternationalizedTab("modules.view.tab.modules", (JComponent) modulesPanel);
         tabbed.addInternationalizedTab("modules.view.tab.updatables", (JComponent) updatablesPanel);

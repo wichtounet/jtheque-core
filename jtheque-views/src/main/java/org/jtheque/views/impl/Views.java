@@ -24,7 +24,6 @@ import org.jtheque.modules.utils.ModuleResourceCache;
 import org.jtheque.spring.utils.SwingSpringProxy;
 import org.jtheque.spring.utils.injection.Injector;
 import org.jtheque.utils.collections.CollectionUtils;
-import org.jtheque.utils.ui.SwingUtils;
 import org.jtheque.views.able.IViews;
 import org.jtheque.views.able.components.ConfigTabComponent;
 import org.jtheque.views.able.components.MainComponent;
@@ -68,18 +67,6 @@ public final class Views implements IViews, ApplicationContextAware, ModuleListe
     private final Collection<ConfigTabComponent> configPanels = new ArrayList<ConfigTabComponent>(5);
     
     private ApplicationContext applicationContext;
-
-    @Override
-    public void init(){
-        SwingUtils.inEdt(new Runnable(){
-            @Override
-            public void run() {
-                addConfigTabComponent("", new JPanelConfigAppearance());
-                addConfigTabComponent("", new JPanelConfigOthers());
-                addConfigTabComponent("", new JPanelConfigNetwork());
-            }
-        });
-    }
 
     @Override
     public void setSelectedView(MainComponent component) {
@@ -211,6 +198,13 @@ public final class Views implements IViews, ApplicationContextAware, ModuleListe
     @Override
     public Collection<ConfigTabComponent> getConfigTabComponents() {
         return CollectionUtils.copyOf(configPanels);
+    }
+
+    @Override
+    public void init() {
+        addConfigTabComponent("", new SwingSpringProxy<JPanelConfigAppearance>(JPanelConfigAppearance.class, applicationContext).get());
+        addConfigTabComponent("", new SwingSpringProxy<JPanelConfigOthers>(JPanelConfigOthers.class, applicationContext).get());
+        addConfigTabComponent("", new SwingSpringProxy<JPanelConfigNetwork>(JPanelConfigNetwork.class, applicationContext).get());
     }
 
     @Override

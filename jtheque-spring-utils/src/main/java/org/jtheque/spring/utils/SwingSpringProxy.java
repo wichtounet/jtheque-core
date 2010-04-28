@@ -42,7 +42,7 @@ public class SwingSpringProxy<T> {
     }
 
     private void createInstance() {
-        SwingUtils.inEdt(new Runnable(){
+        SwingUtils.inEdtSync(new Runnable(){
             @Override
             public void run() {
                 instance = applicationContext.getBean(classz);

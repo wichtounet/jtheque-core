@@ -1,10 +1,11 @@
 package org.jtheque.views.impl.components.panel;
 
+import org.jtheque.i18n.ILanguageService;
 import org.jtheque.modules.able.Module;
 import org.jtheque.ui.utils.actions.ActionFactory;
-import org.jtheque.ui.utils.builders.FilthyPanelBuilder;
-import org.jtheque.ui.utils.builders.PanelBuilder;
-import org.jtheque.ui.utils.filthy.FilthyBackgroundPanel;
+import org.jtheque.ui.utils.builders.I18nPanelBuilder;
+import org.jtheque.ui.utils.filthy.FilthyBuildedPanel;
+import org.jtheque.ui.utils.filthy.IFilthyUtils;
 import org.jtheque.update.IUpdateService;
 import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.utils.ui.SwingUtils;
@@ -39,17 +40,24 @@ import javax.swing.JList;
 /**
  * @author Baptiste Wicht
  */
-public final class ModulesPanel extends FilthyBackgroundPanel implements IModulesPanelView {
-    private final JList modulesList;
+public final class ModulesPanel extends FilthyBuildedPanel implements IModulesPanelView {
+    private JList modulesList;
+
+    private final IUpdateService updateService;
 
     /**
      * Construct a new ModulesPanel. 
      */
-    public ModulesPanel(IUpdateService updateService){
-        super();
+    public ModulesPanel(IUpdateService updateService, ILanguageService languageService, IFilthyUtils utils){
+        super(utils, languageService);
 
-        PanelBuilder builder = new FilthyPanelBuilder(this);
+        this.updateService = updateService;
 
+        build();
+    }
+
+    @Override
+    protected void buildView(I18nPanelBuilder builder) {
         builder.add(new KernelInfoPanel(updateService), builder.gbcSet(0, 0, GridBagUtils.HORIZONTAL, GridBagUtils.BASELINE_LEADING, 1.0, 0.0));
 
         modulesList = builder.addScrolledList(new ModuleListModel(), new ModuleListRenderer(updateService), builder.gbcSet(0, 1, GridBagUtils.BOTH, GridBagUtils.BASELINE_LEADING, 1.0, 1.0));
@@ -57,7 +65,7 @@ public final class ModulesPanel extends FilthyBackgroundPanel implements IModule
 
         builder.addButtonBar(builder.gbcSet(0, 2, GridBagUtils.HORIZONTAL, GridBagUtils.BASELINE_LEADING, 1.0, 0.0),
                 new EnableModuleAction(), new DisableModuleAction(), new UninstallModuleAction(), new UpdateModuleAction());
-        
+
         builder.addButtonBar(builder.gbcSet(0, 3, GridBagUtils.HORIZONTAL, GridBagUtils.BASELINE_LEADING, 1.0, 0.0),
                 new InstallModuleAction(), new LoadModuleAction(), ActionFactory.createDisplayViewAction("modules.actions.repository", "repositoryView"));
     }

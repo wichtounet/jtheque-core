@@ -17,7 +17,6 @@ package org.jtheque.views.impl.windows;
  */
 
 import org.jtheque.messages.IMessageService;
-import org.jtheque.messages.Message;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.ui.utils.builders.PanelBuilder;
 import org.jtheque.ui.utils.windows.dialogs.SwingFilthyBuildedDialogView;

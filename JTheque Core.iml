@@ -14,10 +14,9 @@
       </configuration>
     </facet>
     <facet type="Osmorc" name="OSGi">
-      <configuration osmorcControlsManifest="false" manifestLocation="jtheque-collections/src/main/resources/META-INF/MANIFEST.MF" jarfileLocation="C:/Server/builds/utils/jtheque-core/classes/JTheque_Core.jar" useBndFile="false" bndFileLocation="" bundleActivator="org.jtheque.persistence.PersistenceActivator" bundleSymbolicName="org.jtheque.core.parent" bundleVersion="2.1-SNAPSHOT" ignoreFilePattern="" useProjectDefaultManifestFileLocation="false" alwaysRebuildBundleJAR="false">
+      <configuration osmorcControlsManifest="true" manifestLocation="" jarfileLocation="$APPLICATION_HOME_DIR$/bin/home/wichtounet/Builds/utils/jtheque-core/classes/JTheque_Core.jar" useBndFile="false" bndFileLocation="" bundleActivator="" bundleSymbolicName="org.jtheque.core.parent" bundleVersion="2.1-SNAPSHOT" ignoreFilePattern="" useProjectDefaultManifestFileLocation="true" alwaysRebuildBundleJAR="false">
         <additionalProperties>
           <property key="Bundle-Vendor" value="Baptiste Wicht" />
-          <property key="Export-Package" value="org.jtheque.core.persistence, org.jtheque.core.persistence.able, org.jtheque.core.persistence.context" />
         </additionalProperties>
         <additionalJARContents />
       </configuration>

@@ -19,17 +19,15 @@ package org.jtheque.views.impl.components.config;
 import org.jtheque.core.CoreConfiguration;
 import org.jtheque.core.ICore;
 import org.jtheque.errors.JThequeError;
-import org.jtheque.spring.utils.injection.Init;
-import org.jtheque.spring.utils.injection.Injectable;
-import org.jtheque.ui.utils.builders.FilthyPanelBuilder;
+import org.jtheque.i18n.ILanguageService;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
-import org.jtheque.ui.utils.filthy.FilthyBackgroundPanel;
+import org.jtheque.ui.utils.filthy.FilthyBuildedPanel;
+import org.jtheque.ui.utils.filthy.IFilthyUtils;
 import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.views.able.components.ConfigTabComponent;
 import org.jtheque.views.able.config.IOthersConfigView;
 import org.jtheque.views.impl.filthy.FilthyTextField;
 
-import javax.annotation.Resource;
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import java.util.Collection;
@@ -39,19 +37,28 @@ import java.util.Collection;
  *
  * @author Baptiste Wicht
  */
-public final class JPanelConfigOthers extends FilthyBackgroundPanel implements IOthersConfigView, ConfigTabComponent, Injectable {
+public final class JPanelConfigOthers extends FilthyBuildedPanel implements IOthersConfigView, ConfigTabComponent {
     private JCheckBox boxDeleteLogs;
     private JCheckBox checkBoxStart;
     private FilthyTextField fieldEmail;
     private FilthyTextField fieldSmtpHost;
 
-    @Resource
-    private ICore core;
+    private final ICore core;
 
-    @Init(swing = true)
-    public void init(){
+    public JPanelConfigOthers(IFilthyUtils filthyUtils, ILanguageService languageService, ICore core) {
+        super(filthyUtils, languageService);
+
+        this.core = core;
 
         build();
+    }
+
+    @Override
+    protected void buildView(I18nPanelBuilder builder) {
+        addLogsPanel(builder);
+        addMailPanel(builder);
+
+        checkBoxStart = builder.addI18nCheckBox("update.view.verify", builder.gbcSet(0, 2));
 
         fillAllFields();
     }
@@ -59,18 +66,6 @@ public final class JPanelConfigOthers extends FilthyBackgroundPanel implements I
     @Override
     public String getTitleKey() {
         return "config.view.tab.others";
-    }
-
-    /**
-     * Build the view.
-     */
-    private void build() {
-        I18nPanelBuilder builder = new FilthyPanelBuilder(this);
-
-        addLogsPanel(builder);
-        addMailPanel(builder);
-
-        checkBoxStart = builder.addI18nCheckBox("update.view.verify", builder.gbcSet(0, 2));
     }
 
     /**

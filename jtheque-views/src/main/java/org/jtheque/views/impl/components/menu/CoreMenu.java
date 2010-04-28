@@ -3,6 +3,7 @@ package org.jtheque.views.impl.components.menu;
 import org.jtheque.core.ICore;
 import org.jtheque.features.Feature;
 import org.jtheque.undo.IUndoRedoService;
+import org.jtheque.views.able.IViews;
 import org.jtheque.views.impl.ViewsResources;
 import org.jtheque.views.impl.actions.about.DisplayAboutViewAction;
 import org.jtheque.views.impl.actions.author.AcInformOfABug;
@@ -11,6 +12,9 @@ import org.jtheque.views.impl.actions.author.AcProposeImprovement;
 import org.jtheque.views.impl.actions.backup.AcBackup;
 import org.jtheque.views.impl.actions.backup.AcRestore;
 import org.jtheque.views.impl.actions.ExitAction;
+import org.jtheque.views.impl.actions.config.DisplayConfigViewAction;
+import org.jtheque.views.impl.actions.messages.DisplayMessagesViewAction;
+import org.jtheque.views.impl.actions.module.DisplayModuleViewAction;
 import org.jtheque.views.impl.actions.undo.RedoAction;
 import org.jtheque.views.impl.actions.undo.UndoAction;
 
@@ -40,12 +44,14 @@ import java.util.List;
 public final class CoreMenu extends AbstractMenu {
     private final ICore core;
     private final IUndoRedoService undoRedoService;
+    private final IViews views;
 
-    public CoreMenu(ICore core, IUndoRedoService undoRedoService) {
+    public CoreMenu(ICore core, IUndoRedoService undoRedoService, IViews views) {
         super();
 
         this.core = core;
         this.undoRedoService = undoRedoService;
+        this.views = views;
     }
 
     @Override
@@ -68,8 +74,8 @@ public final class CoreMenu extends AbstractMenu {
     @Override
     protected List<Feature> getAdvancedMenuSubFeatures(){
         return features(
-                createSeparatedSubFeature(500, createDisplayViewAction("config.actions.display", "configView"), ViewsResources.OPTIONS_ICON),
-                createSeparatedSubFeature(750, createDisplayViewAction("modules.actions.manage", "moduleView"), ViewsResources.UPDATE_ICON)
+                createSeparatedSubFeature(500, new DisplayConfigViewAction(views), ViewsResources.OPTIONS_ICON),
+                createSeparatedSubFeature(750, new DisplayModuleViewAction(views), ViewsResources.UPDATE_ICON)
         );
     }
 
@@ -79,7 +85,7 @@ public final class CoreMenu extends AbstractMenu {
                 createSeparatedSubFeature(1, new AcOpenHelp(), ViewsResources.HELP_ICON),
                 createSeparatedSubFeature(2, new AcInformOfABug(), ViewsResources.MAIL_ICON),
                 createSeparatedSubFeature(4, new AcProposeImprovement(), ViewsResources.IDEA_ICON),
-                createSeparatedSubFeature(6, createDisplayViewAction("messages.actions.display", "messageView")),
+                createSeparatedSubFeature(6, new DisplayMessagesViewAction(views)),
                 createSeparatedSubFeature(25, createDisplayViewAction("log.view.actions.display", "logView")),
                 createSeparatedSubFeature(150, new DisplayAboutViewAction(core), ViewsResources.MAIL_ICON)
         );

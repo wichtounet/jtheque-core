@@ -43,6 +43,7 @@
     <bean class="org.jtheque.views.impl.components.menu.CoreMenu">
         <constructor-arg ref="core"/>
         <constructor-arg ref="undoRedoService"/>
+        <constructor-arg ref="views"/>
     </bean>
     
     <!--  Views -->
@@ -54,6 +55,26 @@
     <bean id="moduleView" class="org.jtheque.views.impl.windows.ModuleView" lazy-init="true"/>
     <bean id="repositoryView" class="org.jtheque.views.impl.windows.RepositoryView" lazy-init="true"/>
     <bean id="updateView" class="org.jtheque.views.impl.windows.UpdateView" lazy-init="true"/>
+
+    <!-- Config panels -->
+
+    <bean class="org.jtheque.views.impl.components.config.JPanelConfigAppearance" lazy-init="true">
+        <constructor-arg ref="filthyUtils"/>
+        <constructor-arg ref="languageService"/>
+        <constructor-arg ref="core"/>
+    </bean>
+
+    <bean class="org.jtheque.views.impl.components.config.JPanelConfigNetwork" lazy-init="true">
+        <constructor-arg ref="filthyUtils"/>
+        <constructor-arg ref="languageService"/>
+        <constructor-arg ref="core"/>
+    </bean>
+
+    <bean class="org.jtheque.views.impl.components.config.JPanelConfigOthers" lazy-init="true">
+        <constructor-arg ref="filthyUtils"/>
+        <constructor-arg ref="languageService"/>
+        <constructor-arg ref="core"/>
+    </bean>
 
     <!-- Java2D panes -->
 
