@@ -16,21 +16,22 @@ package org.jtheque.views.impl.components.config;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import org.jtheque.core.CoreConfiguration;
 import org.jtheque.core.ICore;
 import org.jtheque.errors.JThequeError;
 import org.jtheque.i18n.ILanguageService;
+import org.jtheque.spring.utils.injection.Init;
+import org.jtheque.spring.utils.injection.Injectable;
 import org.jtheque.ui.utils.ValidationUtils;
 import org.jtheque.ui.utils.builders.FilthyPanelBuilder;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.ui.utils.filthy.FilthyBackgroundPanel;
 import org.jtheque.utils.ui.GridBagUtils;
-import org.jtheque.views.ViewsServices;
 import org.jtheque.views.able.components.ConfigTabComponent;
 import org.jtheque.views.able.config.IAppearanceConfigView;
 import org.jtheque.views.impl.filthy.FilthyRenderer;
 import org.jtheque.views.impl.models.AvailableLanguagesComboBoxModel;
 
+import javax.annotation.Resource;
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import java.util.Collection;
@@ -40,16 +41,18 @@ import java.util.Collection;
  *
  * @author Baptiste Wicht
  */
-public final class JPanelConfigAppearance extends FilthyBackgroundPanel implements ConfigTabComponent, IAppearanceConfigView {
-    private final AvailableLanguagesComboBoxModel modelLanguages;
-    private final JCheckBox boxRetainSizeAndPosition;
+public final class JPanelConfigAppearance extends FilthyBackgroundPanel implements ConfigTabComponent, IAppearanceConfigView, Injectable {
+    private AvailableLanguagesComboBoxModel modelLanguages;
+    private JCheckBox boxRetainSizeAndPosition;
 
-    /**
-     * Construct a new JPanelConfigAppearance.
-     */
-    public JPanelConfigAppearance() {
-        super();
+    @Resource
+    private ICore core;
 
+    @Resource
+    private ILanguageService languageService;
+
+    @Init(swing = true)
+    public void init(){
         I18nPanelBuilder baseBuilder = new FilthyPanelBuilder(this);
 
         I18nPanelBuilder builder = baseBuilder.addPanel(baseBuilder.gbcSet(0, 0, GridBagUtils.HORIZONTAL, GridBagUtils.FIRST_LINE_START));
@@ -57,35 +60,33 @@ public final class JPanelConfigAppearance extends FilthyBackgroundPanel implemen
 
         builder.addI18nLabel("config.appearance.language", baseBuilder.gbcSet(0, 0));
 
-        modelLanguages = new AvailableLanguagesComboBoxModel();
+        modelLanguages = new AvailableLanguagesComboBoxModel(core);
 
         builder.addComboBox(modelLanguages, new FilthyRenderer(), baseBuilder.gbcSet(1, 0, GridBagUtils.HORIZONTAL));
 
         boxRetainSizeAndPosition = builder.addI18nCheckBox("config.appearance.size",
                 baseBuilder.gbcSet(0, 1, GridBagUtils.HORIZONTAL, GridBagUtils.BASELINE_LEADING, 2, 1));
-        
+
         fillAllFields();
     }
 
     @Override
-    public String getTitle() {
-        return ViewsServices.get(ILanguageService.class).getMessage("config.view.tab.appearance");
+    public String getTitleKey() {
+        return "config.view.tab.appearance";
     }
 
     /**
      * Fill the all fields with the current configurations.
      */
     private void fillAllFields() {
-        modelLanguages.setSelectedItem(ViewsServices.get(ILanguageService.class).getCurrentLanguage());
-        boxRetainSizeAndPosition.setSelected(ViewsServices.get(ICore.class).getConfiguration().retainSizeAndPositionOfWindow());
+        modelLanguages.setSelectedItem(languageService.getCurrentLanguage());
+        boxRetainSizeAndPosition.setSelected(core.getConfiguration().retainSizeAndPositionOfWindow());
     }
 
     @Override
     public void apply() {
-        CoreConfiguration configuration = ViewsServices.get(ICore.class).getConfiguration();
-
-        ViewsServices.get(ILanguageService.class).setCurrentLanguage(modelLanguages.getSelectedLanguage());
-        configuration.setRetainSizeAndPositionOfWindow(boxRetainSizeAndPosition.isSelected());
+        languageService.setCurrentLanguage(modelLanguages.getSelectedLanguage());
+        core.getConfiguration().setRetainSizeAndPositionOfWindow(boxRetainSizeAndPosition.isSelected());
     }
 
     @Override

@@ -2,11 +2,12 @@ package org.jtheque.views.impl.windows;
 
 import org.jdesktop.swingx.JXTable;
 import org.jtheque.events.EventLog;
+import org.jtheque.events.IEventService;
+import org.jtheque.i18n.ILanguageService;
 import org.jtheque.ui.able.IModel;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.ui.utils.builders.PanelBuilder;
-import org.jtheque.ui.utils.windows.dialogs.SwingDialogView;
-import org.jtheque.ui.utils.windows.frames.SwingFilthyBuildedDialogView;
+import org.jtheque.ui.utils.windows.dialogs.SwingFilthyBuildedDialogView;
 import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.views.able.windows.ILogView;
 import org.jtheque.views.impl.actions.event.UpdateAction;
@@ -22,6 +23,8 @@ import java.awt.Insets;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 /*
  * This file is part of JTheque.
@@ -57,27 +60,12 @@ public final class LogView extends SwingFilthyBuildedDialogView<IModel> implemen
 
     private JTextArea areaDetails;
 
-    private final DateFormat dateFormat;
-    private final DateFormat timeFormat;
+    private final DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
+    private final DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss,SSS", Locale.getDefault());
 
     private static final int DEFAULT_WIDTH = 600;
     private static final int DEFAULT_HEIGHT = 450;
-
-    /**
-     * Construct a new LogView.
-     *
-     * @param dateFormat The dateformat to use.
-     * @param timeFormat The image format to use. 
-     */
-    public LogView(DateFormat dateFormat, DateFormat timeFormat){
-        super();
-
-        this.dateFormat = dateFormat;
-        this.timeFormat = timeFormat;
-
-        build();
-    }
-
+    
     @Override
     protected void initView(){
         setTitleKey("log.view.title");
@@ -91,16 +79,16 @@ public final class LogView extends SwingFilthyBuildedDialogView<IModel> implemen
 
         builder.addI18nLabel("log.view.log", builder.gbcSet(0, 0, GridBagUtils.NONE, GridBagUtils.LINE_END));
 
-        builder.addComboBox(new LogComboBoxModel(), new FilthyRenderer(),
+        builder.addComboBox(new LogComboBoxModel(getService(IEventService.class)), new FilthyRenderer(),
                 builder.gbcSet(1, 0, GridBagUtils.HORIZONTAL, GridBagUtils.LINE_START, 1.0, 0.0)).addItemListener(this);
 
-        eventsModel = new EventsTableModel();
+        eventsModel = new EventsTableModel(getService(IEventService.class), getService(ILanguageService.class));
         eventsModel.setHeaders(new String[]{
-                SwingDialogView.getMessage("log.view.level"),
-                SwingDialogView.getMessage("log.view.date"),
-                SwingDialogView.getMessage("log.view.time"),
-                SwingDialogView.getMessage("log.view.source"),
-                SwingDialogView.getMessage("log.view.title")});
+                getMessage("log.view.level"),
+                getMessage("log.view.date"),
+                getMessage("log.view.time"),
+                getMessage("log.view.source"),
+                getMessage("log.view.title")});
 
         tableEvents = (JXTable) builder.addScrolledTable(eventsModel, builder.gbcSet(0, 1, GridBagUtils.BOTH, GridBagUtils.LINE_START, 2, 1, 1.0, 0.67));
         tableEvents.getSelectionModel().addListSelectionListener(this);

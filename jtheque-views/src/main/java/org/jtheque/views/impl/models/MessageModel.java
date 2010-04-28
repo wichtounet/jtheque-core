@@ -20,7 +20,6 @@ import org.jtheque.messages.IMessageService;
 import org.jtheque.messages.Message;
 import org.jtheque.utils.bean.IntDate;
 import org.jtheque.utils.collections.CollectionUtils;
-import org.jtheque.views.ViewsServices;
 
 import java.util.ArrayList;
 import java.util.ListIterator;
@@ -39,10 +38,10 @@ public final class MessageModel implements IMessageModel {
     /**
      * Construct a new MessageModel.
      */
-    public MessageModel() {
+    public MessageModel(IMessageService messageService) {
         super();
 
-        service = ViewsServices.get(IMessageService.class);
+        service = messageService;
 
         iterator = new ArrayList<Message>(service.getMessages()).listIterator();
 

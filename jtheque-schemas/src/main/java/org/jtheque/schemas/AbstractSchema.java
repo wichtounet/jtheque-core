@@ -1,8 +1,11 @@
 package org.jtheque.schemas;
 
+import org.jtheque.core.utils.OSGiUtils;
 import org.jtheque.core.utils.PropertiesUtils;
 import org.jtheque.utils.Constants;
 import org.jtheque.utils.StringUtils;
+import org.jtheque.utils.collections.ArrayUtils;
+import org.osgi.framework.BundleContext;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 
 /*
@@ -34,16 +37,20 @@ public abstract class AbstractSchema implements Schema {
     private static final String INSERT_INTO = "INSERT INTO ";
     private static final String CREATE_TABLE = "CREATE TABLE ";
 
+    void setJdbcTemplate(SimpleJdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
+
+    void setJdbcTemplate(BundleContext bundleContext) {
+        jdbcTemplate = OSGiUtils.getService(bundleContext, SimpleJdbcTemplate.class);
+    }
+
     /**
      * Return the jdbc template to execute JDBC request.
      *
      * @return The jdbc template.
      */
     protected SimpleJdbcTemplate getJdbcTemplate(){
-        if(jdbcTemplate == null){
-            //TODO : jdbcTemplate = CoreUtils.getBean(SimpleJdbcTemplate.class);
-        }
-
         return jdbcTemplate;
     }
 
@@ -54,7 +61,7 @@ public abstract class AbstractSchema implements Schema {
      * @param args The args to give to the request. 
      */
     protected void update(String request, Object... args){
-        getJdbcTemplate().update(request, args);
+        jdbcTemplate.update(request, args);
     }
 
     /**
@@ -66,7 +73,7 @@ public abstract class AbstractSchema implements Schema {
      * @param args The args to fill the command with.
      */
     protected void alterTable(String table, String command, Object... args){
-        getJdbcTemplate().update((ALTER_TABLE + table + ' ' + command).replace("{}", table), args);
+        jdbcTemplate.update((ALTER_TABLE + table + ' ' + command).replace("{}", table), args);
     }
 
     /**
@@ -76,7 +83,7 @@ public abstract class AbstractSchema implements Schema {
      * @param columns The columns to create. The ( and ) are automatically added.
      */
     protected void createTable(String table, String columns){
-        getJdbcTemplate().update(CREATE_TABLE + table + " (" + columns + ')');
+        jdbcTemplate.update(CREATE_TABLE + table + " (" + columns + ')');
     }
 
     /**
@@ -87,7 +94,7 @@ public abstract class AbstractSchema implements Schema {
      * @param args The args to fill the command with.
      */
     protected void updateTable(CharSequence table, String command, Object... args){
-        getJdbcTemplate().update(command.replace("{}", table), args);
+        jdbcTemplate.update(command.replace("{}", table), args);
     }
 
     /**
@@ -112,16 +119,14 @@ public abstract class AbstractSchema implements Schema {
         } else if (!hasDependency && hasOtherDependency) {
             return -1;
         } else {
-            for (String dependency : other.getDependencies()) {
-                if (dependency.equals(getId())) {//The other depends on me
-                    return -1;
-                }
+            //The other depends on me
+            if(ArrayUtils.search(other.getDependencies(), getId())){
+                return -1;
             }
 
-            for (String dependency : getDependencies()) {
-                if (dependency.equals(other.getId())) {//I depends on the other
-                    return 1;
-                }
+            //I depends on the other
+            if(ArrayUtils.search(getDependencies(), other.getId())){
+                return 1;
             }
         }
 

@@ -26,7 +26,9 @@ public interface Filthy {
     Color HINT_COLOR = Color.white;
     Color BACKGROUND_COLOR = Color.black;
     Color ERROR_COLOR = Color.red;
+    Color FOREGROUND_COLOR = Color.white;
 
     Font HINT_FONT = new Font(null, 1, 22);
     Font ERROR_FONT = new Font(null, 1, 20);
+    Font INPUT_FONT = new Font(null, 1, 14);
 }

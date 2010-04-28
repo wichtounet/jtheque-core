@@ -8,8 +8,8 @@
             http://www.springframework.org/schema/osgi
             http://www.springframework.org/schema/osgi/spring-osgi.xsd">
 
-    <bean id="undoManager" class="org.jtheque.undo.UndoRedoService"/>
+    <bean id="undoService" class="org.jtheque.undo.UndoRedoService"/>
 
-    <osgi:service id="undoManagerService" ref="undoManager" interface="org.jtheque.undo.IUndoRedoService"/>
+    <osgi:service ref="undoService" interface="org.jtheque.undo.IUndoRedoService"/>
 
 </beans>

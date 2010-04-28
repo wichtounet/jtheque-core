@@ -1,11 +1,7 @@
 package org.jtheque.ui.utils.components;
 
-import org.jtheque.core.utils.UtilsServices;
-import org.jtheque.i18n.ILanguageService;
-
 import javax.swing.BorderFactory;
 import javax.swing.border.Border;
-import javax.swing.border.TitledBorder;
 
 /*
  * This file is part of JTheque.
@@ -37,20 +33,6 @@ public final class Borders {
      */
     private Borders() {
         super();
-    }
-
-    /**
-     * Create a titled border.
-     *
-     * @param key The internationalization key.
-     * @return The border.
-     */
-    public static Border createTitledBorder(String key) {
-        TitledBorder border = BorderFactory.createTitledBorder(UtilsServices.get(ILanguageService.class).getMessage(key));
-
-        UtilsServices.get(ILanguageService.class).addInternationalizable(new BorderUpdater(border, key));
-
-        return border;
     }
 
     /**

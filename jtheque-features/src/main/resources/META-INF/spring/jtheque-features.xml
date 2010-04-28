@@ -8,8 +8,10 @@
             http://www.springframework.org/schema/osgi
             http://www.springframework.org/schema/osgi/spring-osgi.xsd">
 
-    <bean id="featureManager" class="org.jtheque.features.FeatureService" />
+    <bean id="featureService" class="org.jtheque.features.FeatureService">
+        <constructor-arg><osgi:reference interface="org.jtheque.i18n.ILanguageService" /></constructor-arg>
+    </bean>
 
-    <osgi:service id="featureManagerService" ref="featureManager" interface="org.jtheque.features.IFeatureService"/>
+    <osgi:service ref="featureService" interface="org.jtheque.features.IFeatureService"/>
 
 </beans>

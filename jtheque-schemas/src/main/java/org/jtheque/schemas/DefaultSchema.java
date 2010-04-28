@@ -18,8 +18,10 @@ package org.jtheque.schemas;
 
 import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.collections.ArrayUtils;
+import org.osgi.framework.BundleContext;
+import org.springframework.osgi.context.BundleContextAware;
 
-public abstract class DefaultSchema extends AbstractSchema {
+public abstract class DefaultSchema extends AbstractSchema implements BundleContextAware {
     private final Version version;
     private final String id;
     private final String[] dependencies;
@@ -47,5 +49,10 @@ public abstract class DefaultSchema extends AbstractSchema {
     @Override
     public String[] getDependencies() {
         return dependencies;
+    }
+
+    @Override
+    public void setBundleContext(BundleContext bundleContext) {
+        setJdbcTemplate(bundleContext);
     }
 }

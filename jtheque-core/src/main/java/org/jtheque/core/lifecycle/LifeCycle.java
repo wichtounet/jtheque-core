@@ -1,14 +1,15 @@
 package org.jtheque.core.lifecycle;
 
-import org.jtheque.core.CoreServices;
 import org.jtheque.core.ICore;
 import org.jtheque.core.utils.WeakEventListenerList;
 import org.jtheque.events.EventLevel;
 import org.jtheque.events.EventLog;
 import org.jtheque.events.IEventService;
-import org.jtheque.i18n.ILanguageService;
-import org.jtheque.i18n.Internationalizable;
 import org.jtheque.utils.DesktopUtils;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.BundleException;
+import org.slf4j.LoggerFactory;
 
 /*
  * This file is part of JTheque.
@@ -35,18 +36,20 @@ public class LifeCycle implements ILifeCycle {
     private String title = "JTheque";
 
     private final ICore core;
+    private final IEventService eventService;
 
-    public LifeCycle(ICore core) {
+    private BundleContext bundleContext;
+
+    public LifeCycle(IEventService eventService, ICore core) {
         super();
 
+        this.eventService = eventService;
         this.core = core;
     }
 
     @Override
     public void initTitle() {
         refreshTitle();
-        
-        CoreServices.get(ILanguageService.class).addInternationalizable(new TitleUpdater());
     }
 
     @Override
@@ -116,7 +119,7 @@ public class LifeCycle implements ILifeCycle {
      * Start the exit process but not stop the application.
      */
     private void releaseAll() {
-        CoreServices.get(IEventService.class).addEventLog("JTheque Core", new EventLog(EventLevel.INFO, "User", "events.close"));
+        eventService.addEventLog("JTheque Core", new EventLog(EventLevel.INFO, "User", "events.close"));
     }
 
     /**
@@ -124,9 +127,7 @@ public class LifeCycle implements ILifeCycle {
      */
     private void closeVM() {
         Runtime.getRuntime().removeShutdownHook(shutdownHook);
-
-        //TODO : Quitter le serveur
-
+        
         System.exit(0);
     }
 
@@ -184,18 +185,6 @@ public class LifeCycle implements ILifeCycle {
     }
 
     /**
-     * An updater to reflect the locale in the title when a change occurs.
-     *
-     * @author Baptiste Wicht
-     */
-    private final class TitleUpdater implements Internationalizable {
-        @Override
-        public void refreshText() {
-            refreshTitle();
-        }
-    }
-
-    /**
      * This class is a hook on the shutdown of JTheque. When a shutdown is detected, the thread
      * detect it and if this isn't JTheque who has executed the close, we properly close the
      * resources. This is for prevent accident kill of JTheque.
@@ -214,5 +203,9 @@ public class LifeCycle implements ILifeCycle {
         public void run() {
             exit();
         }
+    }
+
+    public void setBundleContext(BundleContext bundleContext) {
+        this.bundleContext = bundleContext;
     }
 }

@@ -9,7 +9,6 @@ import org.jtheque.ui.utils.AnimationUtils;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.ui.ImageUtils;
 import org.jtheque.utils.ui.PaintUtils;
-import org.jtheque.views.ViewsServices;
 import org.jtheque.views.able.panel.ISplashView;
 import org.pushingpixels.trident.Timeline;
 
@@ -64,11 +63,15 @@ public final class SplashScreenPane extends BufferedLayerUI<JComponent> implemen
     private Timeline waitingAnimation;
     private Timeline fadeAnimation;
 
+    private final ICore core;
+
     /**
      * Construct a new SplashScreenPane.
      */
-    public SplashScreenPane() {
+    public SplashScreenPane(ICore core) {
         super();
+
+        this.core = core;
 
         pImage = new Point();
         pTextName = new Point();
@@ -81,7 +84,7 @@ public final class SplashScreenPane extends BufferedLayerUI<JComponent> implemen
      * Init the view.
      */
     public void init() {
-        Application application = ViewsServices.get(ICore.class).getApplication();
+        Application application = core.getApplication();
 
         if (!StringUtils.isEmpty(application.getLogo())) {
             bImage = ImageUtils.openCompatibleImageFromFileSystem(application.getLogo() + '.' + application.getLogoType().getExtension());
@@ -119,7 +122,7 @@ public final class SplashScreenPane extends BufferedLayerUI<JComponent> implemen
      * @param layer The component to compute the sizes.
      */
     private void computeSizes(Component layer) {
-        int nameWidth = layer.getFontMetrics(fontName).stringWidth(ViewsServices.get(ICore.class).getApplication().getName());
+        int nameWidth = layer.getFontMetrics(fontName).stringWidth(core.getApplication().getName());
         int loadingWidth = layer.getFontMetrics(fontLoading).stringWidth("Loading ...");
 
         int height = layer.getFontMetrics(fontName).getHeight() + 10 + bImage.getHeight() + layer.getFontMetrics(fontLoading).getHeight();
@@ -177,7 +180,7 @@ public final class SplashScreenPane extends BufferedLayerUI<JComponent> implemen
     private void paintName(Graphics g2, Color color) {
         g2.translate(pTextName.x, pTextName.y);
 
-        PaintUtils.drawString(g2, ViewsServices.get(ICore.class).getApplication().getName(), 0, 0, fontName, color);
+        PaintUtils.drawString(g2, core.getApplication().getName(), 0, 0, fontName, color);
 
         g2.translate(-pTextName.x, -pTextName.y);
     }
@@ -217,9 +220,11 @@ public final class SplashScreenPane extends BufferedLayerUI<JComponent> implemen
                     "current", 0, 4);
         }
 
-        fadeAnimation = AnimationUtils.startFadeIn(this);
+        fadeAnimation = AnimationUtils.createFadeInAnimation(this);
 
         AnimationUtils.startsLoopWhenStop(fadeAnimation, waitingAnimation);
+
+        fadeAnimation.play();
     }
 
     @Override

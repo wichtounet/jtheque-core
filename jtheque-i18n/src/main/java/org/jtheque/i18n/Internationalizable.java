@@ -25,5 +25,5 @@ public interface Internationalizable {
     /**
      * Refresh the text.
      */
-    void refreshText();
+    void refreshText(ILanguageService languageService);
 }

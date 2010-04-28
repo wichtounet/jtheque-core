@@ -16,10 +16,6 @@ package org.jtheque.update.actions;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import org.jtheque.errors.InternationalizedError;
-import org.jtheque.i18n.ILanguageService;
-import org.jtheque.ui.able.IUIUtils;
-import org.jtheque.update.UpdateServices;
 import org.jtheque.utils.OSUtils;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.io.FileException;
@@ -27,7 +23,6 @@ import org.jtheque.utils.io.FileUtils;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 
 /**
  * An org.jtheque.update action that download a file.
@@ -49,11 +44,6 @@ public final class DownloadAction extends AbstractUpdateAction {
                 FileUtils.downloadFile(url, getDestination());
             } catch (FileException e) {
                 LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
-
-                if(e.getCause() instanceof FileNotFoundException){
-                    UpdateServices.get(IUIUtils.class).getDelegate().displayError(
-                            new InternationalizedError(UpdateServices.get(ILanguageService.class), "error.update.download", e.getMessage()));
-                }
             }
         }
     }

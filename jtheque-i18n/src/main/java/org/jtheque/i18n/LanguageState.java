@@ -1,6 +1,9 @@
 package org.jtheque.i18n;
 
 import org.jtheque.states.AbstractState;
+import org.jtheque.states.State;
+import org.jtheque.utils.StringUtils;
+import org.jtheque.utils.bean.Version;
 
 /*
  * This file is part of JTheque.
@@ -23,7 +26,7 @@ import org.jtheque.states.AbstractState;
  *
  * @author Baptiste Wicht
  */
-//Must be public for StateService
+@State(id = "jtheque-i18n-configuration")
 public final class LanguageState extends AbstractState {
     /**
      * Set the language.
@@ -40,11 +43,20 @@ public final class LanguageState extends AbstractState {
      * @return The language.
      */
     public String getLanguage() {
-        return getProperty("language");
+        return getProperty("language", "fr");
     }
 
-    @Override
-    public void setDefaults() {
-        setLanguage("fr");
+    public Version getResourceVersion(String resource){
+        String property = getProperty(resource + "_version");
+
+        if(StringUtils.isEmpty(property)){
+            return null;
+        } else {
+            return new Version(property);
+        }
+    }
+
+    public void setResourceVersion(String resource, Version version){
+        setProperty(resource + "_version", version.toString());
     }
 }

@@ -1,9 +1,8 @@
 package org.jtheque.views.impl.components.panel;
 
-import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.ui.able.IView;
-import org.jtheque.ui.utils.edt.SimpleTask;
-import org.jtheque.views.ViewsServices;
+
+import javax.swing.SwingUtilities;
 
 /*
  * This file is part of JTheque.
@@ -51,7 +50,7 @@ public abstract class AbstractDelegatedView<T extends IView> implements IView {
      * Build the delegated view in EDT. This method only call the buildDelegatedView() method in the EDT.
      */
     public final void buildInEDT() {
-        ViewsServices.get(IUIUtils.class).execute(new SimpleTask() {
+        SwingUtilities.invokeLater(new Runnable(){
             @Override
             public void run() {
                 buildDelegatedView();

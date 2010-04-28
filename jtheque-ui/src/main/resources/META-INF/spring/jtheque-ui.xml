@@ -8,12 +8,22 @@
             http://www.springframework.org/schema/osgi
             http://www.springframework.org/schema/osgi/spring-osgi.xsd">
 
-    <bean id="uiUtils" class="org.jtheque.ui.able.UIUtils">
+    <bean class="org.jtheque.ui.UIResources" lazy-init="false" factory-method="register">
+        <constructor-arg><osgi:reference interface="org.jtheque.resources.IResourceService"/></constructor-arg>
+        <constructor-arg value="classpath:org/jtheque/ui/light.png"/>
+    </bean>
+
+    <bean id="uiUtils" class="org.jtheque.ui.UIUtils">
         <constructor-arg ref="viewDelegate" />
+        <constructor-arg><osgi:reference interface="org.jtheque.i18n.ILanguageService" /></constructor-arg>
+    </bean>
+
+    <bean id="filthyUtils" class="org.jtheque.ui.utils.filthy.FilthyUtils">
+        <constructor-arg><osgi:reference interface="org.jtheque.resources.IResourceService"/></constructor-arg>
     </bean>
 
     <bean id="viewDelegate" class="org.jtheque.ui.utils.SwingViewDelegate" />
 
     <osgi:service interface="org.jtheque.ui.able.IUIUtils" ref="uiUtils" />
-
+    <osgi:service interface="org.jtheque.ui.utils.filthy.IFilthyUtils" ref="filthyUtils" />
 </beans>

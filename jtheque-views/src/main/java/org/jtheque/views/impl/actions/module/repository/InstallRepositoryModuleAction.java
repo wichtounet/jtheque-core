@@ -19,11 +19,12 @@ package org.jtheque.views.impl.actions.module.repository;
 import org.jtheque.core.ICore;
 import org.jtheque.modules.able.IModuleService;
 import org.jtheque.modules.impl.ModuleDescription;
+import org.jtheque.spring.utils.injection.Injectable;
 import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.ui.utils.actions.JThequeAction;
-import org.jtheque.views.ViewsServices;
-import org.jtheque.views.able.IViewService;
+import org.jtheque.views.able.IViews;
 
+import javax.annotation.Resource;
 import java.awt.event.ActionEvent;
 
 /**
@@ -31,7 +32,16 @@ import java.awt.event.ActionEvent;
  *
  * @author Baptiste Wicht
  */
-public final class InstallRepositoryModuleAction extends JThequeAction {
+public final class InstallRepositoryModuleAction extends JThequeAction implements Injectable {
+    @Resource
+    private IViews views;
+
+    @Resource
+    private IUIUtils utils;
+
+    @Resource
+    private IModuleService moduleService;
+
     /**
      * Construct a new InstallRepositoryModuleAction.
      */
@@ -41,15 +51,15 @@ public final class InstallRepositoryModuleAction extends JThequeAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        ModuleDescription description = ViewsServices.get(IViewService.class).getViews().getRepositoryView().getSelectedModule();
+        ModuleDescription description = views.getRepositoryView().getSelectedModule();
 
         if (description.getCoreVersion().isGreaterThan(ICore.VERSION)) {
-            ViewsServices.get(IUIUtils.class).displayI18nText("error.module.version.core");
+            utils.displayI18nText("error.module.version.core");
         } else {
-            if (ViewsServices.get(IModuleService.class).isInstalled(description.getId())) {
-                ViewsServices.get(IUIUtils.class).displayI18nText("message.repository.module.installed");
+            if (moduleService.isInstalled(description.getId())) {
+                utils.displayI18nText("message.repository.module.installed");
             } else {
-                ViewsServices.get(IModuleService.class).install(description.getVersionsFileURL());
+                moduleService.install(description.getVersionsFileURL());
             }
         }
     }

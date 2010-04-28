@@ -2,15 +2,14 @@ package org.jtheque.ui.utils.builders;
 
 import org.jdesktop.swingx.JXTable;
 import org.jdesktop.swingx.JXTree;
-import org.jtheque.i18n.ILanguageService;
+import org.jtheque.i18n.Internationalizable;
+import org.jtheque.i18n.InternationalizableContainer;
 import org.jtheque.ui.utils.components.Borders;
 import org.jtheque.utils.ui.ButtonBarBuilder;
 import org.jtheque.utils.ui.GridBagUtils;
-import org.jtheque.ui.ViewsUtilsServices;
 import org.jtheque.ui.utils.components.BorderUpdater;
 import org.jtheque.ui.utils.components.JThequeCheckBox;
 import org.jtheque.ui.utils.components.JThequeI18nLabel;
-import org.jtheque.ui.utils.components.JThequeLabel;
 
 import javax.swing.Action;
 import javax.swing.BorderFactory;
@@ -18,7 +17,6 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.JTable;
@@ -52,6 +50,8 @@ import java.awt.LayoutManager;
  * @author Baptiste Wicht
  */
 public class JThequePanelBuilder extends BasicPanelBuilder implements I18nPanelBuilder {
+    private InternationalizableContainer container;
+
     /**
      * Construct a new JThequePanelBuilder.
      */
@@ -88,6 +88,11 @@ public class JThequePanelBuilder extends BasicPanelBuilder implements I18nPanelB
     }
 
     @Override
+    public void setInternationalizableContainer(InternationalizableContainer container) {
+        this.container = container;
+    }
+
+    @Override
     void initDefaults() {
         getPanel().setBackground(Color.white);
         getPanel().setBorder(Borders.DIALOG_BORDER);
@@ -104,44 +109,11 @@ public class JThequePanelBuilder extends BasicPanelBuilder implements I18nPanelB
 
     @Override
     public JCheckBox addI18nCheckBox(String key, Object constraints) {
-        return add(new JThequeCheckBox(key), constraints);
-    }
+        JThequeCheckBox checkBox = new JThequeCheckBox(key);
 
-    @Override
-    public JLabel addLabel(Object constraints) {
-        return add(new JThequeLabel(""), constraints);
-    }
+        addInternationalizable(checkBox);
 
-    @Override
-    public JLabel addLabel(String text, Object constraints) {
-        return add(new JThequeLabel(text), constraints);
-    }
-
-    @Override
-    public JLabel addLabel(String text, Color foreground, Object constraints) {
-        JLabel label = addLabel(text, constraints);
-
-        label.setForeground(foreground);
-
-        return label;
-    }
-
-    @Override
-    public JLabel addLabel(String text, int style, Object constraints) {
-        JLabel label = addLabel(text, constraints);
-
-        applyStyle(style,label);
-
-        return label;
-    }
-
-    @Override
-    public JLabel addLabel(String text, int style, float size, Object constraints) {
-        JLabel label = addLabel(text, style, constraints);
-
-        label.setFont(label.getFont().deriveFont(size));
-
-        return label;
+        return add(checkBox, constraints);
     }
 
     @Override
@@ -153,6 +125,8 @@ public class JThequePanelBuilder extends BasicPanelBuilder implements I18nPanelB
     public JThequeI18nLabel addI18nLabel(String key, int style, Object constraints) {
         JThequeI18nLabel label = new JThequeI18nLabel(key);
 
+        addInternationalizable(label);
+
         applyStyle(style, label);
 
         return add(label, constraints);
@@ -161,6 +135,8 @@ public class JThequePanelBuilder extends BasicPanelBuilder implements I18nPanelB
     @Override
     public JThequeI18nLabel addI18nLabel(String key, int style, float size, Object constraints) {
         JThequeI18nLabel label = new JThequeI18nLabel(key);
+
+        addInternationalizable(label);
 
         applyStyle(style, label);
 
@@ -184,6 +160,10 @@ public class JThequePanelBuilder extends BasicPanelBuilder implements I18nPanelB
     public void addI18nSeparator(String key, Object constraints) {
         I18nPanelBuilder separatorBuilder = addPanel(constraints);
 
+        if(container != null){
+            separatorBuilder.setInternationalizableContainer(container);
+        }
+
         separatorBuilder.addI18nLabel(key, gbcSet(0, 0));
         separatorBuilder.add(new JSeparator(), gbcSet(1, 0, GridBagUtils.HORIZONTAL));
     }
@@ -191,6 +171,10 @@ public class JThequePanelBuilder extends BasicPanelBuilder implements I18nPanelB
     @Override
     public I18nPanelBuilder addPanel(Object constraints) {
         I18nPanelBuilder builder = new JThequePanelBuilder();
+
+        if(container != null){
+            builder.setInternationalizableContainer(container);
+        }
 
         add(builder.getPanel(), constraints);
 
@@ -201,6 +185,10 @@ public class JThequePanelBuilder extends BasicPanelBuilder implements I18nPanelB
     public I18nPanelBuilder addPanel(LayoutManager layout, Object constraints) {
         I18nPanelBuilder builder = new JThequePanelBuilder(layout);
 
+        if(container != null){
+            builder.setInternationalizableContainer(container);
+        }
+
         add(builder.getPanel(), constraints);
 
         return builder;
@@ -208,9 +196,9 @@ public class JThequePanelBuilder extends BasicPanelBuilder implements I18nPanelB
 
     @Override
     public void setI18nTitleBorder(String key) {
-        TitledBorder border = BorderFactory.createTitledBorder(ViewsUtilsServices.get(ILanguageService.class).getMessage(key));
+        TitledBorder border = BorderFactory.createTitledBorder(key);
 
-        ViewsUtilsServices.get(ILanguageService.class).addInternationalizable(new BorderUpdater(border, key));
+        addInternationalizable(new BorderUpdater(border, key));
 
         setBorder(border);
     }
@@ -222,6 +210,12 @@ public class JThequePanelBuilder extends BasicPanelBuilder implements I18nPanelB
         builder.addGlue();
 
         builder.addActions(actions);
+
+        for(Action action : actions){
+            if(action instanceof Internationalizable){
+                addInternationalizable((Internationalizable) action);
+            }
+        }
 
         ((JComponent) builder.getPanel()).setOpaque(false);
 
@@ -255,5 +249,11 @@ public class JThequePanelBuilder extends BasicPanelBuilder implements I18nPanelB
         table.packAll();
 
         return table;
+    }
+
+    void addInternationalizable(Internationalizable internationalizable) {
+        if(container != null){
+            container.addInternationalizable(internationalizable);
+        }
     }
 }

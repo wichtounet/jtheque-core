@@ -2,151 +2,86 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:osgi="http://www.springframework.org/schema/osgi"
-       xmlns:jtheque="http://www.jtheque.com/schema/jtheque"
-       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="
             http://www.springframework.org/schema/beans
             http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
             http://www.springframework.org/schema/osgi
             http://www.springframework.org/schema/osgi/spring-osgi.xsd
-            http://www.springframework.org/schema/util
-            http://www.springframework.org/schema/util/spring-util.xsd
-            http://www.jtheque.com/schema/jtheque
-            http://www.jtheque.com/schema/jtheque/jtheque.xsd">
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-3.0.xsd"
+        default-lazy-init="false">
 
-    <bean id="splashManager" class="org.jtheque.views.impl.SplashService">
-        <constructor-arg ref="mainView"/>
+    <context:annotation-config/>
+
+    <bean id="splashService" class="org.jtheque.views.impl.SplashService">
+        <constructor-arg ref="core"/>
     </bean>
 
-    <bean id="viewManager" class="org.jtheque.views.impl.ViewService">
+    <bean id="viewService" class="org.jtheque.views.impl.ViewService">
+        <constructor-arg ref="stateService"/>
+        <constructor-arg ref="core"/>
+        <constructor-arg ref="resourceService"/>
+    </bean>
+
+    <bean id="views" class="org.jtheque.views.impl.Views"/>
+
+    <bean class="org.jtheque.views.impl.windows.MainView" lazy-init="true">
+        <constructor-arg ref="core"/>
+        <constructor-arg ref="viewService"/>
+        <constructor-arg ref="views"/>
+        <constructor-arg ref="uiUtils"/>
         <constructor-arg>
-            <util:list>
-                <jtheque:proxy id="configAppearanceView" type="org.jtheque.views.impl.components.config.JPanelConfigAppearance">
-                    <bean class="org.jtheque.views.impl.components.config.JPanelConfigAppearance"/>
-                </jtheque:proxy>
-                <jtheque:proxy id="configOthersView" type="org.jtheque.views.impl.components.config.JPanelConfigOthers">
-                    <bean class="org.jtheque.views.impl.components.config.JPanelConfigNetwork" />
-                </jtheque:proxy>
-                <jtheque:proxy id="configNetworkView" type="org.jtheque.views.impl.components.config.JPanelConfigNetwork">
-                    <bean class="org.jtheque.views.impl.components.config.JPanelConfigOthers"/>
-                </jtheque:proxy>
-            </util:list>
+            <bean class="org.jtheque.views.impl.components.menu.JThequeMenuBar">
+                <constructor-arg ref="resourceService"/>
+                <constructor-arg ref="languageService"/>
+                <constructor-arg ref="featureService"/>
+            </bean>
         </constructor-arg>
-        <constructor-arg ref="uiDefaults"/>
-        <constructor-arg>
-            <bean class="org.jtheque.views.impl.WindowManager"><constructor-arg ref="mainView"/></bean>
-        </constructor-arg>
-        <constructor-arg ref="uiUtils" />
     </bean>
 
-    <osgi:reference id="uiUtils" interface="org.jtheque.ui.able.IUIUtils" />
-
-    <bean id="mainView" class="org.jtheque.views.impl.windows.MainView" />
-
-    <!-- OSGi Services -->
-
-    <osgi:service id="splashManagerService" ref="splashManager" interface="org.jtheque.views.able.ISplashService"/>
-
-    <osgi:service id="viewManagerService" ref="viewManager" interface="org.jtheque.views.able.IViewService"/>
-
-    <!-- Resources -->
-
-    <!-- Colors -->
-
-    <jtheque:color id="filthyInputColor" r="70" g="70" b="70"/>
-    <jtheque:color id="filthyInputBorderColor" r="220" g="220" b="220"/>
-
-    <util:constant id="black" static-field="java.awt.Color.black"/>
-    <util:constant id="white" static-field="java.awt.Color.white"/>
-    <util:constant id="red" static-field="java.awt.Color.red"/>
-    <util:constant id="blue" static-field="java.awt.Color.blue"/>
-
-    <!-- Fonts -->
-
-    <bean id="filthyButtonFont" class="java.awt.Font">
-        <constructor-arg value="ARIAL"/>
-        <constructor-arg value="1" type="int"/>
-        <constructor-arg value="20" type="int"/>
-    </bean>
-
-    <bean id="filthyInputFont" class="java.awt.Font">
-        <constructor-arg>
-            <null/>
-        </constructor-arg>
-        <constructor-arg value="1" type="int"/>
-        <constructor-arg value="14" type="int"/>
-    </bean>
-
-    <bean id="filthyTitleFont" class="java.awt.Font">
-        <constructor-arg value="Arial Black" type="java.lang.String"/>
-        <constructor-arg value="0" type="int"/>
-        <constructor-arg value="30" type="int"/>
-    </bean>
-
-    <bean id="hintFont" class="java.awt.Font">
-        <constructor-arg>
-            <null/>
-        </constructor-arg>
-        <constructor-arg value="1" type="int"/>
-        <constructor-arg value="22" type="int"/>
+    <bean class="org.jtheque.views.impl.components.menu.CoreMenu">
+        <constructor-arg ref="core"/>
+        <constructor-arg ref="undoRedoService"/>
     </bean>
     
     <!--  Views -->
-
-    <!-- Proxy views -->
-
-    <jtheque:proxy id="configView" type="org.jtheque.views.impl.windows.ConfigView" swing="true">
-        <bean class="org.jtheque.views.impl.windows.ConfigView" />
-    </jtheque:proxy>
-
-    <jtheque:proxy id="licenceView" type="org.jtheque.views.impl.windows.LicenceView">
-        <bean class="org.jtheque.views.impl.windows.LicenceView" />
-    </jtheque:proxy>
-
-    <jtheque:proxy id="logView" type="org.jtheque.views.impl.windows.LogView">
-        <bean class="org.jtheque.views.impl.windows.LogView">
-            <constructor-arg ref="dateFormat" />
-            <constructor-arg ref="timeFormat" />
-        </bean>
-    </jtheque:proxy>
-
-    <jtheque:proxy id="messageView" type="org.jtheque.views.impl.windows.MessageView">
-        <bean class="org.jtheque.views.impl.windows.MessageView" />
-    </jtheque:proxy>
-
-    <jtheque:proxy id="moduleView" type="org.jtheque.views.impl.windows.ModuleView">
-        <bean class="org.jtheque.views.impl.windows.ModuleView" />
-    </jtheque:proxy>
-
-    <jtheque:proxy id="repositoryView" type="org.jtheque.views.impl.windows.RepositoryView">
-        <bean class="org.jtheque.views.impl.windows.RepositoryView" />
-    </jtheque:proxy>
-
-    <jtheque:proxy id="updateView" type="org.jtheque.views.impl.windows.UpdateView">
-        <bean class="org.jtheque.views.impl.windows.UpdateView" />
-    </jtheque:proxy>
+    
+    <bean id="configView" class="org.jtheque.views.impl.windows.ConfigView" lazy-init="true"/>
+    <bean id="licenceView" class="org.jtheque.views.impl.windows.LicenceView" lazy-init="true"/>
+    <bean id="logView" class="org.jtheque.views.impl.windows.LogView" lazy-init="true"/>
+    <bean id="messageView" class="org.jtheque.views.impl.windows.MessageView" lazy-init="true"/>
+    <bean id="moduleView" class="org.jtheque.views.impl.windows.ModuleView" lazy-init="true"/>
+    <bean id="repositoryView" class="org.jtheque.views.impl.windows.RepositoryView" lazy-init="true"/>
+    <bean id="updateView" class="org.jtheque.views.impl.windows.UpdateView" lazy-init="true"/>
 
     <!-- Java2D panes -->
 
-    <jtheque:proxy id="collectionPane" type="org.jtheque.views.impl.components.panel.CollectionPane">
-        <bean class="org.jtheque.views.impl.components.panel.CollectionPane" />
-    </jtheque:proxy>
-
-    <jtheque:proxy id="aboutPane" type="org.jtheque.views.impl.components.panel.AboutPane">
-        <bean class="org.jtheque.views.impl.components.panel.AboutPane"/>
-    </jtheque:proxy>
-
-    <!-- UI Defaults -->
-
-    <bean id="uiDefaults" class="org.jtheque.views.impl.JThequeViewDefaults">
-        <property name="backgroundColor" ref="white"/>
-        <property name="foregroundColor" ref="black"/>
-        <property name="selectedForegroundColor" ref="white"/>
-        <property name="selectedBackgroundColor" ref="blue"/>
-        <property name="filthyBackgroundColor" ref="black"/>
-        <property name="filthyForegroundColor" ref="white"/>
-        <property name="filthyButtonFont" ref="filthyButtonFont"/>
-        <property name="filthyInputFont" ref="filthyInputFont"/>
+    <bean class="org.jtheque.views.impl.components.panel.CollectionPane" lazy-init="true">
+        <constructor-arg ref="core" />
     </bean>
 
+    <bean class="org.jtheque.views.impl.components.panel.AboutPane" lazy-init="true">
+        <constructor-arg ref="licenceView" />
+        <constructor-arg ref="core" />
+        <constructor-arg ref="languageService" />
+    </bean>
+
+    <!-- OSGi References -->
+
+    <osgi:reference id="core" interface="org.jtheque.core.ICore" />
+    <osgi:reference id="uiUtils" interface="org.jtheque.ui.able.IUIUtils" />
+    <osgi:reference id="filthyUtils" interface="org.jtheque.ui.utils.filthy.IFilthyUtils" />
+    <osgi:reference id="undoRedoService" interface="org.jtheque.undo.IUndoRedoService"/>
+    <osgi:reference id="languageService" interface="org.jtheque.i18n.ILanguageService"/>
+    <osgi:reference id="featureService" interface="org.jtheque.features.IFeatureService"/>
+    <osgi:reference id="stateService" interface="org.jtheque.states.IStateService"/>
+    <osgi:reference id="moduleService" interface="org.jtheque.modules.able.IModuleService"/>
+    <osgi:reference id="resourceService" interface="org.jtheque.resources.IResourceService"/>
+
+    <!-- OSGi Services -->
+
+    <osgi:service ref="viewService" interface="org.jtheque.views.able.IViewService"/>
+    <osgi:service ref="views" interface="org.jtheque.views.able.IViews"/>
+    <osgi:service ref="splashService" interface="org.jtheque.views.able.ISplashService"/>
 </beans>

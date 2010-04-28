@@ -3,11 +3,13 @@ package org.jtheque.views.impl.actions.module;
 import org.jtheque.errors.IErrorService;
 import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.ui.utils.actions.JThequeAction;
-import org.jtheque.views.ViewsServices;
+import org.jtheque.update.IUpdateService;
 import org.jtheque.views.able.IViewService;
+import org.jtheque.views.able.IViews;
 import org.jtheque.views.able.windows.IUpdateView;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Resource;
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 
@@ -33,6 +35,21 @@ import java.awt.event.ActionEvent;
  * @author Baptiste Wicht
  */
 public abstract class AbstractUpdateAction extends JThequeAction {
+    @Resource
+    private IViewService viewService;
+
+    @Resource
+    private IViews views;
+
+    @Resource
+    private IUIUtils uiUtils;
+
+    @Resource
+    private IErrorService errorService;
+
+    @Resource
+    private IUpdateService updateService;
+
     /**
      * Construct a new AbstractUpdateAction.
      *
@@ -44,18 +61,18 @@ public abstract class AbstractUpdateAction extends JThequeAction {
 
     @Override
     public final void actionPerformed(ActionEvent e) {
-        IUpdateView updateView = ViewsServices.get(IViewService.class).getViews().getUpdateView();
+        IUpdateView updateView = views.getUpdateView();
 
         try {
             if (isUpToDate()) {
-                ViewsServices.get(IUIUtils.class).displayI18nText("message.update.no.version");
+                uiUtils.displayI18nText("message.update.no.version");
             } else {
                 updateView.sendMessage(getMessage(), getSelectedObject());
                 updateView.display();
             }
         } catch (HeadlessException e2) {
             LoggerFactory.getLogger(getClass()).error(e2.getMessage(), e2);
-            ViewsServices.get(IErrorService.class).addInternationalizedError("error.update.internet");
+            errorService.addInternationalizedError("error.update.internet");
         }
     }
 
@@ -79,4 +96,12 @@ public abstract class AbstractUpdateAction extends JThequeAction {
      * @return The selected object.
      */
     abstract Object getSelectedObject();
+
+    IViews getViews() {
+        return views;
+    }
+
+    IUpdateService getUpdateService() {
+        return updateService;
+    }
 }

@@ -3,8 +3,6 @@ package org.jtheque.ui;
 import org.jtheque.i18n.ILanguageService;
 import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.ui.able.ViewDelegate;
-import org.jtheque.ui.utils.edt.SimpleTask;
-import org.jtheque.ui.utils.edt.Task;
 
 /*
  * This file is part of JTheque.
@@ -24,39 +22,34 @@ import org.jtheque.ui.utils.edt.Task;
 
 public class UIUtils implements IUIUtils {
     private final ViewDelegate viewDelegate;
+    private final ILanguageService languageService;
 
-    public UIUtils(ViewDelegate viewDelegate) {
+    public UIUtils(ViewDelegate viewDelegate, ILanguageService languageService) {
         super();
 
         this.viewDelegate = viewDelegate;
+        this.languageService = languageService;
     }
 
     @Override
     public boolean askI18nUserForConfirmation(String textKey, String titleKey) {
+        return viewDelegate.askUserForConfirmation(languageService.getMessage(textKey), languageService.getMessage(titleKey));
+    }
+
+    @Override
+    public boolean askI18nUserForConfirmation(String textKey, Object[] textReplaces, String titleKey, Object[] titleReplaces) {
         return viewDelegate.askUserForConfirmation(
-                ViewsUtilsServices.get(ILanguageService.class).getMessage(textKey),
-                ViewsUtilsServices.get(ILanguageService.class).getMessage(titleKey));
+                languageService.getMessage(textKey, textReplaces),
+                languageService.getMessage(titleKey, titleReplaces));
     }
 
     @Override
     public void displayI18nText(String key) {
-        viewDelegate.displayText(ViewsUtilsServices.get(ILanguageService.class).getMessage(key));
+        viewDelegate.displayText(languageService.getMessage(key));
     }
 
     @Override
     public ViewDelegate getDelegate() {
         return viewDelegate;
-    }
-
-    @Override
-    public void execute(SimpleTask task) {
-        viewDelegate.run(task.asRunnable());
-    }
-
-    @Override
-    public <T> T execute(Task<T> task) {
-        viewDelegate.run(task.asRunnable());
-
-        return task.getResult();
     }
 }

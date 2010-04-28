@@ -68,7 +68,7 @@
                         <Bundle-SymbolicName>${pom.artifactId}</Bundle-SymbolicName>
                         <Export-Package>org.jtheque.collections</Export-Package>
                         <Bundle-Vendor>Baptiste Wicht</Bundle-Vendor>
-                        <Bundle-Activator>org.jtheque.collections.CollectionsActivator</Bundle-Activator>
+                        <Spring-Context>*;create-asynchronously:=false;publish-context:=false</Spring-Context>
                     </instructions>
                 </configuration>
             </plugin>

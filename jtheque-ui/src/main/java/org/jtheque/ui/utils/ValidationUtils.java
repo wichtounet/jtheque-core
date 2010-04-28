@@ -18,8 +18,6 @@ package org.jtheque.ui.utils;
 
 import org.jtheque.errors.InternationalizedError;
 import org.jtheque.errors.JThequeError;
-import org.jtheque.i18n.ILanguageService;
-import org.jtheque.ui.ViewsUtilsServices;
 import org.jtheque.utils.StringUtils;
 
 import javax.swing.ComboBoxModel;
@@ -48,10 +46,7 @@ public final class ValidationUtils {
      */
     public static void rejectIfEmpty(CharSequence field, String name, Collection<JThequeError> errors) {
         if (StringUtils.isEmpty(field)) {
-            errors.add(new InternationalizedError(
-                    ViewsUtilsServices.get(ILanguageService.class),
-                    "error.validation.field.empty",
-                    new Object[]{ViewsUtilsServices.get(ILanguageService.class).getMessage(name)}));
+            errors.add(new InternationalizedError("error.validation.field.empty",name));
         }
     }
 
@@ -65,10 +60,7 @@ public final class ValidationUtils {
      */
     public static void rejectIfLongerThan(CharSequence field, String name, int max, Collection<JThequeError> errors) {
         if (!StringUtils.isEmpty(field) && field.length() > max) {
-            errors.add(new InternationalizedError(
-                    ViewsUtilsServices.get(ILanguageService.class),
-                    "error.validation.field.lenght",
-                    ViewsUtilsServices.get(ILanguageService.class).getMessage(name), max));
+            errors.add(new InternationalizedError("error.validation.field.lenght", name, max));
         }
     }
 
@@ -81,10 +73,7 @@ public final class ValidationUtils {
      */
     public static void rejectIfNothingSelected(JList list, String name, Collection<JThequeError> errors) {
         if (list.getSelectedIndex() <= -1) {
-            errors.add(new InternationalizedError(
-                    ViewsUtilsServices.get(ILanguageService.class),
-                    "error.validation.nothing.selected",
-                    new Object[]{ViewsUtilsServices.get(ILanguageService.class).getMessage(name)}));
+            errors.add(new InternationalizedError("error.validation.nothing.selected",new Object[]{name}));
         }
     }
 
@@ -97,10 +86,7 @@ public final class ValidationUtils {
      */
     public static void rejectIfNothingSelected(ComboBoxModel model, String name, Collection<JThequeError> errors) {
         if (model.getSelectedItem() == null) {
-            errors.add(new InternationalizedError(
-                    ViewsUtilsServices.get(ILanguageService.class),
-                    "error.validation.nothing.selected",
-                    new Object[]{ViewsUtilsServices.get(ILanguageService.class).getMessage(name)}));
+            errors.add(new InternationalizedError("error.validation.nothing.selected",name));
         }
     }
 
@@ -115,10 +101,7 @@ public final class ValidationUtils {
         try {
             Integer.parseInt(field);
         } catch (NumberFormatException e) {
-            errors.add(new InternationalizedError(
-                    ViewsUtilsServices.get(ILanguageService.class),
-                    "error.validation.field.numerical",
-                    new Object[]{ViewsUtilsServices.get(ILanguageService.class).getMessage(name)}));
+            errors.add(new InternationalizedError("error.validation.field.numerical",name));
         }
     }
 
@@ -131,10 +114,7 @@ public final class ValidationUtils {
      */
     public static void rejectIfEmpty(Collection<?> list, String name, Collection<JThequeError> errors) {
         if (list != null && list.isEmpty()) {
-            errors.add(new InternationalizedError(
-                    ViewsUtilsServices.get(ILanguageService.class),
-                    "error.validation.field.empty",
-                    new Object[]{ViewsUtilsServices.get(ILanguageService.class).getMessage(name)}));
+            errors.add(new InternationalizedError("error.validation.field.empty",name));
         }
     }
 
@@ -147,10 +127,7 @@ public final class ValidationUtils {
      */
     public static void rejectIfEmpty(JList list, String name, Collection<JThequeError> errors) {
         if (list != null && list.getModel().getSize() < 1) {
-            errors.add(new InternationalizedError(
-                    ViewsUtilsServices.get(ILanguageService.class),
-                    "error.validation.field.empty",
-                    new Object[]{ViewsUtilsServices.get(ILanguageService.class).getMessage(name)}));
+            errors.add(new InternationalizedError("error.validation.field.empty",name));
         }
     }
 }

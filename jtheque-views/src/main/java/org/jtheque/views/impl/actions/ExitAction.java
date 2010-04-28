@@ -17,10 +17,7 @@ package org.jtheque.views.impl.actions;
  */
 
 import org.jtheque.core.ICore;
-import org.jtheque.core.utils.ImageType;
-import org.jtheque.resources.IResourceService;
 import org.jtheque.ui.utils.actions.JThequeAction;
-import org.jtheque.views.ViewsServices;
 
 import javax.swing.Action;
 import javax.swing.KeyStroke;
@@ -34,20 +31,22 @@ import java.awt.event.KeyEvent;
  * @author Baptiste Wicht
  */
 public final class ExitAction extends JThequeAction {
+    private final ICore core;
+
     /**
      * Construct a new ExitAction.
      */
-    public ExitAction() {
-        super("menu.exit", ViewsServices.get(ICore.class).getApplication().getName());
+    public ExitAction(ICore core) {
+        super("menu.exit", core.getApplication().getName());
+
+        this.core = core;
 
         putValue(Action.ACCELERATOR_KEY,
                 KeyStroke.getKeyStroke(KeyEvent.VK_E, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
-
-        setIcon(ViewsServices.get(IResourceService.class).getIcon(ICore.IMAGES_BASE_NAME, "exit", ImageType.PNG));
     }
 
     @Override
     public void actionPerformed(ActionEvent arg0) {
-        ViewsServices.get(ICore.class).getLifeCycle().exit();
+        core.getLifeCycle().exit();
     }
 }

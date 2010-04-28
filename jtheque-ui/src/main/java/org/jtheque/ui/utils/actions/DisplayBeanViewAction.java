@@ -1,7 +1,6 @@
 package org.jtheque.ui.utils.actions;
 
 import org.jtheque.ui.able.IView;
-import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
@@ -45,7 +44,7 @@ public final class DisplayBeanViewAction extends JThequeAction implements Applic
     }
 
     @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+    public void setApplicationContext(ApplicationContext applicationContext){
         this.applicationContext = applicationContext;
     }
 

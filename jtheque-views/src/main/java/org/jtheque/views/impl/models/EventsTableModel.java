@@ -3,13 +3,13 @@ package org.jtheque.views.impl.models;
 import org.jtheque.events.EventLog;
 import org.jtheque.events.IEventService;
 import org.jtheque.i18n.ILanguageService;
-import org.jtheque.views.ViewsServices;
 
 import javax.swing.table.AbstractTableModel;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /*
  * This file is part of JTheque.
@@ -33,10 +33,13 @@ import java.util.List;
  * @author Baptiste Wicht
  */
 public final class EventsTableModel extends AbstractTableModel {
-    private final DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy", ViewsServices.get(ILanguageService.class).getCurrentLocale());
-    private final DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss,SSS", ViewsServices.get(ILanguageService.class).getCurrentLocale());
+    private final DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
+    private final DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss,SSS", Locale.getDefault());
 
     private String log;
+
+    private final IEventService eventService;
+    private final ILanguageService languageService;
 
     /**
      * The different columns of the films to buy table.
@@ -64,10 +67,13 @@ public final class EventsTableModel extends AbstractTableModel {
     /**
      * Construct a new <code>FilmsToBuyTableModel</code>.
      */
-    public EventsTableModel() {
+    public EventsTableModel(IEventService eventService, ILanguageService languageService) {
         super();
 
-        setLog(ViewsServices.get(IEventService.class).getLogs().iterator().next());
+        this.eventService = eventService;
+        this.languageService = languageService;
+
+        setLog(eventService.getLogs().iterator().next());
     }
 
     /**
@@ -108,7 +114,7 @@ public final class EventsTableModel extends AbstractTableModel {
         if (eventLog != null) {
             switch (columnIndex) {
                 case Columns.LEVEL:
-                    return ViewsServices.get(ILanguageService.class).getMessage(eventLog.getLevel().getKey());
+                    return languageService.getMessage(eventLog.getLevel().getKey());
                 case Columns.DATE:
                     return dateFormat.format(eventLog.getDate());
                 case Columns.TIME:
@@ -116,7 +122,7 @@ public final class EventsTableModel extends AbstractTableModel {
                 case Columns.SOURCE:
                     return eventLog.getSource();
                 case Columns.TITLE:
-                    return ViewsServices.get(ILanguageService.class).getMessage(eventLog.getTitleKey());
+                    return languageService.getMessage(eventLog.getTitleKey());
                 default:
                     return "";
             }
@@ -142,7 +148,7 @@ public final class EventsTableModel extends AbstractTableModel {
      */
     public void setLog(String log) {
         if (this.log == null || !this.log.equals(log)) {
-            events = new ArrayList<EventLog>(ViewsServices.get(IEventService.class).getEventLogs(log));
+            events = new ArrayList<EventLog>(eventService.getEventLogs(log));
 
             fireTableDataChanged();
 

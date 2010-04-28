@@ -17,9 +17,7 @@ package org.jtheque.views.impl;
  */
 
 import org.jtheque.core.ICore;
-import org.jtheque.i18n.ILanguageService;
 import org.jtheque.ui.able.IUIUtils;
-import org.jtheque.views.ViewsServices;
 
 import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeEvent;
@@ -33,6 +31,16 @@ import java.awt.event.WindowEvent;
  * @author Baptiste Wicht
  */
 public final class MainController extends WindowAdapter implements ChangeListener {
+    private final ICore core;
+    private final IUIUtils uiUtils;
+
+    public MainController(ICore core, IUIUtils uiUtils) {
+        super();
+
+        this.core = core;
+        this.uiUtils = uiUtils;
+    }
+
     @Override
     public void stateChanged(ChangeEvent event) {
         JTabbedPane tabbedPane = (JTabbedPane) event.getSource();
@@ -40,22 +48,22 @@ public final class MainController extends WindowAdapter implements ChangeListene
         int index = tabbedPane.getSelectedIndex();
 
         if (index == -1) {
-            ViewsServices.get(ICore.class).getLifeCycle().setCurrentFunction("");
+            core.getLifeCycle().setCurrentFunction("");
         } else {
-            ViewsServices.get(ICore.class).getLifeCycle().setCurrentFunction(tabbedPane.getTitleAt(index));
+            core.getLifeCycle().setCurrentFunction(tabbedPane.getTitleAt(index));
         }
     }
 
     @Override
     public void windowClosing(WindowEvent e) {
-        boolean yes = ViewsServices.get(IUIUtils.class).getDelegate().askUserForConfirmation(
-                ViewsServices.get(ILanguageService.class).getMessage("dialogs.confirm.exit",
-                        ViewsServices.get(ICore.class).getApplication().getName()),
-                ViewsServices.get(ILanguageService.class).getMessage("dialogs.confirm.exit.title",
-                        ViewsServices.get(ICore.class).getApplication().getName()));
+        Object[] applicationName = {core.getApplication().getName()};
+        
+        boolean yes = uiUtils.askI18nUserForConfirmation(
+                "dialogs.confirm.exit", applicationName,
+                "dialogs.confirm.exit.title",applicationName);
 
         if (yes) {
-            ViewsServices.get(ICore.class).getLifeCycle().exit();
+            core.getLifeCycle().exit();
         }
     }
 }

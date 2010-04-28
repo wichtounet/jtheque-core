@@ -57,11 +57,7 @@ public final class ProxyBeanDefinitionParser extends AbstractBeanDefinitionParse
             factory.addConstructorArgValue(false);
         }
 
-        try {
-            factory.addConstructorArgValue(Class.forName(element.getAttribute("type")));
-        } catch (ClassNotFoundException e) {
-            parserContext.getReaderContext().error("Class not found", element, e);
-        }
+        factory.addConstructorArgValue(element.getAttribute("type"));
 
         Element targetElement = DomUtils.getChildElementByTagName(element, "bean");
 

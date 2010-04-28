@@ -17,11 +17,14 @@ package org.jtheque.collections;
  */
 
 import org.jtheque.schemas.DefaultSchema;
+import org.jtheque.schemas.ISchemaService;
 import org.jtheque.utils.bean.Version;
 
 public class CollectionSchema extends DefaultSchema {
-    public CollectionSchema() {
+    public CollectionSchema(ISchemaService schemaService) {
         super(new Version("1.0"), "jtheque-collection-schema");
+
+        schemaService.registerSchema("", this);
     }
 
     @Override

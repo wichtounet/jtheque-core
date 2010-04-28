@@ -16,7 +16,6 @@ package org.jtheque.ui.utils.components;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import org.jtheque.core.utils.UtilsServices;
 import org.jtheque.i18n.ILanguageService;
 import org.jtheque.i18n.Internationalizable;
 
@@ -45,7 +44,7 @@ public final class BorderUpdater implements Internationalizable {
     }
 
     @Override
-    public void refreshText() {
-        border.setTitle(UtilsServices.get(ILanguageService.class).getMessage(key));
+    public void refreshText(ILanguageService languageService) {
+        border.setTitle(languageService.getMessage(key));
     }
 }

@@ -24,6 +24,7 @@ import org.jtheque.ui.utils.builders.FilthyPanelBuilder;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.ui.utils.builders.PanelBuilder;
 import org.jtheque.ui.utils.components.JThequeI18nLabel;
+import org.jtheque.update.IUpdateService;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.ui.GridBagUtils;
 
@@ -53,11 +54,14 @@ public final class ModuleListRenderer extends JPanel implements ListCellRenderer
 
     private static final int TITLE_FONT_SIZE = 16;
 
+    private final IUpdateService updateService;
+
     /**
      * Construct a new ModuleListRenderer.
      */
-    public ModuleListRenderer() {
+    public ModuleListRenderer(IUpdateService updateService) {
         super();
+        this.updateService = updateService;
 
         I18nPanelBuilder builder = new FilthyPanelBuilder(this);
         builder.setBorder(Borders.createEmptyBorder(2, 2, 2, 10));
@@ -123,7 +127,7 @@ public final class ModuleListRenderer extends JPanel implements ListCellRenderer
         labelTitle.setTextKey("modules.view.label.title", module.getName(), module.getAuthor());
         labelState.setTextKey("modules.view.label.state", module.getState().toString());
         labelCurrentVersion.setTextKey("modules.view.label.versions.current", module.getVersion().getVersion());
-        labelOnlineVersion.setTextKey("modules.view.label.versions.online", module.getMostRecentVersion().getVersion());
+        labelOnlineVersion.setTextKey("modules.view.label.versions.online", updateService.getMostRecentVersion(module).getVersion());
 
         if (StringUtils.isEmpty(module.getUrl())) {
             labelSite.setAction(null);

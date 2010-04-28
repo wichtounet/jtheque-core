@@ -1,8 +1,5 @@
 package org.jtheque.views.impl.actions.module;
 
-import org.jtheque.update.IUpdateService;
-import org.jtheque.views.ViewsServices;
-
 /*
  * This file is part of JTheque.
  *
@@ -34,7 +31,7 @@ public final class UpdateKernelAction extends AbstractUpdateAction {
 
     @Override
     boolean isUpToDate() {
-        return ViewsServices.get(IUpdateService.class).isCurrentVersionUpToDate();
+        return getUpdateService().isCurrentVersionUpToDate();
     }
 
     @Override

@@ -1,5 +1,7 @@
 package org.jtheque.i18n;
 
+import org.jtheque.utils.bean.Version;
+
 import java.util.Locale;
 
 /*
@@ -23,20 +25,6 @@ import java.util.Locale;
  */
 public interface ILanguageService {
     /**
-     * Add an internationalization base name.
-     *
-     * @param baseName The base name to add.
-     */
-    void addBaseName(String baseName);
-
-    /**
-     * Remove a base name.
-     *
-     * @param baseName The base name to remove.
-     */
-    void removeBaseName(String baseName);
-
-    /**
      * Set the current language.
      *
      * @param language The language.
@@ -56,16 +44,6 @@ public interface ILanguageService {
      * @return The current language.
      */
     String getCurrentLanguage();
-
-    /**
-     * Return the message of the key. If there is no message with this key, the method return the key and
-     * log the message to the log system.
-     *
-     * @param key The message key.
-     * @return The message of the key of the current locale, empty string if the key is <code>null</code> else
-     *         the key if there is no message for this key.
-     */
-    String getMessage(String key);
 
     /**
      * Return the message of the key and effect the replaces.
@@ -90,4 +68,11 @@ public interface ILanguageService {
      * @param internationalizable The internationalizable to add.
      */
     void addInternationalizable(Internationalizable internationalizable);
+
+    void registerResource(String name, Version version, I18nResource... resources);
+
+    /**
+     * Refresh all the internationalizables elements.
+     */
+    void refreshAll();
 }

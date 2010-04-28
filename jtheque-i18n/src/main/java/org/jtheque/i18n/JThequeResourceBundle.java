@@ -2,10 +2,8 @@ package org.jtheque.i18n;
 
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 
-import javax.annotation.PostConstruct;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashSet;
 
 /*
  * This file is part of JTheque.
@@ -29,19 +27,7 @@ import java.util.Collection;
  * @author Baptiste Wicht
  */
 public final class JThequeResourceBundle extends ReloadableResourceBundleMessageSource implements EditableResourceBundle {
-    private String[] coreBaseNames;
-
-    private final Collection<String> baseNames = new ArrayList<String>(10);
-
-    /**
-     * Init the JTheque resource bundle.
-     */
-    @PostConstruct
-    public void init() {
-        baseNames.addAll(Arrays.asList(coreBaseNames));
-
-        refresh();
-    }
+    private final Collection<String> baseNames = new HashSet<String>(10);
 
     @Override
     public void addBaseName(String baseName) {
@@ -62,14 +48,5 @@ public final class JThequeResourceBundle extends ReloadableResourceBundleMessage
      */
     private void refresh() {
         setBasenames(baseNames.toArray(new String[baseNames.size()]));
-    }
-
-    /**
-     * Set the base names of the core.
-     *
-     * @param coreBaseNames An array of all the base names of the core.
-     */
-    public void setCoreBaseNames(String[] coreBaseNames) {
-        this.coreBaseNames = Arrays.copyOf(coreBaseNames, coreBaseNames.length);
     }
 }

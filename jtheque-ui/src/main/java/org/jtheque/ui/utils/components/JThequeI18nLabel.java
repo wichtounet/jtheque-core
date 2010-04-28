@@ -19,7 +19,6 @@ package org.jtheque.ui.utils.components;
 import org.jtheque.i18n.ILanguageService;
 import org.jtheque.i18n.Internationalizable;
 import org.jtheque.ui.able.ViewComponent;
-import org.jtheque.ui.ViewsUtilsServices;
 import org.jtheque.utils.collections.ArrayUtils;
 
 import javax.swing.JLabel;
@@ -48,8 +47,6 @@ public final class JThequeI18nLabel extends JLabel implements Internationalizabl
         super();
 
         setTextKey(textKey, replaces);
-
-        ViewsUtilsServices.get(ILanguageService.class).addInternationalizable(this);
     }
 
     /**
@@ -87,16 +84,14 @@ public final class JThequeI18nLabel extends JLabel implements Internationalizabl
     public void setTextKey(String textKey, Object... replaces) {
         this.textKey = textKey;
         this.replaces = ArrayUtils.copyOf(replaces);
-
-        refreshText();
     }
 
     @Override
-    public void refreshText() {
+    public void refreshText(ILanguageService languageService) {
         if (ArrayUtils.isEmpty(replaces)) {
-            setText(ViewsUtilsServices.get(ILanguageService.class).getMessage(textKey));
+            setText(languageService.getMessage(textKey));
         } else {
-            setText(ViewsUtilsServices.get(ILanguageService.class).getMessage(textKey, replaces));
+            setText(languageService.getMessage(textKey, replaces));
         }
     }
 

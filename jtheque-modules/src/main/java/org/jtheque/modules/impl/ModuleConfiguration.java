@@ -21,6 +21,9 @@ import org.jtheque.modules.able.IModuleService;
 import org.jtheque.modules.able.Module;
 import org.jtheque.modules.able.ModuleState;
 import org.jtheque.states.AbstractState;
+import org.jtheque.states.Load;
+import org.jtheque.states.Save;
+import org.jtheque.states.State;
 import org.jtheque.utils.StringUtils;
 
 import java.util.ArrayList;
@@ -31,16 +34,12 @@ import java.util.Collection;
  *
  * @author Baptiste Wicht
  */
+@State(id = "jtheque-modules-configuration", delegated = true)
 public final class ModuleConfiguration extends AbstractState {
     private final Collection<ModuleInfo> infos = new ArrayList<ModuleInfo>(20);
 
-    @Override
-    public boolean isDelegated() {
-        return true;
-    }
-
-    @Override
-    public void delegateLoad(Collection<Node> nodes) {
+    @Load
+    public void delegateLoad(Iterable<Node> nodes) {
         for (Node node : nodes){
             if ("module".equals(node.getName())) {
                 infos.add(convertToModuleInfo(node));
@@ -75,7 +74,7 @@ public final class ModuleConfiguration extends AbstractState {
         return info;
     }
 
-    @Override
+    @Save
     public Collection<Node> delegateSave() {
         Collection<Node> states = new ArrayList<Node>(25);
 
@@ -216,12 +215,5 @@ public final class ModuleConfiguration extends AbstractState {
         info.setState(state);
 
         infos.add(info);
-    }
-
-    @Override
-    public void setDefaults() {
-        for (Module module : ModulesServices.get(IModuleService.class).getModules()) {
-            add(module, ModuleState.INSTALLED);
-        }
     }
 }

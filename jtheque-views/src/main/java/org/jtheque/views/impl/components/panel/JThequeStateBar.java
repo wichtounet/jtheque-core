@@ -16,10 +16,9 @@ package org.jtheque.views.impl.components.panel;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.utils.ui.GridBagUtils;
-import org.jtheque.views.ViewsServices;
-import org.jtheque.views.able.IViewService;
+import org.jtheque.utils.ui.SwingUtils;
+import org.jtheque.views.able.IViews;
 import org.jtheque.views.able.components.StateBarComponent;
 
 import javax.swing.Box;
@@ -47,11 +46,16 @@ public final class JThequeStateBar extends JPanel {
     private boolean leftFilled;
     private boolean centerFilled;
 
+    private final IViews viewService;
+
     /**
      * Construct a new JThequeStateBar.
+     * @param viewService
      */
-    public JThequeStateBar() {
+    public JThequeStateBar(IViews viewService) {
         super();
+
+        this.viewService = viewService;
 
         setLayout(new GridBagLayout());
         setBackground(new Color(133, 144, 165));
@@ -63,7 +67,7 @@ public final class JThequeStateBar extends JPanel {
      * Build the state bar.
      */
     private void build() {
-        List<StateBarComponent> components = new ArrayList<StateBarComponent>(getManager().getStateBarComponents());
+        List<StateBarComponent> components = new ArrayList<StateBarComponent>(viewService.getStateBarComponents());
 
         if (components.isEmpty()) {
             setVisible(false);
@@ -167,21 +171,17 @@ public final class JThequeStateBar extends JPanel {
     public void removeComponent(StateBarComponent component) {
         remove(component.getComponent());
 
-        if (getManager().getStateBarComponents().isEmpty()) {
+        if (viewService.getStateBarComponents().isEmpty()) {
             setVisible(false);
         }
 
-        ViewsServices.get(IUIUtils.class).getDelegate().refresh(this);
+        SwingUtils.refresh(this);
     }
 
     public void addComponent(StateBarComponent component) {
         build();
 
-        ViewsServices.get(IUIUtils.class).getDelegate().refresh(this);
-    }
-
-    private static IViewService getManager() {
-        return ViewsServices.get(IViewService.class);
+        SwingUtils.refresh(this);
     }
 
     /**

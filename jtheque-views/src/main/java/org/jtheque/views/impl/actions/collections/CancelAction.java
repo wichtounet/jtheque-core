@@ -18,8 +18,8 @@ package org.jtheque.views.impl.actions.collections;
 
 import org.jtheque.core.ICore;
 import org.jtheque.ui.utils.actions.JThequeAction;
-import org.jtheque.views.ViewsServices;
 
+import javax.annotation.Resource;
 import java.awt.event.ActionEvent;
 
 /**
@@ -28,6 +28,9 @@ import java.awt.event.ActionEvent;
  * @author Baptiste Wicht
  */
 public final class CancelAction extends JThequeAction {
+    @Resource
+    private ICore core;
+
     /**
      * Construct a new CancelAction.
      */
@@ -37,6 +40,6 @@ public final class CancelAction extends JThequeAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        ViewsServices.get(ICore.class).getLifeCycle().exit();
+        core.getLifeCycle().exit();
     }
 }

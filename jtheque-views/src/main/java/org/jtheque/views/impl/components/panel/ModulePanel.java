@@ -25,8 +25,8 @@ import org.jtheque.ui.utils.builders.PanelBuilder;
 import org.jtheque.update.versions.VersionsFile;
 import org.jtheque.update.versions.VersionsFileReader;
 import org.jtheque.utils.ui.GridBagUtils;
-import org.jtheque.views.ViewsServices;
 
+import javax.annotation.Resource;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import java.awt.Color;
@@ -52,6 +52,12 @@ public final class ModulePanel extends JPanel {
     private Font fontLabelBold;
 
     private static final int TITLE_FONT_SIZE = 16;
+
+    @Resource
+    private IModuleService moduleService;
+
+    @Resource
+    private ILanguageService languageService;
 
     /**
      * Construct a new ModulePanel.
@@ -133,16 +139,16 @@ public final class ModulePanel extends JPanel {
     public void expand() {
         VersionsFile file = new VersionsFileReader().readURL(module.getVersionsFileURL());
 
-        onlineLabel.setText(ViewsServices.get(ILanguageService.class).getMessage(
+        onlineLabel.setText(languageService.getMessage(
                 "repository.module.online",
                 file.getMostRecentVersion().getStringVersion()));
 
-        if (ViewsServices.get(IModuleService.class).isInstalled(module.getId())) {
-            currentLabel.setText(ViewsServices.get(ILanguageService.class).getMessage(
+        if (moduleService.isInstalled(module.getId())) {
+            currentLabel.setText(languageService.getMessage(
                     "repository.module.current",
-                    ViewsServices.get(IModuleService.class).getModuleById(module.getId()).getVersion().getVersion()));
+                    moduleService.getModuleById(module.getId()).getVersion().getVersion()));
         } else {
-            currentLabel.setText(ViewsServices.get(ILanguageService.class).getMessage("repository.module.current.notinstalled"));
+            currentLabel.setText(languageService.getMessage("repository.module.current.notinstalled"));
         }
     }
 }

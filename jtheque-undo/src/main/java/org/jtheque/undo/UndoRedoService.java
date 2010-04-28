@@ -50,11 +50,15 @@ public final class UndoRedoService extends UndoManager implements IUndoRedoServi
     @Override
     public void setUndoAction(Action undoAction){
         this.undoAction = undoAction;
+
+        stateChanged();
     }
 
     @Override
     public void setRedoAction(Action redoAction){
         this.redoAction = redoAction;
+
+        stateChanged();
     }
 
     @Override
@@ -83,9 +87,14 @@ public final class UndoRedoService extends UndoManager implements IUndoRedoServi
      * Update the state of the undo/redo action.
      */
     private void stateChanged() {
-        undoAction.putValue(Action.NAME, getUndoPresentationName());
-        redoAction.putValue(Action.NAME, getRedoPresentationName());
-        undoAction.setEnabled(canUndo());
-        redoAction.setEnabled(canRedo());
+        if(undoAction != null){
+            undoAction.putValue(Action.NAME, getUndoPresentationName());
+            undoAction.setEnabled(canUndo());
+        }
+
+        if(redoAction != null){
+            redoAction.putValue(Action.NAME, getRedoPresentationName());
+            redoAction.setEnabled(canRedo());
+        }
     }
 }

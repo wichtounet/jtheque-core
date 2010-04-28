@@ -16,20 +16,18 @@ package org.jtheque.views.impl.actions.backup;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import org.jtheque.core.ICore;
-import org.jtheque.core.utils.ImageType;
 import org.jtheque.file.IFileService;
 import org.jtheque.io.XMLException;
 import org.jtheque.persistence.able.IPersistenceService;
-import org.jtheque.resources.IResourceService;
 import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.ui.utils.actions.JThequeAction;
-import org.jtheque.views.ViewsServices;
+import org.jtheque.utils.ui.SwingUtils;
 import org.jtheque.views.able.windows.IMainView;
-import org.jtheque.ui.utils.edt.SimpleTask;
+import org.jtheque.utils.ui.edt.SimpleTask;
 import org.jtheque.utils.io.SimpleFilter;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Resource;
 import java.awt.event.ActionEvent;
 import java.io.File;
 
@@ -39,26 +37,36 @@ import java.io.File;
  * @author Baptiste Wicht
  */
 public class AcRestore extends JThequeAction {
+    @Resource
+    private IUIUtils uiUtils;
+
+    @Resource
+    private IFileService fileService;
+
+    @Resource
+    private IPersistenceService persistenceService;
+
+    @Resource
+    private IMainView mainView;
+
     /**
      * Construct a new AcRestore.
      */
     public AcRestore() {
         super("menu.restore");
-        
-        setIcon(ViewsServices.get(IResourceService.class).getIcon(ICore.IMAGES_BASE_NAME, "xml", ImageType.PNG));
     }
 
     @Override
     public final void actionPerformed(ActionEvent arg0) {
-        final File file = new File(ViewsServices.get(IUIUtils.class).getDelegate().chooseFile(new SimpleFilter("XML(*.xml)", ".xml")));
+        final File file = new File(SwingUtils.chooseFile(new SimpleFilter("XML(*.xml)", ".xml")));
 
-        final boolean yes = ViewsServices.get(IUIUtils.class).askI18nUserForConfirmation(
+        final boolean yes = uiUtils.askI18nUserForConfirmation(
                 "dialogs.confirm.clear.database", "dialogs.confirm.clear.database.title");
 
-        ViewsServices.get(IUIUtils.class).execute(new SimpleTask() {
+        SwingUtils.execute(new SimpleTask() {
             @Override
             public void run() {
-                ViewsServices.get(IMainView.class).startWait();
+                mainView.startWait();
 
                 new Thread(new RestoreRunnable(yes, file)).start();
             }
@@ -70,7 +78,7 @@ public class AcRestore extends JThequeAction {
      *
      * @author Baptiste Wicht
      */
-    private static final class RestoreRunnable implements Runnable {
+    private final class RestoreRunnable implements Runnable {
         private final boolean clear;
         private final File file;
 
@@ -90,19 +98,19 @@ public class AcRestore extends JThequeAction {
         @Override
         public void run() {
             if (clear) {
-                ViewsServices.get(IPersistenceService.class).clearDatabase();
+                persistenceService.clearDatabase();
             }
 
             try {
-                ViewsServices.get(IFileService.class).restore(file);
+                fileService.restore(file);
             } catch (XMLException e){
                 LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
             }
 
-            ViewsServices.get(IUIUtils.class).execute(new SimpleTask() {
+            SwingUtils.execute(new SimpleTask() {
                 @Override
                 public void run() {
-                    ViewsServices.get(IMainView.class).stopWait();
+                    mainView.stopWait();
                 }
             });
         }

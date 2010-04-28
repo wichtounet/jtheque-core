@@ -18,13 +18,12 @@ package org.jtheque.views.impl.components.panel;
 
 import org.jdesktop.swingx.JXPanel;
 import org.jtheque.core.ICore;
+import org.jtheque.core.utils.SimplePropertiesCache;
 import org.jtheque.ui.utils.AnimationUtils;
 import org.jtheque.ui.utils.components.JThequeI18nLabel;
 import org.jtheque.ui.utils.filthy.Filthy;
 import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.utils.ui.SwingUtils;
-import org.jtheque.views.ViewsServices;
-import org.jtheque.views.able.IViewService;
 import org.jtheque.views.able.panel.ICollectionView;
 import org.jtheque.views.impl.actions.collections.CancelAction;
 import org.jtheque.views.impl.actions.collections.ChooseAction;
@@ -38,13 +37,7 @@ import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Container;
-import java.awt.Graphics;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
+import java.awt.*;
 
 /**
  * @author Baptiste Wicht
@@ -57,6 +50,14 @@ public final class CollectionPane extends JXPanel implements ICollectionView, Fi
     private static final int LEFT_MARGIN_WIDTH = 200;
 
     private final Action chooseAction = new ChooseAction();
+
+    private final ICore core;
+
+    public CollectionPane(ICore core) {
+        super();
+
+        this.core = core;
+    }
 
     /**
      * Build the view.
@@ -72,7 +73,7 @@ public final class CollectionPane extends JXPanel implements ICollectionView, Fi
 
         gbc.setDefaultInsets(new Insets(0, 0, 0, 0));
 
-        add(Box.createVerticalStrut(ViewsServices.get(IViewService.class).getViews().getMainView().getHeight() / 3),
+        add(Box.createVerticalStrut(SimplePropertiesCache.<Window>get("MainView").getHeight() / 3),
                 gbc.gbcSet(0, 0, GridBagConstraints.NONE, GridBagConstraints.CENTER, 4, 1, 1.0, 0.0));
 
         add(Box.createHorizontalStrut(LEFT_MARGIN_WIDTH), gbc.gbcSet(0, 1, GridBagConstraints.HORIZONTAL, GridBagConstraints.CENTER, 1, 4, 0.3, 0.0));
@@ -120,7 +121,7 @@ public final class CollectionPane extends JXPanel implements ICollectionView, Fi
         gbc.setDefaultInsets(new Insets(0, 0, 0, 0));
 
         textField = new FilthyTextField();
-        textField.setText(ViewsServices.get(ICore.class).getConfiguration().getLastCollection());
+        textField.setText(core.getConfiguration().getLastCollection());
 
         SwingUtils.addFieldValidateAction(textField.getField(), chooseAction);
 

@@ -4,8 +4,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>org.jtheque.spring-utils</artifactId>
-    <name>org.jtheque.spring-utils</name>
+    <artifactId>org.jtheque.spring.utils</artifactId>
+    <name>org.jtheque.spring.utils</name>
     <packaging>bundle</packaging>
 
     <parent>
@@ -65,8 +65,10 @@
                 <configuration>
                     <instructions>
                         <Bundle-SymbolicName>${pom.artifactId}</Bundle-SymbolicName>
-                        <Export-Package>org.jtheque.spring.utils</Export-Package>
+                        <Export-Package>org.jtheque.spring.utils, org.jtheque.spring.utils.*</Export-Package>
+                        <Export-Package>org.jtheque.spring.utils, org.jtheque.spring.utils.*</Export-Package>
                         <Bundle-Vendor>Baptiste Wicht</Bundle-Vendor>
+                        <Spring-Context>*;create-asynchronously:=false;publish-context:=false</Spring-Context>
                     </instructions>
                 </configuration>
             </plugin>

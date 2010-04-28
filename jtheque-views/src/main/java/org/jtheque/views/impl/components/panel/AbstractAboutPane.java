@@ -3,7 +3,6 @@ package org.jtheque.views.impl.components.panel;
 import org.jdesktop.swingx.JXPanel;
 import org.jtheque.core.ICore;
 import org.jtheque.i18n.ILanguageService;
-import org.jtheque.views.ViewsServices;
 import org.pushingpixels.trident.Timeline;
 
 import java.util.ArrayList;
@@ -39,28 +38,34 @@ public abstract class AbstractAboutPane extends JXPanel {
     private Info[] infos;
     private Collection<String> credits;
 
+    private final ICore core;
+    private final ILanguageService languageService;
+
+    protected AbstractAboutPane(ILanguageService languageService, ICore core) {
+        super();
+
+        this.languageService = languageService;
+        this.core = core;
+    }
+
     /**
      * Init the view.
      */
     void init() {
-        copyright = ViewsServices.get(ICore.class).getApplication().getCopyright();
+        copyright = core.getApplication().getCopyright();
         licence = getMessage("about.actions.read");
 
         infos = new Info[4];
 
-        infos[0] = new Info(getMessage("about.view.version"),
-                ViewsServices.get(ICore.class).getApplication().getVersion().getVersion(), false, false);
-        infos[1] = new Info(getMessage("about.view.author"),
-                ViewsServices.get(ICore.class).getApplication().getAuthor(), false, false);
-        infos[2] = new Info(getMessage("about.view.site"),
-                ViewsServices.get(ICore.class).getApplication().getSite(), true, false);
-        infos[3] = new Info(getMessage("about.view.mail"),
-                ViewsServices.get(ICore.class).getApplication().getEmail(), false, true);
+        infos[0] = new Info(getMessage("about.view.version"), core.getApplication().getVersion().getVersion(), false, false);
+        infos[1] = new Info(getMessage("about.view.author"), core.getApplication().getAuthor(), false, false);
+        infos[2] = new Info(getMessage("about.view.site"), core.getApplication().getSite(), true, false);
+        infos[3] = new Info(getMessage("about.view.mail"), core.getApplication().getEmail(), false, true);
 
-        credits = new ArrayList<String>(ViewsServices.get(ICore.class).getCreditsMessage().size() * 4);
+        credits = new ArrayList<String>(core.getCreditsMessage().size() * 4);
 
-        for (String key : ViewsServices.get(ICore.class).getCreditsMessage()) {
-            String[] messages = ViewsServices.get(ILanguageService.class).getLinesMessage(key);
+        for (String key : core.getCreditsMessage()) {
+            String[] messages = languageService.getLinesMessage(key);
 
             credits.addAll(Arrays.asList(messages));
         }
@@ -72,8 +77,8 @@ public abstract class AbstractAboutPane extends JXPanel {
      * @param key The internationalization key.
      * @return The internationalized message.
      */
-    private static String getMessage(String key) {
-        return ViewsServices.get(ILanguageService.class).getMessage(key);
+    private String getMessage(String key) {
+        return languageService.getMessage(key);
     }
 
     /**

@@ -2,10 +2,11 @@
 <module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" type="JAVA_MODULE" version="4">
   <component name="FacetManager">
     <facet type="Osmorc" name="OSGi">
-      <configuration osmorcControlsManifest="true" manifestLocation="" jarfileLocation="/home/wichtounet/Builds/bundles/jtheque-spring-utils/classes/jtheque-spring-utils.jar" useBndFile="false" bndFileLocation="" bundleActivator="org.jtheque.persistence.PersistenceActivator" bundleSymbolicName="org.jtheque.spring-utils" bundleVersion="2.1-SNAPSHOT" ignoreFilePattern="" useProjectDefaultManifestFileLocation="true" alwaysRebuildBundleJAR="false">
+      <configuration osmorcControlsManifest="true" manifestLocation="" jarfileLocation="$APPLICATION_HOME_DIR$/bin/home/wichtounet/Builds/bundles/jtheque-spring-utils/classes/jtheque-spring-utils.jar" useBndFile="false" bndFileLocation="" bundleActivator="" bundleSymbolicName="org.jtheque.spring.utils" bundleVersion="2.1-SNAPSHOT" ignoreFilePattern="" useProjectDefaultManifestFileLocation="true" alwaysRebuildBundleJAR="false">
         <additionalProperties>
           <property key="Bundle-Vendor" value="Baptiste Wicht" />
-          <property key="Export-Package" value="org.jtheque.spring.utils" />
+          <property key="Spring-Context" value="*;create-asynchronously:=false;publish-context:=false" />
+          <property key="Export-Package" value="org.jtheque.spring.utils, org.jtheque.spring.utils.*" />
         </additionalProperties>
         <additionalJARContents />
       </configuration>

@@ -16,79 +16,59 @@ package org.jtheque.views.impl;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import org.jtheque.core.ICore;
 import org.jtheque.core.utils.SimplePropertiesCache;
 import org.jtheque.modules.able.Module;
 import org.jtheque.modules.able.ModuleListener;
 import org.jtheque.modules.able.ModuleState;
-import org.jtheque.modules.utils.ModuleResourceCache;
+import org.jtheque.resources.IResourceService;
+import org.jtheque.spring.utils.SwingSpringProxy;
 import org.jtheque.states.IStateService;
-import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.ui.able.IView;
-import org.jtheque.ui.able.ViewComponent;
-import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.ui.SwingUtils;
-import org.jtheque.views.ViewsServices;
 import org.jtheque.views.able.IViewService;
-import org.jtheque.views.able.ViewDefaults;
-import org.jtheque.views.able.Views;
-import org.jtheque.views.able.components.ConfigTabComponent;
-import org.jtheque.views.able.components.MainComponent;
-import org.jtheque.views.able.components.StateBarComponent;
 import org.jtheque.views.able.windows.IAboutView;
 import org.jtheque.views.able.panel.ICollectionView;
+import org.jtheque.views.able.windows.IMainView;
+import org.springframework.beans.BeansException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 
-import javax.annotation.Resource;
 import java.awt.Component;
 import java.awt.GraphicsEnvironment;
 import java.awt.Window;
-import java.util.ArrayList;
-import java.util.Collection;
 
 /**
  * A view manager implementation.
  *
  * @author Baptiste Wicht
  */
-public final class ViewService implements IViewService, ModuleListener {
-    private final Collection<StateBarComponent> stateBarComponents = new ArrayList<StateBarComponent>(5);
-    private final Collection<MainComponent> mainComponents = new ArrayList<MainComponent>(5);
-    private final Collection<ConfigTabComponent> configPanels;
-
-    private final ViewDefaults viewDefaults;
-
+public final class ViewService implements IViewService, ModuleListener, ApplicationContextAware {
     private final WindowsConfiguration configuration;
-    private final Views windowManager;
-    private final IUIUtils utils;
 
-    private ViewComponent mainComponent;
+    private SwingSpringProxy<ICollectionView> collectionPane;
+    private SwingSpringProxy<IAboutView> aboutPane;
 
-    @Resource
-    private ICollectionView collectionPane;
-
-    @Resource
-    private IAboutView aboutPane;
-
-    public ViewService(Collection<ConfigTabComponent> configPanels, ViewDefaults viewDefaults, Views windowManager, IUIUtils utils) {
+    public ViewService(IStateService stateService, ICore core, IResourceService resourceService) {
         super();
 
-        this.configPanels = configPanels;
-        this.viewDefaults = viewDefaults;
-        this.windowManager = windowManager;
-        this.utils = utils;
+        configuration = stateService.getState(new WindowsConfiguration(core, this));
 
-        configuration = ViewsServices.get(IStateService.class).getOrCreateState(WindowsConfiguration.class);
+        ViewsResources.registerResources(resourceService);
     }
 
     @Override
     public void displayAboutView() {
-        applyGlassPane(aboutPane.getImpl());
-        aboutPane.appear();
+        SimplePropertiesCache.<IMainView>get("mainView").setGlassPane(aboutPane.get().getImpl());
+
+        aboutPane.get().appear();
     }
 
     @Override
     public void displayCollectionView() {
-        applyGlassPane(collectionPane.getImpl());
-        collectionPane.appear();
+        SimplePropertiesCache.<IMainView>get("mainView").setGlassPane(collectionPane.get().getImpl());
+
+        collectionPane.get().appear();
     }
 
     @Override
@@ -101,66 +81,6 @@ public final class ViewService implements IViewService, ModuleListener {
     @Override
     public void configureView(IView view, String name, int defaultWidth, int defaultHeight) {
         configuration.configure(name, view, defaultWidth, defaultHeight);
-    }
-
-    @Override
-    public Views getViews() {
-        return windowManager;
-    }
-
-    @Override
-    public void addStateBarComponent(String moduleId, StateBarComponent component) {
-        if (component != null && component.getComponent() != null) {
-            stateBarComponents.add(component);
-
-            if("true".equals(SimplePropertiesCache.get("statebar-loaded"))){
-                windowManager.getMainView().getStateBar().addComponent(component);
-            }
-            
-            ModuleResourceCache.addResource(moduleId, StateBarComponent.class, component);
-        }
-    }
-
-    @Override
-    public Collection<StateBarComponent> getStateBarComponents() {
-        return CollectionUtils.copyOf(stateBarComponents);
-    }
-
-    @Override
-    public void addMainComponent(String moduleId, MainComponent component) {
-        mainComponents.add(component);
-
-        windowManager.getMainView().sendMessage("add", component);
-
-        ModuleResourceCache.addResource(moduleId, MainComponent.class, component);
-    }
-
-    @Override
-    public Collection<MainComponent> getMainComponents() {
-        return CollectionUtils.copyOf(mainComponents);
-    }
-
-    @Override
-    public void addConfigTabComponent(String moduleId, ConfigTabComponent component) {
-        configPanels.add(component);
-
-        if("true".equals(SimplePropertiesCache.get("config-view-loaded"))){
-            windowManager.getConfigView().sendMessage("add", component);
-        }
-
-        ModuleResourceCache.addResource(moduleId, ConfigTabComponent.class, component);
-    }
-
-    @Override
-    public Collection<ConfigTabComponent> getConfigTabComponents() {
-        return CollectionUtils.copyOf(configPanels);
-    }
-    
-    @Override
-    public void setSelectedMainComponent(MainComponent component) {
-        if(getMainComponents().size() > 1){
-            windowManager.getMainView().getTabbedPane().setSelectedComponent(component.getComponent());
-        }
     }
 
     @Override
@@ -201,84 +121,17 @@ public final class ViewService implements IViewService, ModuleListener {
     public void moduleStateChanged(Module module, ModuleState newState, ModuleState oldState) {
         if(oldState == ModuleState.LOADED && (newState == ModuleState.INSTALLED ||
                 newState == ModuleState.DISABLED || newState == ModuleState.UNINSTALLED)){
-
-            for(StateBarComponent component : ModuleResourceCache.getResource(module.getId(), StateBarComponent.class)){
-                removeStateBarComponent(component);
-            }
-
-            for(MainComponent component : ModuleResourceCache.getResource(module.getId(), MainComponent.class)){
-                removeTabComponent(component);
-            }
-
-            for(ConfigTabComponent component : ModuleResourceCache.getResource(module.getId(), ConfigTabComponent.class)){
-                removeConfigTabComponent(component);
-            }
-
-            for(ViewComponent component : ModuleResourceCache.getResource(module.getId(), ViewComponent.class)){
-                removeMainComponent(component);
-            }
-
-            ModuleResourceCache.removeResourceOfType(module.getId(), StateBarComponent.class);
-            ModuleResourceCache.removeResourceOfType(module.getId(), MainComponent.class);
-            ModuleResourceCache.removeResourceOfType(module.getId(), ConfigTabComponent.class);
-            ModuleResourceCache.removeResourceOfType(module.getId(), ViewComponent.class);
-        }
-    }
-
-    @Override
-    public void applyGlassPane(Object component) {
-        final Component glass = (Component) component;
-
-        Runnable display = new Runnable() {
-            @Override
-            public void run() {
-                windowManager.getMainView().setGlassPane(glass);
-
-                glass.setVisible(true);
-
-                glass.repaint();
-
-                utils.getDelegate().refresh(glass);
-                windowManager.getMainView().refresh();
-            }
-        };
-
-        utils.getDelegate().run(display);
-    }
-
-    private void removeStateBarComponent(StateBarComponent component) {
-        stateBarComponents.remove(component);
-
-        if (component != null && component.getComponent() != null) {
-            windowManager.getMainView().getStateBar().removeComponent(component);
-        }
-    }
-
-    private void removeTabComponent(MainComponent component) {
-        mainComponents.remove(component);
-
-        windowManager.getMainView().sendMessage("remove", component);
-    }
-
-    private void removeConfigTabComponent(ConfigTabComponent component) {
-        configPanels.remove(component);
-
-        windowManager.getConfigView().sendMessage("remove", component);
-    }
-
-    private void removeMainComponent(ViewComponent component) {
-        if (mainComponent == component) {
-            mainComponent = null;
         }
     }
 
     @Override
     public ICollectionView getCollectionView() {
-        return collectionPane;
+        return collectionPane.get();
     }
 
     @Override
-    public ViewDefaults getViewDefaults() {
-        return viewDefaults;
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        collectionPane = new SwingSpringProxy<ICollectionView>(ICollectionView.class, applicationContext);
+        aboutPane = new SwingSpringProxy<IAboutView>(IAboutView.class, applicationContext);
     }
 }

@@ -20,8 +20,9 @@ import org.jtheque.modules.able.IModuleService;
 import org.jtheque.modules.able.Module;
 import org.jtheque.modules.able.ModuleListener;
 import org.jtheque.modules.able.ModuleState;
-import org.jtheque.views.ViewsServices;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 import javax.swing.DefaultListModel;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,17 +33,16 @@ import java.util.List;
  * @author Baptiste Wicht
  */
 public final class ModuleListModel extends DefaultListModel implements ModuleListener {
-    private final List<Module> modules;
+    private List<Module> modules;
 
-    /**
-     * Construct a new ModuleListModel.
-     */
-    public ModuleListModel() {
-        super();
+    @Resource
+    private IModuleService moduleService;
 
-        ViewsServices.get(IModuleService.class).addModuleListener(this);
+    @PostConstruct
+    private void init() {
+        moduleService.addModuleListener(this);
 
-        modules = new ArrayList<Module>(ViewsServices.get(IModuleService.class).getModules());
+        modules = new ArrayList<Module>(moduleService.getModules());
     }
 
     @Override
@@ -72,7 +72,7 @@ public final class ModuleListModel extends DefaultListModel implements ModuleLis
 
         if(oldState == null){
             modules.clear();
-            modules.addAll(ViewsServices.get(IModuleService.class).getModules());
+            modules.addAll(moduleService.getModules());
 
             fireContentsChanged(this, 0, modules.size());
         }

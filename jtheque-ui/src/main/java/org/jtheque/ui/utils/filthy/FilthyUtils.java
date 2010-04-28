@@ -1,11 +1,9 @@
 package org.jtheque.ui.utils.filthy;
 
-import org.jtheque.core.ICore;
-import org.jtheque.core.utils.ImageType;
 import org.jtheque.resources.IResourceService;
+import org.jtheque.ui.UIResources;
 import org.jtheque.utils.ui.ImageUtils;
 import org.jtheque.utils.ui.SizeTracker;
-import org.jtheque.ui.ViewsUtilsServices;
 
 import java.awt.AlphaComposite;
 import java.awt.Color;
@@ -36,27 +34,24 @@ import java.awt.image.BufferedImage;
  */
 
 /**
- * A temporary swing utility class. This class must be moved to JTheque Core/Utils at
- * the next release of this two projects.
+ * Utility class for filthy component. 
  *
  * @author Baptiste Wicht
  */
-public final class FilthyUtils {
-    private static final BufferedImage LIGHT;
-    private static final LinearGradientPaint BACKGROUND_PAINT;
-
-    static {
-        BACKGROUND_PAINT = new LinearGradientPaint(new Point2D.Float(0, 0), new Point2D.Float(0, 584),
-                new float[]{0.22f, 0.9f}, new Color[]{new Color(32, 39, 55), new Color(133, 144, 165)});
-        
-        LIGHT = ViewsUtilsServices.get(IResourceService.class).getImage(ICore.IMAGES_BASE_NAME, "light", ImageType.PNG);
-    }
+public class FilthyUtils implements IFilthyUtils {
+    private final BufferedImage LIGHT;
+    private final LinearGradientPaint BACKGROUND_PAINT;
 
     /**
      * Utility class, not instanciable.
      */
-    private FilthyUtils() {
+    public FilthyUtils(IResourceService resourceService) {
         super();
+
+        BACKGROUND_PAINT = new LinearGradientPaint(new Point2D.Float(0, 0), new Point2D.Float(0, 584),
+                new float[]{0.22f, 0.9f}, new Color[]{new Color(32, 39, 55), new Color(133, 144, 165)});
+
+        LIGHT = resourceService.getImage(UIResources.LIGHT_IMAGE);
     }
 
     /**
@@ -68,7 +63,8 @@ public final class FilthyUtils {
      * @param panel         The panel to paint.
      * @return The current gradient image buffer.
      */
-    public static Image paintFilthyBackground(Graphics g, Image gradientImage, SizeTracker tracker, Component panel) {
+    @Override
+    public Image paintFilthyBackground(Graphics g, Image gradientImage, SizeTracker tracker, Component panel) {
         Image gradient = gradientImage;
 
         Graphics2D g2 = (Graphics2D) g;

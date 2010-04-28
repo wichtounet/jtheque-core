@@ -16,17 +16,12 @@ package org.jtheque.ui.utils.windows.dialogs;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import org.jtheque.core.utils.SimplePropertiesCache;
 import org.jtheque.errors.JThequeError;
-import org.jtheque.i18n.ILanguageService;
 import org.jtheque.ui.able.IModel;
-import org.jtheque.ui.ViewsUtilsServices;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.ui.utils.builders.JThequePanelBuilder;
 
-import javax.swing.JFrame;
 import java.awt.Container;
-import java.awt.Frame;
 import java.util.Collection;
 
 /**
@@ -35,34 +30,8 @@ import java.util.Collection;
  * @author Baptiste Wicht
  */
 public abstract class SwingBuildedDialogView<T extends IModel> extends SwingDialogView {
-    /**
-     * Construct a SwingDialogView modal to the main view.
-     */
-    protected SwingBuildedDialogView(){
-        this(SimplePropertiesCache.<Frame>get("mainView"));
-    }
-
-    /**
-     * Construct a new SwingBuildedDialogView.
-     *
-     * @param frame The parent frame.
-     */
-    protected SwingBuildedDialogView(Frame frame) {
-        super(frame);
-
-        setModal(true);
-        setResizable(true);
-
-        ViewsUtilsServices.get(ILanguageService.class).addInternationalizable(this);
-
-        setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-        setIconImage(getDefaultWindowIcon());
-    }
-
-    /**
-     * Build the view.
-     */
-    protected final void build(){
+    @Override
+    protected final void init(){
         initView();
 
         setContentPane(buildContentPane());
@@ -79,6 +48,8 @@ public abstract class SwingBuildedDialogView<T extends IModel> extends SwingDial
      */
     private Container buildContentPane(){
         I18nPanelBuilder builder = new JThequePanelBuilder();
+
+        builder.setInternationalizableContainer(this);
 
         buildView(builder);
 

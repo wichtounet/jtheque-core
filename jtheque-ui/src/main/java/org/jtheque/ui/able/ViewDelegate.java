@@ -17,7 +17,6 @@ package org.jtheque.ui.able;
  */
 
 import org.jtheque.errors.JThequeError;
-import org.jtheque.utils.io.SimpleFilter;
 
 /**
  * @author Baptiste Wicht
@@ -47,21 +46,6 @@ public interface ViewDelegate {
     void displayText(String text);
 
     /**
-     * Choose a file.
-     *
-     * @param filter The filter.
-     * @return The chosen file.
-     */
-    String chooseFile(SimpleFilter filter);
-
-    /**
-     * Choose a directory.
-     *
-     * @return The chosen directory.
-     */
-    String chooseDirectory();
-
-    /**
      * Run the runnable in the view.
      *
      * @param runnable The runnable to run in the view.
@@ -73,7 +57,7 @@ public interface ViewDelegate {
      *
      * @param c The object to refresh.
      */
-    void refresh(Object c);
+    void refresh(Object c);//TODO See if interesting to inline this method
 
     /**
      * Ask the user for text.

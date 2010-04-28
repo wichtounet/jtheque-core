@@ -38,7 +38,7 @@ public final class XMLApplication implements Application {
 
     private ApplicationProperties applicationProperties;
 
-    private ImageDescriptor icon;
+    private String icon;
     private ImageDescriptor logo;
 
     private boolean displayLicence;
@@ -92,12 +92,7 @@ public final class XMLApplication implements Application {
 
     @Override
     public String getWindowIcon(){
-        return icon.getImage();
-    }
-
-    @Override
-    public ImageType getWindowIconType(){
-        return icon.getType();
+        return icon;
     }
 
     @Override
@@ -197,7 +192,7 @@ public final class XMLApplication implements Application {
      * @param logo The logo of the application.
      * @param icon The icon of the application. 
      */
-    void setImages(ImageDescriptor logo, ImageDescriptor icon){
+    void setImages(ImageDescriptor logo, String icon){
         this.logo = logo;
         this.icon = icon;
     }

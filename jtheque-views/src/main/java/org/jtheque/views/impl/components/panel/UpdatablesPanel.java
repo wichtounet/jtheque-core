@@ -4,6 +4,7 @@ import org.jtheque.ui.utils.components.Borders;
 import org.jtheque.ui.utils.builders.FilthyPanelBuilder;
 import org.jtheque.ui.utils.builders.PanelBuilder;
 import org.jtheque.ui.utils.filthy.FilthyBackgroundPanel;
+import org.jtheque.update.IUpdateService;
 import org.jtheque.update.Updatable;
 import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.views.able.components.IUpdatablesPanelView;
@@ -40,12 +41,12 @@ public final class UpdatablesPanel extends FilthyBackgroundPanel implements IUpd
     /**
      * Construct a new UpdatablesPanel. 
      */
-    public UpdatablesPanel(){
+    public UpdatablesPanel(IUpdateService updateService){
         super();
 
         PanelBuilder builder = new FilthyPanelBuilder(this);
 
-        updatablesList = builder.addScrolledList(new UpdatableListModel(), new UpdatableListRenderer(),
+        updatablesList = builder.addScrolledList(new UpdatableListModel(updateService), new UpdatableListRenderer(updateService),
                 builder.gbcSet(0, 0, GridBagUtils.BOTH, GridBagUtils.FIRST_LINE_START, 1.0, 1.0));
         updatablesList.setBorder(Borders.EMPTY_BORDER);
 

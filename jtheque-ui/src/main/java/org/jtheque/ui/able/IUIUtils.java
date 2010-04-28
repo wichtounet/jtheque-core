@@ -1,8 +1,5 @@
 package org.jtheque.ui.able;
 
-import org.jtheque.ui.utils.edt.SimpleTask;
-import org.jtheque.ui.utils.edt.Task;
-
 /*
  * This file is part of JTheque.
  *
@@ -36,26 +33,12 @@ public interface IUIUtils {
      */
     boolean askI18nUserForConfirmation(String textKey, String titleKey);
 
+    boolean askI18nUserForConfirmation(String textKey, Object[] textReplaces, String titleKey, Object[] titleReplaces);
+
     /**
      * Display a internationalized.
      *
      * @param key The internationalization key.
      */
     void displayI18nText(String key);
-
-    /**
-     * Execute a task in the EDT.
-     *
-     * @param task The task to execute.
-     */
-    void execute(SimpleTask task);
-
-    /**
-     * Execute a task in the EDT.
-     *
-     * @param <T>  The type of return.
-     * @param task The task to execute.
-     * @return The result of the task.
-     */
-    <T> T execute(Task<T> task);
 }

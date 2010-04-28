@@ -1,17 +1,12 @@
 package org.jtheque.views.impl.actions.backup;
 
-import org.jtheque.core.ICore;
-import org.jtheque.core.utils.ImageType;
-import org.jtheque.errors.IErrorService;
 import org.jtheque.file.IFileService;
-import org.jtheque.io.XMLException;
-import org.jtheque.resources.IResourceService;
 import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.ui.utils.actions.JThequeAction;
-import org.jtheque.views.ViewsServices;
+import org.jtheque.utils.ui.SwingUtils;
 import org.jtheque.utils.io.SimpleFilter;
-import org.slf4j.LoggerFactory;
 
+import javax.annotation.Resource;
 import java.awt.event.ActionEvent;
 import java.io.File;
 
@@ -37,24 +32,28 @@ import java.io.File;
  * @author Baptiste Wicht
  */
 public class AcBackup extends JThequeAction {
+    @Resource
+    private IUIUtils uiUtils;
+
+    @Resource
+    private IFileService fileService;
+
     /**
      * Construct a new AcBackup.
      */
     public AcBackup() {
         super("menu.backup");
-
-        setIcon(ViewsServices.get(IResourceService.class).getIcon(ICore.IMAGES_BASE_NAME, "xml", ImageType.PNG));
     }
 
     @Override
     public final void actionPerformed(ActionEvent e) {
-        final boolean yes = ViewsServices.get(IUIUtils.class).askI18nUserForConfirmation(
+        final boolean yes = uiUtils.askI18nUserForConfirmation(
                     "dialogs.confirm.backup", "dialogs.confirm.backup.title");
 
         if (yes) {
-            File file = new File(ViewsServices.get(IUIUtils.class).getDelegate().chooseFile(new SimpleFilter("XML(*.xml)", ".xml")));
+            File file = new File(SwingUtils.chooseFile(new SimpleFilter("XML(*.xml)", ".xml")));
 
-            ViewsServices.get(IFileService.class).backup(file);
+            fileService.backup(file);
         }
     }
 }

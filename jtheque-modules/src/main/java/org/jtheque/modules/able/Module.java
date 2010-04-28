@@ -78,8 +78,6 @@ public interface Module {
 
     String getMessagesUrl();
 
-    Version getMostRecentVersion();
-
     void setCollection(boolean collection);
 
     boolean isCollection();

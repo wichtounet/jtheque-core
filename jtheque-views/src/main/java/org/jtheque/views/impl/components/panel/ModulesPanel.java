@@ -1,13 +1,13 @@
 package org.jtheque.views.impl.components.panel;
 
 import org.jtheque.modules.able.Module;
-import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.ui.utils.actions.ActionFactory;
 import org.jtheque.ui.utils.builders.FilthyPanelBuilder;
 import org.jtheque.ui.utils.builders.PanelBuilder;
 import org.jtheque.ui.utils.filthy.FilthyBackgroundPanel;
+import org.jtheque.update.IUpdateService;
 import org.jtheque.utils.ui.GridBagUtils;
-import org.jtheque.views.ViewsServices;
+import org.jtheque.utils.ui.SwingUtils;
 import org.jtheque.views.able.components.IModulesPanelView;
 import org.jtheque.views.impl.actions.module.DisableModuleAction;
 import org.jtheque.views.impl.actions.module.EnableModuleAction;
@@ -45,14 +45,14 @@ public final class ModulesPanel extends FilthyBackgroundPanel implements IModule
     /**
      * Construct a new ModulesPanel. 
      */
-    public ModulesPanel(){
+    public ModulesPanel(IUpdateService updateService){
         super();
 
         PanelBuilder builder = new FilthyPanelBuilder(this);
 
-        builder.add(new KernelInfoPanel(), builder.gbcSet(0, 0, GridBagUtils.HORIZONTAL, GridBagUtils.BASELINE_LEADING, 1.0, 0.0));
+        builder.add(new KernelInfoPanel(updateService), builder.gbcSet(0, 0, GridBagUtils.HORIZONTAL, GridBagUtils.BASELINE_LEADING, 1.0, 0.0));
 
-        modulesList = builder.addScrolledList(new ModuleListModel(), new ModuleListRenderer(), builder.gbcSet(0, 1, GridBagUtils.BOTH, GridBagUtils.BASELINE_LEADING, 1.0, 1.0));
+        modulesList = builder.addScrolledList(new ModuleListModel(), new ModuleListRenderer(updateService), builder.gbcSet(0, 1, GridBagUtils.BOTH, GridBagUtils.BASELINE_LEADING, 1.0, 1.0));
         modulesList.setVisibleRowCount(4);
 
         builder.addButtonBar(builder.gbcSet(0, 2, GridBagUtils.HORIZONTAL, GridBagUtils.BASELINE_LEADING, 1.0, 0.0),
@@ -69,6 +69,6 @@ public final class ModulesPanel extends FilthyBackgroundPanel implements IModule
 
     @Override
     public void refresh() {
-        ViewsServices.get(IUIUtils.class).getDelegate().refresh(modulesList);
+        SwingUtils.refresh(modulesList);
     }
 }

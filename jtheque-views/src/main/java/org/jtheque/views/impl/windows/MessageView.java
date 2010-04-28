@@ -16,10 +16,11 @@ package org.jtheque.views.impl.windows;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import org.jtheque.messages.IMessageService;
 import org.jtheque.messages.Message;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.ui.utils.builders.PanelBuilder;
-import org.jtheque.ui.utils.windows.frames.SwingFilthyBuildedDialogView;
+import org.jtheque.ui.utils.windows.dialogs.SwingFilthyBuildedDialogView;
 import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.views.able.windows.IMessageView;
 import org.jtheque.views.impl.actions.messages.DisplayNextMessageAction;
@@ -41,18 +42,9 @@ public final class MessageView extends SwingFilthyBuildedDialogView<IMessageMode
     private JLabel titleLabel;
     private JTextArea messageArea;
 
-    /**
-     * Construct a new MessageView.
-     */
-    public MessageView(){
-        super();
-
-        build();
-    }
-
     @Override
     protected void initView(){
-        setModel(new MessageModel());
+        setModel(new MessageModel(getService(IMessageService.class)));
         setTitleKey("messages.view.title");
         setResizable(false);
     }

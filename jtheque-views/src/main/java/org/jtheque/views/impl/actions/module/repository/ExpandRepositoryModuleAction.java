@@ -17,8 +17,7 @@ package org.jtheque.views.impl.actions.module.repository;
  */
 
 import org.jtheque.ui.utils.actions.JThequeAction;
-import org.jtheque.views.ViewsServices;
-import org.jtheque.views.able.IViewService;
+import org.jtheque.views.able.panel.IRepositoryView;
 
 import java.awt.event.ActionEvent;
 
@@ -28,16 +27,19 @@ import java.awt.event.ActionEvent;
  * @author Baptiste Wicht
  */
 public final class ExpandRepositoryModuleAction extends JThequeAction {
+    private final IRepositoryView repositoryView;
+
     /**
      * Construct a new ExpandRepositoryModuleAction.
      */
-    public ExpandRepositoryModuleAction() {
+    public ExpandRepositoryModuleAction(IRepositoryView repositoryView) {
         super("repository.actions.expand");
+
+        this.repositoryView = repositoryView;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
-        ViewsServices.get(IViewService.class).getViews().getRepositoryView().expandSelectedModule();
+        repositoryView.expandSelectedModule();
     }
 }

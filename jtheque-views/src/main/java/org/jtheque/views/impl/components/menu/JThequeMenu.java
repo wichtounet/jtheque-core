@@ -18,7 +18,6 @@ package org.jtheque.views.impl.components.menu;
 
 import org.jtheque.i18n.ILanguageService;
 import org.jtheque.i18n.Internationalizable;
-import org.jtheque.views.ViewsServices;
 
 import javax.swing.JMenu;
 import javax.swing.plaf.basic.BasicMenuUI;
@@ -37,9 +36,7 @@ public final class JThequeMenu extends JMenu implements Internationalizable {
      * @param key The internationalization key.
      */
     public JThequeMenu(String key) {
-        super(ViewsServices.get(ILanguageService.class).getMessage(key));
-
-        ViewsServices.get(ILanguageService.class).addInternationalizable(this);
+        super(key);
 
         this.key = key;
 
@@ -47,7 +44,7 @@ public final class JThequeMenu extends JMenu implements Internationalizable {
     }
 
     @Override
-    public void refreshText() {
-        setText(ViewsServices.get(ILanguageService.class).getMessage(key));
+    public void refreshText(ILanguageService languageService) {
+        setText(languageService.getMessage(key));
     }
 }

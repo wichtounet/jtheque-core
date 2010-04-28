@@ -18,6 +18,7 @@ package org.jtheque.ui.utils.filthy;
 
 import org.jtheque.utils.ui.SizeTracker;
 
+import javax.annotation.Resource;
 import javax.swing.JPanel;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -31,12 +32,15 @@ public class FilthyBackgroundPanel extends JPanel {
     private final SizeTracker tracker = new SizeTracker(this);
     private Image gradientImage;
 
+    @Resource
+    private IFilthyUtils filthyUtils;
+
     @Override
     public void paintComponent(Graphics g) {
         if (!isVisible()) {
             return;
         }
 
-        gradientImage = FilthyUtils.paintFilthyBackground(g, gradientImage, tracker, this);
+        gradientImage = filthyUtils.paintFilthyBackground(g, gradientImage, tracker, this);
     }
 }

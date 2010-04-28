@@ -35,6 +35,12 @@
 
         <dependency>
             <groupId>org.jtheque</groupId>
+            <artifactId>org.jtheque.resources</artifactId>
+            <version>2.1-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jtheque</groupId>
             <artifactId>org.jtheque.i18n</artifactId>
             <version>2.1-SNAPSHOT</version>
         </dependency>
@@ -67,7 +73,7 @@
                         <Bundle-SymbolicName>${pom.artifactId}</Bundle-SymbolicName>
                         <Export-Package>org.jtheque.core, org.jtheque.core.application, org.jtheque.core.lifecycle</Export-Package>
                         <Bundle-Vendor>Baptiste Wicht</Bundle-Vendor>
-                        <Bundle-Activator>org.jtheque.core.CoreActivator</Bundle-Activator>
+                        <Spring-Context>*;create-asynchronously:=false;publish-context:=false</Spring-Context>
                     </instructions>
                 </configuration>
             </plugin>

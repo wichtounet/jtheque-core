@@ -89,7 +89,7 @@ public final class XMLApplicationReader {
         readVersion(application);
         readApplicationValues(application);
         readInternationalization(application);
-        application.setImages(readImageDescriptor("logo"), readImageDescriptor("icon"));
+        application.setImages(readImageDescriptor("logo"), readImagePath("icon"));
         readModules(application);
         readOptions(application);
         readProperties(application);
@@ -256,6 +256,40 @@ public final class XMLApplicationReader {
         }
 
         return new ImageDescriptor(node, ImageType.PNG);
+    }
+
+    private String readImagePath(String node) throws XMLException{
+        if(reader.existsNode(node, reader.getRootElement())){
+            Object iconElement = reader.getNode(node, reader.getRootElement());
+
+            StringBuilder path = new StringBuilder(SystemProperty.USER_DIR.get());
+			path.append("images/");
+			path.append(reader.readString("image", iconElement));
+
+            if(reader.existsValue("@image", iconElement)){
+                path.append(reader.readString("@image", iconElement));
+            } else {
+                path.append(reader.readString("image", iconElement));
+            }
+
+            ImageType type;
+
+            if(reader.existsNode("type", iconElement)){
+                String typeStr = reader.readString("type", iconElement);
+                type = StringUtils.isEmpty(typeStr) ? ImageType.PNG : ImageType.resolve(typeStr);
+            } else if(reader.existsValue("@type", iconElement)){
+                String typeStr = reader.readString("@type", iconElement);
+                type = StringUtils.isEmpty(typeStr) ? ImageType.PNG : ImageType.resolve(typeStr);
+            } else {
+                type = ImageType.PNG;
+            }
+
+            path.append('.').append(type.getExtension());
+
+            return path.toString();
+        }
+
+        return null;
     }
 
     private void readModules(XMLApplication application) throws XMLException{

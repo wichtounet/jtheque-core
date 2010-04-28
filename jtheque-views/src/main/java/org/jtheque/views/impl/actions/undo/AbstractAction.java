@@ -16,11 +16,7 @@ package org.jtheque.views.impl.actions.undo;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import org.jtheque.core.ICore;
-import org.jtheque.core.utils.ImageType;
-import org.jtheque.resources.IResourceService;
 import org.jtheque.ui.utils.actions.JThequeAction;
-import org.jtheque.views.ViewsServices;
 
 import javax.swing.Action;
 import javax.swing.KeyStroke;
@@ -36,13 +32,10 @@ public abstract class AbstractAction extends JThequeAction {
      * Construct a new AbstractAction.
      *
      * @param key         The internationalization key.
-     * @param icon        The icon name.
      * @param accelerator The accelerator key.
      */
-    AbstractAction(String key, String icon, int accelerator) {
+    AbstractAction(String key, int accelerator) {
         super(key);
-
-        setIcon(ViewsServices.get(IResourceService.class).getIcon(ICore.IMAGES_BASE_NAME, icon, ImageType.PNG));
 
         putValue(Action.ACCELERATOR_KEY
                 , KeyStroke.getKeyStroke(accelerator, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));

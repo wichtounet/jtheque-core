@@ -43,8 +43,21 @@
                         <Bundle-SymbolicName>${pom.artifactId}</Bundle-SymbolicName>
                         <Export-Package>org.jtheque.events</Export-Package>
                         <Bundle-Vendor>Baptiste Wicht</Bundle-Vendor>
-                        <Bundle-Activator>org.jtheque.events.EventsActivator</Bundle-Activator>
+                        <Spring-Context>*;create-asynchronously:=false;publish-context:=false</Spring-Context>
                     </instructions>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>*</exclude>
+                    </excludes>
+                    <includes>
+                        <include>**/org/jtheque/events/**/*Test.java</include>
+                    </includes>
                 </configuration>
             </plugin>
         </plugins>

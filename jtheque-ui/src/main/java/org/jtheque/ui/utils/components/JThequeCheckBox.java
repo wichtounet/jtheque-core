@@ -18,7 +18,6 @@ package org.jtheque.ui.utils.components;
 
 import org.jtheque.i18n.ILanguageService;
 import org.jtheque.i18n.Internationalizable;
-import org.jtheque.ui.ViewsUtilsServices;
 
 import javax.swing.JCheckBox;
 import java.awt.Color;
@@ -42,14 +41,10 @@ public final class JThequeCheckBox extends JCheckBox implements Internationaliza
         setBackground(Color.white);
 
         textKey = key;
-
-        setText(ViewsUtilsServices.get(ILanguageService.class).getMessage(key));
-
-        ViewsUtilsServices.get(ILanguageService.class).addInternationalizable(this);
     }
 
     @Override
-    public void refreshText() {
-        setText(ViewsUtilsServices.get(ILanguageService.class).getMessage(textKey));
+    public void refreshText(ILanguageService languageService) {
+        setText(languageService.getMessage(textKey));
     }
 }

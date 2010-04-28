@@ -200,18 +200,4 @@ public final class CoreConfiguration extends AbstractState {
 
         return new IntDate(Integer.parseInt(getProperty("messagesLastRead")));
     }
-
-    @Override
-    public void setDefaults() {
-        setHasAProxy(false);
-        setMustDeleteLogs(false);
-        setProxyAddress("");
-        setProxyPort("");
-        setRetainSizeAndPositionOfWindow(true);
-        setSmtpHost("");
-        setUserEmail("");
-        setLastCollection("");
-        setMessagesLastRead("20000101");
-        setVerifyUpdateOnStartup(false);
-    }
 }

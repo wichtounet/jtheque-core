@@ -21,10 +21,9 @@ import org.jtheque.modules.able.Module;
 import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.ui.utils.actions.JThequeAction;
 import org.jtheque.utils.StringUtils;
-import org.jtheque.views.ViewsServices;
-import org.jtheque.views.able.IViewService;
 import org.jtheque.views.able.panel.IModuleView;
 
+import javax.annotation.Resource;
 import java.awt.event.ActionEvent;
 
 /**
@@ -33,6 +32,15 @@ import java.awt.event.ActionEvent;
  * @author Baptiste Wicht
  */
 public final class LoadModuleAction extends JThequeAction {
+    @Resource
+    private IModuleView moduleView;
+
+    @Resource
+    private IUIUtils uiUtils;
+
+    @Resource
+    private IModuleService moduleService;
+
     /**
      * Construct a new LoadModuleAction.
      */
@@ -42,17 +50,15 @@ public final class LoadModuleAction extends JThequeAction {
 
     @Override
     public void actionPerformed(ActionEvent arg0) {
-        IModuleView moduleView = ViewsServices.get(IViewService.class).getViews().getModuleView();
-
         Module module = moduleView.getSelectedModule();
 
-        String error = ViewsServices.get(IModuleService.class).canModuleLaunched(module);
+        String error = moduleService.canModuleLaunched(module);
 
         if (StringUtils.isEmpty(error)) {
-            ViewsServices.get(IModuleService.class).loadModule(module);
+            moduleService.loadModule(module);
             moduleView.refreshList();
         } else {
-            ViewsServices.get(IUIUtils.class).getDelegate().displayText(error);
+            uiUtils.getDelegate().displayText(error);
         }
     }
 }

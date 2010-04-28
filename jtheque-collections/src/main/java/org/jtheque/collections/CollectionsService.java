@@ -20,6 +20,7 @@ import org.jtheque.core.ICore;
 import org.jtheque.core.utils.OSGiUtils;
 import org.jtheque.core.utils.Response;
 import org.jtheque.core.utils.WeakEventListenerList;
+import org.jtheque.file.IFileService;
 import org.jtheque.persistence.able.DataListener;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.io.FileUtils;
@@ -35,12 +36,19 @@ import javax.annotation.Resource;
  * @author Baptiste Wicht
  */
 public final class CollectionsService implements ICollectionsService, BundleContextAware {
-	@Resource
-	private IDaoCollections daoCollections;
+	private final IDaoCollections daoCollections;
 
     private BundleContext bundleContext;
 
     private final WeakEventListenerList listeners = new WeakEventListenerList();
+
+    public CollectionsService(IDaoCollections daoCollections, IFileService fileService) {
+        super();
+
+        this.daoCollections = daoCollections;
+
+        fileService.registerBackuper("jtheque-collections", new CoreBackuper(daoCollections));
+    }
 
     @Override
     public void setBundleContext(BundleContext bundleContext) {

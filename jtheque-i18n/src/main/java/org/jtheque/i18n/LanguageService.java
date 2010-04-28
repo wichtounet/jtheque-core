@@ -1,13 +1,17 @@
 package org.jtheque.i18n;
 
+import org.jtheque.core.utils.SystemProperty;
 import org.jtheque.states.IStateService;
 import org.jtheque.utils.StringUtils;
-import org.jtheque.utils.collections.ArrayUtils;
+import org.jtheque.utils.bean.Version;
+import org.jtheque.utils.io.CopyException;
+import org.jtheque.utils.io.FileUtils;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.NoSuchMessageException;
 
+import javax.annotation.PostConstruct;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -36,25 +40,25 @@ import java.util.Set;
 /**
  * @author Baptiste Wicht
  */
-public final class LanguageService implements ILanguageService, ApplicationContextAware {
+public final class LanguageService implements ILanguageService {
     private final Map<String, Locale> languages;
     private Locale locale = Locale.getDefault();
 
     private final Set<Internationalizable> internationalizables;
 
-    private LanguageState state;
+    private final LanguageState state;
 
     private static final String[] ZERO_LENGTH_ARRAY = new String[0];
 
-    private ApplicationContext applicationContext;
+    private final JThequeResourceBundle resourceBundle;
 
     /**
      * Construct a new ResourceManager.
      */
-    public LanguageService() {
+    public LanguageService(IStateService stateService) {
         super();
 
-        languages = new HashMap<String, Locale>(2);
+        languages = new HashMap<String, Locale>(3);
 
         languages.put("fr", Locale.FRENCH);
         languages.put("en", Locale.ENGLISH);
@@ -62,12 +66,16 @@ public final class LanguageService implements ILanguageService, ApplicationConte
 
         internationalizables = new HashSet<Internationalizable>(100);
 
-        init();
+        resourceBundle = new JThequeResourceBundle();
+        resourceBundle.setCacheSeconds(-1);
+        resourceBundle.setDefaultEncoding("UTF-8");
+        resourceBundle.setUseCodeAsDefaultMessage(true);
+
+        state = stateService.getState(new LanguageState());
     }
 
-    public void init(){
-        state = applicationContext.getBean(IStateService.class).getOrCreateState(LanguageState.class);
-
+    @PostConstruct
+    private void init(){
         locale = languages.get(state.getLanguage());
 
         if (locale == null) {
@@ -77,27 +85,65 @@ public final class LanguageService implements ILanguageService, ApplicationConte
         }
 
         Locale.setDefault(locale);
-    }
 
-    /**
-     * Return the resource bundle.
-     *
-     * @return The resource bundle.
-     */
-    private EditableResourceBundle getResourceBundle() {
-        return (EditableResourceBundle) applicationContext.getBean("messageSource");
+        registerResource("core_messages", new Version("1.0"),
+                I18nResource.fromResource(getClass(), "org/jtheque/i18n/messages_de.properties"),
+                I18nResource.fromResource(getClass(), "org/jtheque/i18n/messages_en.properties"),
+                I18nResource.fromResource(getClass(), "org/jtheque/i18n/messages_fr.properties"));
+
+        registerResource("core_dialogs", new Version("1.0"),
+                I18nResource.fromResource(getClass(), "org/jtheque/i18n/dialogs_de.properties"),
+                I18nResource.fromResource(getClass(), "org/jtheque/i18n/dialogs_en.properties"),
+                I18nResource.fromResource(getClass(), "org/jtheque/i18n/dialogs_fr.properties"));
+
+        registerResource("core_i18n", new Version("1.0"),
+                I18nResource.fromResource(getClass(), "org/jtheque/i18n/core_de.properties"),
+                I18nResource.fromResource(getClass(), "org/jtheque/i18n/core_en.properties"),
+                I18nResource.fromResource(getClass(), "org/jtheque/i18n/core_fr.properties"));
+
+        registerResource("core_errors", new Version("1.0"),
+                I18nResource.fromResource(getClass(), "org/jtheque/i18n/errors_de.properties"),
+                I18nResource.fromResource(getClass(), "org/jtheque/i18n/errors_en.properties"),
+                I18nResource.fromResource(getClass(), "org/jtheque/i18n/errors_fr.properties"));
     }
 
     @Override
-    public void addBaseName(String baseName) {
-        if (baseName != null) {
-            getResourceBundle().addBaseName(baseName);
+    public void registerResource(String name, Version version, I18nResource... resources){
+        Version previousVersion = state.getResourceVersion(name);
+
+        File folder = new File(SystemProperty.USER_DIR.get(), "i18n");
+
+        FileUtils.createIfNotExists(folder);
+
+        if(previousVersion == null || version.isGreaterThan(previousVersion)){
+            state.setResourceVersion(name, version);
+
+            for(I18nResource resource : resources){
+                File resourceFile = new File(folder, resource.getFileName());
+
+                FileUtils.delete(resourceFile);
+
+                try {
+                    FileUtils.copy(resource.getResource().getInputStream(), resourceFile);
+                } catch (CopyException e) {
+                    LoggerFactory.getLogger(getClass()).error("Unable to copy resource {}", resource);
+                    LoggerFactory.getLogger(getClass()).error("Cause exception", e);
+                } catch (IOException e) {
+                    LoggerFactory.getLogger(getClass()).error("Unable to copy resource {}", resource);
+                    LoggerFactory.getLogger(getClass()).error("Cause exception", e);
+                }
+            }
         }
+
+        resourceBundle.addBaseName("file:" + folder + getI18nResource(resources[0]));
     }
 
-    @Override
-    public void removeBaseName(String baseName) {
-        getResourceBundle().removeBaseName(baseName);
+    private String getI18nResource(I18nResource resource) {
+        if(resource.getFileName().contains("_")){
+            return resource.getFileName().substring(0, resource.getFileName().indexOf('_'));
+        }
+
+        return resource.getFileName().substring(0, resource.getFileName().indexOf('.'));
     }
 
     @Override
@@ -139,15 +185,13 @@ public final class LanguageService implements ILanguageService, ApplicationConte
 
         Locale.setDefault(locale);
 
-        refreshInternationalizables();
+        refreshAll();
     }
 
-    /**
-     * Refresh all the internationalizables elements.
-     */
-    private void refreshInternationalizables() {
+    @Override
+    public void refreshAll() {
         for (Internationalizable internationalizable : internationalizables) {
-            internationalizable.refreshText();
+            internationalizable.refreshText(this);
         }
     }
 
@@ -173,25 +217,6 @@ public final class LanguageService implements ILanguageService, ApplicationConte
         }
 
         return language;
-    }
-
-    @Override
-    public String getMessage(String key) {
-        if (StringUtils.isEmpty(key)) {
-            return StringUtils.EMPTY_STRING;
-        }
-
-        String message;
-
-        try {
-            message = applicationContext.getMessage(key, ArrayUtils.ZERO_LENGTH_ARRAY, locale);
-        } catch (NoSuchMessageException e) {
-            message = key;
-
-            LoggerFactory.getLogger(getClass()).warn("No message found for {} with locale {}", key, locale.getDisplayName());
-        }
-
-        return message;
     }
 
     @Override
@@ -222,18 +247,13 @@ public final class LanguageService implements ILanguageService, ApplicationConte
         String message;
 
         try {
-            message = applicationContext.getMessage(key, replaces, locale);
+            message = resourceBundle.getMessage(key, replaces, locale);
         } catch (NoSuchMessageException e) {
             message = key;
 
-            LoggerFactory.getLogger(getClass()).error("No message found for {} with locale {}", key, locale.getDisplayName());
+            LoggerFactory.getLogger(getClass()).warn("No message found for {} with locale {}", key, locale.getDisplayName());
         }
 
         return message;
-    }
-
-    @Override
-    public void setApplicationContext(ApplicationContext applicationContext){
-        this.applicationContext = applicationContext;
     }
 }

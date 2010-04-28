@@ -11,9 +11,8 @@ import org.jtheque.utils.ui.ImageUtils;
 import org.jtheque.utils.ui.PaintUtils;
 import org.jtheque.utils.ui.SizeTracker;
 import org.jtheque.utils.ui.SwingUtils;
-import org.jtheque.views.ViewsServices;
-import org.jtheque.views.able.IViewService;
 import org.jtheque.views.able.windows.IAboutView;
+import org.jtheque.views.able.windows.ILicenceView;
 import org.pushingpixels.trident.Timeline;
 import org.pushingpixels.trident.callback.TimelineCallbackAdapter;
 
@@ -88,6 +87,18 @@ public final class AboutPane extends AbstractAboutPane implements IAboutView, In
 
     private int paintWidth;
 
+    private final ILicenceView licenceView;
+    private final ICore core;
+    private final ILanguageService languageService;
+
+    public AboutPane(ILicenceView licenceView, ICore core, ILanguageService languageService) {
+        super(languageService, core);
+
+        this.licenceView = licenceView;
+        this.core = core;
+        this.languageService = languageService;
+    }
+
     @Override
     @PostConstruct
     void init() {
@@ -96,9 +107,9 @@ public final class AboutPane extends AbstractAboutPane implements IAboutView, In
         setOpaque(false);
         setVisible(true);
 
-        ViewsServices.get(ILanguageService.class).addInternationalizable(this);
+        languageService.addInternationalizable(this);
 
-        Application application = ViewsServices.get(ICore.class).getApplication();
+        Application application = core.getApplication();
 
         if (!StringUtils.isEmpty(application.getLogo())) {
             //We must use directly that, or we can also add prefix file to use as Spring resource
@@ -229,7 +240,7 @@ public final class AboutPane extends AbstractAboutPane implements IAboutView, In
      * @param y         The y position to start painting the licence.
      */
     private void paintLicence(Graphics g2, Color textColor, int x, int y) {
-        if (ViewsServices.get(ICore.class).getApplication().isDisplayLicence()) {
+        if (core.getApplication().isDisplayLicence()) {
             Path2D licencePath = new GeneralPath();
 
             int xLicence = x + paintWidth - getFontMetrics(fontInfos).stringWidth(getLicenceMessage());
@@ -280,7 +291,7 @@ public final class AboutPane extends AbstractAboutPane implements IAboutView, In
      * @param textColor The text color.
      */
     private void paintTitle(Graphics g2, int xStart, int yStart, Color textColor) {
-        PaintUtils.drawString(g2, ViewsServices.get(ICore.class).getApplication().getName(), xStart, yStart, fontName, textColor);
+        PaintUtils.drawString(g2, core.getApplication().getName(), xStart, yStart, fontName, textColor);
 
         PaintUtils.fillRect(g2, xStart, yStart + 20, paintWidth, 3, textColor);
     }
@@ -355,7 +366,7 @@ public final class AboutPane extends AbstractAboutPane implements IAboutView, In
 
         int logoWidth = logo == null ? 0 : logo.getWidth();
 
-        paintWidth = Math.max(metrics.stringWidth(ViewsServices.get(ICore.class).getApplication().getName()), logoWidth + 30 + max + 20 + maxRight);
+        paintWidth = Math.max(metrics.stringWidth(core.getApplication().getName()), logoWidth + 30 + max + 20 + maxRight);
     }
 
     /**
@@ -436,7 +447,7 @@ public final class AboutPane extends AbstractAboutPane implements IAboutView, In
     }
 
     @Override
-    public void refreshText() {
+    public void refreshText(ILanguageService languageService) {
         super.init();
         init();
         repaint();
@@ -465,7 +476,8 @@ public final class AboutPane extends AbstractAboutPane implements IAboutView, In
                 }
             } else if (shapes.get("licence").contains(event.getPoint())) {
                 disappear();
-                ViewsServices.get(IViewService.class).getViews().getLicenceView().display();
+                
+                licenceView.display();
             }
         }
     }

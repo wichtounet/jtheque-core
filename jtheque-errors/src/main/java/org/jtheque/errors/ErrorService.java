@@ -57,17 +57,27 @@ public final class ErrorService implements IErrorService {
 
     @Override
     public void addInternationalizedError(String messageKey) {
-        addError(new InternationalizedError(languageService, messageKey));
+        addError(new InternationalizedError(messageKey));
     }
 
     @Override
     public void addInternationalizedError(String messageKey, Object... messageReplaces) {
-        addError(new InternationalizedError(languageService, messageKey, messageReplaces));
+        addError(new InternationalizedError(messageKey, messageReplaces));
     }
 
-    private static void displayError(JThequeError error) {
-        SwingUtils.inEdt(new DisplayErrorRunnable(
+    private void displayError(JThequeError error) {
+        if(error instanceof InternationalizedError){
+            InternationalizedError iError = (InternationalizedError) error;
+
+            SwingUtils.inEdt(new DisplayErrorRunnable(
+                new ErrorInfo("Error",
+                        languageService.getMessage(iError.getMessage(), iError.getMessageReplaces()),
+                        languageService.getMessage(iError.getDetails(), iError.getDetailsReplaces()),
+                        "", error.getException(), Level.SEVERE, null)));
+        } else {
+            SwingUtils.inEdt(new DisplayErrorRunnable(
                 new ErrorInfo("Error", error.getMessage(), error.getDetails(), "", error.getException(), Level.SEVERE, null)));
+        }
     }
 
     /**

@@ -1,6 +1,8 @@
 package org.jtheque.views.impl.components.menu;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,11 +10,12 @@ import java.util.Map;
 import org.jtheque.features.Feature;
 import org.jtheque.features.IFeatureService;
 import org.jtheque.features.Menu;
+import org.jtheque.i18n.ILanguageService;
+import org.jtheque.i18n.Internationalizable;
 import org.jtheque.ui.able.IView;
 import org.jtheque.ui.utils.actions.ActionFactory;
+import org.jtheque.ui.utils.actions.JThequeAction;
 import org.jtheque.utils.collections.CollectionUtils;
-
-import javax.swing.Action;
 
 /*
  * This file is part of JTheque.
@@ -40,38 +43,38 @@ import javax.swing.Action;
 public abstract class AbstractMenu implements Menu {
     private final Map<String, List<Feature>> cache = new HashMap<String, List<Feature>>(5);
 
+    private final Collection<Internationalizable> internationalizables = new ArrayList<Internationalizable>(10);
+
     //Public methods
 
     @Override
     public final List<Feature> getSubFeatures(IFeatureService.CoreFeature feature){
         switch (feature){
             case FILE:
-                if(!cache.containsKey(IFeatureService.CoreFeature.FILE.name())){
-                    cache.put(IFeatureService.CoreFeature.FILE.name(), getFileMenuSubFeatures());
-                }
+                loadSubFeatures(IFeatureService.CoreFeature.FILE, getFileMenuSubFeatures());
 
                 break;
             case EDIT:
-                if(!cache.containsKey(IFeatureService.CoreFeature.EDIT.name())){
-                    cache.put(IFeatureService.CoreFeature.EDIT.name(), getEditMenuSubFeatures());
-                }
+                loadSubFeatures(IFeatureService.CoreFeature.EDIT, getEditMenuSubFeatures());
 
                 break;
             case ADVANCED:
-                if(!cache.containsKey(IFeatureService.CoreFeature.ADVANCED.name())){
-                    cache.put(IFeatureService.CoreFeature.ADVANCED.name(), getAdvancedMenuSubFeatures());
-                }
+                loadSubFeatures(IFeatureService.CoreFeature.ADVANCED, getAdvancedMenuSubFeatures());
 
                 break;
             case HELP:
-                if(!cache.containsKey(IFeatureService.CoreFeature.HELP.name())){
-                    cache.put(IFeatureService.CoreFeature.HELP.name(), getHelpMenuSubFeatures());
-                }
+                loadSubFeatures(IFeatureService.CoreFeature.HELP, getHelpMenuSubFeatures());
 
                 break;
         }
 
         return cache.get(feature.name());
+    }
+
+    private void loadSubFeatures(IFeatureService.CoreFeature file, List<Feature> subFeatures) {
+        if(!cache.containsKey(file.name())){
+            cache.put(file.name(), subFeatures);
+        }
     }
 
     @Override
@@ -199,15 +202,13 @@ public abstract class AbstractMenu implements Menu {
      *
      * @param position The position of the feature.
      * @param action The name of the action. This action will searched in Spring context.
-     * @param imagesBaseName The image's base name.
      * @param image The image name.
      *
      * @return The created separated feature.
      */
-    protected static Feature createSeparatedSubFeature(int position, String action, String imagesBaseName, String image){
+    protected static Feature createSeparatedSubFeature(int position, String action, String image){
         Feature f = createSeparatedSubFeature(position, action);
 
-        f.setBaseName(imagesBaseName);
         f.setIcon(image);
 
         return f;
@@ -218,15 +219,13 @@ public abstract class AbstractMenu implements Menu {
      *
      * @param position The position of the feature.
      * @param action The action.
-     * @param imagesBaseName The image's base name.
      * @param image The image name.
      *
      * @return The created separated feature.
      */
-    protected static Feature createSeparatedSubFeature(int position, Action action, String imagesBaseName, String image){
+    protected Feature createSeparatedSubFeature(int position, JThequeAction action, String image){
         Feature f = createSeparatedSubFeature(position, action);
 
-        f.setBaseName(imagesBaseName);
         f.setIcon(image);
 
         return f;
@@ -240,7 +239,9 @@ public abstract class AbstractMenu implements Menu {
      *
      * @return The created separated feature.
      */
-    protected static Feature createSeparatedSubFeature(int position, Action action){
+    protected Feature createSeparatedSubFeature(int position, JThequeAction action){
+        internationalizables.add(action);
+
         return new Feature(Feature.FeatureType.SEPARATED_ACTION, position, action);
     }
 
@@ -249,15 +250,13 @@ public abstract class AbstractMenu implements Menu {
      *
      * @param position The position of the feature.
      * @param action The name of the action. This action will searched in Spring context.
-     * @param imagesBaseName The image's base name.
      * @param image The image name.
      *
      * @return The created feature.
      */
-    protected static Feature createSubFeature(int position, String action, String imagesBaseName, String image){
+    protected static Feature createSubFeature(int position, String action, String image){
         Feature f = createSubFeature(position, action);
 
-        f.setBaseName(imagesBaseName);
         f.setIcon(image);
 
         return f;
@@ -267,16 +266,14 @@ public abstract class AbstractMenu implements Menu {
      * Create a feature.
      *
      * @param position The position of the feature.
-     * @param action The action. 
-     * @param imagesBaseName The image's base name.
+     * @param action The action.
      * @param image The image name.
      *
      * @return The created feature.
      */
-    protected static Feature createSubFeature(int position, Action action, String imagesBaseName, String image){
+    protected Feature createSubFeature(int position, JThequeAction action, String image){
         Feature f = createSubFeature(position, action);
 
-        f.setBaseName(imagesBaseName);
         f.setIcon(image);
 
         return f;
@@ -290,7 +287,9 @@ public abstract class AbstractMenu implements Menu {
      *
      * @return The created feature.
      */
-    protected static Feature createSubFeature(int position, Action action){
+    protected Feature createSubFeature(int position, JThequeAction action){
+        internationalizables.add(action);
+
         return new Feature(Feature.FeatureType.ACTION, position, action);
     }
 
@@ -315,7 +314,7 @@ public abstract class AbstractMenu implements Menu {
      *
      * @return An action to close the view.
      */
-    public static Action createCloseViewAction(String key, IView view){
+    public static JThequeAction createCloseViewAction(String key, IView view){
         return ActionFactory.createCloseViewAction(key, view);
     }
 
@@ -327,7 +326,7 @@ public abstract class AbstractMenu implements Menu {
      *
      * @return An action to close the view.
      */
-    public static Action createCloseViewAction(String key, String view){
+    public static JThequeAction createCloseViewAction(String key, String view){
         return ActionFactory.createCloseViewAction(key, view);
     }
 
@@ -339,7 +338,7 @@ public abstract class AbstractMenu implements Menu {
      *
      * @return An action to close the view.
      */
-    public static Action createDisplayViewAction(String key, IView view){
+    public static JThequeAction createDisplayViewAction(String key, IView view){
         return ActionFactory.createDisplayViewAction(key, view);
     }
 
@@ -351,7 +350,14 @@ public abstract class AbstractMenu implements Menu {
      *
      * @return An action to close the view.
      */
-    public static Action createDisplayViewAction(String key, String view){
+    public static JThequeAction createDisplayViewAction(String key, String view){
         return ActionFactory.createDisplayViewAction(key, view);
+    }
+
+    @Override
+    public void refreshText(ILanguageService languageService) {
+        for(Internationalizable internationalizable : internationalizables){
+            internationalizable.refreshText(languageService);
+        }
     }
 }

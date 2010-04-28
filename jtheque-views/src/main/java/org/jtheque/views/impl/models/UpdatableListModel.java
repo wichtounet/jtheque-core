@@ -20,7 +20,6 @@ import org.jtheque.update.IUpdateService;
 import org.jtheque.update.Updatable;
 import org.jtheque.update.UpdatableListener;
 import org.jtheque.utils.collections.CollectionUtils;
-import org.jtheque.views.ViewsServices;
 
 import javax.swing.DefaultListModel;
 import java.util.List;
@@ -36,12 +35,12 @@ public final class UpdatableListModel extends DefaultListModel implements Updata
     /**
      * Construct a new ModuleListModel.
      */
-    public UpdatableListModel() {
+    public UpdatableListModel(IUpdateService updateService) {
         super();
 
-        updatables = CollectionUtils.copyOf(ViewsServices.get(IUpdateService.class).getUpdatables());
+        updatables = CollectionUtils.copyOf(updateService.getUpdatables());
 
-        ViewsServices.get(IUpdateService.class).addUpdatableListener(this);
+        updateService.addUpdatableListener(this);
     }
 
     @Override
@@ -60,8 +59,7 @@ public final class UpdatableListModel extends DefaultListModel implements Updata
     }
 
     @Override
-    public void updatableAdded() {
-        updatables.clear();
-        updatables.addAll(ViewsServices.get(IUpdateService.class).getUpdatables());
+    public void updatableAdded(Updatable updatable) {
+        updatables.add(updatable);
     }
 }

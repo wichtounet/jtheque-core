@@ -17,11 +17,15 @@ import org.jtheque.messages.IMessageService;
 import org.jtheque.modules.able.IModuleService;
 import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.update.IUpdateService;
+import org.jtheque.utils.ui.SwingUtils;
 import org.jtheque.views.able.ISplashService;
 import org.jtheque.views.able.IViewService;
-import org.jtheque.ui.utils.edt.SimpleTask;
+import org.jtheque.utils.ui.edt.SimpleTask;
+import org.jtheque.views.able.IViews;
+import org.jtheque.views.impl.MacOSXConfiguration;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.BundleException;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
@@ -46,7 +50,7 @@ public class LifeCycleActivator implements BundleActivator, CollectionListener {
     private BundleContext context;
 
     @Override
-    public void start(BundleContext context) throws Exception {
+    public void start(BundleContext context) throws BundleException {
         this.context = context;
 
         configureLogging();
@@ -55,19 +59,19 @@ public class LifeCycleActivator implements BundleActivator, CollectionListener {
 
         getService(ICore.class).setApplication(application);
 
+        MacOSXConfiguration.configureForMac(getService(IViewService.class), getService(ICore.class), getService(IViews.class));
+
         getService(ISplashService.class).initViews();
         getService(ISplashService.class).displaySplashScreen();
+        
+        getService(IViews.class).init();
 
         getService(IEventService.class).addEventLog("JTheque Core", new EventLog(EventLevel.INFO, "User", "events.start"));
-
-        OSGiUtils.getBundle(context, "jtheque-modules").start();
 
         getService(IModuleService.class).load();
 
         if(OSGiUtils.getService(context, IModuleService.class).hasCollectionModule()){
-            OSGiUtils.getBundle(context, "jtheque-collections").start();
-
-            getService(IUIUtils.class).execute(new SimpleTask() {
+            SwingUtils.execute(new SimpleTask() {
                 @Override
                 public void run() {
                     getService(ISplashService.class).closeSplashScreen();
@@ -116,7 +120,7 @@ public class LifeCycleActivator implements BundleActivator, CollectionListener {
         getService(IMessageService.class).loadMessages();
 
         if(getService(IMessageService.class).isDisplayNeeded()){
-            getService(IViewService.class).getViews().getMessagesView().display();
+            getService(IViews.class).getMessagesView().display();
         }
 
         if (getService(ICore.class).getConfiguration().verifyUpdateOnStartup()) {
@@ -124,7 +128,7 @@ public class LifeCycleActivator implements BundleActivator, CollectionListener {
 
             for(String message : messages){
                 if(getService(IUIUtils.class).askI18nUserForConfirmation(message, message + ".title")){
-                    getService(IViewService.class).getViews().getModuleView().display();
+                    getService(IViews.class).getModuleView().display();
                     break;
                 }
             }
@@ -132,7 +136,7 @@ public class LifeCycleActivator implements BundleActivator, CollectionListener {
     }
 
     @Override
-    public void stop(BundleContext bundleContext) throws Exception {
+    public void stop(BundleContext bundleContext){
         //Release all
     }
 }

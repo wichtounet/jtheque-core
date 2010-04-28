@@ -27,6 +27,7 @@ import org.jtheque.modules.utils.ModuleResourceCache;
 import org.jtheque.utils.StringUtils;
 
 import org.jtheque.io.XMLException;
+import org.jtheque.utils.collections.ArrayUtils;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -102,17 +103,15 @@ public final class FileService implements IFileService, ModuleListener {
                 return 1;
             } else if (!hasDependency && hasOtherDependency) {
                 return -1;
-            } else if(hasDependency && hasOtherDependency){
-                for (String dependency : backup2.getDependencies()) {
-                    if (dependency.equals(backup1.getId())) {//The other depends on me
-                        return -1;
-                    }
+            } else {
+                //The other depends on me
+                if(ArrayUtils.search(backup2.getDependencies(), backup1.getId())){
+                    return -1;
                 }
 
-                for (String dependency : backup1.getDependencies()) {
-                    if (dependency.equals(backup2.getId())) {//I depends on the other
-                        return 1;
-                    }
+                //I depends on the other
+                if(ArrayUtils.search(backup1.getDependencies(), backup2.getId())){
+                    return 1;
                 }
             }
 

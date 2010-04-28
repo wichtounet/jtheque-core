@@ -32,7 +32,7 @@ public interface ConfigTabComponent {
      *
      * @return The title of the tab.
      */
-    String getTitle();
+    String getTitleKey();
 
     /**
      * Apply all the changes.

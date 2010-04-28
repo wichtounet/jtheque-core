@@ -53,8 +53,9 @@
                 <configuration>
                     <instructions>
                         <Bundle-SymbolicName>${pom.artifactId}</Bundle-SymbolicName>
-                        <Export-Package>org.jtheque.file</Export-Package>
+                        <Export-Package>org.jtheque.file, org.jtheque.file.able, org.jtheque.file.impl</Export-Package>
                         <Bundle-Vendor>Baptiste Wicht</Bundle-Vendor>
+                        <Spring-Context>*;create-asynchronously:=false;publish-context:=false</Spring-Context>
                     </instructions>
                 </configuration>
             </plugin>

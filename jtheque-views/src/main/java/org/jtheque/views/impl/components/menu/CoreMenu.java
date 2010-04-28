@@ -1,7 +1,9 @@
 package org.jtheque.views.impl.components.menu;
 
-import org.jtheque.core.Core;
+import org.jtheque.core.ICore;
 import org.jtheque.features.Feature;
+import org.jtheque.undo.IUndoRedoService;
+import org.jtheque.views.impl.ViewsResources;
 import org.jtheque.views.impl.actions.about.DisplayAboutViewAction;
 import org.jtheque.views.impl.actions.author.AcInformOfABug;
 import org.jtheque.views.impl.actions.author.AcOpenHelp;
@@ -36,40 +38,50 @@ import java.util.List;
  * @author Baptiste Wicht
  */
 public final class CoreMenu extends AbstractMenu {
+    private final ICore core;
+    private final IUndoRedoService undoRedoService;
+
+    public CoreMenu(ICore core, IUndoRedoService undoRedoService) {
+        super();
+
+        this.core = core;
+        this.undoRedoService = undoRedoService;
+    }
+
     @Override
     protected List<Feature> getFileMenuSubFeatures(){
         return features(
-                createSeparatedSubFeature(200, new AcBackup()),
-                createSubFeature(201, new AcRestore()),
-                createSeparatedSubFeature(1000, new ExitAction())
+                createSeparatedSubFeature(200, new AcBackup(), ViewsResources.XML_ICON),
+                createSubFeature(201, new AcRestore(), ViewsResources.XML_ICON),
+                createSeparatedSubFeature(1000, new ExitAction(core), ViewsResources.EXIT_ICON)
         );
     }
 
     @Override
     protected List<Feature> getEditMenuSubFeatures(){
         return features(
-                createSubFeature(1, new UndoAction()),
-                createSubFeature(2, new RedoAction())
+                createSubFeature(1, new UndoAction(undoRedoService), ViewsResources.UNDO_ICON),
+                createSubFeature(2, new RedoAction(undoRedoService), ViewsResources.REDO_ICON)
         );
     }
 
     @Override
     protected List<Feature> getAdvancedMenuSubFeatures(){
         return features(
-                createSeparatedSubFeature(500, createDisplayViewAction("config.actions.display", "configView"), Core.IMAGES_BASE_NAME, "options"),
-                createSeparatedSubFeature(750, createDisplayViewAction("modules.actions.manage", "moduleView"), Core.IMAGES_BASE_NAME, "update")
+                createSeparatedSubFeature(500, createDisplayViewAction("config.actions.display", "configView"), ViewsResources.OPTIONS_ICON),
+                createSeparatedSubFeature(750, createDisplayViewAction("modules.actions.manage", "moduleView"), ViewsResources.UPDATE_ICON)
         );
     }
 
     @Override
     protected List<Feature> getHelpMenuSubFeatures(){
         return features(
-                createSeparatedSubFeature(1, new AcOpenHelp(), Core.IMAGES_BASE_NAME, "help"),
-                createSeparatedSubFeature(2, new AcInformOfABug(), Core.IMAGES_BASE_NAME, "mail"),
-                createSeparatedSubFeature(4, new AcProposeImprovement(), Core.IMAGES_BASE_NAME, "idea"),
+                createSeparatedSubFeature(1, new AcOpenHelp(), ViewsResources.HELP_ICON),
+                createSeparatedSubFeature(2, new AcInformOfABug(), ViewsResources.MAIL_ICON),
+                createSeparatedSubFeature(4, new AcProposeImprovement(), ViewsResources.IDEA_ICON),
                 createSeparatedSubFeature(6, createDisplayViewAction("messages.actions.display", "messageView")),
                 createSeparatedSubFeature(25, createDisplayViewAction("log.view.actions.display", "logView")),
-                createSeparatedSubFeature(150, new DisplayAboutViewAction(), Core.IMAGES_BASE_NAME, "about")
+                createSeparatedSubFeature(150, new DisplayAboutViewAction(core), ViewsResources.MAIL_ICON)
         );
     }
 }

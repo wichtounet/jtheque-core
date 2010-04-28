@@ -55,7 +55,21 @@
                         <Bundle-SymbolicName>${pom.artifactId}</Bundle-SymbolicName>
                         <Export-Package>org.jtheque.cache</Export-Package>
                         <Bundle-Vendor>Baptiste Wicht</Bundle-Vendor>
+                        <Spring-Context>*;create-asynchronously:=false;publish-context:=false</Spring-Context>
                     </instructions>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>*</exclude>
+                    </excludes>
+                    <includes>
+                        <include>**/org/jtheque/cache/**/*Test.java</include>
+                    </includes>
                 </configuration>
             </plugin>
         </plugins>

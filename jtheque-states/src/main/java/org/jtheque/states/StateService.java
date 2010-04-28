@@ -18,16 +18,18 @@ package org.jtheque.states;
 
 import org.jdom.Element;
 import org.jtheque.core.utils.SystemProperty;
+import org.jtheque.io.Node;
 import org.jtheque.io.NodeLoader;
 import org.jtheque.io.NodeSaver;
-import org.jtheque.io.XMLException;
 import org.jtheque.io.XMLReader;
 import org.jtheque.io.XMLWriter;
+import org.jtheque.utils.bean.ReflectionUtils;
 import org.jtheque.utils.io.FileUtils;
 import org.slf4j.LoggerFactory;
 
-import javax.swing.JOptionPane;
 import java.io.File;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -38,7 +40,9 @@ import java.util.Map;
  * @author Baptiste Wicht
  */
 public final class StateService implements IStateService {
-    private final Map<Class<? extends IState>, IState> states = new HashMap<Class<? extends IState>, IState>(10);
+    private final Map<String, Object> states = new HashMap<String, Object>(10);
+    private final Map<String, Map<String, String>> properties = new HashMap<String, Map<String, String>>(5);
+    private final Map<String, Collection<Node>> nodes = new HashMap<String, Collection<Node>>(5);
 
     /**
      * Load the states.
@@ -51,42 +55,32 @@ public final class StateService implements IStateService {
         try {
             reader.openFile(getConfigFile());
 
-            for (Object currentNode : reader.getNodes("state", reader.getRootElement())) {
+            for (Object stateNode : reader.getNodes("state", reader.getRootElement())) {
+                String id = reader.readString("@id", stateNode);
+                boolean delegated = reader.readBoolean("@delegated", stateNode);
 
-                Class<?> stateClass = Class.forName(reader.readString("@class", currentNode), true, getClass().getClassLoader());
+                if(delegated){
+                    Collection<Element> nodeElements = reader.getNodes("*", stateNode);
 
-                if (IState.class.isAssignableFrom(stateClass)) {
-                    IState state = (IState) stateClass.newInstance();
+                    Collection<Node> stateNodes = NodeLoader.resolveNodeStates(nodeElements);
 
-                    loadState(reader, currentNode, state);
+                    nodes.put(id, stateNodes);
+                } else {
+                    Collection<Element> propertyElements = reader.getNodes("properties/property", stateNode);
 
-                    states.put(state.getClass(), state);
+                    Map<String, String> stateProperties = new HashMap<String, String>(propertyElements.size());
+
+                    for (Object propertyNode : propertyElements) {
+                        stateProperties.put(reader.readString("@key", propertyNode), reader.readString("@value", propertyNode));
+                    }
+
+                    properties.put(id, stateProperties);
                 }
             }
         } catch (Exception e) {
             throw new StateException(e);
         } finally {
             FileUtils.close(reader);
-        }
-    }
-
-    /**
-     * Load the state from the XML file.
-     *
-     * @param reader      The XML reader.
-     * @param currentNode The node to read from.
-     * @param state       The state to fill.
-     * @throws XMLException If an error occurs during the XML reading process.
-     */
-    private static void loadState(XMLReader reader, Object currentNode, IState state) throws XMLException {
-        if (state.isDelegated()) {
-            Collection<Element> nodes = reader.getNodes("*", currentNode);
-
-            state.delegateLoad(NodeLoader.resolveNodeStates(nodes));
-        } else {
-            for (Object propertyNode : reader.getNodes("properties/property", currentNode)) {
-                state.setProperty(reader.readString("@key", propertyNode), reader.readString("@value", propertyNode));
-            }
         }
     }
 
@@ -104,20 +98,94 @@ public final class StateService implements IStateService {
     public void close(){
         XMLWriter writer = new XMLWriter("states");
 
-        for (IState state : states.values()) {
-            writer.add("state");
-            writer.addAttribute("class", state.getClass().getCanonicalName());
+        writeStates(writer);
+        writeProperties(writer);
+        writeNodes(writer);
 
-            if (state.isDelegated()) {
-                NodeSaver.writeNodes(writer, state.delegateSave());
+        writer.write(getConfigFile().getAbsolutePath());
+    }
+
+    private void writeStates(XMLWriter writer) {
+        for(Map.Entry<String, Object> state : states.entrySet()){
+            writer.add("state");
+            writer.addAttribute("id", state.getKey());
+
+            boolean delegated = state.getValue().getClass().getAnnotation(State.class).delegated();
+
+            writer.addAttribute("delegated", Boolean.toString(delegated));
+
+            Method saveMethod = ReflectionUtils.getMethod(Save.class, state.getValue().getClass());
+
+            if(delegated){
+                try {
+                    Iterable<Node> nodes = (Iterable<Node>) saveMethod.invoke(state.getValue());
+
+                    NodeSaver.writeNodes(writer, nodes);
+                } catch (IllegalAccessException e) {
+                    LoggerFactory.getLogger(getClass()).error("Unable to access the @Save method of " + state, e);
+                } catch (InvocationTargetException e) {
+                    LoggerFactory.getLogger(getClass()).error("Unable to invoke the @Save method of " + state, e);
+                }
             } else {
-                save(state, writer);
+                writer.add("properties");
+
+                try {
+                    Map<String, String> properties = (Map<String, String>) saveMethod.invoke(state.getValue());
+
+                    for (Map.Entry<String, String> property : properties.entrySet()) {
+                        writer.add("property");
+                        writer.addAttribute("key", property.getKey());
+                        writer.addAttribute("value", property.getValue());
+
+                        writer.switchToParent();
+                    }
+                } catch (IllegalAccessException e) {
+                    LoggerFactory.getLogger(getClass()).error("Unable to access the @Save method of " + state, e);
+                } catch (InvocationTargetException e) {
+                    LoggerFactory.getLogger(getClass()).error("Unable to invoke the @Save method of " + state, e);
+                }
+
+                writer.switchToParent();
             }
 
             writer.switchToParent();
         }
+    }
 
-        writer.write(getConfigFile().getAbsolutePath());
+    private void writeProperties(XMLWriter writer) {
+        for (Map.Entry<String, Map<String, String>> state : properties.entrySet()) {
+            writer.add("state");
+
+            writer.addAttribute("id", state.getKey());
+            writer.addAttribute("delegated", "false");
+
+            writer.add("properties");
+
+            for (Map.Entry<String, String> property : state.getValue().entrySet()) {
+                writer.add("property");
+                writer.addAttribute("key", property.getKey());
+                writer.addAttribute("value", property.getValue());
+
+                writer.switchToParent();
+            }
+
+            writer.switchToParent();
+
+            writer.switchToParent();
+        }
+    }
+
+    private void writeNodes(XMLWriter writer) {
+        for (Map.Entry<String, Collection<Node>> state : nodes.entrySet()) {
+            writer.add("state");
+
+            writer.addAttribute("id", state.getKey());
+            writer.addAttribute("delegated", "true");
+
+            NodeSaver.writeNodes(writer, state.getValue());
+
+            writer.switchToParent();
+        }
     }
 
     /**
@@ -137,61 +205,50 @@ public final class StateService implements IStateService {
         return configFile;
     }
 
-    /**
-     * Save the state to the writer.
-     *
-     * @param state  The state to save.
-     * @param writer The writer.
-     */
-    private static void save(IState state, XMLWriter writer) {
-        writer.add("properties");
+    @Override
+    public <T> T getState(T state) {
+        if(state.getClass().isAnnotationPresent(State.class)){
+            State stateAnnotation = state.getClass().getAnnotation(State.class);
 
-        for (String key : state.getProperties()) {
-            if (state.getProperty(key) != null) {
-                writer.add("property");
-                writer.addAttribute("key", key);
-                writer.addAttribute("value", state.getProperty(key));
+            Method loadMethod = ReflectionUtils.getMethod(Load.class, state.getClass());
 
-                writer.switchToParent();
+            if(loadMethod == null){
+                throw new IllegalArgumentException("The state must have a method with @Load annotation");
             }
+
+            if(stateAnnotation.delegated()){
+                try {
+                    Collection<Node> stateNodes = nodes.get(stateAnnotation.id());
+
+                    if(stateNodes != null){
+                        loadMethod.invoke(state, stateNodes);
+                    }
+
+                    nodes.remove(stateAnnotation.id());
+                } catch (IllegalAccessException e) {
+                    LoggerFactory.getLogger(getClass()).error("Unable to access the @Load method of " + state, e);
+                } catch (InvocationTargetException e) {
+                    LoggerFactory.getLogger(getClass()).error("Unable to invoke the @Load method of " + state, e);
+                }
+            } else {
+                try {
+                    Map<String, String> stateProperties = properties.get(stateAnnotation.id());
+
+                    if(stateProperties != null){
+                        loadMethod.invoke(state, stateProperties);
+                    }
+
+                    properties.remove(stateAnnotation.id());
+                } catch (IllegalAccessException e) {
+                    LoggerFactory.getLogger(getClass()).error("Unable to access the @Load method of " + state, e);
+                } catch (InvocationTargetException e) {
+                    LoggerFactory.getLogger(getClass()).error("Unable to invoke the @Load method of " + state, e);
+                }
+            }
+
+            states.put(stateAnnotation.id(), state);
         }
 
-        writer.switchToParent();
-    }
-
-    @Override
-    public <T extends IState> T getState(Class<T> c) {
-        return states.containsKey(c) ? (T) states.get(c) : null;
-    }
-
-    @Override
-    public <T extends IState> T getOrCreateState(Class<T> c){
-        return states.containsKey(c) ? (T) states.get(c) : createState(c);
-    }
-
-    @Override
-    public <T extends IState> T createState(Class<T> c){
-        try {
-            T state = c.newInstance();
-
-            state.setDefaults();
-
-            states.put(c, state);
-
-            return state;
-        } catch (InstantiationException e) {
-            LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
-            JOptionPane.showMessageDialog(null, e.getMessage(), e.getMessage(), JOptionPane.ERROR_MESSAGE);
-        } catch (IllegalAccessException e) {
-            LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
-            JOptionPane.showMessageDialog(null, e.getMessage(), e.getMessage(), JOptionPane.ERROR_MESSAGE);
-        }
-
-        return null;
-    }
-
-    @Override
-    public void registerState(IState state) {
-        states.put(state.getClass(), state);
+        return state;
     }
 }

@@ -16,12 +16,8 @@ package org.jtheque.resources;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import org.jtheque.core.utils.ImageType;
 import org.jtheque.utils.ui.ImageUtils;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeansException;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
 import org.springframework.core.io.Resource;
 
 import javax.swing.ImageIcon;
@@ -33,60 +29,22 @@ import java.util.Map;
 
 /**
  * A resource manager implementation.
- * <p/>
- * WARNING : BeansManager must be inited before this manager for his good working.
  *
  * @author Baptiste Wicht
  */
-public final class ResourceService implements IResourceService, ApplicationContextAware {
+public final class ResourceService implements IResourceService {
     private static final int DEFAULT_CACHE_SIZE = 50;
 
+    private final Map<String, Resource> resources = new HashMap<String, Resource>(DEFAULT_CACHE_SIZE);
     private final Map<String, JThequeImage> cache = new HashMap<String, JThequeImage>(DEFAULT_CACHE_SIZE);
 
-    private ApplicationContext applicationContext;
-
     @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        this.applicationContext = applicationContext;
-    }
-
-    @Override
-    public ImageIcon getIcon(String baseName, String id, ImageType type) {
-        return getIcon(baseName + '/' + id + '.' + type.getExtension());
-    }
-
-    @Override
-    public ImageIcon getIcon(String id, ImageType type) {
-        return getIcon(id + '.' + type.getExtension());
-    }
-
-    @Override
-    public ImageIcon getIcon(String path) {
-        if (isImageNotCached(path)) {
-            loadImageInCache(path);
+    public ImageIcon getIcon(String id) {
+        if (isImageNotCached(id) && resources.containsKey(id)) {
+            loadImageInCache(id);
         }
 
-        return cache.get(path) == null ? null : cache.get(path).asIcon();
-    }
-
-    @Override
-    public BufferedImage getImage(String baseName, String id, ImageType type, int width) {
-        return getThumbnail(getImage(baseName, id, type), width);
-    }
-
-    @Override
-    public BufferedImage getImage(String baseName, String id, ImageType type) {
-        return getImage(baseName + '/' + id + '.' + type.getExtension());
-    }
-
-    @Override
-    public BufferedImage getImage(String id, ImageType type, int width) {
-        return getThumbnail(getImage(id, type), width);
-    }
-
-    @Override
-    public BufferedImage getImage(String id, ImageType type) {
-        return getImage(id + '.' + type.getExtension());
+        return cache.get(id) == null ? null : cache.get(id).asIcon();
     }
 
     @Override
@@ -95,27 +53,21 @@ public final class ResourceService implements IResourceService, ApplicationConte
     }
 
     @Override
-    public BufferedImage getImage(String path) {
-        if (isImageNotCached(path)) {
-            loadImageInCache(path);
+    public BufferedImage getImage(String id) {
+        if (isImageNotCached(id) && resources.containsKey(id)) {
+            loadImageInCache(id);
         }
 
-        return cache.get(path) == null ? null : cache.get(path).get();
+        return cache.get(id) == null ? null : cache.get(id).get();
     }
 
-    @Override
-    public Resource getResource(String path) {
-        return applicationContext.getResource(path);
-    }
-
-    @Override
-    public InputStream getResourceAsStream(String path) {
+    public InputStream getResourceAsStream(String id) {
         InputStream stream = null;
 
         try {
-            stream = getResource(path).getInputStream();
+            stream = resources.get(id).getInputStream();
         } catch (IOException e) {
-            LoggerFactory.getLogger(getClass()).error("Unable to load stream for {}", path);
+            LoggerFactory.getLogger(getClass()).error("Unable to load stream for {}", id);
             LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
         }
 
@@ -128,7 +80,23 @@ public final class ResourceService implements IResourceService, ApplicationConte
     }
 
     @Override
-    public void invalidateImage(String id) {
+    public Resource getResourceByID(String id) {
+        return resources.get(id);
+    }
+
+    @Override
+    public void registerResource(String id, Resource resource) {
+        resources.put(id, resource);
+    }
+
+    @Override
+    public void releaseResource(String id) {
+        resources.remove(id);
+        cache.remove(id);
+    }
+
+    @Override
+    public void invalidateResource(String id) {
         cache.remove(id);
     }
 

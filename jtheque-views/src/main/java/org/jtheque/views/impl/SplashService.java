@@ -1,16 +1,16 @@
 package org.jtheque.views.impl;
 
+import org.jtheque.core.ICore;
+import org.jtheque.features.IFeatureService;
 import org.jtheque.utils.ui.SwingUtils;
 import org.jtheque.views.able.ISplashService;
 import org.jtheque.views.able.panel.ISplashView;
+import org.jtheque.views.able.windows.IMainView;
+import org.jtheque.views.impl.components.menu.CoreMenu;
 import org.jtheque.views.impl.components.panel.SplashScreenPane;
 import org.jtheque.views.impl.windows.MainView;
-import org.pushingpixels.substance.api.SubstanceLookAndFeel;
-import org.pushingpixels.substance.api.skin.BusinessBlackSteelSkin;
-
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.UIManager;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 
 /*
  * This file is part of JTheque.
@@ -33,13 +33,18 @@ import javax.swing.UIManager;
  *
  * @author Baptiste Wicht
  */
-public final class SplashService implements ISplashService {
+public final class SplashService implements ISplashService, ApplicationContextAware {
     private ISplashView splashScreenPane;
-    private final MainView mainView;
     private boolean mainDisplayed;
 
-    public SplashService(MainView mainView) {
-        this.mainView = mainView;
+    private MainView mainView;
+    private final ICore core;
+    private ApplicationContext applicationContext;
+
+    public SplashService(ICore core) {
+        super();
+
+        this.core = core;
     }
 
     @Override
@@ -47,16 +52,11 @@ public final class SplashService implements ISplashService {
         SwingUtils.inEdt(new Runnable() {
             @Override
             public void run() {
-                SubstanceLookAndFeel.setSkin(new BusinessBlackSteelSkin());
-
-                JFrame.setDefaultLookAndFeelDecorated(true);
-                JDialog.setDefaultLookAndFeelDecorated(true);
-
-                UIManager.put(SubstanceLookAndFeel.COLORIZATION_FACTOR, 1.0);
+                mainView = (MainView) applicationContext.getBean(IMainView.class);
 
                 mainView.build();
 
-                splashScreenPane = new SplashScreenPane();
+                splashScreenPane = new SplashScreenPane(core);
             }
         });
     }
@@ -104,8 +104,16 @@ public final class SplashService implements ISplashService {
             @Override
             public void run() {
                 mainView.fill();
+
+                applicationContext.getBean(IFeatureService.class).addMenu("", applicationContext.getBean(CoreMenu.class));
+
                 mainView.refresh();
             }
         });
+    }
+
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext){
+        this.applicationContext = applicationContext;
     }
 }

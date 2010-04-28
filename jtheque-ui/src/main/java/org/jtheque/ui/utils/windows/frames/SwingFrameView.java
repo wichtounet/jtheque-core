@@ -17,12 +17,13 @@ package org.jtheque.ui.utils.windows.frames;
  */
 
 import org.jtheque.core.ICore;
-import org.jtheque.core.application.Application;
+import org.jtheque.core.utils.OSGiUtils;
 import org.jtheque.resources.IResourceService;
 import org.jtheque.ui.able.IModel;
 import org.jtheque.ui.able.IWindowView;
 import org.jtheque.utils.ui.SwingUtils;
-import org.jtheque.ui.ViewsUtilsServices;
+import org.osgi.framework.BundleContext;
+import org.springframework.osgi.context.BundleContextAware;
 
 import javax.swing.JFrame;
 import java.awt.Image;
@@ -32,14 +33,16 @@ import java.awt.Image;
  *
  * @author Baptiste Wicht
  */
-public abstract class SwingFrameView extends JFrame implements IWindowView {
+public abstract class SwingFrameView extends JFrame implements IWindowView, BundleContextAware {
     private IModel model;
+
+    private BundleContext bundleContext;
 
     /**
      * Construct a new SwingFrameView.
      */
     protected SwingFrameView() {
-        this("");
+        super("");
     }
 
     /**
@@ -56,11 +59,8 @@ public abstract class SwingFrameView extends JFrame implements IWindowView {
      *
      * @return The default icon.
      */
-    protected static Image getDefaultWindowIcon() {
-        Application application = ViewsUtilsServices.get(ICore.class).getApplication();
-
-        return ViewsUtilsServices.get(IResourceService.class).getImage(
-                "file:" + application.getWindowIcon(), application.getWindowIconType());
+    protected Image getDefaultWindowIcon() {
+        return getService(IResourceService.class).getImage(ICore.WINDOW_ICON);
     }
 
     @Override
@@ -86,6 +86,19 @@ public abstract class SwingFrameView extends JFrame implements IWindowView {
     @Override
     public final void refresh() {
         SwingUtils.refresh(this);
+    }
+
+    @Override
+    public void setBundleContext(BundleContext bundleContext) {
+        this.bundleContext = bundleContext;
+    }
+
+    BundleContext getBundleContext() {
+        return bundleContext;
+    }
+
+    <T> T getService(Class<T> classz){
+        return OSGiUtils.getService(bundleContext, classz);
     }
 
     /**

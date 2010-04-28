@@ -19,18 +19,19 @@ package org.jtheque.views.impl.components.config;
 import org.jtheque.core.CoreConfiguration;
 import org.jtheque.core.ICore;
 import org.jtheque.errors.JThequeError;
-import org.jtheque.i18n.ILanguageService;
+import org.jtheque.spring.utils.injection.Init;
+import org.jtheque.spring.utils.injection.Injectable;
 import org.jtheque.ui.utils.ValidationUtils;
 import org.jtheque.ui.utils.builders.FilthyPanelBuilder;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.ui.utils.filthy.FilthyBackgroundPanel;
 import org.jtheque.utils.ui.GridBagUtils;
-import org.jtheque.views.ViewsServices;
 import org.jtheque.views.able.components.ConfigTabComponent;
 import org.jtheque.views.able.config.INetworkConfigView;
 import org.jtheque.views.impl.actions.config.CheckProxyAction;
 import org.jtheque.views.impl.filthy.FilthyTextField;
 
+import javax.annotation.Resource;
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import java.util.Collection;
@@ -40,17 +41,16 @@ import java.util.Collection;
  *
  * @author Baptiste Wicht
  */
-public final class JPanelConfigNetwork extends FilthyBackgroundPanel implements INetworkConfigView, ConfigTabComponent {
+public final class JPanelConfigNetwork extends FilthyBackgroundPanel implements INetworkConfigView, ConfigTabComponent, Injectable {
     private JCheckBox boxProxy;
     private FilthyTextField fieldAddress;
     private FilthyTextField fieldPort;
 
-    /**
-     * Construct a new JPanelConfigNetwork. 
-     */
-    public JPanelConfigNetwork(){
-        super();
+    @Resource
+    private ICore core;
 
+    @Init(swing = true)
+    public void init(){
         addProxyPanel();
 
         fillAllFields();
@@ -80,7 +80,7 @@ public final class JPanelConfigNetwork extends FilthyBackgroundPanel implements 
      * Fill all the fields with the current informations.
      */
     private void fillAllFields() {
-        CoreConfiguration config = ViewsServices.get(ICore.class).getConfiguration();
+        CoreConfiguration config = core.getConfiguration();
 
         boxProxy.setSelected(config.hasAProxy());
         fieldPort.setText(config.getProxyPort());
@@ -88,13 +88,13 @@ public final class JPanelConfigNetwork extends FilthyBackgroundPanel implements 
     }
 
     @Override
-    public String getTitle() {
-        return ViewsServices.get(ILanguageService.class).getMessage("config.view.tab.network");
+    public String getTitleKey() {
+        return "config.view.tab.network";
     }
 
     @Override
     public void apply() {
-        CoreConfiguration config = ViewsServices.get(ICore.class).getConfiguration();
+        CoreConfiguration config = core.getConfiguration();
 
         config.setHasAProxy(boxProxy.isSelected());
         config.setProxyPort(fieldPort.getText());

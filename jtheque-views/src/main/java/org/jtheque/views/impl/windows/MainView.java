@@ -21,6 +21,7 @@ import org.jtheque.core.ICore;
 import org.jtheque.core.lifecycle.TitleEvent;
 import org.jtheque.core.lifecycle.TitleListener;
 import org.jtheque.core.utils.SimplePropertiesCache;
+import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.ui.utils.components.Borders;
 import org.jtheque.ui.utils.builders.JThequePanelBuilder;
 import org.jtheque.ui.utils.builders.PanelBuilder;
@@ -28,15 +29,15 @@ import org.jtheque.ui.utils.windows.frames.SwingFrameView;
 import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.utils.ui.SwingUtils;
-import org.jtheque.views.ViewsServices;
 import org.jtheque.views.able.IViewService;
+import org.jtheque.views.able.IViews;
 import org.jtheque.views.able.components.MainComponent;
 import org.jtheque.views.able.windows.IMainView;
 import org.jtheque.views.impl.MainController;
 import org.jtheque.views.impl.components.InfiniteWaitUI;
 import org.jtheque.views.impl.components.LayerTabbedPane;
 import org.jtheque.views.impl.components.MainTabbedPane;
-import org.jtheque.views.impl.components.menu.JMenuBarJTheque;
+import org.jtheque.views.impl.components.menu.JThequeMenuBar;
 import org.jtheque.views.impl.components.panel.JThequeStateBar;
 
 import javax.swing.JComponent;
@@ -66,7 +67,6 @@ public final class MainView extends SwingFrameView implements TitleListener, IMa
     private static final int DEFAULT_HEIGHT = 645;
 
     private WindowListener tempListener;
-    private IViewService viewService;
 
     private JXLayer<JComponent> content;
 
@@ -75,12 +75,28 @@ public final class MainView extends SwingFrameView implements TitleListener, IMa
     private int current;
 
     private JThequeStateBar stateBar;
+    private final JThequeMenuBar menuBar;
+
+    private final IViewService viewService;
+    private final IViews views;
+    private final IUIUtils uiUtils;
+    private final ICore core;
+
+    public MainView(ICore core, IViewService viewService, IViews views, IUIUtils uiUtils, JThequeMenuBar menuBar) {
+        super();
+
+        this.core = core;
+        this.viewService = viewService;
+        this.views = views;
+        this.uiUtils = uiUtils;
+        this.menuBar = menuBar;
+    }
 
     /**
      * Build the view.
      */
     public void build() {
-        setTitle(ViewsServices.get(ICore.class).getLifeCycle().getTitle());
+        setTitle(core.getLifeCycle().getTitle());
         setResizable(false);
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
@@ -100,7 +116,7 @@ public final class MainView extends SwingFrameView implements TitleListener, IMa
 
         SwingUtils.centerFrame(this);
 
-        ViewsServices.get(ICore.class).getLifeCycle().addTitleListener(this);
+        core.getLifeCycle().addTitleListener(this);
     }
 
     /**
@@ -116,11 +132,10 @@ public final class MainView extends SwingFrameView implements TitleListener, IMa
      * Build the entire view with the final content.
      */
     public void fill() {
-        viewService = ViewsServices.get(IViewService.class);
-
         setIconImage(getDefaultWindowIcon());
         setResizable(true);
-        controller = new MainController();
+
+        controller = new MainController(core, uiUtils);
 
         content = buildContentPane();
 
@@ -129,7 +144,9 @@ public final class MainView extends SwingFrameView implements TitleListener, IMa
             public void run() {
                 setContentPane(content);
 
-                setJMenuBar(new JMenuBarJTheque());
+                menuBar.buildMenu();
+
+                setJMenuBar(menuBar);
 
                 removeWindowListener(tempListener);
 
@@ -167,12 +184,25 @@ public final class MainView extends SwingFrameView implements TitleListener, IMa
     }
 
     @Override
-    public void setGlassPane(Component glassPane) {
-        if (glassPane == null) {
-            content.setGlassPane(content.createGlassPane());
-        } else {
-            content.setGlassPane((JPanel) glassPane);
-        }
+    public void setGlassPane(final Component glassPane) {
+        SwingUtils.inEdt(new Runnable() {
+            @Override
+            public void run() {
+                if (glassPane == null) {
+                    content.setGlassPane(content.createGlassPane());
+                } else {
+                    content.setGlassPane((JPanel) glassPane);
+
+                    glassPane.setVisible(true);
+
+                    glassPane.repaint();
+
+                    SwingUtils.refresh(glassPane);
+                }
+
+                refresh();
+            }
+        });
     }
 
     @Override
@@ -189,11 +219,11 @@ public final class MainView extends SwingFrameView implements TitleListener, IMa
         PanelBuilder builder = new JThequePanelBuilder();
         builder.setBorder(Borders.EMPTY_BORDER);
 
-        Collection<MainComponent> components = ViewsServices.get(IViewService.class).getMainComponents();
+        Collection<MainComponent> components = views.getMainComponents();
 
         if(components.isEmpty()){
             Component emptyPanel = new JPanel();
-            emptyPanel.setBackground(viewService.getViewDefaults().getBackgroundColor());
+            emptyPanel.setBackground(Color.white);
 
             builder.add(emptyPanel, builder.gbcSet(0, 0, GridBagUtils.BOTH, GridBagUtils.FIRST_LINE_START, 1.0, 1.0));
         } else if (components.size() == 1) {
@@ -209,7 +239,7 @@ public final class MainView extends SwingFrameView implements TitleListener, IMa
 
         current = components.size();
 
-        stateBar = new JThequeStateBar();
+        stateBar = new JThequeStateBar(views);
 
         SimplePropertiesCache.put("statebar-loaded", "true");
 
@@ -233,7 +263,7 @@ public final class MainView extends SwingFrameView implements TitleListener, IMa
 
             GridBagUtils gbc = new GridBagUtils();
 
-            Collection<MainComponent> components = ViewsServices.get(IViewService.class).getMainComponents();
+            Collection<MainComponent> components = views.getMainComponents();
 
             content.getView().add(CollectionUtils.first(components).getComponent(),
                     gbc.gbcSet(0, 0, GridBagUtils.BOTH, GridBagUtils.FIRST_LINE_START, 1.0, 1.0));
@@ -262,7 +292,7 @@ public final class MainView extends SwingFrameView implements TitleListener, IMa
             GridBagUtils gbc = new GridBagUtils();
 
             Component emptyPanel = new JPanel();
-            emptyPanel.setBackground(viewService.getViewDefaults().getBackgroundColor());
+            emptyPanel.setBackground(Color.white);
 
             content.getView().add(emptyPanel, gbc.gbcSet(0, 0, GridBagUtils.BOTH, GridBagUtils.FIRST_LINE_START, 1.0, 1.0));
 
@@ -272,7 +302,7 @@ public final class MainView extends SwingFrameView implements TitleListener, IMa
 
             GridBagUtils gbc = new GridBagUtils();
 
-            Collection<MainComponent> components = ViewsServices.get(IViewService.class).getMainComponents();
+            Collection<MainComponent> components = views.getMainComponents();
 
             content.getView().add(CollectionUtils.first(components).getComponent(),
                     gbc.gbcSet(0, 0, GridBagUtils.BOTH, GridBagUtils.FIRST_LINE_START, 1.0, 1.0));
@@ -327,10 +357,10 @@ public final class MainView extends SwingFrameView implements TitleListener, IMa
      *
      * @author Baptiste Wicht
      */
-    private static final class TempWindowAdapter extends WindowAdapter {
+    private final class TempWindowAdapter extends WindowAdapter {
         @Override
         public void windowClosing(WindowEvent e) {
-            ViewsServices.get(ICore.class).getLifeCycle().exit();
+            core.getLifeCycle().exit();
         }
     }
 }

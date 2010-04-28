@@ -4,14 +4,17 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
+    <groupId>org.jtheque</groupId>
     <artifactId>org.jtheque.io</artifactId>
     <name>org.jtheque.io</name>
     <packaging>bundle</packaging>
+    <version>2.1-SNAPSHOT</version>
 
     <parent>
         <artifactId>org.jtheque.core.parent</artifactId>
         <groupId>org.jtheque</groupId>
         <version>2.1-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <dependencies>
@@ -79,7 +82,21 @@
                         <Bundle-SymbolicName>${pom.artifactId}</Bundle-SymbolicName>
                         <Export-Package>org.jtheque.io</Export-Package>
                         <Bundle-Vendor>Baptiste Wicht</Bundle-Vendor>
+                        <Spring-Context>*;create-asynchronously:=false;publish-context:=false</Spring-Context>
                     </instructions>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>*</exclude>
+                    </excludes>
+                    <includes>
+                        <include>**/org/jtheque/io/**/*Test.java</include>
+                    </includes>
                 </configuration>
             </plugin>
         </plugins>

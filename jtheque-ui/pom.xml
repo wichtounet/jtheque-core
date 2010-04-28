@@ -95,9 +95,9 @@
                 <configuration>
                     <instructions>
                         <Bundle-SymbolicName>${pom.artifactId}</Bundle-SymbolicName>
-                        <Export-Package>org.jtheque.ui</Export-Package>
+                        <Export-Package>org.jtheque.ui, org.jtheque.ui.*</Export-Package>
                         <Bundle-Vendor>Baptiste Wicht</Bundle-Vendor>
-                        <Bundle-Activator>org.jtheque.ui.ViewsUtilsActivator</Bundle-Activator>
+                        <Spring-Context>*;create-asynchronously:=false;publish-context:=false</Spring-Context>
                     </instructions>
                 </configuration>
             </plugin>

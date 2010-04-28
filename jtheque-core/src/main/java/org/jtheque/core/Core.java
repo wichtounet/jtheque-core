@@ -19,9 +19,16 @@ package org.jtheque.core;
 import org.jtheque.core.application.Application;
 import org.jtheque.core.lifecycle.ILifeCycle;
 import org.jtheque.core.lifecycle.LifeCycle;
+import org.jtheque.events.IEventService;
+import org.jtheque.resources.IResourceService;
 import org.jtheque.states.IStateService;
 import org.jtheque.utils.bean.Version;
+import org.osgi.framework.BundleContext;
+import org.slf4j.LoggerFactory;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.osgi.context.BundleContextAware;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -30,7 +37,7 @@ import java.util.Collection;
  *
  * @author Baptiste Wicht
  */
-public final class Core implements ICore {
+public final class Core implements ICore, BundleContextAware {
     private static final String CORE_MESSAGES_FILE = "http://jtheque.developpez.com/public/messages/core.message";
 
     private final Collection<String> creditsMessage;
@@ -39,27 +46,33 @@ public final class Core implements ICore {
 
     private final IFoldersContainer foldersContainer;
     private final IFilesContainer filesContainer;
-    private final ILifeCycle lifeCycle = new LifeCycle(this);
+    private final LifeCycle lifeCycle;
+    private final CoreConfiguration configuration;
 
-    private CoreConfiguration configuration;
+    private final IResourceService resourceService;
 
-    /**
-     * Construct a new core.
-     */
-    Core() {
+    public Core(IStateService stateService, IEventService eventService, IResourceService resourceService) {
         super();
 
-        foldersContainer = new Folders();
-        filesContainer = new Files();
+        this.resourceService = resourceService;
+
+        foldersContainer = new Folders(this);
+        filesContainer = new Files(this);
+        lifeCycle = new LifeCycle(eventService, this);
+
+        configuration = stateService.getState(new CoreConfiguration());
 
         creditsMessage = new ArrayList<String>(5);
-
         creditsMessage.add("about.view.copyright");
     }
 
     @Override
     public void setApplication(Application application) {
         this.application = application;
+
+        LoggerFactory.getLogger(getClass()).debug("Configuring core with application {}", application);
+
+        resourceService.registerResource(WINDOW_ICON, new FileSystemResource(new File(application.getWindowIcon())));
     }
 
     @Override
@@ -107,10 +120,6 @@ public final class Core implements ICore {
 
     @Override
     public CoreConfiguration getConfiguration() {
-        if (configuration == null) {
-            configuration = CoreServices.get(IStateService.class).getOrCreateState(CoreConfiguration.class);
-        }
-
         return configuration;
     }
 
@@ -129,5 +138,10 @@ public final class Core implements ICore {
         }
 
         return languagesLong;
+    }
+
+    @Override
+    public void setBundleContext(BundleContext bundleContext) {
+        lifeCycle.setBundleContext(bundleContext);
     }
 }

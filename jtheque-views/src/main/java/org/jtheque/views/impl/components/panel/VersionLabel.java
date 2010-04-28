@@ -17,7 +17,6 @@ package org.jtheque.views.impl.components.panel;
  */
 
 import org.jtheque.update.IUpdateService;
-import org.jtheque.views.ViewsServices;
 
 import javax.swing.JLabel;
 import java.awt.Color;
@@ -34,11 +33,11 @@ public final class VersionLabel extends JLabel {
      * @param object     The object to display the version for.
      * @param foreground The foreground color.
      */
-    public VersionLabel(Object object, Color foreground) {
+    public VersionLabel(Object object, Color foreground, IUpdateService updateService) {//TODO choose one of updateService/object or version to put
         super();
 
         setForeground(foreground);
 
-        setText(ViewsServices.get(IUpdateService.class).getMostRecentVersion(object).getVersion());
+        setText(updateService.getMostRecentVersion(object).getVersion());
     }
 }

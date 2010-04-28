@@ -5,9 +5,10 @@
       <configuration />
     </facet>
     <facet type="Osmorc" name="OSGi">
-      <configuration osmorcControlsManifest="true" manifestLocation="src/main/resources/META-INF/MANIFEST.MF" jarfileLocation="/home/wichtounet/Builds/bundles/jtheque-resources/classes/jtheque-resources.jar" useBndFile="false" bndFileLocation="" bundleActivator="org.jtheque.persistence.PersistenceActivator" bundleSymbolicName="org.jtheque.resources" bundleVersion="2.1-SNAPSHOT" ignoreFilePattern="" useProjectDefaultManifestFileLocation="false" alwaysRebuildBundleJAR="false">
+      <configuration osmorcControlsManifest="true" manifestLocation="" jarfileLocation="$APPLICATION_HOME_DIR$/bin/home/wichtounet/Builds/bundles/jtheque-resources/classes/jtheque-resources.jar" useBndFile="false" bndFileLocation="" bundleActivator="" bundleSymbolicName="org.jtheque.resources" bundleVersion="2.1-SNAPSHOT" ignoreFilePattern="" useProjectDefaultManifestFileLocation="true" alwaysRebuildBundleJAR="false">
         <additionalProperties>
           <property key="Bundle-Vendor" value="Baptiste Wicht" />
+          <property key="Spring-Context" value="*;create-asynchronously:=false;publish-context:=false" />
           <property key="Export-Package" value="org.jtheque.resources" />
         </additionalProperties>
         <additionalJARContents />

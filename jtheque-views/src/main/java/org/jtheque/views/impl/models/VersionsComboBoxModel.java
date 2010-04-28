@@ -16,12 +16,10 @@ package org.jtheque.views.impl.models;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import org.jtheque.core.ICore;
 import org.jtheque.update.IUpdateService;
 import org.jtheque.update.Updatable;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.modules.able.Module;
-import org.jtheque.views.ViewsServices;
 
 import javax.swing.DefaultComboBoxModel;
 import java.util.ArrayList;
@@ -36,7 +34,16 @@ public final class VersionsComboBoxModel extends DefaultComboBoxModel {
     private Mode mode;
     private Module currentModule;
     private Updatable currentUpdatable;
+
     private final List<Version> versions = new ArrayList<Version>(5);
+
+    private final IUpdateService updateService;
+
+    public VersionsComboBoxModel(IUpdateService updateService) {
+        super();
+
+        this.updateService = updateService;
+    }
 
     /**
      * The mode of the model.
@@ -72,7 +79,7 @@ public final class VersionsComboBoxModel extends DefaultComboBoxModel {
             mode = Mode.KERNEL;
 
             versions.clear();
-            versions.addAll(ViewsServices.get(IUpdateService.class).getVersions(ViewsServices.get(ICore.class)));
+            versions.addAll(updateService.getKernelVersions());
         }
     }
 
@@ -87,7 +94,7 @@ public final class VersionsComboBoxModel extends DefaultComboBoxModel {
             currentModule = value;
 
             versions.clear();
-            versions.addAll(ViewsServices.get(IUpdateService.class).getVersions(currentModule));
+            versions.addAll(updateService.getVersions(currentModule));
         }
     }
 
@@ -102,7 +109,7 @@ public final class VersionsComboBoxModel extends DefaultComboBoxModel {
             currentUpdatable = value;
 
             versions.clear();
-            versions.addAll(ViewsServices.get(IUpdateService.class).getVersions(currentUpdatable));
+            versions.addAll(updateService.getVersions(currentUpdatable));
         }
     }
 

@@ -16,14 +16,13 @@ package org.jtheque.views.impl.actions.module.update;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.ui.utils.actions.JThequeAction;
 import org.jtheque.update.IUpdateService;
-import org.jtheque.views.ViewsServices;
-import org.jtheque.views.able.IViewService;
+import org.jtheque.utils.ui.SwingUtils;
+import org.jtheque.utils.ui.edt.SimpleTask;
 import org.jtheque.views.able.windows.IUpdateView;
-import org.jtheque.ui.utils.edt.SimpleTask;
 
+import javax.annotation.Resource;
 import java.awt.event.ActionEvent;
 
 /**
@@ -32,6 +31,12 @@ import java.awt.event.ActionEvent;
  * @author Baptiste Wicht
  */
 public final class AcValidateUpdateView extends JThequeAction {
+    @Resource
+    private IUpdateView updateView;
+
+    @Resource
+    private IUpdateService updateService;
+
     /**
      * Construct a new AcValidateUpdateView.
      */
@@ -41,10 +46,10 @@ public final class AcValidateUpdateView extends JThequeAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        ViewsServices.get(IUIUtils.class).execute(new SimpleTask() {
+        SwingUtils.execute(new SimpleTask() {
             @Override
             public void run() {
-                ViewsServices.get(IViewService.class).getViews().getUpdateView().startWait();
+                updateView.startWait();
 
                 new Thread(new UpdateRunnable()).start();
             }
@@ -56,20 +61,18 @@ public final class AcValidateUpdateView extends JThequeAction {
      *
      * @author Baptiste Wicht
      */
-    private static final class UpdateRunnable implements Runnable {
+    private final class UpdateRunnable implements Runnable {
         @Override
         public void run() {
-            IUpdateView updateView = ViewsServices.get(IViewService.class).getViews().getUpdateView();
-
             if (updateView.getMode() == IUpdateView.Mode.KERNEL) {
-                ViewsServices.get(IUpdateService.class).update(updateView.getSelectedVersion());
+                updateService.update(updateView.getSelectedVersion());
             } else if (updateView.getMode() == IUpdateView.Mode.MODULE) {
-                ViewsServices.get(IUpdateService.class).update(updateView.getModule(), updateView.getSelectedVersion());
+                updateService.update(updateView.getModule(), updateView.getSelectedVersion());
             } else {
-                ViewsServices.get(IUpdateService.class).update(updateView.getUpdatable(), updateView.getSelectedVersion());
+                updateService.update(updateView.getUpdatable(), updateView.getSelectedVersion());
             }
 
-            ViewsServices.get(IUIUtils.class).execute(new StopWaitTask());
+            SwingUtils.execute(new StopWaitTask());
         }
     }
 
@@ -78,10 +81,10 @@ public final class AcValidateUpdateView extends JThequeAction {
      *
      * @author Baptiste Wicht
      */
-    private static final class StopWaitTask extends SimpleTask {
+    private final class StopWaitTask extends SimpleTask {
         @Override
         public void run() {
-            ViewsServices.get(IViewService.class).getViews().getUpdateView().stopWait();
+            updateView.stopWait();
         }
     }
 }

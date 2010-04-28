@@ -10,7 +10,13 @@
 
     <bean id="persistenceManager" class="org.jtheque.persistence.PersistenceService" />
 
-    <osgi:service id="persistenceManagerService" ref="persistenceManager" interface="org.jtheque.persistence.able.IPersistenceService"/>
+    <bean id="daoNotes" class="org.jtheque.persistence.impl.DaoNotes">
+        <constructor-arg><osgi:reference interface="org.jtheque.resources.IResourceService"/></constructor-arg>
+        <constructor-arg><osgi:reference interface="org.jtheque.i18n.ILanguageService"/></constructor-arg>
+    </bean>
+
+    <osgi:service ref="persistenceManager" interface="org.jtheque.persistence.able.IPersistenceService"/>
+    <osgi:service ref="daoNotes" interface="org.jtheque.persistence.able.IDaoNotes"/>
 
     <bean class="org.jtheque.persistence.DataContainerPostProcessor" />
 
@@ -32,4 +38,6 @@
     </bean>
 
     <bean id="daoPersistenceContext" class="org.jtheque.persistence.context.DaoPersistenceContext"/>
+
+    <osgi:service ref="jdbcTemplate" interface="org.springframework.jdbc.core.simple.SimpleJdbcTemplate" />
 </beans>

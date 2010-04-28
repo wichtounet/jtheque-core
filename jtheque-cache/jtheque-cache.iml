@@ -1,17 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" type="JAVA_MODULE" version="4">
   <component name="FacetManager">
+    <facet type="Spring" name="Spring">
+      <configuration />
+    </facet>
     <facet type="Osmorc" name="OSGi">
-      <configuration osmorcControlsManifest="true" manifestLocation="src/main/resources/META-INF/MANIFEST.MF" jarfileLocation="/home/wichtounet/Builds/bundles/jtheque-cache/classes/jtheque-cache.jar" useBndFile="false" bndFileLocation="" bundleActivator="org.jtheque.persistence.PersistenceActivator" bundleSymbolicName="org.jtheque.cache" bundleVersion="2.1-SNAPSHOT" ignoreFilePattern="" useProjectDefaultManifestFileLocation="false" alwaysRebuildBundleJAR="false">
+      <configuration osmorcControlsManifest="true" manifestLocation="" jarfileLocation="$APPLICATION_HOME_DIR$/bin/home/wichtounet/Builds/bundles/jtheque-cache/classes/jtheque-cache.jar" useBndFile="false" bndFileLocation="" bundleActivator="" bundleSymbolicName="org.jtheque.cache" bundleVersion="2.1-SNAPSHOT" ignoreFilePattern="" useProjectDefaultManifestFileLocation="true" alwaysRebuildBundleJAR="false">
         <additionalProperties>
           <property key="Bundle-Vendor" value="Baptiste Wicht" />
+          <property key="Spring-Context" value="*;create-asynchronously:=false;publish-context:=false" />
           <property key="Export-Package" value="org.jtheque.cache" />
         </additionalProperties>
         <additionalJARContents />
       </configuration>
     </facet>
-    <facet type="Spring" name="Spring">
-      <configuration />
+    <facet type="Osmorc" name="OSGi">
+      <configuration osmorcControlsManifest="true" manifestLocation="" jarfileLocation="$APPLICATION_HOME_DIR$/bin/home/wichtounet/Builds/bundles/jtheque-cache/classes/jtheque-cache.jar" useBndFile="false" bndFileLocation="" bundleActivator="" bundleSymbolicName="org.jtheque.cache" bundleVersion="2.1-SNAPSHOT" ignoreFilePattern="" useProjectDefaultManifestFileLocation="true" alwaysRebuildBundleJAR="false">
+        <additionalProperties>
+          <property key="Bundle-Vendor" value="Baptiste Wicht" />
+          <property key="Spring-Context" value="*;create-asynchronously:=false" />
+          <property key="Export-Package" value="org.jtheque.cache" />
+        </additionalProperties>
+        <additionalJARContents />
+      </configuration>
+    </facet>
+    <facet type="Osmorc" name="OSGi">
+      <configuration osmorcControlsManifest="true" manifestLocation="" jarfileLocation="$APPLICATION_HOME_DIR$/bin/home/wichtounet/Builds/bundles/jtheque-cache/classes/jtheque-cache.jar" useBndFile="false" bndFileLocation="" bundleActivator="" bundleSymbolicName="org.jtheque.cache" bundleVersion="2.1-SNAPSHOT" ignoreFilePattern="" useProjectDefaultManifestFileLocation="true" alwaysRebuildBundleJAR="false">
+        <additionalProperties>
+          <property key="Bundle-Vendor" value="Baptiste Wicht" />
+          <property key="Spring-Context" value="*;create-asynchronously:=false" />
+          <property key="Export-Package" value="org.jtheque.cache" />
+        </additionalProperties>
+        <additionalJARContents />
+      </configuration>
     </facet>
   </component>
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_6" inherit-compiler-output="false">
@@ -34,13 +55,14 @@
     <orderEntry type="library" exported="" name="Maven: javax.mail:mail:1.4.1" level="project" />
     <orderEntry type="library" exported="" name="Maven: javax.activation:activation:1.1" level="project" />
     <orderEntry type="module" module-name="jtheque-core" exported="" />
-    <orderEntry type="module" module-name="jtheque-i18n" exported="" />
-    <orderEntry type="library" exported="" name="Maven: org.springframework:spring-context-support:3.0.0.RELEASE" level="project" />
-    <orderEntry type="library" exported="" name="Maven: org.springframework:spring-beans:3.0.0.RELEASE" level="project" />
+    <orderEntry type="module" module-name="jtheque-resources" exported="" />
     <orderEntry type="library" exported="" name="Maven: org.springframework:spring-core:3.0.0.RELEASE" level="project" />
     <orderEntry type="library" exported="" name="Maven: org.springframework:spring-asm:3.0.0.RELEASE" level="project" />
+    <orderEntry type="library" exported="" name="Maven: org.springframework:spring-beans:3.0.0.RELEASE" level="project" />
     <orderEntry type="library" exported="" name="Maven: org.springframework:spring-context:3.0.0.RELEASE" level="project" />
     <orderEntry type="library" exported="" name="Maven: org.springframework:spring-expression:3.0.0.RELEASE" level="project" />
+    <orderEntry type="module" module-name="jtheque-i18n" exported="" />
+    <orderEntry type="library" exported="" name="Maven: org.springframework:spring-context-support:3.0.0.RELEASE" level="project" />
     <orderEntry type="library" exported="" name="Maven: org.springframework.osgi:spring-osgi-core:1.2.1" level="project" />
     <orderEntry type="module" module-name="jtheque-states" exported="" />
     <orderEntry type="module" module-name="jtheque-io" exported="" />
@@ -51,9 +73,9 @@
     <orderEntry type="library" exported="" name="Maven: xml-apis:xml-apis:1.3.04" level="project" />
     <orderEntry type="module" module-name="jtheque-saxpath" exported="" />
     <orderEntry type="library" exported="" name="Maven: org.jdom:saxpath:1.0-FCS" level="project" />
-    <orderEntry type="module" module-name="jtheque-jaxen-core" exported="" />
+    <orderEntry type="library" exported="" name="Maven: org.jdom:org.jtheque.jaxen-core:1.0.0" level="project" />
     <orderEntry type="library" exported="" name="Maven: org.jdom:jaxen-core:1.0-FCS" level="project" />
-    <orderEntry type="module" module-name="jtheque-jaxen-jdom" exported="" />
+    <orderEntry type="library" exported="" name="Maven: org.jdom:org.jtheque.jaxen-jdom:1.0.0" level="project" />
     <orderEntry type="library" exported="" name="Maven: org.jdom:jaxen-jdom:1.0-FCS" level="project" />
     <orderEntry type="module" module-name="jtheque-events" exported="" />
     <orderEntry type="library" scope="TEST" name="Maven: junit:junit:4.4" level="project" />

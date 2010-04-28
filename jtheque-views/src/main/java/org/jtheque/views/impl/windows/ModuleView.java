@@ -19,7 +19,8 @@ package org.jtheque.views.impl.windows;
 import org.jtheque.modules.able.Module;
 import org.jtheque.ui.able.IModel;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
-import org.jtheque.ui.utils.windows.frames.SwingFilthyBuildedDialogView;
+import org.jtheque.ui.utils.windows.dialogs.SwingFilthyBuildedDialogView;
+import org.jtheque.update.IUpdateService;
 import org.jtheque.update.Updatable;
 import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.views.able.components.IModulesPanelView;
@@ -40,15 +41,6 @@ public final class ModuleView extends SwingFilthyBuildedDialogView<IModel> imple
     private IModulesPanelView modulesPanel;
     private IUpdatablesPanelView updatablesPanel;
 
-    /**
-     * Construct a new ModuleView. 
-     */
-    public ModuleView(){
-        super();
-
-        build();
-    }
-
     @Override
     protected void initView(){
         setTitleKey("module.view.title");
@@ -58,8 +50,8 @@ public final class ModuleView extends SwingFilthyBuildedDialogView<IModel> imple
     protected void buildView(I18nPanelBuilder builder){
         LayerTabbedPane tabbed = new LayerTabbedPane();
 
-        modulesPanel = new ModulesPanel();
-        updatablesPanel = new UpdatablesPanel();
+        modulesPanel = new ModulesPanel(getService(IUpdateService.class));
+        updatablesPanel = new UpdatablesPanel(getService(IUpdateService.class));
 
         tabbed.addInternationalizedTab("modules.view.tab.modules", (JComponent) modulesPanel);
         tabbed.addInternationalizedTab("modules.view.tab.updatables", (JComponent) updatablesPanel);

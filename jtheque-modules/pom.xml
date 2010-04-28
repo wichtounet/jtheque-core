@@ -105,8 +105,9 @@
                 <configuration>
                     <instructions>
                         <Bundle-SymbolicName>${pom.artifactId}</Bundle-SymbolicName>
-                        <Export-Package>org.jtheque.modules.able, org.jtheque.modules.utils, org.jtheque.modules</Export-Package>
+                        <Export-Package>org.jtheque.modules, org.jtheque.modules.*, org.jtheque.update, org.jtheque.update.*</Export-Package>
                         <Bundle-Vendor>Baptiste Wicht</Bundle-Vendor>
+                        <Spring-Context>*;create-asynchronously:=false;publish-context:=false</Spring-Context>
                     </instructions>
                 </configuration>
             </plugin>

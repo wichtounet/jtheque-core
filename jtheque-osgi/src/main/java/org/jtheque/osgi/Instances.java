@@ -141,7 +141,7 @@ final class Instances {
 
                     client.start();
                 } catch (SocketException e1) {
-                    LoggerFactory.getLogger(getClass()).error(e1.getMessage(), e1);
+                    LoggerFactory.getLogger(getClass()).debug("The socket has been closed. Normally no problems. ");
                 } catch (IOException e2) {
                     LoggerFactory.getLogger(getClass()).error(e2.getMessage(), e2);
                     interrupt();

@@ -20,10 +20,9 @@ import org.jtheque.collections.ICollectionsService;
 import org.jtheque.core.utils.Response;
 import org.jtheque.i18n.ILanguageService;
 import org.jtheque.ui.utils.actions.JThequeAction;
-import org.jtheque.views.ViewsServices;
-import org.jtheque.views.able.IViewService;
 import org.jtheque.views.able.panel.ICollectionView;
 
+import javax.annotation.Resource;
 import java.awt.event.ActionEvent;
 
 /**
@@ -32,6 +31,15 @@ import java.awt.event.ActionEvent;
  * @author Baptiste Wicht
  */
 public final class ChooseAction extends JThequeAction {
+    @Resource
+    private ICollectionView collectionView;
+
+    @Resource
+    private ICollectionsService collectionsService;
+
+    @Resource
+    private ILanguageService languageService;
+
     /**
      * Construct a new ChooseAction.
      */
@@ -41,12 +49,10 @@ public final class ChooseAction extends JThequeAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        ICollectionView collectionView = ViewsServices.get(IViewService.class).getCollectionView();
-
-        Response response = ViewsServices.get(ICollectionsService.class).chooseCollection(collectionView.getCollection(), collectionView.getPassword(), false);
+        Response response = collectionsService.chooseCollection(collectionView.getCollection(), collectionView.getPassword(), false);
 
         if(!response.isOk()){
-            collectionView.setErrorMessage(ViewsServices.get(ILanguageService.class).getMessage(response.getKey(), response.getReplaces()));
+            collectionView.setErrorMessage(languageService.getMessage(response.getKey(), response.getReplaces()));
         }
     }
 }

@@ -1,10 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" type="JAVA_MODULE" version="4">
   <component name="FacetManager">
+    <facet type="Spring" name="Spring">
+      <configuration />
+    </facet>
     <facet type="Osmorc" name="OSGi">
-      <configuration osmorcControlsManifest="true" manifestLocation="src/main/resources/META-INF/MANIFEST.MF" jarfileLocation="/home/wichtounet/Builds/bundles/jtheque-states/classes/jtheque-states.jar" useBndFile="false" bndFileLocation="" bundleActivator="org.jtheque.states.StatesActivator" bundleSymbolicName="org.jtheque.states" bundleVersion="2.1-SNAPSHOT" ignoreFilePattern="" useProjectDefaultManifestFileLocation="false" alwaysRebuildBundleJAR="false">
+      <configuration osmorcControlsManifest="true" manifestLocation="" jarfileLocation="$APPLICATION_HOME_DIR$/bin/home/wichtounet/Builds/bundles/jtheque-states/classes/jtheque-states.jar" useBndFile="false" bndFileLocation="" bundleActivator="org.jtheque.states.StatesActivator" bundleSymbolicName="org.jtheque.states" bundleVersion="2.1-SNAPSHOT" ignoreFilePattern="" useProjectDefaultManifestFileLocation="true" alwaysRebuildBundleJAR="false">
         <additionalProperties>
           <property key="Bundle-Vendor" value="Baptiste Wicht" />
+          <property key="Spring-Context" value="*;create-asynchronously:=false;publish-context:=false" />
+          <property key="Export-Package" value="org.jtheque.states" />
+        </additionalProperties>
+        <additionalJARContents />
+      </configuration>
+    </facet>
+    <facet type="Osmorc" name="OSGi">
+      <configuration osmorcControlsManifest="true" manifestLocation="" jarfileLocation="$APPLICATION_HOME_DIR$/bin/home/wichtounet/Builds/bundles/jtheque-states/classes/jtheque-states.jar" useBndFile="false" bndFileLocation="" bundleActivator="org.jtheque.states.StatesActivator" bundleSymbolicName="org.jtheque.states" bundleVersion="2.1-SNAPSHOT" ignoreFilePattern="" useProjectDefaultManifestFileLocation="true" alwaysRebuildBundleJAR="false">
+        <additionalProperties>
+          <property key="Bundle-Vendor" value="Baptiste Wicht" />
+          <property key="Spring-Context" value="*;create-asynchronously:=false" />
           <property key="Export-Package" value="org.jtheque.states" />
         </additionalProperties>
         <additionalJARContents />
@@ -15,8 +29,8 @@
     <output url="file:///home/wichtounet/Builds/bundles/jtheque-states/classes/production" />
     <output-test url="file:///home/wichtounet/Builds/utils/jtheque-core/classes/test" />
     <content url="file://$MODULE_DIR$">
-      <sourceFolder url="file://$MODULE_DIR$/src/main/resources" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/main/resources" isTestSource="false" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
@@ -35,9 +49,9 @@
     <orderEntry type="library" exported="" name="Maven: xml-apis:xml-apis:1.3.04" level="project" />
     <orderEntry type="module" module-name="jtheque-saxpath" exported="" />
     <orderEntry type="library" exported="" name="Maven: org.jdom:saxpath:1.0-FCS" level="project" />
-    <orderEntry type="module" module-name="jtheque-jaxen-core" exported="" />
+    <orderEntry type="library" exported="" name="Maven: org.jdom:org.jtheque.jaxen-core:1.0.0" level="project" />
     <orderEntry type="library" exported="" name="Maven: org.jdom:jaxen-core:1.0-FCS" level="project" />
-    <orderEntry type="module" module-name="jtheque-jaxen-jdom" exported="" />
+    <orderEntry type="library" exported="" name="Maven: org.jdom:org.jtheque.jaxen-jdom:1.0.0" level="project" />
     <orderEntry type="library" exported="" name="Maven: org.jdom:jaxen-jdom:1.0-FCS" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: junit:junit:4.4" level="project" />
   </component>

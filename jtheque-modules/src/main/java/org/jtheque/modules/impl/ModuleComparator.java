@@ -18,6 +18,7 @@ package org.jtheque.modules.impl;
 
 import org.jtheque.modules.able.Module;
 import org.jtheque.utils.StringUtils;
+import org.jtheque.utils.collections.ArrayUtils;
 
 import java.util.Comparator;
 
@@ -27,24 +28,22 @@ import java.util.Comparator;
 final class ModuleComparator implements Comparator<ModuleContainer> {
     @Override
     public int compare(ModuleContainer o1, ModuleContainer o2) {
-        boolean hasDependency = StringUtils.isNotEmpty(o1.getDependencies());
-        boolean hasOtherDependency = StringUtils.isNotEmpty(o2.getDependencies());
+        boolean hasDependency = hasDependency(o1);
+        boolean hasOtherDependency = hasDependency(o2);
 
         if (hasDependency && !hasOtherDependency) {
             return 1;
         } else if (!hasDependency && hasOtherDependency) {
             return -1;
         } else {
-            for (String dependency : o2.getDependencies()) {
-                if (dependency.equals(o1.getId())) { //The other depends on me
-                    return -1;
-                }
+            //The other depends on me
+            if(ArrayUtils.search(o2.getDependencies(), o1.getId())){
+                return -1;
             }
 
-            for (String dependency : o1.getDependencies()) {
-                if (dependency.equals(o2.getId())) { //I depends on the other
-                    return 1;
-                }
+            //I depends on the other
+            if(ArrayUtils.search(o1.getDependencies(), o2.getId())){
+                return 1;
             }
         }
 

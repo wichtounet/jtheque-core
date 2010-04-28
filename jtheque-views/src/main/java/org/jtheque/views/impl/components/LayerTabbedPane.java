@@ -20,8 +20,8 @@ import org.jdesktop.jxlayer.JXLayer;
 import org.jdesktop.jxlayer.plaf.BufferedLayerUI;
 import org.jtheque.i18n.ILanguageService;
 import org.jtheque.ui.able.ViewComponent;
-import org.jtheque.views.ViewsServices;
 
+import javax.annotation.Resource;
 import javax.swing.JComponent;
 import javax.swing.JTabbedPane;
 import javax.swing.Timer;
@@ -44,6 +44,9 @@ import java.util.List;
 public class LayerTabbedPane extends JTabbedPane implements ViewComponent {
     private final List<JXLayer<JComponent>> components;
 
+    @Resource
+    private ILanguageService languageService;
+
     /**
      * Construct a new LayerTabbedPane.
      */
@@ -62,7 +65,7 @@ public class LayerTabbedPane extends JTabbedPane implements ViewComponent {
      * @param component The component to add.
      */
     public final void addInternationalizedTab(String key, JComponent component) {
-        addLayeredTab(ViewsServices.get(ILanguageService.class).getMessage(key), component);
+        addLayeredTab(languageService.getMessage(key), component);
     }
 
     /**

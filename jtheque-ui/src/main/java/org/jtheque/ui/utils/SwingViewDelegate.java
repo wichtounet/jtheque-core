@@ -5,17 +5,13 @@ import org.jdesktop.swingx.error.ErrorInfo;
 import org.jtheque.core.utils.SimplePropertiesCache;
 import org.jtheque.errors.JThequeError;
 import org.jtheque.ui.able.ViewDelegate;
-import org.jtheque.utils.io.SimpleFilter;
 import org.jtheque.utils.ui.SwingUtils;
 import org.slf4j.LoggerFactory;
 
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import java.awt.Component;
 import java.awt.Window;
-import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.util.logging.Level;
 
@@ -39,7 +35,7 @@ import java.util.logging.Level;
  * @author Baptiste Wicht
  */
 public final class SwingViewDelegate implements ViewDelegate {
-    private JFileChooser chooser;
+    private static final String MAIN_VIEW_CACHE = "mainView";
 
     @Override
     public boolean askUserForConfirmation(final String text, final String title) {
@@ -47,8 +43,8 @@ public final class SwingViewDelegate implements ViewDelegate {
 
 		Window parent = null;
 
-		if (SimplePropertiesCache.get("mainView") != null) {
-			parent = SimplePropertiesCache.get("mainView");
+		if (SimplePropertiesCache.get(MAIN_VIEW_CACHE) != null) {
+			parent = SimplePropertiesCache.get(MAIN_VIEW_CACHE);
 		}
 
 		final Window p = parent;
@@ -91,51 +87,7 @@ public final class SwingViewDelegate implements ViewDelegate {
         run(new DisplayTextRunnable(text));
     }
 
-    @Override
-    public String chooseFile(SimpleFilter filter) {
-        File file = null;
 
-        if (chooser == null) {
-            chooser = new JFileChooser();
-        }
-
-        chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-
-        if (filter == null) {
-            chooser.setAcceptAllFileFilterUsed(true);
-        } else {
-            chooser.addChoosableFileFilter(new SwingFileFilter(filter));
-            chooser.setAcceptAllFileFilterUsed(false);
-        }
-
-        int answer = chooser.showOpenDialog(SimplePropertiesCache.<Component>get("mainView"));
-
-        if (answer == JFileChooser.APPROVE_OPTION) {
-            file = chooser.getSelectedFile();
-        }
-
-        return file == null ? null : file.getAbsolutePath();
-    }
-
-    @Override
-    public String chooseDirectory() {
-        File file = null;
-
-        if (chooser == null) {
-            chooser = new JFileChooser();
-        }
-
-        chooser.setAcceptAllFileFilterUsed(false);
-        chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-
-        int returnCode = chooser.showOpenDialog(new JFrame());
-
-        if (returnCode == JFileChooser.APPROVE_OPTION) {
-            file = chooser.getSelectedFile();
-        }
-
-        return file == null ? null : file.getAbsolutePath();
-    }
 
     @Override
     public void run(Runnable runnable) {
@@ -151,8 +103,8 @@ public final class SwingViewDelegate implements ViewDelegate {
     public String askText(String text) {
         Window parent = null;
 
-        if (SimplePropertiesCache.<Component>get("mainView") != null) {
-            parent = (Window) SimplePropertiesCache.<Component>get("mainView");
+        if (SimplePropertiesCache.<Component>get(MAIN_VIEW_CACHE) != null) {
+            parent = (Window) SimplePropertiesCache.<Component>get(MAIN_VIEW_CACHE);
         }
 
         return JOptionPane.showInputDialog(parent, text);
@@ -200,7 +152,7 @@ public final class SwingViewDelegate implements ViewDelegate {
 
         @Override
         public void run() {
-            JOptionPane.showMessageDialog(SimplePropertiesCache.<Component>get("mainView"), text);
+            JOptionPane.showMessageDialog(SimplePropertiesCache.<Component>get(MAIN_VIEW_CACHE), text);
         }
     }
 }

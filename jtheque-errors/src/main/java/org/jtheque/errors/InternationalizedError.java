@@ -1,8 +1,5 @@
 package org.jtheque.errors;
 
-import org.jtheque.i18n.ILanguageService;
-import org.jtheque.utils.StringUtils;
-
 /*
  * This file is part of JTheque.
  *
@@ -28,92 +25,70 @@ public final class InternationalizedError extends JThequeError {
     private Object[] messageReplaces;
     private Object[] detailsReplaces;
 
-    private final ILanguageService languageService;
-
     /**
      * Construct a new InternationalizedError.
      *
-     * @param languageService The language manager to use to internationalize the error.
      * @param message The message key.
      */
-    public InternationalizedError(ILanguageService languageService, String message) {
+    public InternationalizedError(String message) {
         super(message);
-
-        this.languageService = languageService;
     }
 
     /**
      * Construct a new InternationalizedError.
      *
-     * @param languageService The language manager to use to internationalize the error.
      * @param message  The message key.
      * @param replaces The replaces for the internationalization variable arguments of the message.
      */
-    public InternationalizedError(ILanguageService languageService, String message, Object... replaces) {
+    public InternationalizedError(String message, Object... replaces) {
         super(message);
 
         messageReplaces = replaces.clone();
-        this.languageService = languageService;
     }
 
     /**
      * Construct a new InternationalizedError.
      *
-     * @param languageService The language manager to use to internationalize the error.
      * @param message The message key.
      * @param details The details key.
      */
-    public InternationalizedError(ILanguageService languageService, String message, String details) {
+    public InternationalizedError(String message, String details) {
         super(message, details);
-
-        this.languageService = languageService;
     }
 
     /**
      * Construct a new InternationalizedError.
      *
-     * @param languageService The language manager to use to internationalize the error.
      * @param message  The message key.
      * @param replaces The replaces for the internationalization variable arguments of the message.
      * @param details  The details key.
      */
-    public InternationalizedError(ILanguageService languageService, String message, Object[] replaces, String details) {
+    public InternationalizedError(String message, Object[] replaces, String details) {
         super(message, details);
 
         messageReplaces = replaces.clone();
-        this.languageService = languageService;
     }
 
     /**
      * Construct a new InternationalizedError.
      *
-     * @param languageService The language manager to use to internationalize the error.
      * @param message         The message key.
      * @param replaces        The replaces for the internationalization variable arguments of the message.
      * @param details         The details key.
      * @param replacesDetails The replaces for the internationalization variable arguments of the details.
      */
-    public InternationalizedError(ILanguageService languageService, String message, Object[] replaces, String details, Object[] replacesDetails) {
+    public InternationalizedError(String message, Object[] replaces, String details, Object[] replacesDetails) {
         super(message, details);
 
         messageReplaces = replaces.clone();
         detailsReplaces = replacesDetails.clone();
-        this.languageService = languageService;
     }
 
-    @Override
-    public String getDetails() {
-        String details = null;
-
-        if (!StringUtils.isEmpty(super.getDetails())) {
-            details = languageService.getMessage(super.getDetails(), detailsReplaces);
-        }
-
-        return details;
+    public Object[] getMessageReplaces() {
+        return messageReplaces;
     }
 
-    @Override
-    public String getMessage() {
-        return languageService.getMessage(super.getMessage(), messageReplaces);
+    public Object[] getDetailsReplaces() {
+        return detailsReplaces;
     }
 }

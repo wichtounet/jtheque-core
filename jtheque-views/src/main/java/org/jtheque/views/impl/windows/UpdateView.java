@@ -19,7 +19,8 @@ package org.jtheque.views.impl.windows;
 import org.jtheque.modules.impl.ModuleContainer;
 import org.jtheque.ui.able.IModel;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
-import org.jtheque.ui.utils.windows.frames.SwingFilthyBuildedDialogView;
+import org.jtheque.ui.utils.windows.dialogs.SwingFilthyBuildedDialogView;
+import org.jtheque.update.IUpdateService;
 import org.jtheque.update.Updatable;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.ui.GridBagUtils;
@@ -40,15 +41,6 @@ public final class UpdateView extends SwingFilthyBuildedDialogView<IModel> imple
     private ModuleContainer module;
     private Updatable updatable;
 
-    /**
-     * Construct a new UpdateView. 
-     */
-    public UpdateView(){
-        super();
-
-        build();
-    }
-
     @Override
     protected void initView(){
         setTitleKey("update.view.title");
@@ -59,7 +51,7 @@ public final class UpdateView extends SwingFilthyBuildedDialogView<IModel> imple
     protected void buildView(I18nPanelBuilder builder){
         builder.addI18nLabel("update.view.versions", builder.gbcSet(0, 0, GridBagUtils.HORIZONTAL));
 
-        model = new VersionsComboBoxModel();
+        model = new VersionsComboBoxModel(getService(IUpdateService.class));
 
         builder.addComboBox(model, new FilthyRenderer(), builder.gbcSet(0, 1, GridBagUtils.HORIZONTAL));
 

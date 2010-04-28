@@ -16,13 +16,13 @@ package org.jtheque.views.impl.actions.about;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.ui.utils.actions.JThequeAction;
-import org.jtheque.views.ViewsServices;
-import org.jtheque.views.able.IViewService;
-import org.jtheque.ui.utils.edt.SimpleTask;
+import org.jtheque.utils.ui.SwingUtils;
+import org.jtheque.utils.ui.edt.SimpleTask;
 import org.jtheque.utils.print.PrintUtils;
+import org.jtheque.views.able.windows.ILicenceView;
 
+import javax.annotation.Resource;
 import java.awt.event.ActionEvent;
 
 /**
@@ -31,6 +31,9 @@ import java.awt.event.ActionEvent;
  * @author Baptiste Wicht
  */
 public final class PrintLicenseAction extends JThequeAction {
+    @Resource
+    private ILicenceView licenceView;
+
     /**
      * Construct a new AcPrintLicense.
      */
@@ -40,10 +43,10 @@ public final class PrintLicenseAction extends JThequeAction {
 
     @Override
     public void actionPerformed(ActionEvent arg0) {
-        ViewsServices.get(IUIUtils.class).execute(new SimpleTask() {
+        SwingUtils.execute(new SimpleTask() {
             @Override
             public void run() {
-                ViewsServices.get(IViewService.class).getViews().getLicenceView().startWait();
+                licenceView.startWait();
 
                 new Thread(new PrintRunnable()).start();
             }
@@ -55,13 +58,14 @@ public final class PrintLicenseAction extends JThequeAction {
      *
      * @author Baptiste Wicht
      */
-    private static final class PrintRunnable implements Runnable {
+    private final class PrintRunnable implements Runnable {
         @Override
         public void run() {
+            //TODO Review that
             PrintUtils.printLineFiles(getClass().getClassLoader().
                     getResourceAsStream("org/jtheque/core/resources/others/licence.txt"));
 
-            ViewsServices.get(IUIUtils.class).execute(new StopWaitTask());
+            SwingUtils.execute(new StopWaitTask());
         }
     }
 
@@ -70,10 +74,10 @@ public final class PrintLicenseAction extends JThequeAction {
      *
      * @author Baptiste Wicht
      */
-    private static final class StopWaitTask extends SimpleTask {
+    private final class StopWaitTask extends SimpleTask {
         @Override
         public void run() {
-            ViewsServices.get(IViewService.class).getViews().getLicenceView().stopWait();
+            licenceView.stopWait();
         }
     }
 }

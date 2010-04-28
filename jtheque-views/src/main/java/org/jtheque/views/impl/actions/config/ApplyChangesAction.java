@@ -17,10 +17,9 @@ package org.jtheque.views.impl.actions.config;
  */
 
 import org.jtheque.ui.utils.actions.JThequeAction;
-import org.jtheque.views.ViewsServices;
-import org.jtheque.views.able.IViewService;
 import org.jtheque.views.able.windows.IConfigView;
 
+import javax.annotation.Resource;
 import java.awt.event.ActionEvent;
 
 /**
@@ -29,6 +28,9 @@ import java.awt.event.ActionEvent;
  * @author Baptiste Wicht
  */
 public final class ApplyChangesAction extends JThequeAction {
+    @Resource
+    private IConfigView configView;
+
     /**
      * Construct a new AcApplyChanges.
      */
@@ -38,8 +40,6 @@ public final class ApplyChangesAction extends JThequeAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        IConfigView configView = ViewsServices.get(IViewService.class).getViews().getConfigView();
-
         if (configView.validateContent()) {
             configView.getSelectedPanelConfig().apply();
         }

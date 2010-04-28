@@ -26,7 +26,7 @@ public class StatesActivator implements BundleActivator {
     private ServiceRegistration registration;
 
     @Override
-    public void start(BundleContext bundleContext) throws Exception {
+    public void start(BundleContext bundleContext) throws StateException {
         manager = new StateService();
         manager.loadStates();
 
@@ -34,7 +34,7 @@ public class StatesActivator implements BundleActivator {
     }
 
     @Override
-    public void stop(BundleContext bundleContext) throws Exception {
+    public void stop(BundleContext bundleContext){
         manager.close();
 
         registration.unregister();

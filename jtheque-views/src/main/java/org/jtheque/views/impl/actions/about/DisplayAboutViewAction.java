@@ -17,10 +17,11 @@ package org.jtheque.views.impl.actions.about;
  */
 
 import org.jtheque.core.ICore;
+import org.jtheque.spring.utils.injection.Injectable;
 import org.jtheque.ui.utils.actions.JThequeAction;
-import org.jtheque.views.ViewsServices;
 import org.jtheque.views.able.IViewService;
 
+import javax.annotation.Resource;
 import java.awt.event.ActionEvent;
 
 /**
@@ -28,16 +29,21 @@ import java.awt.event.ActionEvent;
  *
  * @author Baptiste Wicht
  */
-public final class DisplayAboutViewAction extends JThequeAction {
+public final class DisplayAboutViewAction extends JThequeAction implements Injectable {
+    @Resource
+    private IViewService viewService;
+
     /**
      * Construct a new DisplayAboutViewAction.
+     *
+     * @param core The core service. 
      */
-    public DisplayAboutViewAction() {
-        super("about.actions.display", ViewsServices.get(ICore.class).getApplication().getName());
+    public DisplayAboutViewAction(ICore core) {
+        super("about.actions.display", core.getApplication().getName());
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        ViewsServices.get(IViewService.class).displayAboutView();
+        viewService.displayAboutView();
     }
 }

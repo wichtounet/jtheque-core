@@ -1,9 +1,9 @@
 package org.jtheque.views.impl.actions.event;
 
 import org.jtheque.ui.utils.actions.JThequeAction;
-import org.jtheque.views.ViewsServices;
-import org.jtheque.views.able.IViewService;
+import org.jtheque.views.able.windows.ILogView;
 
+import javax.annotation.Resource;
 import java.awt.event.ActionEvent;
 
 /*
@@ -28,6 +28,9 @@ import java.awt.event.ActionEvent;
  * @author Baptiste Wicht
  */
 public final class UpdateAction extends JThequeAction {
+    @Resource
+    private ILogView logView;
+
     /**
      * Construct a new UpdateAction.
      */
@@ -37,6 +40,6 @@ public final class UpdateAction extends JThequeAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        ViewsServices.get(IViewService.class).getViews().getLogView().refresh();
+        logView.refresh();
     }
 }

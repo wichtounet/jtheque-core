@@ -16,6 +16,8 @@ package org.jtheque.osgi;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import org.jtheque.core.utils.SimplePropertiesCache;
+import org.jtheque.ui.able.IView;
 import org.jtheque.utils.io.FileUtils;
 import org.slf4j.LoggerFactory;
 
@@ -56,7 +58,7 @@ final class Client extends Thread {
         while (!socket.isClosed()) {
             try {
                 if ("open".equals(reader.readLine())) {
-                    //TODO Display main view
+                    SimplePropertiesCache.<IView>get("mainView").toFirstPlan();
 
                     interrupt();
                 }

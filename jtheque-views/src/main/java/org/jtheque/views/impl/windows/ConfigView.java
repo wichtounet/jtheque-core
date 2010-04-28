@@ -18,12 +18,12 @@ package org.jtheque.views.impl.windows;
 
 import org.jtheque.core.utils.SimplePropertiesCache;
 import org.jtheque.errors.JThequeError;
+import org.jtheque.i18n.ILanguageService;
 import org.jtheque.ui.able.IModel;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
-import org.jtheque.ui.utils.windows.frames.SwingFilthyBuildedDialogView;
+import org.jtheque.ui.utils.windows.dialogs.SwingFilthyBuildedDialogView;
 import org.jtheque.utils.ui.GridBagUtils;
-import org.jtheque.views.ViewsServices;
-import org.jtheque.views.able.IViewService;
+import org.jtheque.views.able.IViews;
 import org.jtheque.views.able.components.ConfigTabComponent;
 import org.jtheque.views.able.windows.IConfigView;
 import org.jtheque.views.impl.actions.config.ApplyChangesAction;
@@ -31,6 +31,7 @@ import org.jtheque.views.impl.actions.config.ApplyChangesAndCloseAction;
 import org.jtheque.views.impl.actions.config.CancelChangesAction;
 import org.jtheque.views.impl.components.LayerTabbedPane;
 
+import javax.annotation.Resource;
 import java.util.Collection;
 
 /**
@@ -41,14 +42,8 @@ import java.util.Collection;
 public final class ConfigView extends SwingFilthyBuildedDialogView<IModel> implements IConfigView {
     private LayerTabbedPane tab;
 
-    /**
-     * Construct the ConfigView. 
-     */
-    public ConfigView(){
-        super();
-
-        build();
-    }
+    @Resource
+    private ILanguageService languageService;
 
     @Override
     protected void initView(){
@@ -60,8 +55,8 @@ public final class ConfigView extends SwingFilthyBuildedDialogView<IModel> imple
     protected void buildView(I18nPanelBuilder builder){
         tab = new LayerTabbedPane();
 
-        for (ConfigTabComponent component : ViewsServices.get(IViewService.class).getConfigTabComponents()) {
-            tab.addLayeredTab(component.getTitle(), component.getComponent());
+        for (ConfigTabComponent component : getService(IViews.class).getConfigTabComponents()) {
+            tab.addLayeredTab(languageService.getMessage(component.getTitleKey()), component.getComponent());
         }
 
         builder.add(tab, builder.gbcSet(0, 0, GridBagUtils.BOTH));
@@ -82,11 +77,11 @@ public final class ConfigView extends SwingFilthyBuildedDialogView<IModel> imple
         if("remove".equals(message)){
             ConfigTabComponent component = (ConfigTabComponent)value;
 
-            tab.addLayeredTab(component.getTitle(), component.getComponent());
+            tab.addLayeredTab(languageService.getMessage(component.getTitleKey()), component.getComponent());
         } else if("add".equals(message)){
             ConfigTabComponent component = (ConfigTabComponent)value;
 
-            tab.removeTabAt(tab.indexOfTab(component.getTitle()));
+            tab.removeTabAt(tab.indexOfTab(languageService.getMessage(component.getTitleKey())));
         }
     }
 

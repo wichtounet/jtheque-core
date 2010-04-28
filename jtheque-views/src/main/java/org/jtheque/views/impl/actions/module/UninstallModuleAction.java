@@ -20,10 +20,9 @@ import org.jtheque.modules.able.IModuleService;
 import org.jtheque.modules.able.Module;
 import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.ui.utils.actions.JThequeAction;
-import org.jtheque.views.ViewsServices;
-import org.jtheque.views.able.IViewService;
 import org.jtheque.views.able.panel.IModuleView;
 
+import javax.annotation.Resource;
 import java.awt.event.ActionEvent;
 
 /**
@@ -32,6 +31,15 @@ import java.awt.event.ActionEvent;
  * @author Baptiste Wicht
  */
 public final class UninstallModuleAction extends JThequeAction {
+    @Resource
+    private IModuleView moduleView;
+
+    @Resource
+    private IUIUtils uiUtils;
+
+    @Resource
+    private IModuleService moduleService;
+
     /**
      * Construct a new UninstallModuleAction.
      */
@@ -41,17 +49,14 @@ public final class UninstallModuleAction extends JThequeAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        IModuleView moduleView = ViewsServices.get(IViewService.class).getViews().getModuleView();
-
         Module module = moduleView.getSelectedModule();
 
-        boolean confirm = ViewsServices.get(IUIUtils.class).askI18nUserForConfirmation(
+        boolean confirm = uiUtils.askI18nUserForConfirmation(
                 "dialogs.confirm.uninstall",
                 "dialogs.confirm.uninstall.title");
 
         if (confirm) {
-            ViewsServices.get(IModuleService.class).uninstallModule(module);
-
+            moduleService.uninstallModule(module);
             moduleView.refreshList();
         }
     }

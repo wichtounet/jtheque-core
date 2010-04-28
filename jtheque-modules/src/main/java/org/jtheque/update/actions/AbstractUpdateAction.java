@@ -1,7 +1,5 @@
 package org.jtheque.update.actions;
 
-import org.jtheque.core.ICore;
-import org.jtheque.update.UpdateServices;
 import org.jtheque.utils.StringUtils;
 
 import java.io.File;
@@ -75,7 +73,7 @@ public abstract class AbstractUpdateAction implements UpdateAction {
     static String buildFilePath(String folder, String file) {
         StringBuilder builder = new StringBuilder(200);
 
-        builder.append(UpdateServices.get(ICore.class).getFolders().getApplicationFolder().getAbsolutePath());
+        builder.append(new File(System.getProperty("user.dir")).getAbsolutePath());
 
         if (!StringUtils.isEmpty(folder)) {
             builder.append(File.separator);

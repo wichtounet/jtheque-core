@@ -17,13 +17,14 @@ package org.jtheque.ui.utils.windows.dialogs;
  */
 
 import org.jtheque.core.ICore;
+import org.jtheque.core.utils.OSGiUtils;
 import org.jtheque.core.utils.SimplePropertiesCache;
 import org.jtheque.errors.IErrorService;
 import org.jtheque.errors.JThequeError;
 import org.jtheque.i18n.ILanguageService;
 import org.jtheque.i18n.Internationalizable;
+import org.jtheque.i18n.InternationalizableContainer;
 import org.jtheque.resources.IResourceService;
-import org.jtheque.ui.ViewsUtilsServices;
 import org.jtheque.ui.able.IModel;
 import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.ui.able.IWindowView;
@@ -32,6 +33,8 @@ import org.jtheque.ui.utils.actions.ActionFactory;
 import org.jtheque.ui.utils.windows.ExtendedGlassPane;
 import org.jtheque.ui.utils.windows.InfiniteWaitFigure;
 import org.jtheque.utils.collections.ArrayUtils;
+import org.osgi.framework.BundleContext;
+import org.springframework.osgi.context.BundleContextAware;
 
 import javax.swing.Action;
 import javax.swing.JDialog;
@@ -47,7 +50,7 @@ import java.util.Collection;
  *
  * @author Baptiste Wicht
  */
-public abstract class SwingDialogView extends JDialog implements IWindowView, Internationalizable {
+public abstract class SwingDialogView extends JDialog implements IWindowView, InternationalizableContainer, BundleContextAware {
     private String titleKey;
     private Object[] titleReplaces;
 
@@ -56,29 +59,37 @@ public abstract class SwingDialogView extends JDialog implements IWindowView, In
     private boolean glassPaneInstalled;
     private boolean waitFigureInstalled;
 
+    private final Collection<Internationalizable> internationalizables = new ArrayList<Internationalizable>(10);
+    
+    private BundleContext bundleContext;
+
+    private boolean builded;
+
     /**
      * Construct a SwingDialogView modal to the main view.
      */
     protected SwingDialogView(){
-        this(SimplePropertiesCache.<Frame>get("mainView"));
+        super(SimplePropertiesCache.<Frame>get("mainView"));
     }
 
-    /**
-     * Construct a SwingDialogView.
-     *
-     * @param frame The parent frame.
-     */
-    protected SwingDialogView(Frame frame) {
-        super(frame);
-
+    protected final void build(){
         setModal(true);
         setResizable(true);
 
-        ViewsUtilsServices.get(ILanguageService.class).addInternationalizable(this);
-
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         setIconImage(getDefaultWindowIcon());
+
+        getService(ILanguageService.class).addInternationalizable(this);
+
+        init();
+
+        builded = true;
     }
+
+    /**
+     * Init the view.
+     */
+    protected abstract void init();
 
     /**
      * Install the default glass pane. If you need to install another glass pane, simply override
@@ -137,10 +148,8 @@ public abstract class SwingDialogView extends JDialog implements IWindowView, In
      *
      * @return The default window icon.
      */
-    protected static Image getDefaultWindowIcon() {
-        return ViewsUtilsServices.get(IResourceService.class).getImage(
-                "file:" + ViewsUtilsServices.get(ICore.class).getApplication().getWindowIcon(),
-                ViewsUtilsServices.get(ICore.class).getApplication().getWindowIconType());
+    protected Image getDefaultWindowIcon() {
+        return getService(IResourceService.class).getImage(ICore.WINDOW_ICON);
     }
 
     /**
@@ -170,6 +179,10 @@ public abstract class SwingDialogView extends JDialog implements IWindowView, In
 
     @Override
     public void display() {
+        if(!builded){
+            build();
+        }
+
         setVisible(true);
     }
 
@@ -185,7 +198,7 @@ public abstract class SwingDialogView extends JDialog implements IWindowView, In
 
     @Override
     public final void refresh() {
-        ViewsUtilsServices.get(IUIUtils.class).getDelegate().refresh(this);
+       getService(IUIUtils.class).getDelegate().refresh(this);
     }
 
     /**
@@ -205,9 +218,18 @@ public abstract class SwingDialogView extends JDialog implements IWindowView, In
     }
 
     @Override
-    public void refreshText() {
+    public void addInternationalizable(Internationalizable internationalizable){
+        internationalizables.add(internationalizable);
+    }
+
+    @Override
+    public void refreshText(ILanguageService languageService) {
         if (titleKey != null) {
             setTitleKey(titleKey, titleReplaces);
+        }
+
+        for (Internationalizable internationalizable : internationalizables) {
+            internationalizable.refreshText(languageService);
         }
     }
 
@@ -236,8 +258,10 @@ public abstract class SwingDialogView extends JDialog implements IWindowView, In
 
         validate(errors);
 
+        IErrorService errorService = getService(IErrorService.class);
+
         for (JThequeError error : errors) {
-            ViewsUtilsServices.get(IErrorService.class).addError(error);
+            errorService.addError(error);
         }
 
         return errors.isEmpty();
@@ -249,8 +273,8 @@ public abstract class SwingDialogView extends JDialog implements IWindowView, In
      * @param key The internationalization key.
      * @return The internationalized message.
      */
-    protected static String getMessage(String key) {
-        return ViewsUtilsServices.get(ILanguageService.class).getMessage(key);
+    protected String getMessage(String key) {
+        return getService(ILanguageService.class).getMessage(key);
     }
 
     /**
@@ -260,8 +284,8 @@ public abstract class SwingDialogView extends JDialog implements IWindowView, In
      * @param replaces The replacement objects to use.
      * @return the internationalized message.
      */
-    protected static String getMessage(String key, Object... replaces) {
-        return ViewsUtilsServices.get(ILanguageService.class).getMessage(key, replaces);
+    protected String getMessage(String key, Object... replaces) {
+        return getService(ILanguageService.class).getMessage(key, replaces);
     }
 
     /**
@@ -279,6 +303,19 @@ public abstract class SwingDialogView extends JDialog implements IWindowView, In
             installGlassPane();
             glassPaneInstalled = true;
         }
+    }
+
+    @Override
+    public void setBundleContext(BundleContext bundleContext) {
+        this.bundleContext = bundleContext;
+    }
+
+    BundleContext getBundleContext() {
+        return bundleContext;
+    }
+
+    protected <T> T getService(Class<T> classz){
+        return OSGiUtils.getService(bundleContext, classz);
     }
 
     /**

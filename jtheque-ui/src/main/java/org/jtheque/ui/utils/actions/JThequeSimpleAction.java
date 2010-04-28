@@ -16,9 +16,6 @@ package org.jtheque.ui.utils.actions;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import org.jtheque.i18n.ILanguageService;
-import org.jtheque.ui.ViewsUtilsServices;
-
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.ImageIcon;
@@ -29,15 +26,6 @@ import javax.swing.ImageIcon;
  * @author Baptiste Wicht
  */
 public abstract class JThequeSimpleAction extends AbstractAction {
-    /**
-     * Set the text key.
-     *
-     * @param key The internationalization key.
-     */
-    protected final void setTextKey(String key) {
-        setText(ViewsUtilsServices.get(ILanguageService.class).getMessage(key));
-    }
-
     /**
      * Set the text of the action.
      *

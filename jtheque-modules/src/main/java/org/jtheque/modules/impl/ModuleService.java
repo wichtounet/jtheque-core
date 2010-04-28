@@ -86,8 +86,6 @@ public final class ModuleService implements IModuleService, BundleContextAware {
     @Override
     public void setBundleContext(BundleContext bundleContext) {
         this.bundleContext = bundleContext;
-
-        ModulesServices.setContext(bundleContext);
     }
 
     @Override
@@ -189,7 +187,7 @@ public final class ModuleService implements IModuleService, BundleContextAware {
                 ModuleResourceCache.removeModule(module.getId());
             }
 
-            getService(ILanguageService.class).removeBaseName(module.getI18n());
+            //TODO getService(ILanguageService.class).removeBaseName(module.getI18n());
         }
     }
 
@@ -197,10 +195,10 @@ public final class ModuleService implements IModuleService, BundleContextAware {
      * Configure the modules.
      */
     private void configureModules() {
-        configuration = getService(IStateService.class).getOrCreateState(ModuleConfiguration.class);
+        configuration = getService(IStateService.class).getState(new ModuleConfiguration());
 
         CollectionUtils.filter(modules, new ConfigurationFilter(configuration, getService(ICore.class).getApplication()));
-        CollectionUtils.filter(modules, new CoreVersionFilter());
+        CollectionUtils.filter(modules, new CoreVersionFilter(getService(ICore.class), getService(IUIUtils.class)));
 
         CollectionUtils.sort(modules, new ModuleComparator());
     }
@@ -222,7 +220,7 @@ public final class ModuleService implements IModuleService, BundleContextAware {
     @Override
     public Repository getRepository() {
         if (repository == null) {
-            repository = new RepositoryReader().read(ModulesServices.get(ICore.class).getApplication().getRepository());
+            repository = new RepositoryReader().read(getService(ICore.class).getApplication().getRepository());
         }
 
         return repository;
@@ -310,7 +308,7 @@ public final class ModuleService implements IModuleService, BundleContextAware {
 
     @Override
     public void install(String versionsFileURL) {
-        InstallationResult result = ModulesServices.get(IUpdateService.class).install(versionsFileURL);
+        InstallationResult result = getService(IUpdateService.class).install(versionsFileURL);
 
         if (result.isInstalled()) {
             /* TODO install 
@@ -324,9 +322,9 @@ public final class ModuleService implements IModuleService, BundleContextAware {
 
             configuration.add(result);
 
-            ModulesServices.get(IUIUtils.class).displayI18nText("message.module.repository.installed");
+            getService(IUIUtils.class).displayI18nText("message.module.repository.installed");
         } else {
-            ModulesServices.get(IUIUtils.class).displayI18nText("error.repository.module.not.installed");
+            getService(IUIUtils.class).displayI18nText("error.repository.module.not.installed");
         }
     }
 

@@ -18,7 +18,6 @@ package org.jtheque.views.impl.models;
 
 import org.jtheque.core.ICore;
 import org.jtheque.utils.collections.CollectionUtils;
-import org.jtheque.views.ViewsServices;
 
 import javax.swing.DefaultComboBoxModel;
 import java.util.List;
@@ -33,11 +32,13 @@ public final class AvailableLanguagesComboBoxModel extends DefaultComboBoxModel 
 
     /**
      * Construct a new AvailableLanguagesComboBoxModel.
+     * 
+     * @param core The core service.
      */
-    public AvailableLanguagesComboBoxModel() {
+    public AvailableLanguagesComboBoxModel(ICore core) {
         super();
 
-        languages = CollectionUtils.copyOf(ViewsServices.get(ICore.class).getPossibleLanguages());
+        languages = CollectionUtils.copyOf(core.getPossibleLanguages());
     }
 
     @Override

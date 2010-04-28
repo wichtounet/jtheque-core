@@ -1,9 +1,11 @@
 package org.jtheque.spring.utils.factory;
 
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.config.AbstractFactoryBean;
 import org.springframework.context.support.GenericApplicationContext;
 
 import java.lang.reflect.Proxy;
+import java.util.logging.Logger;
 
 /*
  * This file is part of JTheque.
@@ -40,13 +42,20 @@ public final class LazyFactoryBean extends AbstractFactoryBean {
      * @param beanClass The class of the bean to keep the proxy for.
      * @param context The application context of the bean. 
      */
-    public LazyFactoryBean(String beanName, boolean swing, Class<?> beanClass, GenericApplicationContext context) {
+    public LazyFactoryBean(String beanName, boolean swing, String beanClass, GenericApplicationContext context) throws ClassNotFoundException {
         super();
 
         this.beanName = beanName;
         this.swing = swing;
-        this.beanClass = beanClass;
         this.context = context;
+
+        try {
+            this.beanClass = Class.forName(beanClass);
+        } catch (ClassNotFoundException e) {
+            LoggerFactory.getLogger(getClass()).error("Unable to get the class from the proxified object", e);
+
+            throw e;
+        }
     }
 
     @Override

@@ -20,8 +20,9 @@ import org.jtheque.modules.able.IModuleService;
 import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.ui.utils.actions.JThequeAction;
 import org.jtheque.utils.io.SimpleFilter;
-import org.jtheque.views.ViewsServices;
+import org.jtheque.utils.ui.SwingUtils;
 
+import javax.annotation.Resource;
 import java.awt.event.ActionEvent;
 import java.io.File;
 
@@ -31,6 +32,12 @@ import java.io.File;
  * @author Baptiste Wicht
  */
 public final class InstallModuleAction extends JThequeAction {
+    @Resource
+    private IUIUtils uiUtils;
+
+    @Resource
+    private IModuleService moduleService;
+
     /**
      * Construct a new InstallModuleAction.
      */
@@ -40,14 +47,14 @@ public final class InstallModuleAction extends JThequeAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        File file = new File(ViewsServices.get(IUIUtils.class).getDelegate().chooseFile(new SimpleFilter("JAR File (*.jar)", "jar")));
+        File file = new File(SwingUtils.chooseFile(new SimpleFilter("JAR File (*.jar)", "jar")));
 
-        boolean installed = ViewsServices.get(IModuleService.class).installModule(file);
+        boolean installed = moduleService.installModule(file);
 
         if (installed) {
-            ViewsServices.get(IUIUtils.class).displayI18nText("message.module.installed");
+            uiUtils.displayI18nText("message.module.installed");
         } else {
-            ViewsServices.get(IUIUtils.class).displayI18nText("error.module.not.installed");
+            uiUtils.displayI18nText("error.module.not.installed");
         }
     }
 }

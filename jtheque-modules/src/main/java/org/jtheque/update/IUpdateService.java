@@ -140,4 +140,6 @@ public interface IUpdateService {
      * @return The most recent version of the object.
      */
     Version getMostRecentVersion(Object object);
+
+    Version getMostRecentCoreVersion();
 }

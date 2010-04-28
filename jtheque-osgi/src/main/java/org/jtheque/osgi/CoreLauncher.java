@@ -51,21 +51,12 @@ public final class CoreLauncher implements Closeable {
 
         launchSpring();
         launchJTheque();
-
-        server.debug();
-
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        server.stop();
     }
 
     @Override
     public void close() {
         instances.closeInstance();
+
         server.stop();
     }
 
@@ -76,18 +67,30 @@ public final class CoreLauncher implements Closeable {
     }
 
     private void launchJTheque() {
-        startIfNotStarted("jtheque-lifecycle");
+        startIfNotStarted("org.jtheque.defaults");
+        startIfNotStarted("org.jtheque.spring.utils");
+        startIfNotStarted("org.jtheque.states");
+        startIfNotStarted("org.jtheque.events");
+        startIfNotStarted("org.jtheque.resources");
+        startIfNotStarted("org.jtheque.core");
+        startIfNotStarted("org.jtheque.i18n");
+        startIfNotStarted("org.jtheque.ui");
+        startIfNotStarted("org.jtheque.errors");
+        startIfNotStarted("org.jtheque.messages");
+        startIfNotStarted("org.jtheque.features");
+        startIfNotStarted("org.jtheque.undo");
+        startIfNotStarted("org.jtheque.schemas");
+        startIfNotStarted("org.jtheque.persistence");
+        startIfNotStarted("org.jtheque.modules");
+        startIfNotStarted("org.jtheque.file");
+        startIfNotStarted("org.jtheque.collections");
+        startIfNotStarted("org.jtheque.views");
+        startIfNotStarted("org.jtheque.lifecycle");
     }
 
     private void startIfNotStarted(String name) {
         if(server.getState(name) != BundleState.ACTIVE){
             server.startBundle(name);
-        }
-    }
-
-    private void installIfNecessary(String name, String path) {
-        if(!server.isInstalled(name)){
-            server.installBundle(System.getProperty("user.dir") + path);
         }
     }
 

@@ -27,6 +27,16 @@ import org.jtheque.utils.collections.Filter;
  * @author Baptiste Wicht
  */
 final class CoreVersionFilter implements Filter<ModuleContainer> {
+    private final ICore core;
+    private final IUIUtils uiUtils;
+
+    CoreVersionFilter(ICore core, IUIUtils uiUtils) {
+        super();
+
+        this.core = core;
+        this.uiUtils = uiUtils;
+    }
+
     @Override
     public boolean accept(ModuleContainer module) {
         Version neededVersion = module.getCoreVersion();
@@ -34,11 +44,11 @@ final class CoreVersionFilter implements Filter<ModuleContainer> {
 
         if (neededVersion != null && !currentVersion.equals(neededVersion)) {
             if (neededVersion.isGreaterThan(currentVersion)) {
-                ModulesServices.get(IUIUtils.class).displayI18nText("error.module.core.version.greater");
+                uiUtils.displayI18nText("error.module.core.version.greater");
 
                 return false;
-            } else if (!currentVersion.equals(neededVersion) && ModulesServices.get(ICore.class).isNotCompatibleWith(neededVersion)) {
-                ModulesServices.get(IUIUtils.class).displayI18nText("error.module.core.version.compatibility.no");
+            } else if (!currentVersion.equals(neededVersion) && core.isNotCompatibleWith(neededVersion)) {
+                uiUtils.displayI18nText("error.module.core.version.compatibility.no");
 
                 return false;
             }

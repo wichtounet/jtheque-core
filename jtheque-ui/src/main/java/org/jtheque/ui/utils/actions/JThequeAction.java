@@ -19,7 +19,6 @@ package org.jtheque.ui.utils.actions;
 import org.jtheque.i18n.ILanguageService;
 import org.jtheque.i18n.Internationalizable;
 import org.jtheque.utils.collections.ArrayUtils;
-import org.jtheque.ui.ViewsUtilsServices;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -54,36 +53,13 @@ public abstract class JThequeAction extends AbstractAction implements Internatio
     protected JThequeAction(String key, Object... replaces) {
         super();
 
-        ViewsUtilsServices.get(ILanguageService.class).addInternationalizable(this);
-
         this.key = key;
 
-        if (ArrayUtils.isEmpty(replaces)) {
-            setTextKey(key);
-        } else {
+        setText(key);
+
+        if (!ArrayUtils.isEmpty(replaces)) {
             this.replaces = ArrayUtils.copyOf(replaces);
-
-            setTextKey(key, replaces);
         }
-    }
-
-    /**
-     * Set the text key.
-     *
-     * @param key The internationalization key.
-     */
-    final void setTextKey(String key) {
-        setText(ViewsUtilsServices.get(ILanguageService.class).getMessage(key));
-    }
-
-    /**
-     * Set the text key.
-     *
-     * @param key      The internationalization key.
-     * @param replaces The replacements on the message resource.
-     */
-    final void setTextKey(String key, Object... replaces) {
-        setText(ViewsUtilsServices.get(ILanguageService.class).getMessage(key, replaces));
     }
 
     /**
@@ -105,11 +81,11 @@ public abstract class JThequeAction extends AbstractAction implements Internatio
     }
 
     @Override
-    public final void refreshText() {
+    public final void refreshText(ILanguageService languageService) {
         if (replaces == null) {
-            setTextKey(key);
+            setText(languageService.getMessage(key));
         } else {
-            setTextKey(key, replaces);
+            setText(languageService.getMessage(key, replaces));
         }
     }
 }

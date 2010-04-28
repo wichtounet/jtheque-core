@@ -19,16 +19,17 @@ package org.jtheque.views.impl.components.config;
 import org.jtheque.core.CoreConfiguration;
 import org.jtheque.core.ICore;
 import org.jtheque.errors.JThequeError;
-import org.jtheque.i18n.ILanguageService;
+import org.jtheque.spring.utils.injection.Init;
+import org.jtheque.spring.utils.injection.Injectable;
 import org.jtheque.ui.utils.builders.FilthyPanelBuilder;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.ui.utils.filthy.FilthyBackgroundPanel;
 import org.jtheque.utils.ui.GridBagUtils;
-import org.jtheque.views.ViewsServices;
 import org.jtheque.views.able.components.ConfigTabComponent;
 import org.jtheque.views.able.config.IOthersConfigView;
 import org.jtheque.views.impl.filthy.FilthyTextField;
 
+import javax.annotation.Resource;
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import java.util.Collection;
@@ -38,17 +39,17 @@ import java.util.Collection;
  *
  * @author Baptiste Wicht
  */
-public final class JPanelConfigOthers extends FilthyBackgroundPanel implements IOthersConfigView, ConfigTabComponent {
+public final class JPanelConfigOthers extends FilthyBackgroundPanel implements IOthersConfigView, ConfigTabComponent, Injectable {
     private JCheckBox boxDeleteLogs;
     private JCheckBox checkBoxStart;
     private FilthyTextField fieldEmail;
     private FilthyTextField fieldSmtpHost;
 
-    /**
-     * Construct a new JPanelConfigOthers.
-     */
-    public JPanelConfigOthers() {
-        super();
+    @Resource
+    private ICore core;
+
+    @Init(swing = true)
+    public void init(){
 
         build();
 
@@ -56,8 +57,8 @@ public final class JPanelConfigOthers extends FilthyBackgroundPanel implements I
     }
 
     @Override
-    public String getTitle() {
-        return ViewsServices.get(ILanguageService.class).getMessage("config.view.tab.others");
+    public String getTitleKey() {
+        return "config.view.tab.others";
     }
 
     /**
@@ -107,7 +108,7 @@ public final class JPanelConfigOthers extends FilthyBackgroundPanel implements I
      * Fill all the fields with the current informations.
      */
     private void fillAllFields() {
-        CoreConfiguration config = ViewsServices.get(ICore.class).getConfiguration();
+        CoreConfiguration config = core.getConfiguration();
 
         checkBoxStart.setSelected(config.verifyUpdateOnStartup());
         boxDeleteLogs.setSelected(config.mustDeleteLogs());
@@ -117,7 +118,7 @@ public final class JPanelConfigOthers extends FilthyBackgroundPanel implements I
 
     @Override
     public void apply() {
-        CoreConfiguration config = ViewsServices.get(ICore.class).getConfiguration();
+        CoreConfiguration config = core.getConfiguration();
 
         config.setVerifyUpdateOnStartup(checkBoxStart.isSelected());
         config.setMustDeleteLogs(boxDeleteLogs.isSelected());

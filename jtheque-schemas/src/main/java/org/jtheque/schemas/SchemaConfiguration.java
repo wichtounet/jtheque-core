@@ -1,6 +1,7 @@
 package org.jtheque.schemas;
 
 import org.jtheque.states.AbstractState;
+import org.jtheque.states.State;
 import org.jtheque.utils.bean.Version;
 
 /*
@@ -24,7 +25,7 @@ import org.jtheque.utils.bean.Version;
  *
  * @author Baptiste Wicht
  */
-//Must be public for StateService
+@State(id = "jtheque-schema-configuration")
 public final class SchemaConfiguration extends AbstractState {
     /**
      * Return the version of the schema.

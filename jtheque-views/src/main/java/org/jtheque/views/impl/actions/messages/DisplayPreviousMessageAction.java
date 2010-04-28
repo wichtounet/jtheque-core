@@ -17,9 +17,9 @@ package org.jtheque.views.impl.actions.messages;
  */
 
 import org.jtheque.ui.utils.actions.JThequeAction;
-import org.jtheque.views.ViewsServices;
-import org.jtheque.views.able.IViewService;
+import org.jtheque.views.able.windows.IMessageView;
 
+import javax.annotation.Resource;
 import java.awt.event.ActionEvent;
 
 /**
@@ -28,6 +28,9 @@ import java.awt.event.ActionEvent;
  * @author Baptiste Wicht
  */
 public final class DisplayPreviousMessageAction extends JThequeAction {
+    @Resource
+    private IMessageView messageView;
+
     /**
      * Construct a new DisplayPreviousMessageAction.
      */
@@ -37,6 +40,6 @@ public final class DisplayPreviousMessageAction extends JThequeAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        ViewsServices.get(IViewService.class).getViews().getMessagesView().previous();
+        messageView.previous();
     }
 }

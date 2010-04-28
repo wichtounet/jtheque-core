@@ -24,6 +24,14 @@ import java.io.File;
  * @author Baptiste Wicht
  */
 public final class Files implements IFilesContainer {
+    private final ICore core;
+
+    public Files(ICore core) {
+        super();
+
+        this.core = core;
+    }
+
     @Override
     public File getLauncherFile() {
         return new File(getLauncherPath());
@@ -34,12 +42,12 @@ public final class Files implements IFilesContainer {
      *
      * @return The path to the launcher.
      */
-    private static String getLauncherPath() {
-        return CoreServices.get(ICore.class).getFolders().getApplicationFolder() + File.separator + "JTheque-Launcher.jar";
+    private String getLauncherPath() {
+        return core.getFolders().getApplicationFolder() + File.separator + "JTheque-Launcher.jar";
     }
 
     @Override
     public File getLogsFile() {
-        return new File(CoreServices.get(ICore.class).getFolders().getLogsFolder(), "/jtheque.log");
+        return new File(core.getFolders().getLogsFolder(), "/jtheque.log");
     }
 }

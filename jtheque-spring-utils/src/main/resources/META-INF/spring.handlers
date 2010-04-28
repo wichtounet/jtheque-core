@@ -15,4 +15,4 @@
 # along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-http\://www.jtheque.com/schema/jtheque=org.jtheque.core.spring.extension.JThequeNamespaceHandler
+http\://www.jtheque.com/schema/jtheque=org.jtheque.spring.utils.extension.JThequeNamespaceHandler

@@ -8,7 +8,6 @@ import org.jtheque.states.IStateService;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.bean.Version;
 
-import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -39,17 +38,12 @@ import java.util.Set;
 public final class SchemaService implements ISchemaService, ModuleListener {
     private final List<Schema> schemas = new ArrayList<Schema>(10);
 
-    private SchemaConfiguration configuration;
+    private final SchemaConfiguration configuration;
 
-    private IStateService stateService;
+    public SchemaService(IStateService stateService) {
+        super();
 
-    public void setStateManager(IStateService stateService) {
-        this.stateService = stateService;
-    }
-
-    @PostConstruct
-    public void init(){
-        configuration = stateService.getOrCreateState(SchemaConfiguration.class);
+        configuration = stateService.getState(new SchemaConfiguration());
 
         Collections.sort(schemas);
 

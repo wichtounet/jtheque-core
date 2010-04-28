@@ -18,11 +18,10 @@ package org.jtheque.views.impl.filthy;
 
 import org.jtheque.i18n.ILanguageService;
 import org.jtheque.i18n.Internationalizable;
-import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.ui.utils.components.Borders;
 import org.jtheque.ui.utils.builders.JThequePanelBuilder;
 import org.jtheque.ui.utils.builders.PanelBuilder;
-import org.jtheque.views.ViewsServices;
+import org.jtheque.utils.ui.SwingUtils;
 import org.jtheque.utils.io.SimpleFilter;
 
 import javax.swing.AbstractAction;
@@ -146,8 +145,6 @@ public final class FilthyFileChooserPanel extends JPanel implements Internationa
      */
     public void setTextKey(String key) {
         this.key = key;
-
-        setText(ViewsServices.get(ILanguageService.class).getMessage(key));
     }
 
     /**
@@ -200,9 +197,9 @@ public final class FilthyFileChooserPanel extends JPanel implements Internationa
     }
 
     @Override
-    public void refreshText() {
+    public void refreshText(ILanguageService languageService) {
         if (key != null) {
-            setText(ViewsServices.get(ILanguageService.class).getMessage(key));
+            setText(languageService.getMessage(key));
         }
     }
 
@@ -258,8 +255,7 @@ public final class FilthyFileChooserPanel extends JPanel implements Internationa
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            String file = directoriesOnly ? ViewsServices.get(IUIUtils.class).getDelegate().chooseDirectory() :
-                    ViewsServices.get(IUIUtils.class).getDelegate().chooseFile(filter);
+            String file = directoriesOnly ? SwingUtils.chooseDirectory() : SwingUtils.chooseFile(filter);
 
             if (file != null) {
                 fieldFilePath.setText(file);

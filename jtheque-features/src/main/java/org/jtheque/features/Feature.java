@@ -16,6 +16,8 @@ package org.jtheque.features;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import org.jtheque.ui.utils.actions.JThequeAction;
+
 import javax.swing.Action;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -30,10 +32,9 @@ public class Feature {
     private String titleKey;
     private Integer position;
     private String icon;
-    private String baseName;
 
     private final Collection<Feature> subFeatures = new ArrayList<Feature>(20);
-    private final Action action;
+    private final JThequeAction action;
 
     /**
      * Construct a new Feature for an action.
@@ -42,7 +43,7 @@ public class Feature {
      * @param position The position of the feature in the parent.
      * @param action The action to execute when the feature is pressed.
      */
-    public Feature(FeatureType type, Integer position, Action action){
+    public Feature(FeatureType type, Integer position, JThequeAction action){
         super();
 
         this.action = action;
@@ -120,7 +121,7 @@ public class Feature {
      *
      * @return The action.
      */
-    public final Action getAction() {
+    public final JThequeAction getAction() {
         return action;
     }
 
@@ -175,9 +176,9 @@ public class Feature {
     }
 
     /**
-     * Return the icon of the feature.
+     * Return the icon id of the feature.
      *
-     * @return The icon of the feature.
+     * @return The icon id of the feature.
      */
     public final String getIcon() {
         return icon;
@@ -191,22 +192,4 @@ public class Feature {
     public final void setIcon(String icon) {
         this.icon = icon;
     }
-
-    /**
-     * Return the base name for getting the icon.
-     *
-     * @return The base name.
-     */
-    public final String getBaseName() {
-        return baseName;
-    }
-
-    /**
-     * Set the base name for the resources.
-     *
-     * @param baseName The base name.
-     */
-    public final void setBaseName(String baseName) {
-        this.baseName = baseName;
-	}
 }

@@ -1,15 +1,14 @@
 package org.jtheque.events;
 
 import org.jdom.Element;
-import org.jtheque.core.utils.OSGiUtils;
 import org.jtheque.core.utils.SystemProperty;
 import org.jtheque.io.XMLException;
 import org.jtheque.io.XMLReader;
 import org.jtheque.io.XMLWriter;
 import org.jtheque.utils.io.FileUtils;
-import org.osgi.framework.BundleContext;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.PreDestroy;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -42,6 +41,12 @@ import java.util.Set;
 public final class EventService implements IEventService {
     private final Map<String, Collection<EventLog>> logs = new HashMap<String, Collection<EventLog>>(10);
 
+    public EventService() {
+        super();
+
+        importFromXML();
+    }
+
     @Override
     public Set<String> getLogs() {
         return logs.keySet();
@@ -63,11 +68,16 @@ public final class EventService implements IEventService {
         logs.get(log).add(event);
     }
 
+    @PreDestroy
+    public void release(){
+        saveXML();
+    }
+
     /**
      * Import from XML.
      */
-    public void importFromXML() {
-        File f = new File(SystemProperty.USER_DIR.get(), "/core/logs.xml");
+    private void importFromXML() {
+        File f = new File(SystemProperty.USER_DIR.get(), "/logs.xml");
 
         if (!f.exists()) {
             createEmptyEventFile(f);
@@ -134,7 +144,7 @@ public final class EventService implements IEventService {
     /**
      * Save the events to XML.
      */
-    public void saveXML() {
+    private void saveXML() {
         XMLWriter writer = new XMLWriter("logs");
 
         for (Map.Entry<String, Collection<EventLog>> entry : logs.entrySet()) {
@@ -147,7 +157,7 @@ public final class EventService implements IEventService {
             writer.switchToParent();
         }
 
-        writer.write(SystemProperty.USER_DIR.get() + "/core/logs.xml");
+        writer.write(SystemProperty.USER_DIR.get() + "/logs.xml");
     }
 
     /**

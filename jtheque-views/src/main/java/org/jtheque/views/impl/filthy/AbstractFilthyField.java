@@ -2,9 +2,6 @@ package org.jtheque.views.impl.filthy;
 
 import org.jtheque.ui.utils.components.Borders;
 import org.jtheque.ui.utils.filthy.Filthy;
-import org.jtheque.views.ViewsServices;
-import org.jtheque.views.able.IViewService;
-import org.jtheque.views.able.ViewDefaults;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
@@ -12,7 +9,6 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.text.JTextComponent;
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Font;
 
 /*
  * This file is part of JTheque.
@@ -62,13 +58,9 @@ public abstract class AbstractFilthyField extends JPanel implements Filthy {
      * @param field The field to make filthy.
      */
     static void makeFilthy(JTextComponent field) {
-        ViewDefaults defaults = ViewsServices.get(IViewService.class).getViewDefaults();
-
-        Font inputFont = defaults.getFilthyInputFont();
-
-        Color inputTextColor = defaults.getFilthyForegroundColor();
-        Color inputSelectionColor = defaults.getFilthyForegroundColor();
-        Color inputSelectedTextColor = defaults.getFilthyBackgroundColor();
+        Color inputTextColor = FOREGROUND_COLOR;
+        Color inputSelectionColor = FOREGROUND_COLOR;
+        Color inputSelectedTextColor = BACKGROUND_COLOR;
 
         field.setOpaque(false);
         field.setBorder(Borders.EMPTY_BORDER);
@@ -76,6 +68,6 @@ public abstract class AbstractFilthyField extends JPanel implements Filthy {
         field.setSelectedTextColor(inputSelectedTextColor);
         field.setSelectionColor(inputSelectionColor);
         field.setCaretColor(inputSelectionColor);
-        field.setFont(inputFont);
+        field.setFont(INPUT_FONT);
     }
 }

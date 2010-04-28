@@ -28,12 +28,13 @@ import java.util.Collection;
  * @author Baptiste Wicht
  */
 public interface ICore {
-    String IMAGES_BASE_NAME = "org/jtheque/core/images";
     Version VERSION = new Version("2.1");
 
     String FORUM_URL = "http://www.developpez.net/forums/f751/applications/projets/projets-heberges/jtheque/";
     String VERSIONS_FILE_URL = "http://jtheque.developpez.com/public/versions/Core.versions";
     String HELP_URL = "http://jtheque.developpez.com/";
+
+    String WINDOW_ICON = "jtheque-core-window-icon";
 
     /**
      * Launch the JTheque Core.

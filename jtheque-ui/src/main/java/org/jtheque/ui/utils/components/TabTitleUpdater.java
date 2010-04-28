@@ -2,7 +2,6 @@ package org.jtheque.ui.utils.components;
 
 import org.jtheque.i18n.ILanguageService;
 import org.jtheque.i18n.Internationalizable;
-import org.jtheque.ui.ViewsUtilsServices;
 
 import javax.swing.JComponent;
 import javax.swing.JTabbedPane;
@@ -49,11 +48,11 @@ public final class TabTitleUpdater implements Internationalizable {
     }
 
     @Override
-    public void refreshText() {
+    public void refreshText(ILanguageService languageService) {
         for (Entry<JComponent, String> entry : components.entrySet()) {
             for (int i = 0; i < tab.getTabCount(); i++) {
                 if (entry.getKey().equals(tab.getTabComponentAt(i))) {
-                    tab.setTitleAt(i, ViewsUtilsServices.get(ILanguageService.class).getMessage(entry.getValue()));
+                    tab.setTitleAt(i, languageService.getMessage(entry.getValue()));
 
                     break;
                 }

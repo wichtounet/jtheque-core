@@ -16,12 +16,15 @@ package org.jtheque.ui.utils.builders;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import org.jtheque.i18n.InternationalizableContainer;
 import org.jtheque.ui.utils.components.JThequeI18nLabel;
 
 import javax.swing.JCheckBox;
 import java.awt.LayoutManager;
 
 public interface I18nPanelBuilder extends PanelBuilder {
+    void setInternationalizableContainer(InternationalizableContainer container);
+
     /**
      * Add an internationalized check box.
      *

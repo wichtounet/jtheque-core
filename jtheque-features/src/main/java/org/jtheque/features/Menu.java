@@ -3,6 +3,7 @@ package org.jtheque.features;
 import java.util.List;
 
 import org.jtheque.features.IFeatureService.CoreFeature;
+import org.jtheque.i18n.Internationalizable;
 
 /*
  * This file is part of JTheque.
@@ -26,7 +27,7 @@ import org.jtheque.features.IFeatureService.CoreFeature;
  *
  * @author Baptiste Wicht
  */
-public interface Menu {
+public interface Menu extends Internationalizable {
     /**
      * Return all the sub features of this menu for the specified CoreFeature.
      *

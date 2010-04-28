@@ -4,8 +4,10 @@ import org.jtheque.core.ICore;
 import org.jtheque.io.Node;
 import org.jtheque.io.NodeAttribute;
 import org.jtheque.states.AbstractState;
+import org.jtheque.states.Load;
+import org.jtheque.states.Save;
+import org.jtheque.states.State;
 import org.jtheque.ui.able.IView;
-import org.jtheque.views.ViewsServices;
 import org.jtheque.views.able.IViewService;
 
 import java.util.ArrayList;
@@ -35,16 +37,22 @@ import java.util.Map.Entry;
  *
  * @author Baptiste Wicht
  */
+@State(id = "jtheque-windows-configuration", delegated = true)
 public final class WindowsConfiguration extends AbstractState {
     private final Map<String, WindowConfiguration> configurations = new HashMap<String, WindowConfiguration>(10);
 
-    @Override
-    public boolean isDelegated() {
-        return true;
+    private final ICore core;
+    private final IViewService viewService;
+
+    public WindowsConfiguration(ICore core, IViewService viewService) {
+        super();
+
+        this.core = core;
+        this.viewService = viewService;
     }
 
-    @Override
-    public void delegateLoad(Collection<Node> nodes) {
+    @Load
+    public void delegateLoad(Iterable<Node> nodes) {
         for (Node node : nodes) {
             if ("window".equals(node.getName())) {
                 WindowConfiguration configuration = new WindowConfiguration();
@@ -76,7 +84,7 @@ public final class WindowsConfiguration extends AbstractState {
         }
     }
 
-    @Override
+    @Save
     public Collection<Node> delegateSave() {
         Collection<Node> states = new ArrayList<Node>(10);
 
@@ -112,11 +120,11 @@ public final class WindowsConfiguration extends AbstractState {
      * @param view The view.
      */
     public void update(String name, IView view) {
-        if (ViewsServices.get(ICore.class).getConfiguration().retainSizeAndPositionOfWindow()) {
+        if (core.getConfiguration().retainSizeAndPositionOfWindow()) {
             WindowConfiguration configuration = get(name);
 
             if (configuration != null) {
-                ViewsServices.get(IViewService.class).fill(configuration, view);
+                viewService.fill(configuration, view);
             }
         }
     }
@@ -140,7 +148,7 @@ public final class WindowsConfiguration extends AbstractState {
      * @param defaultHeight The default height of the view.
      */
     public void configure(String name, IView view, int defaultWidth, int defaultHeight) {
-        if (ViewsServices.get(ICore.class).getConfiguration().retainSizeAndPositionOfWindow()) {
+        if (core.getConfiguration().retainSizeAndPositionOfWindow()) {
             WindowConfiguration configuration = get(name);
 
             if (configuration == null) {
@@ -154,9 +162,9 @@ public final class WindowsConfiguration extends AbstractState {
                 add(name, configuration);
             }
 
-            ViewsServices.get(IViewService.class).configure(configuration, view);
+            viewService.configure(configuration, view);
         } else {
-            ViewsServices.get(IViewService.class).setSize(view, defaultWidth, defaultHeight);
+            viewService.setSize(view, defaultWidth, defaultHeight);
         }
     }
 }

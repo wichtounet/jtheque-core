@@ -18,6 +18,7 @@ package org.jtheque.features;
 
 import org.jtheque.core.utils.WeakEventListenerList;
 import org.jtheque.features.Feature.FeatureType;
+import org.jtheque.i18n.ILanguageService;
 import org.jtheque.modules.able.Module;
 import org.jtheque.modules.able.ModuleListener;
 import org.jtheque.modules.able.ModuleState;
@@ -25,7 +26,6 @@ import org.jtheque.modules.utils.ModuleResourceCache;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.collections.CollectionUtils;
 
-import javax.swing.Action;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.EnumMap;
@@ -44,13 +44,20 @@ public final class FeatureService implements IFeatureService, ModuleListener {
 
     private final Map<CoreFeature, Feature> coreFeatures;
 
+    private final ILanguageService languageService;
+
     /**
      * Construct a new FeatureService.
+     *
+     * @param languageService The language service. 
      */
-    public FeatureService() {
+    public FeatureService(ILanguageService languageService) {
         super();
 
+        this.languageService = languageService;
+
         features = new ArrayList<Feature>(10);
+
         coreFeatures = new EnumMap<CoreFeature, Feature>(CoreFeature.class);
 
         coreFeatures.put(CoreFeature.FILE, createAndAddFeature(0, "menu.file"));
@@ -61,6 +68,8 @@ public final class FeatureService implements IFeatureService, ModuleListener {
 
     @Override
     public void addMenu(String moduleId, Menu menu){
+        languageService.addInternationalizable(menu);
+
         for(CoreFeature feature : CoreFeature.values()){
             for(Feature f : menu.getSubFeatures(feature)){
                 getFeature(feature).addSubFeature(f);
@@ -74,6 +83,8 @@ public final class FeatureService implements IFeatureService, ModuleListener {
         if(StringUtils.isNotEmpty(moduleId)){
             ModuleResourceCache.addResource(moduleId, Menu.class, menu);
         }
+
+        menu.refreshText(languageService);
     }
 
     /**
@@ -195,11 +206,7 @@ public final class FeatureService implements IFeatureService, ModuleListener {
      * @author Baptiste Wicht
      */
     protected final class ManagedFeature extends Feature {
-        public ManagedFeature(FeatureType type, Integer position, Action action) {
-            super(type, position, action);
-        }
-
-        public ManagedFeature(FeatureType type, String titleKey, Integer position) {
+        protected ManagedFeature(FeatureType type, String titleKey, Integer position) {
             super(type, titleKey, position);
         }
 

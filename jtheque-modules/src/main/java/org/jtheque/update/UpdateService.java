@@ -48,13 +48,21 @@ public final class UpdateService implements IUpdateService {
     private IVersionsLoader versionsLoader;
 
     private final WeakEventListenerList listeners = new WeakEventListenerList();
-    
-    public UpdateService() {
+
+    private final ICore core;
+    private final IUIUtils uiUtils;
+    private final IModuleService moduleService;
+
+    public UpdateService(IStateService stateService, ICore core, IUIUtils uiUtils, IModuleService moduleService) {
         super();
+
+        this.core = core;
+        this.uiUtils = uiUtils;
+        this.moduleService = moduleService;
 
         updatables = new ArrayList<Updatable>(10);
 
-        state = UpdateServices.get(IStateService.class).getOrCreateState(UpdatableState.class);
+        state = stateService.getState(new UpdatableState());
 
         for (Updatable updatable : updatables) {
             readUpdatableVersion(updatable);
@@ -94,7 +102,7 @@ public final class UpdateService implements IUpdateService {
 
     @Override
     public void update(Version versionToDownload) {
-        for (OnlineVersion onlineVersion : versionsLoader.getOnlineVersions(UpdateServices.get(ICore.class))) {
+        for (OnlineVersion onlineVersion : versionsLoader.getOnlineVersions(core)) {
             if (onlineVersion.getVersion().equals(versionToDownload)) {
                 applyOnlineVersion(onlineVersion);
 
@@ -102,9 +110,9 @@ public final class UpdateService implements IUpdateService {
             }
         }
 
-        UpdateServices.get(IUIUtils.class).displayI18nText("message.application.updated");
+            uiUtils.displayI18nText("message.application.updated");
 
-        UpdateServices.get(ICore.class).getLifeCycle().restart();
+        core.getLifeCycle().restart();
     }
 
     /**
@@ -145,22 +153,22 @@ public final class UpdateService implements IUpdateService {
         OnlineVersion onlineVersion = versionsLoader.getOnlineVersion(version, module);
 
         if (onlineVersion.getCoreVersion().isGreaterThan(ICore.VERSION)) {
-            UpdateServices.get(IUIUtils.class).displayI18nText("modules.message.versionproblem");
+            uiUtils.displayI18nText("modules.message.versionproblem");
         } else {
             //Download all files
             for (UpdateAction action : onlineVersion.getActions()) {
                 action.execute();
             }
 
-            UpdateServices.get(IUIUtils.class).displayI18nText("message.application.updated");
+            uiUtils.displayI18nText("message.application.updated");
 
-            UpdateServices.get(ICore.class).getLifeCycle().restart();
+            core.getLifeCycle().restart();
         }
     }
 
     @Override
     public Collection<Version> getKernelVersions() {
-        return getVersions(UpdateServices.get(ICore.class));
+        return getVersions(core);
     }
 
     @Override
@@ -200,7 +208,7 @@ public final class UpdateService implements IUpdateService {
     private boolean isAModuleNotUpToDate() {
         boolean notUpToDate = false;
 
-        for (Module module : UpdateServices.get(IModuleService.class).getModules()) {
+        for (Module module : moduleService.getModules()) {
             if (!isUpToDate(module)) {
                 notUpToDate = true;
                 break;
@@ -248,7 +256,7 @@ public final class UpdateService implements IUpdateService {
     public void registerUpdatable(Updatable updatable) {
         updatables.add(updatable);
 
-        fireUpdatableAdded();
+        fireUpdatableAdded(updatable);
     }
 
     @Override
@@ -269,9 +277,9 @@ public final class UpdateService implements IUpdateService {
     /**
      * Fire an updatable added event.
      */
-    private void fireUpdatableAdded() {
+    private void fireUpdatableAdded(Updatable updatable) {
         for (UpdatableListener l : listeners.getListeners(UpdatableListener.class)) {
-            l.updatableAdded();
+            l.updatableAdded(updatable);
         }
     }
 
@@ -282,5 +290,10 @@ public final class UpdateService implements IUpdateService {
      */
     public void setVersionsLoader(IVersionsLoader versionsLoader) {
         this.versionsLoader = versionsLoader;
+    }
+
+    @Override
+    public Version getMostRecentCoreVersion() {
+        return getMostRecentVersion(core);
     }
 }

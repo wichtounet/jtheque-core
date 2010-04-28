@@ -49,13 +49,6 @@ public interface Application {
     String getWindowIcon();
 
     /**
-     * Return the image type of the window icon.
-     *
-     * @return The image type of the window icon.
-     */
-    ImageType getWindowIconType();
-
-    /**
      * Return the path to the licence.
      *
      * @return The path to the licence of the application.

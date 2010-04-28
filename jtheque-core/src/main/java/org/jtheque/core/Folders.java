@@ -34,10 +34,18 @@ public final class Folders implements IFoldersContainer {
     private File logsFolder;
     private File cacheFolder;
 
+    private final ICore core;
+
+    public Folders(ICore core) {
+        super();
+
+        this.core = core;
+    }
+
     @Override
     public File getApplicationFolder() {
         if (applicationFolder == null) {
-            applicationFolder = new File(CoreServices.get(ICore.class).getApplication().getFolderPath());
+            applicationFolder = new File(core.getApplication().getFolderPath());
 
             FileUtils.createIfNotExists(applicationFolder);
         }

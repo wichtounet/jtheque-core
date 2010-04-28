@@ -2,32 +2,22 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:osgi="http://www.springframework.org/schema/osgi"
+       xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="
             http://www.springframework.org/schema/beans
             http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
             http://www.springframework.org/schema/osgi
-            http://www.springframework.org/schema/osgi/spring-osgi.xsd">
+            http://www.springframework.org/schema/osgi/spring-osgi.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
-    <bean id="languageManager" class="org.jtheque.i18n.LanguageService" />
+    <context:annotation-config/>
 
-    <osgi:service id="languageManagerService" ref="languageManager" interface="org.jtheque.i18n.ILanguageService"/>
-
-    <osgi:reference id="stateManager" interface="org.jtheque.states.IStateService" />
-
-    <!-- Internationalization -->
-
-    <bean id="messageSource" class="org.jtheque.i18n.JThequeResourceBundle">
-        <property name="coreBaseNames">
-            <list>
-                <value>classpath:org/jtheque/i18n/core</value>
-                <value>classpath:org/jtheque/i18n/dialogs</value>
-                <value>classpath:org/jtheque/i18n/errors</value>
-                <value>classpath:org/jtheque/i18n/messages</value>
-            </list>
-        </property>
-        <property name="cacheSeconds" value="-1"/>
-        <property name="fileEncodings" value="UTF-8"/>
-        <property name="defaultEncoding" value="UTF-8"/>
-        <property name="useCodeAsDefaultMessage" value="true"/>
+    <bean id="languageService" class="org.jtheque.i18n.LanguageService" >
+        <constructor-arg ref="stateService"/>
     </bean>
+
+    <osgi:service ref="languageService" interface="org.jtheque.i18n.ILanguageService"/>
+
+    <osgi:reference id="stateService" interface="org.jtheque.states.IStateService" />
 </beans>

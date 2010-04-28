@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:osgi="http://www.springframework.org/schema/osgi"
+       xsi:schemaLocation="
+            http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+            http://www.springframework.org/schema/osgi
+            http://www.springframework.org/schema/osgi/spring-osgi.xsd">
+
+    <bean id="core" class="org.jtheque.core.Core">
+        <constructor-arg><osgi:reference interface="org.jtheque.states.IStateService" /></constructor-arg>
+        <constructor-arg><osgi:reference interface="org.jtheque.events.IEventService" /></constructor-arg>
+        <constructor-arg><osgi:reference interface="org.jtheque.resources.IResourceService" /></constructor-arg>
+    </bean>
+
+    <osgi:service ref="core" interface="org.jtheque.core.ICore"/>
+</beans>

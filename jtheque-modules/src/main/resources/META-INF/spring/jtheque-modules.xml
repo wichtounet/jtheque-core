@@ -8,10 +8,17 @@
             http://www.springframework.org/schema/osgi
             http://www.springframework.org/schema/osgi/spring-osgi.xsd">
 
-    <bean id="modulesManager" class="org.jtheque.modules.impl.ModuleService">
+    <bean id="moduleService" class="org.jtheque.modules.impl.ModuleService">
         <constructor-arg><bean class="org.jtheque.modules.impl.ModuleLoader"/></constructor-arg>
     </bean>
 
-    <osgi:service id="modulesManagerService" ref="modulesManager" interface="org.jtheque.modules.able.IModuleService"/>
+    <bean id="updateService" class="org.jtheque.update.UpdateService">
+        <constructor-arg><osgi:reference interface="org.jtheque.states.IStateService" /></constructor-arg>
+        <constructor-arg><osgi:reference interface="org.jtheque.core.ICore" /></constructor-arg>
+        <constructor-arg><osgi:reference interface="org.jtheque.ui.able.IUIUtils" /></constructor-arg>
+        <constructor-arg ref="moduleService"/>
+    </bean>
 
+    <osgi:service ref="moduleService" interface="org.jtheque.modules.able.IModuleService"/>
+    <osgi:service ref="updateService" interface="org.jtheque.update.IUpdateService"/>
 </beans>

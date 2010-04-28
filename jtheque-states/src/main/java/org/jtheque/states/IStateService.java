@@ -22,41 +22,5 @@ package org.jtheque.states;
  * @author Baptiste Wicht
  */
 public interface IStateService {
-    /**
-     * Register a new state.
-     *
-     * @param state The state to register.
-     */
-    void registerState(IState state);
-
-    /**
-     * Return the state of a certain class.
-     *
-     * @param <T> The state type.
-     * @param c   The state class.
-     * @return The state.
-     */
-    <T extends IState> T getState(Class<T> c);
-
-    /**
-     * Return the state of a certain class. If the state has not been yet created, it would be created.
-     * If there is a problem during the creation, the error will be displayed.
-     *
-     * @param <T> The state type.
-     * @param c   The state class.
-     *
-     * @return The state or null if there was a problem during the creation.
-     */
-    <T extends IState> T getOrCreateState(Class<T> c);
-
-    /**
-     * Create and return a state.
-     * If there is a problem during the creation, the error will be displayed.
-     *
-     * @param <T> The state type.
-     * @param c   The state class.
-     *
-     * @return The state.
-     */
-    <T extends IState> T createState(Class<T> c);
+    <T> T getState(T state);
 }

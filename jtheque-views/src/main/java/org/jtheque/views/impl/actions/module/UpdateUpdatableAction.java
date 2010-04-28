@@ -1,9 +1,6 @@
 package org.jtheque.views.impl.actions.module;
 
-import org.jtheque.update.IUpdateService;
 import org.jtheque.update.Updatable;
-import org.jtheque.views.ViewsServices;
-import org.jtheque.views.able.IViewService;
 
 /*
  * This file is part of JTheque.
@@ -36,7 +33,7 @@ public final class UpdateUpdatableAction extends AbstractUpdateAction {
 
     @Override
     boolean isUpToDate() {
-        return ViewsServices.get(IUpdateService.class).isUpToDate(getSelectedObject());
+        return getUpdateService().isUpToDate(getSelectedObject());
     }
 
     @Override
@@ -46,6 +43,6 @@ public final class UpdateUpdatableAction extends AbstractUpdateAction {
 
     @Override
     Updatable getSelectedObject() {
-        return ViewsServices.get(IViewService.class).getViews().getModuleView().getSelectedUpdatable();
+        return getViews().getModuleView().getSelectedUpdatable();
     }
 }

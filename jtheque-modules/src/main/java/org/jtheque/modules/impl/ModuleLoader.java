@@ -76,7 +76,7 @@ public final class ModuleLoader implements IModuleLoader, BundleContextAware {
      */
     private void loadModule(File file, Collection<ModuleContainer> modules) {
         try {
-            Bundle bundle = bundleContext.installBundle(file.getAbsolutePath());
+            Bundle bundle = bundleContext.installBundle("file:" + file.getAbsolutePath());
 
             ModuleContainer container = new ModuleContainer(bundle);
 

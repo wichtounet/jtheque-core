@@ -19,7 +19,6 @@ package org.jtheque.views.impl.models;
 import org.jtheque.modules.able.IModuleService;
 import org.jtheque.modules.impl.ModuleDescription;
 import org.jtheque.utils.collections.CollectionUtils;
-import org.jtheque.views.ViewsServices;
 
 import javax.swing.DefaultListModel;
 import java.util.List;
@@ -35,10 +34,10 @@ public final class ModuleRepositoryListModel extends DefaultListModel {
     /**
      * Construct a new ModuleListModel.
      */
-    public ModuleRepositoryListModel() {
+    public ModuleRepositoryListModel(IModuleService moduleService) {
         super();
 
-        modules = CollectionUtils.copyOf(ViewsServices.get(IModuleService.class).getModulesFromRepository());
+        modules = CollectionUtils.copyOf(moduleService.getModulesFromRepository());
     }
 
     @Override

@@ -20,8 +20,8 @@ import com.apple.eawt.Application;
 import com.apple.eawt.ApplicationAdapter;
 import com.apple.eawt.ApplicationEvent;
 import org.jtheque.core.ICore;
-import org.jtheque.views.ViewsServices;
 import org.jtheque.views.able.IViewService;
+import org.jtheque.views.able.IViews;
 
 /**
  * Configuration to improve the compatibility with mac.
@@ -41,8 +41,8 @@ public final class MacOSXConfiguration {
     /**
      * Configure the application for Mac menus.
      */
-    public static void configureForMac() {
-        APPLICATION.addApplicationListener(new MacApplicationAdapter());
+    public static void configureForMac(IViewService viewService, ICore core, IViews views) {
+        APPLICATION.addApplicationListener(new MacApplicationAdapter(viewService, core, views));
         APPLICATION.setEnabledAboutMenu(true);
         APPLICATION.setEnabledPreferencesMenu(true);
     }
@@ -54,21 +54,33 @@ public final class MacOSXConfiguration {
      * @author Baptiste Wicht
      */
     private static final class MacApplicationAdapter extends ApplicationAdapter {
+        private final IViewService viewService;
+        private final IViews views;
+        private final ICore core;
+
+        private MacApplicationAdapter(IViewService viewService, ICore core, IViews views) {
+            super();
+
+            this.viewService = viewService;
+            this.core = core;
+            this.views = views;
+        }
+
         @Override
         public void handleQuit(ApplicationEvent ev) {
-            ViewsServices.get(ICore.class).getLifeCycle().exit();
+            core.getLifeCycle().exit();
         }
 
         @Override
         public void handleAbout(ApplicationEvent ev) {
-            ViewsServices.get(IViewService.class).displayAboutView();
+            viewService.displayAboutView();
 
             ev.setHandled(true);
         }
 
         @Override
         public void handlePreferences(ApplicationEvent ev) {
-            ViewsServices.get(IViewService.class).getViews().getConfigView().display();
+            views.getConfigView().display();
 
             ev.setHandled(true);
         }

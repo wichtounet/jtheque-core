@@ -48,8 +48,8 @@
                     <instructions>
                         <Bundle-SymbolicName>${pom.artifactId}</Bundle-SymbolicName>
                         <Export-Package>org.jtheque.core.utils, org.jtheque.core.utils.ui</Export-Package>
-                        <Bundle-Activator>org.jtheque.core.utils.UtilsActivator</Bundle-Activator>
                         <Bundle-Vendor>Baptiste Wicht</Bundle-Vendor>
+                        <Spring-Context>*;create-asynchronously:=false;publish-context:=false</Spring-Context>
                     </instructions>
                 </configuration>
             </plugin>

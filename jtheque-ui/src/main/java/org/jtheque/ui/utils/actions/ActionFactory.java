@@ -2,8 +2,6 @@ package org.jtheque.ui.utils.actions;
 
 import org.jtheque.ui.able.IView;
 
-import javax.swing.Action;
-
 /*
  * This file is part of JTheque.
  *
@@ -41,7 +39,7 @@ public final class ActionFactory {
      *
      * @return An action to close the view.
      */
-    public static Action createCloseViewAction(String key, IView view){
+    public static JThequeAction createCloseViewAction(String key, IView view){
         return new CloseViewAction(key, view);
     }
 
@@ -53,7 +51,7 @@ public final class ActionFactory {
      *
      * @return An action to close the view.
      */
-    public static Action createCloseViewAction(String key, String view){
+    public static JThequeAction createCloseViewAction(String key, String view){
         return new CloseBeanViewAction(key, view);
     }
 
@@ -65,7 +63,7 @@ public final class ActionFactory {
      *
      * @return An action to close the view.
      */
-    public static Action createDisplayViewAction(String key, IView view){
+    public static JThequeAction createDisplayViewAction(String key, IView view){
         return new DisplayViewAction(key, view);
     }
 
@@ -77,7 +75,7 @@ public final class ActionFactory {
      *
      * @return An action to close the view.
      */
-    public static Action createDisplayViewAction(String key, String view){
+    public static JThequeAction createDisplayViewAction(String key, String view){
         return new DisplayBeanViewAction(key, view);
     }
 }
