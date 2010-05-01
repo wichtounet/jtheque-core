@@ -17,6 +17,7 @@ package org.jtheque.views.impl.models;
  */
 
 import org.jtheque.messages.IMessageService;
+import org.jtheque.messages.Message;
 import org.jtheque.utils.bean.IntDate;
 import org.jtheque.utils.collections.CollectionUtils;
 

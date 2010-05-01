@@ -17,6 +17,36 @@
         </fileset>
       </configuration>
     </facet>
+    <facet type="Osmorc" name="OSGi">
+      <configuration osmorcControlsManifest="true" manifestLocation="" jarfileLocation="$APPLICATION_HOME_DIR$/bin/home/wichtounet/Builds/bundles/jtheque-views/classes/jtheque-views.jar" useBndFile="false" bndFileLocation="" bundleActivator="org.jtheque.views.ViewsActivator" bundleSymbolicName="org.jtheque.views" bundleVersion="2.1-SNAPSHOT" ignoreFilePattern="" useProjectDefaultManifestFileLocation="true" alwaysRebuildBundleJAR="false">
+        <additionalProperties>
+          <property key="Bundle-Vendor" value="Baptiste Wicht" />
+          <property key="Spring-Context" value="*;create-asynchronously:=false" />
+          <property key="Export-Package" value="org.jtheque.views, org.jtheque.views.*" />
+        </additionalProperties>
+        <additionalJARContents />
+      </configuration>
+    </facet>
+    <facet type="Osmorc" name="OSGi">
+      <configuration osmorcControlsManifest="true" manifestLocation="" jarfileLocation="$APPLICATION_HOME_DIR$/bin/home/wichtounet/Builds/bundles/jtheque-views/classes/jtheque-views.jar" useBndFile="false" bndFileLocation="" bundleActivator="org.jtheque.views.ViewsActivator" bundleSymbolicName="org.jtheque.views" bundleVersion="2.1-SNAPSHOT" ignoreFilePattern="" useProjectDefaultManifestFileLocation="true" alwaysRebuildBundleJAR="false">
+        <additionalProperties>
+          <property key="Bundle-Vendor" value="Baptiste Wicht" />
+          <property key="Spring-Context" value="META-INF/spring/jtheque-views.xml;create-asynchronously:=false;publish-context:=false" />
+          <property key="Export-Package" value="org.jtheque.views, org.jtheque.views.*" />
+        </additionalProperties>
+        <additionalJARContents />
+      </configuration>
+    </facet>
+    <facet type="Osmorc" name="OSGi">
+      <configuration osmorcControlsManifest="true" manifestLocation="" jarfileLocation="$APPLICATION_HOME_DIR$/bin/home/wichtounet/Builds/bundles/jtheque-views/classes/jtheque-views.jar" useBndFile="false" bndFileLocation="" bundleActivator="org.jtheque.views.ViewsActivator" bundleSymbolicName="org.jtheque.views" bundleVersion="2.1-SNAPSHOT" ignoreFilePattern="" useProjectDefaultManifestFileLocation="true" alwaysRebuildBundleJAR="false">
+        <additionalProperties>
+          <property key="Bundle-Vendor" value="Baptiste Wicht" />
+          <property key="Spring-Context" value="*;create-asynchronously:=false" />
+          <property key="Export-Package" value="org.jtheque.views, org.jtheque.views.*" />
+        </additionalProperties>
+        <additionalJARContents />
+      </configuration>
+    </facet>
   </component>
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_6" inherit-compiler-output="false">
     <output url="file:///home/wichtounet/Builds/bundles/jtheque-views/classes/production" />

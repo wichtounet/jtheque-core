@@ -1,5 +1,6 @@
 package org.jtheque.views.impl.models;
 
+import org.jtheque.messages.Message;
 import org.jtheque.ui.able.IModel;
 
 /**
