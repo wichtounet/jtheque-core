@@ -28,14 +28,16 @@ import java.awt.event.ActionEvent;
  * @author Baptiste Wicht
  */
 public final class DisplayPreviousMessageAction extends JThequeAction {
-    @Resource
     private IMessageView messageView;
 
     /**
      * Construct a new DisplayPreviousMessageAction.
+     * @param messageView
      */
-    public DisplayPreviousMessageAction() {
+    public DisplayPreviousMessageAction(IMessageView messageView) {
         super("messages.actions.display.previous");
+        
+        this.messageView = messageView;
     }
 
     @Override

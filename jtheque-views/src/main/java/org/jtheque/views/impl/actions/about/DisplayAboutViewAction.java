@@ -29,17 +29,19 @@ import java.awt.event.ActionEvent;
  *
  * @author Baptiste Wicht
  */
-public final class DisplayAboutViewAction extends JThequeAction implements Injectable {
-    @Resource
-    private IViewService viewService;
+public final class DisplayAboutViewAction extends JThequeAction {
+    private final IViewService viewService;
 
     /**
      * Construct a new DisplayAboutViewAction.
      *
-     * @param core The core service. 
+     * @param core The core service.
+     * @param viewService
      */
-    public DisplayAboutViewAction(ICore core) {
+    public DisplayAboutViewAction(ICore core, IViewService viewService) {
         super("about.actions.display", core.getApplication().getName());
+
+        this.viewService = viewService;
     }
 
     @Override

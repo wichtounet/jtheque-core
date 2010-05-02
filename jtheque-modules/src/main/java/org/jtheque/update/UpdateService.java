@@ -30,6 +30,7 @@ import org.jtheque.update.versions.OnlineVersion;
 import org.jtheque.utils.bean.Version;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -42,23 +43,20 @@ import java.util.List;
  */
 public final class UpdateService implements IUpdateService {
     private final Collection<Updatable> updatables;
-
     private final UpdatableState state;
-
-    private IVersionsLoader versionsLoader;
-
     private final WeakEventListenerList listeners = new WeakEventListenerList();
-
     private final ICore core;
     private final IUIUtils uiUtils;
     private final IModuleService moduleService;
+    private final IVersionsLoader versionsLoader;
 
-    public UpdateService(IStateService stateService, ICore core, IUIUtils uiUtils, IModuleService moduleService) {
+    public UpdateService(IStateService stateService, ICore core, IUIUtils uiUtils, IModuleService moduleService, IVersionsLoader versionsLoader) {
         super();
 
         this.core = core;
         this.uiUtils = uiUtils;
         this.moduleService = moduleService;
+        this.versionsLoader = versionsLoader;
 
         updatables = new ArrayList<Updatable>(10);
 
@@ -281,15 +279,6 @@ public final class UpdateService implements IUpdateService {
         for (UpdatableListener l : listeners.getListeners(UpdatableListener.class)) {
             l.updatableAdded(updatable);
         }
-    }
-
-    /**
-     * Set the versions loader. This is not for use, this is only for Spring injection.
-     *
-     * @param versionsLoader The versions loader implementation.
-     */
-    public void setVersionsLoader(IVersionsLoader versionsLoader) {
-        this.versionsLoader = versionsLoader;
     }
 
     @Override

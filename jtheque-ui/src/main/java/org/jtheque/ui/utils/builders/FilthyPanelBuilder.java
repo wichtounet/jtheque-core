@@ -213,6 +213,10 @@ public final class FilthyPanelBuilder extends JThequePanelBuilder {
     public I18nPanelBuilder addPanel(Object constraints) {
         I18nPanelBuilder builder = new FilthyPanelBuilder();
 
+        if(getContainer() != null){
+            builder.setInternationalizableContainer(getContainer());
+        }
+
         add(builder.getPanel(), constraints);
 
         return builder;
@@ -221,6 +225,10 @@ public final class FilthyPanelBuilder extends JThequePanelBuilder {
     @Override
     public I18nPanelBuilder addPanel(LayoutManager layout, Object constraints){
         I18nPanelBuilder builder = new FilthyPanelBuilder(layout);
+
+        if(getContainer() != null){
+            builder.setInternationalizableContainer(getContainer());
+        }
 
         add(builder.getPanel(), constraints);
 
@@ -265,11 +273,11 @@ public final class FilthyPanelBuilder extends JThequePanelBuilder {
 
     @Override
     public JCheckBox addI18nCheckBox(String key, Object constraints) {
-        JCheckBox checkBox = new JThequeCheckBox(key);
+        JCheckBox checkBox = super.addI18nCheckBox(key, constraints);
 
         checkBox.setForeground(Color.white);
         checkBox.setOpaque(false);
 
-        return add(checkBox, constraints);
+        return checkBox;
     }
 }

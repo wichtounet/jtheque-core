@@ -61,7 +61,7 @@ public final class JPanelConfigNetwork extends FilthyBuildedPanel implements INe
 
         boxProxy = builder.addI18nCheckBox("config.network.proxy.check",
                 parent.gbcSet(0, 0, GridBagUtils.HORIZONTAL, GridBagUtils.BASELINE_LEADING, 2, 1));
-        boxProxy.addActionListener(new CheckProxyAction());
+        boxProxy.addActionListener(new CheckProxyAction(this));
 
         builder.addI18nLabel("config.network.proxy.address", parent.gbcSet(0, 1));
         fieldAddress = builder.add(new FilthyTextField(10), parent.gbcSet(1, 1, GridBagUtils.HORIZONTAL));

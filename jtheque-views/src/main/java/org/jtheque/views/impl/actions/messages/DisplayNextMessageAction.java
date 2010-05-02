@@ -28,14 +28,15 @@ import java.awt.event.ActionEvent;
  * @author Baptiste Wicht
  */
 public final class DisplayNextMessageAction extends JThequeAction {
-    @Resource
     private IMessageView messageView;
 
     /**
      * Construct a new DisplayNextMessageAction.
+     * @param messageView
      */
-    public DisplayNextMessageAction() {
+    public DisplayNextMessageAction(IMessageView messageView) {
         super("messages.actions.display.next");
+        this.messageView = messageView;
     }
 
     @Override

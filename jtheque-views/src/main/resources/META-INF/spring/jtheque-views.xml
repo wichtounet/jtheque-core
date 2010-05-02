@@ -44,6 +44,7 @@
         <constructor-arg ref="core"/>
         <constructor-arg ref="undoRedoService"/>
         <constructor-arg ref="views"/>
+        <constructor-arg ref="viewService"/>
     </bean>
     
     <!--  Views -->

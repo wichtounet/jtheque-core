@@ -31,6 +31,11 @@ import javax.swing.UnsupportedLookAndFeelException;
  * along with JTheque.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/**
+ * The activator to activate the defaults configuration of the view. 
+ *
+ * @author Baptiste Wicht
+ */
 public class DefaultsActivator implements BundleActivator {
     @Override
     public void start(BundleContext bundleContext) throws Exception {

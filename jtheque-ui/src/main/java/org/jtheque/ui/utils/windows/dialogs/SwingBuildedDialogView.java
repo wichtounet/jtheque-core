@@ -17,6 +17,7 @@ package org.jtheque.ui.utils.windows.dialogs;
  */
 
 import org.jtheque.errors.JThequeError;
+import org.jtheque.i18n.ILanguageService;
 import org.jtheque.ui.able.IModel;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.ui.utils.builders.JThequePanelBuilder;
@@ -52,6 +53,8 @@ public abstract class SwingBuildedDialogView<T extends IModel> extends SwingDial
         builder.setInternationalizableContainer(this);
 
         buildView(builder);
+
+        refreshText(getService(ILanguageService.class));
 
         return builder.getPanel();
     }

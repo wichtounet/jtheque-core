@@ -17,6 +17,7 @@ package org.jtheque.ui.utils.windows.dialogs;
  */
 
 import org.jtheque.errors.JThequeError;
+import org.jtheque.i18n.ILanguageService;
 import org.jtheque.ui.able.IModel;
 import org.jtheque.ui.utils.builders.FilthyPanelBuilder;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
@@ -37,6 +38,8 @@ public abstract class SwingFilthyBuildedDialogView<T extends IModel> extends Swi
         initView();
 
         setContentPane(buildContentPane());
+
+        refreshText(getService(ILanguageService.class));
 
         pack();
 

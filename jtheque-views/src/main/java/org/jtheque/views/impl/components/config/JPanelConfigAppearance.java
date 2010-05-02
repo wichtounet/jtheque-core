@@ -19,7 +19,6 @@ package org.jtheque.views.impl.components.config;
 import org.jtheque.core.ICore;
 import org.jtheque.errors.JThequeError;
 import org.jtheque.i18n.ILanguageService;
-import org.jtheque.i18n.Internationalizable;
 import org.jtheque.ui.utils.ValidationUtils;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.ui.utils.filthy.FilthyBuildedPanel;
@@ -56,18 +55,18 @@ public final class JPanelConfigAppearance extends FilthyBuildedPanel implements 
     }
 
     @Override
-    protected void buildView(I18nPanelBuilder builder) {
-        I18nPanelBuilder internBuilder = builder.addPanel(builder.gbcSet(0, 0, GridBagUtils.HORIZONTAL, GridBagUtils.FIRST_LINE_START));
-        internBuilder.setI18nTitleBorder("config.appearance.general.title");
+    protected void buildView(I18nPanelBuilder parent) {
+        I18nPanelBuilder builder = parent.addPanel(parent.gbcSet(0, 0, GridBagUtils.HORIZONTAL, GridBagUtils.FIRST_LINE_START));
+        builder.setI18nTitleBorder("config.appearance.general.title");
 
-        internBuilder.addI18nLabel("config.appearance.language", builder.gbcSet(0, 0));
+        builder.addI18nLabel("config.appearance.language", parent.gbcSet(0, 0));
 
         modelLanguages = new AvailableLanguagesComboBoxModel(core);
 
-        internBuilder.addComboBox(modelLanguages, new FilthyRenderer(), builder.gbcSet(1, 0, GridBagUtils.HORIZONTAL));
+        builder.addComboBox(modelLanguages, new FilthyRenderer(), parent.gbcSet(1, 0, GridBagUtils.HORIZONTAL));
 
-        boxRetainSizeAndPosition = internBuilder.addI18nCheckBox("config.appearance.size",
-                builder.gbcSet(0, 1, GridBagUtils.HORIZONTAL, GridBagUtils.BASELINE_LEADING, 2, 1));
+        boxRetainSizeAndPosition = builder.addI18nCheckBox("config.appearance.size",
+                parent.gbcSet(0, 1, GridBagUtils.HORIZONTAL, GridBagUtils.BASELINE_LEADING, 2, 1));
 
         fillAllFields();
     }
@@ -104,15 +103,5 @@ public final class JPanelConfigAppearance extends FilthyBuildedPanel implements 
     @Override
     public JComponent getComponent() {
         return this;
-    }
-
-    @Override
-    public void addInternationalizable(Internationalizable internationalizable) {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    @Override
-    public void refreshText(ILanguageService languageService) {
-        //To change body of implemented methods use File | Settings | File Templates.
     }
 }

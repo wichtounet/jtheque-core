@@ -3,6 +3,7 @@ package org.jtheque.views.impl.components.menu;
 import org.jtheque.core.ICore;
 import org.jtheque.features.Feature;
 import org.jtheque.undo.IUndoRedoService;
+import org.jtheque.views.able.IViewService;
 import org.jtheque.views.able.IViews;
 import org.jtheque.views.impl.ViewsResources;
 import org.jtheque.views.impl.actions.about.DisplayAboutViewAction;
@@ -13,6 +14,7 @@ import org.jtheque.views.impl.actions.backup.AcBackup;
 import org.jtheque.views.impl.actions.backup.AcRestore;
 import org.jtheque.views.impl.actions.ExitAction;
 import org.jtheque.views.impl.actions.config.DisplayConfigViewAction;
+import org.jtheque.views.impl.actions.event.DisplayLogsViewAction;
 import org.jtheque.views.impl.actions.messages.DisplayMessagesViewAction;
 import org.jtheque.views.impl.actions.module.DisplayModuleViewAction;
 import org.jtheque.views.impl.actions.undo.RedoAction;
@@ -45,13 +47,15 @@ public final class CoreMenu extends AbstractMenu {
     private final ICore core;
     private final IUndoRedoService undoRedoService;
     private final IViews views;
+    private final IViewService viewService;
 
-    public CoreMenu(ICore core, IUndoRedoService undoRedoService, IViews views) {
+    public CoreMenu(ICore core, IUndoRedoService undoRedoService, IViews views, IViewService viewService) {
         super();
 
         this.core = core;
         this.undoRedoService = undoRedoService;
         this.views = views;
+        this.viewService = viewService;
     }
 
     @Override
@@ -86,8 +90,8 @@ public final class CoreMenu extends AbstractMenu {
                 createSeparatedSubFeature(2, new AcInformOfABug(), ViewsResources.MAIL_ICON),
                 createSeparatedSubFeature(4, new AcProposeImprovement(), ViewsResources.IDEA_ICON),
                 createSeparatedSubFeature(6, new DisplayMessagesViewAction(views)),
-                createSeparatedSubFeature(25, createDisplayViewAction("log.view.actions.display", "logView")),
-                createSeparatedSubFeature(150, new DisplayAboutViewAction(core), ViewsResources.MAIL_ICON)
+                createSeparatedSubFeature(25, new DisplayLogsViewAction(views)),
+                createSeparatedSubFeature(150, new DisplayAboutViewAction(core, viewService), ViewsResources.MAIL_ICON)
         );
     }
 }

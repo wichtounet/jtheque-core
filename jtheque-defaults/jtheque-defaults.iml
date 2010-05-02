@@ -17,6 +17,14 @@
         <additionalJARContents />
       </configuration>
     </facet>
+    <facet type="Osmorc" name="OSGi">
+      <configuration osmorcControlsManifest="true" manifestLocation="" jarfileLocation="C:/Server/builds/bundles/jtheque-defaults/classes/jtheque-defaults.jar" useBndFile="false" bndFileLocation="" bundleActivator="org.jtheque.defaults.DefaultsActivator" bundleSymbolicName="org.jtheque.defaults" bundleVersion="2.1-SNAPSHOT" ignoreFilePattern="" useProjectDefaultManifestFileLocation="true" alwaysRebuildBundleJAR="false">
+        <additionalProperties>
+          <property key="Bundle-Vendor" value="Baptiste Wicht" />
+        </additionalProperties>
+        <additionalJARContents />
+      </configuration>
+    </facet>
   </component>
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_6" inherit-compiler-output="false">
     <output url="file:///home/wichtounet/Builds/bundles/jtheque-defaults/classes/production" />

@@ -55,7 +55,7 @@ public final class MessageView extends SwingFilthyBuildedDialogView<IMessageMode
         addFields(builder);
 
         builder.addButtonBar(builder.gbcSet(0, 4, GridBagUtils.HORIZONTAL, GridBagUtils.LINE_END, 2, 1),
-                getCloseAction("messages.actions.close"), new DisplayNextMessageAction(), new DisplayPreviousMessageAction());
+                getCloseAction("messages.actions.close"), new DisplayNextMessageAction(this), new DisplayPreviousMessageAction(this));
     }
 
     /**

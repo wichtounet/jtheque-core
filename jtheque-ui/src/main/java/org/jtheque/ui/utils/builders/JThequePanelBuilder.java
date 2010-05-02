@@ -92,6 +92,10 @@ public class JThequePanelBuilder extends BasicPanelBuilder implements I18nPanelB
         this.container = container;
     }
 
+    public InternationalizableContainer getContainer() {
+        return container;
+    }
+
     @Override
     void initDefaults() {
         getPanel().setBackground(Color.white);

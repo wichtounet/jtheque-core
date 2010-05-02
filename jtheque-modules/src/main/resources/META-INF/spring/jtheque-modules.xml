@@ -17,6 +17,7 @@
         <constructor-arg><osgi:reference interface="org.jtheque.core.ICore" /></constructor-arg>
         <constructor-arg><osgi:reference interface="org.jtheque.ui.able.IUIUtils" /></constructor-arg>
         <constructor-arg ref="moduleService"/>
+        <constructor-arg><bean id="versionsLoader" class="org.jtheque.update.versions.VersionsLoader" /></constructor-arg>
     </bean>
 
     <osgi:service ref="moduleService" interface="org.jtheque.modules.able.IModuleService"/>

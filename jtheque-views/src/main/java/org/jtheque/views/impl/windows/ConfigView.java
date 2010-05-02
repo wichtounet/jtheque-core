@@ -31,7 +31,6 @@ import org.jtheque.views.impl.actions.config.ApplyChangesAndCloseAction;
 import org.jtheque.views.impl.actions.config.CancelChangesAction;
 import org.jtheque.views.impl.components.LayerTabbedPane;
 
-import javax.annotation.Resource;
 import java.util.Collection;
 
 /**
@@ -42,9 +41,6 @@ import java.util.Collection;
 public final class ConfigView extends SwingFilthyBuildedDialogView<IModel> implements IConfigView {
     private LayerTabbedPane tab;
 
-    @Resource
-    private ILanguageService languageService;
-
     @Override
     protected void initView(){
         setTitleKey("config.view.title");
@@ -54,6 +50,8 @@ public final class ConfigView extends SwingFilthyBuildedDialogView<IModel> imple
     @Override
     protected void buildView(I18nPanelBuilder builder){
         tab = new LayerTabbedPane();
+
+        ILanguageService languageService = getService(ILanguageService.class);
 
         for (ConfigTabComponent component : getService(IViews.class).getConfigTabComponents()) {
             tab.addLayeredTab(languageService.getMessage(component.getTitleKey()), component.getComponent());
@@ -77,11 +75,11 @@ public final class ConfigView extends SwingFilthyBuildedDialogView<IModel> imple
         if("remove".equals(message)){
             ConfigTabComponent component = (ConfigTabComponent)value;
 
-            tab.addLayeredTab(languageService.getMessage(component.getTitleKey()), component.getComponent());
+            tab.addLayeredTab(getService(ILanguageService.class).getMessage(component.getTitleKey()), component.getComponent());
         } else if("add".equals(message)){
             ConfigTabComponent component = (ConfigTabComponent)value;
 
-            tab.removeTabAt(tab.indexOfTab(languageService.getMessage(component.getTitleKey())));
+            tab.removeTabAt(tab.indexOfTab(getService(ILanguageService.class).getMessage(component.getTitleKey())));
         }
     }
 
