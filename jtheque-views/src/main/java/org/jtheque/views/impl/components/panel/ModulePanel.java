@@ -114,26 +114,6 @@ public final class ModulePanel extends JPanel {
     }
 
     /**
-     * Set the colors of the renderer.
-     *
-     * @param background The background color.
-     * @param foreground The foreground color.
-     */
-    private void setColors(Color background, Color foreground) {
-        setBackground(background);
-
-        labelName.setBackground(background);
-        labelDescription.setBackground(background);
-        onlineLabel.setBackground(background);
-        currentLabel.setBackground(background);
-
-        labelName.setForeground(foreground);
-        labelDescription.setForeground(foreground);
-        onlineLabel.setForeground(foreground);
-        currentLabel.setForeground(foreground);
-    }
-
-    /**
      * Expand the version.
      */
     public void expand() {

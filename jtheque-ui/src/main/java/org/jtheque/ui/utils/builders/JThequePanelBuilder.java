@@ -14,6 +14,7 @@ import org.jtheque.ui.utils.components.JThequeI18nLabel;
 import javax.swing.Action;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
@@ -205,6 +206,17 @@ public class JThequePanelBuilder extends BasicPanelBuilder implements I18nPanelB
         addInternationalizable(new BorderUpdater(border, key));
 
         setBorder(border);
+    }
+
+    @Override
+    public JButton addButton(Action action, Object constraints) {
+        JButton button = add(new JButton(action), constraints);
+
+        if(action instanceof Internationalizable){
+            addInternationalizable((Internationalizable) action);
+        }
+
+        return button;
     }
 
     @Override

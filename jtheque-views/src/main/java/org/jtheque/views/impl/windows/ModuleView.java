@@ -17,6 +17,7 @@ package org.jtheque.views.impl.windows;
  */
 
 import org.jtheque.i18n.ILanguageService;
+import org.jtheque.modules.able.IModuleService;
 import org.jtheque.modules.able.Module;
 import org.jtheque.ui.able.IModel;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
@@ -50,9 +51,11 @@ public final class ModuleView extends SwingFilthyBuildedDialogView<IModel> imple
 
     @Override
     protected void buildView(I18nPanelBuilder builder){
-        LayerTabbedPane tabbed = new LayerTabbedPane();
+        LayerTabbedPane tabbed = new LayerTabbedPane(getService(ILanguageService.class));
 
-        modulesPanel = new ModulesPanel(getService(IUpdateService.class), getService(ILanguageService.class), getService(IFilthyUtils.class));
+        modulesPanel = new ModulesPanel(getService(IUpdateService.class), getService(IModuleService.class),
+                getService(ILanguageService.class), getService(IFilthyUtils.class));
+        
         updatablesPanel = new UpdatablesPanel(getService(IUpdateService.class), getService(ILanguageService.class), getService(IFilthyUtils.class));
 
         tabbed.addInternationalizedTab("modules.view.tab.modules", (JComponent) modulesPanel);

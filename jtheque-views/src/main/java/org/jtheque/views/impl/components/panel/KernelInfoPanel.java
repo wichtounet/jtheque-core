@@ -17,9 +17,11 @@ package org.jtheque.views.impl.components.panel;
  */
 
 import org.jtheque.core.ICore;
+import org.jtheque.i18n.ILanguageService;
 import org.jtheque.ui.utils.builders.FilthyPanelBuilder;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.ui.utils.builders.PanelBuilder;
+import org.jtheque.ui.utils.filthy.BuildedPanel;
 import org.jtheque.update.IUpdateService;
 import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.views.impl.actions.module.UpdateKernelAction;
@@ -32,24 +34,20 @@ import java.awt.Insets;
  *
  * @author Baptiste Wicht
  */
-public final class KernelInfoPanel extends JPanel {
+public final class KernelInfoPanel extends BuildedPanel {
     private static final int TITLE_FONT_SIZE = 16;
+    private final IUpdateService updateService;
 
-    /**
-     * Construct a new KernelInfoPanel.
-     */
-    public KernelInfoPanel(IUpdateService updateService) {
-        super();
+    public KernelInfoPanel(ILanguageService languageService, IUpdateService updateService) {
+        super(languageService);
 
-        build(updateService);
+        this.updateService = updateService;
+
+        build();
     }
 
-    /**
-     * Build the GUI.
-     */
-    private void build(IUpdateService updateService) {
-        I18nPanelBuilder builder = new FilthyPanelBuilder(this);
-
+    @Override
+    protected void buildView(I18nPanelBuilder builder) {
         builder.setDefaultInsets(new Insets(4, 4, 4, 4));
 
         builder.addI18nLabel("modules.view.label.kernel", PanelBuilder.BOLD, TITLE_FONT_SIZE,

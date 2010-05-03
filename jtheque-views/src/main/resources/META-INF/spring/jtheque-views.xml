@@ -38,6 +38,7 @@
                 <constructor-arg ref="featureService"/>
             </bean>
         </constructor-arg>
+        <constructor-arg ref="languageService"/>
     </bean>
 
     <bean class="org.jtheque.views.impl.components.menu.CoreMenu">
@@ -51,7 +52,7 @@
     
     <bean id="configView" class="org.jtheque.views.impl.windows.ConfigView" lazy-init="true"/>
     <bean id="licenceView" class="org.jtheque.views.impl.windows.LicenceView" lazy-init="true"/>
-    <bean id="logView" class="org.jtheque.views.impl.windows.LogView" lazy-init="true"/>
+    <bean id="eventView" class="org.jtheque.views.impl.windows.EventView" lazy-init="true"/>
     <bean id="messageView" class="org.jtheque.views.impl.windows.MessageView" lazy-init="true"/>
     <bean id="moduleView" class="org.jtheque.views.impl.windows.ModuleView" lazy-init="true"/>
     <bean id="repositoryView" class="org.jtheque.views.impl.windows.RepositoryView" lazy-init="true"/>

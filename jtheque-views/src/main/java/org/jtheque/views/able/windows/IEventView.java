@@ -21,6 +21,6 @@ import org.jtheque.ui.able.IView;
 /**
  * @author Baptiste Wicht
  */
-public interface ILogView extends IView {
+public interface IEventView extends IView {
 
 }

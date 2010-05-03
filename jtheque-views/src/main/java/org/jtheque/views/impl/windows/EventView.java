@@ -1,7 +1,7 @@
 package org.jtheque.views.impl.windows;
 
 import org.jdesktop.swingx.JXTable;
-import org.jtheque.events.EventLog;
+import org.jtheque.events.Event;
 import org.jtheque.events.IEventService;
 import org.jtheque.i18n.ILanguageService;
 import org.jtheque.ui.able.IModel;
@@ -9,11 +9,11 @@ import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.ui.utils.builders.PanelBuilder;
 import org.jtheque.ui.utils.windows.dialogs.SwingFilthyBuildedDialogView;
 import org.jtheque.utils.ui.GridBagUtils;
-import org.jtheque.views.able.windows.ILogView;
+import org.jtheque.views.able.windows.IEventView;
 import org.jtheque.views.impl.actions.event.UpdateAction;
 import org.jtheque.views.impl.filthy.FilthyRenderer;
+import org.jtheque.views.impl.models.EventLogComboBoxModel;
 import org.jtheque.views.impl.models.EventsTableModel;
-import org.jtheque.views.impl.models.LogComboBoxModel;
 
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
@@ -47,7 +47,7 @@ import java.util.Locale;
  *
  * @author Baptiste Wicht
  */
-public final class LogView extends SwingFilthyBuildedDialogView<IModel> implements ListSelectionListener, ItemListener, ILogView {
+public final class EventView extends SwingFilthyBuildedDialogView<IModel> implements ListSelectionListener, ItemListener, IEventView {
     private JXTable tableEvents;
     private EventsTableModel eventsModel;
 
@@ -79,7 +79,7 @@ public final class LogView extends SwingFilthyBuildedDialogView<IModel> implemen
 
         builder.addI18nLabel("log.view.log", builder.gbcSet(0, 0, GridBagUtils.NONE, GridBagUtils.LINE_END));
 
-        builder.addComboBox(new LogComboBoxModel(getService(IEventService.class)), new FilthyRenderer(),
+        builder.addComboBox(new EventLogComboBoxModel(getService(IEventService.class)), new FilthyRenderer(),
                 builder.gbcSet(1, 0, GridBagUtils.HORIZONTAL, GridBagUtils.LINE_START, 1.0, 0.0)).addItemListener(this);
 
         eventsModel = new EventsTableModel(getService(IEventService.class), getService(ILanguageService.class));
@@ -96,7 +96,7 @@ public final class LogView extends SwingFilthyBuildedDialogView<IModel> implemen
 
         createInfosPanel(builder);
 
-        builder.addButton(new UpdateAction(), builder.gbcSet(1, 3, GridBagUtils.NONE, GridBagUtils.LINE_END));
+        builder.addButton(new UpdateAction(this), builder.gbcSet(1, 3, GridBagUtils.NONE, GridBagUtils.LINE_END));
     }
 
     /**
@@ -151,7 +151,7 @@ public final class LogView extends SwingFilthyBuildedDialogView<IModel> implemen
     @Override
     public void valueChanged(ListSelectionEvent e) {
         if (tableEvents.getSelectedRowCount() > 0) {
-            EventLog event = eventsModel.getValueAt(tableEvents.getSelectedRow());
+            Event event = eventsModel.getValueAt(tableEvents.getSelectedRow());
 
             labelTitle.setText(getMessage(event.getTitleKey()));
             labelLog.setText(event.getLog());

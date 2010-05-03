@@ -1,6 +1,7 @@
 package org.jtheque.views.impl.components.panel;
 
 import org.jtheque.i18n.ILanguageService;
+import org.jtheque.modules.able.IModuleService;
 import org.jtheque.modules.able.Module;
 import org.jtheque.ui.utils.actions.ActionFactory;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
@@ -38,29 +39,37 @@ import javax.swing.JList;
  */
 
 /**
+ * A panel to display all the modules. 
+ *
  * @author Baptiste Wicht
  */
 public final class ModulesPanel extends FilthyBuildedPanel implements IModulesPanelView {
     private JList modulesList;
 
     private final IUpdateService updateService;
+    private final IModuleService moduleService;
+    private final ILanguageService languageService;
 
     /**
      * Construct a new ModulesPanel. 
      */
-    public ModulesPanel(IUpdateService updateService, ILanguageService languageService, IFilthyUtils utils){
+    public ModulesPanel(IUpdateService updateService, IModuleService moduleService, ILanguageService languageService, IFilthyUtils utils){
         super(utils, languageService);
 
         this.updateService = updateService;
+        this.moduleService = moduleService;
+        this.languageService = languageService;
 
         build();
     }
 
     @Override
     protected void buildView(I18nPanelBuilder builder) {
-        builder.add(new KernelInfoPanel(updateService), builder.gbcSet(0, 0, GridBagUtils.HORIZONTAL, GridBagUtils.BASELINE_LEADING, 1.0, 0.0));
+        builder.add(new KernelInfoPanel(languageService, updateService), 
+                builder.gbcSet(0, 0, GridBagUtils.HORIZONTAL, GridBagUtils.BASELINE_LEADING, 1.0, 0.0));
 
-        modulesList = builder.addScrolledList(new ModuleListModel(), new ModuleListRenderer(updateService), builder.gbcSet(0, 1, GridBagUtils.BOTH, GridBagUtils.BASELINE_LEADING, 1.0, 1.0));
+        modulesList = builder.addScrolledList(new ModuleListModel(moduleService), new ModuleListRenderer(updateService),
+                builder.gbcSet(0, 1, GridBagUtils.BOTH, GridBagUtils.BASELINE_LEADING, 1.0, 1.0));
         modulesList.setVisibleRowCount(4);
 
         builder.addButtonBar(builder.gbcSet(0, 2, GridBagUtils.HORIZONTAL, GridBagUtils.BASELINE_LEADING, 1.0, 0.0),

@@ -23,7 +23,7 @@ import java.util.Date;
  *
  * @author Baptiste Wicht
  */
-public final class EventLog {
+public final class Event {
     private final EventLevel level;
     private final Date date;
     private final String source;
@@ -32,25 +32,25 @@ public final class EventLog {
     private String detailsKey;
 
     /**
-     * Construct a new EventLog.
+     * Construct a new Event.
      *
      * @param level    The level of the event.
      * @param source   The source of the event.
      * @param titleKey The internationalization key of the title.
      */
-    public EventLog(EventLevel level, String source, String titleKey) {
+    public Event(EventLevel level, String source, String titleKey) {
         this(level, new Date(), source, titleKey);
     }
 
     /**
-     * Construct a new EventLog.
+     * Construct a new Event.
      *
      * @param level    The level of the event.
      * @param date     The date of the event.
      * @param source   The source of the event.
      * @param titleKey The internationalization key of the title.
      */
-    public EventLog(EventLevel level, Date date, String source, String titleKey) {
+    public Event(EventLevel level, Date date, String source, String titleKey) {
         super();
 
         this.level = level;

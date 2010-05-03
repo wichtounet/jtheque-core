@@ -49,9 +49,9 @@ public final class ConfigView extends SwingFilthyBuildedDialogView<IModel> imple
 
     @Override
     protected void buildView(I18nPanelBuilder builder){
-        tab = new LayerTabbedPane();
-
         ILanguageService languageService = getService(ILanguageService.class);
+
+        tab = new LayerTabbedPane(languageService);
 
         for (ConfigTabComponent component : getService(IViews.class).getConfigTabComponents()) {
             tab.addLayeredTab(languageService.getMessage(component.getTitleKey()), component.getComponent());

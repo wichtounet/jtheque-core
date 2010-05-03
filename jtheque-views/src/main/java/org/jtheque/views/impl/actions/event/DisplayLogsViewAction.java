@@ -32,6 +32,6 @@ public class DisplayLogsViewAction extends JThequeAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        views.getLogView().display();
+        views.getEventView().display();
     }
 }

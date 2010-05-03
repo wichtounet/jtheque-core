@@ -39,17 +39,19 @@ import java.util.Map;
  * @author Baptiste Wicht
  */
 public final class MainTabbedPane extends LayerTabbedPane {
-    @Resource
-    private ILanguageService languageService;
-
-    @Resource
-    private IViews views;
+    private final ILanguageService languageService;
+    private final IViews views;
 
     /**
      * Construct a new MainTabbedPane.
+     * @param languageService
+     * @param views
      */
-    public MainTabbedPane() {
-        super();
+    public MainTabbedPane(ILanguageService languageService, IViews views) {
+        super(languageService);
+
+        this.languageService = languageService;
+        this.views = views;
 
         setTabPlacement(TOP);
     }

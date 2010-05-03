@@ -1,6 +1,6 @@
 package org.jtheque.views.impl.models;
 
-import org.jtheque.events.EventLog;
+import org.jtheque.events.Event;
 import org.jtheque.events.IEventService;
 import org.jtheque.i18n.ILanguageService;
 
@@ -62,7 +62,7 @@ public final class EventsTableModel extends AbstractTableModel {
     /**
      * The films to buy to display.
      */
-    private List<EventLog> events;
+    private List<Event> events;
 
     /**
      * Construct a new <code>FilmsToBuyTableModel</code>.
@@ -73,7 +73,7 @@ public final class EventsTableModel extends AbstractTableModel {
         this.eventService = eventService;
         this.languageService = languageService;
 
-        setLog(eventService.getLogs().iterator().next());
+        setLog(eventService.getEventLogs().iterator().next());
     }
 
     /**
@@ -82,7 +82,7 @@ public final class EventsTableModel extends AbstractTableModel {
      * @param row The index of the event to get.
      * @return The event level at the position or null if there is no event at this position.
      */
-    public EventLog getValueAt(int row) {
+    public Event getValueAt(int row) {
         return events.get(row);
     }
 
@@ -109,20 +109,20 @@ public final class EventsTableModel extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        EventLog eventLog = events.get(rowIndex);
+        Event event = events.get(rowIndex);
 
-        if (eventLog != null) {
+        if (event != null) {
             switch (columnIndex) {
                 case Columns.LEVEL:
-                    return languageService.getMessage(eventLog.getLevel().getKey());
+                    return languageService.getMessage(event.getLevel().getKey());
                 case Columns.DATE:
-                    return dateFormat.format(eventLog.getDate());
+                    return dateFormat.format(event.getDate());
                 case Columns.TIME:
-                    return timeFormat.format(eventLog.getDate());
+                    return timeFormat.format(event.getDate());
                 case Columns.SOURCE:
-                    return eventLog.getSource();
+                    return event.getSource();
                 case Columns.TITLE:
-                    return languageService.getMessage(eventLog.getTitleKey());
+                    return languageService.getMessage(event.getTitleKey());
                 default:
                     return "";
             }
@@ -148,7 +148,7 @@ public final class EventsTableModel extends AbstractTableModel {
      */
     public void setLog(String log) {
         if (this.log == null || !this.log.equals(log)) {
-            events = new ArrayList<EventLog>(eventService.getEventLogs(log));
+            events = new ArrayList<Event>(eventService.getEvents(log));
 
             fireTableDataChanged();
 

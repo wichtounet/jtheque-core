@@ -27,16 +27,16 @@ import java.util.List;
  *
  * @author Baptiste Wicht
  */
-public final class LogComboBoxModel extends DefaultComboBoxModel {
+public final class EventLogComboBoxModel extends DefaultComboBoxModel {
     private final List<String> logs;
 
     /**
-     * Construct a new LogComboBoxModel.
+     * Construct a new EventLogComboBoxModel.
      */
-    public LogComboBoxModel(IEventService eventService) {
+    public EventLogComboBoxModel(IEventService eventService) {
         super();
 
-        logs = CollectionUtils.copyOf(eventService.getLogs());
+        logs = CollectionUtils.copyOf(eventService.getEventLogs());
     }
 
     @Override

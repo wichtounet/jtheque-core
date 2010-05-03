@@ -39,33 +39,35 @@ import javax.swing.UnsupportedLookAndFeelException;
 public class DefaultsActivator implements BundleActivator {
     @Override
     public void start(BundleContext bundleContext) throws Exception {
-        SwingUtils.inEdt(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    UIManager.setLookAndFeel(new SubstanceBusinessBlackSteelLookAndFeel());
-                } catch (UnsupportedLookAndFeelException e) {
-                    LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
-                }
-
-                UIManager.getLookAndFeelDefaults().put("ClassLoader", SubstanceBusinessBlackSteelLookAndFeel.class.getClassLoader());
-
-                JFrame.setDefaultLookAndFeelDecorated(true);
-                JDialog.setDefaultLookAndFeelDecorated(true);
-
-                UIManager.put(SubstanceLookAndFeel.COLORIZATION_FACTOR, 1.0);
-
-                LoggerFactory.getLogger(getClass()).debug("Substance look and feel configured");
-                LoggerFactory.getLogger(getClass()).debug("Current look and feel : {}", UIManager.getLookAndFeel());
-
-                TridentConfig.getInstance().addPropertyInterpolatorSource(new CorePropertyInterpolators());
-                TridentConfig.getInstance().addPropertyInterpolatorSource(new AWTPropertyInterpolators());
-            }
-        });
+        SwingUtils.inEdt(new ActivateDefaults());
     }
 
     @Override
     public void stop(BundleContext bundleContext) throws Exception {
         //Nothing to stop
+    }
+    
+    private static class ActivateDefaults implements Runnable {
+        @Override
+        public void run() {
+            try {
+                UIManager.setLookAndFeel(new SubstanceBusinessBlackSteelLookAndFeel());
+            } catch (UnsupportedLookAndFeelException e) {
+                LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
+            }
+
+            UIManager.getLookAndFeelDefaults().put("ClassLoader", SubstanceBusinessBlackSteelLookAndFeel.class.getClassLoader());
+
+            JFrame.setDefaultLookAndFeelDecorated(true);
+            JDialog.setDefaultLookAndFeelDecorated(true);
+
+            UIManager.put(SubstanceLookAndFeel.COLORIZATION_FACTOR, 1.0);
+
+            LoggerFactory.getLogger(getClass()).debug("Substance look and feel configured");
+            LoggerFactory.getLogger(getClass()).debug("Current look and feel : {}", UIManager.getLookAndFeel());
+
+            TridentConfig.getInstance().addPropertyInterpolatorSource(new CorePropertyInterpolators());
+            TridentConfig.getInstance().addPropertyInterpolatorSource(new AWTPropertyInterpolators());
+        }
     }
 }

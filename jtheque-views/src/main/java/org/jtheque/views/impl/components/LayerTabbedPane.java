@@ -44,14 +44,17 @@ import java.util.List;
 public class LayerTabbedPane extends JTabbedPane implements ViewComponent {
     private final List<JXLayer<JComponent>> components;
 
-    @Resource
-    private ILanguageService languageService;
+    private final ILanguageService languageService;
 
     /**
      * Construct a new LayerTabbedPane.
+     *
+     * @param languageService
      */
-    public LayerTabbedPane() {
+    public LayerTabbedPane(ILanguageService languageService) {
         super();
+
+        this.languageService = languageService;
 
         components = new ArrayList<JXLayer<JComponent>>(5);
 

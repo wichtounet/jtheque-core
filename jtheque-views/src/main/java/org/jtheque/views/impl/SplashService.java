@@ -1,6 +1,7 @@
 package org.jtheque.views.impl;
 
 import org.jtheque.core.ICore;
+import org.jtheque.core.utils.SimplePropertiesCache;
 import org.jtheque.features.IFeatureService;
 import org.jtheque.utils.ui.SwingUtils;
 import org.jtheque.views.able.ISplashService;
@@ -55,6 +56,8 @@ public final class SplashService implements ISplashService, ApplicationContextAw
                 mainView = (MainView) applicationContext.getBean(IMainView.class);
 
                 mainView.build();
+
+                SimplePropertiesCache.put("mainView", mainView);
 
                 splashScreenPane = new SplashScreenPane(core);
             }

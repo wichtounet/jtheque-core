@@ -33,13 +33,14 @@ import java.util.List;
  * @author Baptiste Wicht
  */
 public final class ModuleListModel extends DefaultListModel implements ModuleListener {
-    private List<Module> modules;
+    private final List<Module> modules;
+    private final IModuleService moduleService;
 
-    @Resource
-    private IModuleService moduleService;
+    public ModuleListModel(IModuleService moduleService) {
+        super();
 
-    @PostConstruct
-    private void init() {
+        this.moduleService = moduleService;
+
         moduleService.addModuleListener(this);
 
         modules = new ArrayList<Module>(moduleService.getModules());

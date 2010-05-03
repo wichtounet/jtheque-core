@@ -3,13 +3,10 @@ package org.jtheque.core.lifecycle;
 import org.jtheque.core.ICore;
 import org.jtheque.core.utils.WeakEventListenerList;
 import org.jtheque.events.EventLevel;
-import org.jtheque.events.EventLog;
+import org.jtheque.events.Event;
 import org.jtheque.events.IEventService;
 import org.jtheque.utils.DesktopUtils;
-import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.BundleException;
-import org.slf4j.LoggerFactory;
 
 /*
  * This file is part of JTheque.
@@ -119,7 +116,7 @@ public class LifeCycle implements ILifeCycle {
      * Start the exit process but not stop the application.
      */
     private void releaseAll() {
-        eventService.addEventLog("JTheque Core", new EventLog(EventLevel.INFO, "User", "events.close"));
+        eventService.addEvent("JTheque Core", new Event(EventLevel.INFO, "User", "events.close"));
     }
 
     /**

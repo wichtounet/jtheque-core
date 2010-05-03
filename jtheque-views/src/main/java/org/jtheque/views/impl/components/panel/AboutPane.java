@@ -198,6 +198,8 @@ public final class AboutPane extends AbstractAboutPane implements IAboutView, In
 
         Graphics g = infosImage.getGraphics();
 
+        PaintUtils.initHints((Graphics2D) g);
+
         Path2D urlPath = new GeneralPath();
 
         for (int i = 0; i < getInfos().length; i++) {

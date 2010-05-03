@@ -18,9 +18,6 @@ package org.jtheque.views.impl;
 
 import org.jtheque.core.ICore;
 import org.jtheque.core.utils.SimplePropertiesCache;
-import org.jtheque.modules.able.Module;
-import org.jtheque.modules.able.ModuleListener;
-import org.jtheque.modules.able.ModuleState;
 import org.jtheque.resources.IResourceService;
 import org.jtheque.spring.utils.SwingSpringProxy;
 import org.jtheque.states.IStateService;
@@ -43,7 +40,7 @@ import java.awt.Window;
  *
  * @author Baptiste Wicht
  */
-public final class ViewService implements IViewService, ModuleListener, ApplicationContextAware {
+public final class ViewService implements IViewService, ApplicationContextAware {
     private final WindowsConfiguration configuration;
 
     private SwingSpringProxy<ICollectionView> collectionPane;
@@ -114,13 +111,6 @@ public final class ViewService implements IViewService, ModuleListener, Applicat
             } else {
                 SwingUtils.centerFrame(window);
             }
-        }
-    }
-
-    @Override
-    public void moduleStateChanged(Module module, ModuleState newState, ModuleState oldState) {
-        if(oldState == ModuleState.LOADED && (newState == ModuleState.INSTALLED ||
-                newState == ModuleState.DISABLED || newState == ModuleState.UNINSTALLED)){
         }
     }
 

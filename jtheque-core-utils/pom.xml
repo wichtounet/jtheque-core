@@ -35,9 +35,10 @@
     </dependencies>
 
     <build>
-        <directory>${env.BUILD_HOME}/bundles/jtheque-core.utils</directory>
+        <directory>${env.BUILD_HOME}/bundles/jtheque-core-utils</directory>
 
-        <outputDirectory>${env.BUILD_HOME}/bundles/jtheque-core.utils/classes/production</outputDirectory>
+        <outputDirectory>${env.BUILD_HOME}/bundles/jtheque-core-utils/classes/production</outputDirectory>
+        <testOutputDirectory>${env.BUILD_HOME}/bundles/jtheque-core-utils/classes/test</testOutputDirectory>
 
         <plugins>
             <plugin>

@@ -10,7 +10,7 @@ import org.jtheque.core.application.Application;
 import org.jtheque.core.utils.OSGiUtils;
 import org.jtheque.errors.IErrorService;
 import org.jtheque.events.EventLevel;
-import org.jtheque.events.EventLog;
+import org.jtheque.events.Event;
 import org.jtheque.events.IEventService;
 import org.jtheque.lifecycle.application.XMLApplicationReader;
 import org.jtheque.messages.IMessageService;
@@ -66,7 +66,7 @@ public class LifeCycleActivator implements BundleActivator, CollectionListener {
         
         getService(IViews.class).init();
 
-        getService(IEventService.class).addEventLog("JTheque Core", new EventLog(EventLevel.INFO, "User", "events.start"));
+        getService(IEventService.class).addEvent("JTheque Core", new Event(EventLevel.INFO, "User", "events.start"));
 
         getService(IModuleService.class).load();
 

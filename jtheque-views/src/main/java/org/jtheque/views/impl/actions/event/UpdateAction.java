@@ -1,9 +1,8 @@
 package org.jtheque.views.impl.actions.event;
 
 import org.jtheque.ui.utils.actions.JThequeAction;
-import org.jtheque.views.able.windows.ILogView;
+import org.jtheque.views.able.windows.IEventView;
 
-import javax.annotation.Resource;
 import java.awt.event.ActionEvent;
 
 /*
@@ -28,18 +27,21 @@ import java.awt.event.ActionEvent;
  * @author Baptiste Wicht
  */
 public final class UpdateAction extends JThequeAction {
-    @Resource
-    private ILogView logView;
+    private final IEventView eventView;
 
     /**
      * Construct a new UpdateAction.
+     * 
+     * @param eventView The log view.
      */
-    public UpdateAction() {
+    public UpdateAction(IEventView eventView) {
         super("log.view.actions.update");
+
+        this.eventView = eventView;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        logView.refresh();
+        eventView.refresh();
     }
 }

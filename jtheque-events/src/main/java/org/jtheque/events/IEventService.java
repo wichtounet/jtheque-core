@@ -30,7 +30,7 @@ public interface IEventService {
      *
      * @return A Set containing all the logs.
      */
-    Set<String> getLogs();
+    Set<String> getEventLogs();
 
     /**
      * Return all the events from a log.
@@ -38,7 +38,7 @@ public interface IEventService {
      * @param log The log to get the events from.
      * @return A List containing all the events of the log.
      */
-    Collection<EventLog> getEventLogs(String log);
+    Collection<Event> getEvents(String log);
 
     /**
      * Add an event to a log.
@@ -46,5 +46,5 @@ public interface IEventService {
      * @param log   The log to add the event to.
      * @param event The event to add.
      */
-    void addEventLog(String log, EventLog event);
+    void addEvent(String log, Event event);
 }

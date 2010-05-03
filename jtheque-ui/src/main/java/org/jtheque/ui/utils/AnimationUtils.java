@@ -131,7 +131,11 @@ public final class AnimationUtils {
             public void onTimelineStateChanged(Timeline.TimelineState oldState, Timeline.TimelineState newState,
                                                float durationFraction, float timelinePosition) {
                 if(newState == Timeline.TimelineState.DONE){
-                    target.playLoop(Timeline.RepeatBehavior.LOOP);
+                    if(target.getState() == Timeline.TimelineState.SUSPENDED){
+                        target.resume();
+                    } else {
+                        target.playLoop(Timeline.RepeatBehavior.LOOP);
+                    }
                 }
             }
         });

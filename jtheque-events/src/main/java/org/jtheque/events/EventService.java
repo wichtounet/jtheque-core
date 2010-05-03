@@ -39,7 +39,7 @@ import java.util.Set;
  * @author Baptiste Wicht
  */
 public final class EventService implements IEventService {
-    private final Map<String, Collection<EventLog>> logs = new HashMap<String, Collection<EventLog>>(10);
+    private final Map<String, Collection<Event>> logs = new HashMap<String, Collection<Event>>(10);
 
     public EventService() {
         super();
@@ -48,19 +48,19 @@ public final class EventService implements IEventService {
     }
 
     @Override
-    public Set<String> getLogs() {
+    public Set<String> getEventLogs() {
         return logs.keySet();
     }
 
     @Override
-    public Collection<EventLog> getEventLogs(String log) {
+    public Collection<Event> getEvents(String log) {
         return logs.get(log);
     }
 
     @Override
-    public void addEventLog(String log, EventLog event) {
+    public void addEvent(String log, Event event) {
         if (!logs.containsKey(log)) {
-            logs.put(log, new ArrayList<EventLog>(25));
+            logs.put(log, new ArrayList<Event>(25));
         }
 
         event.setLog(log);
@@ -93,10 +93,10 @@ public final class EventService implements IEventService {
 
                 Collection<Element> elements = reader.getNodes("event", currentNode);
 
-                logs.put(name, new ArrayList<EventLog>(elements.size()));
+                logs.put(name, new ArrayList<Event>(elements.size()));
 
                 for (Element element : elements) {
-                    EventLog log = readLog(reader, name, element);
+                    Event log = readLog(reader, name, element);
 
                     logs.get(name).add(log);
                 }
@@ -125,11 +125,11 @@ public final class EventService implements IEventService {
      * @param reader  The reader to use.
      * @param name    The name of the log.
      * @param element The element to read the log from.
-     * @return The EventLog.
+     * @return The Event.
      * @throws XMLException If an error occurs during the xml reading.
      */
-    private static EventLog readLog(XMLReader reader, String name, Object element) throws XMLException {
-        EventLog log = new EventLog(
+    private static Event readLog(XMLReader reader, String name, Object element) throws XMLException {
+        Event log = new Event(
                 EventLevel.get(reader.readInt("level", element)),
                 new Date(reader.readLong("date", element)),
                 reader.readString("source", element),
@@ -147,7 +147,7 @@ public final class EventService implements IEventService {
     private void saveXML() {
         XMLWriter writer = new XMLWriter("logs");
 
-        for (Map.Entry<String, Collection<EventLog>> entry : logs.entrySet()) {
+        for (Map.Entry<String, Collection<Event>> entry : logs.entrySet()) {
             writer.add("log");
 
             writer.addAttribute("name", entry.getKey());
@@ -166,8 +166,8 @@ public final class EventService implements IEventService {
      * @param writer The writer to use.
      * @param logs   The logs to write.
      */
-    private static void writeEvents(XMLWriter writer, Iterable<EventLog> logs) {
-        for (EventLog log : logs) {
+    private static void writeEvents(XMLWriter writer, Iterable<Event> logs) {
+        for (Event log : logs) {
             writer.add("event");
 
             writer.addOnly("level", Integer.toString(log.getLevel().intValue()));

@@ -87,8 +87,6 @@ public final class SwingViewDelegate implements ViewDelegate {
         run(new DisplayTextRunnable(text));
     }
 
-
-
     @Override
     public void run(Runnable runnable) {
         SwingUtils.inEdt(runnable);

@@ -31,8 +31,8 @@ import org.jtheque.views.able.components.StateBarComponent;
 import org.jtheque.views.able.panel.IModuleView;
 import org.jtheque.views.able.panel.IRepositoryView;
 import org.jtheque.views.able.windows.IConfigView;
+import org.jtheque.views.able.windows.IEventView;
 import org.jtheque.views.able.windows.ILicenceView;
-import org.jtheque.views.able.windows.ILogView;
 import org.jtheque.views.able.windows.IMainView;
 import org.jtheque.views.able.windows.IMessageView;
 import org.jtheque.views.able.windows.IUpdateView;
@@ -57,7 +57,7 @@ public final class Views implements IViews, ApplicationContextAware, ModuleListe
     private SwingSpringProxy<IConfigView> configView;
     private SwingSpringProxy<IModuleView> moduleView;
     private SwingSpringProxy<IMessageView> messageView;
-    private SwingSpringProxy<ILogView> logView;
+    private SwingSpringProxy<IEventView> eventView;
     private SwingSpringProxy<IRepositoryView> repositoryView;
     private SwingSpringProxy<IUpdateView> updateView;
     private SwingSpringProxy<IMainView> mainView;
@@ -115,8 +115,8 @@ public final class Views implements IViews, ApplicationContextAware, ModuleListe
     }
 
     @Override
-    public ILogView getLogView() {
-        return logView.get();
+    public IEventView getEventView() {
+        return eventView.get();
     }
 
     @Override
@@ -138,7 +138,7 @@ public final class Views implements IViews, ApplicationContextAware, ModuleListe
         configView = new SwingSpringProxy<IConfigView>(IConfigView.class, applicationContext);
         moduleView = new SwingSpringProxy<IModuleView>(IModuleView.class, applicationContext);
         messageView = new SwingSpringProxy<IMessageView>(IMessageView.class, applicationContext);
-        logView = new SwingSpringProxy<ILogView>(ILogView.class, applicationContext);
+        eventView = new SwingSpringProxy<IEventView>(IEventView.class, applicationContext);
         repositoryView = new SwingSpringProxy<IRepositoryView>(IRepositoryView.class, applicationContext);
         updateView = new SwingSpringProxy<IUpdateView>(IUpdateView.class, applicationContext);
     }

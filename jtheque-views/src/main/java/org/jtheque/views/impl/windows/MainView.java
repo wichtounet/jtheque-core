@@ -21,6 +21,7 @@ import org.jtheque.core.ICore;
 import org.jtheque.core.lifecycle.TitleEvent;
 import org.jtheque.core.lifecycle.TitleListener;
 import org.jtheque.core.utils.SimplePropertiesCache;
+import org.jtheque.i18n.ILanguageService;
 import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.ui.utils.components.Borders;
 import org.jtheque.ui.utils.builders.JThequePanelBuilder;
@@ -75,14 +76,15 @@ public final class MainView extends SwingFrameView implements TitleListener, IMa
     private int current;
 
     private JThequeStateBar stateBar;
-    private final JThequeMenuBar menuBar;
 
     private final IViewService viewService;
+    private final ILanguageService languageService;
     private final IViews views;
     private final IUIUtils uiUtils;
     private final ICore core;
+    private final JThequeMenuBar menuBar;
 
-    public MainView(ICore core, IViewService viewService, IViews views, IUIUtils uiUtils, JThequeMenuBar menuBar) {
+    public MainView(ICore core, IViewService viewService, IViews views, IUIUtils uiUtils, JThequeMenuBar menuBar, ILanguageService languageService) {
         super();
 
         this.core = core;
@@ -90,6 +92,7 @@ public final class MainView extends SwingFrameView implements TitleListener, IMa
         this.views = views;
         this.uiUtils = uiUtils;
         this.menuBar = menuBar;
+        this.languageService = languageService;
     }
 
     /**
@@ -231,7 +234,7 @@ public final class MainView extends SwingFrameView implements TitleListener, IMa
             builder.add(CollectionUtils.first(components).getComponent(),
                     builder.gbcSet(0, 0, GridBagUtils.BOTH, GridBagUtils.FIRST_LINE_START, 1.0, 1.0));
         } else {
-            tab = new MainTabbedPane();
+            tab = new MainTabbedPane(languageService, views);
             tab.addChangeListener(controller);
 
             builder.add(tab, builder.gbcSet(0, 0, GridBagUtils.BOTH, GridBagUtils.FIRST_LINE_START, 1.0, 1.0));
@@ -274,7 +277,7 @@ public final class MainView extends SwingFrameView implements TitleListener, IMa
 
             GridBagUtils gbc = new GridBagUtils();
 
-            tab = new MainTabbedPane();
+            tab = new MainTabbedPane(languageService, views);
             tab.addChangeListener(controller);
 
             content.getView().add(tab, gbc.gbcSet(0, 0, GridBagUtils.BOTH, GridBagUtils.FIRST_LINE_START, 1.0, 1.0));
