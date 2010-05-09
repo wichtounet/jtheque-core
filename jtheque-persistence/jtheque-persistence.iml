@@ -4,39 +4,6 @@
     <facet type="Spring" name="Spring">
       <configuration />
     </facet>
-    <facet type="Osmorc" name="OSGi">
-      <configuration osmorcControlsManifest="true" manifestLocation="" jarfileLocation="$APPLICATION_HOME_DIR$/bin/home/wichtounet/Builds/bundles/jtheque-persistence/classes/jtheque-persistence.jar" useBndFile="false" bndFileLocation="" bundleActivator="" bundleSymbolicName="org.jtheque.persistence" bundleVersion="2.1-SNAPSHOT" ignoreFilePattern="" useProjectDefaultManifestFileLocation="true" alwaysRebuildBundleJAR="false">
-        <additionalProperties>
-          <property key="Bundle-Vendor" value="Baptiste Wicht" />
-          <property key="DynamicImport-Package" value="org.h2, org.springframework.jdbc.datasource, org.springframework.jdbc.core.simple" />
-          <property key="Spring-Context" value="*;create-asynchronously:=false" />
-          <property key="Export-Package" value="org.jtheque.persistence, org.jtheque.persistence.able, org.jtheque.persistence.context" />
-        </additionalProperties>
-        <additionalJARContents />
-      </configuration>
-    </facet>
-    <facet type="Osmorc" name="OSGi">
-      <configuration osmorcControlsManifest="true" manifestLocation="" jarfileLocation="$APPLICATION_HOME_DIR$/bin/home/wichtounet/Builds/bundles/jtheque-persistence/classes/jtheque-persistence.jar" useBndFile="false" bndFileLocation="" bundleActivator="" bundleSymbolicName="org.jtheque.persistence" bundleVersion="2.1-SNAPSHOT" ignoreFilePattern="" useProjectDefaultManifestFileLocation="true" alwaysRebuildBundleJAR="false">
-        <additionalProperties>
-          <property key="Bundle-Vendor" value="Baptiste Wicht" />
-          <property key="DynamicImport-Package" value="org.h2, org.springframework.jdbc.datasource, org.springframework.jdbc.core.simple" />
-          <property key="Spring-Context" value="*;create-asynchronously:=false;publish-context:=false" />
-          <property key="Export-Package" value="org.jtheque.persistence, org.jtheque.persistence.able, org.jtheque.persistence.context" />
-        </additionalProperties>
-        <additionalJARContents />
-      </configuration>
-    </facet>
-    <facet type="Osmorc" name="OSGi">
-      <configuration osmorcControlsManifest="true" manifestLocation="" jarfileLocation="$APPLICATION_HOME_DIR$/bin/home/wichtounet/Builds/bundles/jtheque-persistence/classes/jtheque-persistence.jar" useBndFile="false" bndFileLocation="" bundleActivator="" bundleSymbolicName="org.jtheque.persistence" bundleVersion="2.1-SNAPSHOT" ignoreFilePattern="" useProjectDefaultManifestFileLocation="true" alwaysRebuildBundleJAR="false">
-        <additionalProperties>
-          <property key="Bundle-Vendor" value="Baptiste Wicht" />
-          <property key="DynamicImport-Package" value="org.h2, org.springframework.jdbc.datasource, org.springframework.jdbc.core.simple" />
-          <property key="Spring-Context" value="*;create-asynchronously:=false" />
-          <property key="Export-Package" value="org.jtheque.persistence, org.jtheque.persistence.able, org.jtheque.persistence.context" />
-        </additionalProperties>
-        <additionalJARContents />
-      </configuration>
-    </facet>
   </component>
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_6" inherit-compiler-output="false">
     <output url="file:///home/wichtounet/Builds/bundles/jtheque-persistence/classes/production" />
@@ -45,6 +12,8 @@
       <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/resources" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
+      <excludeFolder url="file://$MODULE_DIR$/${env.BUILD_HOME}/bundles/jtheque-persistence" />
+      <excludeFolder url="file://$MODULE_DIR$/${env.BUILD_HOME}/utils/jtheque-core/classes/test" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

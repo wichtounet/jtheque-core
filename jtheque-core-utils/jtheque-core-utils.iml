@@ -1,17 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" type="JAVA_MODULE" version="4">
-  <component name="FacetManager">
-    <facet type="Osmorc" name="OSGi">
-      <configuration osmorcControlsManifest="true" manifestLocation="" jarfileLocation="$APPLICATION_HOME_DIR$/bin/home/wichtounet/Builds/bundles/jtheque-core.utils/classes/jtheque-core-utils.jar" useBndFile="false" bndFileLocation="" bundleActivator="" bundleSymbolicName="org.jtheque.core.utils" bundleVersion="2.1-SNAPSHOT" ignoreFilePattern="" useProjectDefaultManifestFileLocation="true" alwaysRebuildBundleJAR="false">
-        <additionalProperties>
-          <property key="Bundle-Vendor" value="Baptiste Wicht" />
-          <property key="Spring-Context" value="*;create-asynchronously:=false;publish-context:=false" />
-          <property key="Export-Package" value="org.jtheque.core.utils, org.jtheque.core.utils.ui" />
-        </additionalProperties>
-        <additionalJARContents />
-      </configuration>
-    </facet>
-  </component>
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_6" inherit-compiler-output="false">
     <output url="file:///home/wichtounet/Builds/bundles/jtheque-core-utils/classes/production" />
     <output-test url="file:///home/wichtounet/Builds/bundles/jtheque-core-utils/classes/test" />
@@ -19,6 +7,7 @@
       <sourceFolder url="file://$MODULE_DIR$/src/main/resources" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
+      <excludeFolder url="file://$MODULE_DIR$/${env.BUILD_HOME}/bundles/jtheque-core-utils" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

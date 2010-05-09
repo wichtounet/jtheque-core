@@ -3,7 +3,7 @@ Télécharger JTheque Core 2.0.3.1
    JTheque est distribué sous forme d'une archive Jar, les sources de JTheque Core sont distribués sous plusieurs formes
    pour votre convenance. 
 
-   JTheque Core 2.0.3.1 est distribué sous licence {{{http://www.gnu.org/copyleft/gpl.html} GNU General Public License, version 3}}.
+   JTheque Core 2.0.3.1 est distribué sous licence Apache License 2.0.
 
 *-------------------------+---------+----------------+-----------------+
 |                         |  Lien   | Checksum (MD5) | Checksum (SHA1) |

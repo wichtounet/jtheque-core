@@ -12,4 +12,6 @@
 
     <osgi:service ref="undoService" interface="org.jtheque.undo.IUndoRedoService"/>
 
+    <osgi:reference 
+
 </beans>
