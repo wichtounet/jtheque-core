@@ -18,7 +18,6 @@ package org.jtheque.views.impl.components.panel;
 
 import org.jtheque.core.ICore;
 import org.jtheque.i18n.ILanguageService;
-import org.jtheque.ui.utils.builders.FilthyPanelBuilder;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.ui.utils.builders.PanelBuilder;
 import org.jtheque.ui.utils.filthy.BuildedPanel;
@@ -26,7 +25,6 @@ import org.jtheque.update.IUpdateService;
 import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.views.impl.actions.module.UpdateKernelAction;
 
-import javax.swing.JPanel;
 import java.awt.Insets;
 
 /**

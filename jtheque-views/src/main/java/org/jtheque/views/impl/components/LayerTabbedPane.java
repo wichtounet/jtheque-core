@@ -21,7 +21,6 @@ import org.jdesktop.jxlayer.plaf.BufferedLayerUI;
 import org.jtheque.i18n.ILanguageService;
 import org.jtheque.ui.able.ViewComponent;
 
-import javax.annotation.Resource;
 import javax.swing.JComponent;
 import javax.swing.JTabbedPane;
 import javax.swing.Timer;
@@ -137,7 +136,7 @@ public class LayerTabbedPane extends JTabbedPane implements ViewComponent {
         private TabbedAnimatingChangeListener() {
             super();
 
-            delta = .1f;
+            delta = 0.1f;
             layerUI = new AnimationLayerUI();
 
             timer = new Timer(ANIMATION_DELAY, new ActionListener() {

@@ -19,7 +19,7 @@ import java.util.Map;
  * limitations under the License.
  */
 
-public class SimplePropertiesCache {
+public final class SimplePropertiesCache {
     private static final Map<String, Object> PROPERTIES = new HashMap<String, Object>(5);
 
     private SimplePropertiesCache() {

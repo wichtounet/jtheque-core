@@ -6,7 +6,6 @@ import org.jtheque.events.EventLevel;
 import org.jtheque.events.Event;
 import org.jtheque.events.IEventService;
 import org.jtheque.utils.DesktopUtils;
-import org.osgi.framework.BundleContext;
 
 /*
  * Copyright JTheque (Baptiste Wicht)

@@ -5,7 +5,6 @@ import org.springframework.beans.factory.config.AbstractFactoryBean;
 import org.springframework.context.support.GenericApplicationContext;
 
 import java.lang.reflect.Proxy;
-import java.util.logging.Logger;
 
 /*
  * Copyright JTheque (Baptiste Wicht)

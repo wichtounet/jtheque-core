@@ -117,42 +117,48 @@ public final class StateService implements IStateService {
             Method saveMethod = ReflectionUtils.getMethod(Save.class, state.getValue().getClass());
 
             if(delegated){
-                try {
-                    Iterable<Node> nodes = (Iterable<Node>) saveMethod.invoke(state.getValue());
-
-                    NodeSaver.writeNodes(writer, nodes);
-                } catch (IllegalAccessException e) {
-                    LoggerFactory.getLogger(getClass()).error("Unable to access the @Save method of " + state, e);
-                } catch (InvocationTargetException e) {
-                    LoggerFactory.getLogger(getClass()).error("Unable to invoke the @Save method of " + state, e);
-                }
+	            delegatedWrite(writer, state, saveMethod);
             } else {
-                writer.add("properties");
-
-                try {
-                    Map<String, String> properties = (Map<String, String>) saveMethod.invoke(state.getValue());
-
-                    for (Map.Entry<String, String> property : properties.entrySet()) {
-                        writer.add("property");
-                        writer.addAttribute("key", property.getKey());
-                        writer.addAttribute("value", property.getValue());
-
-                        writer.switchToParent();
-                    }
-                } catch (IllegalAccessException e) {
-                    LoggerFactory.getLogger(getClass()).error("Unable to access the @Save method of " + state, e);
-                } catch (InvocationTargetException e) {
-                    LoggerFactory.getLogger(getClass()).error("Unable to invoke the @Save method of " + state, e);
-                }
-
-                writer.switchToParent();
+	            simpleWrite(writer, state, saveMethod);
             }
 
             writer.switchToParent();
         }
     }
 
-    private void writeProperties(XMLWriter writer) {
+	private void simpleWrite(XMLWriter writer, Map.Entry<String, Object> state, Method saveMethod) {
+		writer.add("properties");
+
+		try {
+		    Map<String, String> properties = (Map<String, String>) saveMethod.invoke(state.getValue());
+
+		    for (Map.Entry<String, String> property : properties.entrySet()) {
+		        writer.add("property");
+		        writer.addAttribute("key", property.getKey());
+		        writer.addAttribute("value", property.getValue());
+
+		        writer.switchToParent();
+		    }
+		} catch (IllegalAccessException e) {
+		    LoggerFactory.getLogger(getClass()).error("Unable to access the @Save method of " + state, e);
+		} catch (InvocationTargetException e) {
+		    LoggerFactory.getLogger(getClass()).error("Unable to invoke the @Save method of " + state, e);
+		}
+
+		writer.switchToParent();
+	}
+
+	private void delegatedWrite(XMLWriter writer, Map.Entry<String, Object> state, Method saveMethod) {
+		try {
+			NodeSaver.writeNodes(writer, (Iterable<Node>) saveMethod.invoke(state.getValue()));
+		} catch (IllegalAccessException e) {
+		    LoggerFactory.getLogger(getClass()).error("Unable to access the @Save method of " + state, e);
+		} catch (InvocationTargetException e) {
+		    LoggerFactory.getLogger(getClass()).error("Unable to invoke the @Save method of " + state, e);
+		}
+	}
+
+	private void writeProperties(XMLWriter writer) {
         for (Map.Entry<String, Map<String, String>> state : properties.entrySet()) {
             writer.add("state");
 
@@ -217,33 +223,9 @@ public final class StateService implements IStateService {
             }
 
             if(stateAnnotation.delegated()){
-                try {
-                    Collection<Node> stateNodes = nodes.get(stateAnnotation.id());
-
-                    if(stateNodes != null){
-                        loadMethod.invoke(state, stateNodes);
-                    }
-
-                    nodes.remove(stateAnnotation.id());
-                } catch (IllegalAccessException e) {
-                    LoggerFactory.getLogger(getClass()).error("Unable to access the @Load method of " + state, e);
-                } catch (InvocationTargetException e) {
-                    LoggerFactory.getLogger(getClass()).error("Unable to invoke the @Load method of " + state, e);
-                }
+	            getDelegatedState(state, stateAnnotation, loadMethod);
             } else {
-                try {
-                    Map<String, String> stateProperties = properties.get(stateAnnotation.id());
-
-                    if(stateProperties != null){
-                        loadMethod.invoke(state, stateProperties);
-                    }
-
-                    properties.remove(stateAnnotation.id());
-                } catch (IllegalAccessException e) {
-                    LoggerFactory.getLogger(getClass()).error("Unable to access the @Load method of " + state, e);
-                } catch (InvocationTargetException e) {
-                    LoggerFactory.getLogger(getClass()).error("Unable to invoke the @Load method of " + state, e);
-                }
+	            getSimpleState(state, stateAnnotation, loadMethod);
             }
 
             states.put(stateAnnotation.id(), state);
@@ -251,4 +233,36 @@ public final class StateService implements IStateService {
 
         return state;
     }
+
+	private <T> void getDelegatedState(T state, State stateAnnotation, Method loadMethod) {
+		try {
+		    Collection<Node> stateNodes = nodes.get(stateAnnotation.id());
+
+		    if(stateNodes != null){
+		        loadMethod.invoke(state, stateNodes);
+		    }
+
+		    nodes.remove(stateAnnotation.id());
+		} catch (IllegalAccessException e) {
+		    LoggerFactory.getLogger(getClass()).error("Unable to access the @Load method of " + state, e);
+		} catch (InvocationTargetException e) {
+		    LoggerFactory.getLogger(getClass()).error("Unable to invoke the @Load method of " + state, e);
+		}
+	}
+
+	private <T> void getSimpleState(T state, State stateAnnotation, Method loadMethod) {
+		try {
+		    Map<String, String> stateProperties = properties.get(stateAnnotation.id());
+
+		    if(stateProperties != null){
+		        loadMethod.invoke(state, stateProperties);
+		    }
+
+		    properties.remove(stateAnnotation.id());
+		} catch (IllegalAccessException e) {
+		    LoggerFactory.getLogger(getClass()).error("Unable to access the @Load method of " + state, e);
+		} catch (InvocationTargetException e) {
+		    LoggerFactory.getLogger(getClass()).error("Unable to invoke the @Load method of " + state, e);
+		}
+	}
 }

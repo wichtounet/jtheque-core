@@ -27,7 +27,6 @@ import org.jtheque.views.able.IViewService;
 import org.jtheque.views.able.windows.IAboutView;
 import org.jtheque.views.able.panel.ICollectionView;
 import org.jtheque.views.able.windows.IMainView;
-import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 

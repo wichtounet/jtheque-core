@@ -19,7 +19,6 @@ package org.jtheque.views.impl.actions.messages;
 import org.jtheque.ui.utils.actions.JThequeAction;
 import org.jtheque.views.able.windows.IMessageView;
 
-import javax.annotation.Resource;
 import java.awt.event.ActionEvent;
 
 /**
@@ -28,7 +27,7 @@ import java.awt.event.ActionEvent;
  * @author Baptiste Wicht
  */
 public final class DisplayNextMessageAction extends JThequeAction {
-    private IMessageView messageView;
+    private final IMessageView messageView;
 
     /**
      * Construct a new DisplayNextMessageAction.

@@ -21,7 +21,6 @@ import org.jtheque.i18n.Internationalizable;
 import org.jtheque.utils.collections.ArrayUtils;
 
 import javax.swing.AbstractAction;
-import javax.swing.Action;
 import javax.swing.ImageIcon;
 
 /**
@@ -68,7 +67,7 @@ public abstract class JThequeAction extends AbstractAction implements Internatio
      * @param text The text.
      */
     public final void setText(String text) {
-        putValue(Action.NAME, text);
+        putValue(NAME, text);
     }
 
     /**
@@ -77,7 +76,7 @@ public abstract class JThequeAction extends AbstractAction implements Internatio
      * @param icon The icon.
      */
     public final void setIcon(ImageIcon icon) {
-        putValue(Action.SMALL_ICON, icon);
+        putValue(SMALL_ICON, icon);
     }
 
     @Override

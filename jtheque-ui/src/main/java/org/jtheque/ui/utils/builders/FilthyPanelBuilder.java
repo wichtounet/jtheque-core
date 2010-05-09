@@ -3,7 +3,6 @@ package org.jtheque.ui.utils.builders;
 import org.jdesktop.swingx.JXTree;
 import org.jtheque.ui.utils.components.BorderUpdater;
 import org.jtheque.ui.utils.components.Borders;
-import org.jtheque.ui.utils.components.JThequeCheckBox;
 import org.jtheque.ui.utils.components.JThequeI18nLabel;
 import org.jtheque.ui.utils.filthy.FilthyComboBox;
 import org.jtheque.ui.utils.filthy.FilthyList;

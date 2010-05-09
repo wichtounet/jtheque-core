@@ -32,7 +32,7 @@ public abstract class JThequeSimpleAction extends AbstractAction {
      * @param text The text.
      */
     protected final void setText(String text) {
-        putValue(Action.NAME, text);
+        putValue(NAME, text);
     }
 
     /**
@@ -41,7 +41,7 @@ public abstract class JThequeSimpleAction extends AbstractAction {
      * @param icon The icon.
      */
     public final void setIcon(ImageIcon icon) {
-        putValue(Action.SMALL_ICON, icon);
+        putValue(SMALL_ICON, icon);
     }
 
     @Override

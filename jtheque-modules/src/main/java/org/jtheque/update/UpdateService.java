@@ -30,7 +30,6 @@ import org.jtheque.update.versions.OnlineVersion;
 import org.jtheque.utils.bean.Version;
 import org.slf4j.LoggerFactory;
 
-import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;

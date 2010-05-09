@@ -49,11 +49,7 @@ public final class LanguageState extends AbstractState {
     public Version getResourceVersion(String resource){
         String property = getProperty(resource + "_version");
 
-        if(StringUtils.isEmpty(property)){
-            return null;
-        } else {
-            return new Version(property);
-        }
+	    return StringUtils.isEmpty(property) ? null : new Version(property);
     }
 
     public void setResourceVersion(String resource, Version version){

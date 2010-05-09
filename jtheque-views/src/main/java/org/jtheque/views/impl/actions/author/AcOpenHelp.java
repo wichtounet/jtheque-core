@@ -36,7 +36,7 @@ public final class AcOpenHelp extends AbstractBrowseAction {
     public AcOpenHelp() {
         super("menu.help");
 
-        putValue(Action.ACCELERATOR_KEY,
+        putValue(ACCELERATOR_KEY,
                 KeyStroke.getKeyStroke(KeyEvent.VK_F1, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
     }
 

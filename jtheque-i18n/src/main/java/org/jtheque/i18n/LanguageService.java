@@ -9,7 +9,6 @@ import org.jtheque.utils.io.FileUtils;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.NoSuchMessageException;
 
-import javax.annotation.PostConstruct;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -51,8 +50,10 @@ public final class LanguageService implements ILanguageService {
     private static final String[] ZERO_LENGTH_ARRAY = new String[0];
 
     private final JThequeResourceBundle resourceBundle;
+	
+	private static final Version I18N_VERSION = new Version("1.0");
 
-    /**
+	/**
      * Construct a new ResourceManager.
      */
     public LanguageService(IStateService stateService) {
@@ -72,9 +73,10 @@ public final class LanguageService implements ILanguageService {
         resourceBundle.setUseCodeAsDefaultMessage(true);
 
         state = stateService.getState(new LanguageState());
+
+	    init();
     }
 
-    @PostConstruct
     private void init(){
         locale = languages.get(state.getLanguage());
 
@@ -86,22 +88,22 @@ public final class LanguageService implements ILanguageService {
 
         Locale.setDefault(locale);
 
-        registerResource("core_messages", new Version("1.0"),
+        registerResource("core_messages", I18N_VERSION,
                 I18nResource.fromResource(getClass(), "org/jtheque/i18n/messages_de.properties"),
                 I18nResource.fromResource(getClass(), "org/jtheque/i18n/messages_en.properties"),
                 I18nResource.fromResource(getClass(), "org/jtheque/i18n/messages_fr.properties"));
 
-        registerResource("core_dialogs", new Version("1.0"),
+        registerResource("core_dialogs", I18N_VERSION,
                 I18nResource.fromResource(getClass(), "org/jtheque/i18n/dialogs_de.properties"),
                 I18nResource.fromResource(getClass(), "org/jtheque/i18n/dialogs_en.properties"),
                 I18nResource.fromResource(getClass(), "org/jtheque/i18n/dialogs_fr.properties"));
 
-        registerResource("core_i18n", new Version("1.0"),
+        registerResource("core_i18n", I18N_VERSION,
                 I18nResource.fromResource(getClass(), "org/jtheque/i18n/core_de.properties"),
                 I18nResource.fromResource(getClass(), "org/jtheque/i18n/core_en.properties"),
                 I18nResource.fromResource(getClass(), "org/jtheque/i18n/core_fr.properties"));
 
-        registerResource("core_errors", new Version("1.0"),
+        registerResource("core_errors", I18N_VERSION,
                 I18nResource.fromResource(getClass(), "org/jtheque/i18n/errors_de.properties"),
                 I18nResource.fromResource(getClass(), "org/jtheque/i18n/errors_en.properties"),
                 I18nResource.fromResource(getClass(), "org/jtheque/i18n/errors_fr.properties"));

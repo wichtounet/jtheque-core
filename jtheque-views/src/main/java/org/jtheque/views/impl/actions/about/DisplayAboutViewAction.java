@@ -17,11 +17,9 @@ package org.jtheque.views.impl.actions.about;
  */
 
 import org.jtheque.core.ICore;
-import org.jtheque.spring.utils.injection.Injectable;
 import org.jtheque.ui.utils.actions.JThequeAction;
 import org.jtheque.views.able.IViewService;
 
-import javax.annotation.Resource;
 import java.awt.event.ActionEvent;
 
 /**

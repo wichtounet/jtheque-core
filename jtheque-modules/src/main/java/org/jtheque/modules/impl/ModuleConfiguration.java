@@ -17,7 +17,6 @@ package org.jtheque.modules.impl;
  */
 
 import org.jtheque.io.Node;
-import org.jtheque.modules.able.IModuleService;
 import org.jtheque.modules.able.Module;
 import org.jtheque.modules.able.ModuleState;
 import org.jtheque.states.AbstractState;

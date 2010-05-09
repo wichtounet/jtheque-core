@@ -332,8 +332,8 @@ public final class AboutPane extends AbstractAboutPane implements IAboutView, In
      * @param g2 The graphics 2D elements.
      */
     private void initView(Graphics g2) {
-        fontName = SwingUtils.getDefaultFont().deriveFont(24f).deriveFont(Font.BOLD);
-        fontInfos = SwingUtils.getDefaultFont().deriveFont(18f).deriveFont(Font.PLAIN);
+        fontName = SwingUtils.getDefaultFont().deriveFont(24.0f).deriveFont(Font.BOLD);
+        fontInfos = SwingUtils.getDefaultFont().deriveFont(18.0f).deriveFont(Font.PLAIN);
 
         computeWidths(g2);
         createCreditsImage(g2);

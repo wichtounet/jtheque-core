@@ -8,7 +8,6 @@ import org.jtheque.views.able.IViews;
 import org.jtheque.views.able.components.MainComponent;
 
 import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
 import javax.swing.JComponent;
 import java.io.Serializable;
 import java.util.Collections;

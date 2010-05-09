@@ -29,7 +29,6 @@ import org.jtheque.utils.ui.GridBagUtils;
 import javax.annotation.Resource;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import java.awt.Color;
 import java.awt.Font;
 
 /**

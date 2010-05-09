@@ -92,10 +92,10 @@ public interface IDaoNotes {
          * @param e The int value to search.
          * @return The NoteType corresponding to the int value to search.
          */
-        public static IDaoNotes.NoteType getEnum(int e) {
-            IDaoNotes.NoteType note = MIDDLE;
+        public static NoteType getEnum(int e) {
+            NoteType note = MIDDLE;
 
-            for (IDaoNotes.NoteType n : values()) {
+            for (NoteType n : values()) {
                 if (n.ordinal() == e) {
                     note = n;
                     break;

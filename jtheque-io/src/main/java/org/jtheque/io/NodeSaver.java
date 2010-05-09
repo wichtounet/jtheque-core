@@ -16,8 +16,9 @@ package org.jtheque.io;
  * limitations under the License.
  */
 
-public class NodeSaver {
+public final class NodeSaver {
     private NodeSaver() {
+	    super();
     }
 
     public static void writeNodes(XMLWriter writer, Iterable<Node> nodes) {

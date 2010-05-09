@@ -19,7 +19,6 @@ package org.jtheque.undo;
 import org.jtheque.i18n.ILanguageService;
 import org.slf4j.LoggerFactory;
 
-import javax.annotation.Resource;
 import javax.swing.Action;
 import javax.swing.undo.CannotUndoException;
 import javax.swing.undo.UndoManager;
@@ -34,7 +33,7 @@ public final class UndoRedoService extends UndoManager implements IUndoRedoServi
     private Action undoAction;
     private Action redoAction;
 
-    private ILanguageService languageService;
+    private final ILanguageService languageService;
 
     public UndoRedoService(ILanguageService languageService) {
         super();

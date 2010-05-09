@@ -4,7 +4,6 @@ import org.jtheque.errors.IErrorService;
 import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.ui.utils.actions.JThequeAction;
 import org.jtheque.update.IUpdateService;
-import org.jtheque.views.able.IViewService;
 import org.jtheque.views.able.IViews;
 import org.jtheque.views.able.windows.IUpdateView;
 import org.slf4j.LoggerFactory;

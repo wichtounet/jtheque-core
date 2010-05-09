@@ -10,6 +10,6 @@
 
     <bean id="resourcesManager" class="org.jtheque.resources.ResourceService"/>
 
-    <osgi:service id="resourcesManagerService" ref="resourcesManager" interface="org.jtheque.resources.IResourceService"/>
+    <osgi:service ref="resourcesManager" interface="org.jtheque.resources.IResourceService"/>
 
 </beans>

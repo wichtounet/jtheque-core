@@ -22,7 +22,7 @@ import java.util.Collection;
  * limitations under the License.
  */
 
-public class NodeLoader {
+public final class NodeLoader {
     private NodeLoader() {
         super();
     }

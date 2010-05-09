@@ -41,7 +41,7 @@ public final class ExitAction extends JThequeAction {
 
         this.core = core;
 
-        putValue(Action.ACCELERATOR_KEY,
+        putValue(ACCELERATOR_KEY,
                 KeyStroke.getKeyStroke(KeyEvent.VK_E, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
     }
 

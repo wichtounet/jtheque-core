@@ -39,19 +39,21 @@ import java.awt.image.BufferedImage;
  * @author Baptiste Wicht
  */
 public class FilthyUtils implements IFilthyUtils {
-    private final BufferedImage LIGHT;
-    private final LinearGradientPaint BACKGROUND_PAINT;
+    private final BufferedImage lightImage;
+    private final LinearGradientPaint backgroundPaint;
 
-    /**
-     * Utility class, not instanciable.
-     */
+	/**
+	* Utility class, not instanciable.
+	* 
+	* @param resourceService The resource service, used to get the image of the background.
+	*/
     public FilthyUtils(IResourceService resourceService) {
         super();
 
-        BACKGROUND_PAINT = new LinearGradientPaint(new Point2D.Float(0, 0), new Point2D.Float(0, 584),
+        backgroundPaint = new LinearGradientPaint(new Point2D.Float(0, 0), new Point2D.Float(0, 584),
                 new float[]{0.22f, 0.9f}, new Color[]{new Color(32, 39, 55), new Color(133, 144, 165)});
 
-        LIGHT = resourceService.getImage(UIResources.LIGHT_IMAGE);
+        lightImage = resourceService.getImage(UIResources.LIGHT_IMAGE);
     }
 
     /**
@@ -75,11 +77,11 @@ public class FilthyUtils implements IFilthyUtils {
             Composite composite = g2.getComposite();
 
             g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-            g2d.setPaint(BACKGROUND_PAINT);
+            g2d.setPaint(backgroundPaint);
             g2d.fillRect(0, 0, panel.getWidth(), panel.getHeight());
             g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f));
 
-            g2d.drawImage(LIGHT, 0, 0, panel.getWidth(), LIGHT.getHeight(), null);
+            g2d.drawImage(lightImage, 0, 0, panel.getWidth(), lightImage.getHeight(), null);
             g2d.setComposite(composite);
             g2d.dispose();
         }

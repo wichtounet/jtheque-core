@@ -5,7 +5,6 @@ import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 
 import java.io.File;
-import java.io.InputStream;
 
 /*
  * Copyright JTheque (Baptiste Wicht)

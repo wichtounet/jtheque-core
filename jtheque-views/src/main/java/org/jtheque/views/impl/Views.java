@@ -22,7 +22,6 @@ import org.jtheque.modules.able.ModuleListener;
 import org.jtheque.modules.able.ModuleState;
 import org.jtheque.modules.utils.ModuleResourceCache;
 import org.jtheque.spring.utils.SwingSpringProxy;
-import org.jtheque.spring.utils.injection.Injector;
 import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.views.able.IViews;
 import org.jtheque.views.able.components.ConfigTabComponent;
@@ -39,7 +38,6 @@ import org.jtheque.views.able.windows.IUpdateView;
 import org.jtheque.views.impl.components.config.JPanelConfigAppearance;
 import org.jtheque.views.impl.components.config.JPanelConfigNetwork;
 import org.jtheque.views.impl.components.config.JPanelConfigOthers;
-import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
@@ -184,8 +182,6 @@ public final class Views implements IViews, ApplicationContextAware, ModuleListe
 
     @Override
     public void addConfigTabComponent(String moduleId, ConfigTabComponent component) {
-        Injector.inject(applicationContext, component);
-
         configPanels.add(component);
 
         if("true".equals(SimplePropertiesCache.get("config-view-loaded"))){

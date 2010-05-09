@@ -37,7 +37,7 @@ public abstract class AbstractAction extends JThequeAction {
     AbstractAction(String key, int accelerator) {
         super(key);
 
-        putValue(Action.ACCELERATOR_KEY
+        putValue(ACCELERATOR_KEY
                 , KeyStroke.getKeyStroke(accelerator, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
     }
 }

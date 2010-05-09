@@ -28,8 +28,6 @@ import org.osgi.framework.BundleContext;
 import org.springframework.osgi.context.BundleContextAware;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.Resource;
-
 /**
  * The implementation of the collections service.
  *

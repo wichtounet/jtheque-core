@@ -18,7 +18,6 @@ package org.jtheque.ui.utils.filthy;
 
 import org.jtheque.utils.ui.SizeTracker;
 
-import javax.annotation.Resource;
 import javax.swing.JPanel;
 import java.awt.Graphics;
 import java.awt.Image;

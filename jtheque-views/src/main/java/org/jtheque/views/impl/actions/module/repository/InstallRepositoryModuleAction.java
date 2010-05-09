@@ -19,7 +19,6 @@ package org.jtheque.views.impl.actions.module.repository;
 import org.jtheque.core.ICore;
 import org.jtheque.modules.able.IModuleService;
 import org.jtheque.modules.impl.ModuleDescription;
-import org.jtheque.spring.utils.injection.Injectable;
 import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.ui.utils.actions.JThequeAction;
 import org.jtheque.views.able.IViews;
@@ -32,7 +31,7 @@ import java.awt.event.ActionEvent;
  *
  * @author Baptiste Wicht
  */
-public final class InstallRepositoryModuleAction extends JThequeAction implements Injectable {
+public final class InstallRepositoryModuleAction extends JThequeAction {
     @Resource
     private IViews views;
 

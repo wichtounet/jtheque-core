@@ -18,7 +18,6 @@ package org.jtheque.features;
 
 import org.jtheque.ui.utils.actions.JThequeAction;
 
-import javax.swing.Action;
 import java.util.ArrayList;
 import java.util.Collection;
 

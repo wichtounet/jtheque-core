@@ -21,8 +21,6 @@ import org.jtheque.modules.able.Module;
 import org.jtheque.modules.able.ModuleListener;
 import org.jtheque.modules.able.ModuleState;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
 import javax.swing.DefaultListModel;
 import java.util.ArrayList;
 import java.util.List;

@@ -34,7 +34,7 @@ import java.util.Arrays;
 public final class DaoNotes implements IDaoNotes {
     private Note[] notes;
 
-    private final BufferedImage[] STARS;
+    private final BufferedImage[] stars;
 
     private final ILanguageService languageService;
 
@@ -43,14 +43,14 @@ public final class DaoNotes implements IDaoNotes {
 
         this.languageService = languageService;
 
-        STARS = new BufferedImage[7];
+        stars = new BufferedImage[7];
 
         for (int i = 0; i < 7; ++i) {
             resourceService.registerResource("Star" + (i + 1), new ClassPathResource("org/jtheque/persistence/" + "Star" + (i + 1) + ".png"));
         }
 
         for (int i = 0; i < 7; ++i) {
-            STARS[i] = resourceService.getImage("Star" + (i + 1));
+            stars[i] = resourceService.getImage("Star" + (i + 1));
         }
     }
 
@@ -89,10 +89,10 @@ public final class DaoNotes implements IDaoNotes {
     @Override
     public Image getImage(Note note) {
         if (note == null) {
-            return STARS[6];
+            return stars[6];
         }
 
-        return note.getValue() == IDaoNotes.NoteType.ERROR ? STARS[IDaoNotes.NoteType.UNDEFINED.intValue() - 1] : STARS[note.getValue().intValue() - 1];
+        return note.getValue() == IDaoNotes.NoteType.ERROR ? stars[IDaoNotes.NoteType.UNDEFINED.intValue() - 1] : stars[note.getValue().intValue() - 1];
     }
 
     /**

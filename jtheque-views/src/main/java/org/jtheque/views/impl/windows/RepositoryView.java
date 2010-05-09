@@ -53,7 +53,7 @@ public final class RepositoryView extends SwingFilthyBuildedDialogView<IModel> i
 
     @Override
     protected void buildView(I18nPanelBuilder builder){
-        builder.addLabel(moduleService.getRepository().getTitle().toString(), PanelBuilder.BOLD, 18f,
+        builder.addLabel(moduleService.getRepository().getTitle().toString(), PanelBuilder.BOLD, 18.0f,
                 builder.gbcSet(0, 0, GridBagUtils.HORIZONTAL));
 
         list = builder.addScrolledList(new ModuleRepositoryListModel(moduleService), new ModuleRepositoryListRenderer(), builder.gbcSet(0, 1, GridBagUtils.BOTH));

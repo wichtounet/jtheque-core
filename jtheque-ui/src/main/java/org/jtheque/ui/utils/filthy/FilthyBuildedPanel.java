@@ -6,10 +6,8 @@ import org.jtheque.i18n.InternationalizableContainer;
 import org.jtheque.ui.utils.builders.FilthyPanelBuilder;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 
-import javax.swing.JFrame;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 /*
  * Copyright JTheque (Baptiste Wicht)

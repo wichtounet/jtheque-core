@@ -290,7 +290,7 @@ public final class InfiniteWaitFigure implements WaitFigure, ActionListener {
     @Override
     public void setBounds(int width, int height) {
         centerAndScaleTransform = new AffineTransform();
-        centerAndScaleTransform.translate(width / 2d, height / 2d);
+        centerAndScaleTransform.translate(width / 2.0d, height / 2.0d);
 
         centerAndScaleTransform.scale(SCALE, SCALE);
 
