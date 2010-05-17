@@ -16,7 +16,7 @@ package org.jtheque.ui.utils.builders;
  * limitations under the License.
  */
 
-import org.jtheque.i18n.InternationalizableContainer;
+import org.jtheque.i18n.able.InternationalizableContainer;
 import org.jtheque.ui.utils.components.JThequeI18nLabel;
 
 import javax.swing.JCheckBox;

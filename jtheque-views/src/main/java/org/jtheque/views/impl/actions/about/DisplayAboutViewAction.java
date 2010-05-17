@@ -16,7 +16,7 @@ package org.jtheque.views.impl.actions.about;
  * limitations under the License.
  */
 
-import org.jtheque.core.ICore;
+import org.jtheque.core.able.ICore;
 import org.jtheque.ui.utils.actions.JThequeAction;
 import org.jtheque.views.able.IViewService;
 

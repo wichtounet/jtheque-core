@@ -16,7 +16,7 @@ package org.jtheque.views.impl.models;
  * limitations under the License.
  */
 
-import org.jtheque.core.ICore;
+import org.jtheque.core.able.ICore;
 import org.jtheque.utils.collections.CollectionUtils;
 
 import javax.swing.DefaultComboBoxModel;

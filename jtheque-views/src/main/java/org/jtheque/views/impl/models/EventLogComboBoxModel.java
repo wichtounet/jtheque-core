@@ -1,6 +1,6 @@
 package org.jtheque.views.impl.models;
 
-import org.jtheque.events.IEventService;
+import org.jtheque.events.able.IEventService;
 import org.jtheque.utils.collections.CollectionUtils;
 
 import javax.swing.DefaultComboBoxModel;

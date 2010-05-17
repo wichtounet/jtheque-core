@@ -16,9 +16,9 @@ package org.jtheque.views.impl.actions.collections;
  * limitations under the License.
  */
 
-import org.jtheque.collections.ICollectionsService;
+import org.jtheque.collections.able.ICollectionsService;
 import org.jtheque.core.utils.Response;
-import org.jtheque.i18n.ILanguageService;
+import org.jtheque.i18n.able.ILanguageService;
 import org.jtheque.ui.utils.actions.JThequeAction;
 import org.jtheque.views.able.panel.ICollectionView;
 

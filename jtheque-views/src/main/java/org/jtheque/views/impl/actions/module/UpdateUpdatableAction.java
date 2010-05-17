@@ -1,6 +1,6 @@
 package org.jtheque.views.impl.actions.module;
 
-import org.jtheque.update.Updatable;
+import org.jtheque.update.able.Updatable;
 
 /*
  * Copyright JTheque (Baptiste Wicht)

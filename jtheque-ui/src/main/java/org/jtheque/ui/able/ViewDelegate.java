@@ -16,7 +16,7 @@ package org.jtheque.ui.able;
  * limitations under the License.
  */
 
-import org.jtheque.errors.JThequeError;
+import org.jtheque.errors.utils.JThequeError;
 
 /**
  * @author Baptiste Wicht

@@ -1,6 +1,6 @@
 package org.jtheque.views.able.panel;
 
-import org.jtheque.modules.impl.ModuleDescription;
+import org.jtheque.modules.able.IModuleDescription;
 import org.jtheque.ui.able.IView;
 
 /*
@@ -28,7 +28,7 @@ public interface IRepositoryView extends IView {
      *
      * @return The selected module.
      */
-    ModuleDescription getSelectedModule();
+    IModuleDescription getSelectedModule();
 
     /**
      * Expand the selected module.

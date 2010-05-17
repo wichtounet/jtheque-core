@@ -16,7 +16,7 @@ package org.jtheque.modules.impl;
  * limitations under the License.
  */
 
-import org.jtheque.core.application.Application;
+import org.jtheque.core.able.application.Application;
 import org.jtheque.modules.able.ModuleState;
 import org.jtheque.utils.collections.Filter;
 

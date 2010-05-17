@@ -1,6 +1,6 @@
 package org.jtheque.ui.utils.constraints;
 
-import org.jtheque.errors.JThequeError;
+import org.jtheque.errors.able.IError;
 
 import java.util.Collection;
 
@@ -34,20 +34,6 @@ public interface Constraint {
     int maxLength();
 
     /**
-     * Indicate if the value must be numerical or not.
-     *
-     * @return true if teh value must be numerical else false.
-     */
-    boolean mustBeNumerical();
-
-    /**
-     * Indicate if the value can be null or not.
-     *
-     * @return true if the value can be null else false.
-     */
-    boolean canBeNullOrEmpty();
-
-    /**
      * Indicate if we must control length or not.
      *
      * @return true if we must control length else false.
@@ -60,5 +46,7 @@ public interface Constraint {
      * @param field  The field to validate.
      * @param errors The errors list.
      */
-    void validate(Object field, Collection<JThequeError> errors);
+    void validate(Object field, Collection<IError> errors);
+
+	void configure(Object component);
 }

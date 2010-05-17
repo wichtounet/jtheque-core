@@ -16,43 +16,31 @@ package org.jtheque.views.impl.components.config;
  * limitations under the License.
  */
 
-import org.jtheque.core.ICore;
-import org.jtheque.errors.JThequeError;
-import org.jtheque.i18n.ILanguageService;
-import org.jtheque.ui.utils.ValidationUtils;
+import org.jtheque.core.able.ICore;
+import org.jtheque.i18n.able.ILanguageService;
+import org.jtheque.ui.utils.builded.OSGIFilthyBuildedPanel;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
-import org.jtheque.ui.utils.filthy.FilthyBuildedPanel;
-import org.jtheque.ui.utils.filthy.IFilthyUtils;
+import org.jtheque.ui.utils.constraints.AtLeastOneConstraint;
+import org.jtheque.ui.utils.constraints.Constraint;
+import org.jtheque.ui.utils.filthy.FilthyRenderer;
 import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.views.able.components.ConfigTabComponent;
 import org.jtheque.views.able.config.IAppearanceConfigView;
-import org.jtheque.views.impl.filthy.FilthyRenderer;
 import org.jtheque.views.impl.models.AvailableLanguagesComboBoxModel;
 
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
-import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A config panel for the appearance.
  *
  * @author Baptiste Wicht
  */
-public final class JPanelConfigAppearance extends FilthyBuildedPanel implements ConfigTabComponent, IAppearanceConfigView {
+public final class JPanelConfigAppearance extends OSGIFilthyBuildedPanel implements ConfigTabComponent, IAppearanceConfigView {
     private AvailableLanguagesComboBoxModel modelLanguages;
     private JCheckBox boxRetainSizeAndPosition;
-
-    private final ICore core;
-    private final ILanguageService languageService;
-
-    public JPanelConfigAppearance(IFilthyUtils filthyUtils, ILanguageService languageService, ICore core) {
-        super(filthyUtils, languageService);
-
-        this.languageService = languageService;
-        this.core = core;
-
-        build();
-    }
 
     @Override
     protected void buildView(I18nPanelBuilder parent) {
@@ -61,7 +49,7 @@ public final class JPanelConfigAppearance extends FilthyBuildedPanel implements 
 
         builder.addI18nLabel("config.appearance.language", parent.gbcSet(0, 0));
 
-        modelLanguages = new AvailableLanguagesComboBoxModel(core);
+        modelLanguages = new AvailableLanguagesComboBoxModel(getService(ICore.class));
 
         builder.addComboBox(modelLanguages, new FilthyRenderer(), parent.gbcSet(1, 0, GridBagUtils.HORIZONTAL));
 
@@ -71,7 +59,16 @@ public final class JPanelConfigAppearance extends FilthyBuildedPanel implements 
         fillAllFields();
     }
 
-    @Override
+	@Override
+	public Map<Object, Constraint> getConstraints() {
+		Map<Object, Constraint> constraints = new HashMap<Object, Constraint>(1);
+
+		constraints.put(modelLanguages, new AtLeastOneConstraint("config.appearance.language"));
+
+		return constraints;
+	}
+
+	@Override
     public String getTitleKey() {
         return "config.view.tab.appearance";
     }
@@ -80,24 +77,19 @@ public final class JPanelConfigAppearance extends FilthyBuildedPanel implements 
      * Fill the all fields with the current configurations.
      */
     private void fillAllFields() {
-        modelLanguages.setSelectedItem(languageService.getCurrentLanguage());
-        boxRetainSizeAndPosition.setSelected(core.getConfiguration().retainSizeAndPositionOfWindow());
+        modelLanguages.setSelectedItem(getService(ILanguageService.class).getCurrentLanguage());
+        boxRetainSizeAndPosition.setSelected(getService(ICore.class).getConfiguration().retainSizeAndPositionOfWindow());
     }
 
     @Override
     public void apply() {
-        languageService.setCurrentLanguage(modelLanguages.getSelectedLanguage());
-        core.getConfiguration().setRetainSizeAndPositionOfWindow(boxRetainSizeAndPosition.isSelected());
+        getService(ILanguageService.class).setCurrentLanguage(modelLanguages.getSelectedLanguage());
+        getService(ICore.class).getConfiguration().setRetainSizeAndPositionOfWindow(boxRetainSizeAndPosition.isSelected());
     }
 
     @Override
     public void cancel() {
         fillAllFields();
-    }
-
-    @Override
-    public void validate(Collection<JThequeError> errors) {
-        ValidationUtils.rejectIfNothingSelected(modelLanguages, "config.appearance.language", errors);
     }
 
     @Override

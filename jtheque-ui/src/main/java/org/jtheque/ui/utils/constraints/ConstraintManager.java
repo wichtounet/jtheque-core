@@ -1,6 +1,6 @@
 package org.jtheque.ui.utils.constraints;
 
-import org.jtheque.errors.JThequeError;
+import org.jtheque.errors.able.IError;
 import org.jtheque.utils.ui.DocumentLengthFilterAvert;
 
 import javax.swing.JTextField;
@@ -53,23 +53,13 @@ public final class ConstraintManager {
     }
 
     /**
-     * Return the constraint for a specific field.
-     *
-     * @param fieldName The name of the field to get the constraint for.
-     * @return The constraint for the field.
-     */
-    public static Constraint getConstraint(String fieldName) {
-        return CONSTRAINTS.get(fieldName);
-    }
-
-    /**
      * Validate the field with the constraint.
      *
      * @param fieldName The name of the field.
      * @param field     The field.
      * @param errors    The errors list to fill.
      */
-    public static void validate(String fieldName, Object field, Collection<JThequeError> errors) {
+    public static void validate(String fieldName, Object field, Collection<IError> errors) {
         if (CONSTRAINTS.containsKey(fieldName)) {
             CONSTRAINTS.get(fieldName).validate(field, errors);
         }

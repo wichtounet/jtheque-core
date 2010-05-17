@@ -17,15 +17,16 @@ package org.jtheque.views.impl.windows;
  */
 
 import org.jdesktop.jxlayer.JXLayer;
-import org.jtheque.core.ICore;
-import org.jtheque.core.lifecycle.TitleEvent;
-import org.jtheque.core.lifecycle.TitleListener;
+import org.jtheque.core.able.ICore;
+import org.jtheque.core.able.lifecycle.TitleListener;
+import org.jtheque.core.able.lifecycle.TitleEvent;
 import org.jtheque.core.utils.SimplePropertiesCache;
-import org.jtheque.i18n.ILanguageService;
+import org.jtheque.i18n.able.ILanguageService;
 import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.ui.utils.components.Borders;
 import org.jtheque.ui.utils.builders.JThequePanelBuilder;
 import org.jtheque.ui.utils.builders.PanelBuilder;
+import org.jtheque.ui.utils.components.LayerTabbedPane;
 import org.jtheque.ui.utils.windows.frames.SwingFrameView;
 import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.ui.GridBagUtils;
@@ -36,10 +37,9 @@ import org.jtheque.views.able.components.MainComponent;
 import org.jtheque.views.able.windows.IMainView;
 import org.jtheque.views.impl.MainController;
 import org.jtheque.views.impl.components.InfiniteWaitUI;
-import org.jtheque.views.impl.components.LayerTabbedPane;
+import org.jtheque.views.impl.components.panel.JThequeStateBar;
 import org.jtheque.views.impl.components.MainTabbedPane;
 import org.jtheque.views.impl.components.menu.JThequeMenuBar;
-import org.jtheque.views.impl.components.panel.JThequeStateBar;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -231,7 +231,7 @@ public final class MainView extends SwingFrameView implements TitleListener, IMa
             builder.add(emptyPanel, builder.gbcSet(0, 0, GridBagUtils.BOTH, GridBagUtils.FIRST_LINE_START, 1.0, 1.0));
         } else if (components.size() == 1) {
             builder.setDefaultInsets(new Insets(0, 0, 0, 0));
-            builder.add(CollectionUtils.first(components).getComponent(),
+            builder.add(CollectionUtils.first(components).getImpl(),
                     builder.gbcSet(0, 0, GridBagUtils.BOTH, GridBagUtils.FIRST_LINE_START, 1.0, 1.0));
         } else {
             tab = new MainTabbedPane(languageService, views);
@@ -268,7 +268,7 @@ public final class MainView extends SwingFrameView implements TitleListener, IMa
 
             Collection<MainComponent> components = views.getMainComponents();
 
-            content.getView().add(CollectionUtils.first(components).getComponent(),
+            content.getView().add(CollectionUtils.first(components).getImpl(),
                     gbc.gbcSet(0, 0, GridBagUtils.BOTH, GridBagUtils.FIRST_LINE_START, 1.0, 1.0));
 
             content.getView().add(stateBar, gbc.gbcSet(0, 1, GridBagUtils.HORIZONTAL, GridBagUtils.LAST_LINE_START));
@@ -307,7 +307,7 @@ public final class MainView extends SwingFrameView implements TitleListener, IMa
 
             Collection<MainComponent> components = views.getMainComponents();
 
-            content.getView().add(CollectionUtils.first(components).getComponent(),
+            content.getView().add(CollectionUtils.first(components).getImpl(),
                     gbc.gbcSet(0, 0, GridBagUtils.BOTH, GridBagUtils.FIRST_LINE_START, 1.0, 1.0));
 
             content.getView().add(stateBar, gbc.gbcSet(0, 1, GridBagUtils.HORIZONTAL, GridBagUtils.LAST_LINE_START));

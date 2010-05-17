@@ -67,7 +67,6 @@ public final class CoreLauncher implements Closeable {
     }
 
     private void launchJTheque() {
-        startIfNotStarted("org.jtheque.defaults");
         startIfNotStarted("org.jtheque.spring.utils");
         startIfNotStarted("org.jtheque.states");
         startIfNotStarted("org.jtheque.events");

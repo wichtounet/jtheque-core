@@ -16,9 +16,9 @@ package org.jtheque.ui.utils.windows.frames;
  * limitations under the License.
  */
 
-import org.jtheque.core.ICore;
+import org.jtheque.core.able.ICore;
 import org.jtheque.core.utils.OSGiUtils;
-import org.jtheque.resources.IResourceService;
+import org.jtheque.resources.able.IResourceService;
 import org.jtheque.ui.able.IModel;
 import org.jtheque.ui.able.IWindowView;
 import org.jtheque.utils.ui.SwingUtils;

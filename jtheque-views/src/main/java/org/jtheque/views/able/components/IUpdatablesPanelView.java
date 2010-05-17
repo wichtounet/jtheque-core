@@ -1,6 +1,6 @@
 package org.jtheque.views.able.components;
 
-import org.jtheque.update.Updatable;
+import org.jtheque.update.able.Updatable;
 
 /*
  * Copyright JTheque (Baptiste Wicht)

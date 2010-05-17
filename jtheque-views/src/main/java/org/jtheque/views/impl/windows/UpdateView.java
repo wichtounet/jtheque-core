@@ -16,17 +16,17 @@ package org.jtheque.views.impl.windows;
  * limitations under the License.
  */
 
-import org.jtheque.modules.impl.ModuleContainer;
+import org.jtheque.modules.able.Module;
 import org.jtheque.ui.able.IModel;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
+import org.jtheque.ui.utils.filthy.FilthyRenderer;
 import org.jtheque.ui.utils.windows.dialogs.SwingFilthyBuildedDialogView;
-import org.jtheque.update.IUpdateService;
-import org.jtheque.update.Updatable;
+import org.jtheque.update.able.IUpdateService;
+import org.jtheque.update.able.Updatable;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.views.able.windows.IUpdateView;
 import org.jtheque.views.impl.actions.module.update.AcValidateUpdateView;
-import org.jtheque.views.impl.filthy.FilthyRenderer;
 import org.jtheque.views.impl.models.VersionsComboBoxModel;
 
 /**
@@ -38,7 +38,7 @@ public final class UpdateView extends SwingFilthyBuildedDialogView<IModel> imple
     private VersionsComboBoxModel model;
 
     private Mode mode = Mode.KERNEL;
-    private ModuleContainer module;
+    private Module module;
     private Updatable updatable;
 
     @Override
@@ -67,7 +67,7 @@ public final class UpdateView extends SwingFilthyBuildedDialogView<IModel> imple
         } else if ("module".equals(message)) {
             mode = Mode.MODULE;
 
-            module = (ModuleContainer) value;
+            module = (Module) value;
             model.loadModuleVersions(module);
         } else if ("updatable".equals(message)) {
             mode = Mode.UPDATABLE;
@@ -88,7 +88,7 @@ public final class UpdateView extends SwingFilthyBuildedDialogView<IModel> imple
     }
 
     @Override
-    public ModuleContainer getModule() {
+    public Module getModule() {
         return module;
     }
 

@@ -17,13 +17,13 @@ package org.jtheque.file.impl;
  */
 
 import org.jdom.Element;
-import org.jtheque.file.IFileService.XmlBackupVersion;
+import org.jtheque.file.able.IFileService.XmlBackupVersion;
 import org.jtheque.file.able.ModuleBackup;
-import org.jtheque.io.NodeLoader;
-import org.jtheque.io.XMLException;
-import org.jtheque.io.XMLReader;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.io.FileUtils;
+import org.jtheque.xml.utils.NodeLoader;
+import org.jtheque.xml.utils.XMLException;
+import org.jtheque.xml.utils.XMLReader;
 
 import java.io.File;
 import java.util.ArrayList;

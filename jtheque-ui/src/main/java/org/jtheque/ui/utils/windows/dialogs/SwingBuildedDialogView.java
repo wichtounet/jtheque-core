@@ -16,26 +16,26 @@ package org.jtheque.ui.utils.windows.dialogs;
  * limitations under the License.
  */
 
-import org.jtheque.errors.JThequeError;
-import org.jtheque.i18n.ILanguageService;
+import org.jtheque.i18n.able.ILanguageService;
 import org.jtheque.ui.able.IModel;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.ui.utils.builders.JThequePanelBuilder;
 
 import java.awt.Container;
-import java.util.Collection;
 
 /**
  * A swing dialog view.
  *
  * @author Baptiste Wicht
  */
-public abstract class SwingBuildedDialogView<T extends IModel> extends SwingDialogView {
+public abstract class SwingBuildedDialogView<T extends IModel> extends SwingDialogView<T> {
     @Override
     protected final void init(){
         initView();
 
         setContentPane(buildContentPane());
+
+        refreshText(getService(ILanguageService.class));
 
         pack();
 
@@ -48,7 +48,7 @@ public abstract class SwingBuildedDialogView<T extends IModel> extends SwingDial
      * @return The builded content pane.
      */
     private Container buildContentPane(){
-        I18nPanelBuilder builder = new JThequePanelBuilder();
+        I18nPanelBuilder builder = createBuilder();
 
         builder.setInternationalizableContainer(this);
 
@@ -59,15 +59,9 @@ public abstract class SwingBuildedDialogView<T extends IModel> extends SwingDial
         return builder.getPanel();
     }
 
-    @Override
-    protected void validate(Collection<JThequeError> errors){
-        //Default empty implementation
-    }
-
-    @Override
-    public T getModel(){
-        return (T) super.getModel();
-    }
+	JThequePanelBuilder createBuilder() {
+		return new JThequePanelBuilder();
+	}
 
     /**
      * Init the view.

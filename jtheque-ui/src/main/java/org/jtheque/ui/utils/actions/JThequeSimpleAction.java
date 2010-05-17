@@ -17,7 +17,6 @@ package org.jtheque.ui.utils.actions;
  */
 
 import javax.swing.AbstractAction;
-import javax.swing.Action;
 import javax.swing.ImageIcon;
 
 /**

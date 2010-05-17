@@ -37,5 +37,6 @@ public interface ModuleBackuper {
     String[] getDependencies();
 
     ModuleBackup backup();
+	
     void restore(ModuleBackup backup);
 }

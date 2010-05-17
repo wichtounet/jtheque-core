@@ -16,9 +16,9 @@ package org.jtheque.views.impl.models;
  * limitations under the License.
  */
 
-import org.jtheque.update.IUpdateService;
-import org.jtheque.update.Updatable;
-import org.jtheque.update.UpdatableListener;
+import org.jtheque.update.able.IUpdateService;
+import org.jtheque.update.able.Updatable;
+import org.jtheque.update.able.UpdatableListener;
 import org.jtheque.utils.collections.CollectionUtils;
 
 import javax.swing.DefaultListModel;

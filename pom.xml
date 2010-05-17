@@ -13,13 +13,11 @@
     <version>2.1-SNAPSHOT</version>
 
     <modules>
-        <module>jtheque-defaults</module>
         <module>jtheque-osgi</module>
         <module>jtheque-core</module>
         <module>jtheque-lifecycle</module>
         <module>jtheque-views</module>
         <module>jtheque-core-utils</module>
-        <module>jtheque-io</module>
         <module>jtheque-states</module>
         <module>jtheque-i18n</module>
         <module>jtheque-undo</module>

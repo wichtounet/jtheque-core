@@ -2,28 +2,29 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:osgi="http://www.springframework.org/schema/osgi"
+       xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="
             http://www.springframework.org/schema/beans
             http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
             http://www.springframework.org/schema/osgi
-            http://www.springframework.org/schema/osgi/spring-osgi.xsd">
+            http://www.springframework.org/schema/osgi/spring-osgi.xsd
+            http://www.springframework.org/schema/context
+            http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
-    <bean class="org.jtheque.ui.UIResources" lazy-init="false" factory-method="register">
-        <constructor-arg><osgi:reference interface="org.jtheque.resources.IResourceService"/></constructor-arg>
-        <constructor-arg value="classpath:org/jtheque/ui/light.png"/>
-    </bean>
+    <context:annotation-config/>
 
-    <bean id="uiUtils" class="org.jtheque.ui.UIUtils">
+    <bean id="uiUtils" class="org.jtheque.ui.impl.UIUtils">
         <constructor-arg ref="viewDelegate" />
-        <constructor-arg><osgi:reference interface="org.jtheque.i18n.ILanguageService" /></constructor-arg>
+        <constructor-arg><osgi:reference interface="org.jtheque.i18n.able.ILanguageService" /></constructor-arg>
+        <constructor-arg><osgi:reference interface="org.jtheque.resources.able.IResourceService"/></constructor-arg>
     </bean>
 
-    <bean id="filthyUtils" class="org.jtheque.ui.utils.filthy.FilthyUtils">
-        <constructor-arg><osgi:reference interface="org.jtheque.resources.IResourceService"/></constructor-arg>
+    <bean id="filthyUtils" class="org.jtheque.ui.impl.FilthyUtils">
+        <constructor-arg><osgi:reference interface="org.jtheque.resources.able.IResourceService"/></constructor-arg>
     </bean>
 
-    <bean id="viewDelegate" class="org.jtheque.ui.utils.SwingViewDelegate" />
+    <bean id="viewDelegate" class="org.jtheque.ui.impl.SwingViewDelegate" />
 
     <osgi:service interface="org.jtheque.ui.able.IUIUtils" ref="uiUtils" />
-    <osgi:service interface="org.jtheque.ui.utils.filthy.IFilthyUtils" ref="filthyUtils" />
+    <osgi:service interface="org.jtheque.ui.able.IFilthyUtils" ref="filthyUtils" />
 </beans>

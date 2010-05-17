@@ -16,8 +16,7 @@ package org.jtheque.views.impl.actions.backup;
  * limitations under the License.
  */
 
-import org.jtheque.file.IFileService;
-import org.jtheque.io.XMLException;
+import org.jtheque.file.able.IFileService;
 import org.jtheque.persistence.able.IPersistenceService;
 import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.ui.utils.actions.JThequeAction;
@@ -25,6 +24,7 @@ import org.jtheque.utils.ui.SwingUtils;
 import org.jtheque.views.able.windows.IMainView;
 import org.jtheque.utils.ui.edt.SimpleTask;
 import org.jtheque.utils.io.SimpleFilter;
+import org.jtheque.xml.utils.XMLException;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.Resource;

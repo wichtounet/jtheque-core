@@ -16,7 +16,7 @@ package org.jtheque.views.impl.windows;
  * limitations under the License.
  */
 
-import org.jtheque.core.ICore;
+import org.jtheque.core.able.ICore;
 import org.jtheque.ui.able.IModel;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.ui.utils.windows.dialogs.SwingFilthyBuildedDialogView;

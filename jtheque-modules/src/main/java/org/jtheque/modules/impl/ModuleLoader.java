@@ -1,9 +1,9 @@
 package org.jtheque.modules.impl;
 
-import org.jtheque.core.ICore;
+import org.jtheque.core.able.ICore;
 import org.jtheque.core.utils.OSGiUtils;
-import org.jtheque.errors.IErrorService;
-import org.jtheque.errors.JThequeError;
+import org.jtheque.errors.able.IErrorService;
+import org.jtheque.errors.utils.JThequeError;
 import org.jtheque.modules.able.IModuleLoader;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.bean.Version;
@@ -109,6 +109,12 @@ public final class ModuleLoader implements IModuleLoader, BundleContextAware {
             if(StringUtils.isNotEmpty(headers.get("Module-Dependencies"))){
                 container.setDependencies(COMMA_DELIMITER_PATTERN.split(headers.get("Module-Dependencies")));
             }
+
+	        if(StringUtils.isNotEmpty(headers.get("Module-Config"))){
+		        String path = headers.get("Module-Config");
+
+		        
+	        }
 
             modules.add(container);
         } catch (BundleException e) {

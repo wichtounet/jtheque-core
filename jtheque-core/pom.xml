@@ -71,7 +71,7 @@
                 <configuration>
                     <instructions>
                         <Bundle-SymbolicName>${pom.artifactId}</Bundle-SymbolicName>
-                        <Export-Package>org.jtheque.core, org.jtheque.core.application, org.jtheque.core.lifecycle</Export-Package>
+                        <Export-Package>org.jtheque.core.able.application, org.jtheque.core.able.lifecycle, org.jtheque.core.able</Export-Package>
                         <Bundle-Vendor>Baptiste Wicht</Bundle-Vendor>
                         <Spring-Context>*;create-asynchronously:=false;publish-context:=false</Spring-Context>
                     </instructions>

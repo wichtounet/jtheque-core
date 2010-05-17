@@ -28,14 +28,16 @@ import java.awt.event.ActionEvent;
  * @author Baptiste Wicht
  */
 public final class ApplyChangesAndCloseAction extends JThequeAction {
-    @Resource
-    private IConfigView configView;
+    private final IConfigView configView;
 
     /**
      * Construct a new AcApplyChangesAndClose.
+     * @param configView
      */
-    public ApplyChangesAndCloseAction() {
+    public ApplyChangesAndCloseAction(IConfigView configView) {
         super("config.actions.ok");
+
+	    this.configView = configView;
     }
 
     @Override

@@ -16,8 +16,8 @@ package org.jtheque.ui.utils.components;
  * limitations under the License.
  */
 
-import org.jtheque.i18n.ILanguageService;
-import org.jtheque.i18n.Internationalizable;
+import org.jtheque.i18n.able.ILanguageService;
+import org.jtheque.i18n.able.Internationalizable;
 
 import javax.swing.JCheckBox;
 import java.awt.Color;
@@ -27,8 +27,11 @@ import java.awt.Color;
  *
  * @author Baptiste Wicht
  */
-public final class JThequeCheckBox extends JCheckBox implements Internationalizable {
+public class JThequeCheckBox extends JCheckBox implements Internationalizable {
     private final String textKey;
+    private final Object[] textReplaces;
+
+    private static final Object[] EMPTY_REPLACES = new Object[0];
 
     /**
      * Construct a new JThequeCheckBox.
@@ -41,10 +44,25 @@ public final class JThequeCheckBox extends JCheckBox implements Internationaliza
         setBackground(Color.white);
 
         textKey = key;
+        textReplaces = EMPTY_REPLACES;
+    }
+
+    /**
+     * Construct a new JThequeCheckBox.
+     *
+     * @param key The internationalization key.
+     */
+    public JThequeCheckBox(String key, Object[] replaces) {
+        super();
+
+        setBackground(Color.white);
+
+        textKey = key;
+        textReplaces = replaces;
     }
 
     @Override
     public void refreshText(ILanguageService languageService) {
-        setText(languageService.getMessage(textKey));
+        setText(languageService.getMessage(textKey, textReplaces));
     }
 }

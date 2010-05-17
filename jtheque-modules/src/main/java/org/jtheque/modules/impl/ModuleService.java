@@ -16,26 +16,26 @@ package org.jtheque.modules.impl;
  * limitations under the License.
  */
 
-import org.jtheque.core.ICore;
-import org.jtheque.core.utils.OSGiUtils;
+import org.jtheque.core.able.ICore;
 import org.jtheque.core.utils.WeakEventListenerList;
-import org.jtheque.i18n.ILanguageService;
+import org.jtheque.i18n.able.ILanguageService;
+import org.jtheque.modules.able.IModuleDescription;
 import org.jtheque.modules.able.IModuleLoader;
 import org.jtheque.modules.able.IModuleService;
+import org.jtheque.modules.able.IRepository;
 import org.jtheque.modules.able.Module;
 import org.jtheque.modules.able.ModuleListener;
 import org.jtheque.modules.able.ModuleState;
 import org.jtheque.modules.utils.ModuleResourceCache;
-import org.jtheque.states.IStateService;
+import org.jtheque.states.able.IStateService;
 import org.jtheque.ui.able.IUIUtils;
-import org.jtheque.update.IUpdateService;
+import org.jtheque.update.able.IUpdateService;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.collections.CollectionUtils;
-import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleException;
 import org.slf4j.LoggerFactory;
-import org.springframework.osgi.context.BundleContextAware;
 
+import javax.annotation.Resource;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -46,13 +46,13 @@ import java.util.List;
  *
  * @author Baptiste Wicht
  */
-public final class ModuleService implements IModuleService, BundleContextAware {
+public final class ModuleService implements IModuleService {
     private final WeakEventListenerList listeners = new WeakEventListenerList();
 
     /**
      * The application repository.
      */
-    private Repository repository;
+    private IRepository repository;
 
     /**
      * The configuration of the module manager. It seems the informations about the modules who're
@@ -65,6 +65,21 @@ public final class ModuleService implements IModuleService, BundleContextAware {
     private final List<ModuleContainer> modules = new ArrayList<ModuleContainer>(10);
     private final Collection<ModuleContainer> modulesToLoad = new ArrayList<ModuleContainer>(10);
 
+	@Resource
+	private ICore core;
+
+	@Resource
+	private IStateService stateService;
+
+	@Resource
+	private ILanguageService languageService;
+
+	@Resource
+	private IUpdateService updateService;
+
+	@Resource
+	private IUIUtils uiUtils;
+
     /**
      * Indicate if we must refresh the list of the modules to load.
      */
@@ -75,17 +90,10 @@ public final class ModuleService implements IModuleService, BundleContextAware {
      */
     private boolean collectionModule;
 
-    private BundleContext bundleContext;
-
     public ModuleService(IModuleLoader moduleLoader) {
         super();
 
         this.moduleLoader = moduleLoader;
-    }
-
-    @Override
-    public void setBundleContext(BundleContext bundleContext) {
-        this.bundleContext = bundleContext;
     }
 
     @Override
@@ -188,8 +196,6 @@ public final class ModuleService implements IModuleService, BundleContextAware {
 
                 ModuleResourceCache.removeModule(module.getId());
             }
-
-            //TODO getService(ILanguageService.class).removeBaseName(module.getI18n());
         }
     }
 
@@ -197,16 +203,12 @@ public final class ModuleService implements IModuleService, BundleContextAware {
      * Configure the modules.
      */
     private void configureModules() {
-        configuration = getService(IStateService.class).getState(new ModuleConfiguration());
+        configuration = stateService.getState(new ModuleConfiguration());
 
         //TODO : CollectionUtils.filter(modules, new ConfigurationFilter(configuration, getService(ICore.class).getApplication()));
-        CollectionUtils.filter(modules, new CoreVersionFilter(getService(ICore.class), getService(IUIUtils.class)));
+        CollectionUtils.filter(modules, new CoreVersionFilter(core, uiUtils));
 
         CollectionUtils.sort(modules, new ModuleComparator());
-    }
-
-    private <T> T getService(Class<T> classz) {
-        return OSGiUtils.getService(bundleContext, classz);
     }
 
     @Override
@@ -215,14 +217,14 @@ public final class ModuleService implements IModuleService, BundleContextAware {
     }
 
     @Override
-    public Collection<ModuleDescription> getModulesFromRepository() {
+    public Collection<IModuleDescription> getModulesFromRepository() {
         return getRepository().getModules();
     }
 
     @Override
-    public Repository getRepository() {
+    public IRepository getRepository() {
         if (repository == null) {
-            repository = new RepositoryReader().read(getService(ICore.class).getApplication().getRepository());
+            repository = new RepositoryReader().read(core.getApplication().getRepository());
         }
 
         return repository;
@@ -310,7 +312,7 @@ public final class ModuleService implements IModuleService, BundleContextAware {
 
     @Override
     public void install(String versionsFileURL) {
-        InstallationResult result = getService(IUpdateService.class).install(versionsFileURL);
+        InstallationResult result = updateService.install(versionsFileURL);
 
         if (result.isInstalled()) {
             /* TODO install 
@@ -324,9 +326,9 @@ public final class ModuleService implements IModuleService, BundleContextAware {
 
             configuration.add(result);
 
-            getService(IUIUtils.class).displayI18nText("message.module.repository.installed");
+            uiUtils.displayI18nText("message.module.repository.installed");
         } else {
-            getService(IUIUtils.class).displayI18nText("error.repository.module.not.installed");
+            uiUtils.displayI18nText("error.repository.module.not.installed");
         }
     }
 
@@ -349,13 +351,10 @@ public final class ModuleService implements IModuleService, BundleContextAware {
     }
 
     @Override
-    public void addModuleListener(ModuleListener listener) {
+    public void addModuleListener(String moduleId, ModuleListener listener) {
         listeners.add(ModuleListener.class, listener);
-    }
 
-    @Override
-    public void removeModuleListener(ModuleListener listener) {
-        listeners.remove(ModuleListener.class, listener);
+        ModuleResourceCache.addResource(moduleId, ModuleListener.class, listener);
     }
 
     private void fireModuleStateChanged(Module container, ModuleState newState, ModuleState oldState) {
@@ -363,6 +362,17 @@ public final class ModuleService implements IModuleService, BundleContextAware {
 
         for (ModuleListener listener : l) {
             listener.moduleStateChanged(container, newState, oldState);
+        }
+
+	    //Remove listeners from this module
+        if(oldState == ModuleState.LOADED && (newState == ModuleState.INSTALLED ||
+                newState == ModuleState.DISABLED || newState == ModuleState.UNINSTALLED)){
+
+	        for(ModuleListener listener : ModuleResourceCache.getResource(container.getId(), ModuleListener.class)){
+		        listeners.remove(ModuleListener.class, listener);
+	        }
+	        
+            ModuleResourceCache.removeResourceOfType(container.getId(), ModuleListener.class);
         }
     }
 
@@ -380,7 +390,7 @@ public final class ModuleService implements IModuleService, BundleContextAware {
     }
 
     private String getMessage(String key, String... replaces) {
-        return getService(ILanguageService.class).getMessage(key, replaces);
+        return languageService.getMessage(key, replaces);
     }
 
     /**

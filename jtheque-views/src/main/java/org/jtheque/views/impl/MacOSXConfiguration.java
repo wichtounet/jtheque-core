@@ -19,7 +19,7 @@ package org.jtheque.views.impl;
 import com.apple.eawt.Application;
 import com.apple.eawt.ApplicationAdapter;
 import com.apple.eawt.ApplicationEvent;
-import org.jtheque.core.ICore;
+import org.jtheque.core.able.ICore;
 import org.jtheque.views.able.IViewService;
 import org.jtheque.views.able.IViews;
 

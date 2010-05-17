@@ -16,9 +16,8 @@ package org.jtheque.views.impl.models;
  * limitations under the License.
  */
 
-import org.jtheque.messages.IMessageService;
-import org.jtheque.messages.Message;
-import org.jtheque.utils.bean.IntDate;
+import org.jtheque.messages.able.IMessage;
+import org.jtheque.messages.able.IMessageService;
 import org.jtheque.utils.collections.CollectionUtils;
 
 import java.util.ArrayList;
@@ -30,10 +29,10 @@ import java.util.ListIterator;
  * @author Baptiste Wicht
  */
 public final class MessageModel implements IMessageModel {
-    private final IMessageService service;
-    private final Message defaultMessage;
+    private final IMessageService messageService;
+    private final IMessage defaultMessage;
 
-    private final ListIterator<Message> iterator;
+    private final ListIterator<IMessage> iterator;
 
     /**
      * Construct a new MessageModel.
@@ -41,47 +40,42 @@ public final class MessageModel implements IMessageModel {
     public MessageModel(IMessageService messageService) {
         super();
 
-        service = messageService;
+        this.messageService = messageService;
 
-        iterator = new ArrayList<Message>(service.getMessages()).listIterator();
+        iterator = new ArrayList<IMessage>(messageService.getMessages()).listIterator();
 
-        defaultMessage = new Message();
-        defaultMessage.setDate(IntDate.today());
-        defaultMessage.setId(-1);
-        defaultMessage.setSource("");
-        defaultMessage.setMessage("");
-        defaultMessage.setTitle("");
+        defaultMessage = messageService.getEmptyMessage();
     }
 
     @Override
-    public Message getNextMessage() {
+    public IMessage getNextMessage() {
         if (!iterator.hasNext()) {
             CollectionUtils.goToFirst(iterator);
         }
 
-        return service.getMessages().isEmpty() ? defaultMessage : iterator.next();
+        return messageService.getMessages().isEmpty() ? defaultMessage : iterator.next();
     }
 
     @Override
-    public Message getCurrentMessage() {
+    public IMessage getCurrentMessage() {
         if (!iterator.hasPrevious()) {
             CollectionUtils.goToLast(iterator);
         }
 
-        return service.getMessages().isEmpty() ? defaultMessage : iterator.previous();
+        return messageService.getMessages().isEmpty() ? defaultMessage : iterator.previous();
     }
 
     @Override
-    public Message getPreviousMessage() {
+    public IMessage getPreviousMessage() {
         if (!iterator.hasNext()) {
             CollectionUtils.goToFirst(iterator);
         }
 
-        return service.getMessages().isEmpty() ? defaultMessage : iterator.next();
+        return messageService.getMessages().isEmpty() ? defaultMessage : iterator.next();
     }
 
     @Override
     public boolean isDefaultMessage() {
-        return service.getMessages().isEmpty();
+        return messageService.getMessages().isEmpty();
     }
 }

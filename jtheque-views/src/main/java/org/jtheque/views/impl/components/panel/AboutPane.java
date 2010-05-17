@@ -1,9 +1,9 @@
 package org.jtheque.views.impl.components.panel;
 
-import org.jtheque.core.ICore;
-import org.jtheque.core.application.Application;
-import org.jtheque.i18n.ILanguageService;
-import org.jtheque.i18n.Internationalizable;
+import org.jtheque.core.able.ICore;
+import org.jtheque.core.able.application.Application;
+import org.jtheque.i18n.able.ILanguageService;
+import org.jtheque.i18n.able.Internationalizable;
 import org.jtheque.ui.utils.AnimationUtils;
 import org.jtheque.utils.DesktopUtils;
 import org.jtheque.utils.StringUtils;

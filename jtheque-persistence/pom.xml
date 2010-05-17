@@ -84,7 +84,7 @@
                 <configuration>
                     <instructions>
                         <Bundle-SymbolicName>${pom.artifactId}</Bundle-SymbolicName>
-                        <Export-Package>org.jtheque.persistence, org.jtheque.persistence.able, org.jtheque.persistence.context</Export-Package>
+                        <Export-Package>org.jtheque.persistence.able, org.jtheque.persistence.utils</Export-Package>
                         <Bundle-Vendor>Baptiste Wicht</Bundle-Vendor>
                         <DynamicImport-Package>org.h2, org.springframework.jdbc.datasource, org.springframework.jdbc.core.simple</DynamicImport-Package>
                         <Spring-Context>*;create-asynchronously:=false;publish-context:=false</Spring-Context>

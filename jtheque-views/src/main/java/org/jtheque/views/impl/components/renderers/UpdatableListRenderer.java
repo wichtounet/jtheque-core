@@ -19,8 +19,8 @@ package org.jtheque.views.impl.components.renderers;
 import org.jtheque.ui.utils.builders.FilthyPanelBuilder;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.ui.utils.builders.PanelBuilder;
-import org.jtheque.update.IUpdateService;
-import org.jtheque.update.Updatable;
+import org.jtheque.update.able.IUpdateService;
+import org.jtheque.update.able.Updatable;
 import org.jtheque.utils.ui.GridBagUtils;
 
 import javax.swing.JLabel;

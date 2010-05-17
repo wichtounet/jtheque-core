@@ -1,16 +1,16 @@
 package org.jtheque.views.impl.components.panel;
 
-import org.jtheque.i18n.ILanguageService;
+import org.jtheque.i18n.able.ILanguageService;
 import org.jtheque.modules.able.IModuleService;
 import org.jtheque.modules.able.Module;
 import org.jtheque.ui.utils.actions.ActionFactory;
+import org.jtheque.ui.utils.builded.OSGIFilthyBuildedPanel;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
-import org.jtheque.ui.utils.filthy.FilthyBuildedPanel;
-import org.jtheque.ui.utils.filthy.IFilthyUtils;
-import org.jtheque.update.IUpdateService;
+import org.jtheque.update.able.IUpdateService;
 import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.utils.ui.SwingUtils;
 import org.jtheque.views.able.components.IModulesPanelView;
+import org.jtheque.views.able.panel.IRepositoryView;
 import org.jtheque.views.impl.actions.module.DisableModuleAction;
 import org.jtheque.views.impl.actions.module.EnableModuleAction;
 import org.jtheque.views.impl.actions.module.InstallModuleAction;
@@ -43,28 +43,16 @@ import javax.swing.JList;
  *
  * @author Baptiste Wicht
  */
-public final class ModulesPanel extends FilthyBuildedPanel implements IModulesPanelView {
+public final class ModulesPanel extends OSGIFilthyBuildedPanel implements IModulesPanelView {
     private JList modulesList;
-
-    private final IUpdateService updateService;
-    private final IModuleService moduleService;
-    private final ILanguageService languageService;
-
-    /**
-     * Construct a new ModulesPanel. 
-     */
-    public ModulesPanel(IUpdateService updateService, IModuleService moduleService, ILanguageService languageService, IFilthyUtils utils){
-        super(utils, languageService);
-
-        this.updateService = updateService;
-        this.moduleService = moduleService;
-        this.languageService = languageService;
-
-        build();
-    }
 
     @Override
     protected void buildView(I18nPanelBuilder builder) {
+	    IUpdateService updateService = getService(IUpdateService.class);
+	    ILanguageService languageService = getService(ILanguageService.class);
+	    IModuleService moduleService= getService(IModuleService.class);
+	    IRepositoryView repositoryView = getBeanFromEDT(IRepositoryView.class);
+
         builder.add(new KernelInfoPanel(languageService, updateService), 
                 builder.gbcSet(0, 0, GridBagUtils.HORIZONTAL, GridBagUtils.BASELINE_LEADING, 1.0, 0.0));
 
@@ -76,7 +64,7 @@ public final class ModulesPanel extends FilthyBuildedPanel implements IModulesPa
                 new EnableModuleAction(), new DisableModuleAction(), new UninstallModuleAction(), new UpdateModuleAction());
 
         builder.addButtonBar(builder.gbcSet(0, 3, GridBagUtils.HORIZONTAL, GridBagUtils.BASELINE_LEADING, 1.0, 0.0),
-                new InstallModuleAction(), new LoadModuleAction(), ActionFactory.createDisplayViewAction("modules.actions.repository", "repositoryView"));
+                new InstallModuleAction(), new LoadModuleAction(), ActionFactory.createDisplayViewAction("modules.actions.repository", repositoryView));
     }
 
     @Override

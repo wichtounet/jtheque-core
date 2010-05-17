@@ -1,8 +1,8 @@
 package org.jtheque.views.impl.models;
 
-import org.jtheque.events.Event;
-import org.jtheque.events.IEventService;
-import org.jtheque.i18n.ILanguageService;
+import org.jtheque.events.able.Event;
+import org.jtheque.events.able.IEventService;
+import org.jtheque.i18n.able.ILanguageService;
 
 import javax.swing.table.AbstractTableModel;
 import java.text.DateFormat;

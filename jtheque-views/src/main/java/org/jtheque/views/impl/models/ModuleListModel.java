@@ -39,7 +39,7 @@ public final class ModuleListModel extends DefaultListModel implements ModuleLis
 
         this.moduleService = moduleService;
 
-        moduleService.addModuleListener(this);
+        moduleService.addModuleListener("", this);
 
         modules = new ArrayList<Module>(moduleService.getModules());
     }

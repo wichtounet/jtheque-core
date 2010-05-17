@@ -1,7 +1,7 @@
 package org.jtheque.modules.impl;
 
 import org.jtheque.core.utils.OSGiUtils;
-import org.jtheque.i18n.ILanguageService;
+import org.jtheque.i18n.able.ILanguageService;
 import org.jtheque.modules.able.Module;
 import org.jtheque.modules.able.ModuleState;
 import org.jtheque.utils.bean.Version;

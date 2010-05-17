@@ -1,8 +1,8 @@
 package org.jtheque.file.able;
 
-import org.jtheque.io.Node;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.collections.CollectionUtils;
+import org.jtheque.xml.utils.Node;
 
 import java.util.Collection;
 import java.util.List;

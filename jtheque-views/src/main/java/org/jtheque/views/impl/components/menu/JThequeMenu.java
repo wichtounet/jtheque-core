@@ -16,8 +16,8 @@ package org.jtheque.views.impl.components.menu;
  * limitations under the License.
  */
 
-import org.jtheque.i18n.ILanguageService;
-import org.jtheque.i18n.Internationalizable;
+import org.jtheque.i18n.able.ILanguageService;
+import org.jtheque.i18n.able.Internationalizable;
 
 import javax.swing.JMenu;
 import javax.swing.plaf.basic.BasicMenuUI;

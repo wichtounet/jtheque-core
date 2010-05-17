@@ -2,15 +2,15 @@ package org.jtheque.lifecycle.application;
 
 import org.jdom.Element;
 import org.jtheque.core.utils.SystemProperty;
-import org.jtheque.core.application.Application;
+import org.jtheque.core.able.application.Application;
 import org.jtheque.core.utils.ImageDescriptor;
 import org.jtheque.core.utils.ImageType;
-import org.jtheque.io.XMLException;
-import org.jtheque.io.XMLReader;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.bean.InternationalString;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.io.FileUtils;
+import org.jtheque.xml.utils.XMLException;
+import org.jtheque.xml.utils.XMLReader;
 
 import java.io.File;
 import java.util.ArrayList;

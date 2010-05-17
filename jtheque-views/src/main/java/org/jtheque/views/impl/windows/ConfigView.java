@@ -17,10 +17,11 @@ package org.jtheque.views.impl.windows;
  */
 
 import org.jtheque.core.utils.SimplePropertiesCache;
-import org.jtheque.errors.JThequeError;
-import org.jtheque.i18n.ILanguageService;
+import org.jtheque.i18n.able.ILanguageService;
 import org.jtheque.ui.able.IModel;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
+import org.jtheque.ui.utils.components.LayerTabbedPane;
+import org.jtheque.ui.utils.constraints.Constraint;
 import org.jtheque.ui.utils.windows.dialogs.SwingFilthyBuildedDialogView;
 import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.views.able.IViews;
@@ -29,9 +30,8 @@ import org.jtheque.views.able.windows.IConfigView;
 import org.jtheque.views.impl.actions.config.ApplyChangesAction;
 import org.jtheque.views.impl.actions.config.ApplyChangesAndCloseAction;
 import org.jtheque.views.impl.actions.config.CancelChangesAction;
-import org.jtheque.views.impl.components.LayerTabbedPane;
 
-import java.util.Collection;
+import java.util.Map;
 
 /**
  * A view for the configuration.
@@ -55,12 +55,16 @@ public final class ConfigView extends SwingFilthyBuildedDialogView<IModel> imple
 
         for (ConfigTabComponent component : getService(IViews.class).getConfigTabComponents()) {
             tab.addLayeredTab(languageService.getMessage(component.getTitleKey()), component.getComponent());
+
+	        for(Map.Entry<Object, Constraint> constraint : component.getConstraints().entrySet()){
+				addConstraint(constraint.getKey(), constraint.getValue());
+	        }
         }
 
         builder.add(tab, builder.gbcSet(0, 0, GridBagUtils.BOTH));
 
         builder.addButtonBar(builder.gbcSet(0, 1, GridBagUtils.HORIZONTAL),
-                new ApplyChangesAndCloseAction(), new ApplyChangesAction(), new CancelChangesAction());
+                new ApplyChangesAndCloseAction(this), new ApplyChangesAction(this), new CancelChangesAction(this));
 
         SimplePropertiesCache.put("config-view-loaded", "true");
     }
@@ -81,10 +85,5 @@ public final class ConfigView extends SwingFilthyBuildedDialogView<IModel> imple
 
             tab.removeTabAt(tab.indexOfTab(getService(ILanguageService.class).getMessage(component.getTitleKey())));
         }
-    }
-
-    @Override
-    protected void validate(Collection<JThequeError> errors){
-        getSelectedPanelConfig().validate(errors);
     }
 }

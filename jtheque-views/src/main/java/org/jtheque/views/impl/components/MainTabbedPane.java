@@ -1,11 +1,12 @@
 package org.jtheque.views.impl.components;
 
-import org.jtheque.i18n.ILanguageService;
+import org.jtheque.i18n.able.ILanguageService;
 import org.jtheque.ui.utils.components.TabTitleUpdater;
 import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.ui.SwingUtils;
 import org.jtheque.views.able.IViews;
 import org.jtheque.views.able.components.MainComponent;
+import org.jtheque.ui.utils.components.LayerTabbedPane;
 
 import javax.annotation.PostConstruct;
 import javax.swing.JComponent;
@@ -63,9 +64,9 @@ public final class MainTabbedPane extends LayerTabbedPane {
         Map<JComponent, String> cs = new HashMap<JComponent, String>(components.size());
 
         for (MainComponent component : components) {
-            addLayeredTab(languageService.getMessage(component.getTitleKey()), component.getComponent());
+            addLayeredTab(languageService.getMessage(component.getTitleKey()), component.getImpl());
 
-            cs.put(component.getComponent(), component.getTitleKey());
+            cs.put(component.getImpl(), component.getTitleKey());
         }
 
         languageService.addInternationalizable(new TabTitleUpdater(this, cs));
@@ -79,7 +80,7 @@ public final class MainTabbedPane extends LayerTabbedPane {
         Collections.sort(components, new PositionComparator());
 
         for (MainComponent component : components) {
-            addLayeredTab(languageService.getMessage(component.getTitleKey()), component.getComponent());
+            addLayeredTab(languageService.getMessage(component.getTitleKey()), component.getImpl());
         }
 
         SwingUtils.refresh(this);

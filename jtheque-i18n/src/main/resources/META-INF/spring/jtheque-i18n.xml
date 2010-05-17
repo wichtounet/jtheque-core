@@ -13,11 +13,11 @@
 
     <context:annotation-config/>
 
-    <bean id="languageService" class="org.jtheque.i18n.LanguageService" >
+    <bean id="languageService" class="org.jtheque.i18n.impl.LanguageService" >
         <constructor-arg ref="stateService"/>
     </bean>
 
-    <osgi:service ref="languageService" interface="org.jtheque.i18n.ILanguageService"/>
+    <osgi:service ref="languageService" interface="org.jtheque.i18n.able.ILanguageService"/>
 
-    <osgi:reference id="stateService" interface="org.jtheque.states.IStateService" />
+    <osgi:reference id="stateService" interface="org.jtheque.states.able.IStateService" />
 </beans>

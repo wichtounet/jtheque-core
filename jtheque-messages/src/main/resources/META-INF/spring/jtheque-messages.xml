@@ -8,8 +8,8 @@
             http://www.springframework.org/schema/osgi
             http://www.springframework.org/schema/osgi/spring-osgi.xsd">
 
-    <bean id="featureService" class="org.jtheque.messages.MessageService" />
+    <bean id="featureService" class="org.jtheque.messages.impl.MessageService" />
 
-    <osgi:service ref="featureService" interface="org.jtheque.messages.IMessageService"/>
+    <osgi:service ref="featureService" interface="org.jtheque.messages.able.IMessageService"/>
 
 </beans>

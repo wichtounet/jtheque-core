@@ -16,12 +16,12 @@ package org.jtheque.views.impl.components.panel;
  * limitations under the License.
  */
 
-import org.jtheque.core.ICore;
-import org.jtheque.i18n.ILanguageService;
+import org.jtheque.core.able.ICore;
+import org.jtheque.i18n.able.ILanguageService;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.ui.utils.builders.PanelBuilder;
-import org.jtheque.ui.utils.filthy.BuildedPanel;
-import org.jtheque.update.IUpdateService;
+import org.jtheque.ui.utils.builded.BuildedPanel;
+import org.jtheque.update.able.IUpdateService;
 import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.views.impl.actions.module.UpdateKernelAction;
 

@@ -16,6 +16,8 @@ package org.jtheque.modules.impl;
  * limitations under the License.
  */
 
+import org.jtheque.modules.able.IModuleDescription;
+import org.jtheque.modules.able.IRepository;
 import org.jtheque.utils.bean.InternationalString;
 
 import java.util.ArrayList;
@@ -26,19 +28,10 @@ import java.util.Collection;
  *
  * @author Baptiste Wicht
  */
-public final class Repository {
+public final class Repository implements IRepository {
     private InternationalString title;
     private String application;
-    private final Collection<ModuleDescription> modules = new ArrayList<ModuleDescription>(10);
-
-    /**
-     * Return the title of the repository.
-     *
-     * @return The title of the repository.
-     */
-    public InternationalString getTitle() {
-        return title;
-    }
+    private final Collection<IModuleDescription> modules = new ArrayList<IModuleDescription>(10);
 
     /**
      * Set the title of the repository.
@@ -50,15 +43,6 @@ public final class Repository {
     }
 
     /**
-     * Return the application name.
-     *
-     * @return The application name.
-     */
-    public String getApplication() {
-        return application;
-    }
-
-    /**
      * Set the application name.
      *
      * @param application The application name.
@@ -67,13 +51,19 @@ public final class Repository {
         this.application = application;
     }
 
-    /**
-     * Return all the modules of the repository.
-     *
-     * @return A List containing the description of the modules.
-     */
-    public Collection<ModuleDescription> getModules() {
+    @Override
+    public String getApplication() {
+        return application;
+    }
+
+    @Override
+    public Collection<IModuleDescription> getModules() {
         return modules;
+    }
+
+    @Override
+    public InternationalString getTitle() {
+        return title;
     }
 
     @Override

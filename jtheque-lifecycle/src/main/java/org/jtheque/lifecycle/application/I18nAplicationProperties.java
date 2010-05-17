@@ -1,7 +1,7 @@
 package org.jtheque.lifecycle.application;
 
 import org.jtheque.core.utils.SystemProperty;
-import org.jtheque.core.application.ApplicationProperties;
+import org.jtheque.core.able.application.ApplicationProperties;
 import org.jtheque.utils.collections.ArrayUtils;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 

@@ -30,7 +30,7 @@ public interface MainComponent {
      *
      * @return The component.
      */
-    JComponent getComponent();
+    JComponent getImpl();
 
     /**
      * Return the position of the tab component. This method is not used if there is only one main component.

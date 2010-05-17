@@ -16,42 +16,31 @@ package org.jtheque.views.impl.components.config;
  * limitations under the License.
  */
 
-import org.jtheque.core.CoreConfiguration;
-import org.jtheque.core.ICore;
-import org.jtheque.errors.JThequeError;
-import org.jtheque.i18n.ILanguageService;
+import org.jtheque.core.able.ICore;
+import org.jtheque.core.able.ICoreConfiguration;
+import org.jtheque.ui.utils.builded.OSGIFilthyBuildedPanel;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
-import org.jtheque.ui.utils.filthy.FilthyBuildedPanel;
-import org.jtheque.ui.utils.filthy.IFilthyUtils;
+import org.jtheque.ui.utils.constraints.Constraint;
+import org.jtheque.ui.utils.filthy.FilthyTextField;
 import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.views.able.components.ConfigTabComponent;
 import org.jtheque.views.able.config.IOthersConfigView;
-import org.jtheque.views.impl.filthy.FilthyTextField;
 
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
-import java.util.Collection;
+import java.util.Collections;
+import java.util.Map;
 
 /**
  * Configuration panel for the others options.
  *
  * @author Baptiste Wicht
  */
-public final class JPanelConfigOthers extends FilthyBuildedPanel implements IOthersConfigView, ConfigTabComponent {
+public final class JPanelConfigOthers extends OSGIFilthyBuildedPanel implements IOthersConfigView, ConfigTabComponent {
     private JCheckBox boxDeleteLogs;
     private JCheckBox checkBoxStart;
     private FilthyTextField fieldEmail;
     private FilthyTextField fieldSmtpHost;
-
-    private final ICore core;
-
-    public JPanelConfigOthers(IFilthyUtils filthyUtils, ILanguageService languageService, ICore core) {
-        super(filthyUtils, languageService);
-
-        this.core = core;
-
-        build();
-    }
 
     @Override
     protected void buildView(I18nPanelBuilder builder) {
@@ -103,7 +92,7 @@ public final class JPanelConfigOthers extends FilthyBuildedPanel implements IOth
      * Fill all the fields with the current informations.
      */
     private void fillAllFields() {
-        CoreConfiguration config = core.getConfiguration();
+        ICoreConfiguration config = getService(ICore.class).getConfiguration();
 
         checkBoxStart.setSelected(config.verifyUpdateOnStartup());
         boxDeleteLogs.setSelected(config.mustDeleteLogs());
@@ -113,7 +102,7 @@ public final class JPanelConfigOthers extends FilthyBuildedPanel implements IOth
 
     @Override
     public void apply() {
-        CoreConfiguration config = core.getConfiguration();
+        ICoreConfiguration config = getService(ICore.class).getConfiguration();
 
         config.setVerifyUpdateOnStartup(checkBoxStart.isSelected());
         config.setMustDeleteLogs(boxDeleteLogs.isSelected());
@@ -131,12 +120,12 @@ public final class JPanelConfigOthers extends FilthyBuildedPanel implements IOth
         return boxDeleteLogs;
     }
 
-    @Override
-    public void validate(Collection<JThequeError> errors) {
-        //Nothing to validate in the view
-    }
+	@Override
+	public Map<Object, Constraint> getConstraints() {
+		return Collections.emptyMap();
+	}
 
-    @Override
+	@Override
     public JComponent getComponent() {
         return this;
     }

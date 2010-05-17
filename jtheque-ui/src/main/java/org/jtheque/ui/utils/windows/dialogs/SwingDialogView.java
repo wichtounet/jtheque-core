@@ -16,26 +16,31 @@ package org.jtheque.ui.utils.windows.dialogs;
  * limitations under the License.
  */
 
-import org.jtheque.core.ICore;
+import org.jtheque.core.able.ICore;
 import org.jtheque.core.utils.OSGiUtils;
 import org.jtheque.core.utils.SimplePropertiesCache;
-import org.jtheque.errors.IErrorService;
-import org.jtheque.errors.JThequeError;
-import org.jtheque.i18n.ILanguageService;
-import org.jtheque.i18n.Internationalizable;
-import org.jtheque.i18n.InternationalizableContainer;
-import org.jtheque.resources.IResourceService;
+import org.jtheque.errors.able.IError;
+import org.jtheque.errors.able.IErrorService;
+import org.jtheque.i18n.able.ILanguageService;
+import org.jtheque.i18n.able.Internationalizable;
+import org.jtheque.i18n.able.InternationalizableContainer;
+import org.jtheque.resources.able.IResourceService;
+import org.jtheque.spring.utils.SwingSpringProxy;
 import org.jtheque.ui.able.IModel;
 import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.ui.able.IWindowView;
 import org.jtheque.ui.able.WaitFigure;
 import org.jtheque.ui.utils.actions.ActionFactory;
+import org.jtheque.ui.utils.constraints.Constraint;
 import org.jtheque.ui.utils.windows.ExtendedGlassPane;
 import org.jtheque.ui.utils.windows.InfiniteWaitFigure;
 import org.jtheque.utils.collections.ArrayUtils;
 import org.osgi.framework.BundleContext;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.osgi.context.BundleContextAware;
 
+import javax.annotation.PostConstruct;
 import javax.swing.Action;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -44,17 +49,20 @@ import java.awt.Frame;
 import java.awt.Image;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A swing dialog view.
  *
  * @author Baptiste Wicht
  */
-public abstract class SwingDialogView extends JDialog implements IWindowView, InternationalizableContainer, BundleContextAware {
+public abstract class SwingDialogView<T extends IModel> extends JDialog
+		implements IWindowView, InternationalizableContainer, BundleContextAware, ApplicationContextAware {
     private String titleKey;
     private Object[] titleReplaces;
 
-    private IModel model;
+    private T model;
 
     private boolean glassPaneInstalled;
     private boolean waitFigureInstalled;
@@ -64,14 +72,18 @@ public abstract class SwingDialogView extends JDialog implements IWindowView, In
     private BundleContext bundleContext;
 
     private boolean builded;
+	private ApplicationContext applicationContext;
 
-    /**
+	private final Map<Object, Constraint> constraintCache = new HashMap<Object, Constraint>(5);
+
+	/**
      * Construct a SwingDialogView modal to the main view.
      */
     protected SwingDialogView(){
         super(SimplePropertiesCache.<Frame>get("mainView"));
     }
 
+	@PostConstruct
     protected final void build(){
         setModal(true);
         setResizable(true);
@@ -238,12 +250,12 @@ public abstract class SwingDialogView extends JDialog implements IWindowView, In
      *
      * @param model The model of the view.
      */
-    public void setModel(IModel model) {
+    public void setModel(T model) {
         this.model = model;
     }
 
     @Override
-    public IModel getModel() {
+    public T getModel() {
         return model;
     }
 
@@ -254,13 +266,13 @@ public abstract class SwingDialogView extends JDialog implements IWindowView, In
 
     @Override
     public final boolean validateContent() {
-        Collection<JThequeError> errors = new ArrayList<JThequeError>(5);
+        Collection<IError> errors = new ArrayList<IError>(5);
 
         validate(errors);
 
         IErrorService errorService = getService(IErrorService.class);
 
-        for (JThequeError error : errors) {
+        for (IError error : errors) {
             errorService.addError(error);
         }
 
@@ -293,9 +305,19 @@ public abstract class SwingDialogView extends JDialog implements IWindowView, In
      *
      * @param errors The error's list.
      */
-    protected abstract void validate(Collection<JThequeError> errors);
+    protected void validate(Collection<IError> errors){
+	    for(Map.Entry<Object, Constraint> constraint : constraintCache.entrySet()){
+		    constraint.getValue().validate(constraint.getKey(), errors);
+	    }
+    }
 
-    /**
+	protected void addConstraint(Object field, Constraint constraint){
+		constraintCache.put(field, constraint);
+
+		constraint.configure(field);
+	}
+
+	/**
      * Install the glass pane of the view if necessary.
      */
     private void installGlassPaneIfNecessary() {
@@ -310,12 +332,21 @@ public abstract class SwingDialogView extends JDialog implements IWindowView, In
         this.bundleContext = bundleContext;
     }
 
-    BundleContext getBundleContext() {
-        return bundleContext;
+	@Override
+	public void setApplicationContext(ApplicationContext applicationContext){
+		this.applicationContext = applicationContext;
+	}
+
+	protected <T> T getService(Class<T> classz){
+        return OSGiUtils.getService(bundleContext, classz);
     }
 
-    protected <T> T getService(Class<T> classz){
-        return OSGiUtils.getService(bundleContext, classz);
+	protected <T> T getBean(Class<T> classz){
+        return applicationContext.getBean(classz);
+    }
+
+	protected <T> T getBeanFromEDT(Class<T> classz){
+        return new SwingSpringProxy<T>(classz, applicationContext).get();
     }
 
     /**

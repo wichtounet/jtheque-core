@@ -1,9 +1,9 @@
 package org.jtheque.views.impl.windows;
 
 import org.jdesktop.swingx.JXTable;
-import org.jtheque.events.Event;
-import org.jtheque.events.IEventService;
-import org.jtheque.i18n.ILanguageService;
+import org.jtheque.events.able.Event;
+import org.jtheque.events.able.IEventService;
+import org.jtheque.i18n.able.ILanguageService;
 import org.jtheque.ui.able.IModel;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.ui.utils.builders.PanelBuilder;
@@ -11,7 +11,7 @@ import org.jtheque.ui.utils.windows.dialogs.SwingFilthyBuildedDialogView;
 import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.views.able.windows.IEventView;
 import org.jtheque.views.impl.actions.event.UpdateAction;
-import org.jtheque.views.impl.filthy.FilthyRenderer;
+import org.jtheque.ui.utils.filthy.FilthyRenderer;
 import org.jtheque.views.impl.models.EventLogComboBoxModel;
 import org.jtheque.views.impl.models.EventsTableModel;
 

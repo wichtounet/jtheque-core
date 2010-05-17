@@ -16,14 +16,13 @@ package org.jtheque.views.impl.components.panel;
  * limitations under the License.
  */
 
-import org.jtheque.i18n.ILanguageService;
+import org.jtheque.i18n.able.ILanguageService;
+import org.jtheque.modules.able.IModuleDescription;
 import org.jtheque.modules.able.IModuleService;
-import org.jtheque.modules.impl.ModuleDescription;
 import org.jtheque.ui.utils.components.Borders;
 import org.jtheque.ui.utils.builders.FilthyPanelBuilder;
 import org.jtheque.ui.utils.builders.PanelBuilder;
-import org.jtheque.update.versions.VersionsFile;
-import org.jtheque.update.versions.VersionsFileReader;
+import org.jtheque.update.able.IUpdateService;
 import org.jtheque.utils.ui.GridBagUtils;
 
 import javax.annotation.Resource;
@@ -42,7 +41,7 @@ public final class ModulePanel extends JPanel {
     private final JLabel onlineLabel;
     private final JLabel currentLabel;
 
-    private final ModuleDescription module;
+    private final IModuleDescription module;
 
     //Keeps fonts to quickly switch them
     private Font fontTitle;
@@ -58,6 +57,9 @@ public final class ModulePanel extends JPanel {
     @Resource
     private ILanguageService languageService;
 
+    @Resource
+    private IUpdateService updateService;
+
     /**
      * Construct a new ModulePanel.
      *
@@ -70,7 +72,7 @@ public final class ModulePanel extends JPanel {
         PanelBuilder builder = new FilthyPanelBuilder(this);
         builder.setBorder(Borders.createEmptyBorder(2, 2, 2, 10));
 
-        module = (ModuleDescription) value;
+        module = (IModuleDescription) value;
 
         labelName = builder.addLabel(module.getName(),
                 PanelBuilder.NORMAL, TITLE_FONT_SIZE, builder.gbcSet(0, 0, GridBagUtils.HORIZONTAL, GridBagUtils.BASELINE_LEADING, 0, 1, 1.0, 1.0));
@@ -116,11 +118,9 @@ public final class ModulePanel extends JPanel {
      * Expand the version.
      */
     public void expand() {
-        VersionsFile file = new VersionsFileReader().readURL(module.getVersionsFileURL());
-
         onlineLabel.setText(languageService.getMessage(
                 "repository.module.online",
-                file.getMostRecentVersion().getStringVersion()));
+                updateService.getMostRecentVersion(module).toString()));
 
         if (moduleService.isInstalled(module.getId())) {
             currentLabel.setText(languageService.getMessage(

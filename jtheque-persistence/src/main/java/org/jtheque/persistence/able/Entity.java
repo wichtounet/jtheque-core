@@ -1,7 +1,5 @@
 package org.jtheque.persistence.able;
 
-import org.jtheque.persistence.context.TemporaryContext;
-
 /*
  * Copyright JTheque (Baptiste Wicht)
  *
@@ -29,7 +27,7 @@ public interface Entity extends Comparable<Entity> {
      *
      * @return The temporary context of the data.
      */
-    TemporaryContext getTemporaryContext();
+    ITemporaryContext getTemporaryContext();
 
     /**
      * Return the id of this Entity.

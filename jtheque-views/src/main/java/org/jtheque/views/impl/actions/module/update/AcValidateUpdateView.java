@@ -17,7 +17,7 @@ package org.jtheque.views.impl.actions.module.update;
  */
 
 import org.jtheque.ui.utils.actions.JThequeAction;
-import org.jtheque.update.IUpdateService;
+import org.jtheque.update.able.IUpdateService;
 import org.jtheque.utils.ui.SwingUtils;
 import org.jtheque.utils.ui.edt.SimpleTask;
 import org.jtheque.views.able.windows.IUpdateView;

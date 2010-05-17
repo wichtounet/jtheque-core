@@ -87,7 +87,7 @@
                 <configuration>
                     <instructions>
                         <Bundle-SymbolicName>${pom.artifactId}</Bundle-SymbolicName>
-                        <Export-Package>org.jtheque.i18n</Export-Package>
+                        <Export-Package>org.jtheque.i18n.able, org.jtheque.i18n.utils</Export-Package>
                         <Bundle-Vendor>Baptiste Wicht</Bundle-Vendor>
                         <Spring-Context>*;create-asynchronously:=false;publish-context:=false</Spring-Context>
                     </instructions>

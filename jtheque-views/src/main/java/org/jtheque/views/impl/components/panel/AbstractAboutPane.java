@@ -1,8 +1,8 @@
 package org.jtheque.views.impl.components.panel;
 
 import org.jdesktop.swingx.JXPanel;
-import org.jtheque.core.ICore;
-import org.jtheque.i18n.ILanguageService;
+import org.jtheque.core.able.ICore;
+import org.jtheque.i18n.able.ILanguageService;
 import org.pushingpixels.trident.Timeline;
 
 import java.util.ArrayList;

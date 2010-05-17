@@ -28,14 +28,15 @@ import java.awt.event.ActionEvent;
  * @author Baptiste Wicht
  */
 public final class ApplyChangesAction extends JThequeAction {
-    @Resource
-    private IConfigView configView;
+    private final IConfigView configView;
 
     /**
      * Construct a new AcApplyChanges.
+     * @param configView
      */
-    public ApplyChangesAction() {
+    public ApplyChangesAction(IConfigView configView) {
         super("config.actions.apply");
+	    this.configView = configView;
     }
 
     @Override

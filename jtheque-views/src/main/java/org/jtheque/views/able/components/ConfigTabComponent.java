@@ -16,10 +16,10 @@ package org.jtheque.views.able.components;
  * limitations under the License.
  */
 
-import org.jtheque.errors.JThequeError;
+import org.jtheque.ui.utils.constraints.Constraint;
 
 import javax.swing.JComponent;
-import java.util.Collection;
+import java.util.Map;
 
 /**
  * A config panel.
@@ -45,16 +45,11 @@ public interface ConfigTabComponent {
     void cancel();
 
     /**
-     * Validate the tab component.
-     *
-     * @param errors The error's list.
-     */
-    void validate(Collection<JThequeError> errors);
-
-    /**
      * Return the implementation of the config tab.
      *
      * @return The implementation of the config tab.
      */
     JComponent getComponent();
+
+	Map<Object, Constraint> getConstraints();
 }

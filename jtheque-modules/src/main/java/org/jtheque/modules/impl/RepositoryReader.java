@@ -17,13 +17,14 @@ package org.jtheque.modules.impl;
  */
 
 import org.jdom.Element;
-import org.jtheque.core.ICore;
-import org.jtheque.io.XMLException;
-import org.jtheque.io.XMLReader;
+import org.jtheque.core.able.ICore;
+import org.jtheque.modules.able.IRepository;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.bean.InternationalString;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.io.FileUtils;
+import org.jtheque.xml.utils.XMLException;
+import org.jtheque.xml.utils.XMLReader;
 import org.slf4j.LoggerFactory;
 
 /**
@@ -51,7 +52,7 @@ public final class RepositoryReader {
      * @param strUrl The URL of the repository file.
      * @return The repository.
      */
-    public Repository read(String strUrl) {
+    public IRepository read(String strUrl) {
         try {
             reader.openURL(strUrl);
 

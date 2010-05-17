@@ -2,8 +2,8 @@ package org.jtheque.ui.utils.builders;
 
 import org.jdesktop.swingx.JXTable;
 import org.jdesktop.swingx.JXTree;
-import org.jtheque.i18n.Internationalizable;
-import org.jtheque.i18n.InternationalizableContainer;
+import org.jtheque.i18n.able.Internationalizable;
+import org.jtheque.i18n.able.InternationalizableContainer;
 import org.jtheque.ui.utils.components.Borders;
 import org.jtheque.utils.ui.ButtonBarBuilder;
 import org.jtheque.utils.ui.GridBagUtils;

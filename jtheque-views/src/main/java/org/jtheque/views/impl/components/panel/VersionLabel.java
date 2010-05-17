@@ -16,7 +16,7 @@ package org.jtheque.views.impl.components.panel;
  * limitations under the License.
  */
 
-import org.jtheque.update.IUpdateService;
+import org.jtheque.update.able.IUpdateService;
 
 import javax.swing.JLabel;
 import java.awt.Color;

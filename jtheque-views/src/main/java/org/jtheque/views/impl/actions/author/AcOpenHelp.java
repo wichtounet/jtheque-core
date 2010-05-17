@@ -16,10 +16,9 @@ package org.jtheque.views.impl.actions.author;
  * limitations under the License.
  */
 
-import org.jtheque.core.ICore;
+import org.jtheque.core.able.ICore;
 import org.jtheque.ui.utils.actions.AbstractBrowseAction;
 
-import javax.swing.Action;
 import javax.swing.KeyStroke;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;

@@ -16,7 +16,7 @@ package org.jtheque.views.impl.actions.undo;
  * limitations under the License.
  */
 
-import org.jtheque.undo.IUndoRedoService;
+import org.jtheque.undo.able.IUndoRedoService;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;

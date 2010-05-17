@@ -8,10 +8,10 @@
             http://www.springframework.org/schema/osgi
             http://www.springframework.org/schema/osgi/spring-osgi.xsd">
 
-    <bean id="errorManager" class="org.jtheque.errors.ErrorService">
-        <constructor-arg><osgi:reference interface="org.jtheque.i18n.ILanguageService" /></constructor-arg>
+    <bean id="errorManager" class="org.jtheque.errors.impl.ErrorService">
+        <constructor-arg><osgi:reference interface="org.jtheque.i18n.able.ILanguageService" /></constructor-arg>
     </bean>
 
-    <osgi:service id="errorManagerService" ref="errorManager" interface="org.jtheque.errors.IErrorService"/>
+    <osgi:service id="errorManagerService" ref="errorManager" interface="org.jtheque.errors.able.IErrorService"/>
 
 </beans>

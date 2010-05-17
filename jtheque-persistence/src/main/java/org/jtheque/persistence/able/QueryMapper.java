@@ -1,6 +1,6 @@
 package org.jtheque.persistence.able;
 
-import org.jtheque.persistence.Query;
+import org.jtheque.persistence.utils.Query;
 
 /*
  * Copyright JTheque (Baptiste Wicht)

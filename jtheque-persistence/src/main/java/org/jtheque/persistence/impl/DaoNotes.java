@@ -1,9 +1,9 @@
 package org.jtheque.persistence.impl;
 
-import org.jtheque.i18n.ILanguageService;
+import org.jtheque.i18n.able.ILanguageService;
 import org.jtheque.persistence.able.IDaoNotes;
 import org.jtheque.persistence.able.Note;
-import org.jtheque.resources.IResourceService;
+import org.jtheque.resources.able.IResourceService;
 import org.springframework.core.io.ClassPathResource;
 
 import java.awt.Image;

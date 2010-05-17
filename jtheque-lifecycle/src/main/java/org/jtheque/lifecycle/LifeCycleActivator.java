@@ -2,21 +2,21 @@ package org.jtheque.lifecycle;
 
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.Logger;
-import org.jtheque.collections.CollectionListener;
-import org.jtheque.collections.ICollectionsService;
-import org.jtheque.core.ICore;
+import org.jtheque.collections.able.CollectionListener;
+import org.jtheque.collections.able.ICollectionsService;
+import org.jtheque.core.able.ICore;
 import org.jtheque.core.utils.SystemProperty;
-import org.jtheque.core.application.Application;
+import org.jtheque.core.able.application.Application;
 import org.jtheque.core.utils.OSGiUtils;
-import org.jtheque.errors.IErrorService;
-import org.jtheque.events.EventLevel;
-import org.jtheque.events.Event;
-import org.jtheque.events.IEventService;
+import org.jtheque.errors.able.IErrorService;
+import org.jtheque.events.able.Event;
+import org.jtheque.events.able.EventLevel;
+import org.jtheque.events.able.IEventService;
 import org.jtheque.lifecycle.application.XMLApplicationReader;
-import org.jtheque.messages.IMessageService;
+import org.jtheque.messages.able.IMessageService;
 import org.jtheque.modules.able.IModuleService;
 import org.jtheque.ui.able.IUIUtils;
-import org.jtheque.update.IUpdateService;
+import org.jtheque.update.able.IUpdateService;
 import org.jtheque.utils.ui.SwingUtils;
 import org.jtheque.views.able.ISplashService;
 import org.jtheque.views.able.IViewService;
@@ -108,7 +108,7 @@ public class LifeCycleActivator implements BundleActivator, CollectionListener {
     }
 
     private void startSecondPhase() {
-        OSGiUtils.getService(context, IModuleService.class).plugModules();
+        getService(IModuleService.class).plugModules();
 
         getService(ICore.class).getLifeCycle().initTitle();
 

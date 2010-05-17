@@ -27,7 +27,5 @@ public final class JThequeNamespaceHandler extends NamespaceHandlerSupport {
         registerBeanDefinitionParser("proxy", new ProxyBeanDefinitionParser());
         registerBeanDefinitionParser("color", new ColorBeanDefinitionParser());
         registerBeanDefinitionParser("point", new PointBeanDefinitionParser());
-        registerBeanDefinitionParser("close", new JThequeActionBeanDefinitionParser("close"));
-        registerBeanDefinitionParser("display", new JThequeActionBeanDefinitionParser("display"));
     }
 }

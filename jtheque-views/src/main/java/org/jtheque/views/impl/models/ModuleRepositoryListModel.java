@@ -17,7 +17,7 @@ package org.jtheque.views.impl.models;
  */
 
 import org.jtheque.modules.able.IModuleService;
-import org.jtheque.modules.impl.ModuleDescription;
+import org.jtheque.modules.able.IModuleDescription;
 import org.jtheque.utils.collections.CollectionUtils;
 
 import javax.swing.DefaultListModel;
@@ -29,7 +29,7 @@ import java.util.List;
  * @author Baptiste Wicht
  */
 public final class ModuleRepositoryListModel extends DefaultListModel {
-    private final List<ModuleDescription> modules;
+    private final List<IModuleDescription> modules;
 
     /**
      * Construct a new ModuleListModel.

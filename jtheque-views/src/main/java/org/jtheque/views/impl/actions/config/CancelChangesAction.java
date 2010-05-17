@@ -28,14 +28,16 @@ import java.awt.event.ActionEvent;
  * @author Baptiste Wicht
  */
 public final class CancelChangesAction extends JThequeAction {
-    @Resource
-    private IConfigView configView;
+    private final IConfigView configView;
 
     /**
      * Construct a new AcCancelChanges.
+     * @param configView
      */
-    public CancelChangesAction() {
+    public CancelChangesAction(IConfigView configView) {
         super("config.actions.cancel");
+
+	    this.configView = configView;
     }
 
     @Override

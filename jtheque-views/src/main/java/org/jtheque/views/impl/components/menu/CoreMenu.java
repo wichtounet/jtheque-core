@@ -1,8 +1,9 @@
 package org.jtheque.views.impl.components.menu;
 
-import org.jtheque.core.ICore;
-import org.jtheque.features.Feature;
-import org.jtheque.undo.IUndoRedoService;
+import org.jtheque.core.able.ICore;
+import org.jtheque.features.able.Feature;
+import org.jtheque.views.utils.OSGIMenu;
+import org.jtheque.undo.able.IUndoRedoService;
 import org.jtheque.views.able.IViewService;
 import org.jtheque.views.able.IViews;
 import org.jtheque.views.impl.ViewsResources;
@@ -43,32 +44,20 @@ import java.util.List;
  *
  * @author Baptiste Wicht
  */
-public final class CoreMenu extends AbstractMenu {
-    private final ICore core;
-    private final IUndoRedoService undoRedoService;
-    private final IViews views;
-    private final IViewService viewService;
-
-    public CoreMenu(ICore core, IUndoRedoService undoRedoService, IViews views, IViewService viewService) {
-        super();
-
-        this.core = core;
-        this.undoRedoService = undoRedoService;
-        this.views = views;
-        this.viewService = viewService;
-    }
-
+public final class CoreMenu extends OSGIMenu {
     @Override
     protected List<Feature> getFileMenuSubFeatures(){
         return features(
                 createSeparatedSubFeature(200, new AcBackup(), ViewsResources.XML_ICON),
                 createSubFeature(201, new AcRestore(), ViewsResources.XML_ICON),
-                createSeparatedSubFeature(1000, new ExitAction(core), ViewsResources.EXIT_ICON)
+                createSeparatedSubFeature(1000, new ExitAction(getService(ICore.class)), ViewsResources.EXIT_ICON)
         );
     }
 
     @Override
     protected List<Feature> getEditMenuSubFeatures(){
+	    IUndoRedoService undoRedoService = getService(IUndoRedoService.class);
+
         return features(
                 createSubFeature(1, new UndoAction(undoRedoService), ViewsResources.UNDO_ICON),
                 createSubFeature(2, new RedoAction(undoRedoService), ViewsResources.REDO_ICON)
@@ -77,6 +66,8 @@ public final class CoreMenu extends AbstractMenu {
 
     @Override
     protected List<Feature> getAdvancedMenuSubFeatures(){
+	    IViews views = getService(IViews.class);
+
         return features(
                 createSeparatedSubFeature(500, new DisplayConfigViewAction(views), ViewsResources.OPTIONS_ICON),
                 createSeparatedSubFeature(750, new DisplayModuleViewAction(views), ViewsResources.UPDATE_ICON)
@@ -85,6 +76,10 @@ public final class CoreMenu extends AbstractMenu {
 
     @Override
     protected List<Feature> getHelpMenuSubFeatures(){
+	    IViews views = getService(IViews.class);
+	    ICore core = getService(ICore.class);
+	    IViewService viewService = getService(IViewService.class);
+
         return features(
                 createSeparatedSubFeature(1, new AcOpenHelp(), ViewsResources.HELP_ICON),
                 createSeparatedSubFeature(2, new AcInformOfABug(), ViewsResources.MAIL_ICON),

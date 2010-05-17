@@ -1,6 +1,6 @@
 package org.jtheque.views.impl.actions.author;
 
-import org.jtheque.core.ICore;
+import org.jtheque.core.able.ICore;
 import org.jtheque.ui.utils.actions.AbstractBrowseAction;
 
 /*

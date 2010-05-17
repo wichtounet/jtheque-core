@@ -16,14 +16,14 @@ package org.jtheque.modules.impl;
  * limitations under the License.
  */
 
-import org.jtheque.io.Node;
 import org.jtheque.modules.able.Module;
 import org.jtheque.modules.able.ModuleState;
-import org.jtheque.states.AbstractState;
-import org.jtheque.states.Load;
-import org.jtheque.states.Save;
-import org.jtheque.states.State;
+import org.jtheque.states.utils.AbstractState;
+import org.jtheque.states.able.Load;
+import org.jtheque.states.able.Save;
+import org.jtheque.states.able.State;
 import org.jtheque.utils.StringUtils;
+import org.jtheque.xml.utils.Node;
 
 import java.util.ArrayList;
 import java.util.Collection;

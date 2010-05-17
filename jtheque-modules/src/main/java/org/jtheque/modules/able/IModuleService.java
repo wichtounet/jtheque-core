@@ -16,9 +16,6 @@ package org.jtheque.modules.able;
  * limitations under the License.
  */
 
-import org.jtheque.modules.impl.ModuleDescription;
-import org.jtheque.modules.impl.Repository;
-
 import java.io.File;
 import java.util.Collection;
 
@@ -41,28 +38,21 @@ public interface IModuleService {
      *
      * @param listener The listener to add.
      */
-    void addModuleListener(ModuleListener listener);
-
-    /**
-     * Remove a module listener.
-     *
-     * @param listener The listener to remove.
-     */
-    void removeModuleListener(ModuleListener listener);
+    void addModuleListener(String moduleId, ModuleListener listener);
 
     /**
      * Return all the modules of the application repository.
      *
      * @return all the modules of the application repository.
      */
-    Collection<ModuleDescription> getModulesFromRepository();
+    Collection<IModuleDescription> getModulesFromRepository();
 
     /**
      * Return the repository of the application.
      *
      * @return The Repository.
      */
-    Repository getRepository();
+    IRepository getRepository();
 
     /**
      * Test if the module is installed.

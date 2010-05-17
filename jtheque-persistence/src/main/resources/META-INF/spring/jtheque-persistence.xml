@@ -8,17 +8,14 @@
             http://www.springframework.org/schema/osgi
             http://www.springframework.org/schema/osgi/spring-osgi.xsd">
 
-    <bean id="persistenceManager" class="org.jtheque.persistence.PersistenceService" />
+    <bean id="persistenceManager" class="org.jtheque.persistence.impl.PersistenceService" />
 
     <bean id="daoNotes" class="org.jtheque.persistence.impl.DaoNotes">
-        <constructor-arg><osgi:reference interface="org.jtheque.resources.IResourceService"/></constructor-arg>
-        <constructor-arg><osgi:reference interface="org.jtheque.i18n.ILanguageService"/></constructor-arg>
+        <constructor-arg><osgi:reference interface="org.jtheque.resources.able.IResourceService"/></constructor-arg>
+        <constructor-arg><osgi:reference interface="org.jtheque.i18n.able.ILanguageService"/></constructor-arg>
     </bean>
 
-    <osgi:service ref="persistenceManager" interface="org.jtheque.persistence.able.IPersistenceService"/>
-    <osgi:service ref="daoNotes" interface="org.jtheque.persistence.able.IDaoNotes"/>
-
-    <bean class="org.jtheque.persistence.DataContainerPostProcessor" />
+    <bean class="org.jtheque.persistence.impl.DataContainerPostProcessor" />
 
     <!-- Persistence  -->
 
@@ -37,7 +34,14 @@
         <constructor-arg ref="dataSource"/>
     </bean>
 
-    <bean id="daoPersistenceContext" class="org.jtheque.persistence.context.DaoPersistenceContext"/>
+    <bean id="daoPersistenceContext" class="org.jtheque.persistence.impl.DaoPersistenceContext"/>
 
     <osgi:service ref="jdbcTemplate" interface="org.springframework.jdbc.core.simple.SimpleJdbcTemplate" />
+
+    <!-- OSGI Services Registrations -->
+
+    <osgi:service ref="persistenceManager" interface="org.jtheque.persistence.able.IPersistenceService"/>
+    <osgi:service ref="daoNotes" interface="org.jtheque.persistence.able.IDaoNotes"/>
+    <osgi:service ref="daoPersistenceContext" interface="org.jtheque.persistence.able.IDaoPersistenceContext"/>
+
 </beans>

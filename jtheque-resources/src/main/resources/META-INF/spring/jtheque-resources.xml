@@ -8,8 +8,8 @@
             http://www.springframework.org/schema/osgi
             http://www.springframework.org/schema/osgi/spring-osgi.xsd">
 
-    <bean id="resourcesManager" class="org.jtheque.resources.ResourceService"/>
+    <bean id="resourcesManager" class="org.jtheque.resources.impl.ResourceService"/>
 
-    <osgi:service ref="resourcesManager" interface="org.jtheque.resources.IResourceService"/>
+    <osgi:service ref="resourcesManager" interface="org.jtheque.resources.able.IResourceService"/>
 
 </beans>

@@ -8,8 +8,8 @@
             http://www.springframework.org/schema/osgi
             http://www.springframework.org/schema/osgi/spring-osgi.xsd">
 
-    <bean id="eventsService" class="org.jtheque.events.EventService" />
+    <bean id="eventsService" class="org.jtheque.events.impl.EventService" />
 
-    <osgi:service ref="eventsService" interface="org.jtheque.events.IEventService"/>
+    <osgi:service ref="eventsService" interface="org.jtheque.events.able.IEventService"/>
 
 </beans>

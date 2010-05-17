@@ -17,7 +17,7 @@ package org.jtheque.views.impl.windows;
  */
 
 import org.jtheque.modules.able.IModuleService;
-import org.jtheque.modules.impl.ModuleDescription;
+import org.jtheque.modules.able.IModuleDescription;
 import org.jtheque.ui.able.IModel;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.ui.utils.builders.PanelBuilder;
@@ -64,8 +64,8 @@ public final class RepositoryView extends SwingFilthyBuildedDialogView<IModel> i
     }
 
     @Override
-    public ModuleDescription getSelectedModule() {
-        return (ModuleDescription) list.getSelectedValue();
+    public IModuleDescription getSelectedModule() {
+        return (IModuleDescription) list.getSelectedValue();
     }
 
     @Override

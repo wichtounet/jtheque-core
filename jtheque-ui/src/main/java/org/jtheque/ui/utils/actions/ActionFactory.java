@@ -44,18 +44,6 @@ public final class ActionFactory {
     }
 
     /**
-     * Create an action to close the view.
-     *
-      *@param key The i18n key.
-     * @param view The name of the view to close. The action will be searched in Spring context.
-     *
-     * @return An action to close the view.
-     */
-    public static JThequeAction createCloseViewAction(String key, String view){
-        return new CloseBeanViewAction(key, view);
-    }
-
-    /**
      * Create an action to display the view.
      *
       *@param key The i18n key.
@@ -65,17 +53,5 @@ public final class ActionFactory {
      */
     public static JThequeAction createDisplayViewAction(String key, IView view){
         return new DisplayViewAction(key, view);
-    }
-
-    /**
-     * Create an action to display the view.
-     *
-      *@param key The i18n key. 
-     * @param view The name of the view to close. The action will be searched in Spring context.
-     *
-     * @return An action to close the view.
-     */
-    public static JThequeAction createDisplayViewAction(String key, String view){
-        return new DisplayBeanViewAction(key, view);
     }
 }

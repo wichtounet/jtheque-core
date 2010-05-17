@@ -16,7 +16,7 @@ package org.jtheque.persistence.able;
  * limitations under the License.
  */
 
-import org.jtheque.persistence.AbstractEntity;
+import org.jtheque.persistence.utils.AbstractEntity;
 import org.jtheque.persistence.utils.EntityUtils;
 import org.junit.Test;
 

@@ -17,6 +17,8 @@ package org.jtheque.ui.able;
  */
 
 public interface IUIUtils {
+	String LIGHT_IMAGE = "jtheque-ui-light";
+
     /**
      * Return the delegate view manager.
      *

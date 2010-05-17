@@ -68,7 +68,7 @@ public final class Views implements IViews, ApplicationContextAware, ModuleListe
 
     @Override
     public void setSelectedView(MainComponent component) {
-        mainView.get().setSelectedComponent(component.getComponent());
+        mainView.get().setSelectedComponent(component.getImpl());
     }
 
     @Override
@@ -78,7 +78,7 @@ public final class Views implements IViews, ApplicationContextAware, ModuleListe
         JComponent component = mainView.get().getSelectedComponent();
         
         for (MainComponent tab : mainComponents) {
-            if (tab.getComponent().equals(component)) {
+            if (tab.getImpl().equals(component)) {
                 selected = tab;
                 break;
             }
@@ -158,7 +158,7 @@ public final class Views implements IViews, ApplicationContextAware, ModuleListe
     @Override
     public void setSelectedMainComponent(MainComponent component) {
         if(mainComponents.size() > 1){
-            getMainView().getTabbedPane().setSelectedComponent(component.getComponent());
+            getMainView().getTabbedPane().setSelectedComponent(component.getImpl());
         }
     }
 

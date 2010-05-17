@@ -1,5 +1,6 @@
 package org.jtheque.ui.utils.filthy;
 
+import org.jtheque.ui.able.Filthy;
 import org.jtheque.ui.utils.components.Borders;
 
 import javax.swing.AbstractButton;

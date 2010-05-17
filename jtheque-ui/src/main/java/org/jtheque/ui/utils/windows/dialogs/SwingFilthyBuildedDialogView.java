@@ -16,72 +16,20 @@ package org.jtheque.ui.utils.windows.dialogs;
  * limitations under the License.
  */
 
-import org.jtheque.errors.JThequeError;
-import org.jtheque.i18n.ILanguageService;
+import org.jtheque.ui.able.IFilthyUtils;
 import org.jtheque.ui.able.IModel;
 import org.jtheque.ui.utils.builders.FilthyPanelBuilder;
-import org.jtheque.ui.utils.builders.I18nPanelBuilder;
+import org.jtheque.ui.utils.builders.JThequePanelBuilder;
 import org.jtheque.ui.utils.filthy.FilthyBackgroundPanel;
-import org.jtheque.ui.utils.filthy.IFilthyUtils;
-
-import java.awt.Container;
-import java.util.Collection;
 
 /**
  * A swing dialog view.
  *
  * @author Baptiste Wicht
  */
-public abstract class SwingFilthyBuildedDialogView<T extends IModel> extends SwingDialogView {
-    @Override
-    protected final void init() {
-        initView();
-
-        setContentPane(buildContentPane());
-
-        refreshText(getService(ILanguageService.class));
-
-        pack();
-
-        setLocationRelativeTo(getOwner());
-    }
-
-    /**
-     * Build the content pane of the view.
-     *
-     * @return The builded content pane.
-     */
-    private Container buildContentPane() {
-        FilthyBackgroundPanel contentPane = new FilthyBackgroundPanel(getService(IFilthyUtils.class));
-
-        I18nPanelBuilder builder = new FilthyPanelBuilder(contentPane);
-
-        builder.setInternationalizableContainer(this);
-
-        buildView(builder);
-
-        return contentPane;
-    }
-
-    @Override
-    protected void validate(Collection<JThequeError> errors) {
-        //Default empty implementation
-    }
-
-    @Override
-    public T getModel() {
-        return (T) super.getModel();
-    }
-
-    /**
-     * Init the view.
-     */
-    protected abstract void initView();
-
-    /**
-     * Build the view.
-     *
-     * @param builder The builder to use to build the content pane.
-     */
-    protected abstract void buildView(I18nPanelBuilder builder);
+public abstract class SwingFilthyBuildedDialogView<T extends IModel> extends SwingBuildedDialogView<T> {
+	@Override
+	JThequePanelBuilder createBuilder() {
+		return new FilthyPanelBuilder(new FilthyBackgroundPanel(getService(IFilthyUtils.class)));
+	}
 }

@@ -24,7 +24,7 @@ import org.jtheque.ui.utils.builders.FilthyPanelBuilder;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.ui.utils.builders.PanelBuilder;
 import org.jtheque.ui.utils.components.JThequeI18nLabel;
-import org.jtheque.update.IUpdateService;
+import org.jtheque.update.able.IUpdateService;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.ui.GridBagUtils;
 

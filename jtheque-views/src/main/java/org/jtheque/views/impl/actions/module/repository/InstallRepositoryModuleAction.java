@@ -16,9 +16,9 @@ package org.jtheque.views.impl.actions.module.repository;
  * limitations under the License.
  */
 
-import org.jtheque.core.ICore;
+import org.jtheque.core.able.ICore;
+import org.jtheque.modules.able.IModuleDescription;
 import org.jtheque.modules.able.IModuleService;
-import org.jtheque.modules.impl.ModuleDescription;
 import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.ui.utils.actions.JThequeAction;
 import org.jtheque.views.able.IViews;
@@ -50,7 +50,7 @@ public final class InstallRepositoryModuleAction extends JThequeAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        ModuleDescription description = views.getRepositoryView().getSelectedModule();
+        IModuleDescription description = views.getRepositoryView().getSelectedModule();
 
         if (description.getCoreVersion().isGreaterThan(ICore.VERSION)) {
             utils.displayI18nText("error.module.version.core");

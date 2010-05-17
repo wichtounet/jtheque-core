@@ -16,12 +16,12 @@ package org.jtheque.file.impl;
  * limitations under the License.
  */
 
-import org.jtheque.core.ICore;
-import org.jtheque.file.IFileService.XmlBackupVersion;
+import org.jtheque.core.able.ICore;
+import org.jtheque.file.able.IFileService.XmlBackupVersion;
 import org.jtheque.file.able.ModuleBackup;
-import org.jtheque.io.NodeSaver;
 import org.jtheque.utils.bean.IntDate;
-import org.jtheque.io.XMLWriter;
+import org.jtheque.xml.utils.NodeSaver;
+import org.jtheque.xml.utils.XMLWriter;
 
 import java.io.File;
 

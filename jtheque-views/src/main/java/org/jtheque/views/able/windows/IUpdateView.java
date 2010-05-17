@@ -19,7 +19,7 @@ package org.jtheque.views.able.windows;
 import org.jtheque.modules.able.Module;
 import org.jtheque.ui.able.IView;
 import org.jtheque.ui.able.WaitableView;
-import org.jtheque.update.Updatable;
+import org.jtheque.update.able.Updatable;
 import org.jtheque.utils.bean.Version;
 
 /**

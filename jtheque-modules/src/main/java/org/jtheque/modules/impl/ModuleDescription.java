@@ -16,6 +16,7 @@ package org.jtheque.modules.impl;
  * limitations under the License.
  */
 
+import org.jtheque.modules.able.IModuleDescription;
 import org.jtheque.utils.bean.InternationalString;
 import org.jtheque.utils.bean.Version;
 
@@ -24,18 +25,14 @@ import org.jtheque.utils.bean.Version;
  *
  * @author Baptiste Wicht
  */
-public final class ModuleDescription {
+public final class ModuleDescription implements IModuleDescription {
     private String id;
     private String name;
     private InternationalString description;
     private String versionsFileURL;
     private Version coreVersion;
 
-    /**
-     * Return the name of the module.
-     *
-     * @return The name of the module.
-     */
+    @Override
     public String getName() {
         return name;
     }
@@ -49,11 +46,7 @@ public final class ModuleDescription {
         this.name = name;
     }
 
-    /**
-     * Return the description of the module.
-     *
-     * @return The description of the module.
-     */
+    @Override
     public InternationalString getDescription() {
         return description;
     }
@@ -67,11 +60,7 @@ public final class ModuleDescription {
         this.description = description;
     }
 
-    /**
-     * Return the versions file URL.
-     *
-     * @return The URL of the versions file.
-     */
+    @Override
     public String getVersionsFileURL() {
         return versionsFileURL;
     }
@@ -85,11 +74,7 @@ public final class ModuleDescription {
         this.versionsFileURL = versionsFileURL;
     }
 
-    /**
-     * Return the core version.
-     *
-     * @return The version of the core.
-     */
+    @Override
     public Version getCoreVersion() {
         return coreVersion;
     }
@@ -103,11 +88,7 @@ public final class ModuleDescription {
         this.coreVersion = coreVersion;
     }
 
-    /**
-     * Return the id of the module.
-     *
-     * @return The id of the module.
-     */
+    @Override
     public String getId() {
         return id;
     }

@@ -41,12 +41,7 @@
         <constructor-arg ref="languageService"/>
     </bean>
 
-    <bean class="org.jtheque.views.impl.components.menu.CoreMenu">
-        <constructor-arg ref="core"/>
-        <constructor-arg ref="undoRedoService"/>
-        <constructor-arg ref="views"/>
-        <constructor-arg ref="viewService"/>
-    </bean>
+    <bean class="org.jtheque.views.impl.components.menu.CoreMenu" />
     
     <!--  Views -->
     
@@ -60,23 +55,14 @@
 
     <!-- Config panels -->
 
-    <bean class="org.jtheque.views.impl.components.config.JPanelConfigAppearance" lazy-init="true">
-        <constructor-arg ref="filthyUtils"/>
-        <constructor-arg ref="languageService"/>
-        <constructor-arg ref="core"/>
-    </bean>
+    <bean class="org.jtheque.views.impl.components.config.JPanelConfigAppearance" lazy-init="true" />
+    <bean class="org.jtheque.views.impl.components.config.JPanelConfigNetwork" lazy-init="true"/>
+    <bean class="org.jtheque.views.impl.components.config.JPanelConfigOthers" lazy-init="true"/>
 
-    <bean class="org.jtheque.views.impl.components.config.JPanelConfigNetwork" lazy-init="true">
-        <constructor-arg ref="filthyUtils"/>
-        <constructor-arg ref="languageService"/>
-        <constructor-arg ref="core"/>
-    </bean>
+    <!-- panels -->
 
-    <bean class="org.jtheque.views.impl.components.config.JPanelConfigOthers" lazy-init="true">
-        <constructor-arg ref="filthyUtils"/>
-        <constructor-arg ref="languageService"/>
-        <constructor-arg ref="core"/>
-    </bean>
+    <bean class="org.jtheque.views.impl.components.panel.ModulesPanel" lazy-init="true" />
+    <bean class="org.jtheque.views.impl.components.panel.UpdatablesPanel" lazy-init="true" />
 
     <!-- Java2D panes -->
 
@@ -92,15 +78,15 @@
 
     <!-- OSGi References -->
 
-    <osgi:reference id="core" interface="org.jtheque.core.ICore" />
+    <osgi:reference id="core" interface="org.jtheque.core.able.ICore" />
     <osgi:reference id="uiUtils" interface="org.jtheque.ui.able.IUIUtils" />
-    <osgi:reference id="filthyUtils" interface="org.jtheque.ui.utils.filthy.IFilthyUtils" />
-    <osgi:reference id="undoRedoService" interface="org.jtheque.undo.IUndoRedoService"/>
-    <osgi:reference id="languageService" interface="org.jtheque.i18n.ILanguageService"/>
-    <osgi:reference id="featureService" interface="org.jtheque.features.IFeatureService"/>
-    <osgi:reference id="stateService" interface="org.jtheque.states.IStateService"/>
+    <osgi:reference id="filthyUtils" interface="org.jtheque.ui.able.IFilthyUtils" />
+    <osgi:reference id="undoRedoService" interface="org.jtheque.undo.able.IUndoRedoService"/>
+    <osgi:reference id="languageService" interface="org.jtheque.i18n.able.ILanguageService"/>
+    <osgi:reference id="featureService" interface="org.jtheque.features.able.IFeatureService"/>
+    <osgi:reference id="stateService" interface="org.jtheque.states.able.IStateService"/>
     <osgi:reference id="moduleService" interface="org.jtheque.modules.able.IModuleService"/>
-    <osgi:reference id="resourceService" interface="org.jtheque.resources.IResourceService"/>
+    <osgi:reference id="resourceService" interface="org.jtheque.resources.able.IResourceService"/>
 
     <!-- OSGi Services -->
 

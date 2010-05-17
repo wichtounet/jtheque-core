@@ -18,7 +18,6 @@ package org.jtheque.views.able;
 
 import org.jtheque.ui.able.IView;
 import org.jtheque.views.able.panel.ICollectionView;
-import org.jtheque.views.impl.WindowConfiguration;
 
 /**
  * A view manager.
@@ -76,7 +75,7 @@ public interface IViewService {
      * @param configuration The configuration to fill.
      * @param view          The view to fill the configuration with.
      */
-    void fill(WindowConfiguration configuration, IView view);
+    void fill(IWindowConfiguration configuration, IView view);
 
     /**
      * Configure the view with the window configuration.
@@ -84,5 +83,5 @@ public interface IViewService {
      * @param configuration The window configuration.
      * @param view          The view to configure.
      */
-    void configure(WindowConfiguration configuration, IView view);
+    void configure(IWindowConfiguration configuration, IView view);
 }

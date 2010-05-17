@@ -17,19 +17,19 @@ package org.jtheque.views.impl.components.panel;
  */
 
 import org.jdesktop.swingx.JXPanel;
-import org.jtheque.core.ICore;
+import org.jtheque.core.able.ICore;
 import org.jtheque.core.utils.SimplePropertiesCache;
+import org.jtheque.ui.able.Filthy;
 import org.jtheque.ui.utils.AnimationUtils;
 import org.jtheque.ui.utils.components.JThequeI18nLabel;
-import org.jtheque.ui.utils.filthy.Filthy;
+import org.jtheque.ui.utils.filthy.FilthyPasswordField;
 import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.utils.ui.SwingUtils;
 import org.jtheque.views.able.panel.ICollectionView;
 import org.jtheque.views.impl.actions.collections.CancelAction;
 import org.jtheque.views.impl.actions.collections.ChooseAction;
 import org.jtheque.views.impl.actions.collections.CreateAction;
-import org.jtheque.views.impl.filthy.FilthyPasswordField;
-import org.jtheque.views.impl.filthy.FilthyTextField;
+import org.jtheque.ui.utils.filthy.FilthyTextField;
 
 import javax.annotation.PostConstruct;
 import javax.swing.Action;

@@ -1,6 +1,6 @@
 package org.jtheque.views.impl;
 
-import org.jtheque.resources.IResourceService;
+import org.jtheque.resources.able.IResourceService;
 import org.springframework.core.io.ClassPathResource;
 
 /*

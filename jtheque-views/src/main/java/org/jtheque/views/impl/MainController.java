@@ -16,7 +16,7 @@ package org.jtheque.views.impl;
  * limitations under the License.
  */
 
-import org.jtheque.core.ICore;
+import org.jtheque.core.able.ICore;
 import org.jtheque.ui.able.IUIUtils;
 
 import javax.swing.JTabbedPane;

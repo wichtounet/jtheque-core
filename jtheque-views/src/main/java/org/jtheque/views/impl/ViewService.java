@@ -16,14 +16,15 @@ package org.jtheque.views.impl;
  * limitations under the License.
  */
 
-import org.jtheque.core.ICore;
+import org.jtheque.core.able.ICore;
 import org.jtheque.core.utils.SimplePropertiesCache;
-import org.jtheque.resources.IResourceService;
+import org.jtheque.resources.able.IResourceService;
 import org.jtheque.spring.utils.SwingSpringProxy;
-import org.jtheque.states.IStateService;
+import org.jtheque.states.able.IStateService;
 import org.jtheque.ui.able.IView;
 import org.jtheque.utils.ui.SwingUtils;
 import org.jtheque.views.able.IViewService;
+import org.jtheque.views.able.IWindowConfiguration;
 import org.jtheque.views.able.windows.IAboutView;
 import org.jtheque.views.able.panel.ICollectionView;
 import org.jtheque.views.able.windows.IMainView;
@@ -86,7 +87,7 @@ public final class ViewService implements IViewService, ApplicationContextAware 
     }
 
     @Override
-    public void fill(WindowConfiguration configuration, IView view) {
+    public void fill(IWindowConfiguration configuration, IView view) {
         Component window = (Component) view;
 
         configuration.setWidth(window.getWidth());
@@ -96,7 +97,7 @@ public final class ViewService implements IViewService, ApplicationContextAware 
     }
 
     @Override
-    public void configure(WindowConfiguration configuration, IView view) {
+    public void configure(IWindowConfiguration configuration, IView view) {
         Window window = (Window) view;
 
         window.setSize(configuration.getWidth(), configuration.getHeight());

@@ -23,8 +23,8 @@
 
         <dependency>
             <groupId>org.jtheque</groupId>
-            <artifactId>org.jtheque.io</artifactId>
-            <version>2.1-SNAPSHOT</version>
+            <artifactId>org.jtheque.xml.utils</artifactId>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
 
         <dependency>
@@ -37,11 +37,6 @@
             <groupId>org.jtheque</groupId>
             <artifactId>org.jtheque.utils</artifactId>
             <version>1.1.4-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jtheque</groupId>
-            <artifactId>org.jtheque.io</artifactId>
-            <version>2.1-SNAPSHOT</version>
         </dependency>
     </dependencies>
 
@@ -58,9 +53,8 @@
                 <configuration>
                     <instructions>
                         <Bundle-SymbolicName>${pom.artifactId}</Bundle-SymbolicName>
-                        <Export-Package>org.jtheque.states</Export-Package>
+                        <Export-Package>org.jtheque.states.able, org.jtheque.states.utils</Export-Package>
                         <Bundle-Vendor>Baptiste Wicht</Bundle-Vendor>
-                        <Bundle-Activator>org.jtheque.states.StatesActivator</Bundle-Activator>
                         <Spring-Context>*;create-asynchronously:=false;publish-context:=false</Spring-Context>
                     </instructions>
                 </configuration>
