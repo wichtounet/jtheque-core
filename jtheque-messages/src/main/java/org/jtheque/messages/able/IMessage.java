@@ -2,6 +2,11 @@ package org.jtheque.messages.able;
 
 import org.jtheque.utils.bean.IntDate;
 
+/**
+ * A Message specification.
+ *
+ * @author Baptiste Wicht
+ */
 public interface IMessage extends Comparable<IMessage> {
 	/**
 	 * Return the Id of the message.

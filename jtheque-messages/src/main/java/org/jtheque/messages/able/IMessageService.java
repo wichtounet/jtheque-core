@@ -44,5 +44,10 @@ public interface IMessageService {
      */
     boolean isDisplayNeeded();
 
+    /**
+     * Return an empty message.
+     *
+     * @return An empty message. 
+     */
 	IMessage getEmptyMessage();
 }

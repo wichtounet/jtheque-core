@@ -25,7 +25,6 @@ import org.jtheque.persistence.able.IDaoPersistenceContext;
 import org.jtheque.persistence.able.QueryMapper;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
-import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 
 import javax.annotation.Resource;
 import java.sql.ResultSet;
@@ -43,9 +42,6 @@ public final class DaoCollections extends CachedJDBCDao<Collection> implements I
 
 	@Resource
 	private IDaoPersistenceContext daoPersistenceContext;
-
-	@Resource
-	private SimpleJdbcTemplate jdbcTemplate;
 
 	/**
 	 * The current collection.
@@ -91,7 +87,8 @@ public final class DaoCollections extends CachedJDBCDao<Collection> implements I
 
     @Override
 	public Collection getCollection(String name){
-		List<Collection> collections = jdbcTemplate.query("SELECT * FROM " + TABLE + " WHERE TITLE = ?", rowMapper, name);
+		List<Collection> collections = daoPersistenceContext.getTemplate().query(
+				"SELECT * FROM " + TABLE + " WHERE TITLE = ?", rowMapper, name);
 
 		if (collections.isEmpty()){
 			return null;

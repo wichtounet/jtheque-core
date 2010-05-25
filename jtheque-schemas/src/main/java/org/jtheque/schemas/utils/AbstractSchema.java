@@ -38,10 +38,20 @@ public abstract class AbstractSchema implements Schema {
     private static final String INSERT_INTO = "INSERT INTO ";
     private static final String CREATE_TABLE = "CREATE TABLE ";
 
+    /**
+     * Set the JDBC Template of the schema.
+     *
+     * @param jdbcTemplate The template to set. 
+     */
     void setJdbcTemplate(SimpleJdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+    /**
+     * Set the JDBC template of the schema using the bundle context to search it.
+     *
+     * @param bundleContext The bundle context to search for the JDBC template. 
+     */
     void setJdbcTemplate(BundleContext bundleContext) {
         jdbcTemplate = OSGiUtils.getService(bundleContext, SimpleJdbcTemplate.class);
     }

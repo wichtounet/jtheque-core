@@ -19,61 +19,48 @@ package org.jtheque.views.impl.models;
 import org.jtheque.modules.able.IModuleService;
 import org.jtheque.modules.able.Module;
 import org.jtheque.modules.able.ModuleListener;
-import org.jtheque.modules.able.ModuleState;
-
-import javax.swing.DefaultListModel;
-import java.util.ArrayList;
-import java.util.List;
+import org.jtheque.ui.utils.models.SimpleListModel;
 
 /**
  * A List model to display the modules.
  *
  * @author Baptiste Wicht
  */
-public final class ModuleListModel extends DefaultListModel implements ModuleListener {
-    private final List<Module> modules;
-    private final IModuleService moduleService;
-
+public final class ModuleListModel extends SimpleListModel<Module> implements ModuleListener {
+    /**
+     * Construct a new ModuleListModel.
+     *
+     * @param moduleService The module service to use. 
+     */
     public ModuleListModel(IModuleService moduleService) {
         super();
 
-        this.moduleService = moduleService;
-
         moduleService.addModuleListener("", this);
 
-        modules = new ArrayList<Module>(moduleService.getModules());
+        setElements(moduleService.getModules());
     }
 
-    @Override
-    public Object getElementAt(int index) {
-        return modules.get(index);
-    }
+	@Override
+	public void moduleStarted(Module module) {
+		int index = getIndexOfElement(module);
 
-    @Override
-    public Object get(int index) {
-        return modules.get(index);
-    }
+		fireContentsChanged(this, index, index);
+	}
 
-    @Override
-    public int getSize() {
-        return modules.size();
-    }
+	@Override
+	public void moduleStopped(Module module) {
+		int index = getIndexOfElement(module);
 
-    @Override
-    public void moduleStateChanged(Module module, ModuleState newState, ModuleState oldState) {
-        if(newState == ModuleState.UNINSTALLED){
-            int index = modules.indexOf(module);
+		fireContentsChanged(this, index, index);
+	}
 
-            modules.remove(module);
+	@Override
+	public void moduleInstalled(Module module) {
+		addElement(module);
+	}
 
-            fireIntervalRemoved(this, index, index);
-        }
-
-        if(oldState == null){
-            modules.clear();
-            modules.addAll(moduleService.getModules());
-
-            fireContentsChanged(this, 0, modules.size());
-        }
-    }
+	@Override
+	public void moduleUninstalled(Module module) {
+		removeElement(module);
+	}
 }

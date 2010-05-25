@@ -26,13 +26,13 @@ import java.util.Collection;
  *
  * @author Baptiste Wicht
  */
-public class Feature {
+public class Feature implements IFeature {
     private FeatureType type;
     private String titleKey;
     private Integer position;
     private String icon;
 
-    private final Collection<Feature> subFeatures = new ArrayList<Feature>(20);
+    private final Collection<IFeature> subFeatures = new ArrayList<IFeature>(20);
     private final JThequeAction action;
 
     /**
@@ -66,24 +66,7 @@ public class Feature {
         this.position = position;
     }
 
-    /**
-     * The Feature Type.
-     *
-     * @author Baptiste Wicht
-     */
-    public enum FeatureType {
-        PACK,
-        SEPARATED_ACTIONS,
-        ACTIONS,
-        SEPARATED_ACTION,
-        ACTION
-    }
-
-    /**
-     * Return the type of the feature.
-     *
-     * @return The type of the feature.
-     */
+    @Override
     public final FeatureType getType() {
         return type;
     }
@@ -97,11 +80,7 @@ public class Feature {
         this.type = type;
     }
 
-    /**
-     * Return the internationalization key of the title of the feature.
-     *
-     * @return The internationalisation key of the feature.
-     */
+    @Override
     public final String getTitleKey() {
         return titleKey;
     }
@@ -115,21 +94,13 @@ public class Feature {
         this.titleKey = titleKey;
     }
 
-    /**
-     * Return the action of the feature.
-     *
-     * @return The action.
-     */
+    @Override
     public final JThequeAction getAction() {
         return action;
     }
 
-    /**
-     * Return the sub features of the feature.
-     *
-     * @return A List containing all the sub feature of the feature.
-     */
-    public final Collection<Feature> getSubFeatures() {
+    @Override
+    public final Collection<IFeature> getSubFeatures() {
         return subFeatures;
     }
 
@@ -138,8 +109,8 @@ public class Feature {
      *
      * @param feature The feature to add.
      */
-    public void addSubFeature(Feature feature) {
-        if (feature.type == FeatureType.PACK) {
+    public void addSubFeature(IFeature feature) {
+        if (feature.getType() == FeatureType.PACK) {
             throw new IllegalArgumentException(
                     "Unable to add feature of type Pack to a menu");
         }
@@ -152,15 +123,11 @@ public class Feature {
      *
      * @param feature The feature to remove.
      */
-    public void removeSubFeature(Feature feature) {
+    public void removeSubFeature(IFeature feature) {
         subFeatures.remove(feature);
     }
 
-    /**
-     * Return the position of the feature.
-     *
-     * @return The position of the feature.
-     */
+    @Override
     public final Integer getPosition() {
         return position;
     }
@@ -174,11 +141,7 @@ public class Feature {
         this.position = position;
     }
 
-    /**
-     * Return the icon id of the feature.
-     *
-     * @return The icon id of the feature.
-     */
+    @Override
     public final String getIcon() {
         return icon;
     }

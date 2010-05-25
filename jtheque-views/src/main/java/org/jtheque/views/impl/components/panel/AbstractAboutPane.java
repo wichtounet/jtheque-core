@@ -41,6 +41,12 @@ public abstract class AbstractAboutPane extends JXPanel {
     private final ICore core;
     private final ILanguageService languageService;
 
+	/**
+	 * Construct a new AbstractAboutPane.
+	 *
+	 * @param languageService The language service.
+	 * @param core The core. 
+	 */
     protected AbstractAboutPane(ILanguageService languageService, ICore core) {
         super();
 

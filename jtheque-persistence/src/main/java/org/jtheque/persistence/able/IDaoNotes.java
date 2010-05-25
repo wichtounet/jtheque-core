@@ -18,6 +18,11 @@ package org.jtheque.persistence.able;
 
 import java.awt.Image;
 
+/**
+ * A dao notes specification.
+ *
+ * @author Baptiste Wicht
+ */
 public interface IDaoNotes {
     /**
      * Return all the notes of the dao.
@@ -49,6 +54,13 @@ public interface IDaoNotes {
      */
     Image getImage(Note note);
 
+    /**
+     * Return the internationalized text of the note.
+     *
+     * @param note The note.
+     *
+     * @return The internationalized text of the note. 
+     */
     String getInternationalizedText(Note note);
 
     /**

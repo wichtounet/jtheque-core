@@ -93,10 +93,20 @@ public abstract class AbstractUpdateAction extends JThequeAction {
      */
     abstract Object getSelectedObject();
 
+	/**
+	 * Return the views service.
+	 *
+	 * @return The views.
+	 */
     IViews getViews() {
         return views;
     }
 
+	/**
+	* Return the update service.
+	*
+	* @return The update service.
+	*/
     IUpdateService getUpdateService() {
         return updateService;
     }

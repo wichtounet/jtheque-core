@@ -99,6 +99,9 @@ public final class ModulePanel extends JPanel {
         }
     }
 
+	/**
+	 * Init the fonts of the renderer.
+	 */
     private void initFonts() {
         if(fontTitle == null){
             fontTitle = labelName.getFont();
@@ -109,6 +112,12 @@ public final class ModulePanel extends JPanel {
         }
     }
 
+    /**
+     * Set the fonts of the labels.
+     *
+     * @param fontTitle THe font of the title.
+     * @param fontLabel The font of the normal labels.
+     */
     private void setFonts(Font fontTitle, Font fontLabel) {
         labelName.setFont(fontTitle);
         labelDescription.setFont(fontLabel);

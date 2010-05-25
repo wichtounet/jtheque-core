@@ -115,9 +115,7 @@ public final class UpdateService implements IUpdateService {
             }
         }
 
-            uiUtils.displayI18nText("message.application.updated");
-
-        core.getLifeCycle().restart();
+        uiUtils.displayI18nText("message.application.updated");
     }
 
     /**
@@ -281,6 +279,8 @@ public final class UpdateService implements IUpdateService {
 
     /**
      * Fire an updatable added event.
+     * 
+     * @param updatable The new updatable.
      */
     private void fireUpdatableAdded(Updatable updatable) {
         for (UpdatableListener l : listeners.getListeners(UpdatableListener.class)) {

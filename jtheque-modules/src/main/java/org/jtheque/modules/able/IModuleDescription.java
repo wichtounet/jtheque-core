@@ -4,11 +4,9 @@ import org.jtheque.utils.bean.InternationalString;
 import org.jtheque.utils.bean.Version;
 
 /**
- * Created by IntelliJ IDEA.
- * User: wichtounet
- * Date: May 15, 2010
- * Time: 4:34:01 PM
- * To change this template use File | Settings | File Templates.
+ * A module description. This description is getted from a repository.
+ *
+ * @author Baptiste Wicht
  */
 public interface IModuleDescription {
 	/**

@@ -34,6 +34,12 @@ public final class MainController extends WindowAdapter implements ChangeListene
     private final ICore core;
     private final IUIUtils uiUtils;
 
+	/**
+	 * Construct a new MainController.
+	 *
+	 * @param core The core.
+	 * @param uiUtils The UI Utils. 
+	 */
     public MainController(ICore core, IUIUtils uiUtils) {
         super();
 

@@ -24,5 +24,31 @@ import java.util.EventListener;
  * @author Baptiste Wicht
  */
 public interface ModuleListener extends EventListener {
-    void moduleStateChanged(Module module, ModuleState newState, ModuleState oldState);
+	/**
+	 * Invoked when a module is started.
+	 *
+	 * @param module The started module.
+	 */
+	void moduleStarted(Module module);
+
+	/**
+	 * Invoked when a module is stopped.
+	 *
+	 * @param module The stopped module.
+	 */
+	void moduleStopped(Module module);
+
+	/**
+	 * Invoked when a module is installed.
+	 *
+	 * @param module The installed module.
+	 */
+	void moduleInstalled(Module module);
+
+	/**
+	 * Invoked when a module is uninstalled.
+	 *
+	 * @param module The uninstalled module.
+	 */
+	void moduleUninstalled(Module module);
 }

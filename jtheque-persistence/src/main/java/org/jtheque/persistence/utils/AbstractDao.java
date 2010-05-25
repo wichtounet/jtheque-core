@@ -26,6 +26,12 @@ import org.springframework.jdbc.core.RowMapper;
 
 import javax.annotation.Resource;
 
+/**
+ * An abstract Dao using Spring JDBC.
+ *
+ * @param <T> The type of data contained in this DAO.
+ * @author Baptiste Wicht
+ */
 public abstract class AbstractDao<T extends Entity> implements Dao<T> {
     @Resource
     private IDaoPersistenceContext persistenceContext;
@@ -67,6 +73,11 @@ public abstract class AbstractDao<T extends Entity> implements Dao<T> {
      */
     protected abstract QueryMapper getQueryMapper();
 
+    /**
+     * Return the row mapper of this DAO.
+     *
+     * @return The RowMapper of this DAO. 
+     */
     protected abstract RowMapper<T> getRowMapper();
 
     /**

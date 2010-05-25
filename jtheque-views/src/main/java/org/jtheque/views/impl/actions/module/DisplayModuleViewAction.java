@@ -21,9 +21,19 @@ import java.awt.event.ActionEvent;
  * limitations under the License.
  */
 
+/**
+ * Construct a new DisplayModuleViewAction.
+ *
+ * @author Baptiste Wicht
+ */
 public class DisplayModuleViewAction extends JThequeAction {
     private final IViews views;
 
+    /**
+     * Construct a new DisplayModuleViewAction.
+     *
+     * @param views The views. 
+     */
     public DisplayModuleViewAction(IViews views) {
         super("modules.actions.manage");
 

@@ -59,6 +59,11 @@ public abstract class SwingBuildedDialogView<T extends IModel> extends SwingDial
         return builder.getPanel();
     }
 
+	/**
+	 * Create the builder for the window.
+	 *
+	 * @return The panel builder of the window. 
+	 */
 	JThequePanelBuilder createBuilder() {
 		return new JThequePanelBuilder();
 	}

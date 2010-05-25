@@ -15,6 +15,7 @@
     <bean id="collectionsService" class="org.jtheque.collections.impl.CollectionsService" lazy-init="false">
         <constructor-arg ref="daoCollections"/>
         <constructor-arg><osgi:reference interface="org.jtheque.file.able.IFileService"/></constructor-arg>
+        <constructor-arg><osgi:reference interface="org.jtheque.core.able.ICore"/></constructor-arg>
     </bean>
 
     <bean id="daoCollections" class="org.jtheque.collections.impl.DaoCollections" />

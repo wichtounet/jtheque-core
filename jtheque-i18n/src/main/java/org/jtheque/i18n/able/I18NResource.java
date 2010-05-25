@@ -3,14 +3,22 @@ package org.jtheque.i18n.able;
 import org.springframework.core.io.Resource;
 
 /**
- * Created by IntelliJ IDEA.
- * User: wichtounet
- * Date: May 15, 2010
- * Time: 12:33:03 PM
- * To change this template use File | Settings | File Templates.
+ * An i18n resource. Namely, it's a resource to a i18n file.
+ *
+ * @author Baptiste Wicht
  */
 public interface I18NResource {
+    /**
+     * Return the filename of the resource.
+     *
+     * @return The filename of the resource.
+     */
 	String getFileName();
 
+    /**
+     * Return the resource to the i18n file.
+     *
+     * @return The resource to the i18n file.
+     */
 	Resource getResource();
 }

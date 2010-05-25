@@ -19,7 +19,6 @@ package org.jtheque.views.impl.actions.config;
 import org.jtheque.ui.utils.actions.JThequeAction;
 import org.jtheque.views.able.windows.IConfigView;
 
-import javax.annotation.Resource;
 import java.awt.event.ActionEvent;
 
 /**
@@ -32,7 +31,8 @@ public final class ApplyChangesAndCloseAction extends JThequeAction {
 
     /**
      * Construct a new AcApplyChangesAndClose.
-     * @param configView
+     * 
+     * @param configView The config view.
      */
     public ApplyChangesAndCloseAction(IConfigView configView) {
         super("config.actions.ok");

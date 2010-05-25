@@ -3,6 +3,7 @@ package org.jtheque.views.impl.components.panel;
 import org.jtheque.i18n.able.ILanguageService;
 import org.jtheque.modules.able.IModuleService;
 import org.jtheque.modules.able.Module;
+import org.jtheque.ui.able.IFilthyUtils;
 import org.jtheque.ui.utils.actions.ActionFactory;
 import org.jtheque.ui.utils.builded.OSGIFilthyBuildedPanel;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
@@ -53,10 +54,10 @@ public final class ModulesPanel extends OSGIFilthyBuildedPanel implements IModul
 	    IModuleService moduleService= getService(IModuleService.class);
 	    IRepositoryView repositoryView = getBeanFromEDT(IRepositoryView.class);
 
-        builder.add(new KernelInfoPanel(languageService, updateService), 
+        builder.add(new KernelInfoPanel(languageService, getService(IFilthyUtils.class), updateService), 
                 builder.gbcSet(0, 0, GridBagUtils.HORIZONTAL, GridBagUtils.BASELINE_LEADING, 1.0, 0.0));
 
-        modulesList = builder.addScrolledList(new ModuleListModel(moduleService), new ModuleListRenderer(updateService),
+        modulesList = builder.addScrolledList(new ModuleListModel(moduleService), new ModuleListRenderer(updateService, languageService),
                 builder.gbcSet(0, 1, GridBagUtils.BOTH, GridBagUtils.BASELINE_LEADING, 1.0, 1.0));
         modulesList.setVisibleRowCount(4);
 

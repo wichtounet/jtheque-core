@@ -21,9 +21,19 @@ import java.awt.event.ActionEvent;
  * limitations under the License.
  */
 
+/**
+ * An action to display the messages view.
+ *
+ * @author Baptiste Wicht
+ */
 public class DisplayMessagesViewAction extends JThequeAction {
     private final IViews views;
 
+    /**
+     * Construct a new DisplayMessagesViewAction.
+     *
+     * @param views The views. 
+     */
     public DisplayMessagesViewAction(IViews views) {
         super("messages.actions.display");
 

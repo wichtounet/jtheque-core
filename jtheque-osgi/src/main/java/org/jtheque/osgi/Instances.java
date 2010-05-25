@@ -52,7 +52,7 @@ final class Instances {
 
             registerNewClient();
         } catch (IOException e) {
-            LoggerFactory.getLogger(getClass()).error("Unable to register socket", e);
+            LoggerFactory.getLogger(getClass()).debug("The application is already launched");
 
             exit();
         }

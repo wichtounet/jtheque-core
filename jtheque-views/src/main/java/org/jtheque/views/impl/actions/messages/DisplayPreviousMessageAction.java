@@ -30,8 +30,9 @@ public final class DisplayPreviousMessageAction extends JThequeAction {
     private final IMessageView messageView;
 
     /**
-     * Construct a new DisplayPreviousMessageAction.
-     * @param messageView
+     * Construct a new DisplayPreviousMessageAction.$
+     * 
+     * @param messageView The message view.
      */
     public DisplayPreviousMessageAction(IMessageView messageView) {
         super("messages.actions.display.previous");

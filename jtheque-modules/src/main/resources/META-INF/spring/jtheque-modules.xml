@@ -22,10 +22,12 @@
         <constructor-arg><bean id="versionsLoader" class="org.jtheque.update.impl.versions.VersionsLoader" /></constructor-arg>
     </bean>
 
-    <osgi:reference interface="org.jtheque.states.able.IStateService" />
-    <osgi:reference interface="org.jtheque.core.able.ICore" />
-    <osgi:reference interface="org.jtheque.ui.able.IUIUtils" />
-    <osgi:reference interface="org.jtheque.i18n.able.ILanguageService" />
+    <osgi:reference id="stateService" interface="org.jtheque.states.able.IStateService" />
+    <osgi:reference id="core" interface="org.jtheque.core.able.ICore" />
+    <osgi:reference id="errorService" interface="org.jtheque.errors.able.IErrorService" />
+    <osgi:reference id="iuiUtils" interface="org.jtheque.ui.able.IUIUtils" />
+    <osgi:reference id="languageService" interface="org.jtheque.i18n.able.ILanguageService" />
+    <osgi:reference id="resourceService" interface="org.jtheque.resources.able.IResourceService" />
 
     <osgi:service ref="moduleService" interface="org.jtheque.modules.able.IModuleService"/>
     <osgi:service ref="updateService" interface="org.jtheque.update.able.IUpdateService"/>

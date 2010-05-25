@@ -7,10 +7,12 @@ import org.jtheque.core.able.lifecycle.ILifeCycle;
 import org.jtheque.core.able.lifecycle.TitleEvent;
 import org.jtheque.core.able.lifecycle.TitleListener;
 import org.jtheque.core.utils.WeakEventListenerList;
-import org.jtheque.events.able.Event;
+import org.jtheque.events.utils.Event;
 import org.jtheque.events.able.EventLevel;
 import org.jtheque.events.able.IEventService;
 import org.jtheque.utils.DesktopUtils;
+
+import javax.annotation.Resource;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -39,14 +41,14 @@ public class LifeCycle implements ILifeCycle {
     private final ICore core;
     private final IEventService eventService;
 
-    public LifeCycle(IEventService eventService, ICore core) {
-        super();
+	public LifeCycle(IEventService eventService, ICore core) {
+		super();
 
-        this.eventService = eventService;
-        this.core = core;
-    }
+		this.eventService = eventService;
+		this.core = core;
+	}
 
-    @Override
+	@Override
     public void initTitle() {
         refreshTitle();
     }
@@ -125,6 +127,8 @@ public class LifeCycle implements ILifeCycle {
      * Close the VM.
      */
     private void closeVM() {
+
+
         Runtime.getRuntime().removeShutdownHook(shutdownHook);
         
         System.exit(0);

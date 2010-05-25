@@ -2,7 +2,7 @@ package org.jtheque.ui.utils.models;
 
 import org.jtheque.utils.collections.CollectionUtils;
 
-import javax.swing.DefaultListModel;
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -27,12 +27,14 @@ import java.util.List;
 /**
  * A simple list model to store dynamic objects.
  *
- * @param <T> The type of objects.
+ * @param <T> The type of objects stored in the model.
  *
  * @author Baptiste Wicht
  */
-public class SimpleListModel<T> extends DefaultListModel {
+public class SimpleListModel<T> extends AbstractListModel implements ComboBoxModel {
     private final List<T> objects;
+
+    private T selectedObject;
 
     /**
      * Construct a new SimpleListModel.
@@ -80,26 +82,42 @@ public class SimpleListModel<T> extends DefaultListModel {
     }
 
     @Override
-    public final Object get(int index){
-        return objects.get(index);
-    }
-
-    @Override
     public final int getSize(){
         return objects.size();
     }
 
-    @Override
-    public final Object remove(int index){
-        T category = objects.remove(index);
-        fireIntervalRemoved(this, index, index);
-        return category;
+    /**
+     * Add the element to the model.
+     *
+     * @param element The element to add.
+     */
+    public void addElement(T element){
+        int index = objects.size();
+
+        objects.add(element);
+
+        fireIntervalAdded(this, index, getSize());
     }
 
-    @Override
-    public final void addElement(Object obj){
-        objects.add((T) obj);
-        fireIntervalAdded(this, getSize(), getSize());
+    /**
+     * Add the element to the model.
+     *
+     * @param element The element to add.
+     */
+    public void removeElement(T element){
+        int index = objects.size();
+
+        objects.remove(element);
+
+        fireIntervalRemoved(this, index, getSize());
+    }
+
+    public T removeElement(int index) {
+        T removed = objects.remove(index);
+
+        fireIntervalRemoved(this, index, index);
+
+        return removed;
     }
 
     /**
@@ -117,26 +135,17 @@ public class SimpleListModel<T> extends DefaultListModel {
         fireIntervalAdded(this, index, getSize());
     }
 
-    @Override
-    public final void clear(){
-        objects.clear();
-        fireContentsChanged(this, 0, getSize());
-    }
+    /**
+     * Add the objects to the model.
+     *
+     * @param elements The objects to add.
+     */
+    public void addElements(T...  elements){
+        int index = objects.size();
 
-    @Override
-    public final boolean removeElement(Object obj){
-        T category = (T) obj;
+        objects.addAll(Arrays.asList(elements));
 
-        int index = objects.indexOf(category);
-        boolean remove = objects.remove(category);
-        fireIntervalRemoved(this, index, index);
-        return remove;
-    }
-
-    @Override
-    public final void removeAllElements(){
-        objects.clear();
-        fireContentsChanged(this, 0, getSize());
+        fireIntervalAdded(this, index, getSize());
     }
 
     /**
@@ -155,10 +164,14 @@ public class SimpleListModel<T> extends DefaultListModel {
      *
      * @param elements The elements to set on the model.
      */
-    public void setElements(T[] elements){
+    public void setElements(T... elements){
         objects.clear();
         objects.addAll(Arrays.asList(elements));
         fireContentsChanged(this, 0, getSize());
+    }
+
+    public int getIndexOfElement(T element){
+        return objects.indexOf(element);
     }
 
     /**
@@ -168,5 +181,26 @@ public class SimpleListModel<T> extends DefaultListModel {
      */
     public Collection<T> getObjects(){
         return objects;
+    }
+
+    @Override
+    public void setSelectedItem(Object anObject) {
+        if (selectedObject != null && !selectedObject.equals( anObject ) || selectedObject == null && anObject != null) {
+            selectedObject = (T) anObject;
+            fireContentsChanged(this, -1, -1);
+        }
+    }
+
+    @Override
+    public final T getSelectedItem(){
+        return selectedObject;
+    }
+
+	/**
+	 * Clear the model. 
+	 */
+    public void clear() {
+        objects.clear();
+        fireContentsChanged(this, 0, 0);
     }
 }

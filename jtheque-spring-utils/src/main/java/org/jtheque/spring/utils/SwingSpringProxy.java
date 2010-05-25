@@ -2,6 +2,7 @@ package org.jtheque.spring.utils;
 
 import org.jtheque.utils.ui.SwingUtils;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -19,9 +20,10 @@ import org.springframework.context.ApplicationContext;
  * limitations under the License.
  */
 
-public class SwingSpringProxy<T> {
+public class SwingSpringProxy<T> implements ApplicationContextAware{
     private final Class<T> classz;
-    private final ApplicationContext applicationContext;
+
+    private ApplicationContext applicationContext;
 
     private T instance;
 
@@ -33,6 +35,18 @@ public class SwingSpringProxy<T> {
         this.applicationContext = applicationContext;
     }
 
+	public SwingSpringProxy(Class<T> classz) {
+		super();
+
+		this.classz = classz;
+	}
+
+	/**
+	 * Return the instance of the view. The instance is only created only once. This proxy assert that the instance is
+	 * created in EDT. 
+	 *
+	 * @return The instance of the view.
+	 */
     public T get(){
         if(instance == null){
             createInstance();
@@ -42,11 +56,16 @@ public class SwingSpringProxy<T> {
     }
 
     private void createInstance() {
-        SwingUtils.inEdtSync(new Runnable(){
-            @Override
-            public void run() {
-                instance = applicationContext.getBean(classz);
-            }
-        });
+	    SwingUtils.inEdt(new Runnable() {
+		    @Override
+		    public void run() {
+			    instance = applicationContext.getBean(classz);
+		    }
+	    });
     }
+
+	@Override
+	public void setApplicationContext(ApplicationContext applicationContext) {
+		this.applicationContext = applicationContext;
+	}
 }

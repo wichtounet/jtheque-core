@@ -1,6 +1,6 @@
 package org.jtheque.views.impl.models;
 
-import org.jtheque.events.able.Event;
+import org.jtheque.events.able.IEvent;
 import org.jtheque.events.able.IEventService;
 import org.jtheque.i18n.able.ILanguageService;
 
@@ -62,10 +62,12 @@ public final class EventsTableModel extends AbstractTableModel {
     /**
      * The films to buy to display.
      */
-    private List<Event> events;
+    private List<IEvent> events;
 
     /**
      * Construct a new <code>FilmsToBuyTableModel</code>.
+     * @param eventService The event service.
+     * @param languageService The language service.
      */
     public EventsTableModel(IEventService eventService, ILanguageService languageService) {
         super();
@@ -82,7 +84,7 @@ public final class EventsTableModel extends AbstractTableModel {
      * @param row The index of the event to get.
      * @return The event level at the position or null if there is no event at this position.
      */
-    public Event getValueAt(int row) {
+    public IEvent getValueAt(int row) {
         return events.get(row);
     }
 
@@ -109,7 +111,7 @@ public final class EventsTableModel extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        Event event = events.get(rowIndex);
+        IEvent event = events.get(rowIndex);
 
         if (event != null) {
             switch (columnIndex) {
@@ -148,7 +150,7 @@ public final class EventsTableModel extends AbstractTableModel {
      */
     public void setLog(String log) {
         if (this.log == null || !this.log.equals(log)) {
-            events = new ArrayList<Event>(eventService.getEvents(log));
+            events = new ArrayList<IEvent>(eventService.getEvents(log));
 
             fireTableDataChanged();
 

@@ -15,14 +15,7 @@ import org.springframework.context.NoSuchMessageException;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.*;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -41,6 +34,8 @@ import java.util.Set;
  */
 
 /**
+ * A language service implementation.
+ *
  * @author Baptiste Wicht
  */
 public final class LanguageService implements ILanguageService {
@@ -57,9 +52,13 @@ public final class LanguageService implements ILanguageService {
 	
 	private static final Version I18N_VERSION = new Version("1.0");
 
+    private final Map<String,String> baseNames = new HashMap<String, String>(10);
+
 	/**
      * Construct a new ResourceManager.
-     */
+	 * 
+	 * @param stateService The state service.
+	 */
     public LanguageService(IStateService stateService) {
         super();
 
@@ -81,6 +80,9 @@ public final class LanguageService implements ILanguageService {
 	    init();
     }
 
+	/**
+	 * Init the language service. 
+	 */
     private void init(){
         locale = languages.get(state.getLanguage());
 
@@ -141,11 +143,27 @@ public final class LanguageService implements ILanguageService {
             }
         }
 
-	    String baseName = "file:" + folder + getI18nResource(resources[0]);
+	    String baseName = "file:" + folder + '/' + getI18nResource(resources[0]);
 
 	    resourceBundle.addBaseName(baseName);
+
+        baseNames.put(name, baseName);
     }
 
+    @Override
+    public void releaseResource(String name) {
+        if(baseNames.containsKey(name)){
+            resourceBundle.removeBaseName(baseNames.get(name));
+        }
+    }
+
+    /**
+     * Return the base name of the i18n resource.
+     *
+     * @param resource The resource to compute the basename for.
+     *
+     * @return The basename of the i18n resource. 
+     */
     private static String getI18nResource(I18NResource resource) {
         if(resource.getFileName().contains("_")){
             return resource.getFileName().substring(0, resource.getFileName().indexOf('_'));
@@ -251,17 +269,7 @@ public final class LanguageService implements ILanguageService {
         if (StringUtils.isEmpty(key)) {
             return StringUtils.EMPTY_STRING;
         }
-
-        String message;
-
-        try {
-            message = resourceBundle.getMessage(key, replaces, locale);
-        } catch (NoSuchMessageException e) {
-            message = key;
-
-            LoggerFactory.getLogger(getClass()).warn("No message found for {} with locale {}", key, locale.getDisplayName());
-        }
-
-        return message;
+		
+        return resourceBundle.getMessage(key, replaces, locale);
     }
 }

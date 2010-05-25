@@ -19,6 +19,18 @@ package org.jtheque.errors.able;
 import org.jdesktop.swingx.error.ErrorInfo;
 import org.jtheque.i18n.able.ILanguageService;
 
+/**
+ * An error. That error must be convertible to an error info to be managed by the error service.
+ *
+ * @author Baptiste Wicht
+ */
 public interface IError {
+    /**
+     * Convert the action to an error info bean.
+     *
+     * @param languageService The language service to internationalize the error.
+     *
+     * @return The ErrorInfo corresponding to the IError. 
+     */
 	ErrorInfo toErrorInfo(ILanguageService languageService);
 }

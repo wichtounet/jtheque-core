@@ -1,11 +1,9 @@
 package org.jtheque.views.able;
 
 /**
- * Created by IntelliJ IDEA.
- * User: wichtounet
- * Date: May 15, 2010
- * Time: 4:26:33 PM
- * To change this template use File | Settings | File Templates.
+ * A window configuration specification.
+ *
+ * @author Baptiste Wicht
  */
 public interface IWindowConfiguration {
 	/**

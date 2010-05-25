@@ -22,6 +22,11 @@ import java.lang.annotation.Target;
  * limitations under the License.
  */
 
+/**
+ * An annotation to specify a method to save the properties of the state.
+ *
+ * @author Baptiste Wicht
+ */
 @Documented
 @Retention(value = RetentionPolicy.RUNTIME)
 @Target(value = ElementType.METHOD)

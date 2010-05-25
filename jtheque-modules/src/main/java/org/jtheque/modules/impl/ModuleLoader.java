@@ -4,18 +4,26 @@ import org.jtheque.core.able.ICore;
 import org.jtheque.core.utils.OSGiUtils;
 import org.jtheque.errors.able.IErrorService;
 import org.jtheque.errors.utils.JThequeError;
+import org.jtheque.i18n.able.I18NResource;
+import org.jtheque.i18n.able.ILanguageService;
+import org.jtheque.i18n.utils.I18NResourceFactory;
 import org.jtheque.modules.able.IModuleLoader;
+import org.jtheque.modules.able.Module;
+import org.jtheque.resources.able.IResourceService;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.bean.Version;
+import org.jtheque.xml.utils.XMLException;
+import org.jtheque.xml.utils.XMLOverReader;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleException;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.UrlResource;
 import org.springframework.osgi.context.BundleContextAware;
 
+import javax.annotation.Resource;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Dictionary;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -43,17 +51,25 @@ import java.util.regex.Pattern;
  */
 public final class ModuleLoader implements IModuleLoader, BundleContextAware {
     private static final Pattern COMMA_DELIMITER_PATTERN = Pattern.compile(";");
+	private static final String[] EMPTY_ARRAY = new String[0];
 
     private BundleContext bundleContext;
 
-    @Override
+	@Resource
+	private ILanguageService languageService;
+
+	@Resource
+	private IResourceService resourceService;
+
+
+	@Override
     public void setBundleContext(BundleContext bundleContext) {
         this.bundleContext = bundleContext;
     }
 
     @Override
-    public List<ModuleContainer> loadModules() {
-        List<ModuleContainer> modules = new ArrayList<ModuleContainer>(10);
+    public List<Module> loadModules() {
+        List<Module> modules = new ArrayList<Module>(10);
 
         File moduleDir = OSGiUtils.getService(bundleContext, ICore.class).getFolders().getModulesFolder();
 
@@ -61,70 +77,118 @@ public final class ModuleLoader implements IModuleLoader, BundleContextAware {
 
         if (files != null) {
             for (File file : files) {
-                loadModule(file, modules);
+                modules.add(installModule(file));
             }
         }
 
         return modules;
     }
 
-    /**
-     * Load a module from the file.
-     *
-     * @param file The Jar File of a module.
-     * @param modules The modules to add the new modules to.
-     */
-    private void loadModule(File file, Collection<ModuleContainer> modules) {
-        try {
-            Bundle bundle = bundleContext.installBundle("file:" + file.getAbsolutePath());
+	@Override
+    public Module installModule(File file) {
+		ModuleContainer container = null;
 
-            ModuleContainer container = new ModuleContainer(bundle);
+		try {
+			Bundle bundle = bundleContext.installBundle("file:" + file.getAbsolutePath());
 
-            Dictionary<String, String> headers = bundle.getHeaders();
+			container = new ModuleContainer(bundle);
 
-            String id = StringUtils.isNotEmpty(headers.get("Module-Id")) ? headers.get("Module-Id") : headers.get("Bundle-SymbolicName");
+			Dictionary<String, String> headers = bundle.getHeaders();
 
-            container.setId(id);
+			String id = StringUtils.isNotEmpty(headers.get("Module-Id")) ? headers.get("Module-Id") : headers.get("Bundle-SymbolicName");
 
-            String version = StringUtils.isNotEmpty(headers.get("Module-Version")) ? headers.get("Module-Version") : headers.get("Bundle-Version");
+			container.setId(id);
 
-            container.setVersion(new Version(version));
+			String version = StringUtils.isNotEmpty(headers.get("Module-Version")) ? headers.get("Module-Version") : headers.get("Bundle-Version");
 
-            if(StringUtils.isNotEmpty(headers.get("Module-Core"))){
-                container.setCoreVersion(new Version(headers.get("Module-Core")));
-            }
+			container.setVersion(new Version(version));
 
-            container.setUrl(headers.get("Module-Url"));
-            container.setUpdateUrl(headers.get("Module-UpdateUrl"));
-            container.setMessagesUrl(headers.get("Module-MessagesUrl"));
+			if (StringUtils.isNotEmpty(headers.get("Module-Core"))) {
+				container.setCoreVersion(new Version(headers.get("Module-Core")));
+			}
 
-            if(StringUtils.isNotEmpty(headers.get("Module-Collection"))){
-                container.setCollection(Boolean.parseBoolean(headers.get("Module-Collection")));
-            }
+			container.setUrl(headers.get("Module-Url"));
+			container.setUpdateUrl(headers.get("Module-UpdateUrl"));
+			container.setMessagesUrl(headers.get("Module-MessagesUrl"));
 
-            if(StringUtils.isNotEmpty(headers.get("Module-Bundles"))){
-                container.setBundles(COMMA_DELIMITER_PATTERN.split(headers.get("Module-Bundles")));
-            }
+			if (StringUtils.isNotEmpty(headers.get("Module-Collection"))) {
+				container.setCollection(Boolean.parseBoolean(headers.get("Module-Collection")));
+			}
 
-            if(StringUtils.isNotEmpty(headers.get("Module-Dependencies"))){
-                container.setDependencies(COMMA_DELIMITER_PATTERN.split(headers.get("Module-Dependencies")));
-            }
+			if (StringUtils.isNotEmpty(headers.get("Module-Libs"))) {
+				container.setLibs(COMMA_DELIMITER_PATTERN.split(headers.get("Module-Libs")));
 
-	        if(StringUtils.isNotEmpty(headers.get("Module-Config"))){
-		        String path = headers.get("Module-Config");
+                File libsFolder = OSGiUtils.getService(bundleContext, ICore.class).getFolders().getLibrariesFolder();
 
-		        
-	        }
+                for(String lib : container.getLibs()){
+                    File libFile = new File(libsFolder, lib);
 
-            modules.add(container);
-        } catch (BundleException e) {
-            LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
-            OSGiUtils.getService(bundleContext, IErrorService.class).addError(new JThequeError(e));
-        }
-    }
+                    bundleContext.installBundle("file:" + libFile.getAbsolutePath());
+                }
+			} else {
+				container.setLibs(EMPTY_ARRAY);
+			}
 
-    @Override
-    public ModuleContainer installModule(File file) {
-        return null;  //Todo install a file
-    }
+			if (StringUtils.isNotEmpty(headers.get("Module-Dependencies"))) {
+				container.setDependencies(COMMA_DELIMITER_PATTERN.split(headers.get("Module-Dependencies")));
+			} else {
+				container.setDependencies(EMPTY_ARRAY);
+			}
+
+			String path = headers.get("Module-Config");
+
+			if (StringUtils.isNotEmpty(path)) {
+				container.setResources(importConfig(id, bundle, path));
+			}
+		} catch (BundleException e) {
+			LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
+			OSGiUtils.getService(bundleContext, IErrorService.class).addError(new JThequeError(e));
+		}
+
+		return container;
+	}
+
+	private ModuleResources importConfig(String id, Bundle bundle, String path) {
+		ModuleResources resources = new ModuleResources();
+
+		XMLOverReader reader = new XMLOverReader();
+		try {
+			reader.openURL(bundle.getResource(path));
+
+			while (reader.next("/config/i18n/i18nResource")) {
+				String name = reader.readString("@name");
+				Version version = new Version(reader.readString("@version"));
+
+				List<I18NResource> i18NResources = new ArrayList<I18NResource>(3);
+
+				while (reader.next("classpath")) {
+					String classpath = reader.readString("text()");
+
+					i18NResources.add(I18NResourceFactory.fromURL(classpath.substring(classpath.lastIndexOf('/') + 1), bundle.getResource(classpath)));
+
+					reader.switchToParent();
+				}
+
+				languageService.registerResource(name, version, i18NResources.toArray(new I18NResource[i18NResources.size()]));
+
+				resources.addI18NResource(name);
+
+				reader.switchToParent();
+			}
+
+			while (reader.next("/config/resources/resource")) {
+				String name = reader.readString("@name");
+				String classpath = reader.readString("classpath");
+
+				resourceService.registerResource(name, new UrlResource(bundle.getResource(classpath)));
+
+				resources.addResource(name);
+			}
+		} catch (XMLException e) {
+			LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
+			OSGiUtils.getService(bundleContext, IErrorService.class).addError(new JThequeError(e));
+		}
+
+		return resources;
+	}
 }

@@ -51,6 +51,7 @@ public class JThequeCheckBox extends JCheckBox implements Internationalizable {
      * Construct a new JThequeCheckBox.
      *
      * @param key The internationalization key.
+     * @param replaces The i18n replaces. 
      */
     public JThequeCheckBox(String key, Object[] replaces) {
         super();

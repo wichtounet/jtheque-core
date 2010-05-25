@@ -16,6 +16,11 @@ package org.jtheque.core.able.lifecycle;
  * limitations under the License.
  */
 
+/**
+ * A lifecyle specification. This class is responsible of the lifecyle of the core.
+ *
+ * @author Baptiste Wicht
+ */
 public interface ILifeCycle {
     /**
      * Exit the application.

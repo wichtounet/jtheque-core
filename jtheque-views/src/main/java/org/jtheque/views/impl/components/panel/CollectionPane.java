@@ -60,6 +60,11 @@ public final class CollectionPane extends JXPanel implements ICollectionView, Fi
 
     private final ICore core;
 
+    /**
+     * Construct a new CollectionPane.
+     *
+     * @param core The core. 
+     */
     public CollectionPane(ICore core) {
         super();
 

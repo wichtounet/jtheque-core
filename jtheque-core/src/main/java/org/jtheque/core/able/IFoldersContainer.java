@@ -30,13 +30,6 @@ public interface IFoldersContainer {
     File getApplicationFolder();
 
     /**
-     * Return the skins folder. It seems the folder where the skins are located.
-     *
-     * @return The File object who denotes the skins folder.
-     */
-    File getSkinsFolder();
-
-    /**
      * Returns the logs folder. It seems the folder where the logs are located.
      *
      * @return the File object who denotes the logs folder.
@@ -44,7 +37,8 @@ public interface IFoldersContainer {
     File getLogsFolder();
 
     /**
-     * Return the libraries folder. It seems the folder where the libraries are located.
+     * Return the libraries folder. It seems the folder where the libraries are located. This folder
+     * is only for the librairies of the modules. 
      *
      * @return The File object who denotes the libraries folder.
      */

@@ -38,14 +38,40 @@ public class OSGIMenu extends AbstractMenu implements BundleContextAware, Applic
 		this.bundleContext = bundleContext;
 	}
 
+
+    /**
+     * Return the service of the given class.
+     *
+     * @param classz The class to get the service.
+     * @param <T>    The type of service.
+     *
+     * @return The service of the given class if it's exists otherwise null.
+     */
     protected <T> T getService(Class<T> classz){
         return OSGiUtils.getService(bundleContext, classz);
     }
 
+    /**
+     * Return the bean of the given class using the application context.
+     *
+     * @param classz The classz of the bean to get from application context.
+     * @param <T> The type of bean to get.
+     *
+     * @return The bean of the given class or null if it doesn't exist. 
+     */
     protected <T> T getBean(Class<T> classz){
         return applicationContext.getBean(classz);
     }
 
+    /**
+     * Return the bean of the given class using the application context. The bean will be retrieved in the EDT, so
+     * it can be used for a Swing bean.
+     *
+     * @param classz The classz of the bean to get from application context.
+     * @param <T> The type of bean to get.
+     *
+     * @return The bean of the given class or null if it doesn't exist.
+     */
 	protected <T> T getBeanFromEDT(Class<T> classz){
         return new SwingSpringProxy<T>(classz, applicationContext).get();
     }

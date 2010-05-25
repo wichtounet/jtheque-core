@@ -19,10 +19,21 @@ import org.springframework.core.io.Resource;
  * limitations under the License.
  */
 
+/**
+ * An i18n resource implementation.
+ *
+ * @author Baptiste Wicht
+ */
 public final class I18NResourceImpl implements I18NResource {
     private final String fileName;
     private final Resource resource;
 
+    /**
+     * Construct a new I18NResourceImpl.
+     *
+     * @param fileName The file name.
+     * @param resource The spring resource to the file.
+     */
     public I18NResourceImpl(String fileName, Resource resource) {
         super();
 
@@ -42,7 +53,7 @@ public final class I18NResourceImpl implements I18NResource {
 
     @Override
     public String toString() {
-        return "I18NResourceFactory{" +
+        return "I18NResourceImpl{" +
                 "fileName='" + fileName + '\'' +
                 ", resource=" + resource +
                 '}';

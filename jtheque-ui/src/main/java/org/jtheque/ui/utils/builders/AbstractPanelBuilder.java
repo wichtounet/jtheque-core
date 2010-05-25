@@ -26,6 +26,11 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.LayoutManager;
 
+/**
+ * An abstract panel builder. Implements only simple adds to JPanel and GridBagLayout utilities.
+ *
+ * @author Baptiste Wicht
+ */
 public abstract class AbstractPanelBuilder implements PanelBuilder {
     private final JPanel panel;
 

@@ -22,7 +22,20 @@ import org.jtheque.ui.utils.components.JThequeI18nLabel;
 import javax.swing.JCheckBox;
 import java.awt.LayoutManager;
 
+/**
+ * An internationalized panel builder. This builder add methods to add internationalized components
+ * to the builded panel.
+ *
+ * @author Baptiste Wicht
+ */
 public interface I18nPanelBuilder extends PanelBuilder {
+    /**
+     * Set the internationalizable container to use for this builder. This internationalizable container is 
+     * used to keep all the internationalizables elements of the builded panel and keep them up to date with
+     * the current language.
+     *
+     * @param container The internationalizable container to use.
+     */
     void setInternationalizableContainer(InternationalizableContainer container);
 
     /**

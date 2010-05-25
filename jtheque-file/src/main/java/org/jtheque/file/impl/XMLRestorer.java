@@ -35,6 +35,9 @@ import java.util.List;
  * @author Baptiste Wicht
  */
 public final class XMLRestorer {
+    /**
+     * Utility class, not instanciable.
+     */
     private XMLRestorer() {
         super();
     }

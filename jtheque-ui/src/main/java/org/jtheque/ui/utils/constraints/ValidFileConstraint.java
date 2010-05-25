@@ -77,6 +77,7 @@ public final class ValidFileConstraint implements Constraint {
      * Construct a new NotNullConstraint.
      *
      * @param fieldName The field name.
+     * @param maxLength The max length of the field. 
      */
     public ValidFileConstraint(String fieldName, int maxLength) {
         super();

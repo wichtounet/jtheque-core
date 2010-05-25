@@ -22,20 +22,29 @@ package org.jtheque.modules.able;
  * @author Baptiste Wicht
  */
 public enum ModuleState {
-    LOADED,
-    INSTALLED,
-    JUST_INSTALLED,
-    DISABLED,
-    UNINSTALLED;
+	STARTED ("modules.states.started"),
+    INSTALLED ("modules.states.installed"),
+    DISABLED ("modules.states.disabled");
 
-    /**
+	private final String key;
+
+	/**
+	 * Construct a new ModuleState.
+	 *
+	 * @param key The i18n key of the module state. 
+	 */
+	ModuleState(String key) {
+		this.key = key;
+	}
+
+	/**
      * Return the enum value from the ordinal value.
      *
      * @param ordinal The ordinal value.
      * @return The enum value corresponding to the ordinal value.
      */
     public static ModuleState valueOf(int ordinal) {
-        ModuleState state = LOADED;
+        ModuleState state = STARTED;
 
         for (ModuleState s : values()) {
             if (s.ordinal() == ordinal) {
@@ -46,4 +55,13 @@ public enum ModuleState {
 
         return state;
     }
+
+	/**
+	 * Return the i18n key.
+	 *
+	 * @return the i18n key. 
+	 */
+	public String getKey() {
+		return key;
+	}
 }

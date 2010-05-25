@@ -28,7 +28,7 @@ import java.util.Collection;
  * @author Baptiste Wicht
  */
 public interface ICore {
-    Version VERSION = new Version("2.1");
+    Version VERSION = new Version("2.1.0");
 
     String FORUM_URL = "http://www.developpez.net/forums/f751/applications/projets/projets-heberges/jtheque/";
     String VERSIONS_FILE_URL = "http://jtheque.developpez.com/public/versions/Core.versions";
@@ -100,6 +100,11 @@ public interface ICore {
      */
     ICoreConfiguration getConfiguration();
 
+    /**
+     * The lifecycle of the core.
+     *
+     * @return The lifecycle of the core. 
+     */
     ILifeCycle getLifeCycle();
 
     /**

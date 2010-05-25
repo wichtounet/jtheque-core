@@ -18,6 +18,12 @@
         <fileset id="fileset5" name="jtheque-states-filset" removed="false">
           <file>file://$MODULE_DIR$/../jtheque-states/src/main/resources/META-INF/spring/jtheque-states.xml</file>
         </fileset>
+        <fileset id="fileset6" name="jtheque-events-fileset" removed="false">
+          <file>file://$MODULE_DIR$/../jtheque-events/src/main/resources/META-INF/spring/jtheque-events.xml</file>
+        </fileset>
+        <fileset id="fileset7" name="jtheque-core-fileset" removed="false">
+          <file>file://$MODULE_DIR$/../jtheque-core/src/main/resources/META-INF/spring/jtheque-core.xml</file>
+        </fileset>
       </configuration>
     </facet>
   </component>
@@ -46,7 +52,7 @@
     <orderEntry type="library" exported="" name="Maven: org.springframework:spring-expression:3.0.0.RELEASE" level="project" />
     <orderEntry type="library" exported="" name="Maven: org.springframework.osgi:spring-osgi-core:1.2.1" level="project" />
     <orderEntry type="module" module-name="jtheque-states" exported="" />
-    <orderEntry type="library" exported="" name="Maven: org.jtheque:org.jtheque.xml.utils:1.0-SNAPSHOT" level="project" />
+    <orderEntry type="module" module-name="jtheque-xml-utils" exported="" />
     <orderEntry type="module" module-name="jtheque-jdom" exported="" />
     <orderEntry type="library" exported="" name="Maven: org.jdom:jdom:1.1" level="project" />
     <orderEntry type="module" module-name="jtheque-xercesImpl" exported="" />

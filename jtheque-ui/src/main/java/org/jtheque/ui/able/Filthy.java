@@ -19,6 +19,11 @@ import java.awt.Font;
  * limitations under the License.
  */
 
+/**
+ * An utility interface for filthy views.
+ *
+ * @author Baptiste Wicht
+ */
 public interface Filthy {
     Color INPUT_COLOR = new Color(70, 70, 70);
     Color INPUT_BORDER_COLOR = new Color(220, 220, 220);

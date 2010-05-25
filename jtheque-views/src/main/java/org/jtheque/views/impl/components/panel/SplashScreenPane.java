@@ -67,6 +67,8 @@ public final class SplashScreenPane extends BufferedLayerUI<JComponent> implemen
 
     /**
      * Construct a new SplashScreenPane.
+     * 
+     * @param core The core.
      */
     public SplashScreenPane(ICore core) {
         super();

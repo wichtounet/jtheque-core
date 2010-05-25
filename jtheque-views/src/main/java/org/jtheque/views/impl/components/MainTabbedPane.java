@@ -44,8 +44,8 @@ public final class MainTabbedPane extends LayerTabbedPane {
 
     /**
      * Construct a new MainTabbedPane.
-     * @param languageService
-     * @param views
+     * @param languageService The language service.
+     * @param views The views.
      */
     public MainTabbedPane(ILanguageService languageService, IViews views) {
         super(languageService);
@@ -56,6 +56,9 @@ public final class MainTabbedPane extends LayerTabbedPane {
         setTabPlacement(TOP);
     }
 
+    /**
+     * Build the main tabbed pane. Called by Spring.
+     */
     @PostConstruct
     public void build(){
         List<MainComponent> components = CollectionUtils.copyOf(views.getMainComponents());
@@ -72,6 +75,9 @@ public final class MainTabbedPane extends LayerTabbedPane {
         languageService.addInternationalizable(new TabTitleUpdater(this, cs));
     }
 
+    /**
+     * Refresh all components. 
+     */
     public void refreshComponents() {
         removeAll();
 
@@ -86,6 +92,11 @@ public final class MainTabbedPane extends LayerTabbedPane {
         SwingUtils.refresh(this);
     }
 
+	/**
+	 * Remove the specified main component.
+	 *
+	 * @param component The component to remove. 
+	 */
     public void removeMainComponent(MainComponent component) {
         removeTabAt(indexOfTab(languageService.getMessage(component.getTitleKey())));
 

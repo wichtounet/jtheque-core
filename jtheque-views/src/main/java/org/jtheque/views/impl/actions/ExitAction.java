@@ -34,6 +34,7 @@ public final class ExitAction extends JThequeAction {
 
     /**
      * Construct a new ExitAction.
+     * @param core The core. 
      */
     public ExitAction(ICore core) {
         super("menu.exit", core.getApplication().getName());

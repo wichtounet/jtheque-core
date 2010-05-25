@@ -1,4 +1,7 @@
-package org.jtheque.events.able;
+package org.jtheque.events.utils;
+
+import org.jtheque.events.able.EventLevel;
+import org.jtheque.events.able.IEvent;
 
 import java.util.Date;
 
@@ -23,7 +26,7 @@ import java.util.Date;
  *
  * @author Baptiste Wicht
  */
-public final class Event {
+public final class Event implements IEvent {
     private final EventLevel level;
     private final Date date;
     private final String source;
@@ -59,29 +62,17 @@ public final class Event {
         this.titleKey = titleKey;
     }
 
-    /**
-     * Return the log of the event.
-     *
-     * @return The log of the event.
-     */
+    @Override
     public String getLog() {
         return log;
     }
 
-    /**
-     * Set the log of the event.
-     *
-     * @param log The log of the event.
-     */
+    @Override
     public void setLog(String log) {
         this.log = log;
     }
 
-    /**
-     * Return the details internationalization key.
-     *
-     * @return The details internationalization key.
-     */
+    @Override
     public String getDetailsKey() {
         return detailsKey;
     }
@@ -95,38 +86,22 @@ public final class Event {
         this.detailsKey = detailsKey;
     }
 
-    /**
-     * Return the level of the event.
-     *
-     * @return The level of the event.
-     */
+    @Override
     public EventLevel getLevel() {
         return level;
     }
 
-    /**
-     * Return the date of the event.
-     *
-     * @return The date of the event.
-     */
+    @Override
     public Date getDate() {
         return (Date) date.clone();
     }
 
-    /**
-     * Return the source of the event.
-     *
-     * @return The source of the event.
-     */
+    @Override
     public String getSource() {
         return source;
     }
 
-    /**
-     * Return the title internationalization key.
-     *
-     * @return The title internationalization key.
-     */
+    @Override
     public String getTitleKey() {
         return titleKey;
     }

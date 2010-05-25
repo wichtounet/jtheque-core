@@ -10,6 +10,7 @@ import org.jtheque.ui.utils.builders.FilthyPanelBuilder;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.ui.utils.filthy.FilthyBackgroundPanel;
 
+import javax.annotation.PostConstruct;
 import javax.swing.JComponent;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -41,12 +42,22 @@ public abstract class FilthyBuildedPanel extends FilthyBackgroundPanel implement
 		super();
 	}
 
+    /**
+     * Construct a new FilthyBuildedPanel.
+     *
+     * @param filthyUtils The filthyUtils.
+     * @param languageService The language service. 
+     */
 	public FilthyBuildedPanel(IFilthyUtils filthyUtils, ILanguageService languageService) {
         super(filthyUtils);
 
         this.languageService = languageService;
     }
 
+    /**
+     * Build the panel. 
+     */
+    @PostConstruct
     protected final void build(){
         getLanguageService().addInternationalizable(this);
 
@@ -65,6 +76,11 @@ public abstract class FilthyBuildedPanel extends FilthyBackgroundPanel implement
      */
     protected abstract void buildView(I18nPanelBuilder builder);
 
+    /**
+     * Return the language service to use to internationalize the panel.
+     *
+     * @return The language service. 
+     */
 	protected ILanguageService getLanguageService(){
 		return languageService;
 	}

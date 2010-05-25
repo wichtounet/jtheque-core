@@ -75,5 +75,10 @@ public interface IMainView extends IView {
      */
     JComponent getSelectedComponent();
 
+    /**
+     * Return the state bar of the view.
+     *
+     * @return The statebar of the view.
+     */
     JThequeStateBar getStateBar();
 }

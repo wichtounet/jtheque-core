@@ -25,9 +25,9 @@ import java.util.Comparator;
 /**
  * @author Baptiste Wicht
  */
-final class ModuleComparator implements Comparator<ModuleContainer> {
+final class ModuleComparator implements Comparator<Module> {
     @Override
-    public int compare(ModuleContainer o1, ModuleContainer o2) {
+    public int compare(Module o1, Module o2) {
         boolean hasDependency = hasDependency(o1);
         boolean hasOtherDependency = hasDependency(o2);
 

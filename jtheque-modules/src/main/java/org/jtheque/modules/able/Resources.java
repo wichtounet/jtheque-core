@@ -1,9 +1,6 @@
-package org.jtheque.views.impl.actions.event;
+package org.jtheque.modules.able;
 
-import org.jtheque.ui.utils.actions.JThequeAction;
-import org.jtheque.views.able.IViews;
-
-import java.awt.event.ActionEvent;
+import java.util.List;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -21,17 +18,23 @@ import java.awt.event.ActionEvent;
  * limitations under the License.
  */
 
-public class DisplayLogsViewAction extends JThequeAction {
-    private final IViews views;
+/**
+ * The resources of the module. This is the resources declared in the XML file of the module.
+ *
+ * @author Baptiste Wicht
+ */
+public interface Resources {
+    /**
+     * Return all the resources of the modules.
+     *
+     * @return A List containing all the resources of the modules.
+     */
+	List<String> getResources();
 
-    public DisplayLogsViewAction(IViews views) {
-        super("log.view.actions.display");
-
-        this.views = views;
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        views.getEventView().display();
-    }
+    /**
+     * Return all the i18n resources of the modules.
+     *
+     * @return A List containing all the i18n resources of the modules. 
+     */
+	List<String> getI18NResources();
 }

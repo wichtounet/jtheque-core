@@ -22,10 +22,27 @@ import java.lang.annotation.Target;
  * limitations under the License.
  */
 
+/**
+ * Annotation to describe a state.
+ *
+ * @author Baptiste Wicht
+ */
 @Documented
 @Retention(value = RetentionPolicy.RUNTIME)
 @Target(value = ElementType.TYPE)
 public @interface State {
+
+    /**
+     * Return the id of the state. Must be unique.
+     *
+     * @return The id of the state.
+     */
     String id();
+
+    /**
+     * Indicate if this state is delegated.
+     *
+     * @return true if the state is delegated else false.
+     */
     boolean delegated() default false;
 }

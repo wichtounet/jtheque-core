@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
 
 import org.jtheque.cache.able.CacheConfiguration;
 
-import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import java.io.File;
 import java.lang.reflect.Field;
@@ -40,19 +39,24 @@ public final class CacheService implements ICacheService {
 
     private final ICore core;
 
+    /**
+     * Create a new CacheService.
+     *
+     * @param core The core.
+     */
     public CacheService(ICore core) {
         super();
 
         this.core = core;
-    }
 
-    @PostConstruct
-    public void preInit() {
         CacheManager manager = CacheManager.create();
 
         setDiskStorePath(manager, core.getFolders().getCacheFolder());
     }
 
+    /**
+     * Close the cache.
+     */
     @PreDestroy
     public void close(){
         getCacheManager().shutdown();

@@ -16,10 +16,8 @@ package org.jtheque.update.able;
  * limitations under the License.
  */
 
-import org.jtheque.modules.able.IModuleDescription;
 import org.jtheque.modules.able.Module;
 import org.jtheque.modules.impl.InstallationResult;
-import org.jtheque.update.impl.versions.VersionsFile;
 import org.jtheque.utils.bean.Version;
 
 import java.util.Collection;
@@ -82,7 +80,7 @@ public interface IUpdateService {
      * @param object The object to get the versions for.
      * @return A List containing all the versions of the updatable.
      */
-    Collection<? extends Version> getVersions(Object object);
+    Collection<Version> getVersions(Object object);
 
     /**
      * Install a module from a versions file.
@@ -143,5 +141,10 @@ public interface IUpdateService {
      */
     Version getMostRecentVersion(Object object);
 
+    /**
+     * Return the most recent version of the core.
+     *
+     * @return The most recent version of the core.
+     */
     Version getMostRecentCoreVersion();
 }

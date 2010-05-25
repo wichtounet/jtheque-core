@@ -29,6 +29,7 @@ import org.jtheque.utils.bean.Version;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.FileSystemResource;
 
+import javax.annotation.Resource;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -43,23 +44,29 @@ public final class Core implements ICore {
 
     private final Collection<String> creditsMessage;
 
-    private Application application;
-
     private final IFoldersContainer foldersContainer;
     private final IFilesContainer filesContainer;
-    private final LifeCycle lifeCycle;
     private final ICoreConfiguration configuration;
-
     private final IResourceService resourceService;
+    private final ILifeCycle lifeCycle;
 
-    public Core(IStateService stateService, IEventService eventService, IResourceService resourceService) {
+	private Application application;
+
+    /**
+     * Construct a new Core.
+     *
+     * @param stateService The state service.
+     * @param resourceService The resource service.
+     * @param eventService The event service. 
+     */
+    public Core(IStateService stateService, IResourceService resourceService, IEventService eventService) {
         super();
 
         this.resourceService = resourceService;
+	    lifeCycle = new LifeCycle(eventService, this);
 
-        foldersContainer = new Folders(this);
+	    foldersContainer = new Folders(this);
         filesContainer = new Files(this);
-        lifeCycle = new LifeCycle(eventService, this);
 
         configuration = stateService.getState(new CoreConfiguration());
 
@@ -93,10 +100,8 @@ public final class Core implements ICore {
 
     @Override
     public boolean isNotCompatibleWith(Version version) {
-		//Compatible with 2.0.2 and greater versions
-        Version version202 = new Version("2.0.2");
-
-        return !(version.equals(version202) || version.isGreaterThan(version202));
+        //Compatible with 2.1.0 and greater
+        return !(version.equals(VERSION) || version.isGreaterThan(VERSION));
     }
 
     @Override

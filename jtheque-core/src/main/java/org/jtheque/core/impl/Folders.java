@@ -32,12 +32,16 @@ public final class Folders implements IFoldersContainer {
     private File applicationFolder;
     private File librariesFolder;
     private File modulesFolder;
-    private File skinsFolder;
     private File logsFolder;
     private File cacheFolder;
 
     private final ICore core;
 
+    /**
+     * Construct a new Folders.
+     *
+     * @param core The core. 
+     */
     public Folders(ICore core) {
         super();
 
@@ -56,20 +60,9 @@ public final class Folders implements IFoldersContainer {
     }
 
     @Override
-    public File getSkinsFolder() {
-        if (skinsFolder == null) {
-            skinsFolder = new File(getApplicationFolder(), "/skins");
-
-            FileUtils.createIfNotExists(skinsFolder);
-        }
-
-        return skinsFolder;
-    }
-
-    @Override
     public File getLogsFolder() {
         if (logsFolder == null) {
-            logsFolder = new File(getApplicationFolder(), "/logs");
+            logsFolder = new File(getApplicationFolder(), "logs");
 
             FileUtils.createIfNotExists(logsFolder);
         }
@@ -80,7 +73,7 @@ public final class Folders implements IFoldersContainer {
     @Override
     public File getLibrariesFolder() {
         if (librariesFolder == null) {
-            librariesFolder = new File(getApplicationFolder(), "/lib");
+            librariesFolder = new File(getApplicationFolder(), "lib");
 
             FileUtils.createIfNotExists(librariesFolder);
         }
@@ -91,7 +84,7 @@ public final class Folders implements IFoldersContainer {
     @Override
     public File getModulesFolder() {
         if (modulesFolder == null) {
-            modulesFolder = new File(getApplicationFolder(), "/modules");
+            modulesFolder = new File(getApplicationFolder(), "modules");
 
             FileUtils.createIfNotExists(modulesFolder);
         }
@@ -102,7 +95,7 @@ public final class Folders implements IFoldersContainer {
     @Override
     public File getCacheFolder() {
         if (cacheFolder == null) {
-            cacheFolder = new File(getApplicationFolder(), "/cache");
+            cacheFolder = new File(getApplicationFolder(), "cache");
 
             FileUtils.createIfNotExists(cacheFolder);
         }

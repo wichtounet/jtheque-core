@@ -26,7 +26,8 @@ import java.util.EventListener;
 public interface UpdatableListener extends EventListener {
     /**
      * An updatable was added.
-     * @param updatable
+     *
+     * @param updatable The added updatable.
      */
     void updatableAdded(Updatable updatable);
 }

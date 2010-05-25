@@ -42,6 +42,11 @@ public final class SplashService implements ISplashService, ApplicationContextAw
     private final ICore core;
     private ApplicationContext applicationContext;
 
+	/**
+	 * Construct a new SplashService.
+	 *
+	 * @param core The core. 
+	 */
     public SplashService(ICore core) {
         super();
 

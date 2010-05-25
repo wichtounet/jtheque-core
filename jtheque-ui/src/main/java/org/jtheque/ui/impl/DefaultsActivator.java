@@ -63,6 +63,11 @@ public class DefaultsActivator implements BundleActivator {
         //Nothing to stop
     }
 
+    /**
+     * A runnable to activate the defaults of the view in EDT.
+     *
+     * @author Baptiste Wicht
+     */
     private static class ActivateDefaults implements Runnable {
         @Override
         public void run() {

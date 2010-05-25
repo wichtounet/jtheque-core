@@ -16,29 +16,29 @@ package org.jtheque.views.impl.models;
  * limitations under the License.
  */
 
+import org.jtheque.ui.utils.models.SimpleListModel;
 import org.jtheque.update.able.IUpdateService;
 import org.jtheque.update.able.Updatable;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.modules.able.Module;
-
-import javax.swing.DefaultComboBoxModel;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * A combo box model to display versions.
  *
  * @author Baptiste Wicht
  */
-public final class VersionsComboBoxModel extends DefaultComboBoxModel {
+public final class VersionsComboBoxModel extends SimpleListModel<Version> {
     private Mode mode;
     private Module currentModule;
     private Updatable currentUpdatable;
 
-    private final List<Version> versions = new ArrayList<Version>(5);
-
     private final IUpdateService updateService;
 
+    /**
+     * Construct a new VersionsComboBoxModel.
+     * 
+     * @param updateService The update service to use.
+     */
     public VersionsComboBoxModel(IUpdateService updateService) {
         super();
 
@@ -54,23 +54,6 @@ public final class VersionsComboBoxModel extends DefaultComboBoxModel {
         UPDATABLE
     }
 
-    @Override
-    public Object getElementAt(int index) {
-        return versions.get(index);
-    }
-
-    @Override
-    public int getIndexOf(Object object) {
-        Version version = (Version) object;
-
-        return versions.indexOf(version);
-    }
-
-    @Override
-    public int getSize() {
-        return versions.size();
-    }
-
     /**
      * Load kernel versions into the model.
      */
@@ -78,8 +61,7 @@ public final class VersionsComboBoxModel extends DefaultComboBoxModel {
         if (mode != Mode.KERNEL) {
             mode = Mode.KERNEL;
 
-            versions.clear();
-            versions.addAll(updateService.getKernelVersions());
+            setElements(updateService.getKernelVersions());
         }
     }
 
@@ -93,8 +75,7 @@ public final class VersionsComboBoxModel extends DefaultComboBoxModel {
             mode = Mode.MODULE;
             currentModule = value;
 
-            versions.clear();
-            versions.addAll(updateService.getVersions(currentModule));
+            setElements(updateService.getVersions(currentModule));
         }
     }
 
@@ -108,17 +89,7 @@ public final class VersionsComboBoxModel extends DefaultComboBoxModel {
             mode = Mode.UPDATABLE;
             currentUpdatable = value;
 
-            versions.clear();
-            versions.addAll(updateService.getVersions(currentUpdatable));
+            setElements(updateService.getVersions(currentUpdatable));
         }
-    }
-
-    /**
-     * Return the selected version.
-     *
-     * @return The selected version.
-     */
-    public Version getSelectedVersion() {
-        return (Version) getSelectedItem();
     }
 }

@@ -11,17 +11,7 @@ import org.jtheque.ui.utils.components.BorderUpdater;
 import org.jtheque.ui.utils.components.JThequeCheckBox;
 import org.jtheque.ui.utils.components.JThequeI18nLabel;
 
-import javax.swing.Action;
-import javax.swing.BorderFactory;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JComponent;
-import javax.swing.JPanel;
-import javax.swing.JSeparator;
-import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
+import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.TableModel;
 import javax.swing.tree.TreeCellRenderer;
@@ -93,6 +83,11 @@ public class JThequePanelBuilder extends BasicPanelBuilder implements I18nPanelB
         this.container = container;
     }
 
+	/**
+	 * Return the internationalizable container of this builder.
+	 *
+	 * @return The internationalizable container of this builder. 
+	 */
     public InternationalizableContainer getContainer() {
         return container;
     }
@@ -104,7 +99,7 @@ public class JThequePanelBuilder extends BasicPanelBuilder implements I18nPanelB
     }
 
     @Override
-    public JComboBox addComboBox(DefaultComboBoxModel model, Object constraints) {
+    public JComboBox addComboBox(ComboBoxModel model, Object constraints) {
         JComboBox combo = new JComboBox(model);
 
         combo.setBackground(Color.white);
@@ -267,6 +262,11 @@ public class JThequePanelBuilder extends BasicPanelBuilder implements I18nPanelB
         return table;
     }
 
+	/**
+	 * Add an internationalizable to the builder.
+	 *
+	 * @param internationalizable The internationalizable to the builder. 
+	 */
     void addInternationalizable(Internationalizable internationalizable) {
         if(container != null){
             container.addInternationalizable(internationalizable);

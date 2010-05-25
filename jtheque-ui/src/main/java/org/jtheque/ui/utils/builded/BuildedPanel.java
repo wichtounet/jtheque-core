@@ -30,23 +30,39 @@ import java.util.Collection;
  * limitations under the License.
  */
 
+/**
+ * A builded panel. This panel is builded using a panel builder.
+ *
+ * @author Baptiste Wicht
+ */
 public abstract class BuildedPanel extends JPanel implements InternationalizableContainer, IView {
     private final Collection<Internationalizable> internationalizables = new ArrayList<Internationalizable>(15);
 
 	private ILanguageService languageService;
-
 	private IModel model;
 
+    /**
+     * Construct a new builded panel.
+     *
+     * @param languageService The language service to use.
+     */
 	protected BuildedPanel(ILanguageService languageService) {
 		super();
 
 		this.languageService = languageService;
 	}
 
+    /**
+     * Construct a new builded panel providing no internationalizable service, so the class must override the
+     * getLanguageService() method.
+     */
 	protected BuildedPanel() {
 		super();
 	}
 
+    /**
+     * Build the view. Called by spring after construct.
+     */
 	@PostConstruct
     public final void build(){
 		getLanguageService().addInternationalizable(this);
@@ -66,6 +82,11 @@ public abstract class BuildedPanel extends JPanel implements Internationalizable
      */
     protected abstract void buildView(I18nPanelBuilder builder);
 
+    /**
+     * Return the language service to use to build the panel.
+     *
+     * @return The language service to build the panel. 
+     */
 	protected ILanguageService getLanguageService(){
 		return languageService;
 	}

@@ -46,6 +46,12 @@ public final class WindowsConfiguration extends AbstractState {
     private final ICore core;
     private final IViewService viewService;
 
+    /**
+     * Create a new WindowsConfiguration.
+     *
+     * @param core The core.
+     * @param viewService The view service.
+     */
     public WindowsConfiguration(ICore core, IViewService viewService) {
         super();
 
@@ -57,7 +63,7 @@ public final class WindowsConfiguration extends AbstractState {
     public void delegateLoad(Iterable<Node> nodes) {
         for (Node node : nodes) {
             if ("window".equals(node.getName())) {
-                WindowConfiguration configuration = new WindowConfiguration();
+                IWindowConfiguration configuration = new WindowConfiguration();
 
                 for (Node child : node.getChildrens()) {
                     applyValueFromChild(configuration, child);

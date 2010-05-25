@@ -4,6 +4,7 @@ import org.jtheque.core.utils.OSGiUtils;
 import org.jtheque.i18n.able.ILanguageService;
 import org.jtheque.modules.able.Module;
 import org.jtheque.modules.able.ModuleState;
+import org.jtheque.modules.able.Resources;
 import org.jtheque.utils.bean.Version;
 import org.osgi.framework.Bundle;
 
@@ -40,15 +41,16 @@ public final class ModuleContainer implements Module {
     private String updateUrl;
     private String messagesUrl;
     private boolean collection;
+	private ModuleResources resources;
 
-    public ModuleContainer(Bundle module) {
+	public ModuleContainer(Bundle module) {
         super();
 
         this.module = module;
     }
 
     @Override
-    public Bundle getModule() {
+    public Bundle getBundle() {
         return module;
     }
 
@@ -62,7 +64,12 @@ public final class ModuleContainer implements Module {
         this.state = state;
     }
 
-    @Override
+	@Override
+	public String getDisplayState() {
+		return OSGiUtils.getService(module.getBundleContext(), ILanguageService.class).getMessage(state.getKey());
+	}
+
+	@Override
     public String getId() {
         return id;
     }
@@ -100,6 +107,10 @@ public final class ModuleContainer implements Module {
         return coreVersion;
     }
 
+    /**
+     * Set the core version needed by the module.
+     * @param coreVersion The core version needed by the module.
+     */
     public void setCoreVersion(Version coreVersion) {
         this.coreVersion = coreVersion;
     }
@@ -109,6 +120,10 @@ public final class ModuleContainer implements Module {
         return url;
     }
 
+    /**
+     * Set the URL of the site of the module.
+     * @param url THe URL of the site of the module.
+     */
     public void setUrl(String url) {
         this.url = url;
     }
@@ -118,16 +133,21 @@ public final class ModuleContainer implements Module {
         return updateUrl;
     }
 
+	/**
+	 * Set the the URL to the update file of the module.
+	 *
+	 * @param updateUrl The URL to the update file of the module.
+	 */
     public void setUpdateUrl(String updateUrl) {
         this.updateUrl = updateUrl;
     }
 
     @Override
-    public String[] getBundles() {
+    public String[] getLibs() {
         return bundles;
     }
 
-    public void setBundles(String[] bundles) {
+    public void setLibs(String[] bundles) {
         this.bundles = bundles;
     }
 
@@ -154,7 +174,11 @@ public final class ModuleContainer implements Module {
         return getName();
     }
 
-    @Override
+    /**
+     * Set the boolean tag indicating if the module is collection-based or not.
+     *
+     * @param collection boolean tag indicating if the module is collection-based (true) or not (false).
+     */
     public void setCollection(boolean collection) {
         this.collection = collection;
     }
@@ -163,4 +187,13 @@ public final class ModuleContainer implements Module {
     public boolean isCollection() {
         return collection;
     }
+
+	@Override
+	public Resources getResources() {
+		return resources;
+	}
+
+	public void setResources(ModuleResources resources) {
+		this.resources = resources;
+	}
 }

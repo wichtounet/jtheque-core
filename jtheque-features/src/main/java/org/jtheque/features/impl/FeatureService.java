@@ -18,15 +18,14 @@ package org.jtheque.features.impl;
 
 import org.jtheque.core.utils.WeakEventListenerList;
 import org.jtheque.features.able.CoreFeature;
-import org.jtheque.features.able.Feature.FeatureType;
 import org.jtheque.features.able.Feature;
 import org.jtheque.features.able.FeatureListener;
+import org.jtheque.features.able.IFeature;
 import org.jtheque.features.able.IFeatureService;
 import org.jtheque.features.able.Menu;
 import org.jtheque.i18n.able.ILanguageService;
 import org.jtheque.modules.able.Module;
 import org.jtheque.modules.able.ModuleListener;
-import org.jtheque.modules.able.ModuleState;
 import org.jtheque.modules.utils.ModuleResourceCache;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.collections.CollectionUtils;
@@ -45,7 +44,7 @@ import java.util.Set;
 public final class FeatureService implements IFeatureService, ModuleListener {
     private final WeakEventListenerList listeners = new WeakEventListenerList();
 
-    private final Collection<Feature> features;
+    private final Collection<IFeature> features;
 
     private final Map<CoreFeature, Feature> coreFeatures;
 
@@ -61,7 +60,7 @@ public final class FeatureService implements IFeatureService, ModuleListener {
 
         this.languageService = languageService;
 
-        features = new ArrayList<Feature>(10);
+        features = new ArrayList<IFeature>(10);
 
         coreFeatures = new EnumMap<CoreFeature, Feature>(CoreFeature.class);
 
@@ -76,12 +75,12 @@ public final class FeatureService implements IFeatureService, ModuleListener {
         languageService.addInternationalizable(menu);
 
         for(CoreFeature feature : CoreFeature.values()){
-            for(Feature f : menu.getSubFeatures(feature)){
-                getFeature(feature).addSubFeature(f);
+            for(IFeature f : menu.getSubFeatures(feature)){
+                coreFeatures.get(feature).addSubFeature(f);
             }
         }
 
-        for(Feature f : menu.getMainFeatures()){
+        for(IFeature f : menu.getMainFeatures()){
             addFeature(f);
         }
 
@@ -97,8 +96,8 @@ public final class FeatureService implements IFeatureService, ModuleListener {
      *
      * @param feature The feature to add.
      */
-    private void addFeature(Feature feature) {
-        if (feature.getType() != FeatureType.PACK) {
+    private void addFeature(IFeature feature) {
+        if (feature.getType() != IFeature.FeatureType.PACK) {
             throw new IllegalArgumentException("Can only add feature of type pack directly. ");
         }
 
@@ -107,14 +106,19 @@ public final class FeatureService implements IFeatureService, ModuleListener {
         fireFeatureAdded(feature);
     }
 
+    /**
+     * Remove the specified menu.
+     *
+     * @param menu The menu to remove. 
+     */
     private void removeMenu(Menu menu){
         for(CoreFeature feature : CoreFeature.values()){
-            for(Feature f : menu.getSubFeatures(feature)){
-                getFeature(feature).removeSubFeature(f);
+            for(IFeature f : menu.getSubFeatures(feature)){
+                coreFeatures.get(feature).removeSubFeature(f);
             }
         }
 
-        for(Feature f : menu.getMainFeatures()){
+        for(IFeature f : menu.getMainFeatures()){
             removeFeature(f);
         }
     }
@@ -124,7 +128,7 @@ public final class FeatureService implements IFeatureService, ModuleListener {
      *
      * @param feature The feature to remove.
      */
-    private void removeFeature(Feature feature) {
+    private void removeFeature(IFeature feature) {
         features.remove(feature);
 
         fireFeatureRemoved(feature);
@@ -138,7 +142,7 @@ public final class FeatureService implements IFeatureService, ModuleListener {
      * @return The added feature.
      */
     private Feature createAndAddFeature(int position, String key) {
-        Feature feature = new ManagedFeature(FeatureType.PACK, key, position);
+        Feature feature = new ManagedFeature(IFeature.FeatureType.PACK, key, position);
 
         features.add(feature);
 
@@ -146,12 +150,12 @@ public final class FeatureService implements IFeatureService, ModuleListener {
     }
 
     @Override
-    public Collection<Feature> getFeatures() {
+    public Collection<IFeature> getFeatures() {
         return CollectionUtils.copyOf(features);
     }
 
     @Override
-    public Feature getFeature(CoreFeature feature) {
+    public IFeature getFeature(CoreFeature feature) {
         return coreFeatures.get(feature);
     }
 
@@ -170,7 +174,7 @@ public final class FeatureService implements IFeatureService, ModuleListener {
      *
      * @param feature The feature who's been added.
      */
-    private void fireFeatureAdded(Feature feature) {
+    private void fireFeatureAdded(IFeature feature) {
         FeatureListener[] l = listeners.getListeners(FeatureListener.class);
 
         for (FeatureListener listener : l) {
@@ -183,7 +187,7 @@ public final class FeatureService implements IFeatureService, ModuleListener {
      *
      * @param feature The feature who's been removed.
      */
-    private void fireFeatureRemoved(Feature feature) {
+    private void fireFeatureRemoved(IFeature feature) {
         FeatureListener[] l = listeners.getListeners(FeatureListener.class);
 
         for (FeatureListener listener : l) {
@@ -191,19 +195,31 @@ public final class FeatureService implements IFeatureService, ModuleListener {
         }
     }
 
-    @Override
-    public void moduleStateChanged(Module module, ModuleState newState, ModuleState oldState) {
-        if(oldState == ModuleState.LOADED && (newState == ModuleState.INSTALLED ||
-                newState == ModuleState.DISABLED || newState == ModuleState.UNINSTALLED)){
-            Set<Menu> resources = ModuleResourceCache.getResource(module.getId(), Menu.class);
+	@Override
+	public void moduleStopped(Module module) {
+		Set<Menu> resources = ModuleResourceCache.getResource(module.getId(), Menu.class);
 
-            for(Menu menu : resources){
-                removeMenu(menu);
-            }
+		for (Menu menu : resources) {
+			removeMenu(menu);
+		}
 
-            ModuleResourceCache.removeResourceOfType(module.getId(), Menu.class);
-        }
-    }
+		ModuleResourceCache.removeResourceOfType(module.getId(), Menu.class);
+	}
+
+	@Override
+	public void moduleStarted(Module module) {
+		//Nothing to do here
+	}
+
+	@Override
+	public void moduleInstalled(Module module) {
+		//Nothing to do here
+	}
+
+	@Override
+	public void moduleUninstalled(Module module) {
+		//Nothing to do here
+	}
 
     /**
      * A managed feature.
@@ -211,19 +227,26 @@ public final class FeatureService implements IFeatureService, ModuleListener {
      * @author Baptiste Wicht
      */
     protected final class ManagedFeature extends Feature {
+        /**
+         * Construct a new ManagedFeature.
+         *
+         * @param type The type of feature.
+         * @param titleKey The title key.
+         * @param position The position of the feature. 
+         */
         protected ManagedFeature(FeatureType type, String titleKey, Integer position) {
             super(type, titleKey, position);
         }
 
         @Override
-        public void addSubFeature(Feature feature) {
+        public void addSubFeature(IFeature feature) {
             super.addSubFeature(feature);
 
             fireSubFeatureAdded(this, feature);
         }
 
         @Override
-        public void removeSubFeature(Feature feature) {
+        public void removeSubFeature(IFeature feature) {
             super.removeSubFeature(feature);
 
             fireSubFeatureRemoved(this, feature);
@@ -235,7 +258,7 @@ public final class FeatureService implements IFeatureService, ModuleListener {
          * @param feature    The feature in which the sub feature has been added.
          * @param subFeature The subFeature who's been added.
          */
-        private void fireSubFeatureAdded(Feature feature, Feature subFeature) {
+        private void fireSubFeatureAdded(IFeature feature, IFeature subFeature) {
             FeatureListener[] l = listeners.getListeners(FeatureListener.class);
 
             for (FeatureListener listener : l) {
@@ -249,7 +272,7 @@ public final class FeatureService implements IFeatureService, ModuleListener {
          * @param feature    The feature in which the sub feature has been removed.
          * @param subFeature The subFeature who's been removed.
          */
-        private void fireSubFeatureRemoved(Feature feature, Feature subFeature) {
+        private void fireSubFeatureRemoved(IFeature feature, IFeature subFeature) {
             FeatureListener[] l = listeners.getListeners(FeatureListener.class);
 
             for (FeatureListener listener : l) {

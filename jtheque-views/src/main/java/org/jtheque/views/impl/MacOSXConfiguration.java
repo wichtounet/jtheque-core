@@ -40,6 +40,10 @@ public final class MacOSXConfiguration {
 
     /**
      * Configure the application for Mac menus.
+     *
+     * @param viewService The view service.
+     * @param core The core.
+     * @param views The views.
      */
     public static void configureForMac(IViewService viewService, ICore core, IViews views) {
         APPLICATION.addApplicationListener(new MacApplicationAdapter(viewService, core, views));

@@ -24,7 +24,6 @@ import java.util.Collection;
  * @author Baptiste Wicht
  */
 public interface IFeatureService {
-
 	/**
      * Add a menu to the application. It's an object who contains some features that will be
      * added to the menu bar.
@@ -39,7 +38,7 @@ public interface IFeatureService {
      *
      * @return A List containing all the features.
      */
-    Collection<Feature> getFeatures();
+    Collection<IFeature> getFeatures();
 
     /**
      * Return the core feature.
@@ -47,7 +46,7 @@ public interface IFeatureService {
      * @param feature The feature type.
      * @return The searched feature.
      */
-    Feature getFeature(CoreFeature feature);
+    IFeature getFeature(CoreFeature feature);
 
     /**
      * Add a feature listener.

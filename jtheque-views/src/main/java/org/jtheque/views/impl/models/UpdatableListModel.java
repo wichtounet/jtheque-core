@@ -16,50 +16,32 @@ package org.jtheque.views.impl.models;
  * limitations under the License.
  */
 
+import org.jtheque.ui.utils.models.SimpleListModel;
 import org.jtheque.update.able.IUpdateService;
 import org.jtheque.update.able.Updatable;
 import org.jtheque.update.able.UpdatableListener;
-import org.jtheque.utils.collections.CollectionUtils;
-
-import javax.swing.DefaultListModel;
-import java.util.List;
 
 /**
  * A List model to display the modules.
  *
  * @author Baptiste Wicht
  */
-public final class UpdatableListModel extends DefaultListModel implements UpdatableListener {
-    private final List<Updatable> updatables;
-
+public final class UpdatableListModel extends SimpleListModel<Updatable> implements UpdatableListener {
     /**
      * Construct a new ModuleListModel.
+     *
+     * @param updateService The update service. 
      */
     public UpdatableListModel(IUpdateService updateService) {
         super();
 
-        updatables = CollectionUtils.copyOf(updateService.getUpdatables());
+        setElements(updateService.getUpdatables());
 
         updateService.addUpdatableListener(this);
     }
 
     @Override
-    public Object getElementAt(int index) {
-        return updatables.get(index);
-    }
-
-    @Override
-    public Object get(int index) {
-        return updatables.get(index);
-    }
-
-    @Override
-    public int getSize() {
-        return updatables.size();
-    }
-
-    @Override
     public void updatableAdded(Updatable updatable) {
-        updatables.add(updatable);
+        addElement(updatable);
     }
 }

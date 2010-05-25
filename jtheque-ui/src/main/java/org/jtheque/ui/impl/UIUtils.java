@@ -4,18 +4,7 @@ import org.jtheque.i18n.able.ILanguageService;
 import org.jtheque.resources.able.IResourceService;
 import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.ui.able.ViewDelegate;
-import org.pushingpixels.substance.api.SubstanceLookAndFeel;
-import org.pushingpixels.substance.api.skin.SubstanceBusinessBlackSteelLookAndFeel;
-import org.pushingpixels.trident.TridentConfig;
-import org.pushingpixels.trident.interpolator.CorePropertyInterpolators;
-import org.pushingpixels.trident.swing.AWTPropertyInterpolators;
-import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
-
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -33,10 +22,22 @@ import javax.swing.UnsupportedLookAndFeelException;
  * limitations under the License.
  */
 
+/**
+ * An UI Utils implementation.
+ *
+ * @author Baptiste Wicht
+ */
 public class UIUtils implements IUIUtils {
     private final ViewDelegate viewDelegate;
     private final ILanguageService languageService;
 
+    /**
+     * Create a new UIUtils.
+     *
+     * @param viewDelegate The view delegate.
+     * @param languageService The language service.
+     * @param resourceService The resource service. 
+     */
     public UIUtils(ViewDelegate viewDelegate, ILanguageService languageService, IResourceService resourceService) {
         super();
 

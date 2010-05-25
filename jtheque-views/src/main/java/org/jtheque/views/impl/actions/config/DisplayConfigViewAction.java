@@ -21,9 +21,19 @@ import java.awt.event.ActionEvent;
  * limitations under the License.
  */
 
+/**
+ * An action to display the config.
+ *
+ * @author Baptiste Wicht
+ */
 public class DisplayConfigViewAction extends JThequeAction {
     private final IViews views;
 
+	/**
+	 * Construct a new DisplayConfigViewAction.
+	 *
+	 * @param views The views. 
+	 */
     public DisplayConfigViewAction(IViews views) {
         super("config.actions.display");
 

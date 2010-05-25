@@ -22,7 +22,6 @@ import org.jtheque.messages.able.IMessageService;
 import org.jtheque.modules.able.IModuleService;
 import org.jtheque.modules.able.Module;
 import org.jtheque.modules.able.ModuleListener;
-import org.jtheque.modules.able.ModuleState;
 import org.jtheque.modules.utils.ModuleResourceCache;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.bean.IntDate;
@@ -94,23 +93,34 @@ public final class MessageService implements IMessageService, ModuleListener {
     public Collection<IMessage> getMessages() {
         return messages;
     }
+	
+	@Override
+	public void moduleStopped(Module module) {
+		messages.removeAll(ModuleResourceCache.getResource(module.getId(), IMessage.class));
+	}
 
 	@Override
-	public void moduleStateChanged(Module module, ModuleState newState, ModuleState oldState) {
-		if(oldState == null){
-			if(StringUtils.isNotEmpty(module.getMessagesUrl())){
-				loadMessageFile(module.getMessagesUrl(), module);
-			}
-		} else if(oldState == ModuleState.LOADED && (newState == ModuleState.INSTALLED ||
-                newState == ModuleState.DISABLED || newState == ModuleState.UNINSTALLED)){
-			messages.removeAll(ModuleResourceCache.getResource(module.getId(), IMessage.class));
+	public void moduleStarted(Module module) {
+		if (StringUtils.isNotEmpty(module.getMessagesUrl())) {
+			loadMessageFile(module.getMessagesUrl(), module);
 		}
 	}
 
-    /**
+	@Override
+	public void moduleInstalled(Module module) {
+		//Nothing to do here
+	}
+
+	@Override
+	public void moduleUninstalled(Module module) {
+		//Nothing to do here
+	}
+
+	/**
      * Load a messages files.
      *
      * @param url The URL of the messages file.
+	 * @param module The module to load the message file from. 
      */
     private void loadMessageFile(String url, Module module) {
         try {

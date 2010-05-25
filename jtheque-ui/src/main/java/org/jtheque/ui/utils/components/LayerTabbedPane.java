@@ -48,7 +48,7 @@ public class LayerTabbedPane extends JTabbedPane implements ViewComponent {
     /**
      * Construct a new LayerTabbedPane.
      *
-     * @param languageService
+     * @param languageService The language service. 
      */
     public LayerTabbedPane(ILanguageService languageService) {
         super();

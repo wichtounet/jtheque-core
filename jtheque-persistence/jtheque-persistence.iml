@@ -38,7 +38,18 @@
     <orderEntry type="library" exported="" name="Maven: org.springframework:spring-context-support:3.0.0.RELEASE" level="project" />
     <orderEntry type="library" exported="" name="Maven: org.springframework.osgi:spring-osgi-core:1.2.1" level="project" />
     <orderEntry type="module" module-name="jtheque-states" exported="" />
-    <orderEntry type="library" exported="" name="Maven: org.jtheque:org.jtheque.xml.utils:1.0-SNAPSHOT" level="project" />
+    <orderEntry type="module" module-name="jtheque-xml-utils" exported="" />
+    <orderEntry type="module" module-name="jtheque-jdom" exported="" />
+    <orderEntry type="library" exported="" name="Maven: org.jdom:jdom:1.1" level="project" />
+    <orderEntry type="module" module-name="jtheque-xercesImpl" exported="" />
+    <orderEntry type="library" exported="" name="Maven: xerces:xercesImpl:2.9.1" level="project" />
+    <orderEntry type="library" exported="" name="Maven: xml-apis:xml-apis:1.3.04" level="project" />
+    <orderEntry type="module" module-name="jtheque-saxpath" exported="" />
+    <orderEntry type="library" exported="" name="Maven: org.jdom:saxpath:1.0-FCS" level="project" />
+    <orderEntry type="library" exported="" name="Maven: org.jdom:org.jtheque.jaxen-core:1.0.0" level="project" />
+    <orderEntry type="library" exported="" name="Maven: org.jdom:jaxen-core:1.0-FCS" level="project" />
+    <orderEntry type="library" exported="" name="Maven: org.jdom:org.jtheque.jaxen-jdom:1.0.0" level="project" />
+    <orderEntry type="library" exported="" name="Maven: org.jdom:jaxen-jdom:1.0-FCS" level="project" />
     <orderEntry type="module" module-name="jtheque-resources" exported="" />
     <orderEntry type="module" module-name="jtheque-core" exported="" />
     <orderEntry type="module" module-name="jtheque-events" exported="" />

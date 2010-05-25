@@ -91,6 +91,13 @@ public final class AboutPane extends AbstractAboutPane implements IAboutView, In
     private final ICore core;
     private final ILanguageService languageService;
 
+	/**
+	 * Construct a new AboutPane.
+	 *
+	 * @param licenceView The licence view.
+	 * @param core The core.
+	 * @param languageService The language service.
+	 */
     public AboutPane(ILicenceView licenceView, ICore core, ILanguageService languageService) {
         super(languageService, core);
 
@@ -431,7 +438,10 @@ public final class AboutPane extends AbstractAboutPane implements IAboutView, In
         AnimationUtils.startsLoopWhenStop(fadeAnimation, getTimeline());
         fadeAnimation.play();
     }
-    
+
+	/**
+	 * Make disappear the view. 
+	 */
     public void disappear() {
         getTimeline().suspend();
 

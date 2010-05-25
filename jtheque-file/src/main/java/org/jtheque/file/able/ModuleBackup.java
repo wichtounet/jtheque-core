@@ -23,31 +23,66 @@ import java.util.List;
  * limitations under the License.
  */
 
+/**
+ * A module backup. It's a backup of all the data of a module.
+ *
+ * @author Baptiste Wicht
+ */
 public class ModuleBackup {
     private Version version;
     private String id;
     private List<Node> nodes;
 
+    /**
+     * Return the id of the module.
+     *
+     * @return The id of the module.
+     */
     public String getId() {
         return id;
     }
 
+    /**
+     * Set the id of the module.
+     *
+     * @param id The id of the module.
+     */
     public void setId(String id) {
         this.id = id;
     }
 
+    /**
+     * Return all the nodes of the backup.
+     *
+     * @return All the nodes of the backup.
+     */
     public List<Node> getNodes() {
         return nodes;
     }
 
+    /**
+     * Set the nodes of the backup.
+     *
+     * @param nodes The nodes of the backup.
+     */
     public void setNodes(Collection<Node> nodes) {
         this.nodes = CollectionUtils.copyOf(nodes);
     }
 
+    /**
+     * Return the version of the backuper.
+     *
+     * @return The version of the backuper.
+     */
     public Version getVersion() {
         return version;
     }
 
+    /**
+     * Set the version of the backuper.
+     *
+     * @param version The version of the backuper.
+     */
     public void setVersion(Version version) {
         this.version = version;
     }

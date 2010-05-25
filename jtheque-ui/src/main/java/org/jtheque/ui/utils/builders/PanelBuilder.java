@@ -16,19 +16,7 @@ package org.jtheque.ui.utils.builders;
  * limitations under the License.
  */
 
-import javax.swing.Action;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JTable;
-import javax.swing.JTextArea;
-import javax.swing.JTree;
-import javax.swing.ListCellRenderer;
-import javax.swing.ListModel;
+import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.table.TableModel;
 import javax.swing.tree.TreeCellRenderer;
@@ -70,7 +58,7 @@ public interface PanelBuilder {
      * @param constraints The constraints to use to add to the panel.
      * @return The added JComboBox.
      */
-    JComboBox addComboBox(DefaultComboBoxModel model, Object constraints);
+    JComboBox addComboBox(ComboBoxModel model, Object constraints);
 
     /**
      * Add a combo box with a specific renderer.
@@ -80,7 +68,7 @@ public interface PanelBuilder {
      * @param constraints The constraints to use to add to the panel.
      * @return The added JComboBox.
      */
-    JComboBox addComboBox(DefaultComboBoxModel model, ListCellRenderer renderer, Object constraints);
+    JComboBox addComboBox(ComboBoxModel model, ListCellRenderer renderer, Object constraints);
 
     /**
      * Add a <code>Jlist</code> with the specified model.

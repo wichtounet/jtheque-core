@@ -9,7 +9,8 @@ import org.jtheque.core.utils.SystemProperty;
 import org.jtheque.core.able.application.Application;
 import org.jtheque.core.utils.OSGiUtils;
 import org.jtheque.errors.able.IErrorService;
-import org.jtheque.events.able.Event;
+import org.jtheque.errors.utils.JThequeError;
+import org.jtheque.events.utils.Event;
 import org.jtheque.events.able.EventLevel;
 import org.jtheque.events.able.IEventService;
 import org.jtheque.lifecycle.application.XMLApplicationReader;
@@ -46,6 +47,11 @@ import java.util.List;
  * limitations under the License.
  */
 
+/**
+ * An activator to launch the life cycle of the application.
+ *
+ * @author Baptiste Wicht
+ */
 public class LifeCycleActivator implements BundleActivator, CollectionListener {
     private BundleContext context;
 
@@ -87,7 +93,7 @@ public class LifeCycleActivator implements BundleActivator, CollectionListener {
     private static void configureLogging() {
         Logger rootLogger = (Logger)LoggerFactory.getLogger("root");
 
-        String level = "ERROR";
+        String level = "DEBUG";
 
         if (SystemProperty.JTHEQUE_LOG.get() != null) {
             level = SystemProperty.JTHEQUE_LOG.get();
@@ -108,14 +114,12 @@ public class LifeCycleActivator implements BundleActivator, CollectionListener {
     }
 
     private void startSecondPhase() {
-        getService(IModuleService.class).plugModules();
+        getService(IModuleService.class).startModules();
 
         getService(ICore.class).getLifeCycle().initTitle();
 
         getService(ISplashService.class).closeSplashScreen();
         getService(ISplashService.class).fillMainView();
-
-        getService(IErrorService.class).displayErrors();
 
         getService(IMessageService.class).loadMessages();
 

@@ -70,6 +70,11 @@ public final class Response {
         return ok;
     }
 
+	/**
+	 * Return the i18n key of the response.
+	 *
+	 * @return The i18n key of the response. 
+	 */
     public String getKey() {
         return key;
     }

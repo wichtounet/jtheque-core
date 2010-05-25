@@ -32,8 +32,9 @@ public final class VersionLabel extends JLabel {
      *
      * @param object     The object to display the version for.
      * @param foreground The foreground color.
+     * @param updateService The update service to use. 
      */
-    public VersionLabel(Object object, Color foreground, IUpdateService updateService) {//TODO choose one of updateService/object or version to put
+    public VersionLabel(Object object, Color foreground, IUpdateService updateService) {
         super();
 
         setForeground(foreground);

@@ -260,6 +260,9 @@ public final class MainView extends SwingFrameView implements TitleListener, IMa
         }
     }
 
+	/**
+	 * Add the main component to the view. 
+	 */
     private void addComponent() {
         if(current == 0){
             content.getView().removeAll();

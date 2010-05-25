@@ -1,4 +1,4 @@
-package org.jtheque.persistence.impl;
+package org.jtheque.persistence.utils;
 
 import org.jtheque.persistence.able.DataContainer;
 import org.jtheque.persistence.utils.DataContainerProvider;

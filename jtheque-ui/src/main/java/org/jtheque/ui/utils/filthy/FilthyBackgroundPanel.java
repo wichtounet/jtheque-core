@@ -35,10 +35,19 @@ public class FilthyBackgroundPanel extends JPanel implements Filthy {
     private IFilthyUtils filthyUtils;
     private Image gradientImage;
 
+    /**
+     * Construct a new FilthyBackgroundPanel. Using this constructor, the extended class must
+     * override the getFilthyUtils method to provide a FilthyUtils service to the panel.
+     */
 	public FilthyBackgroundPanel() {
 		super();
 	}
 
+    /**
+     * Construct a new FilthyBackgroundPanel.
+     *
+     * @param filthyUtils The filthy utils. 
+     */
 	public FilthyBackgroundPanel(IFilthyUtils filthyUtils) {
         super();
 
@@ -54,6 +63,11 @@ public class FilthyBackgroundPanel extends JPanel implements Filthy {
         gradientImage = getFilthyUtils().paintFilthyBackground(g, gradientImage, tracker, this);
     }
 
+    /**
+     * Return the filthy utils to use to paint this panel.
+     *
+     * @return The filthy utils to use.
+     */
 	protected IFilthyUtils getFilthyUtils(){
 		return filthyUtils;
 	}

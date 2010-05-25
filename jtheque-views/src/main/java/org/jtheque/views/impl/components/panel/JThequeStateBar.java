@@ -19,7 +19,7 @@ package org.jtheque.views.impl.components.panel;
 import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.utils.ui.SwingUtils;
 import org.jtheque.views.able.IViews;
-import org.jtheque.views.able.components.StateBarComponent;
+import org.jtheque.views.able.components.IStateBarComponent;
 
 import javax.swing.Box;
 import javax.swing.JPanel;
@@ -50,7 +50,8 @@ public final class JThequeStateBar extends JPanel {
 
     /**
      * Construct a new JThequeStateBar.
-     * @param viewService
+     *
+     * @param viewService The view service.
      */
     public JThequeStateBar(IViews viewService) {
         super();
@@ -67,7 +68,7 @@ public final class JThequeStateBar extends JPanel {
      * Build the state bar.
      */
     private void build() {
-        List<StateBarComponent> components = new ArrayList<StateBarComponent>(viewService.getStateBarComponents());
+        List<IStateBarComponent> components = new ArrayList<IStateBarComponent>(viewService.getStateBarComponents());
 
         if (components.isEmpty()) {
             setVisible(false);
@@ -89,9 +90,9 @@ public final class JThequeStateBar extends JPanel {
      *
      * @param components The state bar components.
      */
-    private void addLeftComponents(Iterable<StateBarComponent> components) {
-        for (StateBarComponent component : components) {
-            if (component.isLeft()) {
+    private void addLeftComponents(Iterable<IStateBarComponent> components) {
+        for (IStateBarComponent component : components) {
+            if (component.getPosition() == IStateBarComponent.Position.LEFT) {
                 addComponent(component.getComponent());
                 leftFilled = true;
             }
@@ -105,15 +106,15 @@ public final class JThequeStateBar extends JPanel {
      *
      * @param components The state bar components.
      */
-    private void addCenterComponents(Iterable<StateBarComponent> components) {
+    private void addCenterComponents(Iterable<IStateBarComponent> components) {
         addGlue();
 
         if (leftFilled) {
             addSeparator();
         }
 
-        for (StateBarComponent component : components) {
-            if (component.isCenter()) {
+        for (IStateBarComponent component : components) {
+            if (component.getPosition() == IStateBarComponent.Position.CENTER) {
                 addComponent(component.getComponent());
                 centerFilled = true;
             }
@@ -127,15 +128,15 @@ public final class JThequeStateBar extends JPanel {
      *
      * @param components The state bar components.
      */
-    private void addRightComponents(Iterable<StateBarComponent> components) {
+    private void addRightComponents(Iterable<IStateBarComponent> components) {
         addGlue();
 
         if (centerFilled) {
             addSeparator();
         }
 
-        for (StateBarComponent component : components) {
-            if (component.isRight()) {
+        for (IStateBarComponent component : components) {
+            if (component.getPosition() == IStateBarComponent.Position.RIGHT) {
                 addComponent(component.getComponent());
             }
         }
@@ -168,7 +169,12 @@ public final class JThequeStateBar extends JPanel {
         add(separator, gbc.gbcSet(currentColumn++, 1));
     }
 
-    public void removeComponent(StateBarComponent component) {
+	/**
+	 * Remove the component from the state bar.
+	 *
+	 * @param component The component to add to the state bar. 
+	 */
+    public void removeComponent(IStateBarComponent component) {
         remove(component.getComponent());
 
         if (viewService.getStateBarComponents().isEmpty()) {
@@ -178,7 +184,7 @@ public final class JThequeStateBar extends JPanel {
         SwingUtils.refresh(this);
     }
 
-    public void addComponent(StateBarComponent component) {
+    public void addComponent(IStateBarComponent component) {
         build();
 
         SwingUtils.refresh(this);
@@ -189,9 +195,9 @@ public final class JThequeStateBar extends JPanel {
      *
      * @author Baptiste Wicht
      */
-    private static final class LeftToRightComparator implements Comparator<StateBarComponent> {
+    private static final class LeftToRightComparator implements Comparator<IStateBarComponent> {
         @Override
-        public int compare(StateBarComponent component, StateBarComponent other) {
+        public int compare(IStateBarComponent component, IStateBarComponent other) {
             return component.getPosition().compareTo(other.getPosition());
         }
     }

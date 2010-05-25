@@ -18,6 +18,11 @@ package org.jtheque.core.able;
 
 import org.jtheque.utils.bean.IntDate;
 
+/**
+ * A core configuration specification.
+ *
+ * @author Baptiste Wicht
+ */
 public interface ICoreConfiguration {
 	/**
 	 * Indicate if we verify the updates at the application startup.
@@ -131,8 +136,18 @@ public interface ICoreConfiguration {
 	 */
 	String getSmtpHost();
 
+    /**
+     * Set the last used collection.
+     *
+     * @param value The name of the last collection. 
+     */
 	void setLastCollection(String value);
 
+    /**
+     * Return the last used collection.
+     *
+     * @return The last used collection. 
+     */
 	String getLastCollection();
 
 	/**

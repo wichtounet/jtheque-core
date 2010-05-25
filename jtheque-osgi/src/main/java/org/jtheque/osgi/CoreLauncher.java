@@ -42,6 +42,9 @@ public final class CoreLauncher implements Closeable {
         server = new FelixServer();
     }
 
+    /**
+     * Launch the application.
+     */
     public void launch(){
         instances.launchApplication();
 
@@ -60,12 +63,18 @@ public final class CoreLauncher implements Closeable {
         server.stop();
     }
 
+    /**
+     * Launch the spring bundles.
+     */
     private void launchSpring() {
         startIfNotStarted("org.springframework.osgi.extender");
         startIfNotStarted("org.springframework.osgi.core");
         startIfNotStarted("org.springframework.osgi.io");
     }
 
+    /**
+     * Launch the JTheque bundles.
+     */
     private void launchJTheque() {
         startIfNotStarted("org.jtheque.spring.utils");
         startIfNotStarted("org.jtheque.states");
@@ -75,24 +84,32 @@ public final class CoreLauncher implements Closeable {
         startIfNotStarted("org.jtheque.i18n");
         startIfNotStarted("org.jtheque.ui");
         startIfNotStarted("org.jtheque.errors");
-        startIfNotStarted("org.jtheque.messages");
         startIfNotStarted("org.jtheque.features");
         startIfNotStarted("org.jtheque.undo");
         startIfNotStarted("org.jtheque.schemas");
         startIfNotStarted("org.jtheque.persistence");
         startIfNotStarted("org.jtheque.modules");
+        startIfNotStarted("org.jtheque.messages");
         startIfNotStarted("org.jtheque.file");
         startIfNotStarted("org.jtheque.collections");
         startIfNotStarted("org.jtheque.views");
         startIfNotStarted("org.jtheque.lifecycle");
     }
 
+    /**
+     * Start the specified bundle if it's not already started.
+     *
+     * @param name The name of the bundle to start. 
+     */
     private void startIfNotStarted(String name) {
         if(server.getState(name) != BundleState.ACTIVE){
             server.startBundle(name);
         }
     }
 
+    /**
+     * A hook to stop the server.
+     */
     private class StopServerHook extends Thread {
         @Override
         public void run(){

@@ -46,6 +46,13 @@ public final class ViewService implements IViewService, ApplicationContextAware 
     private SwingSpringProxy<ICollectionView> collectionPane;
     private SwingSpringProxy<IAboutView> aboutPane;
 
+    /**
+     * Construct a new ViewService. 
+     *
+     * @param stateService The state service.
+     * @param core The core.
+     * @param resourceService The resource service. 
+     */
     public ViewService(IStateService stateService, ICore core, IResourceService resourceService) {
         super();
 

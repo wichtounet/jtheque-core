@@ -38,7 +38,7 @@ public interface IEventService {
      * @param log The log to get the events from.
      * @return A List containing all the events of the log.
      */
-    Collection<Event> getEvents(String log);
+    Collection<IEvent> getEvents(String log);
 
     /**
      * Add an event to a log.
@@ -46,5 +46,5 @@ public interface IEventService {
      * @param log   The log to add the event to.
      * @param event The event to add.
      */
-    void addEvent(String log, Event event);
+    void addEvent(String log, IEvent event);
 }

@@ -18,6 +18,14 @@ import java.util.EventListener;
  * limitations under the License.
  */
 
-public interface CollectionListener extends EventListener{
+/**
+ * A collection listener.
+ *
+ * @author Baptiste Wicht
+ */
+public interface CollectionListener extends EventListener {
+    /**
+     * Collection choosed. 
+     */
     void collectionChoosed();
 }

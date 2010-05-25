@@ -31,11 +31,13 @@ public interface IModuleService {
      *
      * @return All the modules.
      */
-    Collection<? extends Module> getModules();
+    Collection<Module> getModules();
 
     /**
      * Add a module listener.
      *
+     * @param moduleId The id of the module who want to add a listener. If this id is given, the listener will
+     * be automatically removed after it stopped.
      * @param listener The listener to add.
      */
     void addModuleListener(String moduleId, ModuleListener listener);
@@ -80,7 +82,7 @@ public interface IModuleService {
     /**
      * Unplug the modules.
      */
-    void unplugModules();
+    void stopModules();
 
     /**
      * Enable a module.
@@ -92,7 +94,7 @@ public interface IModuleService {
     /**
      * Plug the modules.
      */
-    void plugModules();
+    void startModules();
 
     /**
      * Disable the module.
@@ -129,7 +131,7 @@ public interface IModuleService {
      *
      * @param module The module to load.
      */
-    void loadModule(Module module);
+    void startModule(Module module);
 
     /**
      * Indicate if the primary module is collection based.
@@ -138,7 +140,8 @@ public interface IModuleService {
      */
     boolean hasCollectionModule();
 
+    /**
+     * Load the modules. 
+     */
     void load();
-
-    void close();
 }

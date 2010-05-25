@@ -197,6 +197,11 @@ public final class XMLApplication implements Application {
         this.icon = icon;
     }
 
+    /**
+     * Set if the application allows auto discovery of new modules.
+     *
+     * @param discovery A boolean tag indicating if the application allows auto discovery. 
+     */
     public void setAutoDiscovery(boolean discovery) {
         moduleDiscovery = discovery;
     }

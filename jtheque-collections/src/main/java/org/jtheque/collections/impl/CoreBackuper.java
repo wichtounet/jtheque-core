@@ -25,6 +25,11 @@ import java.util.Collection;
  * limitations under the License.
  */
 
+/**
+ * A backuper for the core.
+ *
+ * @author Baptiste Wicht
+ */
 public class CoreBackuper implements ModuleBackuper {
     private static final String[] DEPENDENCIES = new String[0];
 
@@ -32,6 +37,11 @@ public class CoreBackuper implements ModuleBackuper {
 
     private final IDaoCollections daoCollections;
 
+    /**
+     * Construct a new CoreBackuper.
+     *
+     * @param daoCollections The dao collections. 
+     */
     public CoreBackuper(IDaoCollections daoCollections) {
         super();
 

@@ -36,6 +36,8 @@ public final class MessageModel implements IMessageModel {
 
     /**
      * Construct a new MessageModel.
+     * 
+     * @param messageService The message service.
      */
     public MessageModel(IMessageService messageService) {
         super();

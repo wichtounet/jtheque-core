@@ -21,13 +21,26 @@ import org.jtheque.utils.collections.ArrayUtils;
 import org.osgi.framework.BundleContext;
 import org.springframework.osgi.context.BundleContextAware;
 
+/**
+ * A default schema implementation. This schema implements the basic methods of the Schema interface and get
+ * parameters in constructor.
+ *
+ * @author Baptiste Wicht
+ */
 public abstract class DefaultSchema extends AbstractSchema implements BundleContextAware {
+    private static final String[] EMPTY_DEPENDENCIES = {};
+
     private final Version version;
     private final String id;
     private final String[] dependencies;
 
-    private static final String[] EMPTY_DEPENDENCIES = {};
-
+    /**
+     * Construct a new DefaultSchema.
+     *
+     * @param version      The version of the schema.
+     * @param id           The id of the schema.
+     * @param dependencies The dependencies of the schema.
+     */
     protected DefaultSchema(Version version, String id, String... dependencies) {
         super();
 

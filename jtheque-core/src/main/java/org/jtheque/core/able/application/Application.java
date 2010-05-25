@@ -141,7 +141,17 @@ public interface Application {
      */
     String getProperty(String key);
 
+    /**
+     * Indicate if the application allows module discovery.
+     *
+     * @return true if the application allows module discovery. 
+     */
     boolean isModuleDiscovery();
 
+    /**
+     * Return the modules configured in the application.
+     *
+     * @return A Set containing all the modules configured in the application. 
+     */
     Set<String> getModules();
 }

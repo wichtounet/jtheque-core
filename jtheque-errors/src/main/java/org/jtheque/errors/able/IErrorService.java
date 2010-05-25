@@ -1,5 +1,7 @@
 package org.jtheque.errors.able;
 
+import java.util.List;
+
 /*
  * Copyright JTheque (Baptiste Wicht)
  *
@@ -17,7 +19,7 @@ package org.jtheque.errors.able;
  */
 
 /**
- * An error manager. It seems a manager who enable module to display some errors in a simple way.
+ * An error service specification. It seems a manager who enable module to display some errors in a simple way.
  *
  * @author Baptiste Wicht
  */
@@ -28,11 +30,6 @@ public interface IErrorService {
      * @param error A new error.
      */
     void addError(IError error);
-
-    /**
-     * Display the errors.
-     */
-    void displayErrors();
 
     /**
      * Add an internationalizable error.
@@ -48,4 +45,25 @@ public interface IErrorService {
      * @param messageReplaces the object to use in replaces.
      */
     void addInternationalizedError(String messageKey, Object... messageReplaces);
+
+    /**
+     * Return all the errors occurred in this session.
+     *
+     * @return A List containing all the errors occurred in this session.
+     */
+    List<IError> getErrors();
+
+    /**
+     * Add an error listener to listen to new errors.
+     *
+     * @param listener The new listener.
+     */
+    void addErrorListener(ErrorListener listener);
+
+    /**
+     * Remove an error listener.
+     *
+     * @param listener The listener to remove.
+     */
+    void removeErrorListener(ErrorListener listener);
 }

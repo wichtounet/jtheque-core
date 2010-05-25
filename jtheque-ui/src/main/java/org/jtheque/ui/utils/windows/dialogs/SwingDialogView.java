@@ -27,7 +27,6 @@ import org.jtheque.i18n.able.InternationalizableContainer;
 import org.jtheque.resources.able.IResourceService;
 import org.jtheque.spring.utils.SwingSpringProxy;
 import org.jtheque.ui.able.IModel;
-import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.ui.able.IWindowView;
 import org.jtheque.ui.able.WaitFigure;
 import org.jtheque.ui.utils.actions.ActionFactory;
@@ -35,6 +34,7 @@ import org.jtheque.ui.utils.constraints.Constraint;
 import org.jtheque.ui.utils.windows.ExtendedGlassPane;
 import org.jtheque.ui.utils.windows.InfiniteWaitFigure;
 import org.jtheque.utils.collections.ArrayUtils;
+import org.jtheque.utils.ui.SwingUtils;
 import org.osgi.framework.BundleContext;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -58,7 +58,7 @@ import java.util.Map;
  * @author Baptiste Wicht
  */
 public abstract class SwingDialogView<T extends IModel> extends JDialog
-		implements IWindowView, InternationalizableContainer, BundleContextAware, ApplicationContextAware {
+        implements IWindowView, InternationalizableContainer, BundleContextAware, ApplicationContextAware {
     private String titleKey;
     private Object[] titleReplaces;
 
@@ -68,23 +68,23 @@ public abstract class SwingDialogView<T extends IModel> extends JDialog
     private boolean waitFigureInstalled;
 
     private final Collection<Internationalizable> internationalizables = new ArrayList<Internationalizable>(10);
-    
+
     private BundleContext bundleContext;
 
     private boolean builded;
-	private ApplicationContext applicationContext;
+    private ApplicationContext applicationContext;
 
-	private final Map<Object, Constraint> constraintCache = new HashMap<Object, Constraint>(5);
+    private final Map<Object, Constraint> constraintCache = new HashMap<Object, Constraint>(5);
 
-	/**
+    /**
      * Construct a SwingDialogView modal to the main view.
      */
-    protected SwingDialogView(){
+    protected SwingDialogView() {
         super(SimplePropertiesCache.<Frame>get("mainView"));
     }
 
-	@PostConstruct
-    protected final void build(){
+    @PostConstruct
+    protected final void build() {
         setModal(true);
         setResizable(true);
 
@@ -180,7 +180,7 @@ public abstract class SwingDialogView<T extends IModel> extends JDialog
      *
      * @return An action to close this view.
      */
-    public Action getCloseAction(String key){
+    public Action getCloseAction(String key) {
         return ActionFactory.createCloseViewAction(key, this);
     }
 
@@ -191,11 +191,16 @@ public abstract class SwingDialogView<T extends IModel> extends JDialog
 
     @Override
     public void display() {
-        if(!builded){
-            build();
-        }
+        SwingUtils.inEdt(new Runnable() {
+            @Override
+            public void run() {
+                if (!builded) {
+                    build();
+                }
 
-        setVisible(true);
+                setVisible(true);
+            }
+        });
     }
 
     @Override
@@ -210,19 +215,19 @@ public abstract class SwingDialogView<T extends IModel> extends JDialog
 
     @Override
     public final void refresh() {
-       getService(IUIUtils.class).getDelegate().refresh(this);
+        SwingUtils.refresh(this);
     }
 
     /**
      * Set the title key.
      *
-     * @param key The internationalization key.
-     * @param replaces The replacements objects for the i18n methods. 
+     * @param key      The internationalization key.
+     * @param replaces The replacements objects for the i18n methods.
      */
     protected final void setTitleKey(String key, Object... replaces) {
         titleKey = key;
 
-        if(!ArrayUtils.isEmpty(replaces)){
+        if (!ArrayUtils.isEmpty(replaces)) {
             titleReplaces = ArrayUtils.copyOf(replaces);
         }
 
@@ -230,7 +235,7 @@ public abstract class SwingDialogView<T extends IModel> extends JDialog
     }
 
     @Override
-    public void addInternationalizable(Internationalizable internationalizable){
+    public void addInternationalizable(Internationalizable internationalizable) {
         internationalizables.add(internationalizable);
     }
 
@@ -283,6 +288,7 @@ public abstract class SwingDialogView<T extends IModel> extends JDialog
      * Return the internationalized message.
      *
      * @param key The internationalization key.
+     *
      * @return The internationalized message.
      */
     protected String getMessage(String key) {
@@ -294,6 +300,7 @@ public abstract class SwingDialogView<T extends IModel> extends JDialog
      *
      * @param key      The internationalization key.
      * @param replaces The replacement objects to use.
+     *
      * @return the internationalized message.
      */
     protected String getMessage(String key, Object... replaces) {
@@ -305,19 +312,19 @@ public abstract class SwingDialogView<T extends IModel> extends JDialog
      *
      * @param errors The error's list.
      */
-    protected void validate(Collection<IError> errors){
-	    for(Map.Entry<Object, Constraint> constraint : constraintCache.entrySet()){
-		    constraint.getValue().validate(constraint.getKey(), errors);
-	    }
+    protected void validate(Collection<IError> errors) {
+        for (Map.Entry<Object, Constraint> constraint : constraintCache.entrySet()) {
+            constraint.getValue().validate(constraint.getKey(), errors);
+        }
     }
 
-	protected void addConstraint(Object field, Constraint constraint){
-		constraintCache.put(field, constraint);
+    protected void addConstraint(Object field, Constraint constraint) {
+        constraintCache.put(field, constraint);
 
-		constraint.configure(field);
-	}
+        constraint.configure(field);
+    }
 
-	/**
+    /**
      * Install the glass pane of the view if necessary.
      */
     private void installGlassPaneIfNecessary() {
@@ -332,25 +339,50 @@ public abstract class SwingDialogView<T extends IModel> extends JDialog
         this.bundleContext = bundleContext;
     }
 
-	@Override
-	public void setApplicationContext(ApplicationContext applicationContext){
-		this.applicationContext = applicationContext;
-	}
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) {
+        this.applicationContext = applicationContext;
+    }
 
-	protected <T> T getService(Class<T> classz){
+    /**
+     * Return the service of the given class.
+     *
+     * @param classz The class to get the service.
+     * @param <T>    The type of service.
+     *
+     * @return The service of the given class if it's exists otherwise null.
+     */
+    protected <T> T getService(Class<T> classz) {
         return OSGiUtils.getService(bundleContext, classz);
     }
 
-	protected <T> T getBean(Class<T> classz){
+    /**
+     * Return the bean of the given class using the application context.
+     *
+     * @param classz The classz of the bean to get from application context.
+     * @param <T>    The type of bean to get.
+     *
+     * @return The bean of the given class or null if it doesn't exist.
+     */
+    protected <T> T getBean(Class<T> classz) {
         return applicationContext.getBean(classz);
     }
 
-	protected <T> T getBeanFromEDT(Class<T> classz){
+    /**
+     * Return the bean of the given class using the application context. The bean will be retrieved in the EDT, so
+     * it can be used for a Swing bean.
+     *
+     * @param classz The classz of the bean to get from application context.
+     * @param <T> The type of bean to get.
+     *
+     * @return The bean of the given class or null if it doesn't exist.
+     */
+    protected <T> T getBeanFromEDT(Class<T> classz) {
         return new SwingSpringProxy<T>(classz, applicationContext).get();
     }
 
     /**
-     * Install the wait figure if necessary. 
+     * Install the wait figure if necessary.
      */
     private void installWaitFigureIfNecessary() {
         installGlassPaneIfNecessary();

@@ -41,21 +41,21 @@ public final class ResourceService implements IResourceService {
     private final Map<String, JThequeImage> cache = new HashMap<String, JThequeImage>(DEFAULT_CACHE_SIZE);
 
 	@Override
-	public BufferedImage getFileImage(String id, int width) {
-        return getThumbnail(getFileImage(id), width);
+	public BufferedImage getFileImage(String path, int width) {
+        return getThumbnail(getFileImage(path), width);
 	}
 
 	@Override
-	public BufferedImage getFileImage(String id) {
-		if(isImageNotCached(id)){
-			if(!resources.containsKey(id)){
-				registerResource(id, new FileSystemResource(id));
+	public BufferedImage getFileImage(String path) {
+		if(isImageNotCached(path)){
+			if(!resources.containsKey(path)){
+				registerResource(path, new FileSystemResource(path));
 			}
 
-			loadImageInCache(id);
+			loadImageInCache(path);
 		}
 
-		return cache.get(id) == null ? null : cache.get(id).get();
+		return cache.get(path) == null ? null : cache.get(path).get();
 	}
 
 	@Override

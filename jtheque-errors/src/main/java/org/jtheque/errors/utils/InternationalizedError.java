@@ -22,7 +22,7 @@ import java.util.logging.Level;
  */
 
 /**
- * An error with its message and details internationalized.
+ * An internationalized error implementation. 
  *
  * @author Baptiste Wicht
  */

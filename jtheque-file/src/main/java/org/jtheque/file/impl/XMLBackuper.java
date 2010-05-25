@@ -31,11 +31,20 @@ import java.io.File;
  * @author Baptiste Wicht
  */
 public final class XMLBackuper {
+    /**
+     * Utility class, not instanciable.
+     */
     private XMLBackuper() {
         super();
     }
 
-    public static void backup(File file, Iterable<ModuleBackup> backups){
+    /**
+     * Backup all the backups in the given file.
+     *
+     * @param file    The file to write to.
+     * @param backups The backups to write.
+     */
+    public static void backup(File file, Iterable<ModuleBackup> backups) {
         XMLWriter writer = new XMLWriter("jtheque-backup");
 
         writeHeader(writer);
@@ -62,6 +71,12 @@ public final class XMLBackuper {
         writer.switchToParent();
     }
 
+    /**
+     * Write the backup.
+     *
+     * @param writer The write to use.
+     * @param backup The backup to write.
+     */
     private static void writeBackup(XMLWriter writer, ModuleBackup backup) {
         writer.add("backup");
 

@@ -31,6 +31,7 @@ public final class ExpandRepositoryModuleAction extends JThequeAction {
 
     /**
      * Construct a new ExpandRepositoryModuleAction.
+     * @param repositoryView The repository view. 
      */
     public ExpandRepositoryModuleAction(IRepositoryView repositoryView) {
         super("repository.actions.expand");

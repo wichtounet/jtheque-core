@@ -17,17 +17,18 @@ package org.jtheque.views.impl.components.renderers;
  */
 
 import org.jdesktop.swingx.JXHyperlink;
+import org.jtheque.i18n.able.ILanguageService;
 import org.jtheque.modules.able.Module;
 import org.jtheque.ui.utils.components.Borders;
 import org.jtheque.ui.utils.actions.OpenSiteLinkAction;
 import org.jtheque.ui.utils.builders.FilthyPanelBuilder;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.ui.utils.builders.PanelBuilder;
-import org.jtheque.ui.utils.components.JThequeI18nLabel;
 import org.jtheque.update.able.IUpdateService;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.ui.GridBagUtils;
 
+import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.ListCellRenderer;
@@ -40,10 +41,10 @@ import java.awt.Font;
  * @author Baptiste Wicht
  */
 public final class ModuleListRenderer extends JPanel implements ListCellRenderer {
-    private final JThequeI18nLabel labelTitle;
-    private final JThequeI18nLabel labelState;
-    private final JThequeI18nLabel labelCurrentVersion;
-    private final JThequeI18nLabel labelOnlineVersion;
+    private final JLabel labelTitle;
+    private final JLabel labelState;
+    private final JLabel labelCurrentVersion;
+    private final JLabel labelOnlineVersion;
     private final JXHyperlink labelSite;
 
     //Keeps fonts to quickly switch them
@@ -55,25 +56,31 @@ public final class ModuleListRenderer extends JPanel implements ListCellRenderer
     private static final int TITLE_FONT_SIZE = 16;
 
     private final IUpdateService updateService;
+	private final ILanguageService languageService;
 
-    /**
+	/**
      * Construct a new ModuleListRenderer.
-     */
-    public ModuleListRenderer(IUpdateService updateService) {
+	 *
+	 * @param updateService The update service.
+	 * @param languageService The language service.
+	 */
+    public ModuleListRenderer(IUpdateService updateService, ILanguageService languageService) {
         super();
+
         this.updateService = updateService;
+		this.languageService = languageService;
 
         I18nPanelBuilder builder = new FilthyPanelBuilder(this);
         builder.setBorder(Borders.createEmptyBorder(2, 2, 2, 10));
 
-        labelTitle = builder.addI18nLabel("modules.view.label.title", PanelBuilder.NORMAL, TITLE_FONT_SIZE,
+        labelTitle = builder.addLabel("", PanelBuilder.NORMAL, TITLE_FONT_SIZE,
                 builder.gbcSet(0, 0, GridBagUtils.HORIZONTAL, GridBagUtils.BASELINE_LEADING, 0, 1, 1.0, 0.0));
 
-        labelState = builder.addI18nLabel("modules.view.label.state", builder.gbcSet(0, 1));
+        labelState = builder.addLabel("", builder.gbcSet(0, 1));
         labelSite = builder.add(new JXHyperlink(), builder.gbcSet(1, 1));
 
-        labelCurrentVersion = builder.addI18nLabel("modules.view.label.versions.current", builder.gbcSet(0, 2));
-        labelOnlineVersion = builder.addI18nLabel("modules.view.label.versions.online", builder.gbcSet(1, 2));
+        labelCurrentVersion = builder.addLabel("", builder.gbcSet(0, 2));
+        labelOnlineVersion = builder.addLabel("", builder.gbcSet(1, 2));
     }
 
     @Override
@@ -99,6 +106,9 @@ public final class ModuleListRenderer extends JPanel implements ListCellRenderer
         }
     }
 
+	/**
+	 * Init the fonts of the renderer.
+	 */
     private void initFonts() {
         if(fontTitle == null){
             fontTitle = labelTitle.getFont();
@@ -109,6 +119,12 @@ public final class ModuleListRenderer extends JPanel implements ListCellRenderer
         }
     }
 
+    /**
+     * Set the fonts of the labels.
+     *
+     * @param fontTitle THe font of the title.
+     * @param fontLabel The font of the normal labels.
+     */
     private void setFonts(Font fontTitle, Font fontLabel) {
         labelTitle.setFont(fontTitle);
         labelCurrentVersion.setFont(fontLabel);
@@ -124,10 +140,10 @@ public final class ModuleListRenderer extends JPanel implements ListCellRenderer
     private void updateInfos(Object value) {
         Module module = (Module) value;
 
-        labelTitle.setTextKey("modules.view.label.title", module.getName(), module.getAuthor());
-        labelState.setTextKey("modules.view.label.state", module.getState().toString());
-        labelCurrentVersion.setTextKey("modules.view.label.versions.current", module.getVersion().getVersion());
-        labelOnlineVersion.setTextKey("modules.view.label.versions.online", updateService.getMostRecentVersion(module).getVersion());
+        labelTitle.setText(languageService.getMessage("modules.view.label.title", module.getName(), module.getAuthor()));
+        labelState.setText(languageService.getMessage("modules.view.label.state", module.getDisplayState()));
+        labelCurrentVersion.setText(languageService.getMessage("modules.view.label.versions.current", module.getVersion().getVersion()));
+        labelOnlineVersion.setText(languageService.getMessage("modules.view.label.versions.online", updateService.getMostRecentVersion(module).getVersion()));
 
         if (StringUtils.isEmpty(module.getUrl())) {
             labelSite.setAction(null);
@@ -135,6 +151,6 @@ public final class ModuleListRenderer extends JPanel implements ListCellRenderer
             labelSite.setAction(new OpenSiteLinkAction(module.getUrl()));
         }
 
-        setToolTipText(module.getDescription());
+        setToolTipText(languageService.getMessage(module.getDescription()));
     }
 }

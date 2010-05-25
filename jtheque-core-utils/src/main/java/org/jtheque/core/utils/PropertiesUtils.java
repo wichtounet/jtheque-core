@@ -32,7 +32,10 @@ import java.util.List;
  * @author Baptiste Wicht
  */
 public final class PropertiesUtils {
-    private PropertiesUtils() {
+	/**
+	 * Construct a new PropertiesUtils. This constructor is private, because this is an utility class. 
+	 */
+	private PropertiesUtils() {
         super();
     }
 

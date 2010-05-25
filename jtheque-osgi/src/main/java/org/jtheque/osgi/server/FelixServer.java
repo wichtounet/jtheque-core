@@ -29,6 +29,11 @@ import java.util.Map;
  * limitations under the License.
  */
 
+/**
+ * A Felix OSGI server implementation.
+ *
+ * @author Baptiste Wicht
+ */
 public class FelixServer implements OSGiServer {
     private Felix felix;
 
@@ -64,6 +69,9 @@ public class FelixServer implements OSGiServer {
         getLogger().info("Felix started with {} cached bundles : {}", bundles.size(), bundles);
     }
 
+    /**
+     * Auto deploy the bundles in the "bundles" folder of the user dir.
+     */
     private void autoDeploy() {
         File deployDir = new File(System.getProperty("user.dir") + "/bundles");
 
@@ -242,6 +250,12 @@ public class FelixServer implements OSGiServer {
         }
     }
 
+    /**
+     * Install the module with the given name if it's not installed.
+     *
+     * @param name The module name.
+     * @param path The path to the module file. 
+     */
     private void installIfNecessary(String name, String path) {
         if(!isInstalled(name)){
             installBundle(path);
@@ -258,10 +272,20 @@ public class FelixServer implements OSGiServer {
         return bundles.get(bundleName);
     }
 
+    /**
+     * Return the logger of the server.
+     *
+     * @return The logger of the server. 
+     */
     private Logger getLogger(){
         return LoggerFactory.getLogger(getClass());
     }
 
+    /**
+     * A file name filter to keep only JAR files.
+     *
+     * @author Baptiste Wicht
+     */
     private static class JarFileFilter implements FilenameFilter {
         @Override
         public boolean accept(File dir, String name) {

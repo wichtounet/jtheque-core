@@ -39,7 +39,9 @@ public final class LazyFactoryBean extends AbstractFactoryBean {
      * @param beanName  The name of the bean to keep the proxy for.
      * @param swing A boolean tag indicating if the bean is swing bean.
      * @param beanClass The class of the bean to keep the proxy for.
-     * @param context The application context of the bean. 
+     * @param context The application context of the bean.
+     * 
+     * @throws ClassNotFoundException If the bean class doesn't exist.
      */
     public LazyFactoryBean(String beanName, boolean swing, String beanClass, GenericApplicationContext context) throws ClassNotFoundException {
         super();

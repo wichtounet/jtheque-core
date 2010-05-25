@@ -2,22 +2,7 @@ package org.jtheque.ui.utils.builders;
 
 import org.jtheque.utils.ui.ButtonBarBuilder;
 
-import javax.swing.Action;
-import javax.swing.BorderFactory;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextArea;
-import javax.swing.JTree;
-import javax.swing.ListCellRenderer;
-import javax.swing.ListModel;
-import javax.swing.ListSelectionModel;
+import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.TableModel;
 import javax.swing.tree.TreeCellRenderer;
@@ -43,6 +28,12 @@ import java.awt.LayoutManager;
  * limitations under the License.
  */
 
+/**
+ * A basic PanelBuilder. It seems a panel with no internationalization and that works only with basic swing
+ * components.
+ *
+ * @author Baptiste Wicht
+ */
 public class BasicPanelBuilder extends AbstractPanelBuilder {
     /**
      * Construct a new JThequePanelBuilder.
@@ -204,12 +195,12 @@ public class BasicPanelBuilder extends AbstractPanelBuilder {
     }
 
     @Override
-    public JComboBox addComboBox(DefaultComboBoxModel model, Object constraints) {
+    public JComboBox addComboBox(ComboBoxModel model, Object constraints) {
         return add(new JComboBox(model), constraints);
     }
 
     @Override
-    public JComboBox addComboBox(DefaultComboBoxModel model, ListCellRenderer renderer, Object constraints) {
+    public JComboBox addComboBox(ComboBoxModel model, ListCellRenderer renderer, Object constraints) {
         JComboBox combo = addComboBox(model, constraints);
 
         combo.setRenderer(renderer);

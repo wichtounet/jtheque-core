@@ -51,5 +51,12 @@ public interface IFileService {
      */
     void restore(File file) throws XMLException;
 
+    /**
+     * Register a backuper.
+     *
+     * @param moduleId The id of the module that register this backuper. This id is used to automatically dispose the
+     * backuper if the module is stopped. If the module id is null or empty, the backuper will never be released. 
+     * @param backuper The backuper to register.
+     */
     void registerBackuper(String moduleId, ModuleBackuper backuper);
 }

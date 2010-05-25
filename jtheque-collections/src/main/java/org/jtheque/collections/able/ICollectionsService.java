@@ -39,6 +39,17 @@ public interface ICollectionsService extends DataContainer<Collection> {
      */
     Response chooseCollection(String collection, String password, boolean create);
 
+    /**
+     * Add a collection listener.
+     *
+     * @param listener The listener to add.  
+     */
     void addCollectionListener(CollectionListener listener);
+
+    /**
+     * Remove the given collection listener.
+     *
+     * @param listener The listener to remove.
+     */
     void removeCollectionListener(CollectionListener listener);
 }

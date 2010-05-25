@@ -23,10 +23,10 @@ import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.ui.utils.constraints.AtLeastOneConstraint;
 import org.jtheque.ui.utils.constraints.Constraint;
 import org.jtheque.ui.utils.filthy.FilthyRenderer;
+import org.jtheque.ui.utils.models.SimpleListModel;
 import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.views.able.components.ConfigTabComponent;
 import org.jtheque.views.able.config.IAppearanceConfigView;
-import org.jtheque.views.impl.models.AvailableLanguagesComboBoxModel;
 
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
@@ -39,7 +39,7 @@ import java.util.Map;
  * @author Baptiste Wicht
  */
 public final class JPanelConfigAppearance extends OSGIFilthyBuildedPanel implements ConfigTabComponent, IAppearanceConfigView {
-    private AvailableLanguagesComboBoxModel modelLanguages;
+    private SimpleListModel<String> modelLanguages;
     private JCheckBox boxRetainSizeAndPosition;
 
     @Override
@@ -49,7 +49,7 @@ public final class JPanelConfigAppearance extends OSGIFilthyBuildedPanel impleme
 
         builder.addI18nLabel("config.appearance.language", parent.gbcSet(0, 0));
 
-        modelLanguages = new AvailableLanguagesComboBoxModel(getService(ICore.class));
+        modelLanguages = new SimpleListModel<String>(getService(ICore.class).getPossibleLanguages());
 
         builder.addComboBox(modelLanguages, new FilthyRenderer(), parent.gbcSet(1, 0, GridBagUtils.HORIZONTAL));
 
@@ -83,7 +83,7 @@ public final class JPanelConfigAppearance extends OSGIFilthyBuildedPanel impleme
 
     @Override
     public void apply() {
-        getService(ILanguageService.class).setCurrentLanguage(modelLanguages.getSelectedLanguage());
+        getService(ILanguageService.class).setCurrentLanguage(modelLanguages.getSelectedItem());
         getService(ICore.class).getConfiguration().setRetainSizeAndPositionOfWindow(boxRetainSizeAndPosition.isSelected());
     }
 

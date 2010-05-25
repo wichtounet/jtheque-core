@@ -46,12 +46,25 @@ public final class LanguageState extends AbstractState {
         return getProperty("language", "fr");
     }
 
+    /**
+     * Return the version of the resource.
+     *
+     * @param resource The resource to get the version for.
+     *
+     * @return The installed version of the  resource or null if the resource is not installed. 
+     */
     public Version getResourceVersion(String resource){
         String property = getProperty(resource + "_version");
 
 	    return StringUtils.isEmpty(property) ? null : new Version(property);
     }
 
+	/**
+	 * Set the resource version of the specified resource.
+	 *
+	 * @param resource The resource.
+	 * @param version The version of the resource. 
+	 */
     public void setResourceVersion(String resource, Version version){
         setProperty(resource + "_version", version.toString());
     }

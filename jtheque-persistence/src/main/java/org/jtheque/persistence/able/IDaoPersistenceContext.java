@@ -83,5 +83,10 @@ public interface IDaoPersistenceContext {
      */
     void deleteAll(String table);
 
+    /**
+     * Return the spring JDBC template.
+     * 
+     * @return The Spring JDBC template.
+     */
     SimpleJdbcTemplate getTemplate();
 }

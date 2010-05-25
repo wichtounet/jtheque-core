@@ -21,7 +21,17 @@ import org.jtheque.schemas.utils.DefaultSchema;
 import org.jtheque.schemas.able.ISchemaService;
 import org.jtheque.utils.bean.Version;
 
+/**
+ * A collection schema. This schema describe the database part to store the collection. 
+ *
+ * @author Baptiste Wicht
+ */
 public class CollectionSchema extends DefaultSchema {
+    /**
+     * Construct a new CollectionSchema.
+     *
+     * @param schemaService The schema service to use. 
+     */
     public CollectionSchema(ISchemaService schemaService) {
         super(new Version("1.0"), "jtheque-collection-schema");
 

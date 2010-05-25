@@ -17,13 +17,14 @@ package org.jtheque.views.able;
  */
 
 import org.jtheque.views.able.components.ConfigTabComponent;
+import org.jtheque.views.able.components.IStateBarComponent;
 import org.jtheque.views.able.components.MainComponent;
-import org.jtheque.views.able.components.StateBarComponent;
 import org.jtheque.views.able.panel.IModuleView;
 import org.jtheque.views.able.panel.IRepositoryView;
 import org.jtheque.views.able.windows.IConfigView;
-import org.jtheque.views.able.windows.ILicenceView;
+import org.jtheque.views.able.windows.IErrorView;
 import org.jtheque.views.able.windows.IEventView;
+import org.jtheque.views.able.windows.ILicenceView;
 import org.jtheque.views.able.windows.IMainView;
 import org.jtheque.views.able.windows.IMessageView;
 import org.jtheque.views.able.windows.IUpdateView;
@@ -85,11 +86,33 @@ public interface IViews {
      */
     IMessageView getMessagesView();
 
+    /**
+     * Return the event view.
+     *
+     * @return The event view.
+     */
     IEventView getEventView();
 
+    /**
+     * Return the repository view.
+     *
+     * @return The repository view.
+     */
     IRepositoryView getRepositoryView();
 
+    /**
+     * Return the update view.
+     *
+     * @return The update view.
+     */
     IUpdateView getUpdateView();
+
+    /**
+     * Return the error view.
+     *
+     * @return The error view.
+     */
+    IErrorView getErrorView();
 
     /**
      * Return all the main components.
@@ -101,32 +124,37 @@ public interface IViews {
     /**
      * Add a main component.
      *
-     * @param moduleId The id of the module who adds this state bar.
+     * @param moduleId  The id of the module who adds this state bar.
      * @param component The main component to add.
      */
     void addMainComponent(String moduleId, MainComponent component);
 
+    /**
+     * Set the selected main component.
+     *
+     * @param component The main component to select.
+     */
     void setSelectedMainComponent(MainComponent component);
 
     /**
      * Add a state bar component.
      *
-     * @param moduleId The id of the module who adds this state bar.
+     * @param moduleId  The id of the module who adds this state bar.
      * @param component The component to add to the state bar.
      */
-    void addStateBarComponent(String moduleId, StateBarComponent component);
+    void addStateBarComponent(String moduleId, IStateBarComponent component);
 
     /**
      * Return all the state bar components.
      *
      * @return A List containing all the state bar components.
      */
-    Collection<StateBarComponent> getStateBarComponents();
+    Collection<IStateBarComponent> getStateBarComponents();
 
     /**
      * Add config tab component.
      *
-     * @param moduleId The id of the module who adds this state bar.
+     * @param moduleId  The id of the module who adds this state bar.
      * @param component The config tab component to add.
      */
     void addConfigTabComponent(String moduleId, ConfigTabComponent component);
@@ -138,5 +166,8 @@ public interface IViews {
      */
     Collection<ConfigTabComponent> getConfigTabComponents();
 
+    /**
+     * Init the views.
+     */
     void init();
 }

@@ -22,7 +22,12 @@ package org.jtheque.persistence.able;
  * @author Baptiste Wicht
  */
 public interface Note {
-    String getI18nKey();
+	/**
+	 * Return the i18n key of the note.
+	 *
+	 * @return The i18n key of the note. 
+	 */
+	String getI18nKey();
 
     /**
      * Return the value of the note.

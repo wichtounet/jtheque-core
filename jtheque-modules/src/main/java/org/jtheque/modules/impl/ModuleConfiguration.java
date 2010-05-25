@@ -194,15 +194,6 @@ public final class ModuleConfiguration extends AbstractState {
     }
 
     /**
-     * Add the result of an installation to the module configuration.
-     *
-     * @param result The installation result.
-     */
-    public void add(InstallationResult result) {
-        add(result.getName(), ModuleState.INSTALLED);
-    }
-
-    /**
      * Add a module info to the configuration.
      *
      * @param id The module id.

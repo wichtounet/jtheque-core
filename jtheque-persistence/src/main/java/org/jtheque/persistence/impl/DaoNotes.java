@@ -38,6 +38,12 @@ public final class DaoNotes implements IDaoNotes {
 
     private final ILanguageService languageService;
 
+    /**
+     * Construct a new DaoNotes.
+     *
+     * @param resourceService The resources.
+     * @param languageService The language service. 
+     */
     public DaoNotes(IResourceService resourceService, ILanguageService languageService) {
         super();
 

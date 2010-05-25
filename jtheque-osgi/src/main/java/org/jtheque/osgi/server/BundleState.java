@@ -16,6 +16,11 @@ package org.jtheque.osgi.server;
  * limitations under the License.
  */
 
+/**
+ * State of bundle.
+ *
+ * @author Baptiste Wicht
+ */
 public enum BundleState {
     NOTINSTALLED,
     UNINSTALLED,

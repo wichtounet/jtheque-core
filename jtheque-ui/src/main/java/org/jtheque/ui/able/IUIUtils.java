@@ -16,8 +16,13 @@ package org.jtheque.ui.able;
  * limitations under the License.
  */
 
+/**
+ * UI utils specification.
+ *
+ * @author Baptiste Wicht
+ */
 public interface IUIUtils {
-	String LIGHT_IMAGE = "jtheque-ui-light";
+    String LIGHT_IMAGE = "jtheque-ui-light";
 
     /**
      * Return the delegate view manager.
@@ -26,15 +31,26 @@ public interface IUIUtils {
      */
     ViewDelegate getDelegate();
 
-   /**
+    /**
      * Ask the user for confirmation with internationalized message.
      *
      * @param textKey  The question key.
      * @param titleKey The title key.
+     *
      * @return true if the user has accepted else false.
      */
     boolean askI18nUserForConfirmation(String textKey, String titleKey);
 
+    /**
+     * Ask the user for confirmation with internationalized message using replaces.
+     *
+     * @param textKey       The text key.
+     * @param textReplaces  The text replaces.
+     * @param titleKey      The title key.
+     * @param titleReplaces The title replaces.
+     *
+     * @return true if the user has accepted else false.
+     */
     boolean askI18nUserForConfirmation(String textKey, Object[] textReplaces, String titleKey, Object[] titleReplaces);
 
     /**

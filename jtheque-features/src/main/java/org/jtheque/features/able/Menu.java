@@ -34,12 +34,12 @@ public interface Menu extends Internationalizable {
      *
      * @return A List containing all the sub features of this core feature.
      */
-    List<Feature> getSubFeatures(CoreFeature feature);
+    List<IFeature> getSubFeatures(CoreFeature feature);
 
     /**
      * Return all the main features of this menu.
      *
      * @return A List containing all the main features of this menu. 
      */
-    List<Feature> getMainFeatures();
+    List<IFeature> getMainFeatures();
 }

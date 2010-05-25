@@ -21,7 +21,6 @@ import org.jtheque.file.able.ModuleBackup;
 import org.jtheque.file.able.ModuleBackuper;
 import org.jtheque.modules.able.Module;
 import org.jtheque.modules.able.ModuleListener;
-import org.jtheque.modules.able.ModuleState;
 import org.jtheque.modules.utils.ModuleResourceCache;
 import org.jtheque.utils.StringUtils;
 
@@ -78,20 +77,37 @@ public final class FileService implements IFileService, ModuleListener {
         backupers.add(backuper);
     }
 
-    @Override
-    public void moduleStateChanged(Module module, ModuleState newState, ModuleState oldState) {
-        if(oldState == ModuleState.LOADED && (newState == ModuleState.INSTALLED ||
-                newState == ModuleState.DISABLED || newState == ModuleState.UNINSTALLED)){
-            Set<ModuleBackuper> resources = ModuleResourceCache.getResource(module.getId(), ModuleBackuper.class);
+	@Override
+	public void moduleStopped(Module module) {
+		Set<ModuleBackuper> resources = ModuleResourceCache.getResource(module.getId(), ModuleBackuper.class);
 
-            for(ModuleBackuper backuper : resources){
-                backupers.remove(backuper);
-            }
+		for (ModuleBackuper backuper : resources) {
+			backupers.remove(backuper);
+		}
 
-            ModuleResourceCache.removeResourceOfType(module.getId(), ModuleBackuper.class);
-        }
-    }
+		ModuleResourceCache.removeResourceOfType(module.getId(), ModuleBackuper.class);
+	}
 
+	@Override
+	public void moduleStarted(Module module) {
+		//Nothing to do here
+	}
+
+	@Override
+	public void moduleInstalled(Module module) {
+		//Nothing to do here
+	}
+
+	@Override
+	public void moduleUninstalled(Module module) {
+		//Nothing to do here
+	}
+
+    /**
+     * A module backup comparator to compare the module backups using their dependencies.
+     *
+     * @author Baptiste Wicht
+     */
     private static class ModuleBackupComparator implements Comparator<ModuleBackuper> {
         @Override
         public int compare(ModuleBackuper backup1, ModuleBackuper backup2) {

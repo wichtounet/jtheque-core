@@ -17,6 +17,7 @@ package org.jtheque.modules.impl;
  */
 
 import org.jtheque.core.able.application.Application;
+import org.jtheque.modules.able.Module;
 import org.jtheque.modules.able.ModuleState;
 import org.jtheque.utils.collections.Filter;
 
@@ -25,7 +26,7 @@ import org.jtheque.utils.collections.Filter;
  *
  * @author Baptiste Wicht
  */
-final class ConfigurationFilter implements Filter<ModuleContainer> {
+final class ConfigurationFilter implements Filter<Module> {
     private final ModuleConfiguration configuration;
     private final Application application;
 
@@ -43,7 +44,7 @@ final class ConfigurationFilter implements Filter<ModuleContainer> {
     }
 
     @Override
-    public boolean accept(ModuleContainer module) {
+    public boolean accept(Module module) {
         if (configuration.containsModule(module)) {
             module.setState(configuration.getState(module.getId()));
 

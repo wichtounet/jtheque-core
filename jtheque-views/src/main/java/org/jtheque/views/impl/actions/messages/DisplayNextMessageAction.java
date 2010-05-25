@@ -31,7 +31,8 @@ public final class DisplayNextMessageAction extends JThequeAction {
 
     /**
      * Construct a new DisplayNextMessageAction.
-     * @param messageView
+     * 
+     * @param messageView The message view.
      */
     public DisplayNextMessageAction(IMessageView messageView) {
         super("messages.actions.display.next");

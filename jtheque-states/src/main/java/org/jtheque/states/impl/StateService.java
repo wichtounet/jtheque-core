@@ -48,8 +48,6 @@ public final class StateService implements IStateService {
 
     /**
      * Load the states.
-     *
-     * @throws XMLException If an error occurs during the reading of the states.
      */
     @PostConstruct
     public void loadStates(){
@@ -109,6 +107,11 @@ public final class StateService implements IStateService {
         writer.write(getConfigFile().getAbsolutePath());
     }
 
+    /**
+     * Write the states using the given writer.
+     *
+     * @param writer The write to use to write the states.
+     */
     private void writeStates(XMLWriter writer) {
         for(Map.Entry<String, Object> state : states.entrySet()){
             writer.add("state");
@@ -238,6 +241,15 @@ public final class StateService implements IStateService {
         return state;
     }
 
+    /**
+     * Return the delegated state.
+     *
+     * @param state The state to load.
+     * @param stateAnnotation The state annotation of the state.
+     * @param loadMethod The load method.
+     *
+     * @param <T> The type of state.
+     */
 	private <T> void getDelegatedState(T state, State stateAnnotation, Method loadMethod) {
 		try {
 		    Collection<Node> stateNodes = nodes.get(stateAnnotation.id());
@@ -254,6 +266,15 @@ public final class StateService implements IStateService {
 		}
 	}
 
+    /**
+     * Return the simple state. 
+     *
+     * @param state The state to load.
+     * @param stateAnnotation The state annotation of the state.
+     * @param loadMethod The load method.
+     *
+     * @param <T> The type of state.
+     */
 	private <T> void getSimpleState(T state, State stateAnnotation, Method loadMethod) {
 		try {
 		    Map<String, String> stateProperties = properties.get(stateAnnotation.id());

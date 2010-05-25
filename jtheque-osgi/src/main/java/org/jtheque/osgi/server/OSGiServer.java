@@ -84,12 +84,27 @@ public interface OSGiServer {
     boolean isInstalled(String bundleName);
 
     Version getVersion(String bundleName);
-    Version getVersion(Bundle bundle);
+
+	/**
+	 * Return the version of the bundle.
+	 *
+	 * @param bundle The bundle to get the version of.
+	 *
+	 * @return The version of the bundle.
+	 */
+	Version getVersion(Bundle bundle);
 
     /**
      * Print debug informations about the current state of the server.
      */
     void debug();
 
-    Bundle getBundle(String s);
+	/**
+	 * Return the bundle of the specified name.
+	 *
+	 * @param bundleName The name
+	 *
+	 * @return The bundle with the specified name. 
+	 */
+    Bundle getBundle(String bundleName);
 }

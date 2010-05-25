@@ -22,6 +22,11 @@ import java.lang.annotation.Target;
  * limitations under the License.
  */
 
+/**
+ * Annotation to specify a method to load the properties.
+ *
+ * @author Baptiste Wicht
+ */
 @Documented
 @Retention(value = RetentionPolicy.RUNTIME)
 @Target(value = ElementType.METHOD)

@@ -27,13 +27,19 @@ import java.util.List;
  * @author Baptiste Wicht
  */
 public interface IModuleLoader {
-
     /**
      * Load the modules.
      * 
      * @return All the loaded modules.
      */
-    List<ModuleContainer> loadModules();
+    List<Module> loadModules();
 
-    ModuleContainer installModule(File file);
+    /**
+     * Install the module.
+     *
+     * @param file The file to the module to install.
+     *
+     * @return The installed module. 
+     */
+    Module installModule(File file);
 }

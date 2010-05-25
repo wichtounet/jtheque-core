@@ -2,7 +2,6 @@ package org.jtheque.schemas.impl;
 
 import org.jtheque.modules.able.Module;
 import org.jtheque.modules.able.ModuleListener;
-import org.jtheque.modules.able.ModuleState;
 import org.jtheque.modules.utils.ModuleResourceCache;
 import org.jtheque.schemas.able.ISchemaService;
 import org.jtheque.schemas.able.Schema;
@@ -52,6 +51,9 @@ public final class SchemaService implements ISchemaService, ModuleListener {
         checkForUpdates();
     }
 
+	/**
+	 * Check for updates of the schemas. 
+	 */
     private void checkForUpdates() {
         for (Schema schema : schemas) {
             Version installedVersion = configuration.getVersion(schema.getId());
@@ -75,17 +77,29 @@ public final class SchemaService implements ISchemaService, ModuleListener {
         }
     }
 
-    @Override
-    public void moduleStateChanged(Module module, ModuleState newState, ModuleState oldState) {
-        if(oldState == ModuleState.LOADED && (newState == ModuleState.INSTALLED ||
-                newState == ModuleState.DISABLED || newState == ModuleState.UNINSTALLED)){
-            Set<Schema> resources = ModuleResourceCache.getResource(module.getId(), Schema.class);
+	@Override
+	public void moduleStarted(Module module) {
+		//Nothing to do here
+	}
 
-            for(Schema schema : resources){
-                schemas.remove(schema);
-            }
+	@Override
+	public void moduleStopped(Module module) {
+		Set<Schema> resources = ModuleResourceCache.getResource(module.getId(), Schema.class);
 
-            ModuleResourceCache.removeResourceOfType(module.getId(), Schema.class);
-        }
-    }
+		for (Schema schema : resources) {
+			schemas.remove(schema);
+		}
+
+		ModuleResourceCache.removeResourceOfType(module.getId(), Schema.class);
+	}
+
+	@Override
+	public void moduleInstalled(Module module) {
+		//Nothing to do here
+	}
+
+	@Override
+	public void moduleUninstalled(Module module) {
+		//Nothing to do here
+	}
 }

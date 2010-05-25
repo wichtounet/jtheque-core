@@ -19,6 +19,11 @@ import org.jtheque.ui.able.WaitableView;
  * limitations under the License.
  */
 
+/**
+ * A licence view specification.
+ *
+ * @author Baptiste Wicht
+ */
 public interface ILicenceView extends IView, WaitableView {
 
 }

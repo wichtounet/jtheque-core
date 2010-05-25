@@ -8,17 +8,7 @@ import org.jtheque.ui.utils.filthy.FilthyComboBox;
 import org.jtheque.ui.utils.filthy.FilthyList;
 import org.jtheque.ui.utils.filthy.FilthyPanel;
 
-import javax.swing.BorderFactory;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.ListCellRenderer;
-import javax.swing.ListModel;
-import javax.swing.ListSelectionModel;
+import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import javax.swing.tree.TreeCellRenderer;
 import javax.swing.tree.TreeModel;
@@ -195,12 +185,12 @@ public final class FilthyPanelBuilder extends JThequePanelBuilder {
     }
 
     @Override
-    public JComboBox addComboBox(DefaultComboBoxModel model, Object constraints) {
+    public JComboBox addComboBox(ComboBoxModel model, Object constraints) {
         return add(new FilthyComboBox(model), constraints);
     }
 
     @Override
-    public JComboBox addComboBox(DefaultComboBoxModel model, ListCellRenderer renderer, Object constraints) {
+    public JComboBox addComboBox(ComboBoxModel model, ListCellRenderer renderer, Object constraints) {
         JComboBox combo = add(new FilthyComboBox(model), constraints);
 
         combo.setRenderer(renderer);

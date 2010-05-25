@@ -21,6 +21,7 @@ import org.jtheque.modules.able.IModuleDescription;
 import org.jtheque.ui.able.IModel;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.ui.utils.builders.PanelBuilder;
+import org.jtheque.ui.utils.models.SimpleListModel;
 import org.jtheque.ui.utils.windows.dialogs.SwingFilthyBuildedDialogView;
 import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.utils.ui.SwingUtils;
@@ -29,7 +30,6 @@ import org.jtheque.views.impl.actions.module.repository.ExpandRepositoryModuleAc
 import org.jtheque.views.impl.actions.module.repository.InstallRepositoryModuleAction;
 import org.jtheque.views.impl.components.panel.ModulePanel;
 import org.jtheque.views.impl.components.renderers.ModuleRepositoryListRenderer;
-import org.jtheque.views.impl.models.ModuleRepositoryListModel;
 
 import javax.annotation.Resource;
 import javax.swing.JList;
@@ -56,7 +56,8 @@ public final class RepositoryView extends SwingFilthyBuildedDialogView<IModel> i
         builder.addLabel(moduleService.getRepository().getTitle().toString(), PanelBuilder.BOLD, 18.0f,
                 builder.gbcSet(0, 0, GridBagUtils.HORIZONTAL));
 
-        list = builder.addScrolledList(new ModuleRepositoryListModel(moduleService), new ModuleRepositoryListRenderer(), builder.gbcSet(0, 1, GridBagUtils.BOTH));
+        list = builder.addScrolledList(new SimpleListModel<IModuleDescription>(moduleService.getModulesFromRepository()),
+                new ModuleRepositoryListRenderer(), builder.gbcSet(0, 1, GridBagUtils.BOTH));
 
         builder.addButtonBar(builder.gbcSet(0, 2, GridBagUtils.HORIZONTAL),
                 new ExpandRepositoryModuleAction(this), 

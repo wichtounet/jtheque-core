@@ -18,9 +18,10 @@ package org.jtheque.views.impl.components.panel;
 
 import org.jtheque.core.able.ICore;
 import org.jtheque.i18n.able.ILanguageService;
+import org.jtheque.ui.able.IFilthyUtils;
+import org.jtheque.ui.utils.builded.FilthyBuildedPanel;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.ui.utils.builders.PanelBuilder;
-import org.jtheque.ui.utils.builded.BuildedPanel;
 import org.jtheque.update.able.IUpdateService;
 import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.views.impl.actions.module.UpdateKernelAction;
@@ -32,16 +33,18 @@ import java.awt.Insets;
  *
  * @author Baptiste Wicht
  */
-public final class KernelInfoPanel extends BuildedPanel {
+public final class KernelInfoPanel extends FilthyBuildedPanel {
     private static final int TITLE_FONT_SIZE = 16;
     private final IUpdateService updateService;
 
-    public KernelInfoPanel(ILanguageService languageService, IUpdateService updateService) {
-        super(languageService);
+    public KernelInfoPanel(ILanguageService languageService, IFilthyUtils filthyUtils, IUpdateService updateService) {
+        super(filthyUtils, languageService);
 
         this.updateService = updateService;
 
         build();
+
+	    setOpaque(false);
     }
 
     @Override

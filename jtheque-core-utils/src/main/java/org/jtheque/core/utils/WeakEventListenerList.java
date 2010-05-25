@@ -16,7 +16,6 @@ package org.jtheque.core.utils;
  * limitations under the License.
  */
 
-import java.io.Serializable;
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -82,123 +81,141 @@ import java.util.List;
  * @author James Gosling
  * @version 1.37 11/17/05
  */
-public class WeakEventListenerList implements Serializable {
-	private transient List<WeakReference<? extends EventListener>> weakReferences;
-	private transient List<Class<? extends EventListener>> classes;
+public class WeakEventListenerList {
+    private List<WeakReference<? extends EventListener>> weakReferences;
+    private List<Class<? extends EventListener>> classes;
 
-	/**
-	 * Returns a list of strongly referenced EventListeners. Removes
-	 * internal weak references to garbage collected listeners.
-	 *
-	 * @return All the strongly references listeners.
-	 */
-	@SuppressWarnings("unchecked")
-	private synchronized <T extends EventListener> List<T> cleanReferences() {
-		List<T> listeners = new ArrayList<T>(10);
+    /**
+     * Returns a list of strongly referenced EventListeners. Removes
+     * internal weak references to garbage collected listeners.
+     *
+     * @return All the strongly references listeners.
+     */
+    @SuppressWarnings("unchecked")
+    private <T extends EventListener> List<T> cleanReferences() {
+        List<T> listeners = new ArrayList<T>(10);
 
-		for (int i = getReferences().size() - 1; i >= 0; i--) {
-			Object listener = getReferences().get(i).get();
+        for (int i = getReferences().size() - 1; i >= 0; i--) {
+            Object listener = getReferences().get(i).get();
 
-			if (listener == null) {
-				getReferences().remove(i);
+            if (listener == null) {
+                getReferences().remove(i);
+                getClasses().remove(i);
+            } else {
+                listeners.add(0, (T) listener);
+            }
+        }
+
+        return listeners;
+    }
+
+    /**
+     * Return all the references.
+     *
+     * @return All the references.
+     */
+    private List<WeakReference<? extends EventListener>> getReferences() {
+        if (weakReferences == null) {
+            weakReferences = new ArrayList<WeakReference<? extends EventListener>>(10);
+        }
+
+        return weakReferences;
+    }
+
+    /**
+     * Return all the classes.
+     *
+     * @return All the classes.
+     */
+    private List<Class<? extends EventListener>> getClasses() {
+        if (classes == null) {
+            classes = new ArrayList<Class<? extends EventListener>>(10);
+        }
+
+        return classes;
+    }
+
+    /**
+     * Return an array of all the listeners of the given type.
+     * As a side-effect, cleans out any
+     * garbage collected listeners before building the array.
+     *
+     * @param t the class to get the listeners from.
+     *
+     * @return all of the listeners of the specified type.
+     * @throws ClassCastException if the supplied class
+     *                            is not assignable to EventListener
+     * @since 1.3
+     */
+    @SuppressWarnings("unchecked")
+    public <T extends EventListener> T[] getListeners(Class<T> t) {
+        List<T> liveListeners = cleanReferences();
+        List<T> listeners = new ArrayList<T>(5);
+
+        for (int i = 0; i < liveListeners.size(); i++) {
+            if (getClasses().get(i) == t) {
+                listeners.add(liveListeners.get(i));
+            }
+        }
+
+        T[] result = (T[]) Array.newInstance(t, listeners.size());
+        return listeners.toArray(result);
+    }
+
+    /**
+     * Adds the listener as a listener of the specified type.
+     * As a side-effect, cleans out any garbage collected
+     * listeners before adding.
+     *
+     * @param t the type of the listener to be added
+     * @param l the listener to be added
+     */
+    public <T extends EventListener> void add(Class<T> t, T l) {
+        assert l != null;
+
+        if (!t.isInstance(l)) {
+            throw new IllegalArgumentException("Listener " + l + " is not of type " + t);
+        }
+
+        cleanReferences();
+        getReferences().add(new WeakReference<T>(l));
+        getClasses().add(t);
+    }
+
+    /**
+     * Removes the listener as a listener of the specified type.
+     *
+     * @param t the type of the listener to be removed
+     * @param l the listener to be removed
+     */
+    public <T extends EventListener> void remove(Class<T> t, T l) {
+        assert l != null;
+
+        if (!t.isInstance(l)) {
+            throw new IllegalArgumentException("Listener " + l + " is not of type " + t);
+        }
+
+        for (int i = 0; i < getReferences().size(); i++) {
+            if (l.equals(getReferences().get(i).get()) && t == getClasses().get(i)) {
+                getReferences().remove(i);
+                getClasses().remove(i);
+                break;
+            }
+        }
+    }
+
+    /**
+     * Remove all the listeners of type T.
+     *
+     * @param t   The class of listeners to remove.
+     * @param <T> The type of listeners to remove.
+     */
+    public <T extends EventListener> void removeAll(Class<T> t) {
+        for (int i = 0; i < getReferences().size(); i++) {
+            if (t == getClasses().get(i)) {
+                getReferences().remove(i);
 				getClasses().remove(i);
-			} else {
-				listeners.add(0, (T) listener);
-			}
-		}
 
-		return listeners;
-	}
-
-	private List<WeakReference<? extends EventListener>> getReferences() {
-		if (weakReferences == null) {
-			weakReferences = new ArrayList<WeakReference<? extends EventListener>>(10);
-		}
-
-		return weakReferences;
-	}
-
-	private List<Class<? extends EventListener>> getClasses() {
-		if (classes == null) {
-			classes = new ArrayList<Class<? extends EventListener>>(10);
-		}
-
-		return classes;
-	}
-
-	/**
-	 * Return an array of all the listeners of the given type.
-	 * As a side-effect, cleans out any
-	 * garbage collected listeners before building the array.
-	 *
-	 * @param t the class to get the listeners from.
-	 * @return all of the listeners of the specified type.
-	 * @throws ClassCastException if the supplied class
-	 * is not assignable to EventListener
-	 * @since 1.3
-	 */
-	@SuppressWarnings("unchecked")
-	public <T extends EventListener> T[] getListeners(Class<T> t) {
-		List<T> liveListeners = cleanReferences();
-		List<T> listeners = new ArrayList<T>(5);
-
-		for (int i = 0; i < liveListeners.size(); i++) {
-			if (getClasses().get(i) == t) {
-				listeners.add(liveListeners.get(i));
-			}
-		}
-
-		T[] result = (T[]) Array.newInstance(t, listeners.size());
-		return listeners.toArray(result);
-	}
-
-	/**
-	 * Adds the listener as a listener of the specified type.
-	 * As a side-effect, cleans out any garbage collected
-	 * listeners before adding.
-	 *
-	 * @param t the type of the listener to be added
-	 * @param l the listener to be added
-	 */
-	public synchronized <T extends EventListener> void add(Class<T> t, T l) {
-		if (l == null) {
-			// In an ideal world, we would do an assertion here
-			// to help developers know they are probably doing
-			// something wrong
-			return;
-		}
-
-		if (!t.isInstance(l)) {
-			throw new IllegalArgumentException("Listener " + l + " is not of type " + t);
-		}
-
-		cleanReferences();
-		getReferences().add(new WeakReference<T>(l));
-		getClasses().add(t);
-	}
-
-	/**
-	 * Removes the listener as a listener of the specified type.
-	 *
-	 * @param t the type of the listener to be removed
-	 * @param l the listener to be removed
-	 */
-	public synchronized <T extends EventListener> void remove(Class<T> t, T l) {
-		if (l == null) {
-			// In an ideal world, we would do an assertion here
-			// to help developers know they are probably doing
-			// something wrong
-			return;
-		}
-
-		if (!t.isInstance(l)) {
-			throw new IllegalArgumentException("Listener " + l + " is not of type " + t);
-		}
-
-		for (int i = 0; i < getReferences().size(); i++) {
-			if (l.equals(getReferences().get(i).get()) && t == getClasses().get(i)) {
-				getReferences().remove(i);
-				getClasses().remove(i);
 				break;
 			}
 		}

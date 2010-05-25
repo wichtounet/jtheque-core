@@ -44,6 +44,14 @@ public abstract class AbstractController implements Controller, BundleContextAwa
 		this.bundleContext = bundleContext;
 	}
 
+	/**
+	 * Return the service of the given class.
+	 *
+	 * @param classz The class of the service to get.
+	 * @param <T> The Type of class.
+	 *
+	 * @return The service. 
+	 */
     protected <T> T getService(Class<T> classz){
         return OSGiUtils.getService(bundleContext, classz);
     }

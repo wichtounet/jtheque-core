@@ -55,7 +55,7 @@ public final class LoadModuleAction extends JThequeAction {
         String error = moduleService.canModuleLaunched(module);
 
         if (StringUtils.isEmpty(error)) {
-            moduleService.loadModule(module);
+            moduleService.startModule(module);
             moduleView.refreshList();
         } else {
             uiUtils.getDelegate().displayText(error);

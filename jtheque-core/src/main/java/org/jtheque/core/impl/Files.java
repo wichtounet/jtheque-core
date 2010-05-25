@@ -29,6 +29,11 @@ import java.io.File;
 public final class Files implements IFilesContainer {
     private final ICore core;
 
+    /**
+     * Construct a new Files.
+     *
+     * @param core The core. 
+     */
     public Files(ICore core) {
         super();
 

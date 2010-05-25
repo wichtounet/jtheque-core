@@ -84,7 +84,7 @@ public final class UpdateView extends SwingFilthyBuildedDialogView<IModel> imple
 
     @Override
     public Version getSelectedVersion() {
-        return model.getSelectedVersion();
+        return model.getSelectedItem();
     }
 
     @Override

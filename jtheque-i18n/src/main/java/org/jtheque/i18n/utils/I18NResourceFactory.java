@@ -5,8 +5,10 @@ import org.jtheque.i18n.impl.I18NResourceImpl;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 
 import java.io.File;
+import java.net.URL;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -25,22 +27,36 @@ import java.io.File;
  */
 
 public class I18NResourceFactory {
-	private I18NResourceFactory() {
-		super();
-	}
+    private I18NResourceFactory() {
+        super();
+    }
 
-	public static I18NResource fromResource(Class<?> classz, String path) {
+    public static I18NResource fromURL(String name, URL url) {
+        Resource resource = new UrlResource(url);
+
+        return new I18NResourceImpl(name, resource);
+    }
+
+    /**
+     * Construct a I18NResource from the path using the class (with the class loader) to load it.
+     *
+     * @param classz The class to get the class loader.
+     * @param path   The resource path.
+     * @return The I18NResource corresponding to the given resource.
+     */
+    public static I18NResource fromResource(Class<?> classz, String path) {
         Resource resource = new InputStreamResource(classz.getClassLoader().getResourceAsStream(path));
 
         return new I18NResourceImpl(path.substring(path.lastIndexOf('/')), resource);
     }
 
-    public static I18NResource fromResource(String fileName, Class<?> classz, String path) {
-        Resource resource = new InputStreamResource(classz.getClassLoader().getResourceAsStream(path));
-
-        return new I18NResourceImpl(fileName, resource);
-    }
-
+    /**
+     * Construct a I18NResource from the given file.
+     *
+     * @param file The file to use to create the I18NResource.
+     *
+     * @return The I18NResource corresponding to the given file. 
+     */
     public static I18NResource fromFile(File file) {
         return new I18NResourceImpl(file.getName(), new FileSystemResource(file));
     }

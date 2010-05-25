@@ -19,13 +19,18 @@ package org.jtheque.modules.able;
 import org.jtheque.utils.bean.Version;
 import org.osgi.framework.Bundle;
 
+/**
+ * A module specification.
+ *
+ * @author Baptiste Wicht
+ */
 public interface Module {
     /**
      * Return the real module.
      *
      * @return The real module.
      */
-    Bundle getModule();
+    Bundle getBundle();
 
     /**
      * Return the current state of the module.
@@ -62,22 +67,69 @@ public interface Module {
      */
     String getDescription();
 
+	/**
+	 * Return the version of the module.
+	 *
+	 * @return The version of the module.
+	 */
     Version getVersion();
 
+	/**
+	 * Return the needed version of the core.
+	 *
+	 * @return The needed version of the core.
+	 */
     Version getCoreVersion();
 
+	/**
+	 * Return the URL of the website of the module.
+	 *
+	 * @return The URL of the website of the module.
+	 */
     String getUrl();
 
+    /**
+     * Return the URL of the update file of the module.
+     *
+     * @return The URL of the update file of the module.
+     */
     String getUpdateUrl();
 
-    String[] getBundles();
+    /**
+     * Return all the libs of the module. The libs are OSGi bundles that are installed but the libs are
+     * not started. This is standard OSGi bundles with no JTheque specified headers. 
+     *
+     * @return An array containing all the libs of the module.
+     */
+    String[] getLibs();
 
+    /**
+     * Return all the dependencies of the module. The dependencies are a link to a module that must be started
+     * before this module.
+     *
+     * @return An array containing all the module dependencies of the module.
+     */
     String[] getDependencies();
 
+    /**
+     * Return the resources of the module.
+     *
+     * @return The resources of the module. 
+     */
+	Resources getResources();
+
+    /**
+     * Return the URL of the messages file of the module.
+     *
+     * @return The URL of the messages file of the module. 
+     */
     String getMessagesUrl();
 
-    void setCollection(boolean collection);
-
+	/**
+	 * Indicate if the module needs a collection.
+	 *
+	 * @return true if the module needs a collection otherwise false.
+	 */
     boolean isCollection();
     
     /**
@@ -86,4 +138,11 @@ public interface Module {
      * @param state The state of the module.
      */
     void setState(ModuleState state);
+
+	/**
+	 * Return the internationalized state.
+	 *
+	 * @return The internationalized state. 
+	 */
+	String getDisplayState();
 }

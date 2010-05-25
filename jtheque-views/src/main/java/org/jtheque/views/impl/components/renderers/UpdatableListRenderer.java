@@ -48,6 +48,8 @@ public final class UpdatableListRenderer extends JPanel implements ListCellRende
 
     /**
      * Construct a new ModuleListRenderer.
+     *
+     * @param updateService The update service. 
      */
     public UpdatableListRenderer(IUpdateService updateService) {
         super();

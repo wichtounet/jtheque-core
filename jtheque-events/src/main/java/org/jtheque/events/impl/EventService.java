@@ -2,9 +2,10 @@ package org.jtheque.events.impl;
 
 import org.jdom.Element;
 import org.jtheque.core.utils.SystemProperty;
-import org.jtheque.events.able.Event;
 import org.jtheque.events.able.EventLevel;
+import org.jtheque.events.able.IEvent;
 import org.jtheque.events.able.IEventService;
+import org.jtheque.events.utils.Event;
 import org.jtheque.utils.io.FileUtils;
 import org.jtheque.xml.utils.XMLException;
 import org.jtheque.xml.utils.XMLReader;
@@ -42,8 +43,11 @@ import java.util.Set;
  * @author Baptiste Wicht
  */
 public final class EventService implements IEventService {
-    private final Map<String, Collection<Event>> logs = new HashMap<String, Collection<Event>>(10);
+    private final Map<String, Collection<IEvent>> logs = new HashMap<String, Collection<IEvent>>(10);
 
+    /**
+     * Construct a new EventService. 
+     */
     public EventService() {
         super();
 
@@ -56,14 +60,14 @@ public final class EventService implements IEventService {
     }
 
     @Override
-    public Collection<Event> getEvents(String log) {
+    public Collection<IEvent> getEvents(String log) {
         return logs.get(log);
     }
 
     @Override
-    public void addEvent(String log, Event event) {
+    public void addEvent(String log, IEvent event) {
         if (!logs.containsKey(log)) {
-            logs.put(log, new ArrayList<Event>(25));
+            logs.put(log, new ArrayList<IEvent>(25));
         }
 
         event.setLog(log);
@@ -71,6 +75,9 @@ public final class EventService implements IEventService {
         logs.get(log).add(event);
     }
 
+    /**
+     * Save the XML before stop modules.
+     */
     @PreDestroy
     public void release(){
         saveXML();
@@ -96,7 +103,7 @@ public final class EventService implements IEventService {
 
                 Collection<Element> elements = reader.getNodes("event", currentNode);
 
-                logs.put(name, new ArrayList<Event>(elements.size()));
+                logs.put(name, new ArrayList<IEvent>(elements.size()));
 
                 for (Element element : elements) {
                     Event log = readLog(reader, name, element);
@@ -150,7 +157,7 @@ public final class EventService implements IEventService {
     private void saveXML() {
         XMLWriter writer = new XMLWriter("logs");
 
-        for (Map.Entry<String, Collection<Event>> entry : logs.entrySet()) {
+        for (Map.Entry<String, Collection<IEvent>> entry : logs.entrySet()) {
             writer.add("log");
 
             writer.addAttribute("name", entry.getKey());
@@ -169,8 +176,8 @@ public final class EventService implements IEventService {
      * @param writer The writer to use.
      * @param logs   The logs to write.
      */
-    private static void writeEvents(XMLWriter writer, Iterable<Event> logs) {
-        for (Event log : logs) {
+    private static void writeEvents(XMLWriter writer, Iterable<IEvent> logs) {
+        for (IEvent log : logs) {
             writer.add("event");
 
             writer.addOnly("level", Integer.toString(log.getLevel().intValue()));

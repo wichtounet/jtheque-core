@@ -25,8 +25,9 @@ import org.jtheque.core.utils.Response;
 import org.jtheque.core.utils.WeakEventListenerList;
 import org.jtheque.file.able.IFileService;
 import org.jtheque.persistence.able.DataListener;
+import org.jtheque.utils.CryptoUtils;
+import org.jtheque.utils.Hasher;
 import org.jtheque.utils.StringUtils;
-import org.jtheque.utils.io.FileUtils;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -40,6 +41,13 @@ public final class CollectionsService implements ICollectionsService {
 
     private final WeakEventListenerList listeners = new WeakEventListenerList();
 
+    /**
+     * Construct a new CollectionsService.
+     *
+     * @param daoCollections The dao collections.
+     * @param fileService The file service.
+     * @param core The core.
+     */
     public CollectionsService(IDaoCollections daoCollections, IFileService fileService, ICore core) {
         super();
 
@@ -70,6 +78,9 @@ public final class CollectionsService implements ICollectionsService {
         return new Response(true);
     }
 
+    /**
+     * Fire a collection choosed event. 
+     */
     private void fireCollectionChoosed() {
         for(CollectionListener listener : listeners.getListeners(CollectionListener.class)){
             listener.collectionChoosed();
@@ -103,7 +114,7 @@ public final class CollectionsService implements ICollectionsService {
             collection.setPassword("");
 		} else {
 			collection.setProtection(true);
-			collection.setPassword(FileUtils.encryptKey(password));
+			collection.setPassword(CryptoUtils.hashMessage(password, Hasher.SHA256));
 		}
 
 		daoCollections.create(collection);
@@ -145,7 +156,7 @@ public final class CollectionsService implements ICollectionsService {
 		}
 
 		if (collection.isProtection()){
-			String encrypted = FileUtils.encryptKey(password);
+			String encrypted = CryptoUtils.hashMessage(password, Hasher.SHA256);
 
 			if (!encrypted.equals(collection.getPassword())){
 				return true;

@@ -5,11 +5,9 @@ import org.jtheque.utils.bean.InternationalString;
 import java.util.Collection;
 
 /**
- * Created by IntelliJ IDEA.
- * User: wichtounet
- * Date: May 15, 2010
- * Time: 4:31:50 PM
- * To change this template use File | Settings | File Templates.
+ * A repository. It's simply an online repository to provide a list of modules for the application.
+ *
+ * @author Baptiste Wicht
  */
 public interface IRepository {
 	/**

@@ -31,6 +31,8 @@ public final class UndoAction extends AbstractAction {
 
     /**
      * Construct a new UndoAction.
+     *
+     * @param undoRedoService The undo redo service.
      */
     public UndoAction(IUndoRedoService undoRedoService) {
         super("undo.actions.undo", KeyEvent.VK_Z);

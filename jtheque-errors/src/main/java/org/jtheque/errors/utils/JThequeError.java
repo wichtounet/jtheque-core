@@ -23,7 +23,7 @@ import java.util.logging.Level;
  */
 
 /**
- * An error.
+ * A basic error implementation.
  *
  * @author Baptiste Wicht
  */
@@ -37,7 +37,7 @@ public class JThequeError implements IError {
      *
      * @param message The message of the error.
      */
-    JThequeError(String message) {
+    public JThequeError(String message) {
         super();
 
         this.message = message;
@@ -49,7 +49,7 @@ public class JThequeError implements IError {
      * @param message The message of the error.
      * @param details Some details about the error.
      */
-    JThequeError(String message, String details) {
+    public JThequeError(String message, String details) {
         this(message);
 
         this.details = details;
@@ -108,6 +108,6 @@ public class JThequeError implements IError {
 
 	@Override
 	public ErrorInfo toErrorInfo(ILanguageService languageService){
-		return new ErrorInfo("Error", message, details, "", exception, Level.SEVERE, null);
+		return new ErrorInfo(message, message, details, "", exception, Level.SEVERE, null);
 	}
 }

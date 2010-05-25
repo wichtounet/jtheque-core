@@ -93,10 +93,6 @@ public abstract class SwingFrameView extends JFrame implements IWindowView, Bund
         this.bundleContext = bundleContext;
     }
 
-    BundleContext getBundleContext() {
-        return bundleContext;
-    }
-
     <T> T getService(Class<T> classz){
         return OSGiUtils.getService(bundleContext, classz);
     }
