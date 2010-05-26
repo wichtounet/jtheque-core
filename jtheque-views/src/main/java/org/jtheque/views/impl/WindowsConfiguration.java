@@ -59,6 +59,11 @@ public final class WindowsConfiguration extends AbstractState {
         this.viewService = viewService;
     }
 
+    /**
+     * Load the nodes into the state.
+     * 
+     * @param nodes The nodes to load.
+     */
     @Load
     public void delegateLoad(Iterable<Node> nodes) {
         for (Node node : nodes) {
@@ -92,6 +97,11 @@ public final class WindowsConfiguration extends AbstractState {
         }
     }
 
+    /**
+     * Save the nodes of the state.
+     *
+     * @return All the nodes to be saved by the state. 
+     */
     @Save
     public Collection<Node> delegateSave() {
         Collection<Node> states = new ArrayList<Node>(10);

@@ -36,6 +36,11 @@ public final class UndoRedoService extends UndoManager implements IUndoRedoServi
 
     private final ILanguageService languageService;
 
+    /**
+     * Create a new UndoRedoService.
+     *
+     * @param languageService The language service. 
+     */
     public UndoRedoService(ILanguageService languageService) {
         super();
 

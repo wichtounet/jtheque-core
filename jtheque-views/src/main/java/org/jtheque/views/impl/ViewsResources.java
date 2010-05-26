@@ -19,6 +19,11 @@ import org.springframework.core.io.ClassPathResource;
  * limitations under the License.
  */
 
+/**
+ * A simple registrer for the resources of the view.
+ *
+ * @author Baptiste Wicht
+ */
 public final class ViewsResources {
     public static final String EXIT_ICON = "jtheque-views-exit-icon";
     public static final String XML_ICON = "jtheque-views-xml-icon";
@@ -40,6 +45,11 @@ public final class ViewsResources {
         super();
     }
 
+    /**
+     * Register the resources.
+     * 
+     * @param service The resources to register.
+     */
     public static void registerResources(IResourceService service) {
         register(service, EXIT_ICON, "org/jtheque/views/images/exit.png");
         register(service, XML_ICON, "org/jtheque/views/images/xml.png");
@@ -55,6 +65,13 @@ public final class ViewsResources {
 	    register(service, WARNING_ICON, "org/jtheque/views/images/warning.png");
     }
 
+    /**
+     * Register the resource.
+     * 
+     * @param service The service to use to register the resource.
+     * @param resourceId The resource id.
+     * @param resourcePath The path to the resource in the ClassPath.
+     */
     private static void register(IResourceService service, String resourceId, String resourcePath) {
         service.registerResource(resourceId, new ClassPathResource(resourcePath));
     }

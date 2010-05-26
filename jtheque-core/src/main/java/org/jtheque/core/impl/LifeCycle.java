@@ -7,12 +7,10 @@ import org.jtheque.core.able.lifecycle.ILifeCycle;
 import org.jtheque.core.able.lifecycle.TitleEvent;
 import org.jtheque.core.able.lifecycle.TitleListener;
 import org.jtheque.core.utils.WeakEventListenerList;
-import org.jtheque.events.utils.Event;
 import org.jtheque.events.able.EventLevel;
 import org.jtheque.events.able.IEventService;
+import org.jtheque.events.utils.Event;
 import org.jtheque.utils.DesktopUtils;
-
-import javax.annotation.Resource;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -30,6 +28,11 @@ import javax.annotation.Resource;
  * limitations under the License.
  */
 
+/**
+ * The lifecycle implementation of the core.
+ *
+ * @author Baptiste Wicht
+ */
 public class LifeCycle implements ILifeCycle {
     private final WeakEventListenerList listenerList = new WeakEventListenerList();
 
@@ -41,14 +44,19 @@ public class LifeCycle implements ILifeCycle {
     private final ICore core;
     private final IEventService eventService;
 
-	public LifeCycle(IEventService eventService, ICore core) {
-		super();
+    /**
+     * Construct a new lifecycle.
+     * @param eventService The event service.
+     * @param core The core.
+     */
+    public LifeCycle(IEventService eventService, ICore core) {
+        super();
 
-		this.eventService = eventService;
-		this.core = core;
-	}
+        this.eventService = eventService;
+        this.core = core;
+    }
 
-	@Override
+    @Override
     public void initTitle() {
         refreshTitle();
     }
@@ -130,7 +138,7 @@ public class LifeCycle implements ILifeCycle {
 
 
         Runtime.getRuntime().removeShutdownHook(shutdownHook);
-        
+
         System.exit(0);
     }
 

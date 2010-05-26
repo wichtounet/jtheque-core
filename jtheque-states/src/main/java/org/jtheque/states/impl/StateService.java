@@ -96,6 +96,9 @@ public final class StateService implements IStateService {
         writer.write(file.getAbsolutePath());
     }
 
+    /**
+     * Save the states.
+     */
 	@PreDestroy
     public void saveStates(){
         XMLWriter writer = new XMLWriter("states");
@@ -133,6 +136,13 @@ public final class StateService implements IStateService {
         }
     }
 
+    /**
+     * Simply writer the state with the writer.
+     *
+     * @param writer The writer to use.
+     * @param state The state to write.
+     * @param saveMethod The save method.
+     */
 	private void simpleWrite(XMLWriter writer, Map.Entry<String, Object> state, Method saveMethod) {
 		writer.add("properties");
 
@@ -155,6 +165,12 @@ public final class StateService implements IStateService {
 		writer.switchToParent();
 	}
 
+    /**
+     * Write all the nodes of the given state.
+     * @param writer The writer to use.
+     * @param state The state to write.
+     * @param saveMethod The save method.
+     */
 	private void delegatedWrite(XMLWriter writer, Map.Entry<String, Object> state, Method saveMethod) {
 		try {
 			NodeSaver.writeNodes(writer, (Iterable<Node>) saveMethod.invoke(state.getValue()));
@@ -165,6 +181,10 @@ public final class StateService implements IStateService {
 		}
 	}
 
+    /**
+     * Write the properties to the writer.
+     * @param writer The XML writer.
+     */
 	private void writeProperties(XMLWriter writer) {
         for (Map.Entry<String, Map<String, String>> state : properties.entrySet()) {
             writer.add("state");
@@ -188,6 +208,10 @@ public final class StateService implements IStateService {
         }
     }
 
+    /**
+     * Write the nodes to the writer.
+     * @param writer The writer. 
+     */
     private void writeNodes(XMLWriter writer) {
         for (Map.Entry<String, Collection<Node>> state : nodes.entrySet()) {
             writer.add("state");

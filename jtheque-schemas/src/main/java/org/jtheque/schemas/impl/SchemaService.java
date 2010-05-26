@@ -41,6 +41,11 @@ public final class SchemaService implements ISchemaService, ModuleListener {
 
     private final SchemaConfiguration configuration;
 
+    /**
+     * Construct a new SchemaService.
+     *
+     * @param stateService The state stateService.
+     */
     public SchemaService(IStateService stateService) {
         super();
 

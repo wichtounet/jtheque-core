@@ -1,10 +1,10 @@
 package org.jtheque.lifecycle.application;
 
 import org.jdom.Element;
-import org.jtheque.core.utils.SystemProperty;
 import org.jtheque.core.able.application.Application;
 import org.jtheque.core.utils.ImageDescriptor;
 import org.jtheque.core.utils.ImageType;
+import org.jtheque.core.utils.SystemProperty;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.bean.InternationalString;
 import org.jtheque.utils.bean.Version;
@@ -47,7 +47,7 @@ public final class XMLApplicationReader {
      *
      * @return The builded Application.
      */
-    public Application readApplication(String filePath){
+    public Application readApplication(String filePath) {
         XMLApplication application = new XMLApplication();
 
         reader = new XMLReader();
@@ -56,7 +56,7 @@ public final class XMLApplicationReader {
 
         try {
             readFile(application);
-        } catch (XMLException e){
+        } catch (XMLException e) {
             throw new IllegalArgumentException("Unable to read the file " + filePath, e);
         } finally {
             FileUtils.close(reader);
@@ -70,10 +70,10 @@ public final class XMLApplicationReader {
      *
      * @param filePath The path to the file.
      */
-    private void openFile(String filePath){
+    private void openFile(String filePath) {
         try {
             reader.openFile(filePath);
-        } catch (XMLException e){
+        } catch (XMLException e) {
             throw new IllegalArgumentException("Unable to read the file " + filePath, e);
         }
     }
@@ -85,7 +85,7 @@ public final class XMLApplicationReader {
      *
      * @throws XMLException if an error occurs during the XML processing.
      */
-    private void readFile(XMLApplication application) throws XMLException{
+    private void readFile(XMLApplication application) throws XMLException {
         readVersion(application);
         readApplicationValues(application);
         readInternationalization(application);
@@ -102,7 +102,7 @@ public final class XMLApplicationReader {
      *
      * @throws XMLException if an error occurs during the XML processing.
      */
-    private void readVersion(XMLApplication application) throws XMLException{
+    private void readVersion(XMLApplication application) throws XMLException {
         String versionStr = reader.readString("@version", reader.getRootElement());
 
         application.setVersion(new Version(versionStr));
@@ -115,10 +115,10 @@ public final class XMLApplicationReader {
      *
      * @throws XMLException if an error occurs during the XML processing.
      */
-    private void readApplicationValues(XMLApplication application) throws XMLException{
+    private void readApplicationValues(XMLApplication application) throws XMLException {
         String folder = reader.readString("folder", reader.getRootElement());
 
-        if (StringUtils.isEmpty(folder) || !new File(folder).exists()){
+        if (StringUtils.isEmpty(folder) || !new File(folder).exists()) {
             application.setProperty("application.folder.path", new File(SystemProperty.USER_DIR.get()).getParentFile().getAbsolutePath());
         } else {
             application.setProperty("application.folder.path", new File(folder).getAbsolutePath());
@@ -135,7 +135,7 @@ public final class XMLApplicationReader {
      *
      * @throws XMLException if an error occurs during the XML processing.
      */
-    private void readInternationalization(XMLApplication application) throws XMLException{
+    private void readInternationalization(XMLApplication application) throws XMLException {
         Object i18nElement = reader.getNode("i18n", reader.getRootElement());
 
         readLanguages(i18nElement, application);
@@ -150,19 +150,19 @@ public final class XMLApplicationReader {
      *
      * @throws XMLException If an errors occurs during the XML processing.
      */
-    private void readLanguages(Object i18nElement, XMLApplication application) throws XMLException{
-        if(reader.existsNode("languages", i18nElement)){
+    private void readLanguages(Object i18nElement, XMLApplication application) throws XMLException {
+        if (reader.existsNode("languages", i18nElement)) {
             Collection<Element> nodes = reader.getNodes("languages/language", i18nElement);
 
             Collection<String> languages = new ArrayList<String>(nodes.size());
 
-            for (Element languageElement : nodes){
+            for (Element languageElement : nodes) {
                 languages.add(languageElement.getText());
             }
 
             nodes = reader.getNodes("languages/*", i18nElement);
 
-            for (Element languageElement : nodes){
+            for (Element languageElement : nodes) {
                 languages.add(languageElement.getName());
             }
 
@@ -178,8 +178,8 @@ public final class XMLApplicationReader {
      *
      * @throws XMLException If an errors occurs during the XML processing.
      */
-    private void readApplicationProperties(Object i18nElement, XMLApplication application) throws XMLException{
-        if (reader.getNode("files", i18nElement) != null || reader.getNode("name", i18nElement) == null){
+    private void readApplicationProperties(Object i18nElement, XMLApplication application) throws XMLException {
+        if (reader.getNode("files", i18nElement) != null || reader.getNode("name", i18nElement) == null) {
             application.setApplicationProperties(new I18nAplicationProperties());
         } else {
             DirectValuesApplicationProperties props = new DirectValuesApplicationProperties();
@@ -197,19 +197,18 @@ public final class XMLApplicationReader {
     /**
      * Read an international string from the file.
      *
-     * @param path The path the international string element.
+     * @param path          The path the international string element.
      * @param parentElement The parent element.
      *
      * @return The internationalized string.
-     *
      * @throws XMLException if an error occurs during the XML processing.
      */
-    private InternationalString readInternationalString(String path, Object parentElement) throws XMLException{
+    private InternationalString readInternationalString(String path, Object parentElement) throws XMLException {
         InternationalString internationalString = new InternationalString();
 
         Collection<Element> elements = reader.getNodes(path + "/*", parentElement);
 
-        for (Element child : elements){
+        for (Element child : elements) {
             internationalString.put(child.getName(), child.getText());
         }
 
@@ -221,20 +220,19 @@ public final class XMLApplicationReader {
      *
      * @param node The node to read the image from.
      *
-     * @throws XMLException if an error occurs during the XML processing.
-     *
      * @return Return the read image descriptor. If the node doesn't exists a default ImageDescriptor with
-     * the name of the node as the image and PNG type is returned.
+     *         the name of the node as the image and PNG type is returned.
+     * @throws XMLException if an error occurs during the XML processing.
      */
-    private ImageDescriptor readImageDescriptor(String node) throws XMLException{
-        if(reader.existsNode(node, reader.getRootElement())){
+    private ImageDescriptor readImageDescriptor(String node) throws XMLException {
+        if (reader.existsNode(node, reader.getRootElement())) {
             Object iconElement = reader.getNode(node, reader.getRootElement());
 
             StringBuilder path = new StringBuilder(SystemProperty.USER_DIR.get());
-			path.append("images/");
-			path.append(reader.readString("image", iconElement));
-			
-            if(reader.existsValue("@image", iconElement)){
+            path.append("images/");
+            path.append(reader.readString("image", iconElement));
+
+            if (reader.existsValue("@image", iconElement)) {
                 path.append(reader.readString("@image", iconElement));
             } else {
                 path.append(reader.readString("image", iconElement));
@@ -242,10 +240,10 @@ public final class XMLApplicationReader {
 
             ImageType type;
 
-            if(reader.existsNode("type", iconElement)){
+            if (reader.existsNode("type", iconElement)) {
                 String typeStr = reader.readString("type", iconElement);
                 type = StringUtils.isEmpty(typeStr) ? ImageType.PNG : ImageType.resolve(typeStr);
-            } else if(reader.existsValue("@type", iconElement)){
+            } else if (reader.existsValue("@type", iconElement)) {
                 String typeStr = reader.readString("@type", iconElement);
                 type = StringUtils.isEmpty(typeStr) ? ImageType.PNG : ImageType.resolve(typeStr);
             } else {
@@ -258,15 +256,23 @@ public final class XMLApplicationReader {
         return new ImageDescriptor(node, ImageType.PNG);
     }
 
-    private String readImagePath(String node) throws XMLException{
-        if(reader.existsNode(node, reader.getRootElement())){
+    /**
+     * Read the path to the image from the current node.
+     *
+     * @param node The name of the image node.
+     *
+     * @return The path to the image.
+     * @throws XMLException If an errors occurs during XML reading.
+     */
+    private String readImagePath(String node) throws XMLException {
+        if (reader.existsNode(node, reader.getRootElement())) {
             Object iconElement = reader.getNode(node, reader.getRootElement());
 
             StringBuilder path = new StringBuilder(SystemProperty.USER_DIR.get());
-			path.append("images/");
-			path.append(reader.readString("image", iconElement));
+            path.append("images/");
+            path.append(reader.readString("image", iconElement));
 
-            if(reader.existsValue("@image", iconElement)){
+            if (reader.existsValue("@image", iconElement)) {
                 path.append(reader.readString("@image", iconElement));
             } else {
                 path.append(reader.readString("image", iconElement));
@@ -274,10 +280,10 @@ public final class XMLApplicationReader {
 
             ImageType type;
 
-            if(reader.existsNode("type", iconElement)){
+            if (reader.existsNode("type", iconElement)) {
                 String typeStr = reader.readString("type", iconElement);
                 type = StringUtils.isEmpty(typeStr) ? ImageType.PNG : ImageType.resolve(typeStr);
-            } else if(reader.existsValue("@type", iconElement)){
+            } else if (reader.existsValue("@type", iconElement)) {
                 String typeStr = reader.readString("@type", iconElement);
                 type = StringUtils.isEmpty(typeStr) ? ImageType.PNG : ImageType.resolve(typeStr);
             } else {
@@ -292,17 +298,24 @@ public final class XMLApplicationReader {
         return null;
     }
 
-    private void readModules(XMLApplication application) throws XMLException{
-        if(reader.existsNode("modules", reader.getRootElement())){
+    /**
+     * Read all the modules of the application.
+     *
+     * @param application The application to get the modules for.
+     *
+     * @throws XMLException Thrown if an error occurs during XML reading.
+     */
+    private void readModules(XMLApplication application) throws XMLException {
+        if (reader.existsNode("modules", reader.getRootElement())) {
             Object modulesElement = reader.getNode("modules", reader.getRootElement());
 
-            if(reader.existsValue("@discovery", modulesElement) && StringUtils.isNotEmpty(reader.readString("@discovery", modulesElement))){
+            if (reader.existsValue("@discovery", modulesElement) && StringUtils.isNotEmpty(reader.readString("@discovery", modulesElement))) {
                 String discovery = reader.readString("@discovery", modulesElement);
 
                 application.setAutoDiscovery("true".equals(discovery));
             }
 
-            for (Element child : reader.getNodes("*", modulesElement)){
+            for (Element child : reader.getNodes("*", modulesElement)) {
                 application.getModules().add(child.getName());
             }
         }
@@ -315,11 +328,11 @@ public final class XMLApplicationReader {
      *
      * @throws XMLException if an error occurs during the XML processing.
      */
-    private void readOptions(XMLApplication application) throws XMLException{
-        if(reader.existsNode("options", reader.getRootElement())){
+    private void readOptions(XMLApplication application) throws XMLException {
+        if (reader.existsNode("options", reader.getRootElement())) {
             Object optionsElement = reader.getNode("options", reader.getRootElement());
 
-            if(reader.existsValue("licence", optionsElement) && StringUtils.isNotEmpty(reader.readString("licence", optionsElement))){
+            if (reader.existsValue("licence", optionsElement) && StringUtils.isNotEmpty(reader.readString("licence", optionsElement))) {
                 application.displayLicence();
                 application.setProperty("application.licence", SystemProperty.USER_DIR.get() + reader.readString("licence", optionsElement));
             }
@@ -333,10 +346,10 @@ public final class XMLApplicationReader {
      *
      * @throws XMLException if an error occurs during the XML processing.
      */
-    private void readProperties(XMLApplication application) throws XMLException{
+    private void readProperties(XMLApplication application) throws XMLException {
         Collection<Element> nodes = reader.getNodes("properties/*", reader.getRootElement());
 
-        for (Element propertyElement : nodes){
+        for (Element propertyElement : nodes) {
             application.setProperty(propertyElement.getName(), propertyElement.getText());
         }
     }

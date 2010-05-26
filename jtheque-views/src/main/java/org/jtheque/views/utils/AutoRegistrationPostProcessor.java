@@ -123,18 +123,38 @@ public class AutoRegistrationPostProcessor implements BeanPostProcessor, Applica
 		this.applicationContext = applicationContext;
 	}
 
+    /**
+     * Set the views.
+     *
+      * @param views The views.
+     */
 	public void setViews(IViews views) {
 		this.views = views;
 	}
 
+    /**
+     * Set the feature service.
+     *
+     * @param featureService The feature service.
+     */
 	public void setFeatureService(IFeatureService featureService) {
 		this.featureService = featureService;
 	}
 
+    /**
+     * Set the schema service.
+     *
+     * @param schemaService The schema service.
+     */
 	public void setSchemaService(ISchemaService schemaService) {
 		this.schemaService = schemaService;
 	}
 
+    /**
+     * Set the file service.
+     *
+     * @param fileService The file service. 
+     */
 	public void setFileService(IFileService fileService) {
 		this.fileService = fileService;
 	}

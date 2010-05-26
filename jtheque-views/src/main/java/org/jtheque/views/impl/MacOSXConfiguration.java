@@ -62,6 +62,13 @@ public final class MacOSXConfiguration {
         private final IViews views;
         private final ICore core;
 
+        /**
+         * Construct a new MacApplicationAdapter.
+         *
+         * @param viewService The view service.
+         * @param core The core.
+         * @param views The views. 
+         */
         private MacApplicationAdapter(IViewService viewService, ICore core, IViews views) {
             super();
 

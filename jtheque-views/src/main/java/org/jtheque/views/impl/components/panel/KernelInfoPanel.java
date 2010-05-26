@@ -37,6 +37,13 @@ public final class KernelInfoPanel extends FilthyBuildedPanel {
     private static final int TITLE_FONT_SIZE = 16;
     private final IUpdateService updateService;
 
+    /**
+     * Construct a new KernelInfoPanel.
+     *
+     * @param languageService The language service.
+     * @param filthyUtils The filthy utils.
+     * @param updateService The update service. 
+     */
     public KernelInfoPanel(ILanguageService languageService, IFilthyUtils filthyUtils, IUpdateService updateService) {
         super(filthyUtils, languageService);
 

@@ -140,6 +140,11 @@ public final class ResourceService implements IResourceService {
         return ImageUtils.openCompatibleImage(getResourceAsStream(path));
     }
 
+    /**
+     * Return the stream to the resource of the given id.
+     * @param id The id of the resource.
+     * @return The input stream to the resource.
+     */
     private InputStream getResourceAsStream(String id) {
         InputStream stream = null;
 

@@ -138,7 +138,7 @@ public final class ModuleLoader implements IModuleLoader, BundleContextAware {
 			String path = headers.get("Module-Config");
 
 			if (StringUtils.isNotEmpty(path)) {
-				container.setResources(importConfig(id, bundle, path));
+				container.setResources(importConfig(bundle, path));
 			}
 		} catch (BundleException e) {
 			LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
@@ -148,7 +148,15 @@ public final class ModuleLoader implements IModuleLoader, BundleContextAware {
 		return container;
 	}
 
-	private ModuleResources importConfig(String id, Bundle bundle, String path) {
+    /**
+     * Import the configuration of the module from the module config XML file.
+     *
+     * @param bundle The bundle.
+     * @param path The path to the file inside the bundle.
+     *
+     * @return The ModuleResources of the module. 
+     */
+	private ModuleResources importConfig(Bundle bundle, String path) {
 		ModuleResources resources = new ModuleResources();
 
 		XMLOverReader reader = new XMLOverReader();

@@ -26,11 +26,27 @@ import java.net.URL;
  * limitations under the License.
  */
 
+/**
+ * A utility factory for I18NResource.
+ *
+ * @author Baptiste Wicht
+ */
 public class I18NResourceFactory {
+    /**
+     * Utility class, not instantiable.
+     */
     private I18NResourceFactory() {
         super();
     }
 
+    /**
+     * Construct a new I18NResource from the given URL.
+     *
+     * @param name The name of the file.
+     * @param url The url to create the resource to.
+     *
+     * @return The I18NResource to the URL. 
+     */
     public static I18NResource fromURL(String name, URL url) {
         Resource resource = new UrlResource(url);
 

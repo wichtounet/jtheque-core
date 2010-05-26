@@ -89,6 +89,11 @@ public final class ModuleService implements IModuleService {
      */
     private boolean collectionModule;
 
+    /**
+     * Construct a new ModuleService.
+     *
+     * @param moduleLoader The module loader.
+     */
     public ModuleService(IModuleLoader moduleLoader) {
         super();
 
@@ -429,6 +434,14 @@ public final class ModuleService implements IModuleService {
         }
     }
 
+    /**
+     * Return the internationalized message with the given key.
+     *
+     * @param key The i18n key.
+     * @param replaces The i18n replaces.
+     *
+     * @return The internationalized message. 
+     */
     private String getMessage(String key, String... replaces) {
         return languageService.getMessage(key, replaces);
     }

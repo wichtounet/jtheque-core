@@ -30,15 +30,15 @@ import java.util.Collection;
  * limitations under the License.
  */
 
+/**
+ * An OSGi builded panel. 
+ *
+ * @author Baptiste Wicht
+ */
 public abstract class OSGIBuildedPanel extends BuildedPanel implements BundleContextAware, ApplicationContextAware {
 	private BundleContext bundleContext;
 	private ApplicationContext applicationContext;
-
-	@PostConstruct
-	public void init(){
-		build();
-	}
-
+    
 	@Override
 	protected ILanguageService getLanguageService() {
 		return getService(ILanguageService.class);

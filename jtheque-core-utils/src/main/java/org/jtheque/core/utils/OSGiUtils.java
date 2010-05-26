@@ -20,28 +20,35 @@ import org.osgi.framework.ServiceReference;
  * limitations under the License.
  */
 
+/**
+ * OSGi utilities.
+ *
+ * @author Baptiste Wicht
+ */
 public final class OSGiUtils {
+    /**
+     * Utility class, not instantiatable.
+     */
     private OSGiUtils() {
         super();
     }
 
-    public static <T> T getService(BundleContext context, Class<T> classz){
+    /**
+     * Return the service of the given class in the given bundle context.
+     *
+     * @param context The bundle context
+     * @param classz  The class to get the service for.
+     * @param <T>     The type of service.
+     *
+     * @return The service of the given type.
+     */
+    public static <T> T getService(BundleContext context, Class<T> classz) {
         ServiceReference ref = context.getServiceReference(classz.getName());
 
-        if(ref != null){
+        if (ref != null) {
             return (T) context.getService(ref);
         }
 
-        return null;
-    }
-
-    public static Bundle getBundle(BundleContext context, String symbolicName) {
-        for(Bundle bundle : context.getBundles()){
-            if(symbolicName.equals(bundle.getSymbolicName())){
-                return bundle;
-            }
-        }
-                
         return null;
     }
 }

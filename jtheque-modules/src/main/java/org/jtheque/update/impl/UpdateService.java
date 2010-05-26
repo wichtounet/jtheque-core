@@ -60,6 +60,11 @@ public final class UpdateService implements IUpdateService {
 
     private final IVersionsLoader versionsLoader;
 
+    /**
+     * Create a new UpdateService.
+     * @param stateService The state service.
+     * @param versionsLoader The versions loader. 
+     */
     public UpdateService(IStateService stateService, IVersionsLoader versionsLoader) {
         super();
 

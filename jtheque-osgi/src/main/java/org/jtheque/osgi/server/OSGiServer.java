@@ -79,10 +79,27 @@ public interface OSGiServer {
      */
     BundleState getState(Bundle bundle);
 
-    BundleState getState(String bundle);
+    /**
+     * Return the state of the given bundle.
+     * @param bundleName The bundle to get the state for.
+     *
+     * @return The state of the bundle.
+     */
+    BundleState getState(String bundleName);
 
+    /**
+     * Indicate if a bundle is installed.
+     * @param bundleName The name of the bundle.
+     * @return true if the bundle is installed else false.
+     */
     boolean isInstalled(String bundleName);
 
+    /**
+     * Return the version of the given bundle.
+     * @param bundleName The version to get the state for.
+     *
+     * @return The version of the bundle.
+     */
     Version getVersion(String bundleName);
 
 	/**

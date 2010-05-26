@@ -28,14 +28,14 @@ import org.osgi.framework.Bundle;
  * @author Baptiste Wicht
  */
 public final class ModuleContainer implements Module {
-    private final Bundle module;
+    private final Bundle bundle;
 
     private ModuleState state;
 
     private String id;
     private Version version;
     private Version coreVersion;
-    private String[] bundles;
+    private String[] libs;
     private String[] dependencies;
     private String url;
     private String updateUrl;
@@ -43,15 +43,20 @@ public final class ModuleContainer implements Module {
     private boolean collection;
 	private ModuleResources resources;
 
-	public ModuleContainer(Bundle module) {
+    /**
+     * Construct a new ModuleContainer from the specified bundle.
+     *
+     * @param bundle The bundle of the module.
+     */
+	public ModuleContainer(Bundle bundle) {
         super();
 
-        this.module = module;
+        this.bundle = bundle;
     }
 
     @Override
     public Bundle getBundle() {
-        return module;
+        return bundle;
     }
 
     @Override
@@ -66,7 +71,7 @@ public final class ModuleContainer implements Module {
 
 	@Override
 	public String getDisplayState() {
-		return OSGiUtils.getService(module.getBundleContext(), ILanguageService.class).getMessage(state.getKey());
+		return OSGiUtils.getService(bundle.getBundleContext(), ILanguageService.class).getMessage(state.getKey());
 	}
 
 	@Override
@@ -74,23 +79,28 @@ public final class ModuleContainer implements Module {
         return id;
     }
 
+    /**
+     * Set the id of the module.
+     *
+     * @param id The id of the module.
+     */
     public void setId(String id) {
         this.id = id;
     }
 
     @Override
     public String getName() {
-        return OSGiUtils.getService(module.getBundleContext(), ILanguageService.class).getMessage(id + ".name");
+        return OSGiUtils.getService(bundle.getBundleContext(), ILanguageService.class).getMessage(id + ".name");
     }
 
     @Override
     public String getAuthor() {
-        return OSGiUtils.getService(module.getBundleContext(), ILanguageService.class).getMessage(id + ".author");
+        return OSGiUtils.getService(bundle.getBundleContext(), ILanguageService.class).getMessage(id + ".author");
     }
 
     @Override
     public String getDescription() {
-        return OSGiUtils.getService(module.getBundleContext(), ILanguageService.class).getMessage(id + ".description");
+        return OSGiUtils.getService(bundle.getBundleContext(), ILanguageService.class).getMessage(id + ".description");
     }
 
     @Override
@@ -98,6 +108,11 @@ public final class ModuleContainer implements Module {
         return version;
     }
 
+    /**
+     * Set the version of the module.
+     *
+     * @param version The version of the module.
+     */
     public void setVersion(Version version) {
         this.version = version;
     }
@@ -144,11 +159,18 @@ public final class ModuleContainer implements Module {
 
     @Override
     public String[] getLibs() {
-        return bundles;
+        return libs;
     }
 
-    public void setLibs(String[] bundles) {
-        this.bundles = bundles;
+    /**
+     * Set the libs of the module.
+     *
+     * @param libs The libs of the module.
+     *
+     * @see #getLibs()
+     */
+    public void setLibs(String[] libs) {
+        this.libs = libs;
     }
 
     @Override
@@ -156,6 +178,13 @@ public final class ModuleContainer implements Module {
         return dependencies;
     }
 
+    /**
+     * Set the dependencies of the module.
+     *
+     * @param dependencies The dependencies of the module.
+     *
+     * @see #getDependencies() 
+     */
     public void setDependencies(String[] dependencies) {
         this.dependencies = dependencies;
     }
@@ -165,6 +194,11 @@ public final class ModuleContainer implements Module {
         return messagesUrl;
     }
 
+    /**
+     * Set the messages URL.
+     *
+     * @param messagesUrl The messages URL of the mdule.
+     */
     public void setMessagesUrl(String messagesUrl) {
         this.messagesUrl = messagesUrl;
     }
@@ -193,6 +227,11 @@ public final class ModuleContainer implements Module {
 		return resources;
 	}
 
+    /**
+     * Set the resources of of the module.
+     *
+     * @param resources The resources of the module. 
+     */
 	public void setResources(ModuleResources resources) {
 		this.resources = resources;
 	}

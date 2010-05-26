@@ -31,6 +31,11 @@ import java.util.Collection;
  * limitations under the License.
  */
 
+/**
+ * A filthy builded panel.
+ *
+ * @author Baptiste Wicht
+ */
 public abstract class FilthyBuildedPanel extends FilthyBackgroundPanel implements InternationalizableContainer, IView {
     private final Collection<Internationalizable> internationalizables = new ArrayList<Internationalizable>(15);
 
@@ -38,6 +43,9 @@ public abstract class FilthyBuildedPanel extends FilthyBackgroundPanel implement
 
 	private IModel model;
 
+    /**
+     * Construct a FilthyBuildedPanel. 
+     */
 	protected FilthyBuildedPanel() {
 		super();
 	}

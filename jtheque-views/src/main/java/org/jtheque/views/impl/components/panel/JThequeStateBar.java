@@ -184,6 +184,11 @@ public final class JThequeStateBar extends JPanel {
         SwingUtils.refresh(this);
     }
 
+    /**
+     * Add the components to the state bar.
+     *
+     * @param component The component to add. 
+     */
     public void addComponent(IStateBarComponent component) {
         build();
 

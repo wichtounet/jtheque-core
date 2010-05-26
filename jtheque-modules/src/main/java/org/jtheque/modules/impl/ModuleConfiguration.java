@@ -37,6 +37,11 @@ import java.util.Collection;
 public final class ModuleConfiguration extends AbstractState {
     private final Collection<ModuleInfo> infos = new ArrayList<ModuleInfo>(20);
 
+    /**
+     * Load the nodes in the state.
+     *
+     * @param nodes The nodes to load.
+     */
     @Load
     public void delegateLoad(Iterable<Node> nodes) {
         for (Node node : nodes){
@@ -73,6 +78,11 @@ public final class ModuleConfiguration extends AbstractState {
         return info;
     }
 
+    /**
+     * Save the nodes.
+     *
+     * @return All the nodes to be saved by the state. 
+     */
     @Save
     public Collection<Node> delegateSave() {
         Collection<Node> states = new ArrayList<Node>(25);

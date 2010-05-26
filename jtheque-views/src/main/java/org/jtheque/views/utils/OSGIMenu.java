@@ -24,6 +24,11 @@ import org.springframework.osgi.context.BundleContextAware;
  * limitations under the License.
  */
 
+/**
+ * A menu in OSGI spring context.
+ *
+ * @author Baptiste Wicht
+ */
 public class OSGIMenu extends AbstractMenu implements BundleContextAware, ApplicationContextAware {
 	private ApplicationContext applicationContext;
 	private BundleContext bundleContext;

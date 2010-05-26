@@ -20,52 +20,69 @@ import org.springframework.context.ApplicationContextAware;
  * limitations under the License.
  */
 
-public class SwingSpringProxy<T> implements ApplicationContextAware{
+/**
+ * A Swing Spring Proxy. It's a proxy for a swing bean guaranteeing that the bean is created in the
+ * EDT.
+ */
+public class SwingSpringProxy<T> implements ApplicationContextAware {
     private final Class<T> classz;
 
     private ApplicationContext applicationContext;
 
     private T instance;
 
-    public SwingSpringProxy(Class<T> classz, ApplicationContext applicationContext){
+    /**
+     * Construct a new SwingSpringProxy of the given class.
+     *
+     * @param classz             The class of the view.
+     * @param applicationContext The application context. 
+     */
+    public SwingSpringProxy(Class<T> classz, ApplicationContext applicationContext) {
         super();
-
 
         this.classz = classz;
         this.applicationContext = applicationContext;
     }
 
-	public SwingSpringProxy(Class<T> classz) {
-		super();
+    /**
+     * Construct a new SwingSpringProxy of the given class. Only used for beans in Spring contexts
+     *
+     * @param classz The class of the view.
+     */
+    public SwingSpringProxy(Class<T> classz) {
+        super();
 
-		this.classz = classz;
-	}
+        this.classz = classz;
+    }
 
-	/**
-	 * Return the instance of the view. The instance is only created only once. This proxy assert that the instance is
-	 * created in EDT. 
-	 *
-	 * @return The instance of the view.
-	 */
-    public T get(){
-        if(instance == null){
+    /**
+     * Return the instance of the view. The instance is only created only once. This proxy assert that the instance is
+     * created in EDT.
+     *
+     * @return The instance of the view.
+     */
+    public T get() {
+        if (instance == null) {
             createInstance();
         }
 
         return instance;
     }
 
+    /**
+     * Create the instance in the EDT.
+     */
     private void createInstance() {
-	    SwingUtils.inEdt(new Runnable() {
-		    @Override
-		    public void run() {
-			    instance = applicationContext.getBean(classz);
-		    }
-	    });
+        SwingUtils.inEdt(new Runnable() {
+            @Override
+            public void run() {
+                instance = applicationContext.getBean(classz);
+            }
+        });
     }
 
-	@Override
-	public void setApplicationContext(ApplicationContext applicationContext) {
-		this.applicationContext = applicationContext;
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) {
+        this.applicationContext = applicationContext;
 	}
 }

@@ -2,7 +2,8 @@ package org.jtheque.ui.utils.models;
 
 import org.jtheque.utils.collections.CollectionUtils;
 
-import javax.swing.*;
+import javax.swing.AbstractListModel;
+import javax.swing.ComboBoxModel;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -27,8 +28,6 @@ import java.util.List;
 /**
  * A simple list model to store dynamic objects.
  *
- * @param <T> The type of objects stored in the model.
- *
  * @author Baptiste Wicht
  */
 public class SimpleListModel<T> extends AbstractListModel implements ComboBoxModel {
@@ -39,7 +38,7 @@ public class SimpleListModel<T> extends AbstractListModel implements ComboBoxMod
     /**
      * Construct a new SimpleListModel.
      */
-    public SimpleListModel(){
+    public SimpleListModel() {
         this(10);
     }
 
@@ -48,18 +47,18 @@ public class SimpleListModel<T> extends AbstractListModel implements ComboBoxMod
      *
      * @param capacity The initial capacity of the model.
      */
-    public SimpleListModel(int capacity){
+    public SimpleListModel(int capacity) {
         super();
 
         objects = new ArrayList<T>(capacity);
     }
 
     /**
-     * Construct a new SimpleListModel. 
+     * Construct a new SimpleListModel.
      *
      * @param objects The objects to put in the model.
      */
-    public SimpleListModel(Collection<T> objects){
+    public SimpleListModel(Collection<T> objects) {
         super();
 
         this.objects = CollectionUtils.copyOf(objects);
@@ -70,19 +69,19 @@ public class SimpleListModel<T> extends AbstractListModel implements ComboBoxMod
      *
      * @param objects The objects to put in the model.
      */
-    public SimpleListModel(T[] objects){
+    public SimpleListModel(T[] objects) {
         super();
 
         this.objects = Arrays.asList(objects);
     }
 
     @Override
-    public final Object getElementAt(int index){
+    public final Object getElementAt(int index) {
         return objects.get(index);
     }
 
     @Override
-    public final int getSize(){
+    public final int getSize() {
         return objects.size();
     }
 
@@ -91,7 +90,7 @@ public class SimpleListModel<T> extends AbstractListModel implements ComboBoxMod
      *
      * @param element The element to add.
      */
-    public void addElement(T element){
+    public void addElement(T element) {
         int index = objects.size();
 
         objects.add(element);
@@ -104,7 +103,7 @@ public class SimpleListModel<T> extends AbstractListModel implements ComboBoxMod
      *
      * @param element The element to add.
      */
-    public void removeElement(T element){
+    public void removeElement(T element) {
         int index = objects.size();
 
         objects.remove(element);
@@ -112,6 +111,13 @@ public class SimpleListModel<T> extends AbstractListModel implements ComboBoxMod
         fireIntervalRemoved(this, index, getSize());
     }
 
+    /**
+     * Remove the element at the given index.
+     *
+     * @param index The index to remove the element at.
+     *
+     * @return The removed element.
+     */
     public T removeElement(int index) {
         T removed = objects.remove(index);
 
@@ -125,10 +131,10 @@ public class SimpleListModel<T> extends AbstractListModel implements ComboBoxMod
      *
      * @param elements The objects to add.
      */
-    public void addElements(Iterable<T> elements){
+    public void addElements(Iterable<T> elements) {
         int index = objects.size();
 
-        for (T category : elements){
+        for (T category : elements) {
             objects.add(category);
         }
 
@@ -140,7 +146,7 @@ public class SimpleListModel<T> extends AbstractListModel implements ComboBoxMod
      *
      * @param elements The objects to add.
      */
-    public void addElements(T...  elements){
+    public void addElements(T... elements) {
         int index = objects.size();
 
         objects.addAll(Arrays.asList(elements));
@@ -153,7 +159,7 @@ public class SimpleListModel<T> extends AbstractListModel implements ComboBoxMod
      *
      * @param elements The elements to set on the model.
      */
-    public void setElements(Collection<T> elements){
+    public void setElements(Collection<T> elements) {
         objects.clear();
         objects.addAll(elements);
         fireContentsChanged(this, 0, getSize());
@@ -164,13 +170,19 @@ public class SimpleListModel<T> extends AbstractListModel implements ComboBoxMod
      *
      * @param elements The elements to set on the model.
      */
-    public void setElements(T... elements){
+    public void setElements(T... elements) {
         objects.clear();
         objects.addAll(Arrays.asList(elements));
         fireContentsChanged(this, 0, getSize());
     }
 
-    public int getIndexOfElement(T element){
+    /**
+     * Return the index of the element.
+     *
+     * @param element The element to get the index for.
+     * @return The index of the element.
+     */
+    public int getIndexOfElement(T element) {
         return objects.indexOf(element);
     }
 
@@ -179,26 +191,26 @@ public class SimpleListModel<T> extends AbstractListModel implements ComboBoxMod
      *
      * @return A List containing all the objects of the model.
      */
-    public Collection<T> getObjects(){
+    public Collection<T> getObjects() {
         return objects;
     }
 
     @Override
     public void setSelectedItem(Object anObject) {
-        if (selectedObject != null && !selectedObject.equals( anObject ) || selectedObject == null && anObject != null) {
+        if (selectedObject != null && !selectedObject.equals(anObject) || selectedObject == null && anObject != null) {
             selectedObject = (T) anObject;
             fireContentsChanged(this, -1, -1);
         }
     }
 
     @Override
-    public final T getSelectedItem(){
+    public final T getSelectedItem() {
         return selectedObject;
     }
 
-	/**
-	 * Clear the model. 
-	 */
+    /**
+     * Clear the model.
+     */
     public void clear() {
         objects.clear();
         fireContentsChanged(this, 0, 0);

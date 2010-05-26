@@ -90,6 +90,9 @@ public class LifeCycleActivator implements BundleActivator, CollectionListener {
         }
     }
 
+    /**
+     * Configure the logging.
+     */
     private static void configureLogging() {
         Logger rootLogger = (Logger)LoggerFactory.getLogger("root");
 
@@ -102,6 +105,14 @@ public class LifeCycleActivator implements BundleActivator, CollectionListener {
         rootLogger.setLevel(Level.toLevel(level));
     }
 
+    /**
+     * Return the service of the given class.
+     *
+     * @param classz The class to get the service.
+     * @param <T>    The type of service.
+     *
+     * @return The service of the given class if it's exists otherwise null.
+     */
     private <T> T getService(Class<T> classz) {
         return OSGiUtils.getService(context, classz);
     }
@@ -113,6 +124,9 @@ public class LifeCycleActivator implements BundleActivator, CollectionListener {
         getService(ICollectionsService.class).removeCollectionListener(this);
     }
 
+    /**
+     * Start the second phase of the application. 
+     */
     private void startSecondPhase() {
         getService(IModuleService.class).startModules();
 

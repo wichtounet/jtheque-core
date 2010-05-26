@@ -26,6 +26,11 @@ public final class Response {
     private final String key;
     private String[] replaces;
 
+    /**
+     * Construct a new Response.
+     *
+     * @param ok A boolean tag indicating if the response is ok else false.
+     */
     public Response(boolean ok) {
         super();
 
@@ -79,6 +84,10 @@ public final class Response {
         return key;
     }
 
+    /**
+     * Return all the i18n replaces of the response.
+     * @return The i18n replaces of the response.
+     */
     public String[] getReplaces() {
         return replaces;
     }

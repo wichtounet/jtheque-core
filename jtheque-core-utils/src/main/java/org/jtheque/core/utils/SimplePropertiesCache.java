@@ -19,17 +19,37 @@ import java.util.Map;
  * limitations under the License.
  */
 
+/**
+ * A simple properties cache.
+ *
+ * @author Baptiste Wicht
+ */
 public final class SimplePropertiesCache {
     private static final Map<String, Object> PROPERTIES = new HashMap<String, Object>(5);
 
+    /**
+     * Utility class, not instantiable.
+     */
     private SimplePropertiesCache() {
         super();
     }
 
+    /**
+     * Put the property.
+     *
+     * @param key The key of the property.
+     * @param value The value of the property.
+     */
     public static void put(String key, Object value) {
         PROPERTIES.put(key, value);
     }
 
+    /**
+     * Return the value of the given property key.
+     * @param key The key of the property to search.
+     * @param <T> The type of resource.
+     * @return The value of the property.
+     */
     public static <T> T get(String key) {
         return (T) PROPERTIES.get(key);
     }

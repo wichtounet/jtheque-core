@@ -83,6 +83,9 @@ public abstract class SwingDialogView<T extends IModel> extends JDialog
         super(SimplePropertiesCache.<Frame>get("mainView"));
     }
 
+    /**
+     * Build the view.
+     */
     @PostConstruct
     protected final void build() {
         setModal(true);
@@ -318,6 +321,12 @@ public abstract class SwingDialogView<T extends IModel> extends JDialog
         }
     }
 
+    /**
+     * Add the constraint to the view. The filed will be configured by the constraint.
+     *
+     * @param field      The field to validate.
+     * @param constraint The constraint to add.
+     */
     protected void addConstraint(Object field, Constraint constraint) {
         constraintCache.put(field, constraint);
 
@@ -373,7 +382,7 @@ public abstract class SwingDialogView<T extends IModel> extends JDialog
      * it can be used for a Swing bean.
      *
      * @param classz The classz of the bean to get from application context.
-     * @param <T> The type of bean to get.
+     * @param <T>    The type of bean to get.
      *
      * @return The bean of the given class or null if it doesn't exist.
      */

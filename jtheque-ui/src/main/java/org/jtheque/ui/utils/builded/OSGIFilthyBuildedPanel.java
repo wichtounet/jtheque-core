@@ -31,7 +31,13 @@ import java.util.Collection;
  * limitations under the License.
  */
 
-public abstract class OSGIFilthyBuildedPanel extends FilthyBuildedPanel implements BundleContextAware, ApplicationContextAware {
+/**
+ * An filthy panel builded with a panel builder in osgi spring context.
+ *
+ * @author Baptiste Wicht
+ */
+public abstract class OSGIFilthyBuildedPanel extends FilthyBuildedPanel implements BundleContextAware,
+        ApplicationContextAware {
 	private BundleContext bundleContext;
 	private ApplicationContext applicationContext;
 

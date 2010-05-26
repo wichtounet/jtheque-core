@@ -39,6 +39,12 @@ public final class MessageService implements IMessageService, ModuleListener {
 
 	private final ICore core;
 
+    /**
+     * Construct a new MessageService.
+     *
+     * @param core The core.
+     * @param moduleService The module service. 
+     */
 	public MessageService(ICore core, IModuleService moduleService) {
 		super();
 

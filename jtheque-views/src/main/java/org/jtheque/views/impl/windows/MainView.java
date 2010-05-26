@@ -84,6 +84,16 @@ public final class MainView extends SwingFrameView implements TitleListener, IMa
     private final ICore core;
     private final JThequeMenuBar menuBar;
 
+    /**
+     * Construct a new MainView.
+     *
+     * @param core The core.
+     * @param viewService The view service.
+     * @param views The views.
+     * @param uiUtils The ui utils.
+     * @param menuBar The menu bar.
+     * @param languageService The language service.
+     */
     public MainView(ICore core, IViewService viewService, IViews views, IUIUtils uiUtils, JThequeMenuBar menuBar, ILanguageService languageService) {
         super();
 
@@ -291,6 +301,11 @@ public final class MainView extends SwingFrameView implements TitleListener, IMa
         }
     }
 
+    /**
+     * Remove the given main component.
+     *
+     * @param component The main component to remove.
+     */
     private void removeComponent(MainComponent component) {
         if(current == 1){
             content.getView().removeAll();
