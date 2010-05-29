@@ -21,6 +21,7 @@ import org.jtheque.views.impl.components.panel.JThequeStateBar;
 
 import javax.swing.JComponent;
 import javax.swing.JTabbedPane;
+
 import java.awt.Component;
 
 /**

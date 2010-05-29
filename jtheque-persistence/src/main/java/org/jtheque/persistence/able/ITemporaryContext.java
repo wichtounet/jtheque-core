@@ -6,17 +6,17 @@ package org.jtheque.persistence.able;
  * @author Baptiste Wicht
  */
 public interface ITemporaryContext {
-	/**
-	 * Return the id of the context.
-	 *
-	 * @return The id.
-	 */
-	int getId();
+    /**
+     * Return the id of the context.
+     *
+     * @return The id.
+     */
+    int getId();
 
-	/**
-	 * Set the id of the context.
-	 *
-	 * @param id The new id to set.
-	 */
-	void setId(int id);
+    /**
+     * Set the id of the context.
+     *
+     * @param id The new id to set.
+     */
+    void setId(int id);
 }

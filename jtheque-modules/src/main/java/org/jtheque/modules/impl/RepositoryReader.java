@@ -16,7 +16,6 @@ package org.jtheque.modules.impl;
  * limitations under the License.
  */
 
-import org.jdom.Element;
 import org.jtheque.core.able.ICore;
 import org.jtheque.modules.able.IRepository;
 import org.jtheque.utils.StringUtils;
@@ -25,6 +24,8 @@ import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.io.FileUtils;
 import org.jtheque.xml.utils.XMLException;
 import org.jtheque.xml.utils.XMLReader;
+
+import org.jdom.Element;
 import org.slf4j.LoggerFactory;
 
 /**

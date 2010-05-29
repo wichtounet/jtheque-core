@@ -20,7 +20,7 @@
             <artifactId>org.osgi.core</artifactId>
             <version>4.2.0</version>
         </dependency>
-        
+
         <dependency>
             <groupId>org.jtheque</groupId>
             <artifactId>org.jtheque.utils</artifactId>
@@ -62,7 +62,7 @@
         <directory>${env.BUILD_HOME}/bundles/jtheque-core</directory>
 
         <outputDirectory>${env.BUILD_HOME}/bundles/jtheque-core/classes/production</outputDirectory>
-        
+
         <plugins>
             <plugin>
                 <groupId>org.apache.felix</groupId>
@@ -71,7 +71,9 @@
                 <configuration>
                     <instructions>
                         <Bundle-SymbolicName>${pom.artifactId}</Bundle-SymbolicName>
-                        <Export-Package>org.jtheque.core.able.application, org.jtheque.core.able.lifecycle, org.jtheque.core.able</Export-Package>
+                        <Export-Package>org.jtheque.core.able.application, org.jtheque.core.able.lifecycle,
+                            org.jtheque.core.able
+                        </Export-Package>
                         <Bundle-Vendor>Baptiste Wicht</Bundle-Vendor>
                         <Spring-Context>*;create-asynchronously:=false;publish-context:=false</Spring-Context>
                     </instructions>

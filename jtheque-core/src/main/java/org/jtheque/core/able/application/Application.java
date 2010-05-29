@@ -136,7 +136,6 @@ public interface Application {
      * Return the application property.
      *
      * @param key The key of the property.
-     *
      * @return The value of the property or empty string if there is no property with this key.
      */
     String getProperty(String key);
@@ -144,14 +143,14 @@ public interface Application {
     /**
      * Indicate if the application allows module discovery.
      *
-     * @return true if the application allows module discovery. 
+     * @return true if the application allows module discovery.
      */
     boolean isModuleDiscovery();
 
     /**
      * Return the modules configured in the application.
      *
-     * @return A Set containing all the modules configured in the application. 
+     * @return A Set containing all the modules configured in the application.
      */
     Set<String> getModules();
 }

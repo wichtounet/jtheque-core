@@ -22,6 +22,7 @@ import org.jtheque.ui.able.IUIUtils;
 import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -34,12 +35,12 @@ public final class MainController extends WindowAdapter implements ChangeListene
     private final ICore core;
     private final IUIUtils uiUtils;
 
-	/**
-	 * Construct a new MainController.
-	 *
-	 * @param core The core.
-	 * @param uiUtils The UI Utils. 
-	 */
+    /**
+     * Construct a new MainController.
+     *
+     * @param core    The core.
+     * @param uiUtils The UI Utils.
+     */
     public MainController(ICore core, IUIUtils uiUtils) {
         super();
 
@@ -63,10 +64,10 @@ public final class MainController extends WindowAdapter implements ChangeListene
     @Override
     public void windowClosing(WindowEvent e) {
         Object[] applicationName = {core.getApplication().getName()};
-        
+
         boolean yes = uiUtils.askI18nUserForConfirmation(
                 "dialogs.confirm.exit", applicationName,
-                "dialogs.confirm.exit.title",applicationName);
+                "dialogs.confirm.exit.title", applicationName);
 
         if (yes) {
             core.getLifeCycle().exit();

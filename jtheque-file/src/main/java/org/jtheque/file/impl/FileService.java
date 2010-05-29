@@ -23,7 +23,6 @@ import org.jtheque.modules.able.Module;
 import org.jtheque.modules.able.ModuleListener;
 import org.jtheque.modules.utils.ModuleResourceCache;
 import org.jtheque.utils.StringUtils;
-
 import org.jtheque.utils.collections.ArrayUtils;
 import org.jtheque.xml.utils.XMLException;
 
@@ -49,7 +48,7 @@ public final class FileService implements IFileService, ModuleListener {
 
         Collections.sort(backupers, new ModuleBackupComparator());
 
-        for(ModuleBackuper backuper : backupers){
+        for (ModuleBackuper backuper : backupers) {
             backups.add(backuper.backup());
         }
 
@@ -62,46 +61,46 @@ public final class FileService implements IFileService, ModuleListener {
 
         Collections.sort(backupers, new ModuleBackupComparator());
 
-        for(ModuleBackuper backuper : backupers){
-            for(ModuleBackup backup : restores){
-                if(backup.getId().equals(backuper.getId())){
+        for (ModuleBackuper backuper : backupers) {
+            for (ModuleBackup backup : restores) {
+                if (backup.getId().equals(backuper.getId())) {
                     backuper.restore(backup);
                     break;
                 }
             }
         }
     }
-    
+
     @Override
     public void registerBackuper(String moduleId, ModuleBackuper backuper) {
         backupers.add(backuper);
     }
 
-	@Override
-	public void moduleStopped(Module module) {
-		Set<ModuleBackuper> resources = ModuleResourceCache.getResource(module.getId(), ModuleBackuper.class);
+    @Override
+    public void moduleStopped(Module module) {
+        Set<ModuleBackuper> resources = ModuleResourceCache.getResource(module.getId(), ModuleBackuper.class);
 
-		for (ModuleBackuper backuper : resources) {
-			backupers.remove(backuper);
-		}
+        for (ModuleBackuper backuper : resources) {
+            backupers.remove(backuper);
+        }
 
-		ModuleResourceCache.removeResourceOfType(module.getId(), ModuleBackuper.class);
-	}
+        ModuleResourceCache.removeResourceOfType(module.getId(), ModuleBackuper.class);
+    }
 
-	@Override
-	public void moduleStarted(Module module) {
-		//Nothing to do here
-	}
+    @Override
+    public void moduleStarted(Module module) {
+        //Nothing to do here
+    }
 
-	@Override
-	public void moduleInstalled(Module module) {
-		//Nothing to do here
-	}
+    @Override
+    public void moduleInstalled(Module module) {
+        //Nothing to do here
+    }
 
-	@Override
-	public void moduleUninstalled(Module module) {
-		//Nothing to do here
-	}
+    @Override
+    public void moduleUninstalled(Module module) {
+        //Nothing to do here
+    }
 
     /**
      * A module backup comparator to compare the module backups using their dependencies.
@@ -120,12 +119,12 @@ public final class FileService implements IFileService, ModuleListener {
                 return -1;
             } else {
                 //The other depends on me
-                if(ArrayUtils.search(backup2.getDependencies(), backup1.getId())){
+                if (ArrayUtils.search(backup2.getDependencies(), backup1.getId())) {
                     return -1;
                 }
 
                 //I depends on the other
-                if(ArrayUtils.search(backup1.getDependencies(), backup2.getId())){
+                if (ArrayUtils.search(backup1.getDependencies(), backup2.getId())) {
                     return 1;
                 }
             }

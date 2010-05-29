@@ -1,6 +1,5 @@
 package org.jtheque.lifecycle.application;
 
-import org.jdom.Element;
 import org.jtheque.core.able.application.Application;
 import org.jtheque.core.utils.ImageDescriptor;
 import org.jtheque.core.utils.ImageType;
@@ -11,6 +10,8 @@ import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.io.FileUtils;
 import org.jtheque.xml.utils.XMLException;
 import org.jtheque.xml.utils.XMLReader;
+
+import org.jdom.Element;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -44,7 +45,6 @@ public final class XMLApplicationReader {
      * Read the application file.
      *
      * @param filePath The path to the application file.
-     *
      * @return The builded Application.
      */
     public Application readApplication(String filePath) {
@@ -82,7 +82,6 @@ public final class XMLApplicationReader {
      * Read the file.
      *
      * @param application The application to fill.
-     *
      * @throws XMLException if an error occurs during the XML processing.
      */
     private void readFile(XMLApplication application) throws XMLException {
@@ -99,7 +98,6 @@ public final class XMLApplicationReader {
      * Read the version of the application from the file.
      *
      * @param application The application to fill.
-     *
      * @throws XMLException if an error occurs during the XML processing.
      */
     private void readVersion(XMLApplication application) throws XMLException {
@@ -112,7 +110,6 @@ public final class XMLApplicationReader {
      * Read the application values (repository, messages file) from the file.
      *
      * @param application The application to fill.
-     *
      * @throws XMLException if an error occurs during the XML processing.
      */
     private void readApplicationValues(XMLApplication application) throws XMLException {
@@ -132,7 +129,6 @@ public final class XMLApplicationReader {
      * Read all the internationalized values of the application from the file.
      *
      * @param application The application to fill.
-     *
      * @throws XMLException if an error occurs during the XML processing.
      */
     private void readInternationalization(XMLApplication application) throws XMLException {
@@ -147,7 +143,6 @@ public final class XMLApplicationReader {
      *
      * @param application The application to fill.
      * @param i18nElement The i18n XML element.
-     *
      * @throws XMLException If an errors occurs during the XML processing.
      */
     private void readLanguages(Object i18nElement, XMLApplication application) throws XMLException {
@@ -175,7 +170,6 @@ public final class XMLApplicationReader {
      *
      * @param application The application to fill.
      * @param i18nElement The i18n XML element.
-     *
      * @throws XMLException If an errors occurs during the XML processing.
      */
     private void readApplicationProperties(Object i18nElement, XMLApplication application) throws XMLException {
@@ -199,7 +193,6 @@ public final class XMLApplicationReader {
      *
      * @param path          The path the international string element.
      * @param parentElement The parent element.
-     *
      * @return The internationalized string.
      * @throws XMLException if an error occurs during the XML processing.
      */
@@ -219,7 +212,6 @@ public final class XMLApplicationReader {
      * Read the window icon information from the file.
      *
      * @param node The node to read the image from.
-     *
      * @return Return the read image descriptor. If the node doesn't exists a default ImageDescriptor with
      *         the name of the node as the image and PNG type is returned.
      * @throws XMLException if an error occurs during the XML processing.
@@ -260,7 +252,6 @@ public final class XMLApplicationReader {
      * Read the path to the image from the current node.
      *
      * @param node The name of the image node.
-     *
      * @return The path to the image.
      * @throws XMLException If an errors occurs during XML reading.
      */
@@ -302,7 +293,6 @@ public final class XMLApplicationReader {
      * Read all the modules of the application.
      *
      * @param application The application to get the modules for.
-     *
      * @throws XMLException Thrown if an error occurs during XML reading.
      */
     private void readModules(XMLApplication application) throws XMLException {
@@ -325,7 +315,6 @@ public final class XMLApplicationReader {
      * Read the application options from the file.
      *
      * @param application The application to fill.
-     *
      * @throws XMLException if an error occurs during the XML processing.
      */
     private void readOptions(XMLApplication application) throws XMLException {
@@ -343,7 +332,6 @@ public final class XMLApplicationReader {
      * Read the application properties from the file.
      *
      * @param application The application to fill.
-     *
      * @throws XMLException if an error occurs during the XML processing.
      */
     private void readProperties(XMLApplication application) throws XMLException {

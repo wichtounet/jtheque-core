@@ -51,82 +51,82 @@ public final class XMLApplication implements Application {
     private final Map<String, String> properties = new HashMap<String, String>(5);
 
     @Override
-    public Version getVersion(){
+    public Version getVersion() {
         return version;
     }
 
     @Override
-    public String getAuthor(){
+    public String getAuthor() {
         return applicationProperties.getAuthor();
     }
 
     @Override
-    public String getName(){
+    public String getName() {
         return applicationProperties.getName();
     }
 
     @Override
-    public String getSite(){
+    public String getSite() {
         return applicationProperties.getSite();
     }
 
     @Override
-    public String getEmail(){
+    public String getEmail() {
         return applicationProperties.getEmail();
     }
 
     @Override
-    public String getCopyright(){
+    public String getCopyright() {
         return applicationProperties.getCopyright();
     }
 
     @Override
-    public String getLogo(){
+    public String getLogo() {
         return logo.getImage();
     }
 
     @Override
-    public ImageType getLogoType(){
+    public ImageType getLogoType() {
         return logo.getType();
     }
 
     @Override
-    public String getWindowIcon(){
+    public String getWindowIcon() {
         return icon;
     }
 
     @Override
-    public boolean isDisplayLicence(){
+    public boolean isDisplayLicence() {
         return displayLicence;
     }
 
     @Override
-    public String getRepository(){
+    public String getRepository() {
         return getProperty("application.repository");
     }
 
     @Override
-    public String getMessageFileURL(){
+    public String getMessageFileURL() {
         return getProperty("application.messages");
     }
 
     @Override
-    public String[] getSupportedLanguages(){
+    public String[] getSupportedLanguages() {
         return ArrayUtils.copyOf(supportedLanguages);
     }
 
     @Override
-    public String getProperty(String key){
+    public String getProperty(String key) {
         return properties.get(key);
     }
 
     @Override
-    public String getLicenceFilePath(){
+    public String getLicenceFilePath() {
         return getProperty("application.licence");
     }
 
     @Override
-    public String getFolderPath(){
+    public String getFolderPath() {
         return getProperty("application.folder.path");
     }
 
@@ -145,17 +145,17 @@ public final class XMLApplication implements Application {
     /**
      * Set the property value.
      *
-     * @param name The name of the property.
+     * @param name  The name of the property.
      * @param value The value of the property.
      */
-    void setProperty(String name, String value){
+    void setProperty(String name, String value) {
         properties.put(name, value);
     }
 
     /**
      * Set that the application must diplay licence.
      */
-    void displayLicence(){
+    void displayLicence() {
         displayLicence = true;
     }
 
@@ -164,7 +164,7 @@ public final class XMLApplication implements Application {
      *
      * @param version The version of the application.
      */
-    void setVersion(Version version){
+    void setVersion(Version version) {
         this.version = version;
     }
 
@@ -173,26 +173,26 @@ public final class XMLApplication implements Application {
      *
      * @param supportedLanguages The supported languages of the application.
      */
-    void setSupportedLanguages(String[] supportedLanguages){
+    void setSupportedLanguages(String[] supportedLanguages) {
         this.supportedLanguages = ArrayUtils.copyOf(supportedLanguages);
     }
 
     /**
      * Set the application internationalisation of the application.
      *
-     * @param applicationProperties The application properties. 
+     * @param applicationProperties The application properties.
      */
-    void setApplicationProperties(ApplicationProperties applicationProperties){
+    void setApplicationProperties(ApplicationProperties applicationProperties) {
         this.applicationProperties = applicationProperties;
     }
 
     /**
-     * Set the images of the application. 
+     * Set the images of the application.
      *
      * @param logo The logo of the application.
-     * @param icon The icon of the application. 
+     * @param icon The icon of the application.
      */
-    void setImages(ImageDescriptor logo, String icon){
+    void setImages(ImageDescriptor logo, String icon) {
         this.logo = logo;
         this.icon = icon;
     }
@@ -200,7 +200,7 @@ public final class XMLApplication implements Application {
     /**
      * Set if the application allows auto discovery of new modules.
      *
-     * @param discovery A boolean tag indicating if the application allows auto discovery. 
+     * @param discovery A boolean tag indicating if the application allows auto discovery.
      */
     public void setAutoDiscovery(boolean discovery) {
         moduleDiscovery = discovery;

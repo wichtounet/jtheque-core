@@ -39,14 +39,14 @@ public interface ModuleBackuper {
     /**
      * Backup the module data.
      *
-     * @return The backup of the module data. 
+     * @return The backup of the module data.
      */
     ModuleBackup backup();
 
-	/**
-	 * Restore the specified ModuleBackup.
-	 *
-	 * @param backup The backup to restore. 
-	 */
+    /**
+     * Restore the specified ModuleBackup.
+     *
+     * @param backup The backup to restore.
+     */
     void restore(ModuleBackup backup);
 }

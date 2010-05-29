@@ -1,13 +1,15 @@
 package org.jtheque.persistence.impl;
 
-import org.jtheque.persistence.utils.Query;
+import org.jtheque.persistence.able.Entity;
 import org.jtheque.persistence.able.IDaoPersistenceContext;
 import org.jtheque.persistence.able.QueryMapper;
-import org.jtheque.persistence.able.Entity;
+import org.jtheque.persistence.utils.Query;
+
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 
 import javax.annotation.Resource;
+
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;

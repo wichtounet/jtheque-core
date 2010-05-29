@@ -27,6 +27,7 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.ListCellRenderer;
+
 import java.awt.Color;
 import java.awt.Component;
 
@@ -49,7 +50,7 @@ public final class UpdatableListRenderer extends JPanel implements ListCellRende
     /**
      * Construct a new ModuleListRenderer.
      *
-     * @param updateService The update service. 
+     * @param updateService The update service.
      */
     public UpdatableListRenderer(IUpdateService updateService) {
         super();

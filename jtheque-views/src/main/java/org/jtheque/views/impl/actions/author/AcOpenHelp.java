@@ -20,6 +20,7 @@ import org.jtheque.core.able.ICore;
 import org.jtheque.ui.utils.actions.AbstractBrowseAction;
 
 import javax.swing.KeyStroke;
+
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 

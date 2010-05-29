@@ -37,7 +37,7 @@ public interface IModuleService {
      * Add a module listener.
      *
      * @param moduleId The id of the module who want to add a listener. If this id is given, the listener will
-     * be automatically removed after it stopped.
+     *                 be automatically removed after it stopped.
      * @param listener The listener to add.
      */
     void addModuleListener(String moduleId, ModuleListener listener);
@@ -141,7 +141,7 @@ public interface IModuleService {
     boolean hasCollectionModule();
 
     /**
-     * Load the modules. 
+     * Load the modules.
      */
     void load();
 }

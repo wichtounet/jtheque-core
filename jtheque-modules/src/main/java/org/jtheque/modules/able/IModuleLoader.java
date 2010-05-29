@@ -1,7 +1,5 @@
 package org.jtheque.modules.able;
 
-import org.jtheque.modules.impl.ModuleContainer;
-
 import java.io.File;
 import java.util.List;
 
@@ -29,7 +27,7 @@ import java.util.List;
 public interface IModuleLoader {
     /**
      * Load the modules.
-     * 
+     *
      * @return All the loaded modules.
      */
     List<Module> loadModules();
@@ -38,8 +36,7 @@ public interface IModuleLoader {
      * Install the module.
      *
      * @param file The file to the module to install.
-     *
-     * @return The installed module. 
+     * @return The installed module.
      */
     Module installModule(File file);
 }

@@ -41,7 +41,7 @@ public interface FeatureListener extends EventListener {
     /**
      * A sub feature has been added.
      *
-     * @param feature The feature.
+     * @param feature    The feature.
      * @param subFeature The subfeature who was added.
      */
     void subFeatureAdded(IFeature feature, IFeature subFeature);
@@ -49,7 +49,7 @@ public interface FeatureListener extends EventListener {
     /**
      * A sub feature has been removed.
      *
-     * @param feature The feature.
+     * @param feature    The feature.
      * @param subFeature The sub features who was removed
      */
     void subFeatureRemoved(IFeature feature, IFeature subFeature);

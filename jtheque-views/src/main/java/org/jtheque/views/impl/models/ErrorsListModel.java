@@ -32,12 +32,13 @@ package org.jtheque.views.impl.models;
  * limitations under the License.
  */
 
-import org.jdesktop.swingx.error.ErrorInfo;
 import org.jtheque.errors.able.ErrorListener;
 import org.jtheque.errors.able.IError;
 import org.jtheque.errors.able.IErrorService;
 import org.jtheque.i18n.able.ILanguageService;
 import org.jtheque.ui.utils.models.SimpleListModel;
+
+import org.jdesktop.swingx.error.ErrorInfo;
 
 import java.util.List;
 

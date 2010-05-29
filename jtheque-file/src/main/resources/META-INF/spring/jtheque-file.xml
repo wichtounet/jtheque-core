@@ -8,7 +8,7 @@
             http://www.springframework.org/schema/osgi
             http://www.springframework.org/schema/osgi/spring-osgi.xsd">
 
-    <bean id="fileService" class="org.jtheque.file.impl.FileService" />
+    <bean id="fileService" class="org.jtheque.file.impl.FileService"/>
 
     <osgi:service ref="fileService" interface="org.jtheque.file.able.IFileService"/>
 

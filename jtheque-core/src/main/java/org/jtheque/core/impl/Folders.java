@@ -40,7 +40,7 @@ public final class Folders implements IFoldersContainer {
     /**
      * Construct a new Folders.
      *
-     * @param core The core. 
+     * @param core The core.
      */
     public Folders(ICore core) {
         super();

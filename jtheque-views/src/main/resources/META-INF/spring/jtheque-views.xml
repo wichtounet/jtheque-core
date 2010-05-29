@@ -10,7 +10,7 @@
             http://www.springframework.org/schema/osgi/spring-osgi.xsd
            http://www.springframework.org/schema/context
            http://www.springframework.org/schema/context/spring-context-3.0.xsd"
-        default-lazy-init="false">
+       default-lazy-init="false">
 
     <context:annotation-config/>
 
@@ -41,10 +41,10 @@
         <constructor-arg ref="languageService"/>
     </bean>
 
-    <bean class="org.jtheque.views.impl.components.menu.CoreMenu" />
-    
+    <bean class="org.jtheque.views.impl.components.menu.CoreMenu"/>
+
     <!--  Views -->
-    
+
     <bean id="configView" class="org.jtheque.views.impl.windows.ConfigView" lazy-init="true"/>
     <bean id="licenceView" class="org.jtheque.views.impl.windows.LicenceView" lazy-init="true"/>
     <bean id="eventView" class="org.jtheque.views.impl.windows.EventView" lazy-init="true"/>
@@ -52,36 +52,36 @@
     <bean id="moduleView" class="org.jtheque.views.impl.windows.ModuleView" lazy-init="true"/>
     <bean id="repositoryView" class="org.jtheque.views.impl.windows.RepositoryView" lazy-init="true"/>
     <bean id="updateView" class="org.jtheque.views.impl.windows.UpdateView" lazy-init="true"/>
-    <bean id="errorView" class="org.jtheque.views.impl.windows.ErrorView" lazy-init="true" />
+    <bean id="errorView" class="org.jtheque.views.impl.windows.ErrorView" lazy-init="true"/>
 
     <!-- Config panels -->
 
-    <bean class="org.jtheque.views.impl.components.config.JPanelConfigAppearance" lazy-init="true" />
+    <bean class="org.jtheque.views.impl.components.config.JPanelConfigAppearance" lazy-init="true"/>
     <bean class="org.jtheque.views.impl.components.config.JPanelConfigNetwork" lazy-init="true"/>
     <bean class="org.jtheque.views.impl.components.config.JPanelConfigOthers" lazy-init="true"/>
 
     <!-- panels -->
 
-    <bean class="org.jtheque.views.impl.components.panel.ModulesPanel" lazy-init="true" />
-    <bean class="org.jtheque.views.impl.components.panel.UpdatablesPanel" lazy-init="true" />
+    <bean class="org.jtheque.views.impl.components.panel.ModulesPanel" lazy-init="true"/>
+    <bean class="org.jtheque.views.impl.components.panel.UpdatablesPanel" lazy-init="true"/>
 
     <!-- Java2D panes -->
 
     <bean class="org.jtheque.views.impl.components.panel.CollectionPane" lazy-init="true">
-        <constructor-arg ref="core" />
+        <constructor-arg ref="core"/>
     </bean>
 
     <bean class="org.jtheque.views.impl.components.panel.AboutPane" lazy-init="true">
-        <constructor-arg ref="licenceView" />
-        <constructor-arg ref="core" />
-        <constructor-arg ref="languageService" />
+        <constructor-arg ref="licenceView"/>
+        <constructor-arg ref="core"/>
+        <constructor-arg ref="languageService"/>
     </bean>
 
     <!-- OSGi References -->
 
-    <osgi:reference id="core" interface="org.jtheque.core.able.ICore" />
-    <osgi:reference id="uiUtils" interface="org.jtheque.ui.able.IUIUtils" />
-    <osgi:reference id="filthyUtils" interface="org.jtheque.ui.able.IFilthyUtils" />
+    <osgi:reference id="core" interface="org.jtheque.core.able.ICore"/>
+    <osgi:reference id="uiUtils" interface="org.jtheque.ui.able.IUIUtils"/>
+    <osgi:reference id="filthyUtils" interface="org.jtheque.ui.able.IFilthyUtils"/>
     <osgi:reference id="undoRedoService" interface="org.jtheque.undo.able.IUndoRedoService"/>
     <osgi:reference id="languageService" interface="org.jtheque.i18n.able.ILanguageService"/>
     <osgi:reference id="featureService" interface="org.jtheque.features.able.IFeatureService"/>

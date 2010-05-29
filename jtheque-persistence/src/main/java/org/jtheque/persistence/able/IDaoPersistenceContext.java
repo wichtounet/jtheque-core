@@ -85,7 +85,7 @@ public interface IDaoPersistenceContext {
 
     /**
      * Return the spring JDBC template.
-     * 
+     *
      * @return The Spring JDBC template.
      */
     SimpleJdbcTemplate getTemplate();

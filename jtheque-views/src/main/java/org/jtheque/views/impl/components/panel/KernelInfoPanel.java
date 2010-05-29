@@ -41,8 +41,8 @@ public final class KernelInfoPanel extends FilthyBuildedPanel {
      * Construct a new KernelInfoPanel.
      *
      * @param languageService The language service.
-     * @param filthyUtils The filthy utils.
-     * @param updateService The update service. 
+     * @param filthyUtils     The filthy utils.
+     * @param updateService   The update service.
      */
     public KernelInfoPanel(ILanguageService languageService, IFilthyUtils filthyUtils, IUpdateService updateService) {
         super(filthyUtils, languageService);
@@ -51,7 +51,7 @@ public final class KernelInfoPanel extends FilthyBuildedPanel {
 
         build();
 
-	    setOpaque(false);
+        setOpaque(false);
     }
 
     @Override

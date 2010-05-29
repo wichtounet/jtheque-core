@@ -18,6 +18,7 @@ package org.jtheque.schemas.utils;
 
 import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.collections.ArrayUtils;
+
 import org.osgi.framework.BundleContext;
 import org.springframework.osgi.context.BundleContextAware;
 

@@ -24,54 +24,51 @@ import org.jtheque.persistence.able.Dao;
  * @author Baptiste Wicht
  */
 public interface IDaoCollections extends Dao<Collection> {
-	String TABLE = "T_COLLECTIONS";
+    String TABLE = "T_COLLECTIONS";
 
-	/**
-	 * Return the collections.
-	 *
-	 * @return All the collections.
-	 */
-	java.util.Collection<Collection> getCollections();
+    /**
+     * Return the collections.
+     *
+     * @return All the collections.
+     */
+    java.util.Collection<Collection> getCollections();
 
-	/**
-	 * Return the collection with the specific ID.
-	 *
-	 * @param id The searched ID.
-	 *
-	 * @return The corresponding collection.
-	 */
-	Collection getCollection(int id);
+    /**
+     * Return the collection with the specific ID.
+     *
+     * @param id The searched ID.
+     * @return The corresponding collection.
+     */
+    Collection getCollection(int id);
 
-	/**
-	 * Return the collection of the specified name.
-	 *
-	 * @param name The name of the collection.
-	 *
-	 * @return The <code>Collection</code> with the specified name or <code>null</code> if there is no collection with this name.
-	 */
-	Collection getCollection(String name);
+    /**
+     * Return the collection of the specified name.
+     *
+     * @param name The name of the collection.
+     * @return The <code>Collection</code> with the specified name or <code>null</code> if there is no collection with this name.
+     */
+    Collection getCollection(String name);
 
-	/**
-	 * Return the current collection.
-	 *
-	 * @return The current collection.
-	 */
-	Collection getCurrentCollection();
+    /**
+     * Return the current collection.
+     *
+     * @return The current collection.
+     */
+    Collection getCurrentCollection();
 
-	/**
-	 * Set the current collection.
-	 *
-	 * @param collection The current collection to set.
-	 */
-	void setCurrentCollection(Collection collection);
+    /**
+     * Set the current collection.
+     *
+     * @param collection The current collection to set.
+     */
+    void setCurrentCollection(Collection collection);
 
     /**
      * Return the collection with the given temporary id.
      *
      * @param id The id to search in the temporary id of the collections.
-     *
      * @return The collection with the given temporary id or null if there is no collection with the specified
-     * temporary id. 
+     *         temporary id.
      */
     Collection getCollectionByTemporaryId(int id);
 
@@ -79,8 +76,7 @@ public interface IDaoCollections extends Dao<Collection> {
      * Test if a collection exists or not.
      *
      * @param collection The name of collection to test.
-     *
-     * @return true if the collection exists else false. 
+     * @return true if the collection exists else false.
      */
     boolean exists(String collection);
 }

@@ -6,6 +6,7 @@ import org.jtheque.schemas.able.Schema;
 import org.jtheque.utils.Constants;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.collections.ArrayUtils;
+
 import org.osgi.framework.BundleContext;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 
@@ -41,7 +42,7 @@ public abstract class AbstractSchema implements Schema {
     /**
      * Set the JDBC Template of the schema.
      *
-     * @param jdbcTemplate The template to set. 
+     * @param jdbcTemplate The template to set.
      */
     void setJdbcTemplate(SimpleJdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
@@ -50,7 +51,7 @@ public abstract class AbstractSchema implements Schema {
     /**
      * Set the JDBC template of the schema using the bundle context to search it.
      *
-     * @param bundleContext The bundle context to search for the JDBC template. 
+     * @param bundleContext The bundle context to search for the JDBC template.
      */
     void setJdbcTemplate(BundleContext bundleContext) {
         jdbcTemplate = OSGiUtils.getService(bundleContext, SimpleJdbcTemplate.class);
@@ -61,7 +62,7 @@ public abstract class AbstractSchema implements Schema {
      *
      * @return The jdbc template.
      */
-    protected SimpleJdbcTemplate getJdbcTemplate(){
+    protected SimpleJdbcTemplate getJdbcTemplate() {
         return jdbcTemplate;
     }
 
@@ -69,9 +70,9 @@ public abstract class AbstractSchema implements Schema {
      * Update the the database executing the specified request.
      *
      * @param request The request to execute.
-     * @param args The args to give to the request. 
+     * @param args    The args to give to the request.
      */
-    protected void update(String request, Object... args){
+    protected void update(String request, Object... args) {
         jdbcTemplate.update(request, args);
     }
 
@@ -79,42 +80,41 @@ public abstract class AbstractSchema implements Schema {
      * Alter the specified table using the specified command and args. All the {} will be
      * replaced with the name of the table.
      *
-     * @param table The table to alter.
+     * @param table   The table to alter.
      * @param command The command to alter the table with.
-     * @param args The args to fill the command with.
+     * @param args    The args to fill the command with.
      */
-    protected void alterTable(String table, String command, Object... args){
+    protected void alterTable(String table, String command, Object... args) {
         jdbcTemplate.update((ALTER_TABLE + table + ' ' + command).replace("{}", table), args);
     }
 
     /**
      * Create the specified table.
      *
-     * @param table The table to create.
+     * @param table   The table to create.
      * @param columns The columns to create. The ( and ) are automatically added.
      */
-    protected void createTable(String table, String columns){
+    protected void createTable(String table, String columns) {
         jdbcTemplate.update(CREATE_TABLE + table + " (" + columns + ')');
     }
 
     /**
      * Update the database. All the {} will be replaced with the name of the specified table.
      *
-     * @param table The table to org.jtheque.update.
+     * @param table   The table to org.jtheque.update.
      * @param command The command to use to org.jtheque.update the database with.
-     * @param args The args to fill the command with.
+     * @param args    The args to fill the command with.
      */
-    protected void updateTable(CharSequence table, String command, Object... args){
+    protected void updateTable(CharSequence table, String command, Object... args) {
         jdbcTemplate.update(command.replace("{}", table), args);
     }
 
     /**
      * Create an insert request for the specified table.
      *
-     * @param table The table to insert into.
+     * @param table  The table to insert into.
      * @param values The values of the insert request.
-     *
-     * @return The insert into request. 
+     * @return The insert into request.
      */
     protected static String insert(String table, String values) {
         return INSERT_INTO + table + ' ' + values;
@@ -131,12 +131,12 @@ public abstract class AbstractSchema implements Schema {
             return -1;
         } else {
             //The other depends on me
-            if(ArrayUtils.search(other.getDependencies(), getId())){
+            if (ArrayUtils.search(other.getDependencies(), getId())) {
                 return -1;
             }
 
             //I depends on the other
-            if(ArrayUtils.search(getDependencies(), other.getId())){
+            if (ArrayUtils.search(getDependencies(), other.getId())) {
                 return 1;
             }
         }
@@ -147,14 +147,14 @@ public abstract class AbstractSchema implements Schema {
     @Override
     public int hashCode() {
         int hash = Constants.HASH_CODE_START;
-        
+
         hash = Constants.HASH_CODE_PRIME * hash + getVersion().hashCode();
         hash = Constants.HASH_CODE_PRIME * hash + getId().hashCode();
-        
-        for(String dependency : getDependencies()){
+
+        for (String dependency : getDependencies()) {
             hash = Constants.HASH_CODE_PRIME * hash + dependency.hashCode();
         }
-        
+
         return hash;
     }
 

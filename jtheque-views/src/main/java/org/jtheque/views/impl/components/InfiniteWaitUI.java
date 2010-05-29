@@ -1,12 +1,14 @@
 package org.jtheque.views.impl.components;
 
-import org.jdesktop.jxlayer.JXLayer;
-import org.jdesktop.jxlayer.plaf.BufferedLayerUI;
 import org.jtheque.ui.able.WaitFigure;
 import org.jtheque.ui.utils.windows.InfiniteWaitFigure;
 import org.jtheque.utils.ui.SizeTracker;
 
+import org.jdesktop.jxlayer.JXLayer;
+import org.jdesktop.jxlayer.plaf.BufferedLayerUI;
+
 import javax.swing.JComponent;
+
 import java.awt.Graphics2D;
 
 /*
@@ -34,10 +36,10 @@ public final class InfiniteWaitUI extends BufferedLayerUI<JComponent> {
     private final WaitFigure waitFigure;
 
     private final SizeTracker tracker;
-    
+
     /**
      * Construct a new <code>InfiniteWaitUI</code>.
-     * 
+     *
      * @param content The content pane of the view.
      */
     public InfiniteWaitUI(JXLayer<JComponent> content) {
@@ -46,17 +48,17 @@ public final class InfiniteWaitUI extends BufferedLayerUI<JComponent> {
         waitFigure = new InfiniteWaitFigure();
         waitFigure.setGlassPane(content);
         waitFigure.init();
-        
+
         tracker = new SizeTracker(content);
     }
-    
+
     @Override
     public void paintLayer(Graphics2D g2, JXLayer<? extends JComponent> layer) {
-        if(tracker.hasSizeChanged()){
+        if (tracker.hasSizeChanged()) {
             tracker.updateSize();
             waitFigure.setBounds(layer.getWidth(), layer.getHeight());
         }
-        
+
         waitFigure.paint(g2);
     }
 

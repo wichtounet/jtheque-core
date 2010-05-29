@@ -20,8 +20,9 @@ import org.jtheque.core.utils.WeakEventListenerList;
 import org.jtheque.persistence.able.Dao;
 import org.jtheque.persistence.able.DataListener;
 import org.jtheque.persistence.able.Entity;
-import org.jtheque.persistence.able.QueryMapper;
 import org.jtheque.persistence.able.IDaoPersistenceContext;
+import org.jtheque.persistence.able.QueryMapper;
+
 import org.springframework.jdbc.core.RowMapper;
 
 import javax.annotation.Resource;
@@ -29,8 +30,8 @@ import javax.annotation.Resource;
 /**
  * An abstract Dao using Spring JDBC.
  *
- * @param <T> The type of data contained in this DAO.
  * @author Baptiste Wicht
+ * @param <T> The type of data contained in this DAO.
  */
 public abstract class AbstractDao<T extends Entity> implements Dao<T> {
     @Resource
@@ -62,7 +63,7 @@ public abstract class AbstractDao<T extends Entity> implements Dao<T> {
     }
 
     @Override
-    public String getTable(){
+    public String getTable() {
         return table;
     }
 
@@ -76,7 +77,7 @@ public abstract class AbstractDao<T extends Entity> implements Dao<T> {
     /**
      * Return the row mapper of this DAO.
      *
-     * @return The RowMapper of this DAO. 
+     * @return The RowMapper of this DAO.
      */
     protected abstract RowMapper<T> getRowMapper();
 

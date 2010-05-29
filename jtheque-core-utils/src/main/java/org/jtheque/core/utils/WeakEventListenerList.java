@@ -29,10 +29,10 @@ import java.util.List;
  * EventListenerList to provide type-safe API (preferably conforming
  * to the JavaBeans spec) and methods which dispatch event notification
  * methods to appropriate Event Listeners on the list.
- *
+ * <p/>
  * The main benefit that this class provides is that it releases
  * garbage collected listeners (internally uses weak references). <p>
- *
+ * <p/>
  * Usage example:
  * Say one is defining a class that sends out FooEvents, and one wants
  * to allow users of the class to register FooListeners and receive
@@ -41,22 +41,22 @@ import java.util.List;
  * <pre>
  * EventListenerList listenerList = new EventListenerList();
  * FooEvent fooEvent = null;
- *
+ * <p/>
  * public void addFooListener(FooListener l) {
  *     listenerList.add(FooListener.class, l);
  * }
- *
+ * <p/>
  * public void removeFooListener(FooListener l) {
  *     listenerList.remove(FooListener.class, l);
  * }
- *
- *
+ * <p/>
+ * <p/>
  * // Notify all listeners that have registered interest for
  * // notification on this event type.  The event instance
  * // is lazily created using the parameters passed into
  * // the fire method.
- *
- *
+ * <p/>
+ * <p/>
  * protected void fireFooXXX() {
  *     // Guaranteed to return a non-null array
  *     FooListener[] listeners = listenerList.getListeners(FooListener.class);
@@ -74,7 +74,7 @@ import java.util.List;
  * foo should be changed to the appropriate name, and fireFooXxx to the
  * appropriate method name.  One fire method should exist for each
  * notification method in the FooListener interface.
- * <p>
+ * <p/>
  *
  * @author Georges Saab
  * @author Hans Muller
@@ -141,7 +141,6 @@ public class WeakEventListenerList {
      * garbage collected listeners before building the array.
      *
      * @param t the class to get the listeners from.
-     *
      * @return all of the listeners of the specified type.
      * @throws ClassCastException if the supplied class
      *                            is not assignable to EventListener
@@ -214,10 +213,10 @@ public class WeakEventListenerList {
         for (int i = 0; i < getReferences().size(); i++) {
             if (t == getClasses().get(i)) {
                 getReferences().remove(i);
-				getClasses().remove(i);
+                getClasses().remove(i);
 
-				break;
-			}
-		}
-	}
+                break;
+            }
+        }
+    }
 }

@@ -31,13 +31,13 @@ public final class ApplyChangesAndCloseAction extends JThequeAction {
 
     /**
      * Construct a new AcApplyChangesAndClose.
-     * 
+     *
      * @param configView The config view.
      */
     public ApplyChangesAndCloseAction(IConfigView configView) {
         super("config.actions.ok");
 
-	    this.configView = configView;
+        this.configView = configView;
     }
 
     @Override

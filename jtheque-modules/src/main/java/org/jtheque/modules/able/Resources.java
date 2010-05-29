@@ -29,12 +29,12 @@ public interface Resources {
      *
      * @return A List containing all the resources of the modules.
      */
-	List<String> getResources();
+    List<String> getResources();
 
     /**
      * Return all the i18n resources of the modules.
      *
-     * @return A List containing all the i18n resources of the modules. 
+     * @return A List containing all the i18n resources of the modules.
      */
-	List<String> getI18NResources();
+    List<String> getI18NResources();
 }

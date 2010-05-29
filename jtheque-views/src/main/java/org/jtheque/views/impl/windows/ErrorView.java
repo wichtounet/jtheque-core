@@ -1,6 +1,5 @@
 package org.jtheque.views.impl.windows;
 
-import org.jdesktop.swingx.error.ErrorInfo;
 import org.jtheque.errors.able.ErrorListener;
 import org.jtheque.errors.able.IError;
 import org.jtheque.errors.able.IErrorService;
@@ -13,11 +12,14 @@ import org.jtheque.views.able.windows.IErrorView;
 import org.jtheque.views.impl.components.renderers.ErrorListRenderer;
 import org.jtheque.views.impl.models.ErrorsListModel;
 
+import org.jdesktop.swingx.error.ErrorInfo;
+
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JTextArea;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+
 import java.awt.Insets;
 
 import static org.jtheque.utils.ui.GridBagUtils.*;
@@ -54,14 +56,14 @@ public final class ErrorView extends SwingFilthyBuildedDialogView<IModel> implem
     private JTextArea areaDetails;
 
     @Override
-    protected void initView(){
-	    setModal(false);
+    protected void initView() {
+        setModal(false);
         setTitleKey("error.view.title");
         setResizable(true);
     }
 
     @Override
-    protected void buildView(I18nPanelBuilder builder){
+    protected void buildView(I18nPanelBuilder builder) {
         builder.setDefaultInsets(new Insets(4, 4, 4, 4));
 
         errorsModel = new ErrorsListModel(getService(IErrorService.class), getService(ILanguageService.class));
@@ -73,7 +75,7 @@ public final class ErrorView extends SwingFilthyBuildedDialogView<IModel> implem
 
         createInfosPanel(builder);
 
-	    getService(IErrorService.class).addErrorListener(this);
+        getService(IErrorService.class).addErrorListener(this);
     }
 
     /**

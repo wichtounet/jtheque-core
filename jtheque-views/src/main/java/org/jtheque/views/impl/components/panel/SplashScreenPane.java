@@ -1,8 +1,5 @@
 package org.jtheque.views.impl.components.panel;
 
-import org.jdesktop.jxlayer.JXLayer;
-import org.jdesktop.jxlayer.plaf.BufferedLayerUI;
-import org.jdesktop.jxlayer.plaf.LayerUI;
 import org.jtheque.core.able.ICore;
 import org.jtheque.core.able.application.Application;
 import org.jtheque.ui.utils.AnimationUtils;
@@ -10,9 +7,14 @@ import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.ui.ImageUtils;
 import org.jtheque.utils.ui.PaintUtils;
 import org.jtheque.views.able.panel.ISplashView;
+
+import org.jdesktop.jxlayer.JXLayer;
+import org.jdesktop.jxlayer.plaf.BufferedLayerUI;
+import org.jdesktop.jxlayer.plaf.LayerUI;
 import org.pushingpixels.trident.Timeline;
 
 import javax.swing.JComponent;
+
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
@@ -67,7 +69,7 @@ public final class SplashScreenPane extends BufferedLayerUI<JComponent> implemen
 
     /**
      * Construct a new SplashScreenPane.
-     * 
+     *
      * @param core The core.
      */
     public SplashScreenPane(ICore core) {

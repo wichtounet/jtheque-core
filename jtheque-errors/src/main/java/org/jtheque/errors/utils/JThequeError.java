@@ -1,8 +1,9 @@
 package org.jtheque.errors.utils;
 
-import org.jdesktop.swingx.error.ErrorInfo;
 import org.jtheque.errors.able.IError;
 import org.jtheque.i18n.able.ILanguageService;
+
+import org.jdesktop.swingx.error.ErrorInfo;
 
 import java.util.logging.Level;
 
@@ -106,8 +107,8 @@ public class JThequeError implements IError {
         return details;
     }
 
-	@Override
-	public ErrorInfo toErrorInfo(ILanguageService languageService){
-		return new ErrorInfo(message, message, details, "", exception, Level.SEVERE, null);
-	}
+    @Override
+    public ErrorInfo toErrorInfo(ILanguageService languageService) {
+        return new ErrorInfo(message, message, details, "", exception, Level.SEVERE, null);
+    }
 }

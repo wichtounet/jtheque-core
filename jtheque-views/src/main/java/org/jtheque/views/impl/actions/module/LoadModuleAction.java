@@ -24,6 +24,7 @@ import org.jtheque.utils.StringUtils;
 import org.jtheque.views.able.panel.IModuleView;
 
 import javax.annotation.Resource;
+
 import java.awt.event.ActionEvent;
 
 /**

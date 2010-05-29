@@ -10,6 +10,7 @@ import org.jtheque.views.able.windows.IMainView;
 import org.jtheque.views.impl.components.menu.CoreMenu;
 import org.jtheque.views.impl.components.panel.SplashScreenPane;
 import org.jtheque.views.impl.windows.MainView;
+
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
@@ -42,11 +43,11 @@ public final class SplashService implements ISplashService, ApplicationContextAw
     private final ICore core;
     private ApplicationContext applicationContext;
 
-	/**
-	 * Construct a new SplashService.
-	 *
-	 * @param core The core. 
-	 */
+    /**
+     * Construct a new SplashService.
+     *
+     * @param core The core.
+     */
     public SplashService(ICore core) {
         super();
 
@@ -54,7 +55,7 @@ public final class SplashService implements ISplashService, ApplicationContextAw
     }
 
     @Override
-    public void initViews(){
+    public void initViews() {
         SwingUtils.inEdt(new Runnable() {
             @Override
             public void run() {
@@ -121,7 +122,7 @@ public final class SplashService implements ISplashService, ApplicationContextAw
     }
 
     @Override
-    public void setApplicationContext(ApplicationContext applicationContext){
+    public void setApplicationContext(ApplicationContext applicationContext) {
         this.applicationContext = applicationContext;
     }
 }

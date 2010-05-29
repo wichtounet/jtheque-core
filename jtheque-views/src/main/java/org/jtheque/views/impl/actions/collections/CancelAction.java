@@ -20,6 +20,7 @@ import org.jtheque.core.able.ICore;
 import org.jtheque.ui.utils.actions.JThequeAction;
 
 import javax.annotation.Resource;
+
 import java.awt.event.ActionEvent;
 
 /**

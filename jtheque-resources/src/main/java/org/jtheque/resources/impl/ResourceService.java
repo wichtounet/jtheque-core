@@ -18,11 +18,13 @@ package org.jtheque.resources.impl;
 
 import org.jtheque.resources.able.IResourceService;
 import org.jtheque.utils.ui.ImageUtils;
+
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 
 import javax.swing.ImageIcon;
+
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
@@ -40,25 +42,25 @@ public final class ResourceService implements IResourceService {
     private final Map<String, Resource> resources = new HashMap<String, Resource>(DEFAULT_CACHE_SIZE);
     private final Map<String, JThequeImage> cache = new HashMap<String, JThequeImage>(DEFAULT_CACHE_SIZE);
 
-	@Override
-	public BufferedImage getFileImage(String path, int width) {
+    @Override
+    public BufferedImage getFileImage(String path, int width) {
         return getThumbnail(getFileImage(path), width);
-	}
+    }
 
-	@Override
-	public BufferedImage getFileImage(String path) {
-		if(isImageNotCached(path)){
-			if(!resources.containsKey(path)){
-				registerResource(path, new FileSystemResource(path));
-			}
+    @Override
+    public BufferedImage getFileImage(String path) {
+        if (isImageNotCached(path)) {
+            if (!resources.containsKey(path)) {
+                registerResource(path, new FileSystemResource(path));
+            }
 
-			loadImageInCache(path);
-		}
+            loadImageInCache(path);
+        }
 
-		return cache.get(path) == null ? null : cache.get(path).get();
-	}
+        return cache.get(path) == null ? null : cache.get(path).get();
+    }
 
-	@Override
+    @Override
     public ImageIcon getIcon(String id) {
         if (isImageNotCached(id) && resources.containsKey(id)) {
             loadImageInCache(id);
@@ -142,6 +144,7 @@ public final class ResourceService implements IResourceService {
 
     /**
      * Return the stream to the resource of the given id.
+     *
      * @param id The id of the resource.
      * @return The input stream to the resource.
      */

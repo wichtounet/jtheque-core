@@ -25,7 +25,7 @@ import java.util.EventListener;
  */
 public interface ErrorListener extends EventListener {
     /**
-     * A new error has occurred in the application. 
+     * A new error has occurred in the application.
      *
      * @param error The new error.
      */

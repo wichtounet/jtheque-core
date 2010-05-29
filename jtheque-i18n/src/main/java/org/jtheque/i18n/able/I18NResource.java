@@ -13,12 +13,12 @@ public interface I18NResource {
      *
      * @return The filename of the resource.
      */
-	String getFileName();
+    String getFileName();
 
     /**
      * Return the resource to the i18n file.
      *
      * @return The resource to the i18n file.
      */
-	Resource getResource();
+    Resource getResource();
 }

@@ -27,9 +27,8 @@ public interface IStateService {
      * a @Load and a @Save method.
      *
      * @param state The state to get.
-     * @param <T> The type of state.
-     *
-     * @return The loaded state. The instance is the same but the state has been inited. 
+     * @param <T>   The type of state.
+     * @return The loaded state. The instance is the same but the state has been inited.
      */
     <T> T getState(T state);
 }

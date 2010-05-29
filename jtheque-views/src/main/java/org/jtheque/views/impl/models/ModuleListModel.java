@@ -30,7 +30,7 @@ public final class ModuleListModel extends SimpleListModel<Module> implements Mo
     /**
      * Construct a new ModuleListModel.
      *
-     * @param moduleService The module service to use. 
+     * @param moduleService The module service to use.
      */
     public ModuleListModel(IModuleService moduleService) {
         super();
@@ -40,27 +40,27 @@ public final class ModuleListModel extends SimpleListModel<Module> implements Mo
         setElements(moduleService.getModules());
     }
 
-	@Override
-	public void moduleStarted(Module module) {
-		int index = getIndexOfElement(module);
+    @Override
+    public void moduleStarted(Module module) {
+        int index = getIndexOfElement(module);
 
-		fireContentsChanged(this, index, index);
-	}
+        fireContentsChanged(this, index, index);
+    }
 
-	@Override
-	public void moduleStopped(Module module) {
-		int index = getIndexOfElement(module);
+    @Override
+    public void moduleStopped(Module module) {
+        int index = getIndexOfElement(module);
 
-		fireContentsChanged(this, index, index);
-	}
+        fireContentsChanged(this, index, index);
+    }
 
-	@Override
-	public void moduleInstalled(Module module) {
-		addElement(module);
-	}
+    @Override
+    public void moduleInstalled(Module module) {
+        addElement(module);
+    }
 
-	@Override
-	public void moduleUninstalled(Module module) {
-		removeElement(module);
-	}
+    @Override
+    public void moduleUninstalled(Module module) {
+        removeElement(module);
+    }
 }

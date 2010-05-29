@@ -26,6 +26,7 @@ import org.jtheque.modules.utils.ModuleResourceCache;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.bean.IntDate;
 import org.jtheque.xml.utils.XMLException;
+
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
@@ -37,21 +38,21 @@ import java.util.Collection;
 public final class MessageService implements IMessageService, ModuleListener {
     private final Collection<IMessage> messages = new ArrayList<IMessage>(10);
 
-	private final ICore core;
+    private final ICore core;
 
     /**
      * Construct a new MessageService.
      *
-     * @param core The core.
-     * @param moduleService The module service. 
+     * @param core          The core.
+     * @param moduleService The module service.
      */
-	public MessageService(ICore core, IModuleService moduleService) {
-		super();
+    public MessageService(ICore core, IModuleService moduleService) {
+        super();
 
-		this.core = core;
+        this.core = core;
 
-		moduleService.addModuleListener("", this);
-	}
+        moduleService.addModuleListener("", this);
+    }
 
     @Override
     public void loadMessages() {
@@ -83,60 +84,60 @@ public final class MessageService implements IMessageService, ModuleListener {
         return false;
     }
 
-	@Override
-	public IMessage getEmptyMessage() {
-		IMessage defaultMessage = new Message();
+    @Override
+    public IMessage getEmptyMessage() {
+        IMessage defaultMessage = new Message();
         defaultMessage.setDate(IntDate.today());
         defaultMessage.setId(-1);
         defaultMessage.setSource("");
         defaultMessage.setMessage("");
         defaultMessage.setTitle("");
 
-		return defaultMessage;
-	}
+        return defaultMessage;
+    }
 
-	@Override
+    @Override
     public Collection<IMessage> getMessages() {
         return messages;
     }
-	
-	@Override
-	public void moduleStopped(Module module) {
-		messages.removeAll(ModuleResourceCache.getResource(module.getId(), IMessage.class));
-	}
 
-	@Override
-	public void moduleStarted(Module module) {
-		if (StringUtils.isNotEmpty(module.getMessagesUrl())) {
-			loadMessageFile(module.getMessagesUrl(), module);
-		}
-	}
+    @Override
+    public void moduleStopped(Module module) {
+        messages.removeAll(ModuleResourceCache.getResource(module.getId(), IMessage.class));
+    }
 
-	@Override
-	public void moduleInstalled(Module module) {
-		//Nothing to do here
-	}
+    @Override
+    public void moduleStarted(Module module) {
+        if (StringUtils.isNotEmpty(module.getMessagesUrl())) {
+            loadMessageFile(module.getMessagesUrl(), module);
+        }
+    }
 
-	@Override
-	public void moduleUninstalled(Module module) {
-		//Nothing to do here
-	}
+    @Override
+    public void moduleInstalled(Module module) {
+        //Nothing to do here
+    }
 
-	/**
+    @Override
+    public void moduleUninstalled(Module module) {
+        //Nothing to do here
+    }
+
+    /**
      * Load a messages files.
      *
-     * @param url The URL of the messages file.
-	 * @param module The module to load the message file from. 
+     * @param url    The URL of the messages file.
+     * @param module The module to load the message file from.
      */
     private void loadMessageFile(String url, Module module) {
         try {
             MessageFile file = MessageFileReader.readMessagesFile(url);
 
-	        for(IMessage message : file.getMessages()){
-		        messages.add(message);
+            for (IMessage message : file.getMessages()) {
+                messages.add(message);
 
-		        ModuleResourceCache.addResource(module.getId(), IMessage.class, message);
-	        }
+                ModuleResourceCache.addResource(module.getId(), IMessage.class, message);
+            }
         } catch (XMLException e) {
             LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
         }

@@ -19,6 +19,7 @@ package org.jtheque.osgi;
 import org.jtheque.core.utils.SimplePropertiesCache;
 import org.jtheque.ui.able.IView;
 import org.jtheque.utils.io.FileUtils;
+
 import org.slf4j.LoggerFactory;
 
 import java.io.BufferedReader;

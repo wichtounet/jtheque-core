@@ -9,8 +9,12 @@
             http://www.springframework.org/schema/osgi/spring-osgi.xsd">
 
     <bean id="messageService" class="org.jtheque.messages.impl.MessageService">
-        <constructor-arg><osgi:reference interface="org.jtheque.core.able.ICore" /></constructor-arg>
-        <constructor-arg><osgi:reference interface="org.jtheque.modules.able.IModuleService" /></constructor-arg>
+        <constructor-arg>
+            <osgi:reference interface="org.jtheque.core.able.ICore"/>
+        </constructor-arg>
+        <constructor-arg>
+            <osgi:reference interface="org.jtheque.modules.able.IModuleService"/>
+        </constructor-arg>
     </bean>
 
     <osgi:service ref="messageService" interface="org.jtheque.messages.able.IMessageService"/>

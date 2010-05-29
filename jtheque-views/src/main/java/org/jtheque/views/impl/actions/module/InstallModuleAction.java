@@ -23,6 +23,7 @@ import org.jtheque.utils.io.SimpleFilter;
 import org.jtheque.utils.ui.SwingUtils;
 
 import javax.annotation.Resource;
+
 import java.awt.event.ActionEvent;
 import java.io.File;
 
@@ -47,18 +48,18 @@ public final class InstallModuleAction extends JThequeAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-	    String path = SwingUtils.chooseFile(new SimpleFilter("JAR File (*.jar)", "jar"));
+        String path = SwingUtils.chooseFile(new SimpleFilter("JAR File (*.jar)", "jar"));
 
-	    if(path != null){
-		    File file = new File(path);
+        if (path != null) {
+            File file = new File(path);
 
-		    boolean installed = moduleService.installModule(file);
+            boolean installed = moduleService.installModule(file);
 
-		    if (installed) {
-			    uiUtils.displayI18nText("message.module.installed");
-		    } else {
-			    uiUtils.displayI18nText("error.module.not.installed");
-		    }
-	    }
+            if (installed) {
+                uiUtils.displayI18nText("message.module.installed");
+            } else {
+                uiUtils.displayI18nText("error.module.not.installed");
+            }
+        }
     }
 }

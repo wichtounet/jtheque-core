@@ -34,7 +34,7 @@ final class CoreVersionFilter implements Filter<Module> {
     /**
      * Construct a new CoreVersionFilter.
      *
-     * @param core The core.
+     * @param core    The core.
      * @param uiUtils The uiUtils.
      */
     CoreVersionFilter(ICore core, IUIUtils uiUtils) {

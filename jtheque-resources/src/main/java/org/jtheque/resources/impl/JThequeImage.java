@@ -1,6 +1,7 @@
 package org.jtheque.resources.impl;
 
 import javax.swing.ImageIcon;
+
 import java.awt.image.BufferedImage;
 import java.lang.ref.SoftReference;
 
@@ -24,7 +25,6 @@ import java.lang.ref.SoftReference;
  * An image container. This image container stock the image as a SoftReference.
  *
  * @author Baptiste Wicht
- * 
  * @see SoftReference
  */
 final class JThequeImage {

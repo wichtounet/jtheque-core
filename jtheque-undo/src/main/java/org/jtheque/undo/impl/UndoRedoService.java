@@ -18,6 +18,7 @@ package org.jtheque.undo.impl;
 
 import org.jtheque.i18n.able.ILanguageService;
 import org.jtheque.undo.able.IUndoRedoService;
+
 import org.slf4j.LoggerFactory;
 
 import javax.swing.Action;
@@ -39,7 +40,7 @@ public final class UndoRedoService extends UndoManager implements IUndoRedoServi
     /**
      * Create a new UndoRedoService.
      *
-     * @param languageService The language service. 
+     * @param languageService The language service.
      */
     public UndoRedoService(ILanguageService languageService) {
         super();
@@ -59,14 +60,14 @@ public final class UndoRedoService extends UndoManager implements IUndoRedoServi
     }
 
     @Override
-    public void setUndoAction(Action undoAction){
+    public void setUndoAction(Action undoAction) {
         this.undoAction = undoAction;
 
         stateChanged();
     }
 
     @Override
-    public void setRedoAction(Action redoAction){
+    public void setRedoAction(Action redoAction) {
         this.redoAction = redoAction;
 
         stateChanged();
@@ -98,12 +99,12 @@ public final class UndoRedoService extends UndoManager implements IUndoRedoServi
      * Update the state of the undo/redo action.
      */
     private void stateChanged() {
-        if(undoAction != null){
+        if (undoAction != null) {
             undoAction.putValue(Action.NAME, languageService.getMessage(getUndoPresentationName()));
             undoAction.setEnabled(canUndo());
         }
 
-        if(redoAction != null){
+        if (redoAction != null) {
             redoAction.putValue(Action.NAME, languageService.getMessage(getRedoPresentationName()));
             redoAction.setEnabled(canRedo());
         }

@@ -40,7 +40,7 @@ public class CoreBackuper implements ModuleBackuper {
     /**
      * Construct a new CoreBackuper.
      *
-     * @param daoCollections The dao collections. 
+     * @param daoCollections The dao collections.
      */
     public CoreBackuper(IDaoCollections daoCollections) {
         super();
@@ -67,7 +67,7 @@ public class CoreBackuper implements ModuleBackuper {
 
         Collection<Node> nodes = new ArrayList<Node>(10);
 
-        for(org.jtheque.collections.able.Collection collection : daoCollections.getCollections()){
+        for (org.jtheque.collections.able.Collection collection : daoCollections.getCollections()) {
             Node node = new Node("collection");
 
             node.addSimpleChildValue("id", collection.getId());
@@ -86,8 +86,8 @@ public class CoreBackuper implements ModuleBackuper {
     public void restore(ModuleBackup backup) {
         assert getId().equals(backup.getId()) : "This backuper can only restore its own backups";
 
-        for(Node node : backup.getNodes()){
-            if("collection".equals(node.getName())){
+        for (Node node : backup.getNodes()) {
+            if ("collection".equals(node.getName())) {
                 org.jtheque.collections.able.Collection collection = daoCollections.create();
 
                 collection.setTitle(node.getChildValue("title"));

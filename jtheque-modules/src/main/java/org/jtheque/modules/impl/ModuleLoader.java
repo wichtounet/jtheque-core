@@ -14,6 +14,7 @@ import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.xml.utils.XMLException;
 import org.jtheque.xml.utils.XMLOverReader;
+
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleException;
@@ -22,6 +23,7 @@ import org.springframework.core.io.UrlResource;
 import org.springframework.osgi.context.BundleContextAware;
 
 import javax.annotation.Resource;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Dictionary;
@@ -51,18 +53,18 @@ import java.util.regex.Pattern;
  */
 public final class ModuleLoader implements IModuleLoader, BundleContextAware {
     private static final Pattern COMMA_DELIMITER_PATTERN = Pattern.compile(";");
-	private static final String[] EMPTY_ARRAY = new String[0];
+    private static final String[] EMPTY_ARRAY = new String[0];
 
     private BundleContext bundleContext;
 
-	@Resource
-	private ILanguageService languageService;
+    @Resource
+    private ILanguageService languageService;
 
-	@Resource
-	private IResourceService resourceService;
+    @Resource
+    private IResourceService resourceService;
 
 
-	@Override
+    @Override
     public void setBundleContext(BundleContext bundleContext) {
         this.bundleContext = bundleContext;
     }
@@ -84,119 +86,118 @@ public final class ModuleLoader implements IModuleLoader, BundleContextAware {
         return modules;
     }
 
-	@Override
+    @Override
     public Module installModule(File file) {
-		ModuleContainer container = null;
+        ModuleContainer container = null;
 
-		try {
-			Bundle bundle = bundleContext.installBundle("file:" + file.getAbsolutePath());
+        try {
+            Bundle bundle = bundleContext.installBundle("file:" + file.getAbsolutePath());
 
-			container = new ModuleContainer(bundle);
+            container = new ModuleContainer(bundle);
 
-			Dictionary<String, String> headers = bundle.getHeaders();
+            Dictionary<String, String> headers = bundle.getHeaders();
 
-			String id = StringUtils.isNotEmpty(headers.get("Module-Id")) ? headers.get("Module-Id") : headers.get("Bundle-SymbolicName");
+            String id = StringUtils.isNotEmpty(headers.get("Module-Id")) ? headers.get("Module-Id") : headers.get("Bundle-SymbolicName");
 
-			container.setId(id);
+            container.setId(id);
 
-			String version = StringUtils.isNotEmpty(headers.get("Module-Version")) ? headers.get("Module-Version") : headers.get("Bundle-Version");
+            String version = StringUtils.isNotEmpty(headers.get("Module-Version")) ? headers.get("Module-Version") : headers.get("Bundle-Version");
 
-			container.setVersion(new Version(version));
+            container.setVersion(new Version(version));
 
-			if (StringUtils.isNotEmpty(headers.get("Module-Core"))) {
-				container.setCoreVersion(new Version(headers.get("Module-Core")));
-			}
+            if (StringUtils.isNotEmpty(headers.get("Module-Core"))) {
+                container.setCoreVersion(new Version(headers.get("Module-Core")));
+            }
 
-			container.setUrl(headers.get("Module-Url"));
-			container.setUpdateUrl(headers.get("Module-UpdateUrl"));
-			container.setMessagesUrl(headers.get("Module-MessagesUrl"));
+            container.setUrl(headers.get("Module-Url"));
+            container.setUpdateUrl(headers.get("Module-UpdateUrl"));
+            container.setMessagesUrl(headers.get("Module-MessagesUrl"));
 
-			if (StringUtils.isNotEmpty(headers.get("Module-Collection"))) {
-				container.setCollection(Boolean.parseBoolean(headers.get("Module-Collection")));
-			}
+            if (StringUtils.isNotEmpty(headers.get("Module-Collection"))) {
+                container.setCollection(Boolean.parseBoolean(headers.get("Module-Collection")));
+            }
 
-			if (StringUtils.isNotEmpty(headers.get("Module-Libs"))) {
-				container.setLibs(COMMA_DELIMITER_PATTERN.split(headers.get("Module-Libs")));
+            if (StringUtils.isNotEmpty(headers.get("Module-Libs"))) {
+                container.setLibs(COMMA_DELIMITER_PATTERN.split(headers.get("Module-Libs")));
 
                 File libsFolder = OSGiUtils.getService(bundleContext, ICore.class).getFolders().getLibrariesFolder();
 
-                for(String lib : container.getLibs()){
+                for (String lib : container.getLibs()) {
                     File libFile = new File(libsFolder, lib);
 
                     bundleContext.installBundle("file:" + libFile.getAbsolutePath());
                 }
-			} else {
-				container.setLibs(EMPTY_ARRAY);
-			}
+            } else {
+                container.setLibs(EMPTY_ARRAY);
+            }
 
-			if (StringUtils.isNotEmpty(headers.get("Module-Dependencies"))) {
-				container.setDependencies(COMMA_DELIMITER_PATTERN.split(headers.get("Module-Dependencies")));
-			} else {
-				container.setDependencies(EMPTY_ARRAY);
-			}
+            if (StringUtils.isNotEmpty(headers.get("Module-Dependencies"))) {
+                container.setDependencies(COMMA_DELIMITER_PATTERN.split(headers.get("Module-Dependencies")));
+            } else {
+                container.setDependencies(EMPTY_ARRAY);
+            }
 
-			String path = headers.get("Module-Config");
+            String path = headers.get("Module-Config");
 
-			if (StringUtils.isNotEmpty(path)) {
-				container.setResources(importConfig(bundle, path));
-			}
-		} catch (BundleException e) {
-			LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
-			OSGiUtils.getService(bundleContext, IErrorService.class).addError(new JThequeError(e));
-		}
+            if (StringUtils.isNotEmpty(path)) {
+                container.setResources(importConfig(bundle, path));
+            }
+        } catch (BundleException e) {
+            LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
+            OSGiUtils.getService(bundleContext, IErrorService.class).addError(new JThequeError(e));
+        }
 
-		return container;
-	}
+        return container;
+    }
 
     /**
      * Import the configuration of the module from the module config XML file.
      *
      * @param bundle The bundle.
-     * @param path The path to the file inside the bundle.
-     *
-     * @return The ModuleResources of the module. 
+     * @param path   The path to the file inside the bundle.
+     * @return The ModuleResources of the module.
      */
-	private ModuleResources importConfig(Bundle bundle, String path) {
-		ModuleResources resources = new ModuleResources();
+    private ModuleResources importConfig(Bundle bundle, String path) {
+        ModuleResources resources = new ModuleResources();
 
-		XMLOverReader reader = new XMLOverReader();
-		try {
-			reader.openURL(bundle.getResource(path));
+        XMLOverReader reader = new XMLOverReader();
+        try {
+            reader.openURL(bundle.getResource(path));
 
-			while (reader.next("/config/i18n/i18nResource")) {
-				String name = reader.readString("@name");
-				Version version = new Version(reader.readString("@version"));
+            while (reader.next("/config/i18n/i18nResource")) {
+                String name = reader.readString("@name");
+                Version version = new Version(reader.readString("@version"));
 
-				List<I18NResource> i18NResources = new ArrayList<I18NResource>(3);
+                List<I18NResource> i18NResources = new ArrayList<I18NResource>(3);
 
-				while (reader.next("classpath")) {
-					String classpath = reader.readString("text()");
+                while (reader.next("classpath")) {
+                    String classpath = reader.readString("text()");
 
-					i18NResources.add(I18NResourceFactory.fromURL(classpath.substring(classpath.lastIndexOf('/') + 1), bundle.getResource(classpath)));
+                    i18NResources.add(I18NResourceFactory.fromURL(classpath.substring(classpath.lastIndexOf('/') + 1), bundle.getResource(classpath)));
 
-					reader.switchToParent();
-				}
+                    reader.switchToParent();
+                }
 
-				languageService.registerResource(name, version, i18NResources.toArray(new I18NResource[i18NResources.size()]));
+                languageService.registerResource(name, version, i18NResources.toArray(new I18NResource[i18NResources.size()]));
 
-				resources.addI18NResource(name);
+                resources.addI18NResource(name);
 
-				reader.switchToParent();
-			}
+                reader.switchToParent();
+            }
 
-			while (reader.next("/config/resources/resource")) {
-				String name = reader.readString("@name");
-				String classpath = reader.readString("classpath");
+            while (reader.next("/config/resources/resource")) {
+                String name = reader.readString("@name");
+                String classpath = reader.readString("classpath");
 
-				resourceService.registerResource(name, new UrlResource(bundle.getResource(classpath)));
+                resourceService.registerResource(name, new UrlResource(bundle.getResource(classpath)));
 
-				resources.addResource(name);
-			}
-		} catch (XMLException e) {
-			LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
-			OSGiUtils.getService(bundleContext, IErrorService.class).addError(new JThequeError(e));
-		}
+                resources.addResource(name);
+            }
+        } catch (XMLException e) {
+            LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
+            OSGiUtils.getService(bundleContext, IErrorService.class).addError(new JThequeError(e));
+        }
 
-		return resources;
+        return resources;
 	}
 }

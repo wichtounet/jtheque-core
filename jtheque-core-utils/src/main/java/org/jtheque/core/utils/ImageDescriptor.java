@@ -29,9 +29,9 @@ public final class ImageDescriptor {
      * Construct a new ImageDescriptor.
      *
      * @param image The image path.
-     * @param type The type of the image. 
+     * @param type  The type of the image.
      */
-    public ImageDescriptor(String image, ImageType type){
+    public ImageDescriptor(String image, ImageType type) {
         super();
 
         this.image = image;
@@ -43,7 +43,7 @@ public final class ImageDescriptor {
      *
      * @return The path to the image.
      */
-    public String getImage(){
+    public String getImage() {
         return image;
     }
 
@@ -52,7 +52,7 @@ public final class ImageDescriptor {
      *
      * @return The type of the image.
      */
-    public ImageType getType(){
+    public ImageType getType() {
         return type;
     }
 }

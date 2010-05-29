@@ -1,24 +1,26 @@
 package org.jtheque.views.impl.windows;
 
-import org.jdesktop.swingx.JXTable;
 import org.jtheque.events.able.IEvent;
 import org.jtheque.events.able.IEventService;
 import org.jtheque.i18n.able.ILanguageService;
 import org.jtheque.ui.able.IModel;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.ui.utils.builders.PanelBuilder;
+import org.jtheque.ui.utils.filthy.FilthyRenderer;
 import org.jtheque.ui.utils.models.SimpleListModel;
 import org.jtheque.ui.utils.windows.dialogs.SwingFilthyBuildedDialogView;
 import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.views.able.windows.IEventView;
 import org.jtheque.views.impl.actions.event.UpdateAction;
-import org.jtheque.ui.utils.filthy.FilthyRenderer;
 import org.jtheque.views.impl.models.EventsTableModel;
+
+import org.jdesktop.swingx.JXTable;
 
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+
 import java.awt.Insets;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
@@ -65,16 +67,16 @@ public final class EventView extends SwingFilthyBuildedDialogView<IModel> implem
 
     private static final int DEFAULT_WIDTH = 600;
     private static final int DEFAULT_HEIGHT = 450;
-    
+
     @Override
-    protected void initView(){
+    protected void initView() {
         setTitleKey("log.view.title");
         setResizable(false);
         setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
     }
 
     @Override
-    protected void buildView(I18nPanelBuilder builder){
+    protected void buildView(I18nPanelBuilder builder) {
         builder.setDefaultInsets(new Insets(4, 4, 4, 4));
 
         builder.addI18nLabel("log.view.log", builder.gbcSet(0, 0, GridBagUtils.NONE, GridBagUtils.LINE_END));

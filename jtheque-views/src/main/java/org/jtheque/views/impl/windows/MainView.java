@@ -16,16 +16,15 @@ package org.jtheque.views.impl.windows;
  * limitations under the License.
  */
 
-import org.jdesktop.jxlayer.JXLayer;
 import org.jtheque.core.able.ICore;
-import org.jtheque.core.able.lifecycle.TitleListener;
 import org.jtheque.core.able.lifecycle.TitleEvent;
+import org.jtheque.core.able.lifecycle.TitleListener;
 import org.jtheque.core.utils.SimplePropertiesCache;
 import org.jtheque.i18n.able.ILanguageService;
 import org.jtheque.ui.able.IUIUtils;
-import org.jtheque.ui.utils.components.Borders;
 import org.jtheque.ui.utils.builders.JThequePanelBuilder;
 import org.jtheque.ui.utils.builders.PanelBuilder;
+import org.jtheque.ui.utils.components.Borders;
 import org.jtheque.ui.utils.components.LayerTabbedPane;
 import org.jtheque.ui.utils.windows.frames.SwingFrameView;
 import org.jtheque.utils.collections.CollectionUtils;
@@ -37,13 +36,16 @@ import org.jtheque.views.able.components.MainComponent;
 import org.jtheque.views.able.windows.IMainView;
 import org.jtheque.views.impl.MainController;
 import org.jtheque.views.impl.components.InfiniteWaitUI;
-import org.jtheque.views.impl.components.panel.JThequeStateBar;
 import org.jtheque.views.impl.components.MainTabbedPane;
 import org.jtheque.views.impl.components.menu.JThequeMenuBar;
+import org.jtheque.views.impl.components.panel.JThequeStateBar;
+
+import org.jdesktop.jxlayer.JXLayer;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Cursor;
@@ -87,11 +89,11 @@ public final class MainView extends SwingFrameView implements TitleListener, IMa
     /**
      * Construct a new MainView.
      *
-     * @param core The core.
-     * @param viewService The view service.
-     * @param views The views.
-     * @param uiUtils The ui utils.
-     * @param menuBar The menu bar.
+     * @param core            The core.
+     * @param viewService     The view service.
+     * @param views           The views.
+     * @param uiUtils         The ui utils.
+     * @param menuBar         The menu bar.
      * @param languageService The language service.
      */
     public MainView(ICore core, IViewService viewService, IViews views, IUIUtils uiUtils, JThequeMenuBar menuBar, ILanguageService languageService) {
@@ -234,7 +236,7 @@ public final class MainView extends SwingFrameView implements TitleListener, IMa
 
         Collection<MainComponent> components = views.getMainComponents();
 
-        if(components.isEmpty()){
+        if (components.isEmpty()) {
             Component emptyPanel = new JPanel();
             emptyPanel.setBackground(Color.white);
 
@@ -263,18 +265,18 @@ public final class MainView extends SwingFrameView implements TitleListener, IMa
 
     @Override
     public void sendMessage(String message, Object value) {
-        if("add".equals(message)){
+        if ("add".equals(message)) {
             addComponent();
-        } else if("remove".equals(message)){
+        } else if ("remove".equals(message)) {
             removeComponent((MainComponent) value);
         }
     }
 
-	/**
-	 * Add the main component to the view. 
-	 */
+    /**
+     * Add the main component to the view.
+     */
     private void addComponent() {
-        if(current == 0){
+        if (current == 0) {
             content.getView().removeAll();
 
             GridBagUtils gbc = new GridBagUtils();
@@ -285,7 +287,7 @@ public final class MainView extends SwingFrameView implements TitleListener, IMa
                     gbc.gbcSet(0, 0, GridBagUtils.BOTH, GridBagUtils.FIRST_LINE_START, 1.0, 1.0));
 
             content.getView().add(stateBar, gbc.gbcSet(0, 1, GridBagUtils.HORIZONTAL, GridBagUtils.LAST_LINE_START));
-        } else if(current == 1){
+        } else if (current == 1) {
             content.getView().removeAll();
 
             GridBagUtils gbc = new GridBagUtils();
@@ -307,7 +309,7 @@ public final class MainView extends SwingFrameView implements TitleListener, IMa
      * @param component The main component to remove.
      */
     private void removeComponent(MainComponent component) {
-        if(current == 1){
+        if (current == 1) {
             content.getView().removeAll();
 
             GridBagUtils gbc = new GridBagUtils();
@@ -318,7 +320,7 @@ public final class MainView extends SwingFrameView implements TitleListener, IMa
             content.getView().add(emptyPanel, gbc.gbcSet(0, 0, GridBagUtils.BOTH, GridBagUtils.FIRST_LINE_START, 1.0, 1.0));
 
             content.getView().add(stateBar, gbc.gbcSet(0, 1, GridBagUtils.HORIZONTAL, GridBagUtils.LAST_LINE_START));
-        } else if(current == 2){
+        } else if (current == 2) {
             content.getView().removeAll();
 
             GridBagUtils gbc = new GridBagUtils();

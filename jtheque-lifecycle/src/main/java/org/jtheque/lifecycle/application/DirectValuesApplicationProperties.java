@@ -36,7 +36,7 @@ public final class DirectValuesApplicationProperties implements ApplicationPrope
      *
      * @param author The author values.
      */
-    void setAuthor(InternationalString author){
+    void setAuthor(InternationalString author) {
         this.author = author;
     }
 
@@ -45,7 +45,7 @@ public final class DirectValuesApplicationProperties implements ApplicationPrope
      *
      * @param name The name values.
      */
-    void setName(InternationalString name){
+    void setName(InternationalString name) {
         this.name = name;
     }
 
@@ -54,7 +54,7 @@ public final class DirectValuesApplicationProperties implements ApplicationPrope
      *
      * @param site The site values.
      */
-    void setSite(InternationalString site){
+    void setSite(InternationalString site) {
         this.site = site;
     }
 
@@ -63,7 +63,7 @@ public final class DirectValuesApplicationProperties implements ApplicationPrope
      *
      * @param email The email values.
      */
-    void setEmail(InternationalString email){
+    void setEmail(InternationalString email) {
         this.email = email;
     }
 
@@ -72,32 +72,32 @@ public final class DirectValuesApplicationProperties implements ApplicationPrope
      *
      * @param copyright The copyright values.
      */
-    void setCopyright(InternationalString copyright){
+    void setCopyright(InternationalString copyright) {
         this.copyright = copyright;
     }
 
     @Override
-    public String getName(){
+    public String getName() {
         return name.toString();
     }
 
     @Override
-    public String getAuthor(){
+    public String getAuthor() {
         return author.toString();
     }
 
     @Override
-    public String getEmail(){
+    public String getEmail() {
         return email.toString();
     }
 
     @Override
-    public String getSite(){
+    public String getSite() {
         return site.toString();
     }
 
     @Override
-    public String getCopyright(){
+    public String getCopyright() {
         return copyright.toString();
     }
 }

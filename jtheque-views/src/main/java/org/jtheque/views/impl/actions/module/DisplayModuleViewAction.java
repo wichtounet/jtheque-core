@@ -32,7 +32,7 @@ public class DisplayModuleViewAction extends JThequeAction {
     /**
      * Construct a new DisplayModuleViewAction.
      *
-     * @param views The views. 
+     * @param views The views.
      */
     public DisplayModuleViewAction(IViews views) {
         super("modules.actions.manage");

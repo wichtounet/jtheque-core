@@ -1,6 +1,7 @@
 package org.jtheque.spring.utils;
 
 import org.jtheque.utils.ui.SwingUtils;
+
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
@@ -35,7 +36,7 @@ public class SwingSpringProxy<T> implements ApplicationContextAware {
      * Construct a new SwingSpringProxy of the given class.
      *
      * @param classz             The class of the view.
-     * @param applicationContext The application context. 
+     * @param applicationContext The application context.
      */
     public SwingSpringProxy(Class<T> classz, ApplicationContext applicationContext) {
         super();
@@ -84,5 +85,5 @@ public class SwingSpringProxy<T> implements ApplicationContextAware {
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) {
         this.applicationContext = applicationContext;
-	}
+    }
 }

@@ -20,14 +20,16 @@ import org.jtheque.file.able.IFileService;
 import org.jtheque.persistence.able.IPersistenceService;
 import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.ui.utils.actions.JThequeAction;
-import org.jtheque.utils.ui.SwingUtils;
-import org.jtheque.views.able.windows.IMainView;
-import org.jtheque.utils.ui.edt.SimpleTask;
 import org.jtheque.utils.io.SimpleFilter;
+import org.jtheque.utils.ui.SwingUtils;
+import org.jtheque.utils.ui.edt.SimpleTask;
+import org.jtheque.views.able.windows.IMainView;
 import org.jtheque.xml.utils.XMLException;
+
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.Resource;
+
 import java.awt.event.ActionEvent;
 import java.io.File;
 
@@ -103,7 +105,7 @@ public class AcRestore extends JThequeAction {
 
             try {
                 fileService.restore(file);
-            } catch (XMLException e){
+            } catch (XMLException e) {
                 LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
             }
 

@@ -33,7 +33,7 @@ public final class CoreLauncher implements Closeable {
     private final Instances instances;
 
     /**
-     * Utility class, not instanciable. 
+     * Utility class, not instanciable.
      */
     private CoreLauncher() {
         super();
@@ -45,7 +45,7 @@ public final class CoreLauncher implements Closeable {
     /**
      * Launch the application.
      */
-    public void launch(){
+    public void launch() {
         instances.launchApplication();
 
         server.start();
@@ -99,10 +99,10 @@ public final class CoreLauncher implements Closeable {
     /**
      * Start the specified bundle if it's not already started.
      *
-     * @param name The name of the bundle to start. 
+     * @param name The name of the bundle to start.
      */
     private void startIfNotStarted(String name) {
-        if(server.getState(name) != BundleState.ACTIVE){
+        if (server.getState(name) != BundleState.ACTIVE) {
             server.startBundle(name);
         }
     }
@@ -112,7 +112,7 @@ public final class CoreLauncher implements Closeable {
      */
     private class StopServerHook extends Thread {
         @Override
-        public void run(){
+        public void run() {
             close();
         }
     }
@@ -123,8 +123,8 @@ public final class CoreLauncher implements Closeable {
      *
      * @param args No args will be read.
      */
-    public static void main(String[] args){
-        if(args.length > 0){
+    public static void main(String[] args) {
+        if (args.length > 0) {
             System.setProperty("user.dir", args[0]);
         }
 

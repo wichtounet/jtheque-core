@@ -16,8 +16,8 @@ package org.jtheque.views.impl.windows;
  * limitations under the License.
  */
 
-import org.jtheque.modules.able.IModuleService;
 import org.jtheque.modules.able.IModuleDescription;
+import org.jtheque.modules.able.IModuleService;
 import org.jtheque.ui.able.IModel;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.ui.utils.builders.PanelBuilder;
@@ -46,13 +46,13 @@ public final class RepositoryView extends SwingFilthyBuildedDialogView<IModel> i
     private IModuleService moduleService;
 
     @Override
-    protected void initView(){
+    protected void initView() {
         setTitleKey("repository.view.title", moduleService.getRepository().getApplication());
         setResizable(false);
     }
 
     @Override
-    protected void buildView(I18nPanelBuilder builder){
+    protected void buildView(I18nPanelBuilder builder) {
         builder.addLabel(moduleService.getRepository().getTitle().toString(), PanelBuilder.BOLD, 18.0f,
                 builder.gbcSet(0, 0, GridBagUtils.HORIZONTAL));
 
@@ -60,7 +60,7 @@ public final class RepositoryView extends SwingFilthyBuildedDialogView<IModel> i
                 new ModuleRepositoryListRenderer(), builder.gbcSet(0, 1, GridBagUtils.BOTH));
 
         builder.addButtonBar(builder.gbcSet(0, 2, GridBagUtils.HORIZONTAL),
-                new ExpandRepositoryModuleAction(this), 
+                new ExpandRepositoryModuleAction(this),
                 new InstallRepositoryModuleAction());
     }
 

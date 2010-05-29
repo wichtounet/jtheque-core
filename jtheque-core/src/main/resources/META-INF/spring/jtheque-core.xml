@@ -9,10 +9,16 @@
             http://www.springframework.org/schema/osgi/spring-osgi.xsd">
 
     <bean id="core" class="org.jtheque.core.impl.Core">
-        <constructor-arg><osgi:reference interface="org.jtheque.states.able.IStateService" /></constructor-arg>
-        <constructor-arg><osgi:reference interface="org.jtheque.resources.able.IResourceService" /></constructor-arg>
-        <constructor-arg><osgi:reference interface="org.jtheque.events.able.IEventService"/></constructor-arg>
+        <constructor-arg>
+            <osgi:reference interface="org.jtheque.states.able.IStateService"/>
+        </constructor-arg>
+        <constructor-arg>
+            <osgi:reference interface="org.jtheque.resources.able.IResourceService"/>
+        </constructor-arg>
+        <constructor-arg>
+            <osgi:reference interface="org.jtheque.events.able.IEventService"/>
+        </constructor-arg>
     </bean>
-    
+
     <osgi:service ref="core" interface="org.jtheque.core.able.ICore"/>
 </beans>

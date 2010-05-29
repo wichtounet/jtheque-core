@@ -20,6 +20,7 @@ import org.jtheque.views.impl.components.panel.ModulePanel;
 
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
+
 import java.awt.Component;
 import java.util.HashMap;
 import java.util.Map;

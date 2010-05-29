@@ -3,10 +3,11 @@ package org.jtheque.views.impl.actions.backup;
 import org.jtheque.file.able.IFileService;
 import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.ui.utils.actions.JThequeAction;
-import org.jtheque.utils.ui.SwingUtils;
 import org.jtheque.utils.io.SimpleFilter;
+import org.jtheque.utils.ui.SwingUtils;
 
 import javax.annotation.Resource;
+
 import java.awt.event.ActionEvent;
 import java.io.File;
 
@@ -48,7 +49,7 @@ public class AcBackup extends JThequeAction {
     @Override
     public final void actionPerformed(ActionEvent e) {
         final boolean yes = uiUtils.askI18nUserForConfirmation(
-                    "dialogs.confirm.backup", "dialogs.confirm.backup.title");
+                "dialogs.confirm.backup", "dialogs.confirm.backup.title");
 
         if (yes) {
             File file = new File(SwingUtils.chooseFile(new SimpleFilter("XML(*.xml)", ".xml")));

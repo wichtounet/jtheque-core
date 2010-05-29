@@ -9,16 +9,22 @@
             http://www.springframework.org/schema/osgi/spring-osgi.xsd">
 
     <bean class="org.jtheque.collections.impl.CollectionSchema" lazy-init="false">
-        <constructor-arg><osgi:reference interface="org.jtheque.schemas.able.ISchemaService"/></constructor-arg>
+        <constructor-arg>
+            <osgi:reference interface="org.jtheque.schemas.able.ISchemaService"/>
+        </constructor-arg>
     </bean>
 
     <bean id="collectionsService" class="org.jtheque.collections.impl.CollectionsService" lazy-init="false">
         <constructor-arg ref="daoCollections"/>
-        <constructor-arg><osgi:reference interface="org.jtheque.file.able.IFileService"/></constructor-arg>
-        <constructor-arg><osgi:reference interface="org.jtheque.core.able.ICore"/></constructor-arg>
+        <constructor-arg>
+            <osgi:reference interface="org.jtheque.file.able.IFileService"/>
+        </constructor-arg>
+        <constructor-arg>
+            <osgi:reference interface="org.jtheque.core.able.ICore"/>
+        </constructor-arg>
     </bean>
 
-    <bean id="daoCollections" class="org.jtheque.collections.impl.DaoCollections" />
+    <bean id="daoCollections" class="org.jtheque.collections.impl.DaoCollections"/>
 
     <osgi:service ref="collectionsService" interface="org.jtheque.collections.able.ICollectionsService"/>
     <osgi:service ref="daoCollections" interface="org.jtheque.collections.able.IDaoCollections"/>

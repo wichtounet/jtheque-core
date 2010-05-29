@@ -75,17 +75,18 @@ public final class Response {
         return ok;
     }
 
-	/**
-	 * Return the i18n key of the response.
-	 *
-	 * @return The i18n key of the response. 
-	 */
+    /**
+     * Return the i18n key of the response.
+     *
+     * @return The i18n key of the response.
+     */
     public String getKey() {
         return key;
     }
 
     /**
      * Return all the i18n replaces of the response.
+     *
      * @return The i18n replaces of the response.
      */
     public String[] getReplaces() {

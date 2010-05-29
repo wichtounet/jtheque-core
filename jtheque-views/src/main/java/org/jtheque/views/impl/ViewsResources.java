@@ -1,6 +1,7 @@
 package org.jtheque.views.impl;
 
 import org.jtheque.resources.able.IResourceService;
+
 import org.springframework.core.io.ClassPathResource;
 
 /*
@@ -35,11 +36,11 @@ public final class ViewsResources {
     public static final String MAIL_ICON = "jtheque-views-mail-icon";
     public static final String IDEA_ICON = "jtheque-views-idea-icon";
     public static final String ABOUT_ICON = "jtheque-views-about-icon";
-	public static final String ERROR_ICON = "jtheque-views-error-icon";
-	public static final String WARNING_ICON = "jtheque-views-warning-icon";
+    public static final String ERROR_ICON = "jtheque-views-error-icon";
+    public static final String WARNING_ICON = "jtheque-views-warning-icon";
 
     /**
-     * Utility class not instanciable. 
+     * Utility class not instanciable.
      */
     private ViewsResources() {
         super();
@@ -47,7 +48,7 @@ public final class ViewsResources {
 
     /**
      * Register the resources.
-     * 
+     *
      * @param service The resources to register.
      */
     public static void registerResources(IResourceService service) {
@@ -61,15 +62,15 @@ public final class ViewsResources {
         register(service, MAIL_ICON, "org/jtheque/views/images/mail.png");
         register(service, IDEA_ICON, "org/jtheque/views/images/idea.png");
         register(service, ABOUT_ICON, "org/jtheque/views/images/about.png");
-	    register(service, ERROR_ICON, "org/jtheque/views/images/error.png");
-	    register(service, WARNING_ICON, "org/jtheque/views/images/warning.png");
+        register(service, ERROR_ICON, "org/jtheque/views/images/error.png");
+        register(service, WARNING_ICON, "org/jtheque/views/images/warning.png");
     }
 
     /**
      * Register the resource.
-     * 
-     * @param service The service to use to register the resource.
-     * @param resourceId The resource id.
+     *
+     * @param service      The service to use to register the resource.
+     * @param resourceId   The resource id.
      * @param resourcePath The path to the resource in the ClassPath.
      */
     private static void register(IResourceService service, String resourceId, String resourcePath) {

@@ -72,8 +72,8 @@ public interface ILanguageService {
     /**
      * Register a resource.
      *
-     * @param name The name of the resource.
-     * @param version The version of the resource.
+     * @param name      The name of the resource.
+     * @param version   The version of the resource.
      * @param resources The resources to the i18n files (.properties) of the basename.
      */
     void registerResource(String name, Version version, I18NResource... resources);
@@ -86,7 +86,7 @@ public interface ILanguageService {
     /**
      * Release the specified resource.
      *
-     * @param name The name of the resource. 
+     * @param name The name of the resource.
      */
     void releaseResource(String name);
 }

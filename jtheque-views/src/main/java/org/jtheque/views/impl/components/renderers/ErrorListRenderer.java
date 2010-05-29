@@ -16,14 +16,16 @@ package org.jtheque.views.impl.components.renderers;
  * limitations under the License.
  */
 
-import org.jdesktop.swingx.error.ErrorInfo;
 import org.jtheque.resources.able.IResourceService;
 import org.jtheque.views.impl.ViewsResources;
+
+import org.jdesktop.swingx.error.ErrorInfo;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
+
 import java.awt.Color;
 import java.awt.Component;
 import java.util.logging.Level;
@@ -39,7 +41,7 @@ public final class ErrorListRenderer extends JLabel implements ListCellRenderer 
 
     /**
      * Construct a new ModuleListRenderer.
-     * 
+     *
      * @param resourceService The resource service.
      */
     public ErrorListRenderer(IResourceService resourceService) {
@@ -63,7 +65,7 @@ public final class ErrorListRenderer extends JLabel implements ListCellRenderer 
 
         setText(error.getTitle());
 
-        if(error.getErrorLevel() == Level.WARNING){
+        if (error.getErrorLevel() == Level.WARNING) {
             setIcon(warningIcon);
         } else {
             setIcon(errorIcon);

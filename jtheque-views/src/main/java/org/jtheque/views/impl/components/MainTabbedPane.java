@@ -1,15 +1,16 @@
 package org.jtheque.views.impl.components;
 
 import org.jtheque.i18n.able.ILanguageService;
+import org.jtheque.ui.utils.components.LayerTabbedPane;
 import org.jtheque.ui.utils.components.TabTitleUpdater;
 import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.ui.SwingUtils;
 import org.jtheque.views.able.IViews;
 import org.jtheque.views.able.components.MainComponent;
-import org.jtheque.ui.utils.components.LayerTabbedPane;
 
 import javax.annotation.PostConstruct;
 import javax.swing.JComponent;
+
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.Comparator;
@@ -44,8 +45,9 @@ public final class MainTabbedPane extends LayerTabbedPane {
 
     /**
      * Construct a new MainTabbedPane.
+     *
      * @param languageService The language service.
-     * @param views The views.
+     * @param views           The views.
      */
     public MainTabbedPane(ILanguageService languageService, IViews views) {
         super(languageService);
@@ -60,7 +62,7 @@ public final class MainTabbedPane extends LayerTabbedPane {
      * Build the main tabbed pane. Called by Spring.
      */
     @PostConstruct
-    public void build(){
+    public void build() {
         List<MainComponent> components = CollectionUtils.copyOf(views.getMainComponents());
         Collections.sort(components, new PositionComparator());
 
@@ -76,7 +78,7 @@ public final class MainTabbedPane extends LayerTabbedPane {
     }
 
     /**
-     * Refresh all components. 
+     * Refresh all components.
      */
     public void refreshComponents() {
         removeAll();
@@ -92,11 +94,11 @@ public final class MainTabbedPane extends LayerTabbedPane {
         SwingUtils.refresh(this);
     }
 
-	/**
-	 * Remove the specified main component.
-	 *
-	 * @param component The component to remove. 
-	 */
+    /**
+     * Remove the specified main component.
+     *
+     * @param component The component to remove.
+     */
     public void removeMainComponent(MainComponent component) {
         removeTabAt(indexOfTab(languageService.getMessage(component.getTitleKey())));
 

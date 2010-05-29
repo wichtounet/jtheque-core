@@ -16,8 +16,8 @@ package org.jtheque.core.able;
  * limitations under the License.
  */
 
-import org.jtheque.core.able.lifecycle.ILifeCycle;
 import org.jtheque.core.able.application.Application;
+import org.jtheque.core.able.lifecycle.ILifeCycle;
 import org.jtheque.utils.bean.Version;
 
 import java.util.Collection;
@@ -103,7 +103,7 @@ public interface ICore {
     /**
      * The lifecycle of the core.
      *
-     * @return The lifecycle of the core. 
+     * @return The lifecycle of the core.
      */
     ILifeCycle getLifeCycle();
 

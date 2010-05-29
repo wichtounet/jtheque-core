@@ -16,11 +16,11 @@ package org.jtheque.views.impl.models;
  * limitations under the License.
  */
 
+import org.jtheque.modules.able.Module;
 import org.jtheque.ui.utils.models.SimpleListModel;
 import org.jtheque.update.able.IUpdateService;
 import org.jtheque.update.able.Updatable;
 import org.jtheque.utils.bean.Version;
-import org.jtheque.modules.able.Module;
 
 /**
  * A combo box model to display versions.
@@ -36,7 +36,7 @@ public final class VersionsComboBoxModel extends SimpleListModel<Version> {
 
     /**
      * Construct a new VersionsComboBoxModel.
-     * 
+     *
      * @param updateService The update service to use.
      */
     public VersionsComboBoxModel(IUpdateService updateService) {

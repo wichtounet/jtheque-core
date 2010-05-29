@@ -19,8 +19,8 @@ package org.jtheque.errors.impl;
 import org.jtheque.core.utils.WeakEventListenerList;
 import org.jtheque.errors.able.ErrorListener;
 import org.jtheque.errors.able.IError;
-import org.jtheque.errors.utils.InternationalizedError;
 import org.jtheque.errors.able.IErrorService;
+import org.jtheque.errors.utils.InternationalizedError;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -39,7 +39,7 @@ public final class ErrorService implements IErrorService {
     public void addError(IError error) {
         errors.add(error);
 
-	    fireErrorOccurred(error);
+        fireErrorOccurred(error);
     }
 
     @Override
@@ -68,12 +68,12 @@ public final class ErrorService implements IErrorService {
     }
 
     /**
-     * Fire an error occurred event. 
+     * Fire an error occurred event.
      *
      * @param error The new error.
      */
     private void fireErrorOccurred(IError error) {
-        for(ErrorListener listener : eventListenerList.getListeners(ErrorListener.class)){
+        for (ErrorListener listener : eventListenerList.getListeners(ErrorListener.class)) {
             listener.errorOccurred(error);
         }
     }

@@ -1,17 +1,19 @@
 package org.jtheque.cache.impl;
 
+import org.jtheque.cache.able.CacheConfiguration;
+import org.jtheque.cache.able.ICacheService;
+import org.jtheque.core.able.ICore;
+
+import org.slf4j.LoggerFactory;
+
+import javax.annotation.PreDestroy;
+
+import java.io.File;
+import java.lang.reflect.Field;
+
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.store.MemoryStoreEvictionPolicy;
-import org.jtheque.cache.able.ICacheService;
-import org.jtheque.core.able.ICore;
-import org.slf4j.LoggerFactory;
-
-import org.jtheque.cache.able.CacheConfiguration;
-
-import javax.annotation.PreDestroy;
-import java.io.File;
-import java.lang.reflect.Field;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -58,7 +60,7 @@ public final class CacheService implements ICacheService {
      * Close the cache.
      */
     @PreDestroy
-    public void close(){
+    public void close() {
         getCacheManager().shutdown();
     }
 

@@ -2,6 +2,7 @@ package org.jtheque.views.utils;
 
 import org.jtheque.core.utils.OSGiUtils;
 import org.jtheque.views.able.Controller;
+
 import org.osgi.framework.BundleContext;
 import org.springframework.osgi.context.BundleContextAware;
 
@@ -27,9 +28,9 @@ import org.springframework.osgi.context.BundleContextAware;
  * @author Baptiste Wicht
  */
 public abstract class AbstractController implements Controller, BundleContextAware {
-	private BundleContext bundleContext;
+    private BundleContext bundleContext;
 
-	@Override
+    @Override
     public final void closeView() {
         getView().closeDown();
     }
@@ -39,20 +40,19 @@ public abstract class AbstractController implements Controller, BundleContextAwa
         getView().display();
     }
 
-	@Override
-	public void setBundleContext(BundleContext bundleContext) {
-		this.bundleContext = bundleContext;
-	}
+    @Override
+    public void setBundleContext(BundleContext bundleContext) {
+        this.bundleContext = bundleContext;
+    }
 
-	/**
-	 * Return the service of the given class.
-	 *
-	 * @param classz The class of the service to get.
-	 * @param <T> The Type of class.
-	 *
-	 * @return The service. 
-	 */
-    protected <T> T getService(Class<T> classz){
+    /**
+     * Return the service of the given class.
+     *
+     * @param classz The class of the service to get.
+     * @param <T>    The Type of class.
+     * @return The service.
+     */
+    protected <T> T getService(Class<T> classz) {
         return OSGiUtils.getService(bundleContext, classz);
     }
 }

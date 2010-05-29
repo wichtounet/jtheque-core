@@ -18,6 +18,7 @@ package org.jtheque.spring.utils.extension;
 
 import org.jtheque.spring.utils.factory.LazyFactoryBean;
 import org.jtheque.utils.StringUtils;
+
 import org.springframework.beans.factory.config.BeanDefinitionHolder;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
@@ -39,7 +40,7 @@ public final class ProxyBeanDefinitionParser extends AbstractBeanDefinitionParse
 
     @Override
     protected AbstractBeanDefinition parseInternal(Element element, ParserContext parserContext) {
-        if(element == null){
+        if (element == null) {
             return null;
         }
 
@@ -51,7 +52,7 @@ public final class ProxyBeanDefinitionParser extends AbstractBeanDefinitionParse
 
         String swing = element.getAttribute("swing");
 
-        if(StringUtils.isNotEmpty(swing)){
+        if (StringUtils.isNotEmpty(swing)) {
             factory.addConstructorArgValue(Boolean.valueOf(swing));
         } else {
             factory.addConstructorArgValue(false);
@@ -62,7 +63,7 @@ public final class ProxyBeanDefinitionParser extends AbstractBeanDefinitionParse
         Element targetElement = DomUtils.getChildElementByTagName(element, "bean");
 
         BeanDefinitionHolder definition = parserContext.getDelegate().parseBeanDefinitionElement(targetElement);
-                
+
         GenericApplicationContext appContext = new GenericApplicationContext();
         appContext.registerBeanDefinition(beanName, definition.getBeanDefinition());
         appContext.getDefaultListableBeanFactory().addBeanPostProcessor(PROCESSOR);

@@ -29,11 +29,11 @@ import java.awt.event.ActionEvent;
 public class DisplayConfigViewAction extends JThequeAction {
     private final IViews views;
 
-	/**
-	 * Construct a new DisplayConfigViewAction.
-	 *
-	 * @param views The views. 
-	 */
+    /**
+     * Construct a new DisplayConfigViewAction.
+     *
+     * @param views The views.
+     */
     public DisplayConfigViewAction(IViews views) {
         super("config.actions.display");
 

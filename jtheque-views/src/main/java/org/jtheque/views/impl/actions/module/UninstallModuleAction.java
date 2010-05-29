@@ -23,6 +23,7 @@ import org.jtheque.ui.utils.actions.JThequeAction;
 import org.jtheque.views.able.panel.IModuleView;
 
 import javax.annotation.Resource;
+
 import java.awt.event.ActionEvent;
 
 /**

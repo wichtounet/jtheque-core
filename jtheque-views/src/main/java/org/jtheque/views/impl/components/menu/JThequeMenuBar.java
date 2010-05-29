@@ -30,6 +30,7 @@ import javax.swing.Action;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -238,7 +239,6 @@ public final class JThequeMenuBar extends JMenuBar implements FeatureListener, I
      *
      * @param feature The feature to test.
      * @param menu    The menu to test.
-     *
      * @return true if the menu is corresponding to the feature else false.
      */
     private boolean isCorrespondingMenu(IFeature feature, AbstractButton menu) {
@@ -300,7 +300,6 @@ public final class JThequeMenuBar extends JMenuBar implements FeatureListener, I
      * Return the title of the given sub feature.
      *
      * @param subFeature The sub feature to get the title from.
-     *
      * @return The title of the given sub feature.
      */
     private String getSubtitle(IFeature subFeature) {

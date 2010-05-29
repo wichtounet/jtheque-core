@@ -6,6 +6,7 @@ import org.jtheque.modules.able.Module;
 import org.jtheque.modules.able.ModuleState;
 import org.jtheque.modules.able.Resources;
 import org.jtheque.utils.bean.Version;
+
 import org.osgi.framework.Bundle;
 
 /*
@@ -41,14 +42,14 @@ public final class ModuleContainer implements Module {
     private String updateUrl;
     private String messagesUrl;
     private boolean collection;
-	private ModuleResources resources;
+    private ModuleResources resources;
 
     /**
      * Construct a new ModuleContainer from the specified bundle.
      *
      * @param bundle The bundle of the module.
      */
-	public ModuleContainer(Bundle bundle) {
+    public ModuleContainer(Bundle bundle) {
         super();
 
         this.bundle = bundle;
@@ -69,12 +70,12 @@ public final class ModuleContainer implements Module {
         this.state = state;
     }
 
-	@Override
-	public String getDisplayState() {
-		return OSGiUtils.getService(bundle.getBundleContext(), ILanguageService.class).getMessage(state.getKey());
-	}
+    @Override
+    public String getDisplayState() {
+        return OSGiUtils.getService(bundle.getBundleContext(), ILanguageService.class).getMessage(state.getKey());
+    }
 
-	@Override
+    @Override
     public String getId() {
         return id;
     }
@@ -124,6 +125,7 @@ public final class ModuleContainer implements Module {
 
     /**
      * Set the core version needed by the module.
+     *
      * @param coreVersion The core version needed by the module.
      */
     public void setCoreVersion(Version coreVersion) {
@@ -137,6 +139,7 @@ public final class ModuleContainer implements Module {
 
     /**
      * Set the URL of the site of the module.
+     *
      * @param url THe URL of the site of the module.
      */
     public void setUrl(String url) {
@@ -148,11 +151,11 @@ public final class ModuleContainer implements Module {
         return updateUrl;
     }
 
-	/**
-	 * Set the the URL to the update file of the module.
-	 *
-	 * @param updateUrl The URL to the update file of the module.
-	 */
+    /**
+     * Set the the URL to the update file of the module.
+     *
+     * @param updateUrl The URL to the update file of the module.
+     */
     public void setUpdateUrl(String updateUrl) {
         this.updateUrl = updateUrl;
     }
@@ -166,7 +169,6 @@ public final class ModuleContainer implements Module {
      * Set the libs of the module.
      *
      * @param libs The libs of the module.
-     *
      * @see #getLibs()
      */
     public void setLibs(String[] libs) {
@@ -182,8 +184,7 @@ public final class ModuleContainer implements Module {
      * Set the dependencies of the module.
      *
      * @param dependencies The dependencies of the module.
-     *
-     * @see #getDependencies() 
+     * @see #getDependencies()
      */
     public void setDependencies(String[] dependencies) {
         this.dependencies = dependencies;
@@ -222,17 +223,17 @@ public final class ModuleContainer implements Module {
         return collection;
     }
 
-	@Override
-	public Resources getResources() {
-		return resources;
-	}
+    @Override
+    public Resources getResources() {
+        return resources;
+    }
 
     /**
      * Set the resources of of the module.
      *
-     * @param resources The resources of the module. 
+     * @param resources The resources of the module.
      */
-	public void setResources(ModuleResources resources) {
-		this.resources = resources;
+    public void setResources(ModuleResources resources) {
+        this.resources = resources;
 	}
 }

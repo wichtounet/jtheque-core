@@ -25,9 +25,8 @@ public interface ISchemaService {
     /**
      * Register a schema.
      *
-     * @param moduleId The module id. 
-     * @param schema The schema to add.
-     *
+     * @param moduleId The module id.
+     * @param schema   The schema to add.
      * @see Schema
      */
     void registerSchema(String moduleId, Schema schema);

@@ -6,9 +6,11 @@ import org.jtheque.ui.utils.actions.JThequeAction;
 import org.jtheque.update.able.IUpdateService;
 import org.jtheque.views.able.IViews;
 import org.jtheque.views.able.windows.IUpdateView;
+
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.Resource;
+
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 
@@ -93,20 +95,20 @@ public abstract class AbstractUpdateAction extends JThequeAction {
      */
     abstract Object getSelectedObject();
 
-	/**
-	 * Return the views service.
-	 *
-	 * @return The views.
-	 */
+    /**
+     * Return the views service.
+     *
+     * @return The views.
+     */
     IViews getViews() {
         return views;
     }
 
-	/**
-	* Return the update service.
-	*
-	* @return The update service.
-	*/
+    /**
+     * Return the update service.
+     *
+     * @return The update service.
+     */
     IUpdateService getUpdateService() {
         return updateService;
     }

@@ -24,6 +24,7 @@ import org.jtheque.ui.utils.actions.JThequeAction;
 import org.jtheque.views.able.IViews;
 
 import javax.annotation.Resource;
+
 import java.awt.event.ActionEvent;
 
 /**

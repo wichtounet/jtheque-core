@@ -16,22 +16,24 @@ package org.jtheque.views.impl.components.renderers;
  * limitations under the License.
  */
 
-import org.jdesktop.swingx.JXHyperlink;
 import org.jtheque.i18n.able.ILanguageService;
 import org.jtheque.modules.able.Module;
-import org.jtheque.ui.utils.components.Borders;
 import org.jtheque.ui.utils.actions.OpenSiteLinkAction;
 import org.jtheque.ui.utils.builders.FilthyPanelBuilder;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.ui.utils.builders.PanelBuilder;
+import org.jtheque.ui.utils.components.Borders;
 import org.jtheque.update.able.IUpdateService;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.ui.GridBagUtils;
+
+import org.jdesktop.swingx.JXHyperlink;
 
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.ListCellRenderer;
+
 import java.awt.Component;
 import java.awt.Font;
 
@@ -56,19 +58,19 @@ public final class ModuleListRenderer extends JPanel implements ListCellRenderer
     private static final int TITLE_FONT_SIZE = 16;
 
     private final IUpdateService updateService;
-	private final ILanguageService languageService;
+    private final ILanguageService languageService;
 
-	/**
+    /**
      * Construct a new ModuleListRenderer.
-	 *
-	 * @param updateService The update service.
-	 * @param languageService The language service.
-	 */
+     *
+     * @param updateService   The update service.
+     * @param languageService The language service.
+     */
     public ModuleListRenderer(IUpdateService updateService, ILanguageService languageService) {
         super();
 
         this.updateService = updateService;
-		this.languageService = languageService;
+        this.languageService = languageService;
 
         I18nPanelBuilder builder = new FilthyPanelBuilder(this);
         builder.setBorder(Borders.createEmptyBorder(2, 2, 2, 10));
@@ -99,18 +101,18 @@ public final class ModuleListRenderer extends JPanel implements ListCellRenderer
     private void updateUI(boolean isSelected) {
         initFonts();
 
-        if(isSelected){
+        if (isSelected) {
             setFonts(fontTitleBold, fontLabelBold);
         } else {
             setFonts(fontTitle, fontLabel);
         }
     }
 
-	/**
-	 * Init the fonts of the renderer.
-	 */
+    /**
+     * Init the fonts of the renderer.
+     */
     private void initFonts() {
-        if(fontTitle == null){
+        if (fontTitle == null) {
             fontTitle = labelTitle.getFont();
             fontTitleBold = fontTitle.deriveFont(Font.BOLD);
 

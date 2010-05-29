@@ -23,6 +23,7 @@ import org.jtheque.utils.ui.edt.SimpleTask;
 import org.jtheque.views.able.windows.IUpdateView;
 
 import javax.annotation.Resource;
+
 import java.awt.event.ActionEvent;
 
 /**

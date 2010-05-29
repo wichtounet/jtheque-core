@@ -31,7 +31,7 @@ public final class UpdateAction extends JThequeAction {
 
     /**
      * Construct a new UpdateAction.
-     * 
+     *
      * @param eventView The log view.
      */
     public UpdateAction(IEventView eventView) {

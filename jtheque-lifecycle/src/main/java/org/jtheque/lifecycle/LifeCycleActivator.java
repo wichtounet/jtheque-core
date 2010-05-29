@@ -1,35 +1,35 @@
 package org.jtheque.lifecycle;
 
-import ch.qos.logback.classic.Level;
-import ch.qos.logback.classic.Logger;
 import org.jtheque.collections.able.CollectionListener;
 import org.jtheque.collections.able.ICollectionsService;
 import org.jtheque.core.able.ICore;
-import org.jtheque.core.utils.SystemProperty;
 import org.jtheque.core.able.application.Application;
 import org.jtheque.core.utils.OSGiUtils;
-import org.jtheque.errors.able.IErrorService;
-import org.jtheque.errors.utils.JThequeError;
-import org.jtheque.events.utils.Event;
+import org.jtheque.core.utils.SystemProperty;
 import org.jtheque.events.able.EventLevel;
 import org.jtheque.events.able.IEventService;
+import org.jtheque.events.utils.Event;
 import org.jtheque.lifecycle.application.XMLApplicationReader;
 import org.jtheque.messages.able.IMessageService;
 import org.jtheque.modules.able.IModuleService;
 import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.update.able.IUpdateService;
 import org.jtheque.utils.ui.SwingUtils;
+import org.jtheque.utils.ui.edt.SimpleTask;
 import org.jtheque.views.able.ISplashService;
 import org.jtheque.views.able.IViewService;
-import org.jtheque.utils.ui.edt.SimpleTask;
 import org.jtheque.views.able.IViews;
 import org.jtheque.views.impl.MacOSXConfiguration;
+
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleException;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
+
+import ch.qos.logback.classic.Level;
+import ch.qos.logback.classic.Logger;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -69,14 +69,14 @@ public class LifeCycleActivator implements BundleActivator, CollectionListener {
 
         getService(ISplashService.class).initViews();
         getService(ISplashService.class).displaySplashScreen();
-        
+
         getService(IViews.class).init();
 
         getService(IEventService.class).addEvent("JTheque Core", new Event(EventLevel.INFO, "User", "events.start"));
 
         getService(IModuleService.class).load();
 
-        if(OSGiUtils.getService(context, IModuleService.class).hasCollectionModule()){
+        if (OSGiUtils.getService(context, IModuleService.class).hasCollectionModule()) {
             SwingUtils.execute(new SimpleTask() {
                 @Override
                 public void run() {
@@ -94,7 +94,7 @@ public class LifeCycleActivator implements BundleActivator, CollectionListener {
      * Configure the logging.
      */
     private static void configureLogging() {
-        Logger rootLogger = (Logger)LoggerFactory.getLogger("root");
+        Logger rootLogger = (Logger) LoggerFactory.getLogger("root");
 
         String level = "DEBUG";
 
@@ -110,7 +110,6 @@ public class LifeCycleActivator implements BundleActivator, CollectionListener {
      *
      * @param classz The class to get the service.
      * @param <T>    The type of service.
-     *
      * @return The service of the given class if it's exists otherwise null.
      */
     private <T> T getService(Class<T> classz) {
@@ -125,7 +124,7 @@ public class LifeCycleActivator implements BundleActivator, CollectionListener {
     }
 
     /**
-     * Start the second phase of the application. 
+     * Start the second phase of the application.
      */
     private void startSecondPhase() {
         getService(IModuleService.class).startModules();
@@ -137,15 +136,15 @@ public class LifeCycleActivator implements BundleActivator, CollectionListener {
 
         getService(IMessageService.class).loadMessages();
 
-        if(getService(IMessageService.class).isDisplayNeeded()){
+        if (getService(IMessageService.class).isDisplayNeeded()) {
             getService(IViews.class).getMessagesView().display();
         }
 
         if (getService(ICore.class).getConfiguration().verifyUpdateOnStartup()) {
             List<String> messages = getService(IUpdateService.class).getPossibleUpdates();
 
-            for(String message : messages){
-                if(getService(IUIUtils.class).askI18nUserForConfirmation(message, message + ".title")){
+            for (String message : messages) {
+                if (getService(IUIUtils.class).askI18nUserForConfirmation(message, message + ".title")) {
                     getService(IViews.class).getModuleView().display();
                     break;
                 }
@@ -154,7 +153,7 @@ public class LifeCycleActivator implements BundleActivator, CollectionListener {
     }
 
     @Override
-    public void stop(BundleContext bundleContext){
+    public void stop(BundleContext bundleContext) {
         //Release all
     }
 }

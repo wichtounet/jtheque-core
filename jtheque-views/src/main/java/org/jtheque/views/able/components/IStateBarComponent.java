@@ -8,28 +8,28 @@ import java.awt.Component;
  * @author Baptiste Wicht
  */
 public interface IStateBarComponent {
-	/**
-	 * Return the component.
-	 *
-	 * @return The component.
-	 */
-	Component getComponent();
+    /**
+     * Return the component.
+     *
+     * @return The component.
+     */
+    Component getComponent();
 
-	/**
-	 * Return the position of the state bar component.
-	 *
-	 * @return The position of the component.
-	 */
-	Position getPosition();
+    /**
+     * Return the position of the state bar component.
+     *
+     * @return The position of the component.
+     */
+    Position getPosition();
 
-	/**
-	 * A position for state bar component.
-	 *
-	 * @author Baptiste Wicht
-	 */
-	enum Position {
-	    LEFT,
-	    CENTER,
-	    RIGHT,
-	}
+    /**
+     * A position for state bar component.
+     *
+     * @author Baptiste Wicht
+     */
+    enum Position {
+        LEFT,
+        CENTER,
+        RIGHT,
+    }
 }

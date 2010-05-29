@@ -1,8 +1,9 @@
 package org.jtheque.lifecycle.application;
 
-import org.jtheque.core.utils.SystemProperty;
 import org.jtheque.core.able.application.ApplicationProperties;
+import org.jtheque.core.utils.SystemProperty;
 import org.jtheque.utils.collections.ArrayUtils;
+
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 
 import java.util.Locale;
@@ -34,7 +35,7 @@ public final class I18nAplicationProperties implements ApplicationProperties {
     /**
      * Construct a new I18nAplicationProperties.
      */
-    public I18nAplicationProperties(){
+    public I18nAplicationProperties() {
         super();
 
         resourceBundle = new ReloadableResourceBundleMessageSource();
@@ -43,27 +44,27 @@ public final class I18nAplicationProperties implements ApplicationProperties {
     }
 
     @Override
-    public String getName(){
+    public String getName() {
         return getMessage("name");
     }
 
     @Override
-    public String getAuthor(){
+    public String getAuthor() {
         return getMessage("author");
     }
 
     @Override
-    public String getEmail(){
+    public String getEmail() {
         return getMessage("email");
     }
 
     @Override
-    public String getSite(){
+    public String getSite() {
         return getMessage("site");
     }
 
     @Override
-    public String getCopyright(){
+    public String getCopyright() {
         return getMessage("copyright");
     }
 
@@ -71,10 +72,9 @@ public final class I18nAplicationProperties implements ApplicationProperties {
      * Return the message with the specified key in the application resource bundle.
      *
      * @param key The key of the message.
-     *
      * @return The String value of the message with the specified key.
      */
-    private String getMessage(String key){
+    private String getMessage(String key) {
         return resourceBundle.getMessage(key, ArrayUtils.ZERO_LENGTH_ARRAY, Locale.getDefault());
     }
 }

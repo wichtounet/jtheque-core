@@ -17,12 +17,12 @@ package org.jtheque.collections.impl;
  */
 
 import org.jtheque.collections.able.IDaoCollections;
-import org.jtheque.schemas.utils.DefaultSchema;
 import org.jtheque.schemas.able.ISchemaService;
+import org.jtheque.schemas.utils.DefaultSchema;
 import org.jtheque.utils.bean.Version;
 
 /**
- * A collection schema. This schema describe the database part to store the collection. 
+ * A collection schema. This schema describe the database part to store the collection.
  *
  * @author Baptiste Wicht
  */
@@ -30,7 +30,7 @@ public class CollectionSchema extends DefaultSchema {
     /**
      * Construct a new CollectionSchema.
      *
-     * @param schemaService The schema service to use. 
+     * @param schemaService The schema service to use.
      */
     public CollectionSchema(ISchemaService schemaService) {
         super(new Version("1.0"), "jtheque-collection-schema");
@@ -42,7 +42,7 @@ public class CollectionSchema extends DefaultSchema {
     public void install() {
         updateTable(IDaoCollections.TABLE,
                 "CREATE TABLE IF NOT EXISTS {} (ID INT IDENTITY PRIMARY KEY, TITLE VARCHAR(150) NOT NULL UNIQUE, PROTECTED BOOLEAN, PASSWORD VARCHAR(150))");
-	    updateTable(IDaoCollections.TABLE, "CREATE INDEX IF NOT EXISTS COLLECTIONS_IDX ON {} (ID)");
+        updateTable(IDaoCollections.TABLE, "CREATE INDEX IF NOT EXISTS COLLECTIONS_IDX ON {} (ID)");
     }
 
     @Override

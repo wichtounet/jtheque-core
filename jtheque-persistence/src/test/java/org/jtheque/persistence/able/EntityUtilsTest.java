@@ -18,6 +18,7 @@ package org.jtheque.persistence.able;
 
 import org.jtheque.persistence.utils.AbstractEntity;
 import org.jtheque.persistence.utils.EntityUtils;
+
 import org.junit.Test;
 
 import java.util.ArrayList;

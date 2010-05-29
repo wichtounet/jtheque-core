@@ -38,11 +38,11 @@ public class Feature implements IFeature {
     /**
      * Construct a new Feature for an action.
      *
-     * @param type The type of feature.
+     * @param type     The type of feature.
      * @param position The position of the feature in the parent.
-     * @param action The action to execute when the feature is pressed.
+     * @param action   The action to execute when the feature is pressed.
      */
-    public Feature(FeatureType type, Integer position, JThequeAction action){
+    public Feature(FeatureType type, Integer position, JThequeAction action) {
         super();
 
         this.action = action;
@@ -53,11 +53,11 @@ public class Feature implements IFeature {
     /**
      * Construct a new Feature for a menu.
      *
-     * @param type The type of feature.
+     * @param type     The type of feature.
      * @param titleKey The i18n key of the title of the feature.
-     * @param position The position of the feature in the parent. 
+     * @param position The position of the feature in the parent.
      */
-    public Feature(FeatureType type, String titleKey, Integer position){
+    public Feature(FeatureType type, String titleKey, Integer position) {
         super();
 
         action = null;

@@ -32,7 +32,7 @@ public final class Files implements IFilesContainer {
     /**
      * Construct a new Files.
      *
-     * @param core The core. 
+     * @param core The core.
      */
     public Files(ICore core) {
         super();

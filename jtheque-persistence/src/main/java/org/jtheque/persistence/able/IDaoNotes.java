@@ -58,8 +58,7 @@ public interface IDaoNotes {
      * Return the internationalized text of the note.
      *
      * @param note The note.
-     *
-     * @return The internationalized text of the note. 
+     * @return The internationalized text of the note.
      */
     String getInternationalizedText(Note note);
 

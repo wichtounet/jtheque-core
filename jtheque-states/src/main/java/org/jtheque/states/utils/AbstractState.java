@@ -38,7 +38,7 @@ public abstract class AbstractState {
      * @param properties The properties of this state.
      */
     @Load
-    public void setProperties(Map<String, String> properties){
+    public void setProperties(Map<String, String> properties) {
         this.properties.putAll(properties);
     }
 
@@ -57,7 +57,6 @@ public abstract class AbstractState {
      * Return the value of a property.
      *
      * @param key The key of the property.
-     *
      * @return The value of the property with the given key or null if the property doesn't exist.
      */
     protected final String getProperty(String key) {
@@ -67,9 +66,8 @@ public abstract class AbstractState {
     /**
      * Return the value of a property.
      *
-     * @param key The key of the property.
-     * @param defaults The default value to use if the property doesn't exist. 
-     *
+     * @param key      The key of the property.
+     * @param defaults The default value to use if the property doesn't exist.
      * @return The value of the property with the given key or the given default value if the property doesn't exist.
      */
     protected final String getProperty(String key, String defaults) {
@@ -85,8 +83,8 @@ public abstract class AbstractState {
     /**
      * Set the property value of the state.
      *
-     * @param key The key of the property.
-     * @param value The value of the propery. 
+     * @param key   The key of the property.
+     * @param value The value of the propery.
      */
     protected final void setProperty(String key, String value) {
         properties.put(key, value);

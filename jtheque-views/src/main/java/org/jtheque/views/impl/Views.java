@@ -38,11 +38,12 @@ import org.jtheque.views.able.windows.IUpdateView;
 import org.jtheque.views.impl.components.config.JPanelConfigAppearance;
 import org.jtheque.views.impl.components.config.JPanelConfigNetwork;
 import org.jtheque.views.impl.components.config.JPanelConfigOthers;
+
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
-import javax.annotation.PostConstruct;
 import javax.swing.JComponent;
+
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -52,232 +53,232 @@ import java.util.Collection;
  * @author Baptiste Wicht
  */
 public final class Views implements IViews, ApplicationContextAware, ModuleListener {
-	private SwingSpringProxy<ILicenceView> licenceView;
-	private SwingSpringProxy<IConfigView> configView;
-	private SwingSpringProxy<IModuleView> moduleView;
-	private SwingSpringProxy<IMessageView> messageView;
-	private SwingSpringProxy<IEventView> eventView;
-	private SwingSpringProxy<IRepositoryView> repositoryView;
-	private SwingSpringProxy<IUpdateView> updateView;
-	private SwingSpringProxy<IErrorView> errorView;
-	private SwingSpringProxy<IMainView> mainView;
+    private SwingSpringProxy<ILicenceView> licenceView;
+    private SwingSpringProxy<IConfigView> configView;
+    private SwingSpringProxy<IModuleView> moduleView;
+    private SwingSpringProxy<IMessageView> messageView;
+    private SwingSpringProxy<IEventView> eventView;
+    private SwingSpringProxy<IRepositoryView> repositoryView;
+    private SwingSpringProxy<IUpdateView> updateView;
+    private SwingSpringProxy<IErrorView> errorView;
+    private SwingSpringProxy<IMainView> mainView;
 
-	private final Collection<MainComponent> mainComponents = new ArrayList<MainComponent>(5);
-	private final Collection<IStateBarComponent> stateBarComponents = new ArrayList<IStateBarComponent>(5);
-	private final Collection<ConfigTabComponent> configPanels = new ArrayList<ConfigTabComponent>(5);
+    private final Collection<MainComponent> mainComponents = new ArrayList<MainComponent>(5);
+    private final Collection<IStateBarComponent> stateBarComponents = new ArrayList<IStateBarComponent>(5);
+    private final Collection<ConfigTabComponent> configPanels = new ArrayList<ConfigTabComponent>(5);
 
-	private ApplicationContext applicationContext;
+    private ApplicationContext applicationContext;
 
-	@Override
-	public void setSelectedView(MainComponent component) {
-		mainView.get().setSelectedComponent(component.getImpl());
-	}
+    @Override
+    public void setSelectedView(MainComponent component) {
+        mainView.get().setSelectedComponent(component.getImpl());
+    }
 
-	@Override
-	public MainComponent getSelectedView() {
-		MainComponent selected = null;
+    @Override
+    public MainComponent getSelectedView() {
+        MainComponent selected = null;
 
-		JComponent component = mainView.get().getSelectedComponent();
+        JComponent component = mainView.get().getSelectedComponent();
 
-		for (MainComponent tab : mainComponents) {
-			if (tab.getImpl().equals(component)) {
-				selected = tab;
-				break;
-			}
-		}
+        for (MainComponent tab : mainComponents) {
+            if (tab.getImpl().equals(component)) {
+                selected = tab;
+                break;
+            }
+        }
 
-		return selected;
-	}
+        return selected;
+    }
 
-	@Override
-	public IMainView getMainView() {
-		return mainView.get();
-	}
+    @Override
+    public IMainView getMainView() {
+        return mainView.get();
+    }
 
-	@Override
-	public ILicenceView getLicenceView() {
-		return licenceView.get();
-	}
+    @Override
+    public ILicenceView getLicenceView() {
+        return licenceView.get();
+    }
 
-	@Override
-	public IConfigView getConfigView() {
-		return configView.get();
-	}
+    @Override
+    public IConfigView getConfigView() {
+        return configView.get();
+    }
 
-	@Override
-	public IErrorView getErrorView() {
-		return errorView.get();
-	}
+    @Override
+    public IErrorView getErrorView() {
+        return errorView.get();
+    }
 
-	@Override
-	public IModuleView getModuleView() {
-		return moduleView.get();
-	}
+    @Override
+    public IModuleView getModuleView() {
+        return moduleView.get();
+    }
 
-	@Override
-	public IMessageView getMessagesView() {
-		return messageView.get();
-	}
+    @Override
+    public IMessageView getMessagesView() {
+        return messageView.get();
+    }
 
-	@Override
-	public IEventView getEventView() {
-		return eventView.get();
-	}
+    @Override
+    public IEventView getEventView() {
+        return eventView.get();
+    }
 
-	@Override
-	public IRepositoryView getRepositoryView() {
-		return repositoryView.get();
-	}
+    @Override
+    public IRepositoryView getRepositoryView() {
+        return repositoryView.get();
+    }
 
-	@Override
-	public IUpdateView getUpdateView() {
-		return updateView.get();
-	}
+    @Override
+    public IUpdateView getUpdateView() {
+        return updateView.get();
+    }
 
-	@Override
-	public void setApplicationContext(ApplicationContext applicationContext) {
-		this.applicationContext = applicationContext;
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) {
+        this.applicationContext = applicationContext;
 
-		mainView = new SwingSpringProxy<IMainView>(IMainView.class, applicationContext);
-		licenceView = new SwingSpringProxy<ILicenceView>(ILicenceView.class, applicationContext);
-		configView = new SwingSpringProxy<IConfigView>(IConfigView.class, applicationContext);
-		moduleView = new SwingSpringProxy<IModuleView>(IModuleView.class, applicationContext);
-		messageView = new SwingSpringProxy<IMessageView>(IMessageView.class, applicationContext);
-		eventView = new SwingSpringProxy<IEventView>(IEventView.class, applicationContext);
-		repositoryView = new SwingSpringProxy<IRepositoryView>(IRepositoryView.class, applicationContext);
-		updateView = new SwingSpringProxy<IUpdateView>(IUpdateView.class, applicationContext);
-		errorView = new SwingSpringProxy<IErrorView>(IErrorView.class, applicationContext);
+        mainView = new SwingSpringProxy<IMainView>(IMainView.class, applicationContext);
+        licenceView = new SwingSpringProxy<ILicenceView>(ILicenceView.class, applicationContext);
+        configView = new SwingSpringProxy<IConfigView>(IConfigView.class, applicationContext);
+        moduleView = new SwingSpringProxy<IModuleView>(IModuleView.class, applicationContext);
+        messageView = new SwingSpringProxy<IMessageView>(IMessageView.class, applicationContext);
+        eventView = new SwingSpringProxy<IEventView>(IEventView.class, applicationContext);
+        repositoryView = new SwingSpringProxy<IRepositoryView>(IRepositoryView.class, applicationContext);
+        updateView = new SwingSpringProxy<IUpdateView>(IUpdateView.class, applicationContext);
+        errorView = new SwingSpringProxy<IErrorView>(IErrorView.class, applicationContext);
 
-		//Pre init the view
-		errorView.get();
-	}
+        //Pre init the view
+        errorView.get();
+    }
 
-	@Override
-	public void addMainComponent(String moduleId, MainComponent component) {
-		mainComponents.add(component);
+    @Override
+    public void addMainComponent(String moduleId, MainComponent component) {
+        mainComponents.add(component);
 
-		getMainView().sendMessage("add", component);
+        getMainView().sendMessage("add", component);
 
-		ModuleResourceCache.addResource(moduleId, MainComponent.class, component);
-	}
+        ModuleResourceCache.addResource(moduleId, MainComponent.class, component);
+    }
 
-	@Override
-	public Collection<MainComponent> getMainComponents() {
-		return CollectionUtils.copyOf(mainComponents);
-	}
+    @Override
+    public Collection<MainComponent> getMainComponents() {
+        return CollectionUtils.copyOf(mainComponents);
+    }
 
-	@Override
-	public void setSelectedMainComponent(MainComponent component) {
-		if (mainComponents.size() > 1) {
-			getMainView().getTabbedPane().setSelectedComponent(component.getImpl());
-		}
-	}
+    @Override
+    public void setSelectedMainComponent(MainComponent component) {
+        if (mainComponents.size() > 1) {
+            getMainView().getTabbedPane().setSelectedComponent(component.getImpl());
+        }
+    }
 
-	@Override
-	public void addStateBarComponent(String moduleId, IStateBarComponent component) {
-		if (component != null && component.getComponent() != null) {
-			stateBarComponents.add(component);
+    @Override
+    public void addStateBarComponent(String moduleId, IStateBarComponent component) {
+        if (component != null && component.getComponent() != null) {
+            stateBarComponents.add(component);
 
-			if ("true".equals(SimplePropertiesCache.get("statebar-loaded"))) {
-				getMainView().getStateBar().addComponent(component);
-			}
+            if ("true".equals(SimplePropertiesCache.get("statebar-loaded"))) {
+                getMainView().getStateBar().addComponent(component);
+            }
 
-			ModuleResourceCache.addResource(moduleId, IStateBarComponent.class, component);
-		}
-	}
+            ModuleResourceCache.addResource(moduleId, IStateBarComponent.class, component);
+        }
+    }
 
-	@Override
-	public Collection<IStateBarComponent> getStateBarComponents() {
-		return CollectionUtils.copyOf(stateBarComponents);
-	}
+    @Override
+    public Collection<IStateBarComponent> getStateBarComponents() {
+        return CollectionUtils.copyOf(stateBarComponents);
+    }
 
-	@Override
-	public void addConfigTabComponent(String moduleId, ConfigTabComponent component) {
-		configPanels.add(component);
+    @Override
+    public void addConfigTabComponent(String moduleId, ConfigTabComponent component) {
+        configPanels.add(component);
 
-		if ("true".equals(SimplePropertiesCache.get("config-view-loaded"))) {
-			getConfigView().sendMessage("add", component);
-		}
+        if ("true".equals(SimplePropertiesCache.get("config-view-loaded"))) {
+            getConfigView().sendMessage("add", component);
+        }
 
-		ModuleResourceCache.addResource(moduleId, ConfigTabComponent.class, component);
-	}
+        ModuleResourceCache.addResource(moduleId, ConfigTabComponent.class, component);
+    }
 
-	@Override
-	public Collection<ConfigTabComponent> getConfigTabComponents() {
-		return CollectionUtils.copyOf(configPanels);
-	}
+    @Override
+    public Collection<ConfigTabComponent> getConfigTabComponents() {
+        return CollectionUtils.copyOf(configPanels);
+    }
 
-	@Override
-	public void init() {
-		addConfigTabComponent("", new SwingSpringProxy<JPanelConfigAppearance>(JPanelConfigAppearance.class, applicationContext).get());
-		addConfigTabComponent("", new SwingSpringProxy<JPanelConfigOthers>(JPanelConfigOthers.class, applicationContext).get());
-		addConfigTabComponent("", new SwingSpringProxy<JPanelConfigNetwork>(JPanelConfigNetwork.class, applicationContext).get());
-	}
+    @Override
+    public void init() {
+        addConfigTabComponent("", new SwingSpringProxy<JPanelConfigAppearance>(JPanelConfigAppearance.class, applicationContext).get());
+        addConfigTabComponent("", new SwingSpringProxy<JPanelConfigOthers>(JPanelConfigOthers.class, applicationContext).get());
+        addConfigTabComponent("", new SwingSpringProxy<JPanelConfigNetwork>(JPanelConfigNetwork.class, applicationContext).get());
+    }
 
-	@Override
-	public void moduleStarted(Module module) {
-		//Nothing to change here
-	}
+    @Override
+    public void moduleStarted(Module module) {
+        //Nothing to change here
+    }
 
-	@Override
-	public void moduleStopped(Module module) {
-		removeMainComponents(ModuleResourceCache.getResource(module.getId(), MainComponent.class));
-		removeStateBarComponents(ModuleResourceCache.getResource(module.getId(), IStateBarComponent.class));
-		removeConfigTabComponents(ModuleResourceCache.getResource(module.getId(), ConfigTabComponent.class));
+    @Override
+    public void moduleStopped(Module module) {
+        removeMainComponents(ModuleResourceCache.getResource(module.getId(), MainComponent.class));
+        removeStateBarComponents(ModuleResourceCache.getResource(module.getId(), IStateBarComponent.class));
+        removeConfigTabComponents(ModuleResourceCache.getResource(module.getId(), ConfigTabComponent.class));
 
-		ModuleResourceCache.removeResourceOfType(module.getId(), MainComponent.class);
-		ModuleResourceCache.removeResourceOfType(module.getId(), IStateBarComponent.class);
-		ModuleResourceCache.removeResourceOfType(module.getId(), ConfigTabComponent.class);
-	}
+        ModuleResourceCache.removeResourceOfType(module.getId(), MainComponent.class);
+        ModuleResourceCache.removeResourceOfType(module.getId(), IStateBarComponent.class);
+        ModuleResourceCache.removeResourceOfType(module.getId(), ConfigTabComponent.class);
+    }
 
-	@Override
-	public void moduleInstalled(Module module) {
-		//Nothing to change here
-	}
+    @Override
+    public void moduleInstalled(Module module) {
+        //Nothing to change here
+    }
 
-	@Override
-	public void moduleUninstalled(Module module) {
-		//Nothing to change here
-	}
+    @Override
+    public void moduleUninstalled(Module module) {
+        //Nothing to change here
+    }
 
     /**
      * Remove the given main components.
      *
      * @param components The main components to remove.
      */
-	private void removeMainComponents(Iterable<MainComponent> components) {
-		for (MainComponent component : components) {
-			mainComponents.remove(component);
+    private void removeMainComponents(Iterable<MainComponent> components) {
+        for (MainComponent component : components) {
+            mainComponents.remove(component);
 
-			getMainView().sendMessage("remove", component);
-		}
-	}
+            getMainView().sendMessage("remove", component);
+        }
+    }
 
     /**
      * Remove the given state bar components.
      *
-     * @param components The state bar components to remove. 
+     * @param components The state bar components to remove.
      */
-	private void removeStateBarComponents(Iterable<IStateBarComponent> components) {
-		for (IStateBarComponent component : components) {
-			stateBarComponents.remove(component);
+    private void removeStateBarComponents(Iterable<IStateBarComponent> components) {
+        for (IStateBarComponent component : components) {
+            stateBarComponents.remove(component);
 
-			if (component != null && component.getComponent() != null) {
-				getMainView().getStateBar().removeComponent(component);
-			}
-		}
-	}
+            if (component != null && component.getComponent() != null) {
+                getMainView().getStateBar().removeComponent(component);
+            }
+        }
+    }
 
     /**
      * Remove the given config tab components.
      *
      * @param components The config tab components to remove.
      */
-	private void removeConfigTabComponents(Iterable<ConfigTabComponent> components) {
-		for (ConfigTabComponent component : components) {
-			configPanels.remove(component);
+    private void removeConfigTabComponents(Iterable<ConfigTabComponent> components) {
+        for (ConfigTabComponent component : components) {
+            configPanels.remove(component);
 
-			getConfigView().sendMessage("remove", component);
+            getConfigView().sendMessage("remove", component);
 		}
 	}
 }

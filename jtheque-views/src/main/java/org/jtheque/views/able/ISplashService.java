@@ -38,7 +38,7 @@ public interface ISplashService {
     void fillMainView();
 
     /**
-     * Init the views. 
+     * Init the views.
      */
     void initViews();
 }

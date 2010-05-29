@@ -23,6 +23,7 @@ import org.jtheque.ui.utils.actions.JThequeAction;
 import org.jtheque.views.able.panel.ICollectionView;
 
 import javax.annotation.Resource;
+
 import java.awt.event.ActionEvent;
 
 /**
@@ -51,7 +52,7 @@ public final class CreateAction extends JThequeAction {
     public void actionPerformed(ActionEvent e) {
         Response response = collectionsService.chooseCollection(collectionView.getCollection(), collectionView.getPassword(), true);
 
-        if(!response.isOk()){
+        if (!response.isOk()) {
             collectionView.setErrorMessage(languageService.getMessage(response.getKey(), response.getReplaces()));
         }
     }

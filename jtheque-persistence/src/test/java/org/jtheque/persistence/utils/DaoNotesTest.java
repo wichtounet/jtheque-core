@@ -1,6 +1,7 @@
 package org.jtheque.persistence.utils;
 
 import org.jtheque.persistence.able.IDaoNotes;
+
 import org.junit.Test;
 
 import javax.annotation.Resource;

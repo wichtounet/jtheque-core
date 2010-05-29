@@ -42,13 +42,13 @@ public final class UpdateView extends SwingFilthyBuildedDialogView<IModel> imple
     private Updatable updatable;
 
     @Override
-    protected void initView(){
+    protected void initView() {
         setTitleKey("update.view.title");
         setResizable(false);
     }
 
     @Override
-    protected void buildView(I18nPanelBuilder builder){
+    protected void buildView(I18nPanelBuilder builder) {
         builder.addI18nLabel("update.view.versions", builder.gbcSet(0, 0, GridBagUtils.HORIZONTAL));
 
         model = new VersionsComboBoxModel(getService(IUpdateService.class));

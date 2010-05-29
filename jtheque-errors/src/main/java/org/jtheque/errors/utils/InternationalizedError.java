@@ -1,7 +1,8 @@
 package org.jtheque.errors.utils;
 
-import org.jdesktop.swingx.error.ErrorInfo;
 import org.jtheque.i18n.able.ILanguageService;
+
+import org.jdesktop.swingx.error.ErrorInfo;
 
 import java.util.logging.Level;
 
@@ -22,7 +23,7 @@ import java.util.logging.Level;
  */
 
 /**
- * An internationalized error implementation. 
+ * An internationalized error implementation.
  *
  * @author Baptiste Wicht
  */
@@ -89,11 +90,11 @@ public final class InternationalizedError extends JThequeError {
         detailsReplaces = replacesDetails.clone();
     }
 
-	@Override
-	public ErrorInfo toErrorInfo(ILanguageService languageService) {
-		return new ErrorInfo("Error",
-                        languageService.getMessage(getMessage(), messageReplaces),
-                        languageService.getMessage(getDetails(), detailsReplaces),
-                        "", null, Level.SEVERE, null);
-	}
+    @Override
+    public ErrorInfo toErrorInfo(ILanguageService languageService) {
+        return new ErrorInfo("Error",
+                languageService.getMessage(getMessage(), messageReplaces),
+                languageService.getMessage(getDetails(), detailsReplaces),
+                "", null, Level.SEVERE, null);
+    }
 }

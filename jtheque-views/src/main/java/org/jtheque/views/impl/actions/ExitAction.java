@@ -20,6 +20,7 @@ import org.jtheque.core.able.ICore;
 import org.jtheque.ui.utils.actions.JThequeAction;
 
 import javax.swing.KeyStroke;
+
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -34,7 +35,8 @@ public final class ExitAction extends JThequeAction {
 
     /**
      * Construct a new ExitAction.
-     * @param core The core. 
+     *
+     * @param core The core.
      */
     public ExitAction(ICore core) {
         super("menu.exit", core.getApplication().getName());

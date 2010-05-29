@@ -53,7 +53,7 @@ public final class FeatureService implements IFeatureService, ModuleListener {
     /**
      * Construct a new FeatureService.
      *
-     * @param languageService The language service. 
+     * @param languageService The language service.
      */
     public FeatureService(ILanguageService languageService) {
         super();
@@ -71,20 +71,20 @@ public final class FeatureService implements IFeatureService, ModuleListener {
     }
 
     @Override
-    public void addMenu(String moduleId, Menu menu){
+    public void addMenu(String moduleId, Menu menu) {
         languageService.addInternationalizable(menu);
 
-        for(CoreFeature feature : CoreFeature.values()){
-            for(IFeature f : menu.getSubFeatures(feature)){
+        for (CoreFeature feature : CoreFeature.values()) {
+            for (IFeature f : menu.getSubFeatures(feature)) {
                 coreFeatures.get(feature).addSubFeature(f);
             }
         }
 
-        for(IFeature f : menu.getMainFeatures()){
+        for (IFeature f : menu.getMainFeatures()) {
             addFeature(f);
         }
 
-        if(StringUtils.isNotEmpty(moduleId)){
+        if (StringUtils.isNotEmpty(moduleId)) {
             ModuleResourceCache.addResource(moduleId, Menu.class, menu);
         }
 
@@ -109,16 +109,16 @@ public final class FeatureService implements IFeatureService, ModuleListener {
     /**
      * Remove the specified menu.
      *
-     * @param menu The menu to remove. 
+     * @param menu The menu to remove.
      */
-    private void removeMenu(Menu menu){
-        for(CoreFeature feature : CoreFeature.values()){
-            for(IFeature f : menu.getSubFeatures(feature)){
+    private void removeMenu(Menu menu) {
+        for (CoreFeature feature : CoreFeature.values()) {
+            for (IFeature f : menu.getSubFeatures(feature)) {
                 coreFeatures.get(feature).removeSubFeature(f);
             }
         }
 
-        for(IFeature f : menu.getMainFeatures()){
+        for (IFeature f : menu.getMainFeatures()) {
             removeFeature(f);
         }
     }
@@ -195,31 +195,31 @@ public final class FeatureService implements IFeatureService, ModuleListener {
         }
     }
 
-	@Override
-	public void moduleStopped(Module module) {
-		Set<Menu> resources = ModuleResourceCache.getResource(module.getId(), Menu.class);
+    @Override
+    public void moduleStopped(Module module) {
+        Set<Menu> resources = ModuleResourceCache.getResource(module.getId(), Menu.class);
 
-		for (Menu menu : resources) {
-			removeMenu(menu);
-		}
+        for (Menu menu : resources) {
+            removeMenu(menu);
+        }
 
-		ModuleResourceCache.removeResourceOfType(module.getId(), Menu.class);
-	}
+        ModuleResourceCache.removeResourceOfType(module.getId(), Menu.class);
+    }
 
-	@Override
-	public void moduleStarted(Module module) {
-		//Nothing to do here
-	}
+    @Override
+    public void moduleStarted(Module module) {
+        //Nothing to do here
+    }
 
-	@Override
-	public void moduleInstalled(Module module) {
-		//Nothing to do here
-	}
+    @Override
+    public void moduleInstalled(Module module) {
+        //Nothing to do here
+    }
 
-	@Override
-	public void moduleUninstalled(Module module) {
-		//Nothing to do here
-	}
+    @Override
+    public void moduleUninstalled(Module module) {
+        //Nothing to do here
+    }
 
     /**
      * A managed feature.
@@ -230,9 +230,9 @@ public final class FeatureService implements IFeatureService, ModuleListener {
         /**
          * Construct a new ManagedFeature.
          *
-         * @param type The type of feature.
+         * @param type     The type of feature.
          * @param titleKey The title key.
-         * @param position The position of the feature. 
+         * @param position The position of the feature.
          */
         protected ManagedFeature(FeatureType type, String titleKey, Integer position) {
             super(type, titleKey, position);

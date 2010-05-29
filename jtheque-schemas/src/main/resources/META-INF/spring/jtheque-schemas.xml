@@ -9,7 +9,9 @@
             http://www.springframework.org/schema/osgi/spring-osgi.xsd">
 
     <bean id="schemaManager" class="org.jtheque.schemas.impl.SchemaService">
-        <constructor-arg><osgi:reference interface="org.jtheque.states.able.IStateService" /></constructor-arg>
+        <constructor-arg>
+            <osgi:reference interface="org.jtheque.states.able.IStateService"/>
+        </constructor-arg>
     </bean>
 
     <osgi:service id="schemaManagerService" ref="schemaManager" interface="org.jtheque.schemas.able.ISchemaService"/>

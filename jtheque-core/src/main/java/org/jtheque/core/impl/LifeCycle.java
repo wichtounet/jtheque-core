@@ -46,8 +46,9 @@ public class LifeCycle implements ILifeCycle {
 
     /**
      * Construct a new lifecycle.
+     *
      * @param eventService The event service.
-     * @param core The core.
+     * @param core         The core.
      */
     public LifeCycle(IEventService eventService, ICore core) {
         super();

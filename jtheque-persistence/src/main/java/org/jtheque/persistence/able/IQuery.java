@@ -6,17 +6,17 @@ package org.jtheque.persistence.able;
  * @author Baptiste Wicht
  */
 public interface IQuery {
-	/**
-	 * Return the SQL Query.
-	 *
-	 * @return The SQL Query.
-	 */
-	String getSqlQuery();
+    /**
+     * Return the SQL Query.
+     *
+     * @return The SQL Query.
+     */
+    String getSqlQuery();
 
-	/**
-	 * Return all the parameters of the query.
-	 *
-	 * @return The query parameters.
-	 */
-	Object[] getParameters();
+    /**
+     * Return all the parameters of the query.
+     *
+     * @return The query parameters.
+     */
+    Object[] getParameters();
 }

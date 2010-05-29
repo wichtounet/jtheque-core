@@ -24,6 +24,7 @@ import org.jtheque.views.able.components.IStateBarComponent;
 import javax.swing.Box;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
+
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -169,11 +170,11 @@ public final class JThequeStateBar extends JPanel {
         add(separator, gbc.gbcSet(currentColumn++, 1));
     }
 
-	/**
-	 * Remove the component from the state bar.
-	 *
-	 * @param component The component to add to the state bar. 
-	 */
+    /**
+     * Remove the component from the state bar.
+     *
+     * @param component The component to add to the state bar.
+     */
     public void removeComponent(IStateBarComponent component) {
         remove(component.getComponent());
 
@@ -187,7 +188,7 @@ public final class JThequeStateBar extends JPanel {
     /**
      * Add the components to the state bar.
      *
-     * @param component The component to add. 
+     * @param component The component to add.
      */
     public void addComponent(IStateBarComponent component) {
         build();

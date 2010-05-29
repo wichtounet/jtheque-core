@@ -28,6 +28,7 @@ import org.jtheque.persistence.able.DataListener;
 import org.jtheque.utils.CryptoUtils;
 import org.jtheque.utils.Hasher;
 import org.jtheque.utils.StringUtils;
+
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -36,8 +37,8 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Baptiste Wicht
  */
 public final class CollectionsService implements ICollectionsService {
-	private final IDaoCollections daoCollections;
-	private final ICore core;
+    private final IDaoCollections daoCollections;
+    private final ICore core;
 
     private final WeakEventListenerList listeners = new WeakEventListenerList();
 
@@ -45,22 +46,22 @@ public final class CollectionsService implements ICollectionsService {
      * Construct a new CollectionsService.
      *
      * @param daoCollections The dao collections.
-     * @param fileService The file service.
-     * @param core The core.
+     * @param fileService    The file service.
+     * @param core           The core.
      */
     public CollectionsService(IDaoCollections daoCollections, IFileService fileService, ICore core) {
         super();
 
         this.daoCollections = daoCollections;
-	    this.core = core;
+        this.core = core;
 
-	    fileService.registerBackuper("jtheque-collections", new CoreBackuper(daoCollections));
+        fileService.registerBackuper("jtheque-collections", new CoreBackuper(daoCollections));
     }
 
     @Override
     public Response chooseCollection(String collection, String password, boolean create) {
         if (create) {
-            if(daoCollections.exists(collection)){
+            if (daoCollections.exists(collection)) {
                 return new Response(false, "error.module.collection.exists");
             } else {
                 createCollection(collection, password);
@@ -79,10 +80,10 @@ public final class CollectionsService implements ICollectionsService {
     }
 
     /**
-     * Fire a collection choosed event. 
+     * Fire a collection choosed event.
      */
     private void fireCollectionChoosed() {
-        for(CollectionListener listener : listeners.getListeners(CollectionListener.class)){
+        for (CollectionListener listener : listeners.getListeners(CollectionListener.class)) {
             listener.collectionChoosed();
         }
     }
@@ -98,92 +99,90 @@ public final class CollectionsService implements ICollectionsService {
     }
 
     /**
-	 * Create a collection.
-	 *
-	 * @param title The title of the collection.
-	 * @param password The password of the collection.
-	 */
-	@Transactional
-	private void createCollection(String title, String password){
+     * Create a collection.
+     *
+     * @param title    The title of the collection.
+     * @param password The password of the collection.
+     */
+    @Transactional
+    private void createCollection(String title, String password) {
         Collection collection = daoCollections.create();
 
         collection.setTitle(title);
 
-		if (StringUtils.isEmpty(password)){
-			collection.setProtection(false);
+        if (StringUtils.isEmpty(password)) {
+            collection.setProtection(false);
             collection.setPassword("");
-		} else {
-			collection.setProtection(true);
-			collection.setPassword(CryptoUtils.hashMessage(password, Hasher.SHA256));
-		}
+        } else {
+            collection.setProtection(true);
+            collection.setPassword(CryptoUtils.hashMessage(password, Hasher.SHA256));
+        }
 
-		daoCollections.create(collection);
-	}
+        daoCollections.create(collection);
+    }
 
-	/**
-	 * Login using the specified collection and password.
-	 *
-	 * @param title The collection title.
-	 * @param password The password.
-	 *
-	 * @return <code>true</code> if the login is correct else <code>false</code>.
-	 */
-	public boolean login(String title, String password){
-		if (isLoginIncorrect(title, password)){
-			return false;
-		}
+    /**
+     * Login using the specified collection and password.
+     *
+     * @param title    The collection title.
+     * @param password The password.
+     * @return <code>true</code> if the login is correct else <code>false</code>.
+     */
+    public boolean login(String title, String password) {
+        if (isLoginIncorrect(title, password)) {
+            return false;
+        }
 
-		daoCollections.setCurrentCollection(daoCollections.getCollection(title));
+        daoCollections.setCurrentCollection(daoCollections.getCollection(title));
 
         core.getConfiguration().setLastCollection(title);
 
         return true;
-	}
+    }
 
-	/**
-	 * Indicate if a login is correct or not
-	 *
-	 * @param title The title of the collection.
-	 * @param password The password to login to the collection.
-	 *
-	 * @return true if the login is correct else false.
-	 */
-	private boolean isLoginIncorrect(String title, String password){
-		Collection collection = daoCollections.getCollection(title);
+    /**
+     * Indicate if a login is correct or not
+     *
+     * @param title    The title of the collection.
+     * @param password The password to login to the collection.
+     * @return true if the login is correct else false.
+     */
+    private boolean isLoginIncorrect(String title, String password) {
+        Collection collection = daoCollections.getCollection(title);
 
-		if (collection == null){
-			return true;
-		}
+        if (collection == null) {
+            return true;
+        }
 
-		if (collection.isProtection()){
-			String encrypted = CryptoUtils.hashMessage(password, Hasher.SHA256);
+        if (collection.isProtection()) {
+            String encrypted = CryptoUtils.hashMessage(password, Hasher.SHA256);
 
-			if (!encrypted.equals(collection.getPassword())){
-				return true;
-			}
-		}
+            if (!encrypted.equals(collection.getPassword())) {
+                return true;
+            }
+        }
 
-		return false;
-	}
+        return false;
+    }
 
     @Override
-	public java.util.Collection<Collection> getDatas(){
-		return daoCollections.getCollections();
-	}
+    public java.util.Collection<Collection> getDatas() {
+        return daoCollections.getCollections();
+    }
 
-	@Override
-	public void addDataListener(DataListener listener){
-		daoCollections.addDataListener(listener);
-	}
+    @Override
+    public void addDataListener(DataListener listener) {
+        daoCollections.addDataListener(listener);
+    }
 
-	@Override
-	@Transactional
-	public void clearAll(){
-		daoCollections.clearAll();
-	}
+    @Override
+    @Transactional
+    public void clearAll() {
+        daoCollections.clearAll();
+    }
 
-	@Override
-	public String getDataType(){
+    @Override
+    public String getDataType(){
 		return DATA_TYPE;
 	}
 }

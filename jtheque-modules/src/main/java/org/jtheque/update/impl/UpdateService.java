@@ -31,9 +31,11 @@ import org.jtheque.update.impl.versions.IVersionsLoader;
 import org.jtheque.update.impl.versions.InstallVersion;
 import org.jtheque.update.impl.versions.OnlineVersion;
 import org.jtheque.utils.bean.Version;
+
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.Resource;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -49,21 +51,22 @@ public final class UpdateService implements IUpdateService {
     private final UpdatableState state;
     private final WeakEventListenerList listeners = new WeakEventListenerList();
 
-	@Resource
+    @Resource
     private ICore core;
 
-	@Resource
+    @Resource
     private IUIUtils uiUtils;
-	
-	@Resource
+
+    @Resource
     private IModuleService moduleService;
 
     private final IVersionsLoader versionsLoader;
 
     /**
      * Create a new UpdateService.
-     * @param stateService The state service.
-     * @param versionsLoader The versions loader. 
+     *
+     * @param stateService   The state service.
+     * @param versionsLoader The versions loader.
      */
     public UpdateService(IStateService stateService, IVersionsLoader versionsLoader) {
         super();
@@ -284,7 +287,7 @@ public final class UpdateService implements IUpdateService {
 
     /**
      * Fire an updatable added event.
-     * 
+     *
      * @param updatable The new updatable.
      */
     private void fireUpdatableAdded(Updatable updatable) {

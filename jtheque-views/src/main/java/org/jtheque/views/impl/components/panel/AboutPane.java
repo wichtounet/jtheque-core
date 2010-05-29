@@ -13,10 +13,12 @@ import org.jtheque.utils.ui.SizeTracker;
 import org.jtheque.utils.ui.SwingUtils;
 import org.jtheque.views.able.windows.IAboutView;
 import org.jtheque.views.able.windows.ILicenceView;
+
 import org.pushingpixels.trident.Timeline;
 import org.pushingpixels.trident.callback.TimelineCallbackAdapter;
 
 import javax.annotation.PostConstruct;
+
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Cursor;
@@ -91,13 +93,13 @@ public final class AboutPane extends AbstractAboutPane implements IAboutView, In
     private final ICore core;
     private final ILanguageService languageService;
 
-	/**
-	 * Construct a new AboutPane.
-	 *
-	 * @param licenceView The licence view.
-	 * @param core The core.
-	 * @param languageService The language service.
-	 */
+    /**
+     * Construct a new AboutPane.
+     *
+     * @param licenceView     The licence view.
+     * @param core            The core.
+     * @param languageService The language service.
+     */
     public AboutPane(ILicenceView licenceView, ICore core, ILanguageService languageService) {
         super(languageService, core);
 
@@ -439,9 +441,9 @@ public final class AboutPane extends AbstractAboutPane implements IAboutView, In
         fadeAnimation.play();
     }
 
-	/**
-	 * Make disappear the view. 
-	 */
+    /**
+     * Make disappear the view.
+     */
     public void disappear() {
         getTimeline().suspend();
 
@@ -450,7 +452,7 @@ public final class AboutPane extends AbstractAboutPane implements IAboutView, In
             @Override
             public void onTimelineStateChanged(Timeline.TimelineState oldState, Timeline.TimelineState newState,
                                                float durationFraction, float timelinePosition) {
-                if(newState == Timeline.TimelineState.DONE){
+                if (newState == Timeline.TimelineState.DONE) {
                     setVisible(false);
                 }
             }
@@ -488,7 +490,7 @@ public final class AboutPane extends AbstractAboutPane implements IAboutView, In
                 }
             } else if (shapes.get("licence").contains(event.getPoint())) {
                 disappear();
-                
+
                 licenceView.display();
             }
         }

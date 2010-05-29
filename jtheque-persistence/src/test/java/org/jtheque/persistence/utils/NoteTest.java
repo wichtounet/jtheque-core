@@ -18,6 +18,7 @@ package org.jtheque.persistence.utils;
 
 import org.jtheque.persistence.able.IDaoNotes;
 import org.jtheque.persistence.impl.NoteImpl;
+
 import org.junit.Test;
 
 import static org.junit.Assert.*;

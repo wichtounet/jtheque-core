@@ -42,13 +42,13 @@ public final class ConfigView extends SwingFilthyBuildedDialogView<IModel> imple
     private LayerTabbedPane tab;
 
     @Override
-    protected void initView(){
+    protected void initView() {
         setTitleKey("config.view.title");
         setResizable(false);
     }
 
     @Override
-    protected void buildView(I18nPanelBuilder builder){
+    protected void buildView(I18nPanelBuilder builder) {
         ILanguageService languageService = getService(ILanguageService.class);
 
         tab = new LayerTabbedPane(languageService);
@@ -56,9 +56,9 @@ public final class ConfigView extends SwingFilthyBuildedDialogView<IModel> imple
         for (ConfigTabComponent component : getService(IViews.class).getConfigTabComponents()) {
             tab.addLayeredTab(languageService.getMessage(component.getTitleKey()), component.getComponent());
 
-	        for(Map.Entry<Object, Constraint> constraint : component.getConstraints().entrySet()){
-				addConstraint(constraint.getKey(), constraint.getValue());
-	        }
+            for (Map.Entry<Object, Constraint> constraint : component.getConstraints().entrySet()) {
+                addConstraint(constraint.getKey(), constraint.getValue());
+            }
         }
 
         builder.add(tab, builder.gbcSet(0, 0, GridBagUtils.BOTH));
@@ -76,12 +76,12 @@ public final class ConfigView extends SwingFilthyBuildedDialogView<IModel> imple
 
     @Override
     public void sendMessage(String message, Object value) {
-        if("remove".equals(message)){
-            ConfigTabComponent component = (ConfigTabComponent)value;
+        if ("remove".equals(message)) {
+            ConfigTabComponent component = (ConfigTabComponent) value;
 
             tab.addLayeredTab(getService(ILanguageService.class).getMessage(component.getTitleKey()), component.getComponent());
-        } else if("add".equals(message)){
-            ConfigTabComponent component = (ConfigTabComponent)value;
+        } else if ("add".equals(message)) {
+            ConfigTabComponent component = (ConfigTabComponent) value;
 
             tab.removeTabAt(tab.indexOfTab(getService(ILanguageService.class).getMessage(component.getTitleKey())));
         }

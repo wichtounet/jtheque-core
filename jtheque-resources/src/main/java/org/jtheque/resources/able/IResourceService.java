@@ -19,6 +19,7 @@ package org.jtheque.resources.able;
 import org.springframework.core.io.Resource;
 
 import javax.swing.ImageIcon;
+
 import java.awt.image.BufferedImage;
 
 /**
@@ -49,7 +50,6 @@ public interface IResourceService {
      * Return the resource of the specified id.
      *
      * @param id The id of the resource to search.
-     *
      * @return The resource with the specified id or null if there is no resource with this id.
      */
     Resource getResourceByID(String id);
@@ -58,7 +58,6 @@ public interface IResourceService {
      * Return the icon of the given id.
      *
      * @param id The id of the icon (the resource).
-     *
      * @return The image icon with the given id or null if there is no resource with this id.
      */
     ImageIcon getIcon(String id);
@@ -67,7 +66,6 @@ public interface IResourceService {
      * Return the image with the specified id.
      *
      * @param id The id of the image (the resource).
-     *
      * @return The image with the given id or null if there is no resource with this id.
      */
     BufferedImage getImage(String id);
@@ -77,7 +75,6 @@ public interface IResourceService {
      *
      * @param id    The id of the image (the resource).
      * @param width The requested width.
-     *
      * @return The image with the given id scaled to the specified width or null if there is no resource with this id.
      */
     BufferedImage getImage(String id, int width);
@@ -86,7 +83,6 @@ public interface IResourceService {
      * Return the image from the file at the given path. The file resource is also cached.
      *
      * @param path The path to the file.
-     *
      * @return The image with the given id or null if there is no resource with this id.
      */
     BufferedImage getFileImage(String path);
@@ -97,7 +93,6 @@ public interface IResourceService {
      *
      * @param path  The path to the file.
      * @param width The requested width.
-     *
      * @return The image with the given id scaled to the specified width or null if there is no resource with this id.
      */
     BufferedImage getFileImage(String path, int width);

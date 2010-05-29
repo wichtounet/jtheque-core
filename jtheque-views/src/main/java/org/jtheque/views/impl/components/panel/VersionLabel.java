@@ -19,6 +19,7 @@ package org.jtheque.views.impl.components.panel;
 import org.jtheque.update.able.IUpdateService;
 
 import javax.swing.JLabel;
+
 import java.awt.Color;
 
 /**
@@ -30,9 +31,9 @@ public final class VersionLabel extends JLabel {
     /**
      * Construct a new KernelVersionLabel.
      *
-     * @param object     The object to display the version for.
-     * @param foreground The foreground color.
-     * @param updateService The update service to use. 
+     * @param object        The object to display the version for.
+     * @param foreground    The foreground color.
+     * @param updateService The update service to use.
      */
     public VersionLabel(Object object, Color foreground, IUpdateService updateService) {
         super();

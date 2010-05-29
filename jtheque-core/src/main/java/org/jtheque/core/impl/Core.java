@@ -26,10 +26,10 @@ import org.jtheque.events.able.IEventService;
 import org.jtheque.resources.able.IResourceService;
 import org.jtheque.states.able.IStateService;
 import org.jtheque.utils.bean.Version;
+
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.FileSystemResource;
 
-import javax.annotation.Resource;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -50,22 +50,22 @@ public final class Core implements ICore {
     private final IResourceService resourceService;
     private final ILifeCycle lifeCycle;
 
-	private Application application;
+    private Application application;
 
     /**
      * Construct a new Core.
      *
-     * @param stateService The state service.
+     * @param stateService    The state service.
      * @param resourceService The resource service.
-     * @param eventService The event service. 
+     * @param eventService    The event service.
      */
     public Core(IStateService stateService, IResourceService resourceService, IEventService eventService) {
         super();
 
         this.resourceService = resourceService;
-	    lifeCycle = new LifeCycle(eventService, this);
+        lifeCycle = new LifeCycle(eventService, this);
 
-	    foldersContainer = new Folders(this);
+        foldersContainer = new Folders(this);
         filesContainer = new Files(this);
 
         configuration = stateService.getState(new CoreConfiguration());

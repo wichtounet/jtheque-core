@@ -1,10 +1,10 @@
 package org.jtheque.views.impl;
 
 import org.jtheque.core.able.ICore;
-import org.jtheque.states.utils.AbstractState;
 import org.jtheque.states.able.Load;
 import org.jtheque.states.able.Save;
 import org.jtheque.states.able.State;
+import org.jtheque.states.utils.AbstractState;
 import org.jtheque.ui.able.IView;
 import org.jtheque.views.able.IViewService;
 import org.jtheque.views.able.IWindowConfiguration;
@@ -49,7 +49,7 @@ public final class WindowsConfiguration extends AbstractState {
     /**
      * Create a new WindowsConfiguration.
      *
-     * @param core The core.
+     * @param core        The core.
      * @param viewService The view service.
      */
     public WindowsConfiguration(ICore core, IViewService viewService) {
@@ -61,7 +61,7 @@ public final class WindowsConfiguration extends AbstractState {
 
     /**
      * Load the nodes into the state.
-     * 
+     *
      * @param nodes The nodes to load.
      */
     @Load
@@ -100,7 +100,7 @@ public final class WindowsConfiguration extends AbstractState {
     /**
      * Save the nodes of the state.
      *
-     * @return All the nodes to be saved by the state. 
+     * @return All the nodes to be saved by the state.
      */
     @Save
     public Collection<Node> delegateSave() {

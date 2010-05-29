@@ -17,12 +17,13 @@ package org.jtheque.views.impl.actions.about;
  */
 
 import org.jtheque.ui.utils.actions.JThequeAction;
+import org.jtheque.utils.print.PrintUtils;
 import org.jtheque.utils.ui.SwingUtils;
 import org.jtheque.utils.ui.edt.SimpleTask;
-import org.jtheque.utils.print.PrintUtils;
 import org.jtheque.views.able.windows.ILicenceView;
 
 import javax.annotation.Resource;
+
 import java.awt.event.ActionEvent;
 
 /**

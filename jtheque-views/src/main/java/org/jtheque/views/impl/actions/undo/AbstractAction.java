@@ -19,6 +19,7 @@ package org.jtheque.views.impl.actions.undo;
 import org.jtheque.ui.utils.actions.JThequeAction;
 
 import javax.swing.KeyStroke;
+
 import java.awt.Toolkit;
 
 /**

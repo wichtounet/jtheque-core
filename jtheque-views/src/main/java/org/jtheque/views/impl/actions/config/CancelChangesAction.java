@@ -32,12 +32,12 @@ public final class CancelChangesAction extends JThequeAction {
     /**
      * Construct a new AcCancelChanges.
      *
-     * @param configView The config view. 
+     * @param configView The config view.
      */
     public CancelChangesAction(IConfigView configView) {
         super("config.actions.cancel");
 
-	    this.configView = configView;
+        this.configView = configView;
     }
 
     @Override

@@ -17,6 +17,7 @@ package org.jtheque.modules.able;
  */
 
 import org.jtheque.utils.bean.Version;
+
 import org.osgi.framework.Bundle;
 
 /**
@@ -67,25 +68,25 @@ public interface Module {
      */
     String getDescription();
 
-	/**
-	 * Return the version of the module.
-	 *
-	 * @return The version of the module.
-	 */
+    /**
+     * Return the version of the module.
+     *
+     * @return The version of the module.
+     */
     Version getVersion();
 
-	/**
-	 * Return the needed version of the core.
-	 *
-	 * @return The needed version of the core.
-	 */
+    /**
+     * Return the needed version of the core.
+     *
+     * @return The needed version of the core.
+     */
     Version getCoreVersion();
 
-	/**
-	 * Return the URL of the website of the module.
-	 *
-	 * @return The URL of the website of the module.
-	 */
+    /**
+     * Return the URL of the website of the module.
+     *
+     * @return The URL of the website of the module.
+     */
     String getUrl();
 
     /**
@@ -97,7 +98,7 @@ public interface Module {
 
     /**
      * Return all the libs of the module. The libs are OSGi bundles that are installed but the libs are
-     * not started. This is standard OSGi bundles with no JTheque specified headers. 
+     * not started. This is standard OSGi bundles with no JTheque specified headers.
      *
      * @return An array containing all the libs of the module.
      */
@@ -114,24 +115,24 @@ public interface Module {
     /**
      * Return the resources of the module.
      *
-     * @return The resources of the module. 
+     * @return The resources of the module.
      */
-	Resources getResources();
+    Resources getResources();
 
     /**
      * Return the URL of the messages file of the module.
      *
-     * @return The URL of the messages file of the module. 
+     * @return The URL of the messages file of the module.
      */
     String getMessagesUrl();
 
-	/**
-	 * Indicate if the module needs a collection.
-	 *
-	 * @return true if the module needs a collection otherwise false.
-	 */
+    /**
+     * Indicate if the module needs a collection.
+     *
+     * @return true if the module needs a collection otherwise false.
+     */
     boolean isCollection();
-    
+
     /**
      * Set the state of the module.
      *
@@ -139,10 +140,10 @@ public interface Module {
      */
     void setState(ModuleState state);
 
-	/**
-	 * Return the internationalized state.
-	 *
-	 * @return The internationalized state. 
-	 */
-	String getDisplayState();
+    /**
+     * Return the internationalized state.
+     *
+     * @return The internationalized state.
+     */
+    String getDisplayState();
 }

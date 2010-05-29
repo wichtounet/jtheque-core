@@ -37,7 +37,7 @@ public final class SimplePropertiesCache {
     /**
      * Put the property.
      *
-     * @param key The key of the property.
+     * @param key   The key of the property.
      * @param value The value of the property.
      */
     public static void put(String key, Object value) {
@@ -46,6 +46,7 @@ public final class SimplePropertiesCache {
 
     /**
      * Return the value of the given property key.
+     *
      * @param key The key of the property to search.
      * @param <T> The type of resource.
      * @return The value of the property.

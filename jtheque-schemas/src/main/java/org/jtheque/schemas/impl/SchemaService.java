@@ -56,9 +56,9 @@ public final class SchemaService implements ISchemaService, ModuleListener {
         checkForUpdates();
     }
 
-	/**
-	 * Check for updates of the schemas. 
-	 */
+    /**
+     * Check for updates of the schemas.
+     */
     private void checkForUpdates() {
         for (Schema schema : schemas) {
             Version installedVersion = configuration.getVersion(schema.getId());
@@ -77,34 +77,34 @@ public final class SchemaService implements ISchemaService, ModuleListener {
     public void registerSchema(String moduleId, Schema schema) {
         schemas.add(schema);
 
-        if(StringUtils.isNotEmpty(moduleId)){
+        if (StringUtils.isNotEmpty(moduleId)) {
             ModuleResourceCache.addResource(moduleId, Schema.class, schema);
         }
     }
 
-	@Override
-	public void moduleStarted(Module module) {
-		//Nothing to do here
-	}
+    @Override
+    public void moduleStarted(Module module) {
+        //Nothing to do here
+    }
 
-	@Override
-	public void moduleStopped(Module module) {
-		Set<Schema> resources = ModuleResourceCache.getResource(module.getId(), Schema.class);
+    @Override
+    public void moduleStopped(Module module) {
+        Set<Schema> resources = ModuleResourceCache.getResource(module.getId(), Schema.class);
 
-		for (Schema schema : resources) {
-			schemas.remove(schema);
-		}
+        for (Schema schema : resources) {
+            schemas.remove(schema);
+        }
 
-		ModuleResourceCache.removeResourceOfType(module.getId(), Schema.class);
-	}
+        ModuleResourceCache.removeResourceOfType(module.getId(), Schema.class);
+    }
 
-	@Override
-	public void moduleInstalled(Module module) {
-		//Nothing to do here
-	}
+    @Override
+    public void moduleInstalled(Module module) {
+        //Nothing to do here
+    }
 
-	@Override
-	public void moduleUninstalled(Module module) {
-		//Nothing to do here
-	}
+    @Override
+    public void moduleUninstalled(Module module) {
+        //Nothing to do here
+    }
 }

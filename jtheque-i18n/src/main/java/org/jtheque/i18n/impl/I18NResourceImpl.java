@@ -1,6 +1,7 @@
 package org.jtheque.i18n.impl;
 
 import org.jtheque.i18n.able.I18NResource;
+
 import org.springframework.core.io.Resource;
 
 /*

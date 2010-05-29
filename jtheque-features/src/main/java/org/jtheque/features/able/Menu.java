@@ -1,8 +1,8 @@
 package org.jtheque.features.able;
 
-import java.util.List;
-
 import org.jtheque.i18n.able.Internationalizable;
+
+import java.util.List;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -31,7 +31,6 @@ public interface Menu extends Internationalizable {
      * Return all the sub features of this menu for the specified CoreFeature.
      *
      * @param feature The core feature.
-     *
      * @return A List containing all the sub features of this core feature.
      */
     List<IFeature> getSubFeatures(CoreFeature feature);
@@ -39,7 +38,7 @@ public interface Menu extends Internationalizable {
     /**
      * Return all the main features of this menu.
      *
-     * @return A List containing all the main features of this menu. 
+     * @return A List containing all the main features of this menu.
      */
     List<IFeature> getMainFeatures();
 }

@@ -16,20 +16,21 @@ package org.jtheque.views.impl.components.panel;
  * limitations under the License.
  */
 
-import org.jdesktop.swingx.JXPanel;
 import org.jtheque.core.able.ICore;
 import org.jtheque.core.utils.SimplePropertiesCache;
 import org.jtheque.ui.able.Filthy;
 import org.jtheque.ui.utils.AnimationUtils;
 import org.jtheque.ui.utils.components.JThequeI18nLabel;
 import org.jtheque.ui.utils.filthy.FilthyPasswordField;
+import org.jtheque.ui.utils.filthy.FilthyTextField;
 import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.utils.ui.SwingUtils;
 import org.jtheque.views.able.panel.ICollectionView;
 import org.jtheque.views.impl.actions.collections.CancelAction;
 import org.jtheque.views.impl.actions.collections.ChooseAction;
 import org.jtheque.views.impl.actions.collections.CreateAction;
-import org.jtheque.ui.utils.filthy.FilthyTextField;
+
+import org.jdesktop.swingx.JXPanel;
 
 import javax.annotation.PostConstruct;
 import javax.swing.Action;
@@ -37,6 +38,7 @@ import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
@@ -63,7 +65,7 @@ public final class CollectionPane extends JXPanel implements ICollectionView, Fi
     /**
      * Construct a new CollectionPane.
      *
-     * @param core The core. 
+     * @param core The core.
      */
     public CollectionPane(ICore core) {
         super();

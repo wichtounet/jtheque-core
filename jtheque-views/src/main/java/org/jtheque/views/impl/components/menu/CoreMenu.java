@@ -2,25 +2,25 @@ package org.jtheque.views.impl.components.menu;
 
 import org.jtheque.core.able.ICore;
 import org.jtheque.features.able.IFeature;
-import org.jtheque.views.impl.actions.errors.DisplayErrorsViewAction;
-import org.jtheque.views.impl.actions.event.DisplayEventsViewAction;
-import org.jtheque.views.utils.OSGIMenu;
 import org.jtheque.undo.able.IUndoRedoService;
 import org.jtheque.views.able.IViewService;
 import org.jtheque.views.able.IViews;
 import org.jtheque.views.impl.ViewsResources;
+import org.jtheque.views.impl.actions.ExitAction;
 import org.jtheque.views.impl.actions.about.DisplayAboutViewAction;
 import org.jtheque.views.impl.actions.author.AcInformOfABug;
 import org.jtheque.views.impl.actions.author.AcOpenHelp;
 import org.jtheque.views.impl.actions.author.AcProposeImprovement;
 import org.jtheque.views.impl.actions.backup.AcBackup;
 import org.jtheque.views.impl.actions.backup.AcRestore;
-import org.jtheque.views.impl.actions.ExitAction;
 import org.jtheque.views.impl.actions.config.DisplayConfigViewAction;
+import org.jtheque.views.impl.actions.errors.DisplayErrorsViewAction;
+import org.jtheque.views.impl.actions.event.DisplayEventsViewAction;
 import org.jtheque.views.impl.actions.messages.DisplayMessagesViewAction;
 import org.jtheque.views.impl.actions.module.DisplayModuleViewAction;
 import org.jtheque.views.impl.actions.undo.RedoAction;
 import org.jtheque.views.impl.actions.undo.UndoAction;
+import org.jtheque.views.utils.OSGIMenu;
 
 import java.util.List;
 
@@ -47,7 +47,7 @@ import java.util.List;
  */
 public final class CoreMenu extends OSGIMenu {
     @Override
-    protected List<IFeature> getFileMenuSubFeatures(){
+    protected List<IFeature> getFileMenuSubFeatures() {
         return features(
                 createSeparatedSubFeature(200, new AcBackup(), ViewsResources.XML_ICON),
                 createSubFeature(201, new AcRestore(), ViewsResources.XML_ICON),
@@ -56,8 +56,8 @@ public final class CoreMenu extends OSGIMenu {
     }
 
     @Override
-    protected List<IFeature> getEditMenuSubFeatures(){
-	    IUndoRedoService undoRedoService = getService(IUndoRedoService.class);
+    protected List<IFeature> getEditMenuSubFeatures() {
+        IUndoRedoService undoRedoService = getService(IUndoRedoService.class);
 
         return features(
                 createSubFeature(1, new UndoAction(undoRedoService), ViewsResources.UNDO_ICON),
@@ -66,8 +66,8 @@ public final class CoreMenu extends OSGIMenu {
     }
 
     @Override
-    protected List<IFeature> getAdvancedMenuSubFeatures(){
-	    IViews views = getService(IViews.class);
+    protected List<IFeature> getAdvancedMenuSubFeatures() {
+        IViews views = getService(IViews.class);
 
         return features(
                 createSeparatedSubFeature(500, new DisplayConfigViewAction(views), ViewsResources.OPTIONS_ICON),
@@ -76,10 +76,10 @@ public final class CoreMenu extends OSGIMenu {
     }
 
     @Override
-    protected List<IFeature> getHelpMenuSubFeatures(){
-	    IViews views = getService(IViews.class);
-	    ICore core = getService(ICore.class);
-	    IViewService viewService = getService(IViewService.class);
+    protected List<IFeature> getHelpMenuSubFeatures() {
+        IViews views = getService(IViews.class);
+        ICore core = getService(ICore.class);
+        IViewService viewService = getService(IViewService.class);
 
         return features(
                 createSeparatedSubFeature(1, new AcOpenHelp(), ViewsResources.HELP_ICON),

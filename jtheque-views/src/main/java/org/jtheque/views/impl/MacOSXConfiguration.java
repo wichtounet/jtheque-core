@@ -16,12 +16,13 @@ package org.jtheque.views.impl;
  * limitations under the License.
  */
 
-import com.apple.eawt.Application;
-import com.apple.eawt.ApplicationAdapter;
-import com.apple.eawt.ApplicationEvent;
 import org.jtheque.core.able.ICore;
 import org.jtheque.views.able.IViewService;
 import org.jtheque.views.able.IViews;
+
+import com.apple.eawt.Application;
+import com.apple.eawt.ApplicationAdapter;
+import com.apple.eawt.ApplicationEvent;
 
 /**
  * Configuration to improve the compatibility with mac.
@@ -42,8 +43,8 @@ public final class MacOSXConfiguration {
      * Configure the application for Mac menus.
      *
      * @param viewService The view service.
-     * @param core The core.
-     * @param views The views.
+     * @param core        The core.
+     * @param views       The views.
      */
     public static void configureForMac(IViewService viewService, ICore core, IViews views) {
         APPLICATION.addApplicationListener(new MacApplicationAdapter(viewService, core, views));
@@ -66,8 +67,8 @@ public final class MacOSXConfiguration {
          * Construct a new MacApplicationAdapter.
          *
          * @param viewService The view service.
-         * @param core The core.
-         * @param views The views. 
+         * @param core        The core.
+         * @param views       The views.
          */
         private MacApplicationAdapter(IViewService viewService, ICore core, IViews views) {
             super();

@@ -1,6 +1,5 @@
 package org.jtheque.events.impl;
 
-import org.jdom.Element;
 import org.jtheque.core.utils.SystemProperty;
 import org.jtheque.events.able.EventLevel;
 import org.jtheque.events.able.IEvent;
@@ -10,9 +9,12 @@ import org.jtheque.utils.io.FileUtils;
 import org.jtheque.xml.utils.XMLException;
 import org.jtheque.xml.utils.XMLReader;
 import org.jtheque.xml.utils.XMLWriter;
+
+import org.jdom.Element;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.PreDestroy;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -46,7 +48,7 @@ public final class EventService implements IEventService {
     private final Map<String, Collection<IEvent>> logs = new HashMap<String, Collection<IEvent>>(10);
 
     /**
-     * Construct a new EventService. 
+     * Construct a new EventService.
      */
     public EventService() {
         super();
@@ -79,7 +81,7 @@ public final class EventService implements IEventService {
      * Save the XML before stop modules.
      */
     @PreDestroy
-    public void release(){
+    public void release() {
         saveXML();
     }
 

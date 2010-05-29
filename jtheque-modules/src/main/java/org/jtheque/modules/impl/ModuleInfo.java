@@ -30,7 +30,7 @@ final class ModuleInfo {
     /**
      * Construct a new ModuleInfo with a specified id.
      *
-     * @param id The id of the module. 
+     * @param id The id of the module.
      */
     ModuleInfo(String id) {
         super();

@@ -10,24 +10,24 @@ import java.util.Collection;
  * @author Baptiste Wicht
  */
 public interface IRepository {
-	/**
-	 * Return the title of the repository.
-	 *
-	 * @return The title of the repository.
-	 */
-	InternationalString getTitle();
+    /**
+     * Return the title of the repository.
+     *
+     * @return The title of the repository.
+     */
+    InternationalString getTitle();
 
-	/**
-	 * Return the application name.
-	 *
-	 * @return The application name.
-	 */
-	String getApplication();
+    /**
+     * Return the application name.
+     *
+     * @return The application name.
+     */
+    String getApplication();
 
-	/**
-	 * Return all the modules of the repository.
-	 *
-	 * @return A List containing the description of the modules.
-	 */
-	Collection<IModuleDescription> getModules();
+    /**
+     * Return all the modules of the repository.
+     *
+     * @return A List containing the description of the modules.
+     */
+    Collection<IModuleDescription> getModules();
 }

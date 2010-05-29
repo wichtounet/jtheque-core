@@ -40,7 +40,7 @@ public class FelixServer implements OSGiServer {
     private final Map<String, Bundle> bundles = new HashMap<String, Bundle>(10);
 
     @Override
-    public void start(){
+    public void start() {
         getLogger().debug("Starting Felix Server");
 
         long startTime = System.currentTimeMillis();
@@ -50,10 +50,10 @@ public class FelixServer implements OSGiServer {
         configMap.put("felix.cache.bufsize", "8192");
         configMap.put("org.osgi.framework.storage", System.getProperty("user.dir") + "/cache");
 
-        try{
+        try {
             felix = new Felix(configMap);
             felix.start();
-        } catch (Exception e){
+        } catch (Exception e) {
             getLogger().error("Unable to start Felix due to {}", e.getMessage());
             getLogger().error(e.getMessage(), e);
         }
@@ -61,8 +61,8 @@ public class FelixServer implements OSGiServer {
         getLogger().debug("Felix Server started in {} ms", System.currentTimeMillis() - startTime);
 
         autoDeploy();
-        
-        for(Bundle bundle : felix.getBundleContext().getBundles()){
+
+        for (Bundle bundle : felix.getBundleContext().getBundles()) {
             bundles.put(bundle.getSymbolicName(), bundle);
         }
 
@@ -77,7 +77,7 @@ public class FelixServer implements OSGiServer {
 
         getLogger().info("Auto deploy start");
 
-        for(File f : deployDir.listFiles(new JarFileFilter())){
+        for (File f : deployDir.listFiles(new JarFileFilter())) {
             String name = f.getName();
 
             String symbolicName = name.substring(0, name.indexOf('-'));
@@ -91,10 +91,10 @@ public class FelixServer implements OSGiServer {
     }
 
     @Override
-    public void stop(){
+    public void stop() {
         try {
             try {
-                for(Bundle bundle : bundles.values()){
+                for (Bundle bundle : bundles.values()) {
                     if (!"org.apache.felix.framework".equals(bundle.getSymbolicName())) {
                         bundle.stop();
                     }
@@ -118,12 +118,12 @@ public class FelixServer implements OSGiServer {
     }
 
     @Override
-    public Bundle[] getBundles(){
+    public Bundle[] getBundles() {
         return felix.getBundleContext().getBundles();
     }
 
     @Override
-    public void installBundle(String path){
+    public void installBundle(String path) {
         try {
             String url = path.startsWith("file:") ? path : "file:" + path;
 
@@ -133,7 +133,7 @@ public class FelixServer implements OSGiServer {
 
             getLogger().info("Installed bundle {}", bundle.getSymbolicName());
         } catch (BundleException e) {
-            getLogger().error("Unable to install bundle at path {} due to {}", path,  e.getMessage());
+            getLogger().error("Unable to install bundle at path {} due to {}", path, e.getMessage());
             getLogger().error(e.getMessage(), e);
         }
     }
@@ -142,7 +142,7 @@ public class FelixServer implements OSGiServer {
     public void startBundle(String bundleName) {
         Bundle bundle = getBundle(bundleName);
 
-        if(bundle != null){
+        if (bundle != null) {
             try {
                 getLogger().info("Start bundle {}", bundle.getSymbolicName());
 
@@ -164,7 +164,7 @@ public class FelixServer implements OSGiServer {
     public void stopBundle(String bundleName) {
         Bundle bundle = getBundle(bundleName);
 
-        if(bundle != null){
+        if (bundle != null) {
             try {
                 bundle.stop();
 
@@ -184,7 +184,7 @@ public class FelixServer implements OSGiServer {
     public void uninstallBundle(String bundleName) {
         Bundle bundle = getBundle(bundleName);
 
-        if(bundle != null){
+        if (bundle != null) {
             try {
                 bundle.uninstall();
 
@@ -205,7 +205,7 @@ public class FelixServer implements OSGiServer {
 
     @Override
     public Version getVersion(Bundle bundle) {
-        if(bundle != null){
+        if (bundle != null) {
             return bundle.getVersion();
         }
 
@@ -216,7 +216,7 @@ public class FelixServer implements OSGiServer {
     public void debug() {
         getLogger().debug("Installed bundles : ");
 
-        for(Bundle bundle : getBundles()){
+        for (Bundle bundle : getBundles()) {
             getLogger().debug("{} ({}) : {}", new Object[]{bundle.getSymbolicName(), getVersion(bundle).toString(), getState(bundle)});
             getLogger().debug("Exported packages : {}", bundle.getHeaders().get("Export-Package"));
             getLogger().debug("Imported packages : {}", bundle.getHeaders().get("Import-Package"));
@@ -226,7 +226,7 @@ public class FelixServer implements OSGiServer {
 
     @Override
     public BundleState getState(String bundle) {
-        if(!isInstalled(bundle)){
+        if (!isInstalled(bundle)) {
             return BundleState.NOTINSTALLED;
         }
 
@@ -234,17 +234,23 @@ public class FelixServer implements OSGiServer {
     }
 
     @Override
-    public BundleState getState(Bundle bundle){
+    public BundleState getState(Bundle bundle) {
         int state = bundle.getState();
 
-        switch (state){
-            case 1 : return BundleState.UNINSTALLED;
-            case 2 : return BundleState.INSTALLED;
-            case 4 : return BundleState.RESOLVED;
-            case 8 : return BundleState.STARTING;
-            case 16 : return BundleState.STOPPING;
-            case 32 : return BundleState.ACTIVE;
-            default :
+        switch (state) {
+            case 1:
+                return BundleState.UNINSTALLED;
+            case 2:
+                return BundleState.INSTALLED;
+            case 4:
+                return BundleState.RESOLVED;
+            case 8:
+                return BundleState.STARTING;
+            case 16:
+                return BundleState.STOPPING;
+            case 32:
+                return BundleState.ACTIVE;
+            default:
                 getLogger().error("Undefined bundle state bundle : {}, state : {}", bundle.getSymbolicName(), state);
                 return null;
         }
@@ -254,10 +260,10 @@ public class FelixServer implements OSGiServer {
      * Install the module with the given name if it's not installed.
      *
      * @param name The module name.
-     * @param path The path to the module file. 
+     * @param path The path to the module file.
      */
     private void installIfNecessary(String name, String path) {
-        if(!isInstalled(name)){
+        if (!isInstalled(name)) {
             installBundle(path);
         }
     }
@@ -275,9 +281,9 @@ public class FelixServer implements OSGiServer {
     /**
      * Return the logger of the server.
      *
-     * @return The logger of the server. 
+     * @return The logger of the server.
      */
-    private Logger getLogger(){
+    private Logger getLogger() {
         return LoggerFactory.getLogger(getClass());
     }
 

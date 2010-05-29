@@ -30,7 +30,7 @@ public final class UpdatableListModel extends SimpleListModel<Updatable> impleme
     /**
      * Construct a new ModuleListModel.
      *
-     * @param updateService The update service. 
+     * @param updateService The update service.
      */
     public UpdatableListModel(IUpdateService updateService) {
         super();

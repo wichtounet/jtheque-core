@@ -2,6 +2,7 @@ package org.jtheque.i18n.utils;
 
 import org.jtheque.i18n.able.I18NResource;
 import org.jtheque.i18n.impl.I18NResourceImpl;
+
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
@@ -43,9 +44,8 @@ public class I18NResourceFactory {
      * Construct a new I18NResource from the given URL.
      *
      * @param name The name of the file.
-     * @param url The url to create the resource to.
-     *
-     * @return The I18NResource to the URL. 
+     * @param url  The url to create the resource to.
+     * @return The I18NResource to the URL.
      */
     public static I18NResource fromURL(String name, URL url) {
         Resource resource = new UrlResource(url);
@@ -70,8 +70,7 @@ public class I18NResourceFactory {
      * Construct a I18NResource from the given file.
      *
      * @param file The file to use to create the I18NResource.
-     *
-     * @return The I18NResource corresponding to the given file. 
+     * @return The I18NResource corresponding to the given file.
      */
     public static I18NResource fromFile(File file) {
         return new I18NResourceImpl(file.getName(), new FileSystemResource(file));

@@ -19,6 +19,7 @@ package org.jtheque.views.able.components;
 import org.jtheque.ui.utils.constraints.Constraint;
 
 import javax.swing.JComponent;
+
 import java.util.Map;
 
 /**
@@ -55,7 +56,7 @@ public interface ConfigTabComponent {
      * Return all the constraints of the config tab component. All that constraint will be validated
      * when the view is validated.
      *
-     * @return A Map Containing all the constraints. 
+     * @return A Map Containing all the constraints.
      */
-	Map<Object, Constraint> getConstraints();
+    Map<Object, Constraint> getConstraints();
 }

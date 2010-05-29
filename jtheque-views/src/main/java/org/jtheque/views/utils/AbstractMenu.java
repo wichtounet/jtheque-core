@@ -49,8 +49,8 @@ public abstract class AbstractMenu implements Menu {
     //Public methods
 
     @Override
-    public final List<IFeature> getSubFeatures(CoreFeature feature){
-        switch (feature){
+    public final List<IFeature> getSubFeatures(CoreFeature feature) {
+        switch (feature) {
             case FILE:
                 loadSubFeatures(CoreFeature.FILE, getFileMenuSubFeatures());
 
@@ -72,21 +72,21 @@ public abstract class AbstractMenu implements Menu {
         return cache.get(feature.name());
     }
 
-	/**
-	 * Load the sub features of the given core feature.
-	 *
-	 * @param feature The core feature.
-	 * @param subFeatures The sub features to add to the given core feature. 
-	 */
+    /**
+     * Load the sub features of the given core feature.
+     *
+     * @param feature     The core feature.
+     * @param subFeatures The sub features to add to the given core feature.
+     */
     private void loadSubFeatures(CoreFeature feature, List<IFeature> subFeatures) {
-        if(!cache.containsKey(feature.name())){
+        if (!cache.containsKey(feature.name())) {
             cache.put(feature.name(), subFeatures);
         }
     }
 
     @Override
-    public final List<IFeature> getMainFeatures(){
-        if(!cache.containsKey("MAIN")){
+    public final List<IFeature> getMainFeatures() {
+        if (!cache.containsKey("MAIN")) {
             cache.put("MAIN", getMenuMainFeatures());
         }
 
@@ -101,7 +101,7 @@ public abstract class AbstractMenu implements Menu {
      *
      * @return A List containing all the main features of this menu.
      */
-    protected List<IFeature> getMenuMainFeatures(){
+    protected List<IFeature> getMenuMainFeatures() {
         return CollectionUtils.emptyList();
     }
 
@@ -111,7 +111,7 @@ public abstract class AbstractMenu implements Menu {
      *
      * @return A List containing all the sub features of "File" menu.
      */
-    protected List<IFeature> getFileMenuSubFeatures(){
+    protected List<IFeature> getFileMenuSubFeatures() {
         return CollectionUtils.emptyList();
     }
 
@@ -121,7 +121,7 @@ public abstract class AbstractMenu implements Menu {
      *
      * @return A List containing all the sub features of "Edit" menu.
      */
-    protected List<IFeature> getEditMenuSubFeatures(){
+    protected List<IFeature> getEditMenuSubFeatures() {
         return CollectionUtils.emptyList();
     }
 
@@ -131,7 +131,7 @@ public abstract class AbstractMenu implements Menu {
      *
      * @return A List containing all the sub features of "Advanced" menu.
      */
-    protected List<IFeature> getAdvancedMenuSubFeatures(){
+    protected List<IFeature> getAdvancedMenuSubFeatures() {
         return CollectionUtils.emptyList();
     }
 
@@ -141,7 +141,7 @@ public abstract class AbstractMenu implements Menu {
      *
      * @return A List containing all the sub features of "Help" menu.
      */
-    protected List<IFeature> getHelpMenuSubFeatures(){
+    protected List<IFeature> getHelpMenuSubFeatures() {
         return CollectionUtils.emptyList();
     }
 
@@ -151,15 +151,14 @@ public abstract class AbstractMenu implements Menu {
      * Create a main feature.
      *
      * @param position The position of the feature in the menu bar.
-     * @param key The i18n key of the feature.
+     * @param key      The i18n key of the feature.
      * @param features The sub features.
-     *
      * @return The created main feature.
      */
-    protected static IFeature createMainFeature(int position, String key, IFeature... features){
+    protected static IFeature createMainFeature(int position, String key, IFeature... features) {
         Feature feature = new Feature(IFeature.FeatureType.PACK, key, position);
 
-        for(IFeature f : features){
+        for (IFeature f : features) {
             feature.addSubFeature(f);
         }
 
@@ -170,15 +169,14 @@ public abstract class AbstractMenu implements Menu {
      * Create a separated (it seems with a line separator) feature.
      *
      * @param position The position of the feature.
-     * @param key The i18n key of the feature.
+     * @param key      The i18n key of the feature.
      * @param features The sub features.
-     *
      * @return The created separated feature.
      */
-    protected static IFeature createSeparatedSubFeature(int position, String key, IFeature... features){
+    protected static IFeature createSeparatedSubFeature(int position, String key, IFeature... features) {
         Feature feature = new Feature(IFeature.FeatureType.SEPARATED_ACTIONS, key, position);
 
-        for(IFeature f : features){
+        for (IFeature f : features) {
             feature.addSubFeature(f);
         }
 
@@ -189,15 +187,14 @@ public abstract class AbstractMenu implements Menu {
      * Create a feature.
      *
      * @param position The position of the feature.
-     * @param key The i18n key of the feature.
+     * @param key      The i18n key of the feature.
      * @param features The sub features.
-     *
      * @return The created feature.
      */
-    protected static IFeature createSubFeature(int position, String key, IFeature... features){
+    protected static IFeature createSubFeature(int position, String key, IFeature... features) {
         Feature feature = new Feature(IFeature.FeatureType.ACTIONS, key, position);
 
-        for(IFeature f : features){
+        for (IFeature f : features) {
             feature.addSubFeature(f);
         }
 
@@ -208,12 +205,11 @@ public abstract class AbstractMenu implements Menu {
      * Create a separated (it seems with a line separator) feature.
      *
      * @param position The position of the feature.
-     * @param action The action.
-     * @param image The image name.
-     *
+     * @param action   The action.
+     * @param image    The image name.
      * @return The created separated feature.
      */
-    protected IFeature createSeparatedSubFeature(int position, JThequeAction action, String image){
+    protected IFeature createSeparatedSubFeature(int position, JThequeAction action, String image) {
         internationalizables.add(action);
 
         Feature f = new Feature(IFeature.FeatureType.SEPARATED_ACTION, position, action);
@@ -227,11 +223,10 @@ public abstract class AbstractMenu implements Menu {
      * Create a separated (it seems with a line separator) feature.
      *
      * @param position The position of the feature.
-     * @param action The action of the feature.
-     *
+     * @param action   The action of the feature.
      * @return The created separated feature.
      */
-    protected IFeature createSeparatedSubFeature(int position, JThequeAction action){
+    protected IFeature createSeparatedSubFeature(int position, JThequeAction action) {
         internationalizables.add(action);
 
         return new Feature(IFeature.FeatureType.SEPARATED_ACTION, position, action);
@@ -241,12 +236,11 @@ public abstract class AbstractMenu implements Menu {
      * Create a feature.
      *
      * @param position The position of the feature.
-     * @param action The action.
-     * @param image The image name.
-     *
+     * @param action   The action.
+     * @param image    The image name.
      * @return The created feature.
      */
-    protected IFeature createSubFeature(int position, JThequeAction action, String image){
+    protected IFeature createSubFeature(int position, JThequeAction action, String image) {
         internationalizables.add(action);
 
         Feature f = new Feature(IFeature.FeatureType.ACTION, position, action);
@@ -260,11 +254,10 @@ public abstract class AbstractMenu implements Menu {
      * Create a feature.
      *
      * @param position The position of the feature.
-     * @param action The action of the feature.
-     *
+     * @param action   The action of the feature.
      * @return The created feature.
      */
-    protected IFeature createSubFeature(int position, JThequeAction action){
+    protected IFeature createSubFeature(int position, JThequeAction action) {
         internationalizables.add(action);
 
         return new Feature(IFeature.FeatureType.ACTION, position, action);
@@ -274,42 +267,39 @@ public abstract class AbstractMenu implements Menu {
      * Transform all the features into a List of features.
      *
      * @param features The features to put in the list.
-     *
      * @return A List of features containing all the features in parameters.
      */
-    protected static List<IFeature> features(IFeature... features){
+    protected static List<IFeature> features(IFeature... features) {
         return Arrays.asList(features);
     }
 
     //Utility action methods
-    
+
     /**
      * Create an action to close the view.
      *
-      *@param key The i18n key.
+     * @param key  The i18n key.
      * @param view The view to close.
-     *
      * @return An action to close the view.
      */
-    public static JThequeAction createCloseViewAction(String key, IView view){
+    public static JThequeAction createCloseViewAction(String key, IView view) {
         return ActionFactory.createCloseViewAction(key, view);
     }
 
     /**
      * Create an action to display the view.
      *
-      *@param key The i18n key.
+     * @param key  The i18n key.
      * @param view The view to close.
-     *
      * @return An action to close the view.
      */
-    public static JThequeAction createDisplayViewAction(String key, IView view){
+    public static JThequeAction createDisplayViewAction(String key, IView view) {
         return ActionFactory.createDisplayViewAction(key, view);
     }
 
     @Override
     public void refreshText(ILanguageService languageService) {
-        for(Internationalizable internationalizable : internationalizables){
+        for (Internationalizable internationalizable : internationalizables) {
             internationalizable.refreshText(languageService);
         }
     }

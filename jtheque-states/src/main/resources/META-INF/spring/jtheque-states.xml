@@ -12,9 +12,9 @@
            http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
     <context:annotation-config/>
-    
-    <bean id="stateService" class="org.jtheque.states.impl.StateService" />
 
-    <osgi:service interface="org.jtheque.states.able.IStateService" ref="stateService" />
+    <bean id="stateService" class="org.jtheque.states.impl.StateService"/>
+
+    <osgi:service interface="org.jtheque.states.able.IStateService" ref="stateService"/>
 
 </beans>

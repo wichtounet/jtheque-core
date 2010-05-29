@@ -39,7 +39,7 @@ public interface IMessageService {
 
     /**
      * Display the messages if needed.
-     * 
+     *
      * @return true if there is messages to display else false.
      */
     boolean isDisplayNeeded();
@@ -47,7 +47,7 @@ public interface IMessageService {
     /**
      * Return an empty message.
      *
-     * @return An empty message. 
+     * @return An empty message.
      */
-	IMessage getEmptyMessage();
+    IMessage getEmptyMessage();
 }

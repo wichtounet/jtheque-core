@@ -27,34 +27,34 @@ import java.util.List;
  * @author Baptiste Wicht
  */
 public class ModuleResources implements Resources {
-	private final List<String> resources = new ArrayList<String>(5);
-	private final List<String> i18nResources = new ArrayList<String>(5);
+    private final List<String> resources = new ArrayList<String>(5);
+    private final List<String> i18nResources = new ArrayList<String>(5);
 
     /**
      * Add a resource.
      *
      * @param name The name of the resource.
      */
-	void addResource(String name){
-		resources.add(name);
-	}
+    void addResource(String name) {
+        resources.add(name);
+    }
 
     /**
      * Add an i18n resource.
      *
      * @param name The name of the i18n resource.
      */
-	void addI18NResource(String name){
-		i18nResources.add(name);
-	}
+    void addI18NResource(String name) {
+        i18nResources.add(name);
+    }
 
-	@Override
-	public List<String> getResources() {
-		return resources;
-	}
+    @Override
+    public List<String> getResources() {
+        return resources;
+    }
 
-	@Override
-	public List<String> getI18NResources() {
-		return i18nResources;
+    @Override
+    public List<String> getI18NResources() {
+        return i18nResources;
 	}
 }

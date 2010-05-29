@@ -33,9 +33,8 @@ public final class DisplayAboutViewAction extends JThequeAction {
     /**
      * Construct a new DisplayAboutViewAction.
      *
-     * @param core The core service.
-     *
-     * @param viewService The view service. 
+     * @param core        The core service.
+     * @param viewService The view service.
      */
     public DisplayAboutViewAction(ICore core, IViewService viewService) {
         super("about.actions.display", core.getApplication().getName());

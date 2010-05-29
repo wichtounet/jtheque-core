@@ -20,6 +20,7 @@ import org.jtheque.utils.OSUtils;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.io.FileException;
 import org.jtheque.utils.io.FileUtils;
+
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
@@ -37,7 +38,7 @@ public final class DownloadAction extends AbstractUpdateAction {
     public void execute() {
         if (canBeExecutedOnThisOS()) {
             try {
-                if(!new File(getDestination()).delete()){
+                if (!new File(getDestination()).delete()) {
                     setFile("dljt_" + getFile());
                 }
 

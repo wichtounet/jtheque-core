@@ -31,12 +31,12 @@ public final class ApplyChangesAction extends JThequeAction {
 
     /**
      * Construct a new AcApplyChanges.
-     * 
+     *
      * @param configView The config view.
      */
     public ApplyChangesAction(IConfigView configView) {
         super("config.actions.apply");
-	    this.configView = configView;
+        this.configView = configView;
     }
 
     @Override

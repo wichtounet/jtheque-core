@@ -34,10 +34,12 @@ import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.update.able.IUpdateService;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.collections.CollectionUtils;
+
 import org.osgi.framework.BundleException;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.Resource;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -66,23 +68,23 @@ public final class ModuleService implements IModuleService {
      */
     private ModuleConfiguration configuration;
 
-	@Resource
-	private ICore core;
+    @Resource
+    private ICore core;
 
-	@Resource
-	private IStateService stateService;
+    @Resource
+    private IStateService stateService;
 
-	@Resource
-	private ILanguageService languageService;
+    @Resource
+    private ILanguageService languageService;
 
-	@Resource
-	private IResourceService resourceService;
+    @Resource
+    private IResourceService resourceService;
 
-	@Resource
-	private IUpdateService updateService;
+    @Resource
+    private IUpdateService updateService;
 
-	@Resource
-	private IUIUtils uiUtils;
+    @Resource
+    private IUIUtils uiUtils;
 
     /**
      * Indicate if there is a collection module.
@@ -109,9 +111,9 @@ public final class ModuleService implements IModuleService {
         addLoadableModules();
 
         for (Module module : modules) {
-	        setState(module, ModuleState.INSTALLED);
+            setState(module, ModuleState.INSTALLED);
 
-            if(module.isCollection()){
+            if (module.isCollection()) {
                 collectionModule = true;
             }
 
@@ -119,38 +121,38 @@ public final class ModuleService implements IModuleService {
         }
     }
 
-	/**
-	 * Configure the modules.
-	 */
-	private void configureModules() {
-		configuration = stateService.getState(new ModuleConfiguration());
+    /**
+     * Configure the modules.
+     */
+    private void configureModules() {
+        configuration = stateService.getState(new ModuleConfiguration());
 
-		CollectionUtils.filter(modules, new ConfigurationFilter(configuration, core.getApplication()));
-		CollectionUtils.filter(modules, new CoreVersionFilter(core, uiUtils));
-		
-		CollectionUtils.sort(modules, new ModuleComparator());
-	}
+        CollectionUtils.filter(modules, new ConfigurationFilter(configuration, core.getApplication()));
+        CollectionUtils.filter(modules, new CoreVersionFilter(core, uiUtils));
 
-	/**
-	 * Add the loadable modules to the modules to load list.
-	 */
-	private void addLoadableModules() {
-		for (Module module : modules) {
-			if (canBeLoaded(module) && areAllDependenciesSatisfied(module)) {
-				modulesToLoad.add(module);
-			}
-		}
-	}
+        CollectionUtils.sort(modules, new ModuleComparator());
+    }
 
-	/**
-	 * Test if the module can be loaded.
-	 *
-	 * @param module The module to test.
-	 * @return true if the module can be loaded else false.
-	 */
-	private static boolean canBeLoaded(Module module) {
-		return !(module.getState() == ModuleState.DISABLED);
-	}
+    /**
+     * Add the loadable modules to the modules to load list.
+     */
+    private void addLoadableModules() {
+        for (Module module : modules) {
+            if (canBeLoaded(module) && areAllDependenciesSatisfied(module)) {
+                modulesToLoad.add(module);
+            }
+        }
+    }
+
+    /**
+     * Test if the module can be loaded.
+     *
+     * @param module The module to test.
+     * @return true if the module can be loaded else false.
+     */
+    private static boolean canBeLoaded(Module module) {
+        return !(module.getState() == ModuleState.DISABLED);
+    }
 
     /**
      * Plug the modules.
@@ -183,11 +185,11 @@ public final class ModuleService implements IModuleService {
 
                 setState(module, ModuleState.INSTALLED);
 
-	            fireModuleStopped(module);
+                fireModuleStopped(module);
 
                 Resources resources = module.getResources();
 
-                if(resources != null){
+                if (resources != null) {
                     for (String name : resources.getI18NResources()) {
                         languageService.releaseResource(name);
                     }
@@ -225,18 +227,17 @@ public final class ModuleService implements IModuleService {
      * Start a module. The module cannot be started if it's already started.
      *
      * @param module The module to Start.
-     *
      * @throws IllegalStateException If the module is already started.
      */
     @Override
     public void startModule(Module module) {
-	    if (module.getState() == ModuleState.STARTED) {
-		    throw new IllegalStateException("The module is already started. ");
-	    }
+        if (module.getState() == ModuleState.STARTED) {
+            throw new IllegalStateException("The module is already started. ");
+        }
 
         setState(module, ModuleState.STARTED);
 
-	    fireModuleStarted(module);
+        fireModuleStarted(module);
 
         try {
             module.getBundle().start();
@@ -247,7 +248,7 @@ public final class ModuleService implements IModuleService {
 
     @Override
     public void enableModule(Module module) {
-        if(module.getState() == ModuleState.DISABLED){
+        if (module.getState() == ModuleState.DISABLED) {
             setState(module, ModuleState.INSTALLED);
         }
     }
@@ -256,16 +257,15 @@ public final class ModuleService implements IModuleService {
      * Disable a module. The module must be stopped before disabling it.
      *
      * @param module The module to disable.
-     *
      * @throws IllegalStateException If the module is started.
      */
     @Override
     public void disableModule(Module module) {
-	    if(module.getState() == ModuleState.STARTED){
-		    throw new IllegalStateException("The module cannot be disabled when started. ");
-	    }
+        if (module.getState() == ModuleState.STARTED) {
+            throw new IllegalStateException("The module cannot be disabled when started. ");
+        }
 
-	    setState(module, ModuleState.DISABLED);
+        setState(module, ModuleState.DISABLED);
     }
 
     /**
@@ -297,12 +297,12 @@ public final class ModuleService implements IModuleService {
 
         if (result.isInstalled()) {
             Module module = moduleLoader.installModule(new File(core.getFolders().getModulesFolder(), result.getJarFile()));
-            
+
             modules.add(module);
 
             configuration.add(module);
 
-	        fireModuleInstalled(module);
+            fireModuleInstalled(module);
 
             uiUtils.displayI18nText("message.module.repository.installed");
         } else {
@@ -314,22 +314,21 @@ public final class ModuleService implements IModuleService {
      * Uninstall a module. The module must be stopped before uninstall it.
      *
      * @param module The module to uninstall.
-     *
      * @throws IllegalStateException If the module is started.
      */
     @Override
     public void uninstallModule(Module module) {
-	    if (module.getState() == ModuleState.STARTED) {
-		    throw new IllegalStateException("The module cannot be disabled when started. ");
-	    }
+        if (module.getState() == ModuleState.STARTED) {
+            throw new IllegalStateException("The module cannot be disabled when started. ");
+        }
 
-	    configuration.remove(module);
+        configuration.remove(module);
         modulesToLoad.remove(module);
         modules.remove(module);
 
         fireModuleUninstalled(module);
 
-        for(ModuleListener listener : ModuleResourceCache.getResource(module.getId(), ModuleListener.class)){
+        for (ModuleListener listener : ModuleResourceCache.getResource(module.getId(), ModuleListener.class)) {
             listeners.remove(ModuleListener.class, listener);
         }
 
@@ -343,93 +342,93 @@ public final class ModuleService implements IModuleService {
         ModuleResourceCache.addResource(moduleId, ModuleListener.class, listener);
     }
 
-	@Override
-	public String canModuleLaunched(Module module) {
-		if (module.getCoreVersion() != null && module.getCoreVersion().isGreaterThan(ICore.VERSION)) {
-			return getMessage("modules.message.versionproblem");
-		} else if (!areAllDependenciesSatisfied(module)) {
-			return getMessage("error.module.not.loaded.dependency", module.getDependencies());
-		}
+    @Override
+    public String canModuleLaunched(Module module) {
+        if (module.getCoreVersion() != null && module.getCoreVersion().isGreaterThan(ICore.VERSION)) {
+            return getMessage("modules.message.versionproblem");
+        } else if (!areAllDependenciesSatisfied(module)) {
+            return getMessage("error.module.not.loaded.dependency", module.getDependencies());
+        }
 
-		return "";
-	}
+        return "";
+    }
 
-	@Override
-	public Module getModuleById(String id) {
-		Module module = null;
+    @Override
+    public Module getModuleById(String id) {
+        Module module = null;
 
-		for (Module m : modules) {
-			if (id.equals(m.getId())) {
-				module = m;
-				break;
-			}
-		}
+        for (Module m : modules) {
+            if (id.equals(m.getId())) {
+                module = m;
+                break;
+            }
+        }
 
-		return module;
-	}
+        return module;
+    }
 
-	@Override
-	public boolean isInstalled(String module) {
-		return getModuleById(module) != null;
-	}
+    @Override
+    public boolean isInstalled(String module) {
+        return getModuleById(module) != null;
+    }
 
-	@Override
-	public boolean hasCollectionModule() {
-		return collectionModule;
-	}
+    @Override
+    public boolean hasCollectionModule() {
+        return collectionModule;
+    }
 
-	/**
-	 * Set the state of a module.
-	 *
-	 * @param module The module to set the state.
-	 * @param state The state.
-	 */
-	private void setState(Module module, ModuleState state) {
-		module.setState(state);
+    /**
+     * Set the state of a module.
+     *
+     * @param module The module to set the state.
+     * @param state  The state.
+     */
+    private void setState(Module module, ModuleState state) {
+        module.setState(state);
 
-		configuration.setState(module.getId(), state);
-	}
+        configuration.setState(module.getId(), state);
+    }
 
-	/**
-	 * Fire a module started event.
-	 *
-	 * @param module The started module.
-	 */
-	private void fireModuleStarted(Module module) {
-		for (ModuleListener listener : listeners.getListeners(ModuleListener.class)) {
-			listener.moduleStarted(module);
-		}
-	}
-
-	/**
-	 * Fire a module stopped event.
-	 *
-	 * @param module The stopped module.
-	 */
-	private void fireModuleStopped(Module module) {
-		for (ModuleListener listener : listeners.getListeners(ModuleListener.class)) {
-			listener.moduleStopped(module);
-		}
-	}
-
-	/**
-	 * Fire a module installed event.
-	 *
-	 * @param module The installed module.
-	 */
-    private void fireModuleInstalled(Module module) {
-	    for (ModuleListener listener : listeners.getListeners(ModuleListener.class)) {
-	        listener.moduleInstalled(module);
+    /**
+     * Fire a module started event.
+     *
+     * @param module The started module.
+     */
+    private void fireModuleStarted(Module module) {
+        for (ModuleListener listener : listeners.getListeners(ModuleListener.class)) {
+            listener.moduleStarted(module);
         }
     }
 
-	/**
-	 * Fire a module uninstalled event.
-	 *
-	 * @param module The uninstalled module. 
-	 */
-    private void fireModuleUninstalled(Module module){
-	    for (ModuleListener listener : listeners.getListeners(ModuleListener.class)) {
+    /**
+     * Fire a module stopped event.
+     *
+     * @param module The stopped module.
+     */
+    private void fireModuleStopped(Module module) {
+        for (ModuleListener listener : listeners.getListeners(ModuleListener.class)) {
+            listener.moduleStopped(module);
+        }
+    }
+
+    /**
+     * Fire a module installed event.
+     *
+     * @param module The installed module.
+     */
+    private void fireModuleInstalled(Module module) {
+        for (ModuleListener listener : listeners.getListeners(ModuleListener.class)) {
+            listener.moduleInstalled(module);
+        }
+    }
+
+    /**
+     * Fire a module uninstalled event.
+     *
+     * @param module The uninstalled module.
+     */
+    private void fireModuleUninstalled(Module module) {
+        for (ModuleListener listener : listeners.getListeners(ModuleListener.class)) {
             listener.moduleUninstalled(module);
         }
     }
@@ -437,10 +436,9 @@ public final class ModuleService implements IModuleService {
     /**
      * Return the internationalized message with the given key.
      *
-     * @param key The i18n key.
+     * @param key      The i18n key.
      * @param replaces The i18n replaces.
-     *
-     * @return The internationalized message. 
+     * @return The internationalized message.
      */
     private String getMessage(String key, String... replaces) {
         return languageService.getMessage(key, replaces);

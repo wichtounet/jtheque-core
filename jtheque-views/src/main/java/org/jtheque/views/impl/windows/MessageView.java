@@ -32,7 +32,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextArea;
 
 /**
- * A view to display the messages of the module and the application. 
+ * A view to display the messages of the module and the application.
  *
  * @author Baptiste Wicht
  */
@@ -43,14 +43,14 @@ public final class MessageView extends SwingFilthyBuildedDialogView<IMessageMode
     private JTextArea messageArea;
 
     @Override
-    protected void initView(){
+    protected void initView() {
         setModel(new MessageModel(getService(IMessageService.class)));
         setTitleKey("messages.view.title");
         setResizable(false);
     }
 
     @Override
-    protected void buildView(I18nPanelBuilder builder){
+    protected void buildView(I18nPanelBuilder builder) {
         addLabels(builder);
         addFields(builder);
 
@@ -78,7 +78,7 @@ public final class MessageView extends SwingFilthyBuildedDialogView<IMessageMode
         dateLabel = builder.addLabel(getModel().isDefaultMessage() ? "" : getModel().getCurrentMessage().getDate().getStrDate(), builder.gbcSet(1, 0));
         sourceLabel = builder.addLabel(getModel().isDefaultMessage() ? "" : getModel().getCurrentMessage().getSource(), builder.gbcSet(1, 1));
         titleLabel = builder.addLabel(getModel().isDefaultMessage() ? "" : getModel().getCurrentMessage().getTitle(), builder.gbcSet(1, 2));
-        
+
         messageArea = builder.addScrolledTextArea(getModel().isDefaultMessage() ? "" : getModel().getCurrentMessage().getMessage(),
                 builder.gbcSet(0, 3, GridBagUtils.BOTH, GridBagUtils.LINE_START, 2, 1));
         messageArea.setRows(8);

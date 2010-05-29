@@ -27,69 +27,69 @@ import org.jtheque.utils.bean.HashCodeUtils;
  * @author Baptiste Wicht
  */
 public final class CollectionImpl extends AbstractEntity implements Collection {
-	private String title;
-	private boolean protection;
-	private String password;
+    private String title;
+    private boolean protection;
+    private String password;
 
-	//Data methods
+    //Data methods
 
-	@Override
-	public void setTitle(String title){
-		this.title = title;
-	}
+    @Override
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-	@Override
-	public String getTitle(){
-		return title;
-	}
+    @Override
+    public String getTitle() {
+        return title;
+    }
 
-	@Override
-	public boolean isProtection(){
-		return protection;
-	}
+    @Override
+    public boolean isProtection() {
+        return protection;
+    }
 
-	@Override
-	public void setProtection(boolean protection){
-		this.protection = protection;
-	}
+    @Override
+    public void setProtection(boolean protection) {
+        this.protection = protection;
+    }
 
-	@Override
-	public String getPassword(){
-		return password;
-	}
+    @Override
+    public String getPassword() {
+        return password;
+    }
 
-	@Override
-	public void setPassword(String password){
-		this.password = password;
-	}
+    @Override
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-	//Utility class
+    //Utility class
 
-	@Override
-	public String getDisplayableText(){
-		return title;
-	}
+    @Override
+    public String getDisplayableText() {
+        return title;
+    }
 
-	@Override
-	public String toString(){
-		return title;
-	}
+    @Override
+    public String toString() {
+        return title;
+    }
 
-	@Override
-	public int hashCode(){
-		return HashCodeUtils.hashCodeDirect(title, protection, password);
-	}
+    @Override
+    public int hashCode() {
+        return HashCodeUtils.hashCodeDirect(title, protection, password);
+    }
 
-	@Override
-	public boolean equals(Object obj){
-        if(obj == null){
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
             return false;
         }
 
-		Collection other = (Collection) obj;
+        Collection other = (Collection) obj;
 
-		return EqualsUtils.areEqualsDirect(this, obj,
-				getId(), title, protection, password,
-				other.getId(), other.getTitle(), other.isProtection(), other.getPassword());
-	}
+        return EqualsUtils.areEqualsDirect(this, obj,
+                getId(), title, protection, password,
+                other.getId(), other.getTitle(), other.isProtection(), other.getPassword());
+    }
 }

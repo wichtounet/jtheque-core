@@ -24,136 +24,136 @@ import org.jtheque.utils.bean.IntDate;
  * @author Baptiste Wicht
  */
 public interface ICoreConfiguration {
-	/**
-	 * Indicate if we verify the updates at the application startup.
-	 *
-	 * @return <code>true</code> if verify updates on startup else <code>false</code>
-	 */
-	boolean verifyUpdateOnStartup();
+    /**
+     * Indicate if we verify the updates at the application startup.
+     *
+     * @return <code>true</code> if verify updates on startup else <code>false</code>
+     */
+    boolean verifyUpdateOnStartup();
 
-	/**
-	 * Set if we must verify the updates on startup.
-	 *
-	 * @param value A boolean tag indicating if we must verify updates on startup.
-	 */
-	void setVerifyUpdateOnStartup(boolean value);
+    /**
+     * Set if we must verify the updates on startup.
+     *
+     * @param value A boolean tag indicating if we must verify updates on startup.
+     */
+    void setVerifyUpdateOnStartup(boolean value);
 
-	/**
-	 * Indicate if we must retain the size of the windows.
-	 *
-	 * @return <code>true</code> if we must retain the size of the windows else <code>false</code>
-	 */
-	boolean retainSizeAndPositionOfWindow();
+    /**
+     * Indicate if we must retain the size of the windows.
+     *
+     * @return <code>true</code> if we must retain the size of the windows else <code>false</code>
+     */
+    boolean retainSizeAndPositionOfWindow();
 
-	/**
-	 * Set if we must retain the size of the window.
-	 *
-	 * @param value A boolean tag indicating if we must retain the size of the window.
-	 */
-	void setRetainSizeAndPositionOfWindow(boolean value);
+    /**
+     * Set if we must retain the size of the window.
+     *
+     * @param value A boolean tag indicating if we must retain the size of the window.
+     */
+    void setRetainSizeAndPositionOfWindow(boolean value);
 
-	/**
-	 * Indicate if there is a proxy or not.
-	 *
-	 * @return <code>true</code> if there is a proxy else <code>false</code>
-	 */
-	boolean hasAProxy();
+    /**
+     * Indicate if there is a proxy or not.
+     *
+     * @return <code>true</code> if there is a proxy else <code>false</code>
+     */
+    boolean hasAProxy();
 
-	/**
-	 * Set if there is a proxy or not.
-	 *
-	 * @param value A boolean tag indicating if there is a proxy or not.
-	 */
-	void setHasAProxy(boolean value);
+    /**
+     * Set if there is a proxy or not.
+     *
+     * @param value A boolean tag indicating if there is a proxy or not.
+     */
+    void setHasAProxy(boolean value);
 
-	/**
-	 * Return the port number of the proxy.
-	 *
-	 * @param value The port number of the proxy.
-	 */
-	void setProxyPort(String value);
+    /**
+     * Return the port number of the proxy.
+     *
+     * @param value The port number of the proxy.
+     */
+    void setProxyPort(String value);
 
-	/**
-	 * Return the port number of the proxy.
-	 *
-	 * @return The port number of the proxy.
-	 */
-	String getProxyPort();
+    /**
+     * Return the port number of the proxy.
+     *
+     * @return The port number of the proxy.
+     */
+    String getProxyPort();
 
-	/**
-	 * Set the address of the proxy.
-	 *
-	 * @param value The address of the proxy.
-	 */
-	void setProxyAddress(String value);
+    /**
+     * Set the address of the proxy.
+     *
+     * @param value The address of the proxy.
+     */
+    void setProxyAddress(String value);
 
-	/**
-	 * Return the address of the proxy.
-	 *
-	 * @return The address of the proxy.
-	 */
-	String getProxyAddress();
+    /**
+     * Return the address of the proxy.
+     *
+     * @return The address of the proxy.
+     */
+    String getProxyAddress();
 
-	/**
-	 * Set if we must delete the logs or not.
-	 *
-	 * @param value A boolean tag indicating if we must delete the logs or not.
-	 */
-	void setMustDeleteLogs(boolean value);
+    /**
+     * Set if we must delete the logs or not.
+     *
+     * @param value A boolean tag indicating if we must delete the logs or not.
+     */
+    void setMustDeleteLogs(boolean value);
 
-	/**
-	 * Indicate if we must delete the logs or not.
-	 *
-	 * @return <code>true</code> if we must delete the logs else <code>false</code>
-	 */
-	boolean mustDeleteLogs();
+    /**
+     * Indicate if we must delete the logs or not.
+     *
+     * @return <code>true</code> if we must delete the logs else <code>false</code>
+     */
+    boolean mustDeleteLogs();
 
-	/**
-	 * Set the email of the user.
-	 *
-	 * @param value The new email to set
-	 */
-	void setUserEmail(String value);
+    /**
+     * Set the email of the user.
+     *
+     * @param value The new email to set
+     */
+    void setUserEmail(String value);
 
-	/**
-	 * Return the email of the user.
-	 *
-	 * @return The email
-	 */
-	String getUserEmail();
+    /**
+     * Return the email of the user.
+     *
+     * @return The email
+     */
+    String getUserEmail();
 
-	/**
-	 * Set the SMTP host.
-	 *
-	 * @param value The new SMTP host.
-	 */
-	void setSmtpHost(String value);
+    /**
+     * Set the SMTP host.
+     *
+     * @param value The new SMTP host.
+     */
+    void setSmtpHost(String value);
 
-	/**
-	 * Return the SMTP host.
-	 *
-	 * @return The SMTP host.
-	 */
-	String getSmtpHost();
+    /**
+     * Return the SMTP host.
+     *
+     * @return The SMTP host.
+     */
+    String getSmtpHost();
 
     /**
      * Set the last used collection.
      *
-     * @param value The name of the last collection. 
+     * @param value The name of the last collection.
      */
-	void setLastCollection(String value);
+    void setLastCollection(String value);
 
     /**
      * Return the last used collection.
      *
-     * @return The last used collection. 
+     * @return The last used collection.
      */
-	String getLastCollection();
+    String getLastCollection();
 
-	/**
-	 * Return the date of the last reading of the messages.
-	 *
-	 * @return The date of the last reading of the messages.
-	 */
-	IntDate getMessagesLastRead();
+    /**
+     * Return the date of the last reading of the messages.
+     *
+     * @return The date of the last reading of the messages.
+     */
+    IntDate getMessagesLastRead();
 }

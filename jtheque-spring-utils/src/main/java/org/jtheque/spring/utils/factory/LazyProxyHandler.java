@@ -20,6 +20,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.support.GenericApplicationContext;
 
 import javax.swing.SwingUtilities;
+
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -40,8 +41,8 @@ final class LazyProxyHandler implements InvocationHandler {
      * Construct a new LazyProxyHandler.
      *
      * @param beanName The name of the bean.
-     * @param swing A boolean tag indicating if the bean is swing bean.
-     * @param context The application context of the target. 
+     * @param swing    A boolean tag indicating if the bean is swing bean.
+     * @param context  The application context of the target.
      */
     LazyProxyHandler(String beanName, boolean swing, GenericApplicationContext context) {
         super();
@@ -56,9 +57,9 @@ final class LazyProxyHandler implements InvocationHandler {
         if (instance == null) {
             LoggerFactory.getLogger(getClass()).debug("Init {} due to call to {}", beanName, method.toGenericString());
 
-            if(swing && !SwingUtilities.isEventDispatchThread()){
+            if (swing && !SwingUtilities.isEventDispatchThread()) {
                 try {
-                    SwingUtilities.invokeAndWait(new Runnable(){
+                    SwingUtilities.invokeAndWait(new Runnable() {
                         @Override
                         public void run() {
                             instance = context.getBean(beanName);

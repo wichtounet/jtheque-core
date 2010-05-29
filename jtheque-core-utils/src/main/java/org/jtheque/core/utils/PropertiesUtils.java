@@ -19,6 +19,7 @@ package org.jtheque.core.utils;
 import org.jtheque.utils.bean.EqualsUtils;
 import org.jtheque.utils.bean.ReflectionUtils;
 import org.jtheque.utils.collections.CollectionUtils;
+
 import org.slf4j.LoggerFactory;
 
 import java.beans.PropertyDescriptor;
@@ -32,16 +33,16 @@ import java.util.List;
  * @author Baptiste Wicht
  */
 public final class PropertiesUtils {
-	/**
-	 * Construct a new PropertiesUtils. This constructor is private, because this is an utility class. 
-	 */
-	private PropertiesUtils() {
+    /**
+     * Construct a new PropertiesUtils. This constructor is private, because this is an utility class.
+     */
+    private PropertiesUtils() {
         super();
     }
 
     /**
      * Create a memento for the bean. A memento is a clone of all the properties of the bean.
-     *
+     * <p/>
      * Note : The properties of the Object class are not retrieved.
      *
      * @param bean The bean to create the memento from.
@@ -72,7 +73,7 @@ public final class PropertiesUtils {
 
     /**
      * Restore the state of the memento. It seems to copy all the properties values from the memento to the bean.
-     *
+     * <p/>
      * Note : The properties of the Object class are not retrieved.
      *
      * @param bean    The bean.
@@ -102,7 +103,6 @@ public final class PropertiesUtils {
      * @param bean       The first bean.
      * @param other      The other bean.
      * @param properties The properties to use.
-     *
      * @return <code>true</code> if the two objects are equals else <code>false</code>.
      */
     public static boolean areEquals(Object bean, Object other, String... properties) {
@@ -136,10 +136,9 @@ public final class PropertiesUtils {
      *
      * @param bean     The bean to get the property value from.
      * @param property The property.
-     *
      * @return the value of the property.
      */
-    public static Object getProperty(Object bean, String property){
+    public static Object getProperty(Object bean, String property) {
         return ReflectionUtils.getProperty(bean, property);
     }
 
@@ -149,7 +148,6 @@ public final class PropertiesUtils {
      *
      * @param bean     The bean to get the property value from.
      * @param property The property.
-     *
      * @return the value of the property.
      */
     public static Object getPropertyQuickly(Object bean, String property) {
@@ -158,7 +156,7 @@ public final class PropertiesUtils {
 
     /**
      * Generate a toString() String based on all the properties of the bean.
-     *
+     * <p/>
      * Note : The properties of the Object class are not retrieved.
      *
      * @param bean The bean.

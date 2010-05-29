@@ -48,7 +48,7 @@ public class DisplayErrorsViewAction extends JThequeAction {
     /**
      * Construct a new DisplayErrorsViewAction
      *
-     * @param views The views. 
+     * @param views The views.
      */
     public DisplayErrorsViewAction(IViews views) {
         super("error.view.actions.display");

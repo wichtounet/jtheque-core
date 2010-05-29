@@ -57,7 +57,7 @@ public abstract class AbstractUpdateAction implements UpdateAction {
     /**
      * Return the name of the file.
      *
-     * @return The name of the file. 
+     * @return The name of the file.
      */
     public String getFile() {
         return file;

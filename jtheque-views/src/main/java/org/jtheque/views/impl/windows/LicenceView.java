@@ -34,14 +34,14 @@ import org.jtheque.views.impl.actions.about.PrintLicenseAction;
 public final class LicenceView extends SwingFilthyBuildedDialogView<IModel> implements ILicenceView {
     private static final int DEFAULT_WIDTH = 800;
     private static final int DEFAULT_HEIGHT = 600;
-    
+
     @Override
-    protected void initView(){
+    protected void initView() {
         setTitleKey("licence.view.title", getService(ICore.class).getApplication().getName());
     }
 
     @Override
-    protected void buildView(I18nPanelBuilder builder){
+    protected void buildView(I18nPanelBuilder builder) {
         builder.addScrolledTextArea(FileUtils.getTextOf(getService(ICore.class).getApplication().getLicenceFilePath()),
                 builder.gbcSet(0, 0, GridBagUtils.BOTH, GridBagUtils.BELOW_BASELINE_LEADING, 1.0, 1.0));
 

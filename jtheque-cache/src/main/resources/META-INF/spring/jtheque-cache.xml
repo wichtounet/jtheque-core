@@ -14,7 +14,9 @@
     <context:annotation-config/>
 
     <bean id="cacheManager" class="org.jtheque.cache.impl.CacheService">
-        <constructor-arg><osgi:reference interface="org.jtheque.core.able.ICore"/></constructor-arg>
+        <constructor-arg>
+            <osgi:reference interface="org.jtheque.core.able.ICore"/>
+        </constructor-arg>
     </bean>
 
     <osgi:service id="cacheManagerService" ref="cacheManager" interface="org.jtheque.cache.impl.CacheService"/>

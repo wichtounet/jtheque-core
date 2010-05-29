@@ -18,10 +18,10 @@ package org.jtheque.modules.impl;
 
 import org.jtheque.modules.able.Module;
 import org.jtheque.modules.able.ModuleState;
-import org.jtheque.states.utils.AbstractState;
 import org.jtheque.states.able.Load;
 import org.jtheque.states.able.Save;
 import org.jtheque.states.able.State;
+import org.jtheque.states.utils.AbstractState;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.xml.utils.Node;
 
@@ -44,7 +44,7 @@ public final class ModuleConfiguration extends AbstractState {
      */
     @Load
     public void delegateLoad(Iterable<Node> nodes) {
-        for (Node node : nodes){
+        for (Node node : nodes) {
             if ("module".equals(node.getName())) {
                 infos.add(convertToModuleInfo(node));
             }
@@ -55,13 +55,12 @@ public final class ModuleConfiguration extends AbstractState {
      * Convert the node state to a ModuleInfo.
      *
      * @param node The node state to convert to ModuleInfo.
-     *
      * @return The ModuleInfo.
      */
     private static ModuleInfo convertToModuleInfo(Node node) {
         ModuleInfo info = new ModuleInfo(node.getAttributeValue("id"));
 
-        if(StringUtils.isNotEmpty(node.getAttributeValue("state"))){
+        if (StringUtils.isNotEmpty(node.getAttributeValue("state"))) {
             info.setState(ModuleState.valueOf(node.getIntAttributeValue("state")));
         } else {
             for (Node child : node.getChildrens()) {
@@ -71,7 +70,7 @@ public final class ModuleConfiguration extends AbstractState {
             }
         }
 
-        if(info.getState() == null){
+        if (info.getState() == null) {
             info.setState(ModuleState.INSTALLED);
         }
 
@@ -81,7 +80,7 @@ public final class ModuleConfiguration extends AbstractState {
     /**
      * Save the nodes.
      *
-     * @return All the nodes to be saved by the state. 
+     * @return All the nodes to be saved by the state.
      */
     @Save
     public Collection<Node> delegateSave() {
@@ -98,7 +97,6 @@ public final class ModuleConfiguration extends AbstractState {
      * Convert the module info the node state.
      *
      * @param info The module info.
-     *
      * @return The node state.
      */
     private static Node convertToNodeState(ModuleInfo info) {
@@ -114,7 +112,6 @@ public final class ModuleConfiguration extends AbstractState {
      * Return the module information of a module.
      *
      * @param moduleName The name of the module.
-     *
      * @return The module information.
      */
     ModuleInfo getModuleInfo(String moduleName) {
@@ -206,7 +203,7 @@ public final class ModuleConfiguration extends AbstractState {
     /**
      * Add a module info to the configuration.
      *
-     * @param id The module id.
+     * @param id    The module id.
      * @param state The module state.
      */
     private void add(String id, ModuleState state) {

@@ -22,18 +22,18 @@ import java.awt.event.ActionEvent;
  */
 
 /**
- * Action to display the events view. 
+ * Action to display the events view.
  *
  * @author Baptiste Wicht
  */
 public class DisplayEventsViewAction extends JThequeAction {
     private final IViews views;
 
-	/**
-	 * Construct a new DislayEventsViewAction.
-	 *
-	 * @param views The views.
-	 */
+    /**
+     * Construct a new DislayEventsViewAction.
+     *
+     * @param views The views.
+     */
     public DisplayEventsViewAction(IViews views) {
         super("log.view.actions.display");
 

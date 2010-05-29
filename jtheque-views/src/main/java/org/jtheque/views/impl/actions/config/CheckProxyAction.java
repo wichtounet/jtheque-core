@@ -29,11 +29,11 @@ import java.awt.event.ActionEvent;
 public final class CheckProxyAction extends JThequeSimpleAction {
     private final INetworkConfigView configView;
 
-	/**
-	 * Construct a new CheckProxyAction.
-	 *
-	 * @param configView The config view. 
-	 */
+    /**
+     * Construct a new CheckProxyAction.
+     *
+     * @param configView The config view.
+     */
     public CheckProxyAction(INetworkConfigView configView) {
         super();
 

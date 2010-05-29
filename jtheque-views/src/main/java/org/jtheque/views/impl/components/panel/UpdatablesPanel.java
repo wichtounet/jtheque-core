@@ -39,7 +39,7 @@ public final class UpdatablesPanel extends OSGIFilthyBuildedPanel implements IUp
 
     @Override
     protected void buildView(I18nPanelBuilder builder) {
-	    IUpdateService updateService = getService(IUpdateService.class);
+        IUpdateService updateService = getService(IUpdateService.class);
 
         updatablesList = builder.addScrolledList(new UpdatableListModel(updateService), new UpdatableListRenderer(updateService),
                 builder.gbcSet(0, 0, GridBagUtils.BOTH, GridBagUtils.FIRST_LINE_START, 1.0, 1.0));

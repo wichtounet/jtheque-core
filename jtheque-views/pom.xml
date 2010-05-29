@@ -157,11 +157,13 @@
                         <Bundle-SymbolicName>${pom.artifactId}</Bundle-SymbolicName>
                         <Export-Package>org.jtheque.views, org.jtheque.views.*</Export-Package>
                         <Bundle-Vendor>Baptiste Wicht</Bundle-Vendor>
-                        <Spring-Context>META-INF/spring/jtheque-views.xml;create-asynchronously:=false;publish-context:=false</Spring-Context>
+                        <Spring-Context>
+                            META-INF/spring/jtheque-views.xml;create-asynchronously:=false;publish-context:=false
+                        </Spring-Context>
                     </instructions>
                 </configuration>
             </plugin>
-            
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>

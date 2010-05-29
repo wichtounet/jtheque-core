@@ -24,7 +24,8 @@ package org.jtheque.i18n.able;
 public interface Internationalizable {
     /**
      * Refresh the text.
-     * @param languageService The language service to use to internationalize the text of the component. 
+     *
+     * @param languageService The language service to use to internationalize the text of the component.
      */
     void refreshText(ILanguageService languageService);
 }

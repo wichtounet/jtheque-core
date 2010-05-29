@@ -30,6 +30,7 @@ import org.jtheque.views.able.config.IAppearanceConfigView;
 
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -59,16 +60,16 @@ public final class JPanelConfigAppearance extends OSGIFilthyBuildedPanel impleme
         fillAllFields();
     }
 
-	@Override
-	public Map<Object, Constraint> getConstraints() {
-		Map<Object, Constraint> constraints = new HashMap<Object, Constraint>(1);
+    @Override
+    public Map<Object, Constraint> getConstraints() {
+        Map<Object, Constraint> constraints = new HashMap<Object, Constraint>(1);
 
-		constraints.put(modelLanguages, new AtLeastOneConstraint("config.appearance.language"));
+        constraints.put(modelLanguages, new AtLeastOneConstraint("config.appearance.language"));
 
-		return constraints;
-	}
+        return constraints;
+    }
 
-	@Override
+    @Override
     public String getTitleKey() {
         return "config.view.tab.appearance";
     }

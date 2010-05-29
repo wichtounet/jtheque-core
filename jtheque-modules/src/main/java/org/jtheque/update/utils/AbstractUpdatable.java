@@ -1,9 +1,10 @@
 package org.jtheque.update.utils;
 
-import org.jdesktop.swingx.event.WeakEventListenerList;
 import org.jtheque.update.able.Updatable;
 import org.jtheque.update.able.UpdateListener;
 import org.jtheque.utils.bean.Version;
+
+import org.jdesktop.swingx.event.WeakEventListenerList;
 
 /*
  * Copyright JTheque (Baptiste Wicht)

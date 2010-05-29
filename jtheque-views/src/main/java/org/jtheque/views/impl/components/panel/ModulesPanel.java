@@ -40,7 +40,7 @@ import javax.swing.JList;
  */
 
 /**
- * A panel to display all the modules. 
+ * A panel to display all the modules.
  *
  * @author Baptiste Wicht
  */
@@ -49,12 +49,12 @@ public final class ModulesPanel extends OSGIFilthyBuildedPanel implements IModul
 
     @Override
     protected void buildView(I18nPanelBuilder builder) {
-	    IUpdateService updateService = getService(IUpdateService.class);
-	    ILanguageService languageService = getService(ILanguageService.class);
-	    IModuleService moduleService= getService(IModuleService.class);
-	    IRepositoryView repositoryView = getBeanFromEDT(IRepositoryView.class);
+        IUpdateService updateService = getService(IUpdateService.class);
+        ILanguageService languageService = getService(ILanguageService.class);
+        IModuleService moduleService = getService(IModuleService.class);
+        IRepositoryView repositoryView = getBeanFromEDT(IRepositoryView.class);
 
-        builder.add(new KernelInfoPanel(languageService, getService(IFilthyUtils.class), updateService), 
+        builder.add(new KernelInfoPanel(languageService, getService(IFilthyUtils.class), updateService),
                 builder.gbcSet(0, 0, GridBagUtils.HORIZONTAL, GridBagUtils.BASELINE_LEADING, 1.0, 0.0));
 
         modulesList = builder.addScrolledList(new ModuleListModel(moduleService), new ModuleListRenderer(updateService, languageService),

@@ -8,18 +8,23 @@
             http://www.springframework.org/schema/osgi
             http://www.springframework.org/schema/osgi/spring-osgi.xsd">
 
-    <bean id="persistenceManager" class="org.jtheque.persistence.impl.PersistenceService" />
+    <bean id="persistenceManager" class="org.jtheque.persistence.impl.PersistenceService"/>
 
     <bean id="daoNotes" class="org.jtheque.persistence.impl.DaoNotes">
-        <constructor-arg><osgi:reference interface="org.jtheque.resources.able.IResourceService"/></constructor-arg>
-        <constructor-arg><osgi:reference interface="org.jtheque.i18n.able.ILanguageService"/></constructor-arg>
+        <constructor-arg>
+            <osgi:reference interface="org.jtheque.resources.able.IResourceService"/>
+        </constructor-arg>
+        <constructor-arg>
+            <osgi:reference interface="org.jtheque.i18n.able.ILanguageService"/>
+        </constructor-arg>
     </bean>
 
-    <bean class="org.jtheque.persistence.utils.DataContainerPostProcessor" />
+    <bean class="org.jtheque.persistence.utils.DataContainerPostProcessor"/>
 
     <!-- Persistence  -->
 
-    <bean id="dataSource" class="org.springframework.jdbc.datasource.SingleConnectionDataSource" destroy-method="destroy">
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.SingleConnectionDataSource"
+          destroy-method="destroy">
         <property name="driverClassName" value="org.h2.Driver"/>
         <property name="url" value="jdbc:h2:{current}/db/jtheque"/>
         <property name="username" value="sa"/>

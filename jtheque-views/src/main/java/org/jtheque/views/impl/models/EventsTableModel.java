@@ -5,6 +5,7 @@ import org.jtheque.events.able.IEventService;
 import org.jtheque.i18n.able.ILanguageService;
 
 import javax.swing.table.AbstractTableModel;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -66,7 +67,8 @@ public final class EventsTableModel extends AbstractTableModel {
 
     /**
      * Construct a new <code>FilmsToBuyTableModel</code>.
-     * @param eventService The event service.
+     *
+     * @param eventService    The event service.
      * @param languageService The language service.
      */
     public EventsTableModel(IEventService eventService, ILanguageService languageService) {

@@ -18,7 +18,7 @@ package org.jtheque.i18n.able;
 
 /**
  * An internationalizable container. It's a internationalize who contains also some
- * internationalizables and are responsible to internationalize all the childs. 
+ * internationalizables and are responsible to internationalize all the childs.
  *
  * @author Baptiste Wicht
  */
@@ -26,7 +26,7 @@ public interface InternationalizableContainer extends Internationalizable {
     /**
      * Add an internationalizable to the container.
      *
-     * @param internationalizable The internationalizable to add. 
+     * @param internationalizable The internationalizable to add.
      */
     void addInternationalizable(Internationalizable internationalizable);
 }

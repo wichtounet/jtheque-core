@@ -19,15 +19,16 @@ package org.jtheque.views.impl.components.panel;
 import org.jtheque.i18n.able.ILanguageService;
 import org.jtheque.modules.able.IModuleDescription;
 import org.jtheque.modules.able.IModuleService;
-import org.jtheque.ui.utils.components.Borders;
 import org.jtheque.ui.utils.builders.FilthyPanelBuilder;
 import org.jtheque.ui.utils.builders.PanelBuilder;
+import org.jtheque.ui.utils.components.Borders;
 import org.jtheque.update.able.IUpdateService;
 import org.jtheque.utils.ui.GridBagUtils;
 
 import javax.annotation.Resource;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
 import java.awt.Font;
 
 /**
@@ -92,18 +93,18 @@ public final class ModulePanel extends JPanel {
     public void updateUI(boolean isSelected) {
         initFonts();
 
-        if(isSelected){
+        if (isSelected) {
             setFonts(fontTitleBold, fontLabelBold);
         } else {
             setFonts(fontTitle, fontLabel);
         }
     }
 
-	/**
-	 * Init the fonts of the renderer.
-	 */
+    /**
+     * Init the fonts of the renderer.
+     */
     private void initFonts() {
-        if(fontTitle == null){
+        if (fontTitle == null) {
             fontTitle = labelName.getFont();
             fontTitleBold = fontTitle.deriveFont(Font.BOLD);
 

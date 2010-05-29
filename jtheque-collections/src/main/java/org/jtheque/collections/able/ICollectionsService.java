@@ -25,7 +25,7 @@ import org.jtheque.persistence.able.DataContainer;
  * @author Baptiste Wicht
  */
 public interface ICollectionsService extends DataContainer<Collection> {
-	String DATA_TYPE = "Collections";
+    String DATA_TYPE = "Collections";
 
     /**
      * Plug a collection. This method must only make the choose collection process and return the
@@ -42,7 +42,7 @@ public interface ICollectionsService extends DataContainer<Collection> {
     /**
      * Add a collection listener.
      *
-     * @param listener The listener to add.  
+     * @param listener The listener to add.
      */
     void addCollectionListener(CollectionListener listener);
 

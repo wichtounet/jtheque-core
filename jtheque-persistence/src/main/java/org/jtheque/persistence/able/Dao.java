@@ -62,7 +62,7 @@ public interface Dao<T extends Entity> {
     /**
      * Create an empty instance of the entity.
      *
-     * @return An empty instance of the entity. 
+     * @return An empty instance of the entity.
      */
     T create();
 
@@ -107,7 +107,6 @@ public interface Dao<T extends Entity> {
      * Indicate if the simple entity exists or not.
      *
      * @param entity The entity to test for exists or not.
-     *
      * @return <code>true</code> if the entity exists else <code>false</code>.
      */
     boolean exists(T entity);

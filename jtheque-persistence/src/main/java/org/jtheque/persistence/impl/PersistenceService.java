@@ -17,9 +17,9 @@ package org.jtheque.persistence.impl;
  */
 
 import org.jtheque.persistence.able.DataContainer;
-import org.jtheque.persistence.utils.DataContainerProvider;
 import org.jtheque.persistence.able.Entity;
 import org.jtheque.persistence.able.IPersistenceService;
+import org.jtheque.persistence.utils.DataContainerProvider;
 
 /**
  * A persistence manager implementation.

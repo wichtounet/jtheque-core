@@ -20,7 +20,7 @@
             <artifactId>org.osgi.core</artifactId>
             <version>4.2.0</version>
         </dependency>
-        
+
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-jdbc</artifactId>
@@ -70,7 +70,7 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-    
+
     <build>
         <directory>${env.BUILD_HOME}/bundles/jtheque-persistence</directory>
 
@@ -86,7 +86,9 @@
                         <Bundle-SymbolicName>${pom.artifactId}</Bundle-SymbolicName>
                         <Export-Package>org.jtheque.persistence.able, org.jtheque.persistence.utils</Export-Package>
                         <Bundle-Vendor>Baptiste Wicht</Bundle-Vendor>
-                        <DynamicImport-Package>org.h2, org.springframework.jdbc.datasource, org.springframework.jdbc.core.simple</DynamicImport-Package>
+                        <DynamicImport-Package>org.h2, org.springframework.jdbc.datasource,
+                            org.springframework.jdbc.core.simple
+                        </DynamicImport-Package>
                         <Spring-Context>*;create-asynchronously:=false;publish-context:=false</Spring-Context>
                     </instructions>
                 </configuration>

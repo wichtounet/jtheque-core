@@ -34,7 +34,7 @@ final class ConfigurationFilter implements Filter<Module> {
      * Construct a new configuration filter.
      *
      * @param configuration The current module configuration.
-     * @param application The current application. 
+     * @param application   The current application.
      */
     ConfigurationFilter(ModuleConfiguration configuration, Application application) {
         super();
@@ -49,7 +49,7 @@ final class ConfigurationFilter implements Filter<Module> {
             module.setState(configuration.getState(module.getId()));
 
             return true;
-        } else if(application.isModuleDiscovery() || application.getModules().contains(module.getId())){
+        } else if (application.isModuleDiscovery() || application.getModules().contains(module.getId())) {
             module.setState(ModuleState.INSTALLED);
             configuration.add(module);
 

@@ -1,8 +1,9 @@
 package org.jtheque.views.impl.components.panel;
 
-import org.jdesktop.swingx.JXPanel;
 import org.jtheque.core.able.ICore;
 import org.jtheque.i18n.able.ILanguageService;
+
+import org.jdesktop.swingx.JXPanel;
 import org.pushingpixels.trident.Timeline;
 
 import java.util.ArrayList;
@@ -41,12 +42,12 @@ public abstract class AbstractAboutPane extends JXPanel {
     private final ICore core;
     private final ILanguageService languageService;
 
-	/**
-	 * Construct a new AbstractAboutPane.
-	 *
-	 * @param languageService The language service.
-	 * @param core The core. 
-	 */
+    /**
+     * Construct a new AbstractAboutPane.
+     *
+     * @param languageService The language service.
+     * @param core            The core.
+     */
     protected AbstractAboutPane(ILanguageService languageService, ICore core) {
         super();
 

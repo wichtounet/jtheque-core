@@ -20,13 +20,13 @@ import org.jtheque.i18n.able.ILanguageService;
 import org.jtheque.modules.able.Module;
 import org.jtheque.ui.able.IModel;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
+import org.jtheque.ui.utils.components.LayerTabbedPane;
 import org.jtheque.ui.utils.windows.dialogs.SwingFilthyBuildedDialogView;
 import org.jtheque.update.able.Updatable;
 import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.views.able.components.IModulesPanelView;
 import org.jtheque.views.able.components.IUpdatablesPanelView;
 import org.jtheque.views.able.panel.IModuleView;
-import org.jtheque.ui.utils.components.LayerTabbedPane;
 
 import javax.swing.JComponent;
 
@@ -40,16 +40,16 @@ public final class ModuleView extends SwingFilthyBuildedDialogView<IModel> imple
     private IUpdatablesPanelView updatablesPanel;
 
     @Override
-    protected void initView(){
+    protected void initView() {
         setTitleKey("module.view.title");
     }
 
     @Override
-    protected void buildView(I18nPanelBuilder builder){
+    protected void buildView(I18nPanelBuilder builder) {
         LayerTabbedPane tabbed = new LayerTabbedPane(getService(ILanguageService.class));
 
-	    modulesPanel = getBean(IModulesPanelView.class);
-	    updatablesPanel = getBean(IUpdatablesPanelView.class);
+        modulesPanel = getBean(IModulesPanelView.class);
+        updatablesPanel = getBean(IUpdatablesPanelView.class);
 
         tabbed.addInternationalizedTab("modules.view.tab.modules", (JComponent) modulesPanel);
         tabbed.addInternationalizedTab("modules.view.tab.updatables", (JComponent) updatablesPanel);

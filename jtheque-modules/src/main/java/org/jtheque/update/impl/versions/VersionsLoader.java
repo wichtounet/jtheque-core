@@ -7,6 +7,7 @@ import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.collections.CollectionUtils;
 
 import javax.annotation.Resource;
+
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -28,9 +29,9 @@ import java.util.Map;
  */
 
 /**
- * A loader for the online version's file. 
- * 
- * @author Baptiste Wicht 
+ * A loader for the online version's file.
+ *
+ * @author Baptiste Wicht
  */
 public final class VersionsLoader implements IVersionsLoader {
     private final Map<Object, VersionsFile> cache;

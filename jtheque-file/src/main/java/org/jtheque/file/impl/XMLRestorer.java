@@ -16,7 +16,6 @@ package org.jtheque.file.impl;
  * limitations under the License.
  */
 
-import org.jdom.Element;
 import org.jtheque.file.able.IFileService.XmlBackupVersion;
 import org.jtheque.file.able.ModuleBackup;
 import org.jtheque.utils.bean.Version;
@@ -24,6 +23,8 @@ import org.jtheque.utils.io.FileUtils;
 import org.jtheque.xml.utils.NodeLoader;
 import org.jtheque.xml.utils.XMLException;
 import org.jtheque.xml.utils.XMLReader;
+
+import org.jdom.Element;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -45,10 +46,9 @@ public final class XMLRestorer {
     /**
      * Import all the data from the file.
      *
-     * @param file    The file.
+     * @param file The file.
+     * @return All the module backups.
      * @throws XMLException When an error occurs during the restore process.
-     *
-     * @return All the module backups. 
      */
     public static List<ModuleBackup> restore(File file) throws XMLException {
         List<ModuleBackup> backups = new ArrayList<ModuleBackup>(10);
@@ -64,7 +64,7 @@ public final class XMLRestorer {
                 throw new XMLException("Unsupported version");
             }
 
-            for(Element backupElement : reader.getNodes("//backup", reader.getRootElement())){
+            for (Element backupElement : reader.getNodes("//backup", reader.getRootElement())) {
                 ModuleBackup backup = new ModuleBackup();
 
                 backup.setId(reader.readString("id", backupElement));

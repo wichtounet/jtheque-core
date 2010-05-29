@@ -16,7 +16,6 @@ package org.jtheque.update.impl.versions;
  * limitations under the License.
  */
 
-import org.jdom.Element;
 import org.jtheque.core.able.ICore;
 import org.jtheque.modules.able.IModuleDescription;
 import org.jtheque.modules.able.Module;
@@ -31,6 +30,8 @@ import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.io.FileUtils;
 import org.jtheque.xml.utils.XMLException;
 import org.jtheque.xml.utils.XMLReader;
+
+import org.jdom.Element;
 import org.slf4j.LoggerFactory;
 
 import java.net.MalformedURLException;
@@ -68,8 +69,8 @@ public final class VersionsFileReader {
             return read(updatable.getVersionsFileURL());
         } else if (isCore(object)) {
             return read(ICore.VERSIONS_FILE_URL);
-        } else if(object instanceof IModuleDescription){
-	        return readURL(((IModuleDescription) object).getVersionsFileURL());
+        } else if (object instanceof IModuleDescription) {
+            return readURL(((IModuleDescription) object).getVersionsFileURL());
         }
 
         return null;

@@ -32,7 +32,7 @@ public class DisplayMessagesViewAction extends JThequeAction {
     /**
      * Construct a new DisplayMessagesViewAction.
      *
-     * @param views The views. 
+     * @param views The views.
      */
     public DisplayMessagesViewAction(IViews views) {
         super("messages.actions.display");

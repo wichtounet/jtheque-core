@@ -25,9 +25,10 @@ import org.jtheque.ui.able.IView;
 import org.jtheque.utils.ui.SwingUtils;
 import org.jtheque.views.able.IViewService;
 import org.jtheque.views.able.IWindowConfiguration;
-import org.jtheque.views.able.windows.IAboutView;
 import org.jtheque.views.able.panel.ICollectionView;
+import org.jtheque.views.able.windows.IAboutView;
 import org.jtheque.views.able.windows.IMainView;
+
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
@@ -47,11 +48,11 @@ public final class ViewService implements IViewService, ApplicationContextAware 
     private SwingSpringProxy<IAboutView> aboutPane;
 
     /**
-     * Construct a new ViewService. 
+     * Construct a new ViewService.
      *
-     * @param stateService The state service.
-     * @param core The core.
-     * @param resourceService The resource service. 
+     * @param stateService    The state service.
+     * @param core            The core.
+     * @param resourceService The resource service.
      */
     public ViewService(IStateService stateService, ICore core, IResourceService resourceService) {
         super();
@@ -127,7 +128,7 @@ public final class ViewService implements IViewService, ApplicationContextAware 
     }
 
     @Override
-    public void setApplicationContext(ApplicationContext applicationContext){
+    public void setApplicationContext(ApplicationContext applicationContext) {
         collectionPane = new SwingSpringProxy<ICollectionView>(ICollectionView.class, applicationContext);
         aboutPane = new SwingSpringProxy<IAboutView>(IAboutView.class, applicationContext);
     }

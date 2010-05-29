@@ -28,6 +28,7 @@ import org.jtheque.views.able.config.IOthersConfigView;
 
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
+
 import java.util.Collections;
 import java.util.Map;
 
@@ -120,12 +121,12 @@ public final class JPanelConfigOthers extends OSGIFilthyBuildedPanel implements 
         return boxDeleteLogs;
     }
 
-	@Override
-	public Map<Object, Constraint> getConstraints() {
-		return Collections.emptyMap();
-	}
+    @Override
+    public Map<Object, Constraint> getConstraints() {
+        return Collections.emptyMap();
+    }
 
-	@Override
+    @Override
     public JComponent getComponent() {
         return this;
     }

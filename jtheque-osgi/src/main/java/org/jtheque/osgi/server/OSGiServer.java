@@ -74,21 +74,21 @@ public interface OSGiServer {
      * Return the state of the specified bundle.
      *
      * @param bundle The bundle to get the state for.
-     *
      * @return The state of the bundle.
      */
     BundleState getState(Bundle bundle);
 
     /**
      * Return the state of the given bundle.
-     * @param bundleName The bundle to get the state for.
      *
+     * @param bundleName The bundle to get the state for.
      * @return The state of the bundle.
      */
     BundleState getState(String bundleName);
 
     /**
      * Indicate if a bundle is installed.
+     *
      * @param bundleName The name of the bundle.
      * @return true if the bundle is installed else false.
      */
@@ -96,32 +96,30 @@ public interface OSGiServer {
 
     /**
      * Return the version of the given bundle.
-     * @param bundleName The version to get the state for.
      *
+     * @param bundleName The version to get the state for.
      * @return The version of the bundle.
      */
     Version getVersion(String bundleName);
 
-	/**
-	 * Return the version of the bundle.
-	 *
-	 * @param bundle The bundle to get the version of.
-	 *
-	 * @return The version of the bundle.
-	 */
-	Version getVersion(Bundle bundle);
+    /**
+     * Return the version of the bundle.
+     *
+     * @param bundle The bundle to get the version of.
+     * @return The version of the bundle.
+     */
+    Version getVersion(Bundle bundle);
 
     /**
      * Print debug informations about the current state of the server.
      */
     void debug();
 
-	/**
-	 * Return the bundle of the specified name.
-	 *
-	 * @param bundleName The name
-	 *
-	 * @return The bundle with the specified name. 
-	 */
+    /**
+     * Return the bundle of the specified name.
+     *
+     * @param bundleName The name
+     * @return The bundle with the specified name.
+     */
     Bundle getBundle(String bundleName);
 }

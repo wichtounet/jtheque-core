@@ -30,6 +30,7 @@ import org.jtheque.views.impl.actions.config.CheckProxyAction;
 
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -106,15 +107,15 @@ public final class JPanelConfigNetwork extends OSGIFilthyBuildedPanel implements
         return boxProxy;
     }
 
-	@Override
-	public Map<Object, Constraint> getConstraints() {
-		Map<Object, Constraint> constraints = new HashMap<Object, Constraint>(1);
+    @Override
+    public Map<Object, Constraint> getConstraints() {
+        Map<Object, Constraint> constraints = new HashMap<Object, Constraint>(1);
 
-		constraints.put(fieldAddress, new MaxLengthConstraint(false, "config.network.proxy.address"));
-		constraints.put(fieldPort, new MaxLengthConstraint(false, "config.network.proxy.port"));
+        constraints.put(fieldAddress, new MaxLengthConstraint(false, "config.network.proxy.address"));
+        constraints.put(fieldPort, new MaxLengthConstraint(false, "config.network.proxy.port"));
 
-		return constraints;
-	}
+        return constraints;
+    }
 
     @Override
     public JComponent getComponent() {
