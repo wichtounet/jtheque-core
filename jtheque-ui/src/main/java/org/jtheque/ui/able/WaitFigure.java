@@ -17,6 +17,7 @@ package org.jtheque.ui.able;
  */
 
 import javax.swing.JComponent;
+
 import java.awt.Graphics;
 
 /**

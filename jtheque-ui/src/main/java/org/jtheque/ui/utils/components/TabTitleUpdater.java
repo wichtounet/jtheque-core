@@ -5,6 +5,7 @@ import org.jtheque.i18n.able.Internationalizable;
 
 import javax.swing.JComponent;
 import javax.swing.JTabbedPane;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;

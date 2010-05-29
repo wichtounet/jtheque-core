@@ -5,12 +5,12 @@ import org.jtheque.errors.able.IError;
 import org.jtheque.errors.able.IErrorService;
 import org.jtheque.i18n.able.ILanguageService;
 import org.jtheque.spring.utils.SwingSpringProxy;
+
 import org.osgi.framework.BundleContext;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.osgi.context.BundleContextAware;
 
-import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -31,50 +31,48 @@ import java.util.Collection;
  */
 
 /**
- * An OSGi builded panel. 
+ * An OSGi builded panel.
  *
  * @author Baptiste Wicht
  */
 public abstract class OSGIBuildedPanel extends BuildedPanel implements BundleContextAware, ApplicationContextAware {
-	private BundleContext bundleContext;
-	private ApplicationContext applicationContext;
-    
-	@Override
-	protected ILanguageService getLanguageService() {
-		return getService(ILanguageService.class);
-	}
+    private BundleContext bundleContext;
+    private ApplicationContext applicationContext;
 
-	@Override
-	public void setBundleContext(BundleContext bundleContext) {
-		this.bundleContext = bundleContext;
-	}
+    @Override
+    protected ILanguageService getLanguageService() {
+        return getService(ILanguageService.class);
+    }
+
+    @Override
+    public void setBundleContext(BundleContext bundleContext) {
+        this.bundleContext = bundleContext;
+    }
 
     /**
      * Return the service of the given class.
      *
      * @param classz The class to get the service.
      * @param <T>    The type of service.
-     *
      * @return The service of the given class if it's exists otherwise null.
      */
-    protected <T> T getService(Class<T> classz){
+    protected <T> T getService(Class<T> classz) {
         return OSGiUtils.getService(bundleContext, classz);
     }
 
-	@Override
-	public void setApplicationContext(ApplicationContext applicationContext) {
-		this.applicationContext = applicationContext;
-	}
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) {
+        this.applicationContext = applicationContext;
+    }
 
     /**
      * Return the bean of the given class using the application context.
      *
      * @param classz The classz of the bean to get from application context.
-     * @param <T> The type of bean to get.
-     *
+     * @param <T>    The type of bean to get.
      * @return The bean of the given class or null if it doesn't exist.
      */
-    protected <T> T getBean(Class<T> classz){
+    protected <T> T getBean(Class<T> classz) {
         return applicationContext.getBean(classz);
     }
 
@@ -83,33 +81,32 @@ public abstract class OSGIBuildedPanel extends BuildedPanel implements BundleCon
      * it can be used for a Swing bean.
      *
      * @param classz The classz of the bean to get from application context.
-     * @param <T> The type of bean to get.
-     *
+     * @param <T>    The type of bean to get.
      * @return The bean of the given class or null if it doesn't exist.
      */
-	protected <T> T getBeanFromEDT(Class<T> classz){
+    protected <T> T getBeanFromEDT(Class<T> classz) {
         return new SwingSpringProxy<T>(classz, applicationContext).get();
     }
 
-	@Override
-	public boolean validateContent() {
-		Collection<IError> errors = new ArrayList<IError>(5);
+    @Override
+    public boolean validateContent() {
+        Collection<IError> errors = new ArrayList<IError>(5);
 
-		validate(errors);
+        validate(errors);
 
-		for (IError error : errors) {
-			getService(IErrorService.class).addError(error);
-		}
+        for (IError error : errors) {
+            getService(IErrorService.class).addError(error);
+        }
 
-		return errors.isEmpty();
-	}
+        return errors.isEmpty();
+    }
 
     /**
      * Validate the panel. By default the validation does nothing, so the panel is always valid.
      *
      * @param errors The errors to fill.
      */
-	protected void validate(Collection<IError> errors){
-		//Default empty implementation
+    protected void validate(Collection<IError> errors) {
+        //Default empty implementation
 	}
 }

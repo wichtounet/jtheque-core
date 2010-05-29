@@ -54,5 +54,5 @@ public interface Constraint {
      *
      * @param component The component to configure.
      */
-	void configure(Object component);
+    void configure(Object component);
 }

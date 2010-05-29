@@ -11,6 +11,7 @@ import org.jtheque.ui.utils.builders.JThequePanelBuilder;
 import javax.annotation.PostConstruct;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
+
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -38,34 +39,34 @@ import java.util.Collection;
 public abstract class BuildedPanel extends JPanel implements InternationalizableContainer, IView {
     private final Collection<Internationalizable> internationalizables = new ArrayList<Internationalizable>(15);
 
-	private ILanguageService languageService;
-	private IModel model;
+    private ILanguageService languageService;
+    private IModel model;
 
     /**
      * Construct a new builded panel.
      *
      * @param languageService The language service to use.
      */
-	protected BuildedPanel(ILanguageService languageService) {
-		super();
+    protected BuildedPanel(ILanguageService languageService) {
+        super();
 
-		this.languageService = languageService;
-	}
+        this.languageService = languageService;
+    }
 
     /**
      * Construct a new builded panel providing no internationalizable service, so the class must override the
      * getLanguageService() method.
      */
-	protected BuildedPanel() {
-		super();
-	}
+    protected BuildedPanel() {
+        super();
+    }
 
     /**
      * Build the view. Called by spring after construct.
      */
-	@PostConstruct
-    public final void build(){
-		getLanguageService().addInternationalizable(this);
+    @PostConstruct
+    public final void build() {
+        getLanguageService().addInternationalizable(this);
 
         I18nPanelBuilder panelBuilder = new JThequePanelBuilder(this);
         panelBuilder.setInternationalizableContainer(this);
@@ -85,13 +86,13 @@ public abstract class BuildedPanel extends JPanel implements Internationalizable
     /**
      * Return the language service to use to build the panel.
      *
-     * @return The language service to build the panel. 
+     * @return The language service to build the panel.
      */
-	protected ILanguageService getLanguageService(){
-		return languageService;
-	}
+    protected ILanguageService getLanguageService() {
+        return languageService;
+    }
 
-	@Override
+    @Override
     public void addInternationalizable(Internationalizable internationalizable) {
         internationalizables.add(internationalizable);
     }
@@ -104,42 +105,42 @@ public abstract class BuildedPanel extends JPanel implements Internationalizable
     }
 
     @Override
-    public void display(){
+    public void display() {
         //Nothing by default
     }
 
     @Override
-    public void closeDown(){
+    public void closeDown() {
         //Nothing by default
     }
 
     @Override
-    public void toFirstPlan(){
+    public void toFirstPlan() {
         //Nothing by default
     }
 
     @Override
-    public void sendMessage(String message, Object value){
+    public void sendMessage(String message, Object value) {
         //Nothing by default
     }
 
     @Override
-    public void refresh(){
+    public void refresh() {
         //Nothing by default
     }
 
     @Override
-    public JComponent getImpl(){
+    public JComponent getImpl() {
         return this;
     }
 
     @Override
-    public IModel getModel(){
+    public IModel getModel() {
         return model;
     }
 
     @Override
-    public boolean validateContent(){
+    public boolean validateContent() {
         return true;
     }
 

@@ -20,6 +20,7 @@ import org.jtheque.i18n.able.InternationalizableContainer;
 import org.jtheque.ui.utils.components.JThequeI18nLabel;
 
 import javax.swing.JCheckBox;
+
 import java.awt.LayoutManager;
 
 /**
@@ -30,7 +31,7 @@ import java.awt.LayoutManager;
  */
 public interface I18nPanelBuilder extends PanelBuilder {
     /**
-     * Set the internationalizable container to use for this builder. This internationalizable container is 
+     * Set the internationalizable container to use for this builder. This internationalizable container is
      * used to keep all the internationalizables elements of the builded panel and keep them up to date with
      * the current language.
      *
@@ -73,7 +74,6 @@ public interface I18nPanelBuilder extends PanelBuilder {
      * @param constraints The constraints to use to add to the panel.
      * @param style       The font style.
      * @param size        The font size
-     *
      * @return The added label.
      */
     JThequeI18nLabel addI18nLabel(String key, int style, float size, Object constraints);

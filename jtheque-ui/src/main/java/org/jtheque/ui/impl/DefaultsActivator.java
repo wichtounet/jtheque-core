@@ -1,6 +1,7 @@
 package org.jtheque.ui.impl;
 
 import org.jtheque.utils.ui.SwingUtils;
+
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 import org.pushingpixels.substance.api.SubstanceLookAndFeel;
@@ -54,12 +55,12 @@ import javax.swing.UnsupportedLookAndFeelException;
  */
 public class DefaultsActivator implements BundleActivator {
     @Override
-    public void start(BundleContext bundleContext){
+    public void start(BundleContext bundleContext) {
         SwingUtils.inEdt(new ActivateDefaults());
     }
 
     @Override
-    public void stop(BundleContext bundleContext){
+    public void stop(BundleContext bundleContext) {
         //Nothing to stop
     }
 
@@ -83,7 +84,7 @@ public class DefaultsActivator implements BundleActivator {
             JDialog.setDefaultLookAndFeelDecorated(true);
 
             UIManager.put(SubstanceLookAndFeel.COLORIZATION_FACTOR, 1.0);
-	        
+
             TridentConfig.getInstance().addPropertyInterpolatorSource(new CorePropertyInterpolators());
             TridentConfig.getInstance().addPropertyInterpolatorSource(new AWTPropertyInterpolators());
         }

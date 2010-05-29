@@ -35,6 +35,7 @@ import org.jtheque.ui.utils.windows.ExtendedGlassPane;
 import org.jtheque.ui.utils.windows.InfiniteWaitFigure;
 import org.jtheque.utils.collections.ArrayUtils;
 import org.jtheque.utils.ui.SwingUtils;
+
 import org.osgi.framework.BundleContext;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -44,6 +45,7 @@ import javax.annotation.PostConstruct;
 import javax.swing.Action;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+
 import java.awt.Component;
 import java.awt.Frame;
 import java.awt.Image;
@@ -180,7 +182,6 @@ public abstract class SwingDialogView<T extends IModel> extends JDialog
      * Return an action to close this view.
      *
      * @param key The i18n key.
-     *
      * @return An action to close this view.
      */
     public Action getCloseAction(String key) {
@@ -291,7 +292,6 @@ public abstract class SwingDialogView<T extends IModel> extends JDialog
      * Return the internationalized message.
      *
      * @param key The internationalization key.
-     *
      * @return The internationalized message.
      */
     protected String getMessage(String key) {
@@ -303,7 +303,6 @@ public abstract class SwingDialogView<T extends IModel> extends JDialog
      *
      * @param key      The internationalization key.
      * @param replaces The replacement objects to use.
-     *
      * @return the internationalized message.
      */
     protected String getMessage(String key, Object... replaces) {
@@ -358,7 +357,6 @@ public abstract class SwingDialogView<T extends IModel> extends JDialog
      *
      * @param classz The class to get the service.
      * @param <T>    The type of service.
-     *
      * @return The service of the given class if it's exists otherwise null.
      */
     protected <T> T getService(Class<T> classz) {
@@ -370,7 +368,6 @@ public abstract class SwingDialogView<T extends IModel> extends JDialog
      *
      * @param classz The classz of the bean to get from application context.
      * @param <T>    The type of bean to get.
-     *
      * @return The bean of the given class or null if it doesn't exist.
      */
     protected <T> T getBean(Class<T> classz) {
@@ -383,7 +380,6 @@ public abstract class SwingDialogView<T extends IModel> extends JDialog
      *
      * @param classz The classz of the bean to get from application context.
      * @param <T>    The type of bean to get.
-     *
      * @return The bean of the given class or null if it doesn't exist.
      */
     protected <T> T getBeanFromEDT(Class<T> classz) {

@@ -27,31 +27,29 @@ public final class ActionFactory {
     /**
      * Construct a new ActionFactory.
      */
-    private ActionFactory(){
+    private ActionFactory() {
         super();
     }
 
     /**
      * Create an action to close the view.
      *
-      *@param key The i18n key.
+     * @param key  The i18n key.
      * @param view The view to close.
-     *
      * @return An action to close the view.
      */
-    public static JThequeAction createCloseViewAction(String key, IView view){
+    public static JThequeAction createCloseViewAction(String key, IView view) {
         return new CloseViewAction(key, view);
     }
 
     /**
      * Create an action to display the view.
      *
-      *@param key The i18n key.
+     * @param key  The i18n key.
      * @param view The view to close.
-     *
      * @return An action to close the view.
      */
-    public static JThequeAction createDisplayViewAction(String key, IView view){
+    public static JThequeAction createDisplayViewAction(String key, IView view) {
         return new DisplayViewAction(key, view);
     }
 }

@@ -63,7 +63,7 @@ import java.util.Collection;
  */
 public final class ValidFileConstraint implements Constraint {
     private final String fieldName;
-	private final int maxLength;
+    private final int maxLength;
 
     /**
      * Construct a new NotNullConstraint.
@@ -73,17 +73,18 @@ public final class ValidFileConstraint implements Constraint {
     public ValidFileConstraint(String fieldName) {
         this(fieldName, -1);
     }
+
     /**
      * Construct a new NotNullConstraint.
      *
      * @param fieldName The field name.
-     * @param maxLength The max length of the field. 
+     * @param maxLength The max length of the field.
      */
     public ValidFileConstraint(String fieldName, int maxLength) {
         super();
 
         this.fieldName = fieldName;
-	    this.maxLength = maxLength;
+        this.maxLength = maxLength;
     }
 
     @Override
@@ -98,21 +99,21 @@ public final class ValidFileConstraint implements Constraint {
 
     @Override
     public void validate(Object field, Collection<IError> errors) {
-	    if(field instanceof FileChooserPanel){
-		    String filePath = ((FileChooserPanel) field).getFilePath();
+        if (field instanceof FileChooserPanel) {
+            String filePath = ((FileChooserPanel) field).getFilePath();
 
-		    if(maxLength > 0){
-			    ValidationUtils.rejectIfLongerThan(filePath, fieldName, maxLength, errors);
-		    }
+            if (maxLength > 0) {
+                ValidationUtils.rejectIfLongerThan(filePath, fieldName, maxLength, errors);
+            }
 
-		    if(errors.isEmpty() && !new File(filePath).exists()){
-			    errors.add(new InternationalizedError("error.validation.field.file", fieldName));
-		    }
-	    }
+            if (errors.isEmpty() && !new File(filePath).exists()) {
+                errors.add(new InternationalizedError("error.validation.field.file", fieldName));
+            }
+        }
     }
 
-	@Override
-	public void configure(Object component) {
-		//Nothing to do here
-	}
+    @Override
+    public void configure(Object component) {
+        //Nothing to do here
+    }
 }

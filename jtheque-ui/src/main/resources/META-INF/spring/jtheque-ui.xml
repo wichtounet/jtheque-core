@@ -14,17 +14,23 @@
     <context:annotation-config/>
 
     <bean id="uiUtils" class="org.jtheque.ui.impl.UIUtils">
-        <constructor-arg ref="viewDelegate" />
-        <constructor-arg><osgi:reference interface="org.jtheque.i18n.able.ILanguageService" /></constructor-arg>
-        <constructor-arg><osgi:reference interface="org.jtheque.resources.able.IResourceService"/></constructor-arg>
+        <constructor-arg ref="viewDelegate"/>
+        <constructor-arg>
+            <osgi:reference interface="org.jtheque.i18n.able.ILanguageService"/>
+        </constructor-arg>
+        <constructor-arg>
+            <osgi:reference interface="org.jtheque.resources.able.IResourceService"/>
+        </constructor-arg>
     </bean>
 
     <bean id="filthyUtils" class="org.jtheque.ui.impl.FilthyUtils">
-        <constructor-arg><osgi:reference interface="org.jtheque.resources.able.IResourceService"/></constructor-arg>
+        <constructor-arg>
+            <osgi:reference interface="org.jtheque.resources.able.IResourceService"/>
+        </constructor-arg>
     </bean>
 
-    <bean id="viewDelegate" class="org.jtheque.ui.impl.SwingViewDelegate" />
+    <bean id="viewDelegate" class="org.jtheque.ui.impl.SwingViewDelegate"/>
 
-    <osgi:service interface="org.jtheque.ui.able.IUIUtils" ref="uiUtils" />
-    <osgi:service interface="org.jtheque.ui.able.IFilthyUtils" ref="filthyUtils" />
+    <osgi:service interface="org.jtheque.ui.able.IUIUtils" ref="uiUtils"/>
+    <osgi:service interface="org.jtheque.ui.able.IFilthyUtils" ref="filthyUtils"/>
 </beans>

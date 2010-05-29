@@ -20,6 +20,7 @@ import org.jtheque.i18n.able.ILanguageService;
 import org.jtheque.i18n.able.Internationalizable;
 
 import javax.swing.JCheckBox;
+
 import java.awt.Color;
 
 /**
@@ -50,8 +51,8 @@ public class JThequeCheckBox extends JCheckBox implements Internationalizable {
     /**
      * Construct a new JThequeCheckBox.
      *
-     * @param key The internationalization key.
-     * @param replaces The i18n replaces. 
+     * @param key      The internationalization key.
+     * @param replaces The i18n replaces.
      */
     public JThequeCheckBox(String key, Object[] replaces) {
         super();

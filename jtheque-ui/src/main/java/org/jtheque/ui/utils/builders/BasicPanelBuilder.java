@@ -2,11 +2,27 @@ package org.jtheque.ui.utils.builders;
 
 import org.jtheque.utils.ui.ButtonBarBuilder;
 
-import javax.swing.*;
+import javax.swing.Action;
+import javax.swing.BorderFactory;
+import javax.swing.ComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextArea;
+import javax.swing.JTree;
+import javax.swing.ListCellRenderer;
+import javax.swing.ListModel;
+import javax.swing.ListSelectionModel;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.TableModel;
 import javax.swing.tree.TreeCellRenderer;
 import javax.swing.tree.TreeModel;
+
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
@@ -56,17 +72,17 @@ public class BasicPanelBuilder extends AbstractPanelBuilder {
      *
      * @param layout The layout to set to the builded panel.
      */
-    public BasicPanelBuilder(LayoutManager layout){
+    public BasicPanelBuilder(LayoutManager layout) {
         super(layout);
     }
 
     /**
      * Construct a new JThequePanelBuilder.
      *
-     * @param panel The panel to build.
+     * @param panel  The panel to build.
      * @param layout If true set a default layout (GridBagLayout) to the builded panel.
      */
-    public BasicPanelBuilder(JPanel panel, boolean layout){
+    public BasicPanelBuilder(JPanel panel, boolean layout) {
         super(panel, layout);
     }
 
@@ -110,9 +126,8 @@ public class BasicPanelBuilder extends AbstractPanelBuilder {
     /**
      * Create a JList with the specified parameters.
      *
-     * @param model The model of the list.
+     * @param model    The model of the list.
      * @param renderer The renderer. Can be null.
-     *
      * @return The created JList.
      */
     private static JList createJList(ListModel model, ListCellRenderer renderer) {
@@ -178,9 +193,8 @@ public class BasicPanelBuilder extends AbstractPanelBuilder {
     /**
      * Apply the specified style to the component.
      *
-     * @param style The font style to apply.
+     * @param style     The font style to apply.
      * @param component The component to apply the style on.
-     *
      * @see PanelBuilder#BOLD
      * @see PanelBuilder#ITALIC
      */
@@ -229,10 +243,10 @@ public class BasicPanelBuilder extends AbstractPanelBuilder {
     }
 
     @Override
-    public JTree addScrolledTree(TreeModel model, TreeCellRenderer renderer, Object constraints){
+    public JTree addScrolledTree(TreeModel model, TreeCellRenderer renderer, Object constraints) {
         JTree tree = new JTree(model);
 
-        if(renderer != null){
+        if (renderer != null) {
             tree.setCellRenderer(renderer);
         }
 

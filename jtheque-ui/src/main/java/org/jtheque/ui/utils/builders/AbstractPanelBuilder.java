@@ -21,6 +21,7 @@ import org.jtheque.utils.ui.GridBagUtils;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
+
 import java.awt.Component;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -57,20 +58,20 @@ public abstract class AbstractPanelBuilder implements PanelBuilder {
      *
      * @param layout The layout to set to the builded panel.
      */
-    public AbstractPanelBuilder(LayoutManager layout){
+    public AbstractPanelBuilder(LayoutManager layout) {
         this(new JPanel(layout), false);
     }
 
     /**
      * Construct a new JThequePanelBuilder.
      *
-     * @param panel The panel to build.
+     * @param panel  The panel to build.
      * @param layout If true set a default layout (GridBagLayout) to the builded panel.
      */
-    public AbstractPanelBuilder(JPanel panel, boolean layout){
+    public AbstractPanelBuilder(JPanel panel, boolean layout) {
         super();
 
-        if(layout){
+        if (layout) {
             panel.setLayout(new GridBagLayout());
         }
 
@@ -98,7 +99,7 @@ public abstract class AbstractPanelBuilder implements PanelBuilder {
     }
 
     @Override
-    public void setBorder(Border border){
+    public void setBorder(Border border) {
         panel.setBorder(border);
     }
 

@@ -22,6 +22,7 @@ import org.jtheque.utils.StringUtils;
 
 import javax.swing.ComboBoxModel;
 import javax.swing.JList;
+
 import java.util.Collection;
 
 /**
@@ -46,7 +47,7 @@ public final class ValidationUtils {
      */
     public static void rejectIfEmpty(CharSequence field, String name, Collection<IError> errors) {
         if (StringUtils.isEmpty(field)) {
-            errors.add(new InternationalizedError("error.validation.field.empty",name));
+            errors.add(new InternationalizedError("error.validation.field.empty", name));
         }
     }
 
@@ -73,7 +74,7 @@ public final class ValidationUtils {
      */
     public static void rejectIfNothingSelected(JList list, String name, Collection<IError> errors) {
         if (list.getSelectedIndex() <= -1) {
-            errors.add(new InternationalizedError("error.validation.nothing.selected",new Object[]{name}));
+            errors.add(new InternationalizedError("error.validation.nothing.selected", new Object[]{name}));
         }
     }
 
@@ -86,7 +87,7 @@ public final class ValidationUtils {
      */
     public static void rejectIfNothingSelected(ComboBoxModel model, String name, Collection<IError> errors) {
         if (model.getSelectedItem() == null) {
-            errors.add(new InternationalizedError("error.validation.nothing.selected",name));
+            errors.add(new InternationalizedError("error.validation.nothing.selected", name));
         }
     }
 
@@ -101,7 +102,7 @@ public final class ValidationUtils {
         try {
             Integer.parseInt(field);
         } catch (NumberFormatException e) {
-            errors.add(new InternationalizedError("error.validation.field.numerical",name));
+            errors.add(new InternationalizedError("error.validation.field.numerical", name));
         }
     }
 
@@ -114,7 +115,7 @@ public final class ValidationUtils {
      */
     public static void rejectIfEmpty(Collection<?> list, String name, Collection<IError> errors) {
         if (list != null && list.isEmpty()) {
-            errors.add(new InternationalizedError("error.validation.field.empty",name));
+            errors.add(new InternationalizedError("error.validation.field.empty", name));
         }
     }
 
@@ -127,7 +128,7 @@ public final class ValidationUtils {
      */
     public static void rejectIfEmpty(JList list, String name, Collection<IError> errors) {
         if (list != null && list.getModel().getSize() < 1) {
-            errors.add(new InternationalizedError("error.validation.field.empty",name));
+            errors.add(new InternationalizedError("error.validation.field.empty", name));
         }
     }
 }

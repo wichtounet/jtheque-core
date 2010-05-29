@@ -4,6 +4,7 @@ import org.jtheque.utils.collections.CollectionUtils;
 
 import javax.swing.AbstractListModel;
 import javax.swing.ComboBoxModel;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -115,7 +116,6 @@ public class SimpleListModel<T> extends AbstractListModel implements ComboBoxMod
      * Remove the element at the given index.
      *
      * @param index The index to remove the element at.
-     *
      * @return The removed element.
      */
     public T removeElement(int index) {

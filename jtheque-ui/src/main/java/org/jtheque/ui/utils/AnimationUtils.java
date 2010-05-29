@@ -38,7 +38,6 @@ public final class AnimationUtils {
      * Create a Fade Out animator for the view.
      *
      * @param view The view to fade out.
-     *
      * @return The timeline animation.
      */
     public static Timeline createFadeOutAnimation(Object view) {
@@ -49,7 +48,6 @@ public final class AnimationUtils {
      * Create a fade in animator for a view.
      *
      * @param view The view to fade in.
-     *
      * @return The timeline animation.
      */
     public static Timeline createFadeInAnimation(Object view) {
@@ -60,7 +58,6 @@ public final class AnimationUtils {
      * Create a spring effect animator for a view.
      *
      * @param view The view to animate.
-     *
      * @return The timeline animation.
      */
     public static Timeline createSpringEffectAnimation(Object view) {
@@ -70,14 +67,12 @@ public final class AnimationUtils {
     /**
      * Create an animation to interpolate a property.
      *
-     * @param object The bean on which the property must be interpolated.
+     * @param object   The bean on which the property must be interpolated.
      * @param duration The duration of the animation.
      * @param property The property to interpolate.
-     * @param from The from value.
-     * @param to The to value.
-     *
-     * @param <T> The type of property to interpolate.
-     *
+     * @param from     The from value.
+     * @param to       The to value.
+     * @param <T>      The type of property to interpolate.
      * @return The timeline animation.
      */
     public static <T> Timeline createInterpolationAnimation(Object object, int duration, String property, T from, T to) {
@@ -93,7 +88,6 @@ public final class AnimationUtils {
      * Fade in the view.
      *
      * @param view The view to fade in.
-     *
      * @return The timeline animation.
      */
     public static Timeline startFadeIn(Object view) {
@@ -108,7 +102,6 @@ public final class AnimationUtils {
      * Fade out the view.
      *
      * @param view The view to fade out.
-     *
      * @return The timeline animation.
      */
     public static Timeline startFadeOut(Object view) {
@@ -126,12 +119,12 @@ public final class AnimationUtils {
      * @param target The target animation.
      */
     public static void startsLoopWhenStop(Timeline source, final Timeline target) {
-        source.addCallback(new TimelineCallbackAdapter(){
+        source.addCallback(new TimelineCallbackAdapter() {
             @Override
             public void onTimelineStateChanged(Timeline.TimelineState oldState, Timeline.TimelineState newState,
                                                float durationFraction, float timelinePosition) {
-                if(newState == Timeline.TimelineState.DONE){
-                    if(target.getState() == Timeline.TimelineState.SUSPENDED){
+                if (newState == Timeline.TimelineState.DONE) {
+                    if (target.getState() == Timeline.TimelineState.SUSPENDED) {
                         target.resume();
                     } else {
                         target.playLoop(Timeline.RepeatBehavior.LOOP);

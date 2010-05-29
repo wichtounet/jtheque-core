@@ -19,6 +19,7 @@ package org.jtheque.ui.utils.components;
 import org.jtheque.ui.able.ViewComponent;
 
 import javax.swing.JLabel;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -74,7 +75,7 @@ public final class JThequeLabel extends JLabel implements ViewComponent {
     }
 
     @Override
-    public Object getImpl(){
+    public Object getImpl() {
         return this;
     }
 }

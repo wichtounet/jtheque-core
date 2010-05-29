@@ -18,11 +18,11 @@ package org.jtheque.ui.utils.filthy;
 
 import org.jtheque.i18n.able.ILanguageService;
 import org.jtheque.i18n.able.Internationalizable;
-import org.jtheque.ui.utils.components.Borders;
 import org.jtheque.ui.utils.builders.JThequePanelBuilder;
 import org.jtheque.ui.utils.builders.PanelBuilder;
-import org.jtheque.utils.ui.SwingUtils;
+import org.jtheque.ui.utils.components.Borders;
 import org.jtheque.utils.io.SimpleFilter;
+import org.jtheque.utils.ui.SwingUtils;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -32,6 +32,7 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;

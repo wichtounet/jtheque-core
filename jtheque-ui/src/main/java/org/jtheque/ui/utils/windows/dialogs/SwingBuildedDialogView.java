@@ -30,7 +30,7 @@ import java.awt.Container;
  */
 public abstract class SwingBuildedDialogView<T extends IModel> extends SwingDialogView<T> {
     @Override
-    protected final void init(){
+    protected final void init() {
         initView();
 
         setContentPane(buildContentPane());
@@ -47,7 +47,7 @@ public abstract class SwingBuildedDialogView<T extends IModel> extends SwingDial
      *
      * @return The builded content pane.
      */
-    private Container buildContentPane(){
+    private Container buildContentPane() {
         I18nPanelBuilder builder = createBuilder();
 
         builder.setInternationalizableContainer(this);
@@ -59,14 +59,14 @@ public abstract class SwingBuildedDialogView<T extends IModel> extends SwingDial
         return builder.getPanel();
     }
 
-	/**
-	 * Create the builder for the window.
-	 *
-	 * @return The panel builder of the window. 
-	 */
-	JThequePanelBuilder createBuilder() {
-		return new JThequePanelBuilder();
-	}
+    /**
+     * Create the builder for the window.
+     *
+     * @return The panel builder of the window.
+     */
+    JThequePanelBuilder createBuilder() {
+        return new JThequePanelBuilder();
+    }
 
     /**
      * Init the view.

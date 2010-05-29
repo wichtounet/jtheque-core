@@ -1,15 +1,17 @@
 package org.jtheque.ui.impl;
 
-import org.jdesktop.swingx.JXErrorPane;
-import org.jdesktop.swingx.error.ErrorInfo;
 import org.jtheque.core.utils.SimplePropertiesCache;
 import org.jtheque.errors.utils.JThequeError;
 import org.jtheque.ui.able.ViewDelegate;
 import org.jtheque.utils.ui.SwingUtils;
+
+import org.jdesktop.swingx.JXErrorPane;
+import org.jdesktop.swingx.error.ErrorInfo;
 import org.slf4j.LoggerFactory;
 
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
+
 import java.awt.Component;
 import java.awt.Window;
 import java.lang.reflect.InvocationTargetException;
@@ -41,33 +43,33 @@ public final class SwingViewDelegate implements ViewDelegate {
     public boolean askUserForConfirmation(final String text, final String title) {
         boolean yes = false;
 
-		Window parent = null;
+        Window parent = null;
 
-		if (SimplePropertiesCache.get(MAIN_VIEW_CACHE) != null) {
-			parent = SimplePropertiesCache.get(MAIN_VIEW_CACHE);
-		}
+        if (SimplePropertiesCache.get(MAIN_VIEW_CACHE) != null) {
+            parent = SimplePropertiesCache.get(MAIN_VIEW_CACHE);
+        }
 
-		final Window p = parent;
+        final Window p = parent;
 
         final int[] response = new int[1];
 
-		if(SwingUtilities.isEventDispatchThread()){
-			response[0] = JOptionPane.showConfirmDialog(parent, text, title, JOptionPane.YES_NO_OPTION);
-		} else {
-			try {
-				SwingUtilities.invokeAndWait(new Runnable(){
-					@Override
-					public void run() {
-						response[0] = JOptionPane.showConfirmDialog(p, text, title, JOptionPane.YES_NO_OPTION);
-					}
-				});
-			} catch (InterruptedException e) {
-				LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
-			} catch (InvocationTargetException e) {
-				LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
-			}
-		}
-		
+        if (SwingUtilities.isEventDispatchThread()) {
+            response[0] = JOptionPane.showConfirmDialog(parent, text, title, JOptionPane.YES_NO_OPTION);
+        } else {
+            try {
+                SwingUtilities.invokeAndWait(new Runnable() {
+                    @Override
+                    public void run() {
+                        response[0] = JOptionPane.showConfirmDialog(p, text, title, JOptionPane.YES_NO_OPTION);
+                    }
+                });
+            } catch (InterruptedException e) {
+                LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
+            } catch (InvocationTargetException e) {
+                LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
+            }
+        }
+
         if (response[0] == JOptionPane.YES_OPTION) {
             yes = true;
         }
@@ -121,7 +123,7 @@ public final class SwingViewDelegate implements ViewDelegate {
          *
          * @param info The error info to display.
          */
-        DisplayErrorRunnable(ErrorInfo info){
+        DisplayErrorRunnable(ErrorInfo info) {
             this.info = info;
         }
 
@@ -142,9 +144,9 @@ public final class SwingViewDelegate implements ViewDelegate {
         /**
          * The text to display.
          *
-         * @param text The text to display. 
+         * @param text The text to display.
          */
-        DisplayTextRunnable(String text){
+        DisplayTextRunnable(String text) {
             this.text = text;
         }
 

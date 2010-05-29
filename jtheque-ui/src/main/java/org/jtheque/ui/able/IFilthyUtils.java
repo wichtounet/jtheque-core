@@ -29,13 +29,12 @@ import java.awt.Image;
  */
 public interface IFilthyUtils {
     /**
-     * Paint a filthy buffered background on the given graphics. 
+     * Paint a filthy buffered background on the given graphics.
      *
-     * @param g The graphics to use.
+     * @param g             The graphics to use.
      * @param gradientImage The gradient image.
-     * @param tracker The size tracker of the component.
-     * @param panel The panel to paint the filthy background for.
-     *
+     * @param tracker       The size tracker of the component.
+     * @param panel         The panel to paint the filthy background for.
      * @return The new gradient image.
      */
     Image paintFilthyBackground(Graphics g, Image gradientImage, SizeTracker tracker, Component panel);

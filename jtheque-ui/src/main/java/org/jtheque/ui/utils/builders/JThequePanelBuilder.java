@@ -1,21 +1,33 @@
 package org.jtheque.ui.utils.builders;
 
-import org.jdesktop.swingx.JXTable;
-import org.jdesktop.swingx.JXTree;
 import org.jtheque.i18n.able.Internationalizable;
 import org.jtheque.i18n.able.InternationalizableContainer;
-import org.jtheque.ui.utils.components.Borders;
-import org.jtheque.utils.ui.ButtonBarBuilder;
-import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.ui.utils.components.BorderUpdater;
+import org.jtheque.ui.utils.components.Borders;
 import org.jtheque.ui.utils.components.JThequeCheckBox;
 import org.jtheque.ui.utils.components.JThequeI18nLabel;
+import org.jtheque.utils.ui.ButtonBarBuilder;
+import org.jtheque.utils.ui.GridBagUtils;
 
-import javax.swing.*;
+import org.jdesktop.swingx.JXTable;
+import org.jdesktop.swingx.JXTree;
+
+import javax.swing.Action;
+import javax.swing.BorderFactory;
+import javax.swing.ComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JComponent;
+import javax.swing.JPanel;
+import javax.swing.JSeparator;
+import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.TableModel;
 import javax.swing.tree.TreeCellRenderer;
 import javax.swing.tree.TreeModel;
+
 import java.awt.Color;
 import java.awt.LayoutManager;
 
@@ -64,17 +76,17 @@ public class JThequePanelBuilder extends BasicPanelBuilder implements I18nPanelB
      *
      * @param layout The layout to set to the builded panel.
      */
-    public JThequePanelBuilder(LayoutManager layout){
+    public JThequePanelBuilder(LayoutManager layout) {
         super(layout);
     }
 
     /**
      * Construct a new JThequePanelBuilder.
      *
-     * @param panel The panel to build.
+     * @param panel  The panel to build.
      * @param layout If true set a default layout (GridBagLayout) to the builded panel.
      */
-    public JThequePanelBuilder(JPanel panel, boolean layout){
+    public JThequePanelBuilder(JPanel panel, boolean layout) {
         super(panel, layout);
     }
 
@@ -83,11 +95,11 @@ public class JThequePanelBuilder extends BasicPanelBuilder implements I18nPanelB
         this.container = container;
     }
 
-	/**
-	 * Return the internationalizable container of this builder.
-	 *
-	 * @return The internationalizable container of this builder. 
-	 */
+    /**
+     * Return the internationalizable container of this builder.
+     *
+     * @return The internationalizable container of this builder.
+     */
     public InternationalizableContainer getContainer() {
         return container;
     }
@@ -146,10 +158,10 @@ public class JThequePanelBuilder extends BasicPanelBuilder implements I18nPanelB
     }
 
     @Override
-    public JXTree addScrolledTree(TreeModel model, TreeCellRenderer renderer, Object constraints){
+    public JXTree addScrolledTree(TreeModel model, TreeCellRenderer renderer, Object constraints) {
         JXTree tree = new JXTree(model);
 
-        if(renderer != null){
+        if (renderer != null) {
             tree.setCellRenderer(renderer);
         }
 
@@ -160,7 +172,7 @@ public class JThequePanelBuilder extends BasicPanelBuilder implements I18nPanelB
     public void addI18nSeparator(String key, Object constraints) {
         I18nPanelBuilder separatorBuilder = addPanel(constraints);
 
-        if(container != null){
+        if (container != null) {
             separatorBuilder.setInternationalizableContainer(container);
         }
 
@@ -172,7 +184,7 @@ public class JThequePanelBuilder extends BasicPanelBuilder implements I18nPanelB
     public I18nPanelBuilder addPanel(Object constraints) {
         I18nPanelBuilder builder = new JThequePanelBuilder();
 
-        if(container != null){
+        if (container != null) {
             builder.setInternationalizableContainer(container);
         }
 
@@ -185,7 +197,7 @@ public class JThequePanelBuilder extends BasicPanelBuilder implements I18nPanelB
     public I18nPanelBuilder addPanel(LayoutManager layout, Object constraints) {
         I18nPanelBuilder builder = new JThequePanelBuilder(layout);
 
-        if(container != null){
+        if (container != null) {
             builder.setInternationalizableContainer(container);
         }
 
@@ -207,7 +219,7 @@ public class JThequePanelBuilder extends BasicPanelBuilder implements I18nPanelB
     public JButton addButton(Action action, Object constraints) {
         JButton button = add(new JButton(action), constraints);
 
-        if(action instanceof Internationalizable){
+        if (action instanceof Internationalizable) {
             addInternationalizable((Internationalizable) action);
         }
 
@@ -222,8 +234,8 @@ public class JThequePanelBuilder extends BasicPanelBuilder implements I18nPanelB
 
         builder.addActions(actions);
 
-        for(Action action : actions){
-            if(action instanceof Internationalizable){
+        for (Action action : actions) {
+            if (action instanceof Internationalizable) {
                 addInternationalizable((Internationalizable) action);
             }
         }
@@ -247,8 +259,7 @@ public class JThequePanelBuilder extends BasicPanelBuilder implements I18nPanelB
      * Create a JXTable with JTheque defaults.
      *
      * @param model The model to use.
-     *
-     * @return The created JXTable. 
+     * @return The created JXTable.
      */
     private static JXTable createTable(TableModel model) {
         JXTable table = new JXTable(model);
@@ -262,13 +273,13 @@ public class JThequePanelBuilder extends BasicPanelBuilder implements I18nPanelB
         return table;
     }
 
-	/**
-	 * Add an internationalizable to the builder.
-	 *
-	 * @param internationalizable The internationalizable to the builder. 
-	 */
+    /**
+     * Add an internationalizable to the builder.
+     *
+     * @param internationalizable The internationalizable to the builder.
+     */
     void addInternationalizable(Internationalizable internationalizable) {
-        if(container != null){
+        if (container != null) {
             container.addInternationalizable(internationalizable);
         }
     }

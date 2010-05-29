@@ -12,6 +12,7 @@ import org.jtheque.ui.utils.filthy.FilthyBackgroundPanel;
 
 import javax.annotation.PostConstruct;
 import javax.swing.JComponent;
+
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -41,32 +42,32 @@ public abstract class FilthyBuildedPanel extends FilthyBackgroundPanel implement
 
     private ILanguageService languageService;
 
-	private IModel model;
+    private IModel model;
 
     /**
-     * Construct a FilthyBuildedPanel. 
+     * Construct a FilthyBuildedPanel.
      */
-	protected FilthyBuildedPanel() {
-		super();
-	}
+    protected FilthyBuildedPanel() {
+        super();
+    }
 
     /**
      * Construct a new FilthyBuildedPanel.
      *
-     * @param filthyUtils The filthyUtils.
-     * @param languageService The language service. 
+     * @param filthyUtils     The filthyUtils.
+     * @param languageService The language service.
      */
-	public FilthyBuildedPanel(IFilthyUtils filthyUtils, ILanguageService languageService) {
+    public FilthyBuildedPanel(IFilthyUtils filthyUtils, ILanguageService languageService) {
         super(filthyUtils);
 
         this.languageService = languageService;
     }
 
     /**
-     * Build the panel. 
+     * Build the panel.
      */
     @PostConstruct
-    protected final void build(){
+    protected final void build() {
         getLanguageService().addInternationalizable(this);
 
         I18nPanelBuilder panelBuilder = new FilthyPanelBuilder(this);
@@ -80,20 +81,20 @@ public abstract class FilthyBuildedPanel extends FilthyBackgroundPanel implement
     /**
      * Init the view.
      *
-     * @param builder The builder. 
+     * @param builder The builder.
      */
     protected abstract void buildView(I18nPanelBuilder builder);
 
     /**
      * Return the language service to use to internationalize the panel.
      *
-     * @return The language service. 
+     * @return The language service.
      */
-	protected ILanguageService getLanguageService(){
-		return languageService;
-	}
+    protected ILanguageService getLanguageService() {
+        return languageService;
+    }
 
-	@Override
+    @Override
     public void addInternationalizable(Internationalizable internationalizable) {
         internationalizables.add(internationalizable);
     }
@@ -106,42 +107,42 @@ public abstract class FilthyBuildedPanel extends FilthyBackgroundPanel implement
     }
 
     @Override
-    public void display(){
+    public void display() {
         //Nothing by default
     }
 
     @Override
-    public void closeDown(){
+    public void closeDown() {
         //Nothing by default
     }
 
     @Override
-    public void toFirstPlan(){
+    public void toFirstPlan() {
         //Nothing by default
     }
 
     @Override
-    public void sendMessage(String message, Object value){
+    public void sendMessage(String message, Object value) {
         //Nothing by default
     }
 
     @Override
-    public void refresh(){
+    public void refresh() {
         //Nothing by default
     }
 
     @Override
-    public JComponent getImpl(){
+    public JComponent getImpl() {
         return this;
     }
 
     @Override
-    public IModel getModel(){
+    public IModel getModel() {
         return model;
     }
 
     @Override
-    public boolean validateContent(){
+    public boolean validateContent() {
         return true;
     }
 
@@ -150,7 +151,7 @@ public abstract class FilthyBuildedPanel extends FilthyBackgroundPanel implement
      *
      * @param model The model of the view.
      */
-    protected void setModel(IModel model){
+    protected void setModel(IModel model) {
         this.model = model;
     }
 }

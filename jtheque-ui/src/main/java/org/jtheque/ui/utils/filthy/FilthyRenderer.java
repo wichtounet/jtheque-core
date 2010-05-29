@@ -6,6 +6,7 @@ import org.jtheque.ui.utils.components.Borders;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JList;
 import javax.swing.border.Border;
+
 import java.awt.Color;
 import java.awt.Component;
 

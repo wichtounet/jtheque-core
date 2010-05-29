@@ -1,6 +1,7 @@
 package org.jtheque.ui.utils.components;
 
 import javax.swing.JPanel;
+
 import java.awt.CardLayout;
 import java.awt.Component;
 import java.util.HashMap;

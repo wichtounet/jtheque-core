@@ -6,12 +6,12 @@ import org.jtheque.errors.able.IErrorService;
 import org.jtheque.i18n.able.ILanguageService;
 import org.jtheque.spring.utils.SwingSpringProxy;
 import org.jtheque.ui.able.IFilthyUtils;
+
 import org.osgi.framework.BundleContext;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.osgi.context.BundleContextAware;
 
-import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -38,42 +38,40 @@ import java.util.Collection;
  */
 public abstract class OSGIFilthyBuildedPanel extends FilthyBuildedPanel implements BundleContextAware,
         ApplicationContextAware {
-	private BundleContext bundleContext;
-	private ApplicationContext applicationContext;
+    private BundleContext bundleContext;
+    private ApplicationContext applicationContext;
 
-	private IFilthyUtils utils;
+    private IFilthyUtils utils;
 
-	@Override
-	public void setBundleContext(BundleContext bundleContext) {
-		this.bundleContext = bundleContext;
-	}
+    @Override
+    public void setBundleContext(BundleContext bundleContext) {
+        this.bundleContext = bundleContext;
+    }
 
     /**
      * Return the service of the given class.
      *
      * @param classz The class to get the service.
      * @param <T>    The type of service.
-     *
      * @return The service of the given class if it's exists otherwise null.
      */
-    protected <T> T getService(Class<T> classz){
+    protected <T> T getService(Class<T> classz) {
         return OSGiUtils.getService(bundleContext, classz);
     }
 
-	@Override
-	public void setApplicationContext(ApplicationContext applicationContext) {
-		this.applicationContext = applicationContext;
-	}
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) {
+        this.applicationContext = applicationContext;
+    }
 
     /**
      * Return the bean of the given class using the application context.
      *
      * @param classz The classz of the bean to get from application context.
-     * @param <T> The type of bean to get.
-     *
+     * @param <T>    The type of bean to get.
      * @return The bean of the given class or null if it doesn't exist.
      */
-    protected <T> T getBean(Class<T> classz){
+    protected <T> T getBean(Class<T> classz) {
         return applicationContext.getBean(classz);
     }
 
@@ -82,47 +80,46 @@ public abstract class OSGIFilthyBuildedPanel extends FilthyBuildedPanel implemen
      * it can be used for a Swing bean.
      *
      * @param classz The classz of the bean to get from application context.
-     * @param <T> The type of bean to get.
-     *
+     * @param <T>    The type of bean to get.
      * @return The bean of the given class or null if it doesn't exist.
      */
-	protected <T> T getBeanFromEDT(Class<T> classz){
+    protected <T> T getBeanFromEDT(Class<T> classz) {
         return new SwingSpringProxy<T>(classz, applicationContext).get();
     }
 
-	@Override
-	protected ILanguageService getLanguageService() {
-		return getService(ILanguageService.class);
-	}
+    @Override
+    protected ILanguageService getLanguageService() {
+        return getService(ILanguageService.class);
+    }
 
-	@Override
-	protected IFilthyUtils getFilthyUtils() {
-		if(utils == null){
-			utils = getService(IFilthyUtils.class);
-		}
+    @Override
+    protected IFilthyUtils getFilthyUtils() {
+        if (utils == null) {
+            utils = getService(IFilthyUtils.class);
+        }
 
-		return utils;
-	}
+        return utils;
+    }
 
-	@Override
-	public boolean validateContent() {
-		Collection<IError> errors = new ArrayList<IError>(5);
+    @Override
+    public boolean validateContent() {
+        Collection<IError> errors = new ArrayList<IError>(5);
 
-		validate(errors);
+        validate(errors);
 
-		for (IError error : errors) {
-			getService(IErrorService.class).addError(error);
-		}
+        for (IError error : errors) {
+            getService(IErrorService.class).addError(error);
+        }
 
-		return errors.isEmpty();
-	}
+        return errors.isEmpty();
+    }
 
-	/**
-	 * Validate the panel.
-	 *
-	 * @param errors The errors. 
-	 */
-	public void validate(Collection<IError> errors){
-		//Default empty implementation
+    /**
+     * Validate the panel.
+     *
+     * @param errors The errors.
+     */
+    public void validate(Collection<IError> errors) {
+        //Default empty implementation
 	}
 }

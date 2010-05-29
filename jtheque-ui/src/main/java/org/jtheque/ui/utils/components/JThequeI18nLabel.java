@@ -22,6 +22,7 @@ import org.jtheque.ui.able.ViewComponent;
 import org.jtheque.utils.collections.ArrayUtils;
 
 import javax.swing.JLabel;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -103,7 +104,7 @@ public final class JThequeI18nLabel extends JLabel implements Internationalizabl
     }
 
     @Override
-    public Object getImpl(){
+    public Object getImpl() {
         return this;
     }
 }

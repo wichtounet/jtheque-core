@@ -1,8 +1,10 @@
 package org.jtheque.ui.utils.filthy;
+
 import org.jtheque.ui.utils.components.Borders;
 
 import javax.swing.JList;
 import javax.swing.ListModel;
+
 import java.awt.AlphaComposite;
 import java.awt.BasicStroke;
 import java.awt.Color;

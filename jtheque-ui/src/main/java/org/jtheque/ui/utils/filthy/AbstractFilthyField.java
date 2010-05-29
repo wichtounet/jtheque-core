@@ -7,6 +7,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.border.CompoundBorder;
 import javax.swing.text.JTextComponent;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 

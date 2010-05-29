@@ -40,7 +40,7 @@ public final class CloseViewAction extends JThequeAction {
     /**
      * Construct a new CloseViewAction with a specific internationalization key.
      *
-     * @param key The i18n key.
+     * @param key  The i18n key.
      * @param view The view to close.
      */
     public CloseViewAction(String key, IView view) {

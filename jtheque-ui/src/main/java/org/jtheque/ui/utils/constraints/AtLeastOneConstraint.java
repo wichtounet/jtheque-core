@@ -5,6 +5,7 @@ import org.jtheque.errors.utils.InternationalizedError;
 
 import javax.swing.ComboBoxModel;
 import javax.swing.JList;
+
 import java.awt.ItemSelectable;
 import java.util.Collection;
 
@@ -71,23 +72,23 @@ public final class AtLeastOneConstraint implements Constraint {
 
     @Override
     public void validate(Object field, Collection<IError> errors) {
-	    int count = 0;
+        int count = 0;
 
-	    if(field instanceof ItemSelectable){
-		    count = ((ItemSelectable) field).getSelectedObjects().length;
-	    } else if(field instanceof ComboBoxModel){
-		    count = ((ComboBoxModel) field).getSelectedItem() == null ? 0 : 1;
-	    } else if(field instanceof JList){
-		    count = ((JList) field).getSelectedValues().length;
-	    }
+        if (field instanceof ItemSelectable) {
+            count = ((ItemSelectable) field).getSelectedObjects().length;
+        } else if (field instanceof ComboBoxModel) {
+            count = ((ComboBoxModel) field).getSelectedItem() == null ? 0 : 1;
+        } else if (field instanceof JList) {
+            count = ((JList) field).getSelectedValues().length;
+        }
 
         if (count <= 0) {
             errors.add(new InternationalizedError("error.validation.field.empty", fieldName));
         }
     }
 
-	@Override
-	public void configure(Object component) {
-		//Nothing to configure here
-	}
+    @Override
+    public void configure(Object component) {
+        //Nothing to configure here
+    }
 }

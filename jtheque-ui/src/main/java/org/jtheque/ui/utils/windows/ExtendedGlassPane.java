@@ -20,6 +20,7 @@ import org.jtheque.ui.able.IWindowView;
 import org.jtheque.ui.able.WaitFigure;
 
 import javax.swing.JPanel;
+
 import java.awt.Cursor;
 import java.awt.Graphics;
 

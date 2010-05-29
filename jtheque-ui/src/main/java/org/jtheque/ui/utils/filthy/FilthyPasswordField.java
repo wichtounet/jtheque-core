@@ -47,9 +47,9 @@ public final class FilthyPasswordField extends AbstractFilthyField {
     /**
      * Set the password of the field.
      *
-     * @param password The password. 
+     * @param password The password.
      */
-    public void setPassword(String password){
+    public void setPassword(String password) {
         passwordField.setText(password);
     }
 

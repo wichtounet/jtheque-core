@@ -1,6 +1,5 @@
 package org.jtheque.ui.utils.builders;
 
-import org.jdesktop.swingx.JXTree;
 import org.jtheque.ui.utils.components.BorderUpdater;
 import org.jtheque.ui.utils.components.Borders;
 import org.jtheque.ui.utils.components.JThequeI18nLabel;
@@ -8,10 +7,23 @@ import org.jtheque.ui.utils.filthy.FilthyComboBox;
 import org.jtheque.ui.utils.filthy.FilthyList;
 import org.jtheque.ui.utils.filthy.FilthyPanel;
 
-import javax.swing.*;
+import org.jdesktop.swingx.JXTree;
+
+import javax.swing.BorderFactory;
+import javax.swing.ComboBoxModel;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.ListCellRenderer;
+import javax.swing.ListModel;
+import javax.swing.ListSelectionModel;
 import javax.swing.border.TitledBorder;
 import javax.swing.tree.TreeCellRenderer;
 import javax.swing.tree.TreeModel;
+
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.LayoutManager;
@@ -60,16 +72,16 @@ public final class FilthyPanelBuilder extends JThequePanelBuilder {
      *
      * @param layout The layout to set to the builded panel.
      */
-    public FilthyPanelBuilder(LayoutManager layout){
+    public FilthyPanelBuilder(LayoutManager layout) {
         super(new FilthyPanel(layout), false);
     }
 
-	/**
-	 * Construct a new FilthyPanelBuilder with a specific panel.
-	 *
-	 * @param panel The panel to build.
-	 * @param layout Indicate if we must set a default layout on the panel or keep the existing one. 
-	 */
+    /**
+     * Construct a new FilthyPanelBuilder with a specific panel.
+     *
+     * @param panel  The panel to build.
+     * @param layout Indicate if we must set a default layout on the panel or keep the existing one.
+     */
     public FilthyPanelBuilder(JPanel panel, boolean layout) {
         super(panel, layout);
     }
@@ -202,7 +214,7 @@ public final class FilthyPanelBuilder extends JThequePanelBuilder {
     public I18nPanelBuilder addPanel(Object constraints) {
         I18nPanelBuilder builder = new FilthyPanelBuilder();
 
-        if(getContainer() != null){
+        if (getContainer() != null) {
             builder.setInternationalizableContainer(getContainer());
         }
 
@@ -212,10 +224,10 @@ public final class FilthyPanelBuilder extends JThequePanelBuilder {
     }
 
     @Override
-    public I18nPanelBuilder addPanel(LayoutManager layout, Object constraints){
+    public I18nPanelBuilder addPanel(LayoutManager layout, Object constraints) {
         I18nPanelBuilder builder = new FilthyPanelBuilder(layout);
 
-        if(getContainer() != null){
+        if (getContainer() != null) {
             builder.setInternationalizableContainer(getContainer());
         }
 
@@ -225,7 +237,7 @@ public final class FilthyPanelBuilder extends JThequePanelBuilder {
     }
 
     @Override
-    public JXTree addScrolledTree(TreeModel model, TreeCellRenderer renderer, Object constraints){
+    public JXTree addScrolledTree(TreeModel model, TreeCellRenderer renderer, Object constraints) {
         JXTree tree = new JXTree(model);
         tree.setRootVisible(false);
         tree.setShowsRootHandles(true);
@@ -233,7 +245,7 @@ public final class FilthyPanelBuilder extends JThequePanelBuilder {
         tree.setBorder(Borders.EMPTY_BORDER);
         tree.putClientProperty("JTree.lineStyle", "None");
 
-        if(renderer != null){
+        if (renderer != null) {
             tree.setCellRenderer(renderer);
         }
 

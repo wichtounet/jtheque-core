@@ -35,7 +35,7 @@ import java.awt.image.BufferedImage;
  */
 
 /**
- * Utility class for filthy component. 
+ * Utility class for filthy component.
  *
  * @author Baptiste Wicht
  */
@@ -43,11 +43,11 @@ public class FilthyUtils implements IFilthyUtils {
     private final BufferedImage lightImage;
     private final LinearGradientPaint backgroundPaint;
 
-	/**
-	* Utility class, not instanciable.
-	* 
-	* @param resourceService The resource service, used to get the image of the background.
-	*/
+    /**
+     * Utility class, not instanciable.
+     *
+     * @param resourceService The resource service, used to get the image of the background.
+     */
     public FilthyUtils(IResourceService resourceService) {
         super();
 

@@ -7,6 +7,7 @@ import javax.swing.JTextField;
 import javax.swing.text.AbstractDocument;
 import javax.swing.text.Document;
 import javax.swing.text.DocumentFilter;
+
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;

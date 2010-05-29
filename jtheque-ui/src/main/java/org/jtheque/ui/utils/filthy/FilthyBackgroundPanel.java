@@ -21,6 +21,7 @@ import org.jtheque.ui.able.IFilthyUtils;
 import org.jtheque.utils.ui.SizeTracker;
 
 import javax.swing.JPanel;
+
 import java.awt.Graphics;
 import java.awt.Image;
 
@@ -39,16 +40,16 @@ public class FilthyBackgroundPanel extends JPanel implements Filthy {
      * Construct a new FilthyBackgroundPanel. Using this constructor, the extended class must
      * override the getFilthyUtils method to provide a FilthyUtils service to the panel.
      */
-	public FilthyBackgroundPanel() {
-		super();
-	}
+    public FilthyBackgroundPanel() {
+        super();
+    }
 
     /**
      * Construct a new FilthyBackgroundPanel.
      *
-     * @param filthyUtils The filthy utils. 
+     * @param filthyUtils The filthy utils.
      */
-	public FilthyBackgroundPanel(IFilthyUtils filthyUtils) {
+    public FilthyBackgroundPanel(IFilthyUtils filthyUtils) {
         super();
 
         this.filthyUtils = filthyUtils;
@@ -68,7 +69,7 @@ public class FilthyBackgroundPanel extends JPanel implements Filthy {
      *
      * @return The filthy utils to use.
      */
-	protected IFilthyUtils getFilthyUtils(){
+    protected IFilthyUtils getFilthyUtils(){
 		return filthyUtils;
 	}
 }

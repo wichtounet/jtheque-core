@@ -3,6 +3,7 @@ package org.jtheque.ui.utils.filthy;
 import org.jtheque.utils.ui.PaintUtils;
 
 import javax.swing.JTextField;
+
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
@@ -51,7 +52,7 @@ public final class FilthyTextField extends AbstractFilthyField {
     @Override
     void initComponent() {
         textField = new JTextField();
-        
+
         makeFilthy(textField);
 
         add(textField);

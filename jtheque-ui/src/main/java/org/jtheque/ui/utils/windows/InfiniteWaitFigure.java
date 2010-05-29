@@ -17,6 +17,7 @@ package org.jtheque.ui.utils.windows;
  */
 
 import org.jtheque.ui.able.WaitFigure;
+
 import org.slf4j.LoggerFactory;
 
 import javax.swing.JComponent;
@@ -25,6 +26,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 import javax.swing.event.AncestorEvent;
 import javax.swing.event.AncestorListener;
+
 import java.awt.AWTException;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -72,24 +74,26 @@ public final class InfiniteWaitFigure implements WaitFigure, ActionListener {
     private Timer timer;
     private Color[] colors;
     private int colorOffset;
-    
+
     private final KeyListener keyListener = new InactiveKeyListener();
     private final MouseMotionListener mouseMotionListener = new InactiveMouseMotionListener();
 
     /**
-     * A key listener who do nothing. 
-     * 
+     * A key listener who do nothing.
+     *
      * @author Baptiste Wicht
      */
-    private static final class InactiveKeyListener extends KeyAdapter{}
+    private static final class InactiveKeyListener extends KeyAdapter {
+    }
 
     /**
-     * A mouse motion listener who do nothing. 
-     * 
+     * A mouse motion listener who do nothing.
+     *
      * @author Baptiste Wicht
      */
-    private static final class InactiveMouseMotionListener extends MouseMotionAdapter{}
-    
+    private static final class InactiveMouseMotionListener extends MouseMotionAdapter {
+    }
+
     private final ComponentListener componentAdapter = new ComponentAdapter() {
         @Override
         public void componentResized(ComponentEvent e) {

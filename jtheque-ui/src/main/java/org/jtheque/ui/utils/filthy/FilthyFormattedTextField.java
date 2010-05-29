@@ -5,6 +5,7 @@ import org.jtheque.utils.ui.PaintUtils;
 import javax.swing.JFormattedTextField;
 import javax.swing.text.MaskFormatter;
 import javax.swing.text.NumberFormatter;
+
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
@@ -60,7 +61,7 @@ public final class FilthyFormattedTextField extends AbstractFilthyField {
 
     @Override
     void initComponent() {
-        if(textField != null){
+        if (textField != null) {
             makeFilthy(textField);
 
             add(textField);

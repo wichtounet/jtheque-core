@@ -4,6 +4,7 @@ import org.jtheque.i18n.able.ILanguageService;
 import org.jtheque.resources.able.IResourceService;
 import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.ui.able.ViewDelegate;
+
 import org.springframework.core.io.ClassPathResource;
 
 /*
@@ -34,9 +35,9 @@ public class UIUtils implements IUIUtils {
     /**
      * Create a new UIUtils.
      *
-     * @param viewDelegate The view delegate.
+     * @param viewDelegate    The view delegate.
      * @param languageService The language service.
-     * @param resourceService The resource service. 
+     * @param resourceService The resource service.
      */
     public UIUtils(ViewDelegate viewDelegate, ILanguageService languageService, IResourceService resourceService) {
         super();
@@ -44,7 +45,7 @@ public class UIUtils implements IUIUtils {
         this.viewDelegate = viewDelegate;
         this.languageService = languageService;
 
-	    resourceService.registerResource(LIGHT_IMAGE, new ClassPathResource("org/jtheque/ui/light.png"));
+        resourceService.registerResource(LIGHT_IMAGE, new ClassPathResource("org/jtheque/ui/light.png"));
     }
 
     @Override

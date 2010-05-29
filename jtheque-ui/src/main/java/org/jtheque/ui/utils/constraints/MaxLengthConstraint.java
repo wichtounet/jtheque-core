@@ -6,6 +6,7 @@ import org.jtheque.utils.ui.SwingUtils;
 
 import javax.swing.JTextField;
 import javax.swing.text.JTextComponent;
+
 import java.awt.Component;
 import java.util.Collection;
 
@@ -39,10 +40,10 @@ public final class MaxLengthConstraint implements Constraint {
     /**
      * Construct a new MaxLengthConstraint.
      *
-     * @param maxLength  The maximum length of the field.
-     * @param fieldName  The field name.
+     * @param maxLength The maximum length of the field.
+     * @param fieldName The field name.
      * @param canBeNull Can the field be null ?
-     * @param numerical  Must the field be numerical ?
+     * @param numerical Must the field be numerical ?
      */
     public MaxLengthConstraint(int maxLength, String fieldName, boolean canBeNull, boolean numerical) {
         super();
@@ -57,18 +58,18 @@ public final class MaxLengthConstraint implements Constraint {
      * Construct a new MaxLengthConstraint.
      *
      * @param canBeNull boolean tag indicating if the field can be empty.
-     * @param fieldName The field name to test. 
+     * @param fieldName The field name to test.
      */
-	public MaxLengthConstraint(boolean canBeNull, String fieldName) {
-		super();
+    public MaxLengthConstraint(boolean canBeNull, String fieldName) {
+        super();
 
-		this.canBeNull = canBeNull;
-		this.fieldName = fieldName;
-		maxLength = Integer.MAX_VALUE;
-		numerical = false;
-	}
+        this.canBeNull = canBeNull;
+        this.fieldName = fieldName;
+        maxLength = Integer.MAX_VALUE;
+        numerical = false;
+    }
 
-	@Override
+    @Override
     public int maxLength() {
         return maxLength;
     }
@@ -78,27 +79,27 @@ public final class MaxLengthConstraint implements Constraint {
         return true;
     }
 
-	@Override
-	public void configure(Object component) {
-		if(component instanceof JTextField && maxLength > 0){
-			SwingUtils.addFieldLengthLimit((JTextField) component, maxLength);
-		}
-	}
+    @Override
+    public void configure(Object component) {
+        if (component instanceof JTextField && maxLength > 0) {
+            SwingUtils.addFieldLengthLimit((JTextField) component, maxLength);
+        }
+    }
 
-	@Override
+    @Override
     public void validate(Object field, Collection<IError> errors) {
-	    if(field instanceof Component && !((Component) field).isEnabled()){
-		    return;
-	    }
+        if (field instanceof Component && !((Component) field).isEnabled()) {
+            return;
+        }
 
-	    CharSequence str = null;
+        CharSequence str = null;
 
-	    if(field instanceof JTextComponent){
-		    str = ((JTextComponent) field).getText();
-	    } else if(field instanceof CharSequence){
-		    str = (CharSequence) field;
-	    }
-	    
+        if (field instanceof JTextComponent) {
+            str = ((JTextComponent) field).getText();
+        } else if (field instanceof CharSequence) {
+            str = (CharSequence) field;
+        }
+
         if (!canBeNull) {
             ValidationUtils.rejectIfEmpty(str, fieldName, errors);
         }

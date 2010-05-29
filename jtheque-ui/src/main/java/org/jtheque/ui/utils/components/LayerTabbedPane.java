@@ -16,16 +16,18 @@ package org.jtheque.ui.utils.components;
  * limitations under the License.
  */
 
-import org.jdesktop.jxlayer.JXLayer;
-import org.jdesktop.jxlayer.plaf.BufferedLayerUI;
 import org.jtheque.i18n.able.ILanguageService;
 import org.jtheque.ui.able.ViewComponent;
+
+import org.jdesktop.jxlayer.JXLayer;
+import org.jdesktop.jxlayer.plaf.BufferedLayerUI;
 
 import javax.swing.JComponent;
 import javax.swing.JTabbedPane;
 import javax.swing.Timer;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+
 import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -48,7 +50,7 @@ public class LayerTabbedPane extends JTabbedPane implements ViewComponent {
     /**
      * Construct a new LayerTabbedPane.
      *
-     * @param languageService The language service. 
+     * @param languageService The language service.
      */
     public LayerTabbedPane(ILanguageService languageService) {
         super();
@@ -116,7 +118,7 @@ public class LayerTabbedPane extends JTabbedPane implements ViewComponent {
     final JXLayer<JComponent> getLayerAt(int index) {
         return components.get(index);
     }
-    
+
     /**
      * A listener to animate the tabbed pane.
      *

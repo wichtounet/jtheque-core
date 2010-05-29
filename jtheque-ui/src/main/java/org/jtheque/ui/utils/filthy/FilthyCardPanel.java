@@ -20,6 +20,7 @@ import org.jtheque.ui.utils.components.Borders;
 import org.jtheque.ui.utils.components.CardPanel;
 
 import javax.swing.JComponent;
+
 import java.awt.AlphaComposite;
 import java.awt.BasicStroke;
 import java.awt.Color;

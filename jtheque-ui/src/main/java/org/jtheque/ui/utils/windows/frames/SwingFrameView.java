@@ -22,10 +22,12 @@ import org.jtheque.resources.able.IResourceService;
 import org.jtheque.ui.able.IModel;
 import org.jtheque.ui.able.IWindowView;
 import org.jtheque.utils.ui.SwingUtils;
+
 import org.osgi.framework.BundleContext;
 import org.springframework.osgi.context.BundleContextAware;
 
 import javax.swing.JFrame;
+
 import java.awt.Image;
 
 /**
@@ -95,11 +97,12 @@ public abstract class SwingFrameView extends JFrame implements IWindowView, Bund
 
     /**
      * Return the service of the given class.
+     *
      * @param classz The class of the service to get.
-     * @param <T> The type of service to get.
-     * @return The service of the given class. 
+     * @param <T>    The type of service to get.
+     * @return The service of the given class.
      */
-    <T> T getService(Class<T> classz){
+    <T> T getService(Class<T> classz) {
         return OSGiUtils.getService(bundleContext, classz);
     }
 

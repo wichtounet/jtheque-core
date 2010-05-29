@@ -28,8 +28,8 @@ import org.jtheque.ui.utils.filthy.FilthyBackgroundPanel;
  * @author Baptiste Wicht
  */
 public abstract class SwingFilthyBuildedDialogView<T extends IModel> extends SwingBuildedDialogView<T> {
-	@Override
-	JThequePanelBuilder createBuilder() {
-		return new FilthyPanelBuilder(new FilthyBackgroundPanel(getService(IFilthyUtils.class)));
-	}
+    @Override
+    JThequePanelBuilder createBuilder() {
+        return new FilthyPanelBuilder(new FilthyBackgroundPanel(getService(IFilthyUtils.class)));
+    }
 }

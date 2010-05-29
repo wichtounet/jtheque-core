@@ -3,6 +3,7 @@ package org.jtheque.ui.utils.components;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.Icon;
 import javax.swing.JList;
+
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
@@ -34,7 +35,7 @@ public final class IconListRenderer extends DefaultListCellRenderer {
      *
      * @param labelIcon The label icon.
      */
-    public IconListRenderer(Icon labelIcon){
+    public IconListRenderer(Icon labelIcon) {
         super();
 
         setOpaque(false);
@@ -43,8 +44,8 @@ public final class IconListRenderer extends DefaultListCellRenderer {
     }
 
     @Override
-    public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus){
-        if (isSelected){
+    public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+        if (isSelected) {
             setFont(getFont().deriveFont(Font.BOLD));
         } else {
             setFont(getFont().deriveFont(Font.PLAIN));
