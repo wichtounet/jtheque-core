@@ -42,6 +42,7 @@ import javax.annotation.Resource;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -244,6 +245,8 @@ public final class ModuleService implements IModuleService {
         } catch (BundleException e) {
             LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
         }
+
+        System.out.println(Arrays.toString(module.getBundle().getRegisteredServices()));
     }
 
     @Override
