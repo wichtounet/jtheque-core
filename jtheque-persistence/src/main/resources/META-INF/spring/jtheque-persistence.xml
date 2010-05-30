@@ -26,7 +26,7 @@
     <bean id="dataSource" class="org.springframework.jdbc.datasource.SingleConnectionDataSource"
           destroy-method="destroy">
         <property name="driverClassName" value="org.h2.Driver"/>
-        <property name="url" value="jdbc:h2:{current}/db/jtheque"/>
+        <property name="url" value="jdbc:h2:db/jtheque"/>
         <property name="username" value="sa"/>
         <property name="password" value=""/>
     </bean>
@@ -39,7 +39,9 @@
         <constructor-arg ref="dataSource"/>
     </bean>
 
-    <bean id="daoPersistenceContext" class="org.jtheque.persistence.impl.DaoPersistenceContext"/>
+    <bean id="daoPersistenceContext" class="org.jtheque.persistence.impl.DaoPersistenceContext">
+        <constructor-arg ref="jdbcTemplate"/>
+    </bean>
 
     <!-- OSGI Services Registrations -->
 

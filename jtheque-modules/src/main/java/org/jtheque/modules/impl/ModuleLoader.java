@@ -125,6 +125,8 @@ public final class ModuleLoader implements IModuleLoader, BundleContextAware {
                 for (String lib : container.getLibs()) {
                     File libFile = new File(libsFolder, lib);
 
+                    LoggerFactory.getLogger(getClass()).debug("Install bundle dependency {}", libFile.getAbsolutePath());
+                    
                     bundleContext.installBundle("file:" + libFile.getAbsolutePath());
                 }
             } else {

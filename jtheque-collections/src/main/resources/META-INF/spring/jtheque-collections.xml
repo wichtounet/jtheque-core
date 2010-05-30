@@ -8,11 +8,7 @@
             http://www.springframework.org/schema/osgi
             http://www.springframework.org/schema/osgi/spring-osgi.xsd">
 
-    <bean class="org.jtheque.collections.impl.CollectionSchema" lazy-init="false">
-        <constructor-arg>
-            <osgi:reference interface="org.jtheque.schemas.able.ISchemaService"/>
-        </constructor-arg>
-    </bean>
+    <bean id="collectionSchema" class="org.jtheque.collections.impl.CollectionSchema" lazy-init="false"/>
 
     <bean id="collectionsService" class="org.jtheque.collections.impl.CollectionsService" lazy-init="false">
         <constructor-arg ref="daoCollections"/>
@@ -22,6 +18,10 @@
         <constructor-arg>
             <osgi:reference interface="org.jtheque.core.able.ICore"/>
         </constructor-arg>
+        <constructor-arg>
+            <osgi:reference interface="org.jtheque.schemas.able.ISchemaService"/>
+        </constructor-arg>
+        <constructor-arg ref="collectionSchema"/>
     </bean>
 
     <bean id="daoCollections" class="org.jtheque.collections.impl.DaoCollections"/>

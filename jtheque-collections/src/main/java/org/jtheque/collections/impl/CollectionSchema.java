@@ -21,6 +21,8 @@ import org.jtheque.schemas.able.ISchemaService;
 import org.jtheque.schemas.utils.DefaultSchema;
 import org.jtheque.utils.bean.Version;
 
+import javax.annotation.PostConstruct;
+
 /**
  * A collection schema. This schema describe the database part to store the collection.
  *
@@ -32,10 +34,8 @@ public class CollectionSchema extends DefaultSchema {
      *
      * @param schemaService The schema service to use.
      */
-    public CollectionSchema(ISchemaService schemaService) {
+    public CollectionSchema() {
         super(new Version("1.0"), "jtheque-collection-schema");
-
-        schemaService.registerSchema("", this);
     }
 
     @Override

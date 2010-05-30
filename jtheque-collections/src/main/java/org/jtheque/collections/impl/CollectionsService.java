@@ -25,6 +25,8 @@ import org.jtheque.core.utils.Response;
 import org.jtheque.core.utils.WeakEventListenerList;
 import org.jtheque.file.able.IFileService;
 import org.jtheque.persistence.able.DataListener;
+import org.jtheque.schemas.able.ISchemaService;
+import org.jtheque.schemas.able.Schema;
 import org.jtheque.utils.CryptoUtils;
 import org.jtheque.utils.Hasher;
 import org.jtheque.utils.StringUtils;
@@ -42,20 +44,16 @@ public final class CollectionsService implements ICollectionsService {
 
     private final WeakEventListenerList listeners = new WeakEventListenerList();
 
-    /**
-     * Construct a new CollectionsService.
-     *
-     * @param daoCollections The dao collections.
-     * @param fileService    The file service.
-     * @param core           The core.
-     */
-    public CollectionsService(IDaoCollections daoCollections, IFileService fileService, ICore core) {
+    public CollectionsService(IDaoCollections daoCollections, IFileService fileService, ICore core,
+                              ISchemaService schemaService, Schema schema) {
         super();
 
         this.daoCollections = daoCollections;
         this.core = core;
 
         fileService.registerBackuper("jtheque-collections", new CoreBackuper(daoCollections));
+
+        schemaService.registerSchema("", schema);
     }
 
     @Override

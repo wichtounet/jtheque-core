@@ -36,8 +36,13 @@ import java.util.List;
  * @author Baptiste Wicht
  */
 public final class DaoPersistenceContext implements IDaoPersistenceContext {
-    @Resource
-    private SimpleJdbcTemplate jdbcTemplate;
+    private final SimpleJdbcTemplate jdbcTemplate;
+
+    public DaoPersistenceContext(SimpleJdbcTemplate jdbcTemplate) {
+        super();
+
+        this.jdbcTemplate = jdbcTemplate;
+    }
 
     @Override
     public <T extends Entity> Collection<T> getSortedList(String table, RowMapper<T> mapper) {

@@ -83,11 +83,6 @@ public class AutoRegistrationPostProcessor implements BeanPostProcessor, Applica
 
     @Override
     public Object postProcessAfterInitialization(Object bean, String beanName) {
-        return bean;
-    }
-
-    @Override
-    public Object postProcessBeforeInitialization(Object bean, String beanName) {
         if (bean instanceof IStateBarComponent) {
             views.addStateBarComponent(module, (IStateBarComponent) bean);
         } else if (bean instanceof Menu) {
@@ -102,6 +97,11 @@ public class AutoRegistrationPostProcessor implements BeanPostProcessor, Applica
             fileService.registerBackuper(module, (ModuleBackuper) bean);
         }
 
+        return bean;
+    }
+
+    @Override
+    public Object postProcessBeforeInitialization(Object bean, String beanName) {
         return bean;
     }
 

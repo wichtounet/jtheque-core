@@ -234,26 +234,11 @@ public final class MainView extends SwingFrameView implements TitleListener, IMa
         PanelBuilder builder = new JThequePanelBuilder();
         builder.setBorder(Borders.EMPTY_BORDER);
 
-        Collection<MainComponent> components = views.getMainComponents();
+        Component emptyPanel = new JPanel();
+        emptyPanel.setBackground(Color.white);
 
-        if (components.isEmpty()) {
-            Component emptyPanel = new JPanel();
-            emptyPanel.setBackground(Color.white);
-
-            builder.add(emptyPanel, builder.gbcSet(0, 0, GridBagUtils.BOTH, GridBagUtils.FIRST_LINE_START, 1.0, 1.0));
-        } else if (components.size() == 1) {
-            builder.setDefaultInsets(new Insets(0, 0, 0, 0));
-            builder.add(CollectionUtils.first(components).getImpl(),
-                    builder.gbcSet(0, 0, GridBagUtils.BOTH, GridBagUtils.FIRST_LINE_START, 1.0, 1.0));
-        } else {
-            tab = new MainTabbedPane(languageService, views);
-            tab.addChangeListener(controller);
-
-            builder.add(tab, builder.gbcSet(0, 0, GridBagUtils.BOTH, GridBagUtils.FIRST_LINE_START, 1.0, 1.0));
-        }
-
-        current = components.size();
-
+        builder.add(emptyPanel, builder.gbcSet(0, 0, GridBagUtils.BOTH, GridBagUtils.FIRST_LINE_START, 1.0, 1.0));
+        
         stateBar = new JThequeStateBar(views);
 
         SimplePropertiesCache.put("statebar-loaded", "true");

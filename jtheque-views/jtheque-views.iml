@@ -23,13 +23,17 @@
         </fileset>
         <fileset id="fileset7" name="jtheque-core-fileset" removed="false">
           <file>file://$MODULE_DIR$/../jtheque-core/src/main/resources/META-INF/spring/jtheque-core.xml</file>
+          <file>file://$MODULE_DIR$/../jtheque-persistence/src/main/resources/META-INF/spring/jtheque-persistence.xml</file>
+        </fileset>
+        <fileset id="fileset8" name="jtheque-persistence-fileset" removed="false">
+          <file>file://$MODULE_DIR$/../jtheque-persistence/src/main/resources/META-INF/spring/jtheque-persistence.xml</file>
         </fileset>
       </configuration>
     </facet>
   </component>
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_6" inherit-compiler-output="false">
-    <output url="file:///home/wichtounet/Builds/bundles/jtheque-views/classes/production" />
-    <output-test url="file:///home/wichtounet/Builds/utils/jtheque-core/classes/test" />
+    <output url="file://$MODULE_DIR$/../../../../../Builds/bundles/jtheque-views/classes/production" />
+    <output-test url="file://$MODULE_DIR$/../../../../../Builds/utils/jtheque-core/classes/test" />
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/resources" isTestSource="false" />
@@ -39,7 +43,7 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="Maven: org.osgi:org.osgi.core:4.2.0" level="project" />
-    <orderEntry type="module" module-name="JTheque Utils" exported="" />
+    <orderEntry type="module" module-name="jtheque-utils" exported="" />
     <orderEntry type="library" exported="" name="Maven: org.slf4j:slf4j-api:1.5.8" level="project" />
     <orderEntry type="module" module-name="jtheque-ui" exported="" />
     <orderEntry type="module" module-name="jtheque-i18n" exported="" />

@@ -50,16 +50,14 @@ public final class SchemaService implements ISchemaService, ModuleListener {
         super();
 
         configuration = stateService.getState(new SchemaConfiguration());
-
-        Collections.sort(schemas);
-
-        checkForUpdates();
     }
 
     /**
      * Check for updates of the schemas.
      */
     private void checkForUpdates() {
+        Collections.sort(schemas);
+
         for (Schema schema : schemas) {
             Version installedVersion = configuration.getVersion(schema.getId());
 
@@ -80,6 +78,8 @@ public final class SchemaService implements ISchemaService, ModuleListener {
         if (StringUtils.isNotEmpty(moduleId)) {
             ModuleResourceCache.addResource(moduleId, Schema.class, schema);
         }
+
+        checkForUpdates();
     }
 
     @Override

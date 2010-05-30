@@ -127,12 +127,12 @@ public class LifeCycleActivator implements BundleActivator, CollectionListener {
      * Start the second phase of the application.
      */
     private void startSecondPhase() {
+        getService(ISplashService.class).closeSplashScreen();
+        getService(ISplashService.class).fillMainView();
+        
         getService(IModuleService.class).startModules();
 
         getService(ICore.class).getLifeCycle().initTitle();
-
-        getService(ISplashService.class).closeSplashScreen();
-        getService(ISplashService.class).fillMainView();
 
         getService(IMessageService.class).loadMessages();
 

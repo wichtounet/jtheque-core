@@ -29,6 +29,7 @@ import org.jtheque.modules.able.ModuleListener;
 import org.jtheque.modules.utils.ModuleResourceCache;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.collections.CollectionUtils;
+import org.jtheque.utils.ui.SwingUtils;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -71,24 +72,29 @@ public final class FeatureService implements IFeatureService, ModuleListener {
     }
 
     @Override
-    public void addMenu(String moduleId, Menu menu) {
+    public void addMenu(String moduleId, final Menu menu) {
         languageService.addInternationalizable(menu);
-
-        for (CoreFeature feature : CoreFeature.values()) {
-            for (IFeature f : menu.getSubFeatures(feature)) {
-                coreFeatures.get(feature).addSubFeature(f);
-            }
-        }
-
-        for (IFeature f : menu.getMainFeatures()) {
-            addFeature(f);
-        }
 
         if (StringUtils.isNotEmpty(moduleId)) {
             ModuleResourceCache.addResource(moduleId, Menu.class, menu);
         }
 
-        menu.refreshText(languageService);
+        SwingUtils.inEdt(new Runnable(){
+            @Override
+            public void run() {
+                for (CoreFeature feature : CoreFeature.values()) {
+                    for (IFeature f : menu.getSubFeatures(feature)) {
+                        coreFeatures.get(feature).addSubFeature(f);
+                    }
+                }
+
+                for (IFeature f : menu.getMainFeatures()) {
+                    addFeature(f);
+                }
+
+                menu.refreshText(languageService);
+            }
+        });
     }
 
     /**
