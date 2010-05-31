@@ -144,8 +144,8 @@ public final class ModuleListRenderer extends JPanel implements ListCellRenderer
 
         labelTitle.setText(languageService.getMessage("modules.view.label.title", module.getName(), module.getAuthor()));
         labelState.setText(languageService.getMessage("modules.view.label.state", module.getDisplayState()));
-        labelCurrentVersion.setText(languageService.getMessage("modules.view.label.versions.current", module.getVersion().getVersion()));
-        labelOnlineVersion.setText(languageService.getMessage("modules.view.label.versions.online", updateService.getMostRecentVersion(module).getVersion()));
+        labelCurrentVersion.setText(languageService.getMessage("modules.view.label.versions.current", module.getVersion()));
+        labelOnlineVersion.setText(languageService.getMessage("modules.view.label.versions.online", updateService.getMostRecentVersion(module)));
 
         if (StringUtils.isEmpty(module.getUrl())) {
             labelSite.setAction(null);

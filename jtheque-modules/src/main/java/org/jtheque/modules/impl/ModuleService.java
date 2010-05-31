@@ -42,7 +42,6 @@ import javax.annotation.Resource;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -161,9 +160,7 @@ public final class ModuleService implements IModuleService {
     @Override
     public void startModules() {
         for (Module module : modulesToLoad) {
-            LoggerFactory.getLogger(getClass()).debug("Start module {}", module.getBundle().getSymbolicName());
             startModule(module);
-            LoggerFactory.getLogger(getClass()).debug("Module {} started", module.getBundle().getSymbolicName());
         }
     }
 
@@ -236,6 +233,8 @@ public final class ModuleService implements IModuleService {
             throw new IllegalStateException("The module is already started. ");
         }
 
+        LoggerFactory.getLogger(getClass()).debug("Start module {}", module.getBundle().getSymbolicName());
+        
         setState(module, ModuleState.STARTED);
 
         fireModuleStarted(module);
@@ -246,7 +245,7 @@ public final class ModuleService implements IModuleService {
             LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
         }
 
-        System.out.println(Arrays.toString(module.getBundle().getRegisteredServices()));
+        LoggerFactory.getLogger(getClass()).debug("Module {} started", module.getBundle().getSymbolicName());
     }
 
     @Override

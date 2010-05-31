@@ -111,7 +111,13 @@ public final class VersionsLoader implements IVersionsLoader {
 
     @Override
     public Version getMostRecentVersion(Object object) {
-        return getVersionsFile(object).getMostRecentVersion().getVersion();
+        VersionsFile versionsFile = getVersionsFile(object);
+
+        if(versionsFile != null){
+            return versionsFile.getMostRecentVersion().getVersion();
+        }
+
+        return null;
     }
 
     /**

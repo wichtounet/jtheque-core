@@ -50,5 +50,6 @@ public final class JThequeResourceBundle extends ReloadableResourceBundleMessage
      */
     private void refresh() {
         setBasenames(baseNames.toArray(new String[baseNames.size()]));
+        clearCache();
     }
 }
