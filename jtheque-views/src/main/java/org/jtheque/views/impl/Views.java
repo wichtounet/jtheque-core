@@ -17,6 +17,7 @@ package org.jtheque.views.impl;
  */
 
 import org.jtheque.core.utils.SimplePropertiesCache;
+import org.jtheque.modules.able.IModuleService;
 import org.jtheque.modules.able.Module;
 import org.jtheque.modules.able.ModuleListener;
 import org.jtheque.modules.utils.ModuleResourceCache;
@@ -42,6 +43,8 @@ import org.jtheque.views.impl.components.config.JPanelConfigOthers;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 import javax.swing.JComponent;
 
 import java.util.ArrayList;
@@ -68,6 +71,14 @@ public final class Views implements IViews, ApplicationContextAware, ModuleListe
     private final Collection<ConfigTabComponent> configPanels = new ArrayList<ConfigTabComponent>(5);
 
     private ApplicationContext applicationContext;
+
+    @Resource
+    private IModuleService moduleService;
+
+    @PostConstruct
+    public void register(){
+        moduleService.addModuleListener("", this);
+    }
 
     @Override
     public void setSelectedView(MainComponent component) {

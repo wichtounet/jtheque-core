@@ -127,11 +127,22 @@ public interface IModuleService {
     String canModuleLaunched(Module module);
 
     /**
-     * Load the module.
+     * Start a module. The module cannot be started if it's already started.
      *
-     * @param module The module to load.
+     * @param module The module to Start.
+     *
+     * @throws IllegalStateException If the module is already started.
      */
     void startModule(Module module);
+
+    /**
+     * Stop the module.
+     *
+     * @param module The module to stop.
+     *
+     * @throws IllegalStateException If the module is already stopped.
+     */
+    void stopModule(Module module);
 
     /**
      * Indicate if the primary module is collection based.

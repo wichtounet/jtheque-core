@@ -33,20 +33,23 @@ import java.awt.event.ActionEvent;
  * @author Baptiste Wicht
  */
 public final class DisableModuleAction extends JThequeAction {
-    @Resource
-    private IModuleView moduleView;
-
-    @Resource
-    private IUIUtils uiUtils;
-
-    @Resource
-    private IModuleService moduleService;
+    private final IModuleView moduleView;
+    private final IUIUtils uiUtils;
+    private final IModuleService moduleService;
 
     /**
      * Construct a new DisableModuleAction.
+     *
+     * @param moduleService The module service.
+     * @param uiUtils The UI Utils.
+     * @param moduleView The module view. 
      */
-    public DisableModuleAction() {
+    public DisableModuleAction(IModuleService moduleService, IUIUtils uiUtils, IModuleView moduleView) {
         super("modules.actions.desactivate");
+        
+        this.moduleService = moduleService;
+        this.uiUtils = uiUtils;
+        this.moduleView = moduleView;
     }
 
     @Override
@@ -55,7 +58,9 @@ public final class DisableModuleAction extends JThequeAction {
 
         if (module.getState() == ModuleState.DISABLED) {
             uiUtils.displayI18nText("error.module.not.enabled");
-        } else {
+        } else if (module.getState() == ModuleState.STARTED) {
+            uiUtils.displayI18nText("error.module.started");
+        }else {
             moduleService.disableModule(module);
             moduleView.refreshList();
 

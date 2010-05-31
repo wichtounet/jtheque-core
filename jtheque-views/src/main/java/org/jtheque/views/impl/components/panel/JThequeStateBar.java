@@ -193,6 +193,10 @@ public final class JThequeStateBar extends JPanel {
     public void addComponent(IStateBarComponent component) {
         build();
 
+        if (!viewService.getStateBarComponents().isEmpty()) {
+            setVisible(true);
+        }
+
         SwingUtils.refresh(this);
     }
 

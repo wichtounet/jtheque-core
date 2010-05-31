@@ -23,8 +23,6 @@ import org.jtheque.ui.utils.actions.JThequeAction;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.views.able.panel.IModuleView;
 
-import javax.annotation.Resource;
-
 import java.awt.event.ActionEvent;
 
 /**
@@ -32,21 +30,24 @@ import java.awt.event.ActionEvent;
  *
  * @author Baptiste Wicht
  */
-public final class LoadModuleAction extends JThequeAction {
-    @Resource
-    private IModuleView moduleView;
-
-    @Resource
-    private IUIUtils uiUtils;
-
-    @Resource
-    private IModuleService moduleService;
+public final class StartModuleAction extends JThequeAction {
+    private final IModuleView moduleView;
+    private final IUIUtils uiUtils;
+    private final IModuleService moduleService;
 
     /**
-     * Construct a new LoadModuleAction.
+     * Construct a new StartModuleAction.
+     *
+     * @param moduleService The module service.
+     * @param uiUtils The UI Utils.
+     * @param moduleView The module view. 
      */
-    public LoadModuleAction() {
+    public StartModuleAction(IModuleService moduleService, IUIUtils uiUtils, IModuleView moduleView) {
         super("modules.actions.load");
+
+        this.moduleService = moduleService;
+        this.uiUtils = uiUtils;
+        this.moduleView = moduleView;
     }
 
     @Override

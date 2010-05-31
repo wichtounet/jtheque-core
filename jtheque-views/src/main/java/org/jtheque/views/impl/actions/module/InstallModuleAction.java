@@ -21,6 +21,7 @@ import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.ui.utils.actions.JThequeAction;
 import org.jtheque.utils.io.SimpleFilter;
 import org.jtheque.utils.ui.SwingUtils;
+import org.jtheque.views.able.panel.IModuleView;
 
 import javax.annotation.Resource;
 
@@ -33,17 +34,20 @@ import java.io.File;
  * @author Baptiste Wicht
  */
 public final class InstallModuleAction extends JThequeAction {
-    @Resource
-    private IUIUtils uiUtils;
-
-    @Resource
-    private IModuleService moduleService;
+    private final IUIUtils uiUtils;
+    private final IModuleService moduleService;
 
     /**
      * Construct a new InstallModuleAction.
+     *
+     * @param moduleService The module service.
+     * @param uiUtils The UI Utils. 
      */
-    public InstallModuleAction() {
+    public InstallModuleAction(IModuleService moduleService, IUIUtils uiUtils) {
         super("modules.actions.new");
+
+        this.moduleService = moduleService;
+        this.uiUtils = uiUtils;
     }
 
     @Override

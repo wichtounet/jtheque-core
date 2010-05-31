@@ -198,6 +198,8 @@ public final class JThequeMenuBar extends JMenuBar implements FeatureListener, I
     @Override
     public void featureAdded(IFeature feature) {
         addFeature(feature);
+
+        SwingUtils.refresh(this);
     }
 
     @Override

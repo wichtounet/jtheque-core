@@ -1,6 +1,5 @@
 package org.jtheque.modules.impl;
 
-import org.jtheque.core.utils.OSGiUtils;
 import org.jtheque.i18n.able.ILanguageService;
 import org.jtheque.modules.able.Module;
 import org.jtheque.modules.able.ModuleState;
@@ -45,6 +44,11 @@ public final class ModuleContainer implements Module {
     private ModuleResources resources;
 
     /**
+     * For internationalization purpose.
+     */
+    private ILanguageService languageService;
+
+    /**
      * Construct a new ModuleContainer from the specified bundle.
      *
      * @param bundle The bundle of the module.
@@ -71,11 +75,6 @@ public final class ModuleContainer implements Module {
     }
 
     @Override
-    public String getDisplayState() {
-        return OSGiUtils.getService(bundle.getBundleContext(), ILanguageService.class).getMessage(state.getKey());
-    }
-
-    @Override
     public String getId() {
         return id;
     }
@@ -91,17 +90,30 @@ public final class ModuleContainer implements Module {
 
     @Override
     public String getName() {
-        return OSGiUtils.getService(bundle.getBundleContext(), ILanguageService.class).getMessage(id + ".name");
+        return internationalize(id + ".name");
     }
 
     @Override
     public String getAuthor() {
-        return OSGiUtils.getService(bundle.getBundleContext(), ILanguageService.class).getMessage(id + ".author");
+        return internationalize(id + ".author");
     }
 
     @Override
     public String getDescription() {
-        return OSGiUtils.getService(bundle.getBundleContext(), ILanguageService.class).getMessage(id + ".description");
+        return internationalize(id + ".description");
+    }
+
+    @Override
+    public String getDisplayState() {
+        return internationalize(state.getKey());
+    }
+
+    private String internationalize(String field) {
+        if (languageService == null) {
+            return field;
+        }
+
+        return languageService.getMessage(field);
     }
 
     @Override
@@ -236,4 +248,8 @@ public final class ModuleContainer implements Module {
     public void setResources(ModuleResources resources) {
         this.resources = resources;
 	}
+
+    public void setLanguageService(ILanguageService languageService) {
+        this.languageService = languageService;
+    }
 }

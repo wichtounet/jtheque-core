@@ -175,29 +175,7 @@ public final class ModuleService implements IModuleService {
 
         for (Module module : modulesToUnplug) {
             if (module.getState() == ModuleState.STARTED) {
-                try {
-                    module.getBundle().stop();
-                } catch (BundleException e) {
-                    LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
-                }
-
-                setState(module, ModuleState.INSTALLED);
-
-                fireModuleStopped(module);
-
-                Resources resources = module.getResources();
-
-                if (resources != null) {
-                    for (String name : resources.getI18NResources()) {
-                        languageService.releaseResource(name);
-                    }
-
-                    for (String name : resources.getResources()) {
-                        resourceService.releaseResource(name);
-                    }
-                }
-
-                ModuleResourceCache.removeModule(module.getId());
+                stopModule(module);
             }
         }
     }
@@ -221,12 +199,6 @@ public final class ModuleService implements IModuleService {
         return repository;
     }
 
-    /**
-     * Start a module. The module cannot be started if it's already started.
-     *
-     * @param module The module to Start.
-     * @throws IllegalStateException If the module is already started.
-     */
     @Override
     public void startModule(Module module) {
         if (module.getState() == ModuleState.STARTED) {
@@ -246,6 +218,41 @@ public final class ModuleService implements IModuleService {
         }
 
         LoggerFactory.getLogger(getClass()).debug("Module {} started", module.getBundle().getSymbolicName());
+    }
+
+    @Override
+    public void stopModule(Module module) {
+        if (module.getState() != ModuleState.STARTED) {
+            throw new IllegalStateException("The module is already started. ");
+        }
+
+        LoggerFactory.getLogger(getClass()).debug("Stop module {}", module.getBundle().getSymbolicName());
+
+        try {
+            module.getBundle().stop();
+        } catch (BundleException e) {
+            LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
+        }
+
+        setState(module, ModuleState.INSTALLED);
+
+        fireModuleStopped(module);
+
+        Resources resources = module.getResources();
+
+        if (resources != null) {
+            for (String name : resources.getI18NResources()) {
+                languageService.releaseResource(name);
+            }
+
+            for (String name : resources.getResources()) {
+                resourceService.releaseResource(name);
+            }
+        }
+
+        ModuleResourceCache.removeModule(module.getId());
+
+        LoggerFactory.getLogger(getClass()).debug("Module {} stopped", module.getBundle().getSymbolicName());
     }
 
     @Override

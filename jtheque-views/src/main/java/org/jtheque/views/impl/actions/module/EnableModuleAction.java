@@ -34,20 +34,23 @@ import java.awt.event.ActionEvent;
  * @author Baptiste Wicht
  */
 public final class EnableModuleAction extends JThequeAction {
-    @Resource
-    private IModuleView moduleView;
-
-    @Resource
-    private IUIUtils uiUtils;
-
-    @Resource
-    private IModuleService moduleService;
+    private final IModuleView moduleView;
+    private final IUIUtils uiUtils;
+    private final IModuleService moduleService;
 
     /**
      * Construct a new EnableModuleAction.
+     *
+     * @param moduleService The module service.
+     * @param uiUtils The UI Utils.
+     * @param moduleView The module view. 
      */
-    public EnableModuleAction() {
+    public EnableModuleAction(IModuleService moduleService, IUIUtils uiUtils, IModuleView moduleView) {
         super("modules.actions.activate");
+
+        this.moduleService = moduleService;
+        this.uiUtils = uiUtils;
+        this.moduleView = moduleView;
     }
 
     @Override

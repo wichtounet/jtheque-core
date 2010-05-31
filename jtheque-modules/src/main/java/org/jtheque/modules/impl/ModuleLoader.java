@@ -95,6 +95,8 @@ public final class ModuleLoader implements IModuleLoader, BundleContextAware {
 
             container = new ModuleContainer(bundle);
 
+            container.setLanguageService(OSGiUtils.getService(bundleContext, ILanguageService.class));
+
             Dictionary<String, String> headers = bundle.getHeaders();
 
             String id = StringUtils.isNotEmpty(headers.get("Module-Id")) ? headers.get("Module-Id") : headers.get("Bundle-SymbolicName");
