@@ -22,7 +22,7 @@ import org.jtheque.features.able.IFeatureService;
 import org.jtheque.i18n.able.ILanguageService;
 import org.jtheque.i18n.able.Internationalizable;
 import org.jtheque.i18n.able.InternationalizableContainer;
-import org.jtheque.resources.able.IResourceService;
+import org.jtheque.images.able.IImageService;
 import org.jtheque.utils.ui.SwingUtils;
 
 import javax.swing.AbstractButton;
@@ -45,7 +45,7 @@ import java.util.List;
 public final class JThequeMenuBar extends JMenuBar implements FeatureListener, InternationalizableContainer {
     private final Comparator<IFeature> featureComparator = new ByPositionComparator();
 
-    private final IResourceService resourceService;
+    private final IImageService imageService;
     private final ILanguageService languageService;
     private final IFeatureService featureService;
 
@@ -54,14 +54,14 @@ public final class JThequeMenuBar extends JMenuBar implements FeatureListener, I
     /**
      * Construct a JThequeMenuBar.
      *
-     * @param resourceService The resource service.
+     * @param imageService The resource service.
      * @param languageService The language service.
      * @param featureService  The feature service.
      */
-    public JThequeMenuBar(IResourceService resourceService, ILanguageService languageService, IFeatureService featureService) {
+    public JThequeMenuBar(IImageService imageService, ILanguageService languageService, IFeatureService featureService) {
         super();
 
-        this.resourceService = resourceService;
+        this.imageService = imageService;
         this.languageService = languageService;
         this.featureService = featureService;
 
@@ -172,7 +172,7 @@ public final class JThequeMenuBar extends JMenuBar implements FeatureListener, I
         addInternationalizable(subMenu);
 
         if (feature.getIcon() != null) {
-            subMenu.setIcon(resourceService.getIcon(feature.getIcon()));
+            subMenu.setIcon(imageService.getIcon(feature.getIcon()));
         }
 
         for (IFeature subFeature : feature.getSubFeatures()) {
@@ -197,7 +197,9 @@ public final class JThequeMenuBar extends JMenuBar implements FeatureListener, I
 
     @Override
     public void featureAdded(IFeature feature) {
-        addFeature(feature);
+        removeAll();
+
+        buildMenu();
 
         SwingUtils.refresh(this);
     }
