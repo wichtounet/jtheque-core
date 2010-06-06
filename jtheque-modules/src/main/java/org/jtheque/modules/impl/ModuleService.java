@@ -28,7 +28,7 @@ import org.jtheque.modules.able.ModuleListener;
 import org.jtheque.modules.able.ModuleState;
 import org.jtheque.modules.able.Resources;
 import org.jtheque.modules.utils.ModuleResourceCache;
-import org.jtheque.resources.able.IResourceService;
+import org.jtheque.images.able.IImageService;
 import org.jtheque.states.able.IStateService;
 import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.update.able.IUpdateService;
@@ -78,7 +78,7 @@ public final class ModuleService implements IModuleService {
     private ILanguageService languageService;
 
     @Resource
-    private IResourceService resourceService;
+    private IImageService imageService;
 
     @Resource
     private IUpdateService updateService;
@@ -206,16 +206,16 @@ public final class ModuleService implements IModuleService {
         }
 
         LoggerFactory.getLogger(getClass()).debug("Start module {}", module.getBundle().getSymbolicName());
-        
-        setState(module, ModuleState.STARTED);
-
-        fireModuleStarted(module);
 
         try {
             module.getBundle().start();
         } catch (BundleException e) {
             LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
         }
+
+        setState(module, ModuleState.STARTED);
+
+        fireModuleStarted(module);
 
         LoggerFactory.getLogger(getClass()).debug("Module {} started", module.getBundle().getSymbolicName());
     }
@@ -246,7 +246,7 @@ public final class ModuleService implements IModuleService {
             }
 
             for (String name : resources.getResources()) {
-                resourceService.releaseResource(name);
+                imageService.releaseResource(name);
             }
         }
 

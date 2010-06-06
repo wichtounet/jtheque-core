@@ -9,7 +9,7 @@ import org.jtheque.i18n.able.ILanguageService;
 import org.jtheque.i18n.utils.I18NResourceFactory;
 import org.jtheque.modules.able.IModuleLoader;
 import org.jtheque.modules.able.Module;
-import org.jtheque.resources.able.IResourceService;
+import org.jtheque.images.able.IImageService;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.xml.utils.XMLException;
@@ -61,7 +61,7 @@ public final class ModuleLoader implements IModuleLoader, BundleContextAware {
     private ILanguageService languageService;
 
     @Resource
-    private IResourceService resourceService;
+    private IImageService imageService;
 
 
     @Override
@@ -193,7 +193,7 @@ public final class ModuleLoader implements IModuleLoader, BundleContextAware {
                 String name = reader.readString("@name");
                 String classpath = reader.readString("classpath");
 
-                resourceService.registerResource(name, new UrlResource(bundle.getResource(classpath)));
+                imageService.registerResource(name, new UrlResource(bundle.getResource(classpath)));
 
                 resources.addResource(name);
             }
