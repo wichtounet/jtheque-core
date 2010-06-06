@@ -17,6 +17,8 @@ package org.jtheque.modules.impl;
  */
 
 import org.jtheque.modules.able.Resources;
+import org.jtheque.resources.able.IResource;
+import org.jtheque.resources.impl.Resource;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,16 +29,17 @@ import java.util.List;
  * @author Baptiste Wicht
  */
 public class ModuleResources implements Resources {
-    private final List<String> resources = new ArrayList<String>(5);
+    private final List<String> imageResources = new ArrayList<String>(5);
     private final List<String> i18nResources = new ArrayList<String>(5);
+    private final List<IResource> resources = new ArrayList<IResource>(5);
 
     /**
      * Add a resource.
      *
      * @param name The name of the resource.
      */
-    void addResource(String name) {
-        resources.add(name);
+    void addImageResource(String name) {
+        imageResources.add(name);
     }
 
     /**
@@ -48,13 +51,22 @@ public class ModuleResources implements Resources {
         i18nResources.add(name);
     }
 
+    void addResource(IResource resource) {
+        resources.add(resource);
+    }
+
     @Override
-    public List<String> getResources() {
-        return resources;
+    public List<String> getImageResources() {
+        return imageResources;
     }
 
     @Override
     public List<String> getI18NResources() {
         return i18nResources;
 	}
+
+    @Override
+    public List<IResource> getResources() {
+        return resources;
+    }
 }

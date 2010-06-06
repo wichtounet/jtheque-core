@@ -13,6 +13,8 @@
 
     <context:annotation-config/>
 
+    <bean id="resourceService" class="org.jtheque.resources.impl.ResourceService" />
+
     <bean id="moduleService" class="org.jtheque.modules.impl.ModuleService">
         <constructor-arg>
             <bean class="org.jtheque.modules.impl.ModuleLoader"/>
@@ -37,4 +39,5 @@
 
     <osgi:service ref="moduleService" interface="org.jtheque.modules.able.IModuleService"/>
     <osgi:service ref="updateService" interface="org.jtheque.update.able.IUpdateService"/>
+    <osgi:service ref="resourceService" interface="org.jtheque.resources.able.IResourceService"/>
 </beans>

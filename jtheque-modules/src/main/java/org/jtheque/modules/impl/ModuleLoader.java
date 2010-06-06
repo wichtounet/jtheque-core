@@ -10,6 +10,8 @@ import org.jtheque.i18n.utils.I18NResourceFactory;
 import org.jtheque.modules.able.IModuleLoader;
 import org.jtheque.modules.able.Module;
 import org.jtheque.images.able.IImageService;
+import org.jtheque.resources.able.IResource;
+import org.jtheque.resources.able.IResourceService;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.xml.utils.XMLException;
@@ -62,6 +64,9 @@ public final class ModuleLoader implements IModuleLoader, BundleContextAware {
 
     @Resource
     private IImageService imageService;
+
+    @Resource
+    private IResourceService resourceService;
 
 
     @Override
@@ -189,13 +194,27 @@ public final class ModuleLoader implements IModuleLoader, BundleContextAware {
                 reader.switchToParent();
             }
 
-            while (reader.next("/config/resources/resource")) {
+            while (reader.next("/config/images/resource")) {
                 String name = reader.readString("@name");
                 String classpath = reader.readString("classpath");
 
                 imageService.registerResource(name, new UrlResource(bundle.getResource(classpath)));
 
-                resources.addResource(name);
+                resources.addImageResource(name);
+            }
+
+            while (reader.next("/config/resources/resource")) {
+                String id = reader.readString("@id");
+                String version = reader.readString("@version");
+                String url = reader.readString("@version");
+
+                IResource resource = resourceService.getResource(id, version);
+
+                if(resource != null){
+                    resources.addResource(resource);
+                } else {
+                    //TODO Install resource
+                }
             }
         } catch (XMLException e) {
             LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);

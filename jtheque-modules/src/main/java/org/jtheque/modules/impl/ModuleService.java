@@ -245,7 +245,7 @@ public final class ModuleService implements IModuleService {
                 languageService.releaseResource(name);
             }
 
-            for (String name : resources.getResources()) {
+            for (String name : resources.getImageResources()) {
                 imageService.releaseResource(name);
             }
         }

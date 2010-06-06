@@ -1,8 +1,4 @@
-package org.jtheque.modules.able;
-
-import org.jtheque.resources.able.IResource;
-
-import java.util.List;
+package org.jtheque.resources.able;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -20,25 +16,26 @@ import java.util.List;
  * limitations under the License.
  */
 
-/**
- * The resources of the module. This is the resources declared in the XML file of the module.
- *
- * @author Baptiste Wicht
- */
-public interface Resources {
-    /**
-     * Return all the resources of the modules.
-     *
-     * @return A List containing all the resources of the modules.
-     */
-    List<String> getImageResources();
+import org.jtheque.resources.impl.Resource;
+import org.jtheque.utils.bean.Version;
 
-    /**
-     * Return all the i18n resources of the modules.
-     *
-     * @return A List containing all the i18n resources of the modules.
-     */
-    List<String> getI18NResources();
+import java.util.List;
+
+/**
+ * Created by IntelliJ IDEA.
+ * User: wichtounet
+ * Date: Jun 6, 2010
+ * Time: 8:28:12 PM
+ * To change this template use File | Settings | File Templates.
+ */
+public interface IResourceService {
+    void addResource(Resource resource);
 
     List<IResource> getResources();
+
+    List<Version> getVersions(String resourceName);
+
+    boolean exists(String resourceName);
+
+    IResource getResource(String id, String version);
 }
