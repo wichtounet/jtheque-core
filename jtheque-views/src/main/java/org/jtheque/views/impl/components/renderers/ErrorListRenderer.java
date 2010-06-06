@@ -16,7 +16,7 @@ package org.jtheque.views.impl.components.renderers;
  * limitations under the License.
  */
 
-import org.jtheque.resources.able.IResourceService;
+import org.jtheque.images.able.IImageService;
 import org.jtheque.views.impl.ViewsResources;
 
 import org.jdesktop.swingx.error.ErrorInfo;
@@ -42,13 +42,13 @@ public final class ErrorListRenderer extends JLabel implements ListCellRenderer 
     /**
      * Construct a new ModuleListRenderer.
      *
-     * @param resourceService The resource service.
+     * @param imageService The resource service.
      */
-    public ErrorListRenderer(IResourceService resourceService) {
+    public ErrorListRenderer(IImageService imageService) {
         super();
 
-        errorIcon = resourceService.getIcon(ViewsResources.ERROR_ICON);
-        warningIcon = resourceService.getIcon(ViewsResources.WARNING_ICON);
+        errorIcon = imageService.getIcon(ViewsResources.ERROR_ICON);
+        warningIcon = imageService.getIcon(ViewsResources.WARNING_ICON);
     }
 
     @Override

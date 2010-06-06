@@ -18,7 +18,7 @@ package org.jtheque.views.impl;
 
 import org.jtheque.core.able.ICore;
 import org.jtheque.core.utils.SimplePropertiesCache;
-import org.jtheque.resources.able.IResourceService;
+import org.jtheque.images.able.IImageService;
 import org.jtheque.spring.utils.SwingSpringProxy;
 import org.jtheque.states.able.IStateService;
 import org.jtheque.ui.able.IView;
@@ -52,14 +52,14 @@ public final class ViewService implements IViewService, ApplicationContextAware 
      *
      * @param stateService    The state service.
      * @param core            The core.
-     * @param resourceService The resource service.
+     * @param imageService The resource service.
      */
-    public ViewService(IStateService stateService, ICore core, IResourceService resourceService) {
+    public ViewService(IStateService stateService, ICore core, IImageService imageService) {
         super();
 
         configuration = stateService.getState(new WindowsConfiguration(core, this));
 
-        ViewsResources.registerResources(resourceService);
+        ViewsResources.registerResources(imageService);
     }
 
     @Override

@@ -22,7 +22,7 @@
         <module>jtheque-i18n</module>
         <module>jtheque-undo</module>
         <module>jtheque-features</module>
-        <module>jtheque-resources</module>
+        <module>jtheque-images</module>
         <module>jtheque-errors</module>
         <module>jtheque-modules</module>
         <module>jtheque-events</module>

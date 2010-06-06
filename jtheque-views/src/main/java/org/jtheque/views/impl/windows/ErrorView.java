@@ -4,7 +4,7 @@ import org.jtheque.errors.able.ErrorListener;
 import org.jtheque.errors.able.IError;
 import org.jtheque.errors.able.IErrorService;
 import org.jtheque.i18n.able.ILanguageService;
-import org.jtheque.resources.able.IResourceService;
+import org.jtheque.images.able.IImageService;
 import org.jtheque.ui.able.IModel;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.ui.utils.windows.dialogs.SwingFilthyBuildedDialogView;
@@ -68,7 +68,7 @@ public final class ErrorView extends SwingFilthyBuildedDialogView<IModel> implem
 
         errorsModel = new ErrorsListModel(getService(IErrorService.class), getService(ILanguageService.class));
 
-        listEvents = builder.addScrolledList(errorsModel, new ErrorListRenderer(getService(IResourceService.class)),
+        listEvents = builder.addScrolledList(errorsModel, new ErrorListRenderer(getService(IImageService.class)),
                 builder.gbcSet(0, 1, BOTH, LINE_START, 2, 1, 1.0, 0.67));
         listEvents.getSelectionModel().addListSelectionListener(this);
         listEvents.setVisibleRowCount(8);

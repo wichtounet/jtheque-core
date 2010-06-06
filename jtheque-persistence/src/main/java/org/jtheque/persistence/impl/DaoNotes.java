@@ -3,7 +3,7 @@ package org.jtheque.persistence.impl;
 import org.jtheque.i18n.able.ILanguageService;
 import org.jtheque.persistence.able.IDaoNotes;
 import org.jtheque.persistence.able.Note;
-import org.jtheque.resources.able.IResourceService;
+import org.jtheque.images.able.IImageService;
 
 import org.springframework.core.io.ClassPathResource;
 
@@ -42,10 +42,10 @@ public final class DaoNotes implements IDaoNotes {
     /**
      * Construct a new DaoNotes.
      *
-     * @param resourceService The resources.
+     * @param imageService The resources.
      * @param languageService The language service.
      */
-    public DaoNotes(IResourceService resourceService, ILanguageService languageService) {
+    public DaoNotes(IImageService imageService, ILanguageService languageService) {
         super();
 
         this.languageService = languageService;
@@ -53,11 +53,11 @@ public final class DaoNotes implements IDaoNotes {
         stars = new BufferedImage[7];
 
         for (int i = 0; i < 7; ++i) {
-            resourceService.registerResource("Star" + (i + 1), new ClassPathResource("org/jtheque/persistence/" + "Star" + (i + 1) + ".png"));
+            imageService.registerResource("Star" + (i + 1), new ClassPathResource("org/jtheque/persistence/" + "Star" + (i + 1) + ".png"));
         }
 
         for (int i = 0; i < 7; ++i) {
-            stars[i] = resourceService.getImage("Star" + (i + 1));
+            stars[i] = imageService.getImage("Star" + (i + 1));
         }
     }
 

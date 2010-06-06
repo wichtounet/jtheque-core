@@ -46,7 +46,7 @@
     <orderEntry type="library" exported="" name="Maven: javax.mail:mail:1.4.1" level="project" />
     <orderEntry type="library" exported="" name="Maven: javax.activation:activation:1.1" level="project" />
     <orderEntry type="module" module-name="jtheque-core" exported="" />
-    <orderEntry type="module" module-name="jtheque-resources" exported="" />
+    <orderEntry type="module" module-name="jtheque-images" exported="" />
     <orderEntry type="module" module-name="jtheque-events" exported="" />
     <orderEntry type="module" module-name="jtheque-spring-utils" exported="" />
     <orderEntry type="module" module-name="jtheque-errors" exported="" />

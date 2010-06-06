@@ -12,7 +12,7 @@
 
     <bean id="daoNotes" class="org.jtheque.persistence.impl.DaoNotes">
         <constructor-arg>
-            <osgi:reference interface="org.jtheque.resources.able.IResourceService"/>
+            <osgi:reference interface="org.jtheque.images.able.IImageService"/>
         </constructor-arg>
         <constructor-arg>
             <osgi:reference interface="org.jtheque.i18n.able.ILanguageService"/>

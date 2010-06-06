@@ -1,4 +1,4 @@
-package org.jtheque.resources.impl;
+package org.jtheque.images.impl;
 
 import javax.swing.ImageIcon;
 

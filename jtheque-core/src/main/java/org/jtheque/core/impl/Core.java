@@ -23,7 +23,7 @@ import org.jtheque.core.able.IFoldersContainer;
 import org.jtheque.core.able.application.Application;
 import org.jtheque.core.able.lifecycle.ILifeCycle;
 import org.jtheque.events.able.IEventService;
-import org.jtheque.resources.able.IResourceService;
+import org.jtheque.images.able.IImageService;
 import org.jtheque.states.able.IStateService;
 import org.jtheque.utils.bean.Version;
 
@@ -47,7 +47,7 @@ public final class Core implements ICore {
     private final IFoldersContainer foldersContainer;
     private final IFilesContainer filesContainer;
     private final ICoreConfiguration configuration;
-    private final IResourceService resourceService;
+    private final IImageService imageService;
     private final ILifeCycle lifeCycle;
 
     private Application application;
@@ -56,13 +56,13 @@ public final class Core implements ICore {
      * Construct a new Core.
      *
      * @param stateService    The state service.
-     * @param resourceService The resource service.
+     * @param imageService The resource service.
      * @param eventService    The event service.
      */
-    public Core(IStateService stateService, IResourceService resourceService, IEventService eventService) {
+    public Core(IStateService stateService, IImageService imageService, IEventService eventService) {
         super();
 
-        this.resourceService = resourceService;
+        this.imageService = imageService;
         lifeCycle = new LifeCycle(eventService, this);
 
         foldersContainer = new Folders(this);
@@ -80,7 +80,7 @@ public final class Core implements ICore {
 
         LoggerFactory.getLogger(getClass()).debug("Configuring core with application {}", application);
 
-        resourceService.registerResource(WINDOW_ICON, new FileSystemResource(new File(application.getWindowIcon())));
+        imageService.registerResource(WINDOW_ICON, new FileSystemResource(new File(application.getWindowIcon())));
     }
 
     @Override

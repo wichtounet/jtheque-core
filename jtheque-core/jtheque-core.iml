@@ -18,7 +18,7 @@
     <orderEntry type="module" module-name="jtheque-javamail" exported="" />
     <orderEntry type="library" exported="" name="Maven: javax.mail:mail:1.4.1" level="project" />
     <orderEntry type="library" exported="" name="Maven: javax.activation:activation:1.1" level="project" />
-    <orderEntry type="module" module-name="jtheque-resources" exported="" />
+    <orderEntry type="module" module-name="jtheque-images" exported="" />
     <orderEntry type="library" exported="" name="Maven: org.springframework:spring-core:3.0.0.RELEASE" level="project" />
     <orderEntry type="library" exported="" name="Maven: org.springframework:spring-asm:3.0.0.RELEASE" level="project" />
     <orderEntry type="library" exported="" name="Maven: commons-logging:commons-logging:1.1.1" level="project" />

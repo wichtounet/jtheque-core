@@ -1,4 +1,4 @@
-package org.jtheque.resources.able;
+package org.jtheque.images.able;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -30,7 +30,7 @@ import java.awt.image.BufferedImage;
  *
  * @author Baptiste Wicht
  */
-public interface IResourceService {
+public interface IImageService {
     /**
      * Register a resource with the specified id.
      *

@@ -1,4 +1,4 @@
-package org.jtheque.resources.impl;
+package org.jtheque.images.impl;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -16,7 +16,7 @@ package org.jtheque.resources.impl;
  * limitations under the License.
  */
 
-import org.jtheque.resources.able.IResourceService;
+import org.jtheque.images.able.IImageService;
 import org.jtheque.utils.ui.ImageUtils;
 
 import org.slf4j.LoggerFactory;
@@ -36,7 +36,7 @@ import java.util.Map;
  *
  * @author Baptiste Wicht
  */
-public final class ResourceService implements IResourceService {
+public final class ImageService implements IImageService {
     private static final int DEFAULT_CACHE_SIZE = 50;
 
     private final Map<String, Resource> resources = new HashMap<String, Resource>(DEFAULT_CACHE_SIZE);

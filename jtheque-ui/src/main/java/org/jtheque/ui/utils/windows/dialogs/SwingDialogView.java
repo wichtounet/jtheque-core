@@ -24,7 +24,7 @@ import org.jtheque.errors.able.IErrorService;
 import org.jtheque.i18n.able.ILanguageService;
 import org.jtheque.i18n.able.Internationalizable;
 import org.jtheque.i18n.able.InternationalizableContainer;
-import org.jtheque.resources.able.IResourceService;
+import org.jtheque.images.able.IImageService;
 import org.jtheque.spring.utils.SwingSpringProxy;
 import org.jtheque.ui.able.IModel;
 import org.jtheque.ui.able.IWindowView;
@@ -166,7 +166,7 @@ public abstract class SwingDialogView<T extends IModel> extends JDialog
      * @return The default window icon.
      */
     protected Image getDefaultWindowIcon() {
-        return getService(IResourceService.class).getImage(ICore.WINDOW_ICON);
+        return getService(IImageService.class).getImage(ICore.WINDOW_ICON);
     }
 
     /**
@@ -201,10 +201,10 @@ public abstract class SwingDialogView<T extends IModel> extends JDialog
                 if (!builded) {
                     build();
                 }
-
-                setVisible(true);
             }
         });
+
+        setVisible(true);
     }
 
     @Override

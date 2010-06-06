@@ -4,8 +4,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>org.jtheque.resources</artifactId>
-    <name>org.jtheque.resources</name>
+    <artifactId>org.jtheque.images</artifactId>
+    <name>org.jtheque.images</name>
     <packaging>bundle</packaging>
 
     <parent>
@@ -65,7 +65,7 @@
                 <configuration>
                     <instructions>
                         <Bundle-SymbolicName>${pom.artifactId}</Bundle-SymbolicName>
-                        <Export-Package>org.jtheque.resources.able</Export-Package>
+                        <Export-Package>org.jtheque.images.able</Export-Package>
                         <Bundle-Vendor>Baptiste Wicht</Bundle-Vendor>
                         <Spring-Context>*;create-asynchronously:=false;publish-context:=false</Spring-Context>
                     </instructions>

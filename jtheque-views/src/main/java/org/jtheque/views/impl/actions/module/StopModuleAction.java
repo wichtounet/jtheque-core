@@ -73,8 +73,6 @@ public final class StopModuleAction extends JThequeAction {
         if (module.getState() == ModuleState.STARTED) {
             moduleService.stopModule(module);
             moduleView.refreshList();
-
-            uiUtils.displayI18nText("message.module.stopped");
         } else {
             uiUtils.displayI18nText("error.module.not.started");
         }

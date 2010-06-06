@@ -1,7 +1,7 @@
 package org.jtheque.ui.impl;
 
 import org.jtheque.i18n.able.ILanguageService;
-import org.jtheque.resources.able.IResourceService;
+import org.jtheque.images.able.IImageService;
 import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.ui.able.ViewDelegate;
 
@@ -37,15 +37,15 @@ public class UIUtils implements IUIUtils {
      *
      * @param viewDelegate    The view delegate.
      * @param languageService The language service.
-     * @param resourceService The resource service.
+     * @param imageService The resource service.
      */
-    public UIUtils(ViewDelegate viewDelegate, ILanguageService languageService, IResourceService resourceService) {
+    public UIUtils(ViewDelegate viewDelegate, ILanguageService languageService, IImageService imageService) {
         super();
 
         this.viewDelegate = viewDelegate;
         this.languageService = languageService;
 
-        resourceService.registerResource(LIGHT_IMAGE, new ClassPathResource("org/jtheque/ui/light.png"));
+        imageService.registerResource(LIGHT_IMAGE, new ClassPathResource("org/jtheque/ui/light.png"));
     }
 
     @Override
