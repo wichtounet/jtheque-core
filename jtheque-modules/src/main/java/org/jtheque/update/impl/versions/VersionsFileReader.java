@@ -19,7 +19,6 @@ package org.jtheque.update.impl.versions;
 import org.jtheque.core.able.ICore;
 import org.jtheque.modules.able.IModuleDescription;
 import org.jtheque.modules.able.Module;
-import org.jtheque.update.able.Updatable;
 import org.jtheque.update.impl.actions.AbstractUpdateAction;
 import org.jtheque.update.impl.actions.DeleteAction;
 import org.jtheque.update.impl.actions.DownloadAction;
@@ -63,10 +62,6 @@ public final class VersionsFileReader {
             if (StringUtils.isNotEmpty(module.getUpdateUrl())) {
                 return read(module.getUpdateUrl());
             }
-        } else if (isUpdatable(object)) {
-            Updatable updatable = (Updatable) object;
-
-            return read(updatable.getVersionsFileURL());
         } else if (isCore(object)) {
             return read(ICore.VERSIONS_FILE_URL);
         } else if (object instanceof IModuleDescription) {
@@ -84,16 +79,6 @@ public final class VersionsFileReader {
      */
     private static boolean isModule(Object object) {
         return object instanceof Module;
-    }
-
-    /**
-     * Indicate if the object is an updatable or not.
-     *
-     * @param object The object to test.
-     * @return true if the object is an updatable else false.
-     */
-    private static boolean isUpdatable(Object object) {
-        return object instanceof Updatable;
     }
 
     /**

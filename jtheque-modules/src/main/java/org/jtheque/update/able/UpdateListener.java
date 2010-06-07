@@ -21,7 +21,7 @@ import java.util.EventListener;
 /**
  * An Update listener.
  *
- * @author BBaptiste Wicht
+ * @author Baptiste Wicht
  */
 public interface UpdateListener extends EventListener {
     /**

@@ -18,14 +18,14 @@ package org.jtheque.views.impl.windows;
 
 import org.jtheque.i18n.able.ILanguageService;
 import org.jtheque.modules.able.Module;
+import org.jtheque.resources.able.IResource;
 import org.jtheque.ui.able.IModel;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.ui.utils.components.LayerTabbedPane;
 import org.jtheque.ui.utils.windows.dialogs.SwingFilthyBuildedDialogView;
-import org.jtheque.update.able.Updatable;
 import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.views.able.components.IModulesPanelView;
-import org.jtheque.views.able.components.IUpdatablesPanelView;
+import org.jtheque.views.able.components.IResourcePanelView;
 import org.jtheque.views.able.panel.IModuleView;
 
 import javax.swing.JComponent;
@@ -37,7 +37,7 @@ import javax.swing.JComponent;
  */
 public final class ModuleView extends SwingFilthyBuildedDialogView<IModel> implements IModuleView {
     private IModulesPanelView modulesPanel;
-    private IUpdatablesPanelView updatablesPanel;
+    private IResourcePanelView resourcePanel;
 
     @Override
     protected void initView() {
@@ -49,10 +49,10 @@ public final class ModuleView extends SwingFilthyBuildedDialogView<IModel> imple
         LayerTabbedPane tabbed = new LayerTabbedPane(getService(ILanguageService.class));
 
         modulesPanel = getBean(IModulesPanelView.class);
-        updatablesPanel = getBean(IUpdatablesPanelView.class);
+        resourcePanel = getBean(IResourcePanelView.class);
 
         tabbed.addInternationalizedTab("modules.view.tab.modules", (JComponent) modulesPanel);
-        tabbed.addInternationalizedTab("modules.view.tab.updatables", (JComponent) updatablesPanel);
+        tabbed.addInternationalizedTab("modules.view.tab.updatables", (JComponent) resourcePanel);
 
         builder.add(tabbed, builder.gbcSet(0, 0, GridBagUtils.BOTH, GridBagUtils.BASELINE_LEADING, 1.0, 1.0));
     }
@@ -63,8 +63,8 @@ public final class ModuleView extends SwingFilthyBuildedDialogView<IModel> imple
     }
 
     @Override
-    public Updatable getSelectedUpdatable() {
-        return updatablesPanel.getSelectedUpdatable();
+    public IResource getSelectedResource() {
+        return resourcePanel.getSelectedResource();
     }
 
     @Override

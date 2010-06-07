@@ -1,8 +1,8 @@
 package org.jtheque.views.able.panel;
 
 import org.jtheque.modules.able.Module;
+import org.jtheque.resources.able.IResource;
 import org.jtheque.ui.able.IView;
-import org.jtheque.update.able.Updatable;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -36,7 +36,7 @@ public interface IModuleView extends IView {
      *
      * @return The selected updatable.
      */
-    Updatable getSelectedUpdatable();
+    IResource getSelectedResource();
 
     /**
      * Refresh the list.

@@ -35,7 +35,6 @@ public final class ModuleContainer implements Module {
     private String id;
     private Version version;
     private Version coreVersion;
-    private String[] libs;
     private String[] dependencies;
     private String url;
     private String updateUrl;
@@ -170,21 +169,6 @@ public final class ModuleContainer implements Module {
      */
     public void setUpdateUrl(String updateUrl) {
         this.updateUrl = updateUrl;
-    }
-
-    @Override
-    public String[] getLibs() {
-        return libs;
-    }
-
-    /**
-     * Set the libs of the module.
-     *
-     * @param libs The libs of the module.
-     * @see #getLibs()
-     */
-    public void setLibs(String[] libs) {
-        this.libs = libs;
     }
 
     @Override

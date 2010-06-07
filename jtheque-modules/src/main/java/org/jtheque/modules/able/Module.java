@@ -97,14 +97,6 @@ public interface Module {
     String getUpdateUrl();
 
     /**
-     * Return all the libs of the module. The libs are OSGi bundles that are installed but the libs are
-     * not started. This is standard OSGi bundles with no JTheque specified headers.
-     *
-     * @return An array containing all the libs of the module.
-     */
-    String[] getLibs();
-
-    /**
      * Return all the dependencies of the module. The dependencies are a link to a module that must be started
      * before this module.
      *

@@ -1,15 +1,14 @@
 package org.jtheque.views.impl.components.panel;
 
+import org.jtheque.resources.able.IResource;
+import org.jtheque.resources.able.IResourceService;
 import org.jtheque.ui.utils.builded.OSGIFilthyBuildedPanel;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.ui.utils.components.Borders;
-import org.jtheque.update.able.IUpdateService;
-import org.jtheque.update.able.Updatable;
 import org.jtheque.utils.ui.GridBagUtils;
-import org.jtheque.views.able.components.IUpdatablesPanelView;
-import org.jtheque.views.impl.actions.module.UpdateUpdatableAction;
-import org.jtheque.views.impl.components.renderers.UpdatableListRenderer;
-import org.jtheque.views.impl.models.UpdatableListModel;
+import org.jtheque.views.able.components.IResourcePanelView;
+import org.jtheque.views.impl.components.renderers.ResourceListRenderer;
+import org.jtheque.views.impl.models.ResourceListModel;
 
 import javax.swing.JList;
 
@@ -30,26 +29,26 @@ import javax.swing.JList;
  */
 
 /**
- * An updatable panel view implementation.
+ * An resources panel view implementation.
  *
  * @author Baptiste Wicht
  */
-public final class UpdatablesPanel extends OSGIFilthyBuildedPanel implements IUpdatablesPanelView {
-    private JList updatablesList;
+public final class ResourcesPanel extends OSGIFilthyBuildedPanel implements IResourcePanelView {
+    private JList resourcesList;
 
     @Override
     protected void buildView(I18nPanelBuilder builder) {
-        IUpdateService updateService = getService(IUpdateService.class);
+        IResourceService resourceService = getService(IResourceService.class);
 
-        updatablesList = builder.addScrolledList(new UpdatableListModel(updateService), new UpdatableListRenderer(updateService),
+        resourcesList = builder.addScrolledList(new ResourceListModel(resourceService), new ResourceListRenderer(),
                 builder.gbcSet(0, 0, GridBagUtils.BOTH, GridBagUtils.FIRST_LINE_START, 1.0, 1.0));
-        updatablesList.setBorder(Borders.EMPTY_BORDER);
+        resourcesList.setBorder(Borders.EMPTY_BORDER);
 
-        builder.addButtonBar(builder.gbcSet(0, 1, GridBagUtils.HORIZONTAL, GridBagUtils.FIRST_LINE_START), new UpdateUpdatableAction());
+        //builder.addButtonBar(builder.gbcSet(0, 1, GridBagUtils.HORIZONTAL, GridBagUtils.FIRST_LINE_START), new UpdateUpdatableAction());
     }
 
     @Override
-    public Updatable getSelectedUpdatable() {
-        return (Updatable) updatablesList.getSelectedValue();
+    public IResource getSelectedResource() {
+        return (IResource) resourcesList.getSelectedValue();
     }
 }

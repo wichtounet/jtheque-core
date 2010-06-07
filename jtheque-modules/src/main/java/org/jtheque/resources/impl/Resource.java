@@ -29,6 +29,14 @@ public class Resource implements IResource {
         return id;
     }
 
+    public void addFile(String text) {
+        files.add(text);
+    }
+
+    public void addLibrary(Library library) {
+        libraries.add(library);
+    }
+
     @Override
     public List<String> getFiles() {
         return files;

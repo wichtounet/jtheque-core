@@ -13,7 +13,9 @@
 
     <context:annotation-config/>
 
-    <bean id="resourceService" class="org.jtheque.resources.impl.ResourceService" />
+    <bean id="resourceService" class="org.jtheque.resources.impl.ResourceService">
+        <constructor-arg ref="stateService"/>
+    </bean>
 
     <bean id="moduleService" class="org.jtheque.modules.impl.ModuleService">
         <constructor-arg>
@@ -22,9 +24,7 @@
     </bean>
 
     <bean id="updateService" class="org.jtheque.update.impl.UpdateService">
-        <constructor-arg>
-            <osgi:reference interface="org.jtheque.states.able.IStateService"/>
-        </constructor-arg>
+        <constructor-arg ref="stateService"/>
         <constructor-arg>
             <bean id="versionsLoader" class="org.jtheque.update.impl.versions.VersionsLoader"/>
         </constructor-arg>

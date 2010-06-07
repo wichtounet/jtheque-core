@@ -19,7 +19,6 @@ package org.jtheque.views.able.windows;
 import org.jtheque.modules.able.Module;
 import org.jtheque.ui.able.IView;
 import org.jtheque.ui.able.WaitableView;
-import org.jtheque.update.able.Updatable;
 import org.jtheque.utils.bean.Version;
 
 /**
@@ -33,8 +32,7 @@ public interface IUpdateView extends IView, WaitableView {
      */
     enum Mode {
         KERNEL,
-        MODULE,
-        UPDATABLE
+        MODULE
     }
 
     /**
@@ -57,11 +55,4 @@ public interface IUpdateView extends IView, WaitableView {
      * @return The current module.
      */
     Module getModule();
-
-    /**
-     * Return the current updatable.
-     *
-     * @return The current updatable.
-     */
-    Updatable getUpdatable();
 }

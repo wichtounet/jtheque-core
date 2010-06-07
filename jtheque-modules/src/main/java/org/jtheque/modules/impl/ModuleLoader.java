@@ -124,22 +124,6 @@ public final class ModuleLoader implements IModuleLoader, BundleContextAware {
                 container.setCollection(Boolean.parseBoolean(headers.get("Module-Collection")));
             }
 
-            if (StringUtils.isNotEmpty(headers.get("Module-Libs"))) {
-                container.setLibs(COMMA_DELIMITER_PATTERN.split(headers.get("Module-Libs")));
-
-                File libsFolder = OSGiUtils.getService(bundleContext, ICore.class).getFolders().getLibrariesFolder();
-
-                for (String lib : container.getLibs()) {
-                    File libFile = new File(libsFolder, lib);
-
-                    LoggerFactory.getLogger(getClass()).debug("Install bundle dependency {}", libFile.getAbsolutePath());
-                    
-                    bundleContext.installBundle("file:" + libFile.getAbsolutePath());
-                }
-            } else {
-                container.setLibs(EMPTY_ARRAY);
-            }
-
             if (StringUtils.isNotEmpty(headers.get("Module-Dependencies"))) {
                 container.setDependencies(COMMA_DELIMITER_PATTERN.split(headers.get("Module-Dependencies")));
             } else {
@@ -206,17 +190,21 @@ public final class ModuleLoader implements IModuleLoader, BundleContextAware {
             while (reader.next("/config/resources/resource")) {
                 String id = reader.readString("@id");
                 String version = reader.readString("@version");
-                String url = reader.readString("@version");
+                String url = reader.readString("@url");
 
                 IResource resource = resourceService.getResource(id, version);
 
                 if(resource != null){
                     resources.addResource(resource);
                 } else {
-                    resources.addResource(resourceService.downloadResource(url, version));
+                    resource = resourceService.downloadResource(url, version);
+
+                    resources.addResource(resource);
                 }
 
-                resourceService.installResource(resource);
+                if (resource != null) {
+                    resourceService.installResource(resource);
+                }
             }
         } catch (XMLException e) {
             LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);

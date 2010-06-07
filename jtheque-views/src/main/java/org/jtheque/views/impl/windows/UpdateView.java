@@ -22,7 +22,6 @@ import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.ui.utils.filthy.FilthyRenderer;
 import org.jtheque.ui.utils.windows.dialogs.SwingFilthyBuildedDialogView;
 import org.jtheque.update.able.IUpdateService;
-import org.jtheque.update.able.Updatable;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.views.able.windows.IUpdateView;
@@ -39,7 +38,6 @@ public final class UpdateView extends SwingFilthyBuildedDialogView<IModel> imple
 
     private Mode mode = Mode.KERNEL;
     private Module module;
-    private Updatable updatable;
 
     @Override
     protected void initView() {
@@ -69,11 +67,6 @@ public final class UpdateView extends SwingFilthyBuildedDialogView<IModel> imple
 
             module = (Module) value;
             model.loadModuleVersions(module);
-        } else if ("updatable".equals(message)) {
-            mode = Mode.UPDATABLE;
-
-            updatable = (Updatable) value;
-            model.loadUpdatableVersions(updatable);
         }
     }
 
@@ -90,10 +83,5 @@ public final class UpdateView extends SwingFilthyBuildedDialogView<IModel> imple
     @Override
     public Module getModule() {
         return module;
-    }
-
-    @Override
-    public Updatable getUpdatable() {
-        return updatable;
     }
 }

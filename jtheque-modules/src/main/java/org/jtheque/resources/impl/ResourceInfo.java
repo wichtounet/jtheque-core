@@ -3,6 +3,7 @@ package org.jtheque.resources.impl;
 import org.jtheque.utils.bean.Version;
 
 import java.util.List;
+import java.util.Set;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -22,9 +23,9 @@ import java.util.List;
 
 public class ResourceInfo {
     private final String id;
-    private final List<Version> versions;
+    private final Set<Version> versions;
 
-    public ResourceInfo(String id, List<Version> versions) {
+    public ResourceInfo(String id, Set<Version> versions) {
         super();
 
         this.id = id;
@@ -35,7 +36,7 @@ public class ResourceInfo {
         return id;
     }
 
-    public List<Version> getVersions() {
+    public Set<Version> getVersions() {
         return versions;
     }
 }

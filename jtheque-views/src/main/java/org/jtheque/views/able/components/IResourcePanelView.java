@@ -1,6 +1,6 @@
 package org.jtheque.views.able.components;
 
-import org.jtheque.update.able.Updatable;
+import org.jtheque.resources.able.IResource;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -19,15 +19,15 @@ import org.jtheque.update.able.Updatable;
  */
 
 /**
- * An updatable panel view specification.
+ * An resource panel view specification.
  *
  * @author Baptiste Wicht
  */
-public interface IUpdatablesPanelView {
+public interface IResourcePanelView {
     /**
-     * Return the selected updatable.
+     * Return the selected resource.
      *
-     * @return The selected updatable.
+     * @return The selected resource.
      */
-    Updatable getSelectedUpdatable();
+    IResource getSelectedResource();
 }

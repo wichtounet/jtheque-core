@@ -2,7 +2,6 @@ package org.jtheque.update.impl.versions;
 
 import org.jtheque.errors.able.IErrorService;
 import org.jtheque.modules.able.Module;
-import org.jtheque.update.able.Updatable;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.collections.CollectionUtils;
 
@@ -54,8 +53,6 @@ public final class VersionsLoader implements IVersionsLoader {
     public Version getVersion(Object object) {
         if (isModule(object)) {
             return ((Module) object).getVersion();
-        } else if (isUpdatable(object)) {
-            return ((Updatable) object).getVersion();
         }
 
         return null;
@@ -69,16 +66,6 @@ public final class VersionsLoader implements IVersionsLoader {
      */
     private static boolean isModule(Object object) {
         return object instanceof Module;
-    }
-
-    /**
-     * Test if the object is an updatable.
-     *
-     * @param object The object to test.
-     * @return true if the object is an updatable else false.
-     */
-    private static boolean isUpdatable(Object object) {
-        return object instanceof Updatable;
     }
 
     @Override

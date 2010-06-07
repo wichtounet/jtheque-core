@@ -69,8 +69,6 @@ public final class AcValidateUpdateView extends JThequeAction {
                 updateService.update(updateView.getSelectedVersion());
             } else if (updateView.getMode() == IUpdateView.Mode.MODULE) {
                 updateService.update(updateView.getModule(), updateView.getSelectedVersion());
-            } else {
-                updateService.update(updateView.getUpdatable(), updateView.getSelectedVersion());
             }
 
             SwingUtils.execute(new StopWaitTask());

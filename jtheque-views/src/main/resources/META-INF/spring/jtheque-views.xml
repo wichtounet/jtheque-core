@@ -63,7 +63,7 @@
     <!-- panels -->
 
     <bean class="org.jtheque.views.impl.components.panel.ModulesPanel" lazy-init="true"/>
-    <bean class="org.jtheque.views.impl.components.panel.UpdatablesPanel" lazy-init="true"/>
+    <bean class="org.jtheque.views.impl.components.panel.ResourcesPanel" lazy-init="true"/>
 
     <!-- Java2D panes -->
 

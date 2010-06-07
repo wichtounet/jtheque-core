@@ -76,8 +76,8 @@ public final class ResourceDescriptorReader {
         try {
             reader.openURL(url);
 
-            String id = reader.readString("@id", reader.getRootElement());
-
+            String id = reader.readString("id", reader.getRootElement());
+            
             resourceDescriptor = new ResourceDescriptor(id);
 
             for (Object currentNode : reader.getNodes("version", reader.getRootElement())) {

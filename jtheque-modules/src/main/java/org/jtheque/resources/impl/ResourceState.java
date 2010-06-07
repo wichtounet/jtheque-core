@@ -1,9 +1,10 @@
 package org.jtheque.resources.impl;
 
-import org.jtheque.modules.impl.ModuleInfo;
+import org.jtheque.resources.able.IResource;
 import org.jtheque.states.able.Load;
 import org.jtheque.states.able.Save;
 import org.jtheque.states.able.State;
+import org.jtheque.utils.bean.Version;
 import org.jtheque.xml.utils.Node;
 
 import java.util.ArrayList;
@@ -28,39 +29,74 @@ import java.util.List;
 
 @State(id = "jtheque-resources", delegated = true)
 public class ResourceState {
-    private final List<ResourceInfo> resources;
+    private final List<IResource> resources;
 
     public ResourceState() {
         super();
 
-        resources = new ArrayList<ResourceInfo>(10);
+        resources = new ArrayList<IResource>(10);
     }
 
     @Load
     public void delegateLoad(Iterable<Node> nodes) {
         for (Node node : nodes) {
             if ("resource".equals(node.getName())) {
-                resources.add(convertToModuleInfo(node));
+                resources.add(convertToResource(node));
             }
         }
-    }
-
-    private ResourceInfo convertToModuleInfo(Node node) {
-        return null;
     }
 
     @Save
     public Collection<Node> delegateSave() {
         Collection<Node> states = new ArrayList<Node>(25);
 
-        for (ResourceInfo info : resources) {
-            states.add(convertToNodeState(info));
+        for (IResource info : resources) {
+            states.add(convertToNode(info));
         }
 
         return states;
     }
 
-    private Node convertToNodeState(ResourceInfo info) {
-        return null;
+    public void addResource(IResource resource) {
+        resources.add(resource);
+    }
+
+    public List<IResource> getResources(){
+        return resources;
+    }
+
+    private static IResource convertToResource(Node node) {
+        String id = node.getAttributeValue("id");
+        Version version = new Version(node.getAttributeValue("version"));
+
+        Resource resource = new Resource(id);
+        resource.setVersion(version);
+
+        for(Node child : node.getChildrens()){
+            if("file".equals(child.getName())){
+                resource.addFile(child.getText());
+            } else if("library".equals(child.getName())){
+                resource.addLibrary(new Library(child.getText()));
+            }
+        }
+
+        return resource;
+    }
+
+    private static Node convertToNode(IResource resource) {
+        Node node = new Node("resource");
+
+        node.setAttribute("id", resource.getId());
+        node.setAttribute("version", resource.getVersion().getVersion());
+
+        for(String file : resource.getFiles()){
+            node.addSimpleChildValue("file", file);
+        }
+
+        for(Library library : resource.getLibraries()){
+            node.addSimpleChildValue("library", library.getId());
+        }
+
+        return node;
     }
 }

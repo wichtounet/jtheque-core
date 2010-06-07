@@ -17,15 +17,12 @@ package org.jtheque.update.impl;
  */
 
 import org.jtheque.core.able.ICore;
-import org.jtheque.core.utils.WeakEventListenerList;
 import org.jtheque.modules.able.IModuleService;
 import org.jtheque.modules.able.Module;
 import org.jtheque.modules.impl.InstallationResult;
 import org.jtheque.states.able.IStateService;
 import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.update.able.IUpdateService;
-import org.jtheque.update.able.Updatable;
-import org.jtheque.update.able.UpdatableListener;
 import org.jtheque.update.impl.actions.UpdateAction;
 import org.jtheque.update.impl.versions.IVersionsLoader;
 import org.jtheque.update.impl.versions.InstallVersion;
@@ -47,10 +44,6 @@ import java.util.List;
  * @author Baptiste Wicht
  */
 public final class UpdateService implements IUpdateService {
-    private final Collection<Updatable> updatables;
-    private final UpdatableState state;
-    private final WeakEventListenerList listeners = new WeakEventListenerList();
-
     @Resource
     private ICore core;
 
@@ -72,45 +65,6 @@ public final class UpdateService implements IUpdateService {
         super();
 
         this.versionsLoader = versionsLoader;
-
-        updatables = new ArrayList<Updatable>(10);
-
-        state = stateService.getState(new UpdatableState());
-
-        for (Updatable updatable : updatables) {
-            readUpdatableVersion(updatable);
-        }
-    }
-
-    /**
-     * Read the updatable version of the updatable.
-     *
-     * @param updatable The updatable to fill with the version.
-     */
-    private void readUpdatableVersion(Updatable updatable) {
-        Version version = state.getVersion(updatable.getName());
-
-        if (version == null) {
-            updatable.setVersion(updatable.getDefaultVersion());
-        } else {
-            updatable.setVersion(version);
-        }
-    }
-
-    @Override
-    public void update(Updatable updatable, Version versionToDownload) {
-        //Download all files
-        for (OnlineVersion onlineVersion : versionsLoader.getOnlineVersions(updatable)) {
-            if (onlineVersion.getVersion().equals(versionToDownload)) {
-                applyOnlineVersion(onlineVersion);
-
-                break;
-            }
-        }
-
-        updatable.setVersion(new Version(versionToDownload.getVersion()));
-        state.setVersion(updatable.getName(), updatable.getVersion());
-        updatable.setUpdated();
     }
 
     @Override
@@ -261,39 +215,6 @@ public final class UpdateService implements IUpdateService {
     @Override
     public Collection<Version> getVersions(Object object) {
         return versionsLoader.getVersions(object);
-    }
-
-    @Override
-    public void registerUpdatable(Updatable updatable) {
-        updatables.add(updatable);
-
-        fireUpdatableAdded(updatable);
-    }
-
-    @Override
-    public Collection<Updatable> getUpdatables() {
-        return updatables;
-    }
-
-    @Override
-    public void addUpdatableListener(UpdatableListener listener) {
-        listeners.add(UpdatableListener.class, listener);
-    }
-
-    @Override
-    public void removeUpdatableListener(UpdatableListener listener) {
-        listeners.remove(UpdatableListener.class, listener);
-    }
-
-    /**
-     * Fire an updatable added event.
-     *
-     * @param updatable The new updatable.
-     */
-    private void fireUpdatableAdded(Updatable updatable) {
-        for (UpdatableListener l : listeners.getListeners(UpdatableListener.class)) {
-            l.updatableAdded(updatable);
-        }
     }
 
     @Override

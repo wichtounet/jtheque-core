@@ -3,6 +3,7 @@ package org.jtheque.resources.impl;
 import org.jtheque.core.utils.SystemProperty;
 import org.jtheque.resources.able.IResource;
 import org.jtheque.resources.able.IResourceService;
+import org.jtheque.states.able.IStateService;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.io.FileException;
 import org.jtheque.utils.io.FileUtils;
@@ -37,9 +38,18 @@ import java.util.Map;
 
 public class ResourceService implements IResourceService, BundleContextAware {
     private final List<IResource> resources = new ArrayList<IResource>(10);
-
     private final Map<String, ResourceDescriptor> descriptorCache = new HashMap<String, ResourceDescriptor>(5);
+    private final ResourceState resourceState;
+    
     private BundleContext bundleContext;
+
+    public ResourceService(IStateService stateService) {
+        super();
+
+        resourceState = stateService.getState(new ResourceState());
+
+        resources.addAll(resourceState.getResources());
+    }
 
     @Override
     public void addResource(Resource resource){
@@ -138,6 +148,7 @@ public class ResourceService implements IResourceService, BundleContextAware {
                 }
 
                 resources.add(resource);
+                resourceState.addResource(resource);
 
                 return resource;
             }
@@ -166,7 +177,7 @@ public class ResourceService implements IResourceService, BundleContextAware {
         this.bundleContext = bundleContext;
     }
 
-    private File getResourceFolder(IResource resource) {
+    private static File getResourceFolder(IResource resource) {
         return new File(SystemProperty.USER_DIR.get(), resource.getId() + '/' + resource.getVersion());
     }
 }

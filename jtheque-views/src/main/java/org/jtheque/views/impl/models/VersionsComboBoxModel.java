@@ -19,7 +19,6 @@ package org.jtheque.views.impl.models;
 import org.jtheque.modules.able.Module;
 import org.jtheque.ui.utils.models.SimpleListModel;
 import org.jtheque.update.able.IUpdateService;
-import org.jtheque.update.able.Updatable;
 import org.jtheque.utils.bean.Version;
 
 /**
@@ -30,7 +29,6 @@ import org.jtheque.utils.bean.Version;
 public final class VersionsComboBoxModel extends SimpleListModel<Version> {
     private Mode mode;
     private Module currentModule;
-    private Updatable currentUpdatable;
 
     private final IUpdateService updateService;
 
@@ -76,20 +74,6 @@ public final class VersionsComboBoxModel extends SimpleListModel<Version> {
             currentModule = value;
 
             setElements(updateService.getVersions(currentModule));
-        }
-    }
-
-    /**
-     * Load module versions into the model.
-     *
-     * @param value The module to load the versions from.
-     */
-    public void loadUpdatableVersions(Updatable value) {
-        if (mode != Mode.UPDATABLE || !currentUpdatable.equals(value)) {
-            mode = Mode.UPDATABLE;
-            currentUpdatable = value;
-
-            setElements(updateService.getVersions(currentUpdatable));
         }
     }
 }

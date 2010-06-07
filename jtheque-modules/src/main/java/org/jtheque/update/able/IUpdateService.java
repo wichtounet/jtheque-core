@@ -91,42 +91,6 @@ public interface IUpdateService {
     InstallationResult install(String versionFileURL);
 
     /**
-     * Register a new updatable.
-     *
-     * @param updatable The updatable to register.
-     */
-    void registerUpdatable(Updatable updatable);
-
-    /**
-     * Update the updatable with specific version.
-     *
-     * @param updatable         The updatable to org.jtheque.update.
-     * @param versionToDownload The version to apply.
-     */
-    void update(Updatable updatable, Version versionToDownload);
-
-    /**
-     * Return all the updatable.
-     *
-     * @return A List containing all the updatable.
-     */
-    Collection<Updatable> getUpdatables();
-
-    /**
-     * Add an updatable listener.
-     *
-     * @param listener The listener to add.
-     */
-    void addUpdatableListener(UpdatableListener listener);
-
-    /**
-     * Remove an updatable listener.
-     *
-     * @param listener The updatable listener to remove.
-     */
-    void removeUpdatableListener(UpdatableListener listener);
-
-    /**
      * Update the module to the most recent available version.
      *
      * @param module The module to org.jtheque.update.

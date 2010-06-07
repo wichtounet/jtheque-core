@@ -1,4 +1,4 @@
-package org.jtheque.update.able;
+package org.jtheque.views.impl.models;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -16,18 +16,19 @@ package org.jtheque.update.able;
  * limitations under the License.
  */
 
-import java.util.EventListener;
+import org.jtheque.resources.able.IResource;
+import org.jtheque.resources.able.IResourceService;
+import org.jtheque.ui.utils.models.SimpleListModel;
 
 /**
- * An Update listener.
+ * A List model to display the resources.
  *
- * @author BBaptiste Wicht
+ * @author Baptiste Wicht
  */
-public interface UpdatableListener extends EventListener {
-    /**
-     * An updatable was added.
-     *
-     * @param updatable The added updatable.
-     */
-    void updatableAdded(Updatable updatable);
+public final class ResourceListModel extends SimpleListModel<IResource> {
+    public ResourceListModel(IResourceService resourceService) {
+        super();
+
+        setElements(resourceService.getResources());
+    }
 }

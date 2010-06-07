@@ -16,11 +16,10 @@ package org.jtheque.views.impl.components.renderers;
  * limitations under the License.
  */
 
+import org.jtheque.resources.able.IResource;
 import org.jtheque.ui.utils.builders.FilthyPanelBuilder;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.ui.utils.builders.PanelBuilder;
-import org.jtheque.update.able.IUpdateService;
-import org.jtheque.update.able.Updatable;
 import org.jtheque.utils.ui.GridBagUtils;
 
 import javax.swing.JLabel;
@@ -32,30 +31,22 @@ import java.awt.Color;
 import java.awt.Component;
 
 /**
- * A renderer to display a module in a list.
+ * A renderer to display a resource in a list.
  *
  * @author Baptiste Wicht
  */
-public final class UpdatableListRenderer extends JPanel implements ListCellRenderer {
+public final class ResourceListRenderer extends JPanel implements ListCellRenderer {
     private final JLabel labelName;
     private final JLabel labelCurrentVersion;
-    private final JLabel labelOnlineVersion;
     private final JLabel labelCurrentVersion1;
-    private final JLabel labelOnlineVersion1;
 
     private static final int TITLE_FONT_SIZE = 16;
 
-    private final IUpdateService updateService;
-
     /**
-     * Construct a new ModuleListRenderer.
-     *
-     * @param updateService The update service.
+     * Construct a new ResourceListRenderer.
      */
-    public UpdatableListRenderer(IUpdateService updateService) {
+    public ResourceListRenderer() {
         super();
-
-        this.updateService = updateService;
 
         I18nPanelBuilder builder = new FilthyPanelBuilder(this);
 
@@ -64,8 +55,8 @@ public final class UpdatableListRenderer extends JPanel implements ListCellRende
         labelCurrentVersion1 = builder.addI18nLabel("modules.view.label.versions.current", builder.gbcSet(0, 1));
         labelCurrentVersion = builder.addLabel(builder.gbcSet(1, 1));
 
-        labelOnlineVersion1 = builder.addI18nLabel("modules.view.label.versions.online", builder.gbcSet(0, 2));
-        labelOnlineVersion = builder.addLabel(builder.gbcSet(1, 2));
+        /*labelOnlineVersion1 = builder.addI18nLabel("modules.view.label.versions.online", builder.gbcSet(0, 2));
+                labelOnlineVersion = builder.addLabel(builder.gbcSet(1, 2));*/
     }
 
     @Override
@@ -78,14 +69,10 @@ public final class UpdatableListRenderer extends JPanel implements ListCellRende
             setChildsForeground(Color.white);
         }
 
-        labelOnlineVersion.setBackground(getBackground());
-        labelOnlineVersion.removeAll();
+        IResource resource = (IResource) value;
 
-        Updatable updatable = (Updatable) value;
-
-        labelName.setText(updatable.getName());
-        labelCurrentVersion.setText(updatable.getVersion().getVersion());
-        labelOnlineVersion.setText(updateService.getMostRecentVersion(updatable).getVersion());
+        labelName.setText(resource.getId());
+        labelCurrentVersion.setText(resource.getVersion().getVersion());
 
         return this;
     }
@@ -99,7 +86,5 @@ public final class UpdatableListRenderer extends JPanel implements ListCellRende
         labelName.setForeground(color);
         labelCurrentVersion.setForeground(color);
         labelCurrentVersion1.setForeground(color);
-        labelOnlineVersion.setForeground(color);
-        labelOnlineVersion1.setForeground(color);
     }
 }
