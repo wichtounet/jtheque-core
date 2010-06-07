@@ -213,8 +213,10 @@ public final class ModuleLoader implements IModuleLoader, BundleContextAware {
                 if(resource != null){
                     resources.addResource(resource);
                 } else {
-                    //TODO Install resource
+                    resources.addResource(resourceService.downloadResource(url, version));
                 }
+
+                resourceService.installResource(resource);
             }
         } catch (XMLException e) {
             LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);

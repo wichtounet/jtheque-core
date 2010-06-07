@@ -1,4 +1,8 @@
-package org.jtheque.resources.able;
+package org.jtheque.resources.impl;
+
+import org.jtheque.utils.bean.Version;
+
+import java.util.List;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -16,23 +20,22 @@ package org.jtheque.resources.able;
  * limitations under the License.
  */
 
-import org.jtheque.resources.impl.Resource;
-import org.jtheque.utils.bean.Version;
+public class ResourceInfo {
+    private final String id;
+    private final List<Version> versions;
 
-import java.util.List;
+    public ResourceInfo(String id, List<Version> versions) {
+        super();
 
-public interface IResourceService {
-    void addResource(Resource resource);
+        this.id = id;
+        this.versions = versions;
+    }
 
-    List<IResource> getResources();
+    public String getId() {
+        return id;
+    }
 
-    List<Version> getVersions(String resourceName);
-
-    boolean exists(String resourceName);
-
-    IResource getResource(String id, String version);
-
-    IResource downloadResource(String url, String version);
-
-    void installResource(IResource resource);
+    public List<Version> getVersions() {
+        return versions;
+    }
 }

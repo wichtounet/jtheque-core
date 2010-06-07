@@ -1,4 +1,4 @@
-package org.jtheque.resources.able;
+package org.jtheque.resources.impl;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -16,23 +16,22 @@ package org.jtheque.resources.able;
  * limitations under the License.
  */
 
-import org.jtheque.resources.impl.Resource;
-import org.jtheque.utils.bean.Version;
+public class FileDescriptor {
+    private final String name;
+    private final String url;
 
-import java.util.List;
+    public FileDescriptor(String name, String url) {
+        super();
 
-public interface IResourceService {
-    void addResource(Resource resource);
+        this.name = name;
+        this.url = url;
+    }
 
-    List<IResource> getResources();
+    public String getName() {
+        return name;
+    }
 
-    List<Version> getVersions(String resourceName);
-
-    boolean exists(String resourceName);
-
-    IResource getResource(String id, String version);
-
-    IResource downloadResource(String url, String version);
-
-    void installResource(IResource resource);
+    public String getUrl() {
+        return url;
+    }
 }
