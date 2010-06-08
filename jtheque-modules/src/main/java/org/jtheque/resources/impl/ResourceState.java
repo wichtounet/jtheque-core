@@ -67,10 +67,12 @@ public class ResourceState {
 
     private static IResource convertToResource(Node node) {
         String id = node.getAttributeValue("id");
+        String url = node.getAttributeValue("url");
         Version version = new Version(node.getAttributeValue("version"));
 
         Resource resource = new Resource(id);
         resource.setVersion(version);
+        resource.setUrl(url);
 
         for(Node child : node.getChildrens()){
             if("file".equals(child.getName())){
@@ -87,6 +89,7 @@ public class ResourceState {
         Node node = new Node("resource");
 
         node.setAttribute("id", resource.getId());
+        node.setAttribute("url", resource.getUrl());
         node.setAttribute("version", resource.getVersion().getVersion());
 
         for(String file : resource.getFiles()){

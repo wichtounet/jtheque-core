@@ -120,31 +120,21 @@ public class ResourceService implements IResourceService, BundleContextAware {
                 Resource resource = new Resource(descriptor.getId());
 
                 resource.setVersion(resourceVersion.getVersion());
+                resource.setUrl(url);
 
                 File resourceFolder = getResourceFolder(resource);
+                resourceFolder.mkdirs();
 
                 for(FileDescriptor file : resourceVersion.getFiles()){
-                    File filePath = new File(resourceFolder, file.getName());
-
-                    try {
-                        FileUtils.downloadFile(file.getUrl(), filePath.getAbsolutePath());
-                    } catch (FileException e) {
-                        LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
-                    }
+                    downloadFile(resourceFolder, file);
 
                     resource.getFiles().add(file.getName());
                 }
 
                 for (FileDescriptor library : resourceVersion.getLibraries()) {
-                    File filePath = new File(resourceFolder, library.getName());
+                    downloadFile(resourceFolder, library);
 
-                    try {
-                        FileUtils.downloadFile(library.getUrl(), filePath.getAbsolutePath());
-                    } catch (FileException e) {
-                        LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
-                    }
-
-                    resource.getFiles().add(library.getName());
+                    resource.getLibraries().add(new Library(library.getName()));
                 }
 
                 resources.add(resource);
@@ -155,6 +145,16 @@ public class ResourceService implements IResourceService, BundleContextAware {
         }
 
         return null;
+    }
+
+    private void downloadFile(File resourceFolder, FileDescriptor fileDescriptor) {
+        File filePath = new File(resourceFolder, fileDescriptor.getName());
+
+        try {
+            FileUtils.downloadFile(fileDescriptor.getUrl(), filePath.getAbsolutePath());
+        } catch (FileException e) {
+            LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
+        }
     }
 
     @Override
@@ -178,6 +178,6 @@ public class ResourceService implements IResourceService, BundleContextAware {
     }
 
     private static File getResourceFolder(IResource resource) {
-        return new File(SystemProperty.USER_DIR.get(), resource.getId() + '/' + resource.getVersion());
+        return new File(SystemProperty.USER_DIR.get(), "resources/" + resource.getId() + '/' + resource.getVersion());
     }
 }
