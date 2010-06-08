@@ -23,10 +23,10 @@ import org.jtheque.utils.bean.InternationalString;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.io.FileUtils;
 import org.jtheque.xml.utils.XMLException;
-import org.jtheque.xml.utils.XMLReader;
+import org.jtheque.xml.utils.javax.XMLReader;
 
-import org.jdom.Element;
 import org.slf4j.LoggerFactory;
+import org.w3c.dom.Node;
 
 /**
  * A reader for repository XML file.
@@ -109,14 +109,10 @@ public final class RepositoryReader {
 
             module.setVersionsFileURL(reader.readString("versions", currentNode));
 
-            Element descriptionElement = reader.getNode("description", currentNode);
-
             InternationalString description = new InternationalString();
 
-            for (Object child : descriptionElement.getChildren()) {
-                Element childElement = (Element) child;
-
-                description.put(childElement.getName(), childElement.getValue());
+            for (Node child : reader.getNodes("description/*", currentNode)) {
+                description.put(child.getNodeName(), child.getTextContent());
             }
 
             module.setDescription(description);
@@ -134,12 +130,8 @@ public final class RepositoryReader {
     private void readTitle(XMLReader reader) throws XMLException {
         InternationalString title = new InternationalString();
 
-        Element titleElement = reader.getNode("title", reader.getRootElement());
-
-        for (Object child : titleElement.getChildren()) {
-            Element childElement = (Element) child;
-
-            title.put(childElement.getName(), childElement.getValue());
+        for (Node child : reader.getNodes("title/*", reader.getRootElement())) {
+            title.put(child.getNodeName(), child.getTextContent());
         }
 
         repository.setTitle(title);

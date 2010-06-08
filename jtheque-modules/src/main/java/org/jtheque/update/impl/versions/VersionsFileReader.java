@@ -28,10 +28,10 @@ import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.io.FileUtils;
 import org.jtheque.xml.utils.XMLException;
-import org.jtheque.xml.utils.XMLReader;
+import org.jtheque.xml.utils.javax.XMLReader;
 
-import org.jdom.Element;
 import org.slf4j.LoggerFactory;
+import org.w3c.dom.Node;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -217,12 +217,12 @@ public final class VersionsFileReader {
      * @throws XMLException If an error occurs during the reading process.
      */
     private void readActions(Object currentNode, OnlineVersion onlineVersion) throws XMLException {
-        Collection<Element> nodes = reader.getNodes("actions/*", currentNode);
+        Collection<Node> nodes = reader.getNodes("actions/*", currentNode);
 
         onlineVersion.setActions(new ArrayList<UpdateAction>(nodes.size()));
 
-        for (Element node : nodes) {
-            String name = node.getName();
+        for (Node node : nodes) {
+            String name = node.getNodeName();
 
             if ("add".equals(name)) {
                 AbstractUpdateAction action = readDownloadAction(node);

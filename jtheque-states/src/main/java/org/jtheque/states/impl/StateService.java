@@ -24,13 +24,12 @@ import org.jtheque.states.able.State;
 import org.jtheque.utils.bean.ReflectionUtils;
 import org.jtheque.utils.io.FileUtils;
 import org.jtheque.xml.utils.Node;
-import org.jtheque.xml.utils.NodeLoader;
-import org.jtheque.xml.utils.NodeSaver;
+import org.jtheque.xml.utils.javax.NodeLoader;
+import org.jtheque.xml.utils.javax.NodeSaver;
 import org.jtheque.xml.utils.XMLException;
-import org.jtheque.xml.utils.XMLReader;
-import org.jtheque.xml.utils.XMLWriter;
+import org.jtheque.xml.utils.javax.XMLReader;
+import org.jtheque.xml.utils.javax.XMLWriter;
 
-import org.jdom.Element;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.PostConstruct;
@@ -68,13 +67,13 @@ public final class StateService implements IStateService {
                 boolean delegated = reader.readBoolean("@delegated", stateNode);
 
                 if (delegated) {
-                    Collection<Element> nodeElements = reader.getNodes("*", stateNode);
+                    Collection<org.w3c.dom.Node> nodeElements = reader.getNodes("*", stateNode);
 
                     Collection<Node> stateNodes = NodeLoader.resolveNodeStates(nodeElements);
 
                     nodes.put(id, stateNodes);
                 } else {
-                    Collection<Element> propertyElements = reader.getNodes("properties/property", stateNode);
+                    Collection<org.w3c.dom.Node> propertyElements = reader.getNodes("properties/property", stateNode);
 
                     Map<String, String> stateProperties = new HashMap<String, String>(propertyElements.size());
 

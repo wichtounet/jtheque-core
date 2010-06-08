@@ -15,7 +15,7 @@ import org.jtheque.resources.able.IResourceService;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.xml.utils.XMLException;
-import org.jtheque.xml.utils.XMLOverReader;
+import org.jtheque.xml.utils.javax.XMLOverReader;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;

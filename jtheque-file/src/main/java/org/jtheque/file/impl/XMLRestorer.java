@@ -20,11 +20,11 @@ import org.jtheque.file.able.IFileService.XmlBackupVersion;
 import org.jtheque.file.able.ModuleBackup;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.io.FileUtils;
-import org.jtheque.xml.utils.NodeLoader;
 import org.jtheque.xml.utils.XMLException;
-import org.jtheque.xml.utils.XMLReader;
+import org.jtheque.xml.utils.javax.NodeLoader;
+import org.jtheque.xml.utils.javax.XMLReader;
 
-import org.jdom.Element;
+import org.w3c.dom.Node;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -64,7 +64,7 @@ public final class XMLRestorer {
                 throw new XMLException("Unsupported version");
             }
 
-            for (Element backupElement : reader.getNodes("//backup", reader.getRootElement())) {
+            for (Node backupElement : reader.getNodes("//backup", reader.getRootElement())) {
                 ModuleBackup backup = new ModuleBackup();
 
                 backup.setId(reader.readString("id", backupElement));

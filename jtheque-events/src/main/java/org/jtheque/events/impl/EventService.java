@@ -7,11 +7,11 @@ import org.jtheque.events.able.IEventService;
 import org.jtheque.events.utils.Event;
 import org.jtheque.utils.io.FileUtils;
 import org.jtheque.xml.utils.XMLException;
-import org.jtheque.xml.utils.XMLReader;
-import org.jtheque.xml.utils.XMLWriter;
+import org.jtheque.xml.utils.javax.XMLReader;
+import org.jtheque.xml.utils.javax.XMLWriter;
 
-import org.jdom.Element;
 import org.slf4j.LoggerFactory;
+import org.w3c.dom.Node;
 
 import javax.annotation.PreDestroy;
 
@@ -103,11 +103,11 @@ public final class EventService implements IEventService {
             for (Object currentNode : reader.getNodes("log", reader.getRootElement())) {
                 String name = reader.readString("@name", currentNode);
 
-                Collection<Element> elements = reader.getNodes("event", currentNode);
+                Collection<Node> elements = reader.getNodes("event", currentNode);
 
                 logs.put(name, new ArrayList<IEvent>(elements.size()));
 
-                for (Element element : elements) {
+                for (Node element : elements) {
                     Event log = readLog(reader, name, element);
 
                     logs.get(name).add(log);

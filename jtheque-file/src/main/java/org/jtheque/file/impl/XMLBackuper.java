@@ -20,8 +20,8 @@ import org.jtheque.core.able.ICore;
 import org.jtheque.file.able.IFileService.XmlBackupVersion;
 import org.jtheque.file.able.ModuleBackup;
 import org.jtheque.utils.bean.IntDate;
-import org.jtheque.xml.utils.NodeSaver;
-import org.jtheque.xml.utils.XMLWriter;
+import org.jtheque.xml.utils.javax.NodeSaver;
+import org.jtheque.xml.utils.javax.XMLWriter;
 
 import java.io.File;
 

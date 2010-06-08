@@ -20,7 +20,7 @@ import org.jtheque.messages.able.IMessage;
 import org.jtheque.utils.bean.IntDate;
 import org.jtheque.utils.io.FileUtils;
 import org.jtheque.xml.utils.XMLException;
-import org.jtheque.xml.utils.XMLReader;
+import org.jtheque.xml.utils.javax.XMLReader;
 
 import java.net.MalformedURLException;
 import java.net.URL;

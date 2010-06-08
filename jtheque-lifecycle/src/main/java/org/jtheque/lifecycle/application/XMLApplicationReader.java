@@ -9,9 +9,9 @@ import org.jtheque.utils.bean.InternationalString;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.io.FileUtils;
 import org.jtheque.xml.utils.XMLException;
-import org.jtheque.xml.utils.XMLReader;
+import org.jtheque.xml.utils.javax.XMLReader;
 
-import org.jdom.Element;
+import org.w3c.dom.Node;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -147,18 +147,18 @@ public final class XMLApplicationReader {
      */
     private void readLanguages(Object i18nElement, XMLApplication application) throws XMLException {
         if (reader.existsNode("languages", i18nElement)) {
-            Collection<Element> nodes = reader.getNodes("languages/language", i18nElement);
+            Collection<Node> nodes = reader.getNodes("languages/language", i18nElement);
 
             Collection<String> languages = new ArrayList<String>(nodes.size());
 
-            for (Element languageElement : nodes) {
-                languages.add(languageElement.getText());
+            for (Node languageElement : nodes) {
+                languages.add(languageElement.getTextContent());
             }
 
             nodes = reader.getNodes("languages/*", i18nElement);
 
-            for (Element languageElement : nodes) {
-                languages.add(languageElement.getName());
+            for (Node languageElement : nodes) {
+                languages.add(languageElement.getTextContent());
             }
 
             application.setSupportedLanguages(languages.toArray(new String[languages.size()]));
@@ -199,10 +199,10 @@ public final class XMLApplicationReader {
     private InternationalString readInternationalString(String path, Object parentElement) throws XMLException {
         InternationalString internationalString = new InternationalString();
 
-        Collection<Element> elements = reader.getNodes(path + "/*", parentElement);
+        Collection<Node> elements = reader.getNodes(path + "/*", parentElement);
 
-        for (Element child : elements) {
-            internationalString.put(child.getName(), child.getText());
+        for (Node child : elements) {
+            internationalString.put(child.getNodeName(), child.getTextContent());
         }
 
         return internationalString;
@@ -305,8 +305,8 @@ public final class XMLApplicationReader {
                 application.setAutoDiscovery("true".equals(discovery));
             }
 
-            for (Element child : reader.getNodes("*", modulesElement)) {
-                application.getModules().add(child.getName());
+            for (Node child : reader.getNodes("*", modulesElement)) {
+                application.getModules().add(child.getNodeName());
             }
         }
     }
@@ -335,10 +335,10 @@ public final class XMLApplicationReader {
      * @throws XMLException if an error occurs during the XML processing.
      */
     private void readProperties(XMLApplication application) throws XMLException {
-        Collection<Element> nodes = reader.getNodes("properties/*", reader.getRootElement());
+        Collection<Node> nodes = reader.getNodes("properties/*", reader.getRootElement());
 
-        for (Element propertyElement : nodes) {
-            application.setProperty(propertyElement.getName(), propertyElement.getText());
+        for (Node propertyElement : nodes) {
+            application.setProperty(propertyElement.getNodeName(), propertyElement.getTextContent());
         }
     }
 }
