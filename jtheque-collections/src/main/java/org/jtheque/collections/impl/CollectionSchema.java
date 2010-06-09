@@ -17,11 +17,8 @@ package org.jtheque.collections.impl;
  */
 
 import org.jtheque.collections.able.IDaoCollections;
-import org.jtheque.schemas.able.ISchemaService;
 import org.jtheque.schemas.utils.DefaultSchema;
 import org.jtheque.utils.bean.Version;
-
-import javax.annotation.PostConstruct;
 
 /**
  * A collection schema. This schema describe the database part to store the collection.
@@ -31,8 +28,6 @@ import javax.annotation.PostConstruct;
 public class CollectionSchema extends DefaultSchema {
     /**
      * Construct a new CollectionSchema.
-     *
-     * @param schemaService The schema service to use.
      */
     public CollectionSchema() {
         super(new Version("1.0"), "jtheque-collection-schema");

@@ -21,9 +21,6 @@ import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.ui.utils.actions.JThequeAction;
 import org.jtheque.utils.io.SimpleFilter;
 import org.jtheque.utils.ui.SwingUtils;
-import org.jtheque.views.able.panel.IModuleView;
-
-import javax.annotation.Resource;
 
 import java.awt.event.ActionEvent;
 import java.io.File;

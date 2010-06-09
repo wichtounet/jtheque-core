@@ -2,7 +2,6 @@ package org.jtheque.resources.impl;
 
 import org.jtheque.utils.bean.Version;
 
-import java.util.List;
 import java.util.Set;
 
 /*

@@ -233,6 +233,12 @@ public final class ModuleContainer implements Module {
         this.resources = resources;
 	}
 
+    /**
+     * Set the language service of the container. If this service is not setted, the informations will
+     * not be internationalized. 
+     *
+     * @param languageService The language service.
+     */
     public void setLanguageService(ILanguageService languageService) {
         this.languageService = languageService;
     }

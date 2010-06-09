@@ -16,6 +16,11 @@ package org.jtheque.resources.impl;
  * limitations under the License.
  */
 
+/**
+ * A File Descriptor. Describe a file or library in a resource descriptor.
+ *
+ * @author Baptiste Wicht
+ */
 public class FileDescriptor {
     private final String name;
     private final String url;

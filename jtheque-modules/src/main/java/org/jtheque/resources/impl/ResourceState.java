@@ -61,7 +61,7 @@ public class ResourceState {
         resources.add(resource);
     }
 
-    public List<IResource> getResources(){
+    public Collection<IResource> getResources(){
         return resources;
     }
 

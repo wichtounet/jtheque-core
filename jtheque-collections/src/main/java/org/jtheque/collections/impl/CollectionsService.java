@@ -44,6 +44,15 @@ public final class CollectionsService implements ICollectionsService {
 
     private final WeakEventListenerList listeners = new WeakEventListenerList();
 
+    /**
+     * Construct a new CollectionsService.
+     *
+     * @param daoCollections The dao collections.
+     * @param fileService The file service.
+     * @param core The core.
+     * @param schemaService The schema service.
+     * @param schema The schema of the collections. 
+     */
     public CollectionsService(IDaoCollections daoCollections, IFileService fileService, ICore core,
                               ISchemaService schemaService, Schema schema) {
         super();

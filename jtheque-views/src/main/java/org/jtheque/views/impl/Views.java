@@ -75,6 +75,9 @@ public final class Views implements IViews, ApplicationContextAware, ModuleListe
     @Resource
     private IModuleService moduleService;
 
+    /**
+     * Register a module listener to the module service. 
+     */
     @PostConstruct
     public void register(){
         moduleService.addModuleListener("", this);

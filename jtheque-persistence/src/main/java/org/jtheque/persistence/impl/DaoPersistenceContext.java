@@ -8,8 +8,6 @@ import org.jtheque.persistence.utils.Query;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 
-import javax.annotation.Resource;
-
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -38,6 +36,11 @@ import java.util.List;
 public final class DaoPersistenceContext implements IDaoPersistenceContext {
     private final SimpleJdbcTemplate jdbcTemplate;
 
+    /**
+     * Construct a new DaoPersistenceContext.
+     *
+     * @param jdbcTemplate The JDBC template to use. 
+     */
     public DaoPersistenceContext(SimpleJdbcTemplate jdbcTemplate) {
         super();
 

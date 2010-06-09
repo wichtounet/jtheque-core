@@ -18,7 +18,6 @@ package org.jtheque.modules.impl;
 
 import org.jtheque.modules.able.Resources;
 import org.jtheque.resources.able.IResource;
-import org.jtheque.resources.impl.Resource;
 
 import java.util.ArrayList;
 import java.util.List;

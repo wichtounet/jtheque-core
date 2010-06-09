@@ -5,13 +5,6 @@ import org.jtheque.utils.bean.Version;
 
 import java.util.List;
 
-/**
- * Created by IntelliJ IDEA.
- * User: wichtounet
- * Date: Jun 6, 2010
- * Time: 8:27:37 PM
- * To change this template use File | Settings | File Templates.
- */
 public interface IResource {
     String getId();
 
@@ -19,6 +12,11 @@ public interface IResource {
 
     List<Library> getLibraries();
 
+    /**
+     * Return the version of the resource.
+     *
+     * @return The version of the resource. 
+     */
     Version getVersion();
 
     String getUrl();
