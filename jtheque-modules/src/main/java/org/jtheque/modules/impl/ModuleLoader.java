@@ -7,9 +7,11 @@ import org.jtheque.errors.utils.JThequeError;
 import org.jtheque.i18n.able.I18NResource;
 import org.jtheque.i18n.able.ILanguageService;
 import org.jtheque.i18n.utils.I18NResourceFactory;
+import org.jtheque.images.able.IImageService;
 import org.jtheque.modules.able.IModuleLoader;
 import org.jtheque.modules.able.Module;
-import org.jtheque.images.able.IImageService;
+import org.jtheque.modules.utils.I18NDescription;
+import org.jtheque.modules.utils.ImageDescription;
 import org.jtheque.resources.able.IResource;
 import org.jtheque.resources.able.IResourceService;
 import org.jtheque.utils.StringUtils;
@@ -27,10 +29,14 @@ import org.springframework.osgi.context.BundleContextAware;
 import javax.annotation.Resource;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.List;
+import java.util.jar.JarFile;
 import java.util.regex.Pattern;
+import java.util.zip.ZipEntry;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -93,49 +99,35 @@ public final class ModuleLoader implements IModuleLoader, BundleContextAware {
 
     @Override
     public Module installModule(File file) {
-        ModuleContainer container = null;
+        ModuleContainer container = new ModuleContainer();
 
         try {
-            container = new ModuleContainer();
+            //Read the config file of the module
+            readConfig(file, container);
 
+            //Install necessary resources before installing the bundle
+            for (IResource resource : container.getResources().getResources()) {
+                if (resource != null) {
+                    resourceService.installResource(resource);
+                }
+            }
+
+            //Install the bundle
             Bundle bundle = bundleContext.installBundle("file:" + file.getAbsolutePath());
+            container.setBundle(bundle);
 
-            container.setLanguageService(OSGiUtils.getService(bundleContext, ILanguageService.class));
+            //Get informations from manifest
+            readManifestInformations(container, bundle);
 
-            Dictionary<String, String> headers = bundle.getHeaders();
+            //Add images resources
+            loadImageResources(container, bundle);
 
-            String id = StringUtils.isNotEmpty(headers.get("Module-Id")) ? headers.get("Module-Id") : headers.get("Bundle-SymbolicName");
-
-            container.setId(id);
-
-            String version = StringUtils.isNotEmpty(headers.get("Module-Version")) ? headers.get("Module-Version") : headers.get("Bundle-Version");
-
-            container.setVersion(new Version(version));
-
-            if (StringUtils.isNotEmpty(headers.get("Module-Core"))) {
-                container.setCoreVersion(new Version(headers.get("Module-Core")));
-            }
-
-            container.setUrl(headers.get("Module-Url"));
-            container.setUpdateUrl(headers.get("Module-UpdateUrl"));
-            container.setMessagesUrl(headers.get("Module-MessagesUrl"));
-
-            if (StringUtils.isNotEmpty(headers.get("Module-Collection"))) {
-                container.setCollection(Boolean.parseBoolean(headers.get("Module-Collection")));
-            }
-
-            if (StringUtils.isNotEmpty(headers.get("Module-Dependencies"))) {
-                container.setDependencies(COMMA_DELIMITER_PATTERN.split(headers.get("Module-Dependencies")));
-            } else {
-                container.setDependencies(EMPTY_ARRAY);
-            }
-
-            String path = headers.get("Module-Config");
-
-            if (StringUtils.isNotEmpty(path)) {
-                container.setResources(importConfig(bundle, path));
-            }
+            //Add i18n resources
+            loadI18NResources(container, bundle);
         } catch (BundleException e) {
+            LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
+            OSGiUtils.getService(bundleContext, IErrorService.class).addError(new JThequeError(e));
+        } catch (IOException e) {
             LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
             OSGiUtils.getService(bundleContext, IErrorService.class).addError(new JThequeError(e));
         }
@@ -143,37 +135,111 @@ public final class ModuleLoader implements IModuleLoader, BundleContextAware {
         return container;
     }
 
+    private void readManifestInformations(ModuleContainer container, Bundle bundle) {
+        Dictionary<String, String> headers = bundle.getHeaders();
+
+        String id = StringUtils.isNotEmpty(headers.get("Module-Id")) ? headers.get("Module-Id") : headers.get("Bundle-SymbolicName");
+
+        container.setId(id);
+
+        String version = StringUtils.isNotEmpty(headers.get("Module-Version")) ? headers.get("Module-Version") : headers.get("Bundle-Version");
+
+        container.setVersion(new Version(version));
+
+        if (StringUtils.isNotEmpty(headers.get("Module-Core"))) {
+            container.setCoreVersion(new Version(headers.get("Module-Core")));
+        }
+
+        container.setUrl(headers.get("Module-Url"));
+        container.setUpdateUrl(headers.get("Module-UpdateUrl"));
+        container.setMessagesUrl(headers.get("Module-MessagesUrl"));
+
+        if (StringUtils.isNotEmpty(headers.get("Module-Collection"))) {
+            container.setCollection(Boolean.parseBoolean(headers.get("Module-Collection")));
+        }
+
+        if (StringUtils.isNotEmpty(headers.get("Module-Dependencies"))) {
+            container.setDependencies(COMMA_DELIMITER_PATTERN.split(headers.get("Module-Dependencies")));
+        } else {
+            container.setDependencies(EMPTY_ARRAY);
+        }
+    }
+
+    private void loadImageResources(Module container, Bundle bundle) {
+        for(ImageDescription imageDescription : container.getResources().getImageResources()){
+            String resource = imageDescription.getResource();
+
+            if(resource.startsWith("classpath:")){
+                imageService.registerResource(imageDescription.getName(),
+                        new UrlResource(bundle.getResource(resource.substring(10))));
+            }
+        }
+    }
+
+    private void loadI18NResources(ModuleContainer container, Bundle bundle) {
+        for (I18NDescription i18NDescription : container.getResources().getI18NResources()) {
+            List<I18NResource> i18NResources = new ArrayList<I18NResource>(i18NDescription.getResources().size());
+
+            for (String resource : i18NDescription.getResources()) {
+                if (resource.startsWith("classpath:")) {
+                    i18NResources.add(I18NResourceFactory.fromURL(resource.substring(resource.lastIndexOf('/') + 1),
+                            bundle.getResource(resource.substring(10))));
+                }
+            }
+
+            languageService.registerResource(i18NDescription.getName(), i18NDescription.getVersion(),
+                    i18NResources.toArray(new I18NResource[i18NResources.size()]));
+        }
+
+        container.setLanguageService(OSGiUtils.getService(bundleContext, ILanguageService.class));
+    }
+
+    private void readConfig(File file, ModuleContainer container) throws IOException {
+        JarFile jarFile = new JarFile(file);
+        ZipEntry configEntry = jarFile.getEntry("module.xml");
+
+        if (configEntry != null) {
+            container.setResources(importConfig(jarFile.getInputStream(configEntry)));
+        } else {
+            container.setResources(new ModuleResources());
+        }
+
+        jarFile.close();
+    }
+
     /**
      * Import the configuration of the module from the module config XML file.
      *
-     * @param bundle The bundle.
-     * @param path   The path to the file inside the bundle.
+     * @param stream The stream to the file.
      * @return The ModuleResources of the module.
      */
-    private ModuleResources importConfig(Bundle bundle, String path) {
+    private ModuleResources importConfig(InputStream stream) {
         ModuleResources resources = new ModuleResources();
 
         XMLOverReader reader = new XMLOverReader();
         try {
-            reader.openURL(bundle.getResource(path));
+            reader.openStream(stream);
 
             while (reader.next("/config/i18n/i18nResource")) {
+
                 String name = reader.readString("@name");
                 Version version = new Version(reader.readString("@version"));
 
-                List<I18NResource> i18NResources = new ArrayList<I18NResource>(3);
+                I18NDescription description = new I18NDescription(name, version);
 
                 while (reader.next("classpath")) {
                     String classpath = reader.readString("text()");
 
-                    i18NResources.add(I18NResourceFactory.fromURL(classpath.substring(classpath.lastIndexOf('/') + 1), bundle.getResource(classpath)));
+                    description.getResources().add("classpath:" + classpath);
+
+                    //i18NResources.add(I18NResourceFactory.fromURL(classpath.substring(classpath.lastIndexOf('/') + 1), bundle.getResource(classpath)));
 
                     reader.switchToParent();
                 }
 
-                languageService.registerResource(name, version, i18NResources.toArray(new I18NResource[i18NResources.size()]));
+                //languageService.registerResource(name, version, i18NResources.toArray(new I18NResource[i18NResources.size()]));
 
-                resources.addI18NResource(name);
+                resources.addI18NResource(description);
 
                 reader.switchToParent();
             }
@@ -182,9 +248,7 @@ public final class ModuleLoader implements IModuleLoader, BundleContextAware {
                 String name = reader.readString("@name");
                 String classpath = reader.readString("classpath");
 
-                imageService.registerResource(name, new UrlResource(bundle.getResource(classpath)));
-
-                resources.addImageResource(name);
+                resources.addImageResource(new ImageDescription(name, "classpath:" + classpath));
             }
 
             while (reader.next("/config/resources/resource")) {
@@ -194,16 +258,12 @@ public final class ModuleLoader implements IModuleLoader, BundleContextAware {
 
                 IResource resource = resourceService.getResource(id, version);
 
-                if(resource != null){
+                if (resource != null) {
                     resources.addResource(resource);
                 } else {
                     resource = resourceService.downloadResource(url, version);
 
                     resources.addResource(resource);
-                }
-
-                if (resource != null) {
-                    resourceService.installResource(resource);
                 }
             }
         } catch (XMLException e) {
@@ -212,5 +272,5 @@ public final class ModuleLoader implements IModuleLoader, BundleContextAware {
         }
 
         return resources;
-	}
+    }
 }

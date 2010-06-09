@@ -1,5 +1,7 @@
 package org.jtheque.modules.able;
 
+import org.jtheque.modules.utils.I18NDescription;
+import org.jtheque.modules.utils.ImageDescription;
 import org.jtheque.resources.able.IResource;
 
 import java.util.List;
@@ -31,14 +33,14 @@ public interface Resources {
      *
      * @return A List containing all the resources of the modules.
      */
-    List<String> getImageResources();
+    List<ImageDescription> getImageResources();
 
     /**
      * Return all the i18n resources of the modules.
      *
      * @return A List containing all the i18n resources of the modules.
      */
-    List<String> getI18NResources();
+    List<I18NDescription> getI18NResources();
 
     List<IResource> getResources();
 }

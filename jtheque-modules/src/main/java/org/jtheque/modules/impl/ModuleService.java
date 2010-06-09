@@ -27,6 +27,8 @@ import org.jtheque.modules.able.Module;
 import org.jtheque.modules.able.ModuleListener;
 import org.jtheque.modules.able.ModuleState;
 import org.jtheque.modules.able.Resources;
+import org.jtheque.modules.utils.I18NDescription;
+import org.jtheque.modules.utils.ImageDescription;
 import org.jtheque.modules.utils.ModuleResourceCache;
 import org.jtheque.images.able.IImageService;
 import org.jtheque.states.able.IStateService;
@@ -241,12 +243,12 @@ public final class ModuleService implements IModuleService {
         Resources resources = module.getResources();
 
         if (resources != null) {
-            for (String name : resources.getI18NResources()) {
-                languageService.releaseResource(name);
+            for (I18NDescription i18NDescription : resources.getI18NResources()) {
+                languageService.releaseResource(i18NDescription.getName());
             }
 
-            for (String name : resources.getImageResources()) {
-                imageService.releaseResource(name);
+            for (ImageDescription imageDescription : resources.getImageResources()) {
+                imageService.releaseResource(imageDescription.getName());
             }
         }
 
