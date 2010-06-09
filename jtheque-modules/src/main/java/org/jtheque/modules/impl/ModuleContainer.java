@@ -28,10 +28,8 @@ import org.osgi.framework.Bundle;
  * @author Baptiste Wicht
  */
 public final class ModuleContainer implements Module {
-    private final Bundle bundle;
-
+    private Bundle bundle;
     private ModuleState state;
-
     private String id;
     private Version version;
     private Version coreVersion;
@@ -46,17 +44,6 @@ public final class ModuleContainer implements Module {
      * For internationalization purpose.
      */
     private ILanguageService languageService;
-
-    /**
-     * Construct a new ModuleContainer from the specified bundle.
-     *
-     * @param bundle The bundle of the module.
-     */
-    public ModuleContainer(Bundle bundle) {
-        super();
-
-        this.bundle = bundle;
-    }
 
     @Override
     public Bundle getBundle() {
@@ -241,5 +228,9 @@ public final class ModuleContainer implements Module {
      */
     public void setLanguageService(ILanguageService languageService) {
         this.languageService = languageService;
+    }
+
+    public void setBundle(Bundle bundle) {
+        this.bundle = bundle;
     }
 }

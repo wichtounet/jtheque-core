@@ -96,9 +96,9 @@ public final class ModuleLoader implements IModuleLoader, BundleContextAware {
         ModuleContainer container = null;
 
         try {
-            Bundle bundle = bundleContext.installBundle("file:" + file.getAbsolutePath());
+            container = new ModuleContainer();
 
-            container = new ModuleContainer(bundle);
+            Bundle bundle = bundleContext.installBundle("file:" + file.getAbsolutePath());
 
             container.setLanguageService(OSGiUtils.getService(bundleContext, ILanguageService.class));
 
