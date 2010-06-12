@@ -37,12 +37,12 @@ final class ModuleComparator implements Comparator<Module> {
             return -1;
         } else {
             //The other depends on me
-            if (ArrayUtils.search(o2.getDependencies(), o1.getId())) {
+            if (ArrayUtils.contains(o2.getDependencies(), o1.getId())) {
                 return -1;
             }
 
             //I depends on the other
-            if (ArrayUtils.search(o1.getDependencies(), o2.getId())) {
+            if (ArrayUtils.contains(o1.getDependencies(), o2.getId())) {
                 return 1;
             }
         }

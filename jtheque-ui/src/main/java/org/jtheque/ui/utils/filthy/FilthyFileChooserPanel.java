@@ -40,6 +40,7 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
+import java.io.File;
 
 /**
  * A panel with a label, a text field and a button to choose a file.
@@ -256,10 +257,10 @@ public final class FilthyFileChooserPanel extends JPanel implements Internationa
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            String file = directoriesOnly ? SwingUtils.chooseDirectory() : SwingUtils.chooseFile(filter);
+            File file = directoriesOnly ? SwingUtils.chooseDirectory() : SwingUtils.chooseFile(filter);
 
             if (file != null) {
-                fieldFilePath.setText(file);
+                fieldFilePath.setText(file.getAbsolutePath());
             }
         }
     }

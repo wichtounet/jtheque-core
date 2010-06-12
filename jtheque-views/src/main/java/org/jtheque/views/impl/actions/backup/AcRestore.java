@@ -60,7 +60,7 @@ public class AcRestore extends JThequeAction {
 
     @Override
     public final void actionPerformed(ActionEvent arg0) {
-        final File file = new File(SwingUtils.chooseFile(new SimpleFilter("XML(*.xml)", ".xml")));
+        final File file = SwingUtils.chooseFile(new SimpleFilter("XML(*.xml)", ".xml"));
 
         final boolean yes = uiUtils.askI18nUserForConfirmation(
                 "dialogs.confirm.clear.database", "dialogs.confirm.clear.database.title");

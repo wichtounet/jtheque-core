@@ -131,12 +131,12 @@ public abstract class AbstractSchema implements Schema {
             return -1;
         } else {
             //The other depends on me
-            if (ArrayUtils.search(other.getDependencies(), getId())) {
+            if (ArrayUtils.contains(other.getDependencies(), getId())) {
                 return -1;
             }
 
             //I depends on the other
-            if (ArrayUtils.search(getDependencies(), other.getId())) {
+            if (ArrayUtils.contains(getDependencies(), other.getId())) {
                 return 1;
             }
         }

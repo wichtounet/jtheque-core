@@ -36,6 +36,7 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 /**
  * A panel with a label, a text field and a button to choose a file.
@@ -186,10 +187,10 @@ public final class FileChooserPanel extends JPanel implements Internationalizabl
     private final class BrowseAction implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            String file = directoriesOnly ? SwingUtils.chooseDirectory() : SwingUtils.chooseFile(filter);
+            File file = directoriesOnly ? SwingUtils.chooseDirectory() : SwingUtils.chooseFile(filter);
 
             if (file != null) {
-                fieldFilePath.setText(file);
+                fieldFilePath.setText(file.getAbsolutePath());
             }
         }
     }

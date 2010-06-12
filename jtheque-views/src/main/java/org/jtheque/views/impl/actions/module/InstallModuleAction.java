@@ -49,11 +49,9 @@ public final class InstallModuleAction extends JThequeAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        String path = SwingUtils.chooseFile(new SimpleFilter("JAR File (*.jar)", "jar"));
+        File file = SwingUtils.chooseFile(new SimpleFilter("JAR File (*.jar)", "jar"));
 
-        if (path != null) {
-            File file = new File(path);
-
+        if (file != null) {
             boolean installed = moduleService.installModule(file);
 
             if (installed) {

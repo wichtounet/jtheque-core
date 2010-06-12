@@ -119,12 +119,12 @@ public final class FileService implements IFileService, ModuleListener {
                 return -1;
             } else {
                 //The other depends on me
-                if (ArrayUtils.search(backup2.getDependencies(), backup1.getId())) {
+                if (ArrayUtils.contains(backup2.getDependencies(), backup1.getId())) {
                     return -1;
                 }
 
                 //I depends on the other
-                if (ArrayUtils.search(backup1.getDependencies(), backup2.getId())) {
+                if (ArrayUtils.contains(backup1.getDependencies(), backup2.getId())) {
                     return 1;
                 }
             }

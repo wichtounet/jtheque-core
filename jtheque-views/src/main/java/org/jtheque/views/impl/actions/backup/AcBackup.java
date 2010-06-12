@@ -52,9 +52,11 @@ public class AcBackup extends JThequeAction {
                 "dialogs.confirm.backup", "dialogs.confirm.backup.title");
 
         if (yes) {
-            File file = new File(SwingUtils.chooseFile(new SimpleFilter("XML(*.xml)", ".xml")));
+            File file = SwingUtils.chooseFile(new SimpleFilter("XML(*.xml)", ".xml"));
 
-            fileService.backup(file);
+            if(file != null){
+                fileService.backup(file);
+            }
         }
     }
 }
