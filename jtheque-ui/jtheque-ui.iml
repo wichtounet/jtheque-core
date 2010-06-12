@@ -6,13 +6,14 @@
     </facet>
   </component>
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_6" inherit-compiler-output="false">
-    <output url="file://$MODULE_DIR$/../../../../../Builds/bundles/jtheque-ui/classes/production" />
-    <output-test url="file://$MODULE_DIR$/../../../../../Builds/utils/jtheque-core/classes/test" />
+    <output url="file://$MODULE_DIR$/target/classes" />
+    <output-test url="file://$MODULE_DIR$/target/test-classes" />
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/resources" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/${env.BUILD_HOME}/bundles/jtheque-ui" />
       <excludeFolder url="file://$MODULE_DIR$/${env.BUILD_HOME}/utils/jtheque-core/classes/test" />
+      <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

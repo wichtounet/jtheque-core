@@ -41,10 +41,6 @@
     </dependencies>
 
     <build>
-        <directory>${env.BUILD_HOME}/bundles/jtheque-errors</directory>
-
-        <outputDirectory>${env.BUILD_HOME}/bundles/jtheque-errors/classes/production</outputDirectory>
-
         <plugins>
             <plugin>
                 <groupId>org.apache.felix</groupId>

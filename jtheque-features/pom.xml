@@ -29,10 +29,6 @@
     </dependencies>
 
     <build>
-        <directory>${env.BUILD_HOME}/bundles/jtheque-features</directory>
-
-        <outputDirectory>${env.BUILD_HOME}/bundles/jtheque-features/classes/production</outputDirectory>
-
         <plugins>
             <plugin>
                 <groupId>org.apache.felix</groupId>

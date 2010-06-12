@@ -35,11 +35,6 @@
     </dependencies>
 
     <build>
-        <directory>${env.BUILD_HOME}/bundles/jtheque-core-utils</directory>
-
-        <outputDirectory>${env.BUILD_HOME}/bundles/jtheque-core-utils/classes/production</outputDirectory>
-        <testOutputDirectory>${env.BUILD_HOME}/bundles/jtheque-core-utils/classes/test</testOutputDirectory>
-
         <plugins>
             <plugin>
                 <groupId>org.apache.felix</groupId>

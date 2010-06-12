@@ -38,10 +38,15 @@
 
     <url>http://jtheque.developpez.com/utilities/core</url>
 
-    <issueManagement>
-        <system>Redmine</system>
-        <url>http://projets.developpez.com/projects/jtheque-core/issues</url>
-    </issueManagement>
+    <ciManagement>
+        <system>Hudson</system>
+        <url>http://wichtounet.homedns.org:8280/hudson/</url>
+    </ciManagement>
+
+    <scm>
+        <connection>scm:git:git://github.com/wichtounet/jtheque-core.git</connection>
+        <url>scm:git:git://github.com/wichtounet/jtheque-core.git</url>
+    </scm>
 
     <distributionManagement>
         <site>
@@ -61,17 +66,7 @@
         </snapshotRepository>
     </distributionManagement>
 
-    <scm>
-        <url>http://wichtounet.homedns.org/svn/jtheque-core/trunk/</url>
-        <connection>scm:svn:http://wichtounet.homedns.org/svn/jtheque-core/trunk/</connection>
-    </scm>
-
     <build>
-        <directory>${env.BUILD_HOME}/utils/jtheque-core</directory>
-
-        <outputDirectory>${env.BUILD_HOME}/utils/jtheque-core/classes/production</outputDirectory>
-        <testOutputDirectory>${env.BUILD_HOME}/utils/jtheque-core/classes/test</testOutputDirectory>
-         
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -144,17 +139,6 @@
                 <artifactId>maven-site-plugin</artifactId>
                 <configuration>
                   <locales>fr,en</locales>
-                </configuration>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-scm-plugin</artifactId>
-                <configuration>
-                    <tag>${BUILD_NUMBER}</tag>
-                    <tagBase>http://wichtounet.homedns.org/svn/jtheque-core/continuous/</tagBase>
-                    <username>wichtounet</username>
-                    <password>${svn.password}</password>
                 </configuration>
             </plugin>
             

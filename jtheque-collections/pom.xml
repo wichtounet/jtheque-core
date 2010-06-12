@@ -54,10 +54,6 @@
 
 
     <build>
-        <directory>${env.BUILD_HOME}/bundles/jtheque-collections</directory>
-
-        <outputDirectory>${env.BUILD_HOME}/bundles/jtheque-collections/classes/production</outputDirectory>
-
         <plugins>
             <plugin>
                 <groupId>org.apache.felix</groupId>

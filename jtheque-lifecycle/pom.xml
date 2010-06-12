@@ -95,10 +95,6 @@
     </dependencies>
 
     <build>
-        <directory>${env.BUILD_HOME}/bundles/jtheque-lifecycle</directory>
-
-        <outputDirectory>${env.BUILD_HOME}/bundles/jtheque-lifecycle/classes/production</outputDirectory>
-
         <plugins>
             <plugin>
                 <groupId>org.apache.felix</groupId>

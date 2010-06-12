@@ -75,10 +75,6 @@
     </dependencies>
 
     <build>
-        <directory>${env.BUILD_HOME}/bundles/jtheque-i18n</directory>
-
-        <outputDirectory>${env.BUILD_HOME}/bundles/jtheque-i18n/classes/production</outputDirectory>
-
         <plugins>
             <plugin>
                 <groupId>org.apache.felix</groupId>

@@ -41,10 +41,6 @@
     </dependencies>
 
     <build>
-        <directory>${env.BUILD_HOME}/bundles/jtheque-cache</directory>
-
-        <outputDirectory>${env.BUILD_HOME}/bundles/jtheque-cache/classes/production</outputDirectory>
-
         <plugins>
             <plugin>
                 <groupId>org.apache.felix</groupId>

@@ -143,10 +143,6 @@
     </dependencies>
 
     <build>
-        <directory>${env.BUILD_HOME}/bundles/jtheque-views</directory>
-
-        <outputDirectory>${env.BUILD_HOME}/bundles/jtheque-views/classes/production</outputDirectory>
-
         <plugins>
             <plugin>
                 <groupId>org.apache.felix</groupId>

@@ -75,10 +75,6 @@
     </dependencies>
 
     <build>
-        <directory>${env.BUILD_HOME}/bundles/jtheque-messages</directory>
-
-        <outputDirectory>${env.BUILD_HOME}/bundles/jtheque-messages/classes/production</outputDirectory>
-
         <plugins>
             <plugin>
                 <groupId>org.apache.felix</groupId>

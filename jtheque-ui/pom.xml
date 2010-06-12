@@ -89,10 +89,6 @@
     </dependencies>
 
     <build>
-        <directory>${env.BUILD_HOME}/bundles/jtheque-ui</directory>
-
-        <outputDirectory>${env.BUILD_HOME}/bundles/jtheque-ui/classes/production/</outputDirectory>
-
         <plugins>
             <plugin>
                 <groupId>org.apache.felix</groupId>
