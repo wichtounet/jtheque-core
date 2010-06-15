@@ -35,6 +35,7 @@ public interface ICacheService {
      * Return the cache with the specified name.
      *
      * @param name The name of the cache.
+     *
      * @return The cache with the specified name.
      */
     Cache getCache(String name);
@@ -43,6 +44,7 @@ public interface ICacheService {
      * Indicate if a cache exists with the specified name or not.
      *
      * @param name The name of the cache to search for.
+     *
      * @return true if the cache exists else false.
      */
     boolean cacheExists(String name);

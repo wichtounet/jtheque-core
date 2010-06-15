@@ -23,10 +23,10 @@ import javax.swing.ImageIcon;
 import java.awt.image.BufferedImage;
 
 /**
- * A resource manager. All the images and icons are cached and only created once. If the cache is invalidated or
- * if the specified resource is invalidated, the image/icon will be recreated the next time it will be requested.
- * All the images are guaranteed to be buffered and compatible with the current configuration. The thumbnails are
- * not cached. The ratios are kept during scale.
+ * A resource manager. All the images and icons are cached and only created once. If the cache is invalidated or if the
+ * specified resource is invalidated, the image/icon will be recreated the next time it will be requested. All the
+ * images are guaranteed to be buffered and compatible with the current configuration. The thumbnails are not cached.
+ * The ratios are kept during scale.
  *
  * @author Baptiste Wicht
  */
@@ -50,6 +50,7 @@ public interface IImageService {
      * Return the resource of the specified id.
      *
      * @param id The id of the resource to search.
+     *
      * @return The resource with the specified id or null if there is no resource with this id.
      */
     Resource getResourceByID(String id);
@@ -58,6 +59,7 @@ public interface IImageService {
      * Return the icon of the given id.
      *
      * @param id The id of the icon (the resource).
+     *
      * @return The image icon with the given id or null if there is no resource with this id.
      */
     ImageIcon getIcon(String id);
@@ -66,6 +68,7 @@ public interface IImageService {
      * Return the image with the specified id.
      *
      * @param id The id of the image (the resource).
+     *
      * @return The image with the given id or null if there is no resource with this id.
      */
     BufferedImage getImage(String id);
@@ -75,6 +78,7 @@ public interface IImageService {
      *
      * @param id    The id of the image (the resource).
      * @param width The requested width.
+     *
      * @return The image with the given id scaled to the specified width or null if there is no resource with this id.
      */
     BufferedImage getImage(String id, int width);
@@ -83,16 +87,18 @@ public interface IImageService {
      * Return the image from the file at the given path. The file resource is also cached.
      *
      * @param path The path to the file.
+     *
      * @return The image with the given id or null if there is no resource with this id.
      */
     BufferedImage getFileImage(String path);
 
     /**
-     * Return the image from the file at the given path and scaled to the given width.
-     * The file resource is also cached.
+     * Return the image from the file at the given path and scaled to the given width. The file resource is also
+     * cached.
      *
      * @param path  The path to the file.
      * @param width The requested width.
+     *
      * @return The image with the given id scaled to the specified width or null if there is no resource with this id.
      */
     BufferedImage getFileImage(String path, int width);

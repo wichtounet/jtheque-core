@@ -40,8 +40,8 @@ public final class EnableModuleAction extends JThequeAction {
      * Construct a new EnableModuleAction.
      *
      * @param moduleService The module service.
-     * @param uiUtils The UI Utils.
-     * @param moduleView The module view. 
+     * @param uiUtils       The UI Utils.
+     * @param moduleView    The module view.
      */
     public EnableModuleAction(IModuleService moduleService, IUIUtils uiUtils, IModuleView moduleView) {
         super("modules.actions.activate");

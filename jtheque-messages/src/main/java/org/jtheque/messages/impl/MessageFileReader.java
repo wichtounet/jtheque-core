@@ -19,8 +19,11 @@ package org.jtheque.messages.impl;
 import org.jtheque.messages.able.IMessage;
 import org.jtheque.utils.bean.IntDate;
 import org.jtheque.utils.io.FileUtils;
+import org.jtheque.xml.utils.IXMLReader;
+import org.jtheque.xml.utils.XML;
 import org.jtheque.xml.utils.XMLException;
-import org.jtheque.xml.utils.javax.XMLReader;
+
+import org.w3c.dom.Node;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -33,8 +36,7 @@ import java.util.List;
  */
 final class MessageFileReader {
     /**
-     * Construct a new MessageFileReader. This constructor is private because
-     * all methods are static.
+     * Construct a new MessageFileReader. This constructor is private because all methods are static.
      */
     private MessageFileReader() {
         super();
@@ -44,7 +46,9 @@ final class MessageFileReader {
      * Read a messages file and return it.
      *
      * @param strUrl The URL of the file.
+     *
      * @return The versions file.
+     *
      * @throws XMLException If there is an error reading the messages file.
      */
     public static MessageFile readMessagesFile(String strUrl) throws XMLException {
@@ -63,13 +67,15 @@ final class MessageFileReader {
      * Read a messages file and return it.
      *
      * @param url The URL of the file.
+     *
      * @return The messages file.
+     *
      * @throws XMLException Thrown when an error occurs during the reading.
      */
     private static MessageFile readMessagesFile(URL url) throws XMLException {
         MessageFile messageFile = new MessageFile();
 
-        XMLReader reader = new XMLReader();
+        IXMLReader<Node> reader = XML.newJavaFactory().newReader();
 
         List<IMessage> messages = new ArrayList<IMessage>(10);
 

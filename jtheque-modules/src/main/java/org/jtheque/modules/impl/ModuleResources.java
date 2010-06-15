@@ -64,7 +64,7 @@ public class ModuleResources implements Resources {
     @Override
     public List<I18NDescription> getI18NResources() {
         return i18nResources;
-	}
+    }
 
     @Override
     public List<IResource> getResources() {

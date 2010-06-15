@@ -40,7 +40,7 @@ public class ResourceService implements IResourceService, BundleContextAware {
     private final List<IResource> resources = new ArrayList<IResource>(10);
     private final Map<String, ResourceDescriptor> descriptorCache = new HashMap<String, ResourceDescriptor>(5);
     private final ResourceState resourceState;
-    
+
     private BundleContext bundleContext;
 
     public ResourceService(IStateService stateService) {
@@ -52,21 +52,21 @@ public class ResourceService implements IResourceService, BundleContextAware {
     }
 
     @Override
-    public void addResource(Resource resource){
+    public void addResource(Resource resource) {
         resources.add(resource);
     }
 
     @Override
-    public List<IResource> getResources(){
+    public List<IResource> getResources() {
         return resources;
     }
 
     @Override
-    public List<Version> getVersions(String resourceName){
+    public List<Version> getVersions(String resourceName) {
         List<Version> versions = new ArrayList<Version>(3);
 
-        for(IResource resource : resources){
-            if(resource.getId().equals(resourceName)){
+        for (IResource resource : resources) {
+            if (resource.getId().equals(resourceName)) {
                 versions.add(resource.getVersion());
             }
         }
@@ -75,7 +75,7 @@ public class ResourceService implements IResourceService, BundleContextAware {
     }
 
     @Override
-    public boolean exists(String resourceName){
+    public boolean exists(String resourceName) {
         for (IResource resource : resources) {
             if (resource.getId().equals(resourceName)) {
                 return true;
@@ -100,23 +100,23 @@ public class ResourceService implements IResourceService, BundleContextAware {
 
     @Override
     public IResource downloadResource(String url, String version) {
-        if(!descriptorCache.containsKey(url)){
+        if (!descriptorCache.containsKey(url)) {
             descriptorCache.put(url, new ResourceDescriptorReader().readURL(url));
         }
 
         ResourceDescriptor descriptor = descriptorCache.get(url);
 
-        if(descriptor == null){
+        if (descriptor == null) {
             return null;
         }
 
         IResource cachedResource = getResource(descriptor.getId(), version);
-        if(cachedResource != null){
+        if (cachedResource != null) {
             return cachedResource;
         }
 
-        for(ResourceVersion resourceVersion : descriptor.getVersions()){
-            if(resourceVersion.getVersion().equals(new Version(version))){
+        for (ResourceVersion resourceVersion : descriptor.getVersions()) {
+            if (resourceVersion.getVersion().equals(new Version(version))) {
                 Resource resource = new Resource(descriptor.getId());
 
                 resource.setVersion(resourceVersion.getVersion());
@@ -125,7 +125,7 @@ public class ResourceService implements IResourceService, BundleContextAware {
                 File resourceFolder = getResourceFolder(resource);
                 resourceFolder.mkdirs();
 
-                for(FileDescriptor file : resourceVersion.getFiles()){
+                for (FileDescriptor file : resourceVersion.getFiles()) {
                     downloadFile(resourceFolder, file);
 
                     resource.getFiles().add(file.getName());
@@ -159,7 +159,7 @@ public class ResourceService implements IResourceService, BundleContextAware {
 
     @Override
     public void installResource(IResource resource) {
-        for(Library library : resource.getLibraries()){
+        for (Library library : resource.getLibraries()) {
             File folder = getResourceFolder(resource);
 
             try {

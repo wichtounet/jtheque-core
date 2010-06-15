@@ -38,7 +38,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 /**
- * A resource descriptor. 
+ * A resource descriptor.
  *
  * @author Baptiste Wicht
  */

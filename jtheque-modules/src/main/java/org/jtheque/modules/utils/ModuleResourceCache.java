@@ -69,6 +69,7 @@ public final class ModuleResourceCache {
      * @param id           The id of the module.
      * @param resourceType The resource type.
      * @param <T>          The type of resource.
+     *
      * @return A Set containing all the resources of the given type for the given module.
      */
     public static <T> Set<T> getResource(String id, Class<T> resourceType) {

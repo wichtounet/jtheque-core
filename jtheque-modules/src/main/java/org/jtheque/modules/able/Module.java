@@ -97,8 +97,8 @@ public interface Module {
     String getUpdateUrl();
 
     /**
-     * Return all the dependencies of the module. The dependencies are a link to a module that must be started
-     * before this module.
+     * Return all the dependencies of the module. The dependencies are a link to a module that must be started before
+     * this module.
      *
      * @return An array containing all the module dependencies of the module.
      */

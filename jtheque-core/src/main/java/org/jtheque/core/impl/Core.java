@@ -55,9 +55,9 @@ public final class Core implements ICore {
     /**
      * Construct a new Core.
      *
-     * @param stateService    The state service.
+     * @param stateService The state service.
      * @param imageService The resource service.
-     * @param eventService    The event service.
+     * @param eventService The event service.
      */
     public Core(IStateService stateService, IImageService imageService, IEventService eventService) {
         super();

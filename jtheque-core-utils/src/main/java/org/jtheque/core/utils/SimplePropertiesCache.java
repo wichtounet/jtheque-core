@@ -49,6 +49,7 @@ public final class SimplePropertiesCache {
      *
      * @param key The key of the property to search.
      * @param <T> The type of resource.
+     *
      * @return The value of the property.
      */
     public static <T> T get(String key) {

@@ -197,9 +197,9 @@ public class LifeCycle implements ILifeCycle {
     }
 
     /**
-     * This class is a hook on the shutdown of JTheque. When a shutdown is detected, the thread
-     * detect it and if this isn't JTheque who has executed the close, we properly close the
-     * resources. This is for prevent accident kill of JTheque.
+     * This class is a hook on the shutdown of JTheque. When a shutdown is detected, the thread detect it and if this
+     * isn't JTheque who has executed the close, we properly close the resources. This is for prevent accident kill of
+     * JTheque.
      *
      * @author Baptiste Wicht
      */

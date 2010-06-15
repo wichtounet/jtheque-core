@@ -71,6 +71,7 @@ public final class VersionsFile {
      * Return the most recent version of the VersionsFile.
      *
      * @return The most recent version.
+     *
      * @throws NoSuchElementException If the version's file contains no version.
      */
     public OnlineVersion getMostRecentVersion() {

@@ -38,8 +38,8 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * Manage the org.jtheque.update of the application. This class can go on internet to verify if a more recent
- * version of JTheque is available and download one new version if there is one.
+ * Manage the org.jtheque.update of the application. This class can go on internet to verify if a more recent version of
+ * JTheque is available and download one new version if there is one.
  *
  * @author Baptiste Wicht
  */

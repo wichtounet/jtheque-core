@@ -23,12 +23,11 @@ import org.jtheque.states.able.Save;
 import org.jtheque.states.able.State;
 import org.jtheque.utils.bean.ReflectionUtils;
 import org.jtheque.utils.io.FileUtils;
+import org.jtheque.xml.utils.IXMLReader;
+import org.jtheque.xml.utils.IXMLWriter;
 import org.jtheque.xml.utils.Node;
-import org.jtheque.xml.utils.javax.NodeLoader;
-import org.jtheque.xml.utils.javax.NodeSaver;
+import org.jtheque.xml.utils.XML;
 import org.jtheque.xml.utils.XMLException;
-import org.jtheque.xml.utils.javax.XMLReader;
-import org.jtheque.xml.utils.javax.XMLWriter;
 
 import org.slf4j.LoggerFactory;
 
@@ -57,7 +56,7 @@ public final class StateService implements IStateService {
      */
     @PostConstruct
     public void loadStates() {
-        XMLReader reader = new XMLReader();
+        IXMLReader<org.w3c.dom.Node> reader = XML.newJavaFactory().newReader();
 
         try {
             reader.openFile(getConfigFile());
@@ -69,7 +68,7 @@ public final class StateService implements IStateService {
                 if (delegated) {
                     Collection<org.w3c.dom.Node> nodeElements = reader.getNodes("*", stateNode);
 
-                    Collection<Node> stateNodes = NodeLoader.resolveNodeStates(nodeElements);
+                    Collection<Node> stateNodes = XML.newJavaFactory().newNodeLoader().resolveNodeStates(nodeElements);
 
                     nodes.put(id, stateNodes);
                 } else {
@@ -97,8 +96,7 @@ public final class StateService implements IStateService {
      * @param file The config file.
      */
     private static void initConfigFile(File file) {
-        XMLWriter writer = new XMLWriter("states");
-
+        IXMLWriter<org.w3c.dom.Node> writer = XML.newJavaFactory().newWriter("states");
         writer.write(file.getAbsolutePath());
     }
 
@@ -107,7 +105,7 @@ public final class StateService implements IStateService {
      */
     @PreDestroy
     public void saveStates() {
-        XMLWriter writer = new XMLWriter("states");
+        IXMLWriter<org.w3c.dom.Node> writer = XML.newJavaFactory().newWriter("states");
 
         writeStates(writer);
         writeProperties(writer);
@@ -121,7 +119,7 @@ public final class StateService implements IStateService {
      *
      * @param writer The write to use to write the states.
      */
-    private void writeStates(XMLWriter writer) {
+    private void writeStates(IXMLWriter<org.w3c.dom.Node> writer) {
         for (Map.Entry<String, Object> state : states.entrySet()) {
             writer.add("state");
             writer.addAttribute("id", state.getKey());
@@ -149,7 +147,7 @@ public final class StateService implements IStateService {
      * @param state      The state to write.
      * @param saveMethod The save method.
      */
-    private void simpleWrite(XMLWriter writer, Map.Entry<String, Object> state, Method saveMethod) {
+    private void simpleWrite(IXMLWriter<org.w3c.dom.Node> writer, Map.Entry<String, Object> state, Method saveMethod) {
         writer.add("properties");
 
         try {
@@ -178,9 +176,9 @@ public final class StateService implements IStateService {
      * @param state      The state to write.
      * @param saveMethod The save method.
      */
-    private void delegatedWrite(XMLWriter writer, Map.Entry<String, Object> state, Method saveMethod) {
+    private void delegatedWrite(IXMLWriter<org.w3c.dom.Node> writer, Map.Entry<String, Object> state, Method saveMethod) {
         try {
-            NodeSaver.writeNodes(writer, (Iterable<Node>) saveMethod.invoke(state.getValue()));
+            XML.newJavaFactory().newNodeSaver().writeNodes(writer, (Iterable<Node>) saveMethod.invoke(state.getValue()));
         } catch (IllegalAccessException e) {
             LoggerFactory.getLogger(getClass()).error("Unable to access the @Save method of " + state, e);
         } catch (InvocationTargetException e) {
@@ -193,7 +191,7 @@ public final class StateService implements IStateService {
      *
      * @param writer The XML writer.
      */
-    private void writeProperties(XMLWriter writer) {
+    private void writeProperties(IXMLWriter<org.w3c.dom.Node> writer) {
         for (Map.Entry<String, Map<String, String>> state : properties.entrySet()) {
             writer.add("state");
 
@@ -221,14 +219,14 @@ public final class StateService implements IStateService {
      *
      * @param writer The writer.
      */
-    private void writeNodes(XMLWriter writer) {
+    private void writeNodes(IXMLWriter<org.w3c.dom.Node> writer) {
         for (Map.Entry<String, Collection<Node>> state : nodes.entrySet()) {
             writer.add("state");
 
             writer.addAttribute("id", state.getKey());
             writer.addAttribute("delegated", "true");
 
-            NodeSaver.writeNodes(writer, state.getValue());
+            XML.newJavaFactory().newNodeSaver().writeNodes(writer, state.getValue());
 
             writer.switchToParent();
         }

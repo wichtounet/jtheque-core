@@ -24,16 +24,15 @@ import javax.swing.JCheckBox;
 import java.awt.LayoutManager;
 
 /**
- * An internationalized panel builder. This builder add methods to add internationalized components
- * to the builded panel.
+ * An internationalized panel builder. This builder add methods to add internationalized components to the builded
+ * panel.
  *
  * @author Baptiste Wicht
  */
 public interface I18nPanelBuilder extends PanelBuilder {
     /**
-     * Set the internationalizable container to use for this builder. This internationalizable container is
-     * used to keep all the internationalizables elements of the builded panel and keep them up to date with
-     * the current language.
+     * Set the internationalizable container to use for this builder. This internationalizable container is used to keep
+     * all the internationalizables elements of the builded panel and keep them up to date with the current language.
      *
      * @param container The internationalizable container to use.
      */
@@ -44,6 +43,7 @@ public interface I18nPanelBuilder extends PanelBuilder {
      *
      * @param key         The internationalization key.
      * @param constraints The constraints to use to add to the panel.
+     *
      * @return The added JCheckBox.
      */
     JCheckBox addI18nCheckBox(String key, Object constraints);
@@ -53,6 +53,7 @@ public interface I18nPanelBuilder extends PanelBuilder {
      *
      * @param key         The i18n key.
      * @param constraints The constraints to use to add to the panel.
+     *
      * @return The added label.
      */
     JThequeI18nLabel addI18nLabel(String key, Object constraints);
@@ -63,6 +64,7 @@ public interface I18nPanelBuilder extends PanelBuilder {
      * @param key         The i18n key.
      * @param constraints The constraints to use to add to the panel.
      * @param style       The font style.
+     *
      * @return The added label.
      */
     JThequeI18nLabel addI18nLabel(String key, int style, Object constraints);
@@ -74,6 +76,7 @@ public interface I18nPanelBuilder extends PanelBuilder {
      * @param constraints The constraints to use to add to the panel.
      * @param style       The font style.
      * @param size        The font size
+     *
      * @return The added label.
      */
     JThequeI18nLabel addI18nLabel(String key, int style, float size, Object constraints);

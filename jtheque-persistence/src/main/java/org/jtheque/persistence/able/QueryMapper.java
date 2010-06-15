@@ -28,6 +28,7 @@ public interface QueryMapper {
      * Construct an insert query for the entity.
      *
      * @param entity The entity to build the query for.
+     *
      * @return The builded query.
      */
     Query constructInsertQuery(Entity entity);
@@ -36,6 +37,7 @@ public interface QueryMapper {
      * Construct an org.jtheque.update query of the entity.
      *
      * @param entity The entity to build the query for.
+     *
      * @return The builded query.
      */
     Query constructUpdateQuery(Entity entity);

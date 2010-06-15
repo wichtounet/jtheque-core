@@ -53,8 +53,8 @@ public interface ConfigTabComponent {
     JComponent getComponent();
 
     /**
-     * Return all the constraints of the config tab component. All that constraint will be validated
-     * when the view is validated.
+     * Return all the constraints of the config tab component. All that constraint will be validated when the view is
+     * validated.
      *
      * @return A Map Containing all the constraints.
      */

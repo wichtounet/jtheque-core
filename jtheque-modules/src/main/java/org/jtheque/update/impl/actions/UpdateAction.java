@@ -17,7 +17,8 @@ package org.jtheque.update.impl.actions;
  */
 
 /**
- * An org.jtheque.update action. It's an action the org.jtheque.update manager can execute when it updates the application.
+ * An org.jtheque.update action. It's an action the org.jtheque.update manager can execute when it updates the
+ * application.
  *
  * @author Baptiste Wicht
  */

@@ -23,11 +23,12 @@ package org.jtheque.states.able;
  */
 public interface IStateService {
     /**
-     * Return the state of the given instance. The class must be annotated with @State and must contains and
-     * a @Load and a @Save method.
+     * Return the state of the given instance. The class must be annotated with @State and must contains and a @Load and
+     * a @Save method.
      *
      * @param state The state to get.
      * @param <T>   The type of state.
+     *
      * @return The loaded state. The instance is the same but the state has been inited.
      */
     <T> T getState(T state);

@@ -50,6 +50,7 @@ public abstract class AbstractController implements Controller, BundleContextAwa
      *
      * @param classz The class of the service to get.
      * @param <T>    The Type of class.
+     *
      * @return The service.
      */
     protected <T> T getService(Class<T> classz) {

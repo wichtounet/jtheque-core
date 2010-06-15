@@ -39,8 +39,8 @@ public final class StartModuleAction extends JThequeAction {
      * Construct a new StartModuleAction.
      *
      * @param moduleService The module service.
-     * @param uiUtils The UI Utils.
-     * @param moduleView The module view. 
+     * @param uiUtils       The UI Utils.
+     * @param moduleView    The module view.
      */
     public StartModuleAction(IModuleService moduleService, IUIUtils uiUtils, IModuleView moduleView) {
         super("modules.actions.load");

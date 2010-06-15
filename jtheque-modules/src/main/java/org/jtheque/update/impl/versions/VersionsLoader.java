@@ -62,6 +62,7 @@ public final class VersionsLoader implements IVersionsLoader {
      * Test if the object is a module.
      *
      * @param object The object to test.
+     *
      * @return true if the object is a module else false.
      */
     private static boolean isModule(Object object) {
@@ -100,7 +101,7 @@ public final class VersionsLoader implements IVersionsLoader {
     public Version getMostRecentVersion(Object object) {
         VersionsFile versionsFile = getVersionsFile(object);
 
-        if(versionsFile != null){
+        if (versionsFile != null) {
             return versionsFile.getMostRecentVersion().getVersion();
         }
 
@@ -111,6 +112,7 @@ public final class VersionsLoader implements IVersionsLoader {
      * Return the version's file of the object.
      *
      * @param object The object to get the version's file.
+     *
      * @return The version's file of the module.
      */
     private VersionsFile getVersionsFile(Object object) {

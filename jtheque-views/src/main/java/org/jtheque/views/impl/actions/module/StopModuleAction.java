@@ -55,8 +55,8 @@ public final class StopModuleAction extends JThequeAction {
      * Construct a new DisableModuleAction.
      *
      * @param moduleService The module service.
-     * @param uiUtils The UI Utils.
-     * @param moduleView The module view.
+     * @param uiUtils       The UI Utils.
+     * @param moduleView    The module view.
      */
     public StopModuleAction(IModuleService moduleService, IUIUtils uiUtils, IModuleView moduleView) {
         super("modules.actions.stop");

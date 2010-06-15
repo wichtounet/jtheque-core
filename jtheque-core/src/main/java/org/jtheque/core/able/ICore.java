@@ -82,6 +82,7 @@ public interface ICore {
      * Indicate if the current version of the core is compatible with an other version.
      *
      * @param version The version to test the compatibility with.
+     *
      * @return true if the current version is compatible with the other version.
      */
     boolean isNotCompatibleWith(Version version);

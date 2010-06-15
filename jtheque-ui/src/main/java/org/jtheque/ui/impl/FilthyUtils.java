@@ -64,6 +64,7 @@ public class FilthyUtils implements IFilthyUtils {
      * @param gradientImage The gradient image to use.
      * @param tracker       The size tracker of the panel.
      * @param panel         The panel to paint.
+     *
      * @return The current gradient image buffer.
      */
     @Override

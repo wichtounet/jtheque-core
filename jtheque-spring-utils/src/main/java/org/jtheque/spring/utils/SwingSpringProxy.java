@@ -22,8 +22,7 @@ import org.springframework.context.ApplicationContextAware;
  */
 
 /**
- * A Swing Spring Proxy. It's a proxy for a swing bean guaranteeing that the bean is created in the
- * EDT.
+ * A Swing Spring Proxy. It's a proxy for a swing bean guaranteeing that the bean is created in the EDT.
  *
  * @author Baptiste Wicht
  */

@@ -41,6 +41,7 @@ public enum ModuleState {
      * Return the enum value from the ordinal value.
      *
      * @param ordinal The ordinal value.
+     *
      * @return The enum value corresponding to the ordinal value.
      */
     public static ModuleState valueOf(int ordinal) {
@@ -62,6 +63,6 @@ public enum ModuleState {
      * @return the i18n key.
      */
     public String getKey() {
-		return key;
-	}
+        return key;
+    }
 }

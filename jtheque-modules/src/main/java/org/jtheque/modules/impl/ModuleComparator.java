@@ -54,6 +54,7 @@ final class ModuleComparator implements Comparator<Module> {
      * Indicate if the module has dependency or not.
      *
      * @param module The module to test.
+     *
      * @return true if the module has dependency else false.
      */
     private static boolean hasDependency(Module module) {

@@ -38,8 +38,8 @@ public final class UninstallModuleAction extends JThequeAction {
      * Construct a new UninstallModuleAction.
      *
      * @param moduleService The module service.
-     * @param uiUtils The UI Utils.
-     * @param moduleView The module view.
+     * @param uiUtils       The UI Utils.
+     * @param moduleView    The module view.
      */
     public UninstallModuleAction(IModuleService moduleService, IUIUtils uiUtils, IModuleView moduleView) {
         super("modules.actions.uninstall");

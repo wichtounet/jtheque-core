@@ -26,6 +26,7 @@ public interface Importer {
      * Indicate if the importer can import from a specific file format or not.
      *
      * @param fileType The file format.
+     *
      * @return true ou false
      */
     boolean canImportFrom(FileType fileType);

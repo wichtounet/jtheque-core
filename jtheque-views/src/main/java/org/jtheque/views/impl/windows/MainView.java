@@ -237,7 +237,7 @@ public final class MainView extends SwingFrameView implements TitleListener, IMa
         emptyPanel.setBackground(Color.white);
 
         builder.add(emptyPanel, builder.gbcSet(0, 0, GridBagUtils.BOTH, GridBagUtils.FIRST_LINE_START, 1.0, 1.0));
-        
+
         stateBar = new JThequeStateBar(views);
 
         SimplePropertiesCache.put("statebar-loaded", "true");

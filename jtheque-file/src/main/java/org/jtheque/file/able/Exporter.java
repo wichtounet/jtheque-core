@@ -26,6 +26,7 @@ public interface Exporter {
      * Indicate if the exporter can export to a specific fileType.
      *
      * @param fileType The fileType to export to.
+     *
      * @return true if the exporter can export to this file type, else false.
      */
     boolean canExportTo(FileType fileType);

@@ -193,6 +193,7 @@ public final class DaoCollections extends CachedJDBCDao<Collection> implements I
          *
          * @param collection The collection to use to fill the array.
          * @param id         Indicate if we must add the id to the array.
+         *
          * @return The filled array.
          */
         private static Object[] fillArray(Collection collection, boolean id) {
@@ -204,9 +205,9 @@ public final class DaoCollections extends CachedJDBCDao<Collection> implements I
 
             if (id) {
                 values[3] = collection.getId();
-			}
+            }
 
-			return values;
-		}
-	}
+            return values;
+        }
+    }
 }

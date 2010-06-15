@@ -36,6 +36,7 @@ public final class EntityUtils {
      *
      * @param list The list to search in.
      * @param id   The id to find.
+     *
      * @return true if the id is in the list else false.
      */
     public static boolean containsID(Iterable<? extends Entity> list, int id) {

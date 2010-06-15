@@ -35,6 +35,7 @@ public interface IFilthyUtils {
      * @param gradientImage The gradient image.
      * @param tracker       The size tracker of the component.
      * @param panel         The panel to paint the filthy background for.
+     *
      * @return The new gradient image.
      */
     Image paintFilthyBackground(Graphics g, Image gradientImage, SizeTracker tracker, Component panel);

@@ -146,6 +146,7 @@ public abstract class CachedJDBCDao<T extends Entity> extends AbstractDao<T> {
      * Indicate if the entity with the ID is in cache.
      *
      * @param i The ID of the entity.
+     *
      * @return true if an entity with the ID is in cache.
      */
     protected final boolean isNotInCache(int i) {

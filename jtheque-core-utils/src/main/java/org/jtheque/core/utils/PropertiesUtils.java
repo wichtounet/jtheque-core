@@ -47,6 +47,7 @@ public final class PropertiesUtils {
      *
      * @param bean The bean to create the memento from.
      * @param <T>  The class of the bean.
+     *
      * @return The memento.
      */
     public static <T> T createMemento(T bean) {
@@ -103,6 +104,7 @@ public final class PropertiesUtils {
      * @param bean       The first bean.
      * @param other      The other bean.
      * @param properties The properties to use.
+     *
      * @return <code>true</code> if the two objects are equals else <code>false</code>.
      */
     public static boolean areEquals(Object bean, Object other, String... properties) {
@@ -131,11 +133,12 @@ public final class PropertiesUtils {
     }
 
     /**
-     * Return the value of the property. This method parse the entire class, but use a cache, so it's better to
-     * use it when we have to access a lot of times the same class.
+     * Return the value of the property. This method parse the entire class, but use a cache, so it's better to use it
+     * when we have to access a lot of times the same class.
      *
      * @param bean     The bean to get the property value from.
      * @param property The property.
+     *
      * @return the value of the property.
      */
     public static Object getProperty(Object bean, String property) {
@@ -143,11 +146,12 @@ public final class PropertiesUtils {
     }
 
     /**
-     * Return the value of the property. This method doesn't parse the entire class, so it's quicker than
-     * getProperty() but it doesn't use cache so if you've to use it many times, use getProperty().
+     * Return the value of the property. This method doesn't parse the entire class, so it's quicker than getProperty()
+     * but it doesn't use cache so if you've to use it many times, use getProperty().
      *
      * @param bean     The bean to get the property value from.
      * @param property The property.
+     *
      * @return the value of the property.
      */
     public static Object getPropertyQuickly(Object bean, String property) {
@@ -160,6 +164,7 @@ public final class PropertiesUtils {
      * Note : The properties of the Object class are not retrieved.
      *
      * @param bean The bean.
+     *
      * @return A String representation of all the properties of the bean.
      */
     public static String toString(Object bean) {
@@ -190,6 +195,7 @@ public final class PropertiesUtils {
      * @param bean     The bean to edit.
      * @param property The property to set.
      * @param value    The value to set to the property.
+     *
      * @throws IllegalAccessException    If the property cannot be accessed.
      * @throws InvocationTargetException If there is a problem during the setting process.
      */

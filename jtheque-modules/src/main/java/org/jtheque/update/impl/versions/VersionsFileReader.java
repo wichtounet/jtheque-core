@@ -27,8 +27,9 @@ import org.jtheque.update.impl.actions.UpdateAction;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.io.FileUtils;
+import org.jtheque.xml.utils.IXMLReader;
+import org.jtheque.xml.utils.XML;
 import org.jtheque.xml.utils.XMLException;
-import org.jtheque.xml.utils.javax.XMLReader;
 
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Node;
@@ -46,13 +47,14 @@ import java.util.List;
  * @author Baptiste Wicht
  */
 public final class VersionsFileReader {
-    private final XMLReader reader = new XMLReader();
+    private final IXMLReader<Node> reader = XML.newJavaFactory().newReader();
     private VersionsFile versionsFile;
 
     /**
      * Read a versions file and return it.
      *
      * @param object The URL of the file.
+     *
      * @return The versions file.
      */
     public VersionsFile read(Object object) {
@@ -75,6 +77,7 @@ public final class VersionsFileReader {
      * Indicate if the object is a module or not.
      *
      * @param object The object to test.
+     *
      * @return true if the object is a module else false.
      */
     private static boolean isModule(Object object) {
@@ -85,6 +88,7 @@ public final class VersionsFileReader {
      * Indicate if the object is the core or not.
      *
      * @param object The object to test.
+     *
      * @return true if the object is the core else false.
      */
     private static boolean isCore(Object object) {
@@ -95,6 +99,7 @@ public final class VersionsFileReader {
      * Read the VersionsFile at the url.
      *
      * @param strUrl the url string value.
+     *
      * @return the read versions file.
      */
     private VersionsFile read(String strUrl) {
@@ -111,6 +116,7 @@ public final class VersionsFileReader {
      * Read the the version's file at the specified URL.
      *
      * @param versionsFileURL The URL of the versions file.
+     *
      * @return The version's file or null if the URL is invalid.
      */
     public VersionsFile readURL(String versionsFileURL) {
@@ -125,6 +131,7 @@ public final class VersionsFileReader {
      * Read a versions file and return it.
      *
      * @param url The URL of the file.
+     *
      * @return The versions file.
      */
     private VersionsFile readVersionsFile(URL url) {
@@ -175,6 +182,7 @@ public final class VersionsFileReader {
      *
      * @param currentNode    The current node.
      * @param onlineVersions The list of all online versions.
+     *
      * @throws XMLException If an error occurs during the reading process.
      */
     private void readOnlineVersion(Object currentNode, Collection<OnlineVersion> onlineVersions) throws XMLException {
@@ -190,6 +198,7 @@ public final class VersionsFileReader {
      *
      * @param currentNode   The node to read from.
      * @param onlineVersion The online version to fill.
+     *
      * @throws XMLException If an error occurs during the reading process.
      */
     private void readOnlineVersion(Object currentNode, OnlineVersion onlineVersion) throws XMLException {
@@ -203,6 +212,7 @@ public final class VersionsFileReader {
      *
      * @param currentNode   The node to read from.
      * @param onlineVersion The online version to fill.
+     *
      * @throws XMLException If an error occurs during the reading process.
      */
     private void readVersionNumber(Object currentNode, OnlineVersion onlineVersion) throws XMLException {
@@ -214,6 +224,7 @@ public final class VersionsFileReader {
      *
      * @param currentNode   The node to read from.
      * @param onlineVersion The online version to fill.
+     *
      * @throws XMLException If an error occurs during the reading process.
      */
     private void readActions(Object currentNode, OnlineVersion onlineVersion) throws XMLException {
@@ -244,7 +255,9 @@ public final class VersionsFileReader {
      * Read the download action.
      *
      * @param node The node to read from.
+     *
      * @return the read DownloadAction.
+     *
      * @throws XMLException If an error occurs during the reading process.
      */
     private AbstractUpdateAction readDownloadAction(Object node) throws XMLException {
@@ -262,7 +275,9 @@ public final class VersionsFileReader {
      * Read a delete action.
      *
      * @param node The node to read from.
+     *
      * @return The delete action.
+     *
      * @throws XMLException If an error occurs during the reading process.
      */
     private AbstractUpdateAction readDeleteAction(Object node) throws XMLException {
@@ -278,7 +293,9 @@ public final class VersionsFileReader {
      * Read a move action.
      *
      * @param node The node to read from.
+     *
      * @return The move action.
+     *
      * @throws XMLException If an error occurs during the reading process.
      */
     private AbstractUpdateAction readMoveAction(Object node) throws XMLException {
@@ -297,6 +314,7 @@ public final class VersionsFileReader {
      *
      * @param currentNode   The node to read from.
      * @param onlineVersion The online version to fill.
+     *
      * @throws XMLException If an error occurs during the reading process.
      */
     private void readCoreVersion(Object currentNode, OnlineVersion onlineVersion) throws XMLException {

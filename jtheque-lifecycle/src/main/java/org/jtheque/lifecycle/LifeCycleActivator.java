@@ -110,6 +110,7 @@ public class LifeCycleActivator implements BundleActivator, CollectionListener {
      *
      * @param classz The class to get the service.
      * @param <T>    The type of service.
+     *
      * @return The service of the given class if it's exists otherwise null.
      */
     private <T> T getService(Class<T> classz) {
@@ -129,7 +130,7 @@ public class LifeCycleActivator implements BundleActivator, CollectionListener {
     private void startSecondPhase() {
         getService(ISplashService.class).closeSplashScreen();
         getService(ISplashService.class).fillMainView();
-        
+
         getService(IModuleService.class).startModules();
 
         getService(ICore.class).getLifeCycle().initTitle();

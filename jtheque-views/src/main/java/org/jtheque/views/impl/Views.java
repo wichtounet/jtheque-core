@@ -76,10 +76,10 @@ public final class Views implements IViews, ApplicationContextAware, ModuleListe
     private IModuleService moduleService;
 
     /**
-     * Register a module listener to the module service. 
+     * Register a module listener to the module service.
      */
     @PostConstruct
-    public void register(){
+    public void register() {
         moduleService.addModuleListener("", this);
     }
 
@@ -293,6 +293,6 @@ public final class Views implements IViews, ApplicationContextAware, ModuleListe
             configPanels.remove(component);
 
             getConfigView().sendMessage("remove", component);
-		}
-	}
+        }
+    }
 }

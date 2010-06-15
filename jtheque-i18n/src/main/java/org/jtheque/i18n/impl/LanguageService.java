@@ -168,6 +168,7 @@ public final class LanguageService implements ILanguageService {
      * Return the base name of the i18n resource.
      *
      * @param resource The resource to compute the basename for.
+     *
      * @return The basename of the i18n resource.
      */
     private static String getI18nResource(I18NResource resource) {
@@ -191,6 +192,7 @@ public final class LanguageService implements ILanguageService {
      * Convert the language to his short form.
      *
      * @param language The language to convert.
+     *
      * @return The short form of the language.
      */
     private static String convertToShortForm(CharSequence language) {

@@ -45,6 +45,7 @@ public class I18NResourceFactory {
      *
      * @param name The name of the file.
      * @param url  The url to create the resource to.
+     *
      * @return The I18NResource to the URL.
      */
     public static I18NResource fromURL(String name, URL url) {
@@ -58,6 +59,7 @@ public class I18NResourceFactory {
      *
      * @param classz The class to get the class loader.
      * @param path   The resource path.
+     *
      * @return The I18NResource corresponding to the given resource.
      */
     public static I18NResource fromResource(Class<?> classz, String path) {
@@ -70,6 +72,7 @@ public class I18NResourceFactory {
      * Construct a I18NResource from the given file.
      *
      * @param file The file to use to create the I18NResource.
+     *
      * @return The I18NResource corresponding to the given file.
      */
     public static I18NResource fromFile(File file) {

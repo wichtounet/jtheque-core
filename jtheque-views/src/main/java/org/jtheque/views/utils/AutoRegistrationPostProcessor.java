@@ -37,8 +37,8 @@ import java.util.Arrays;
  */
 
 /**
- * A bean post processor to register all the resources of a module in the application context. This
- * post processor add automatically state bar components to state bar.
+ * A bean post processor to register all the resources of a module in the application context. This post processor add
+ * automatically state bar components to state bar.
  *
  * @author Baptiste Wicht
  */
@@ -158,6 +158,6 @@ public class AutoRegistrationPostProcessor implements BeanPostProcessor, Applica
      * @param fileService The file service.
      */
     public void setFileService(IFileService fileService) {
-		this.fileService = fileService;
-	}
+        this.fileService = fileService;
+    }
 }

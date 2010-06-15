@@ -23,21 +23,17 @@ import java.util.EventListener;
 import java.util.List;
 
 /**
- * A class that holds a list of EventListeners.  A single instance
- * can be used to hold all listeners (of all types) for the instance
- * using the list.  It is the responsibility of the class using the
- * EventListenerList to provide type-safe API (preferably conforming
- * to the JavaBeans spec) and methods which dispatch event notification
- * methods to appropriate Event Listeners on the list.
+ * A class that holds a list of EventListeners.  A single instance can be used to hold all listeners (of all types) for
+ * the instance using the list.  It is the responsibility of the class using the EventListenerList to provide type-safe
+ * API (preferably conforming to the JavaBeans spec) and methods which dispatch event notification methods to
+ * appropriate Event Listeners on the list.
  * <p/>
- * The main benefit that this class provides is that it releases
- * garbage collected listeners (internally uses weak references). <p>
+ * The main benefit that this class provides is that it releases garbage collected listeners (internally uses weak
+ * references). <p>
  * <p/>
- * Usage example:
- * Say one is defining a class that sends out FooEvents, and one wants
- * to allow users of the class to register FooListeners and receive
- * notification when FooEvents occur.  The following should be added
- * to the class definition:
+ * Usage example: Say one is defining a class that sends out FooEvents, and one wants to allow users of the class to
+ * register FooListeners and receive notification when FooEvents occur.  The following should be added to the class
+ * definition:
  * <pre>
  * EventListenerList listenerList = new EventListenerList();
  * FooEvent fooEvent = null;
@@ -71,9 +67,8 @@ import java.util.List;
  *     }
  * }
  * </pre>
- * foo should be changed to the appropriate name, and fireFooXxx to the
- * appropriate method name.  One fire method should exist for each
- * notification method in the FooListener interface.
+ * foo should be changed to the appropriate name, and fireFooXxx to the appropriate method name.  One fire method should
+ * exist for each notification method in the FooListener interface.
  * <p/>
  *
  * @author Georges Saab
@@ -86,8 +81,8 @@ public class WeakEventListenerList {
     private List<Class<? extends EventListener>> classes;
 
     /**
-     * Returns a list of strongly referenced EventListeners. Removes
-     * internal weak references to garbage collected listeners.
+     * Returns a list of strongly referenced EventListeners. Removes internal weak references to garbage collected
+     * listeners.
      *
      * @return All the strongly references listeners.
      */
@@ -136,14 +131,14 @@ public class WeakEventListenerList {
     }
 
     /**
-     * Return an array of all the listeners of the given type.
-     * As a side-effect, cleans out any
-     * garbage collected listeners before building the array.
+     * Return an array of all the listeners of the given type. As a side-effect, cleans out any garbage collected
+     * listeners before building the array.
      *
      * @param t the class to get the listeners from.
+     *
      * @return all of the listeners of the specified type.
-     * @throws ClassCastException if the supplied class
-     *                            is not assignable to EventListener
+     *
+     * @throws ClassCastException if the supplied class is not assignable to EventListener
      * @since 1.3
      */
     @SuppressWarnings("unchecked")
@@ -162,8 +157,7 @@ public class WeakEventListenerList {
     }
 
     /**
-     * Adds the listener as a listener of the specified type.
-     * As a side-effect, cleans out any garbage collected
+     * Adds the listener as a listener of the specified type. As a side-effect, cleans out any garbage collected
      * listeners before adding.
      *
      * @param t the type of the listener to be added

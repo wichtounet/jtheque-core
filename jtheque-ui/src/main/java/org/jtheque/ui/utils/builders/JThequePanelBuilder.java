@@ -259,6 +259,7 @@ public class JThequePanelBuilder extends BasicPanelBuilder implements I18nPanelB
      * Create a JXTable with JTheque defaults.
      *
      * @param model The model to use.
+     *
      * @return The created JXTable.
      */
     private static JXTable createTable(TableModel model) {

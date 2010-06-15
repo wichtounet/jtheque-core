@@ -39,7 +39,7 @@ public final class DaoPersistenceContext implements IDaoPersistenceContext {
     /**
      * Construct a new DaoPersistenceContext.
      *
-     * @param jdbcTemplate The JDBC template to use. 
+     * @param jdbcTemplate The JDBC template to use.
      */
     public DaoPersistenceContext(SimpleJdbcTemplate jdbcTemplate) {
         super();

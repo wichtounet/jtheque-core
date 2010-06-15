@@ -35,9 +35,9 @@ import java.util.Map;
  */
 
 /**
- * An abstract menu. This class provide several a method to specify features for each of the core features.
- * This methods are only called once and the result are kept in cache for the next call of the Menu methods.
- * On the same way, this class provide a method to specify the main features. This method are also cached.
+ * An abstract menu. This class provide several a method to specify features for each of the core features. This methods
+ * are only called once and the result are kept in cache for the next call of the Menu methods. On the same way, this
+ * class provide a method to specify the main features. This method are also cached.
  *
  * @author Baptiste Wicht
  */
@@ -96,8 +96,7 @@ public abstract class AbstractMenu implements Menu {
     //Methods to override
 
     /**
-     * Return the main features of this menu. This method will only be called once and the result
-     * will be cached.
+     * Return the main features of this menu. This method will only be called once and the result will be cached.
      *
      * @return A List containing all the main features of this menu.
      */
@@ -106,8 +105,8 @@ public abstract class AbstractMenu implements Menu {
     }
 
     /**
-     * Return all the sub features of the "File" menu. This method will only be called once and the result
-     * will be cached.
+     * Return all the sub features of the "File" menu. This method will only be called once and the result will be
+     * cached.
      *
      * @return A List containing all the sub features of "File" menu.
      */
@@ -116,8 +115,8 @@ public abstract class AbstractMenu implements Menu {
     }
 
     /**
-     * Return all the sub features of the "Edit" menu. This method will only be called once and the result
-     * will be cached.
+     * Return all the sub features of the "Edit" menu. This method will only be called once and the result will be
+     * cached.
      *
      * @return A List containing all the sub features of "Edit" menu.
      */
@@ -126,8 +125,8 @@ public abstract class AbstractMenu implements Menu {
     }
 
     /**
-     * Return all the sub features of the "Advanced" menu. This method will only be called once and the result
-     * will be cached.
+     * Return all the sub features of the "Advanced" menu. This method will only be called once and the result will be
+     * cached.
      *
      * @return A List containing all the sub features of "Advanced" menu.
      */
@@ -136,8 +135,8 @@ public abstract class AbstractMenu implements Menu {
     }
 
     /**
-     * Return all the sub features of the "Help" menu. This method will only be called once and the result
-     * will be cached.
+     * Return all the sub features of the "Help" menu. This method will only be called once and the result will be
+     * cached.
      *
      * @return A List containing all the sub features of "Help" menu.
      */
@@ -153,6 +152,7 @@ public abstract class AbstractMenu implements Menu {
      * @param position The position of the feature in the menu bar.
      * @param key      The i18n key of the feature.
      * @param features The sub features.
+     *
      * @return The created main feature.
      */
     protected static IFeature createMainFeature(int position, String key, IFeature... features) {
@@ -171,6 +171,7 @@ public abstract class AbstractMenu implements Menu {
      * @param position The position of the feature.
      * @param key      The i18n key of the feature.
      * @param features The sub features.
+     *
      * @return The created separated feature.
      */
     protected static IFeature createSeparatedSubFeature(int position, String key, IFeature... features) {
@@ -189,6 +190,7 @@ public abstract class AbstractMenu implements Menu {
      * @param position The position of the feature.
      * @param key      The i18n key of the feature.
      * @param features The sub features.
+     *
      * @return The created feature.
      */
     protected static IFeature createSubFeature(int position, String key, IFeature... features) {
@@ -207,6 +209,7 @@ public abstract class AbstractMenu implements Menu {
      * @param position The position of the feature.
      * @param action   The action.
      * @param image    The image name.
+     *
      * @return The created separated feature.
      */
     protected IFeature createSeparatedSubFeature(int position, JThequeAction action, String image) {
@@ -224,6 +227,7 @@ public abstract class AbstractMenu implements Menu {
      *
      * @param position The position of the feature.
      * @param action   The action of the feature.
+     *
      * @return The created separated feature.
      */
     protected IFeature createSeparatedSubFeature(int position, JThequeAction action) {
@@ -238,6 +242,7 @@ public abstract class AbstractMenu implements Menu {
      * @param position The position of the feature.
      * @param action   The action.
      * @param image    The image name.
+     *
      * @return The created feature.
      */
     protected IFeature createSubFeature(int position, JThequeAction action, String image) {
@@ -255,6 +260,7 @@ public abstract class AbstractMenu implements Menu {
      *
      * @param position The position of the feature.
      * @param action   The action of the feature.
+     *
      * @return The created feature.
      */
     protected IFeature createSubFeature(int position, JThequeAction action) {
@@ -267,6 +273,7 @@ public abstract class AbstractMenu implements Menu {
      * Transform all the features into a List of features.
      *
      * @param features The features to put in the list.
+     *
      * @return A List of features containing all the features in parameters.
      */
     protected static List<IFeature> features(IFeature... features) {
@@ -280,6 +287,7 @@ public abstract class AbstractMenu implements Menu {
      *
      * @param key  The i18n key.
      * @param view The view to close.
+     *
      * @return An action to close the view.
      */
     public static JThequeAction createCloseViewAction(String key, IView view) {
@@ -291,6 +299,7 @@ public abstract class AbstractMenu implements Menu {
      *
      * @param key  The i18n key.
      * @param view The view to close.
+     *
      * @return An action to close the view.
      */
     public static JThequeAction createDisplayViewAction(String key, IView view) {

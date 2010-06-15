@@ -19,6 +19,7 @@ package org.jtheque.modules.impl;
 import org.jtheque.core.able.ICore;
 import org.jtheque.core.utils.WeakEventListenerList;
 import org.jtheque.i18n.able.ILanguageService;
+import org.jtheque.images.able.IImageService;
 import org.jtheque.modules.able.IModuleDescription;
 import org.jtheque.modules.able.IModuleLoader;
 import org.jtheque.modules.able.IModuleService;
@@ -30,7 +31,6 @@ import org.jtheque.modules.able.Resources;
 import org.jtheque.modules.utils.I18NDescription;
 import org.jtheque.modules.utils.ImageDescription;
 import org.jtheque.modules.utils.ModuleResourceCache;
-import org.jtheque.images.able.IImageService;
 import org.jtheque.states.able.IStateService;
 import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.update.able.IUpdateService;
@@ -65,8 +65,8 @@ public final class ModuleService implements IModuleService {
     private IRepository repository;
 
     /**
-     * The configuration of the module manager. It seems the informations about the modules who're
-     * installed or disabled.
+     * The configuration of the module manager. It seems the informations about the modules who're installed or
+     * disabled.
      */
     private ModuleConfiguration configuration;
 
@@ -150,6 +150,7 @@ public final class ModuleService implements IModuleService {
      * Test if the module can be loaded.
      *
      * @param module The module to test.
+     *
      * @return true if the module can be loaded else false.
      */
     private static boolean canBeLoaded(Module module) {
@@ -268,6 +269,7 @@ public final class ModuleService implements IModuleService {
      * Disable a module. The module must be stopped before disabling it.
      *
      * @param module The module to disable.
+     *
      * @throws IllegalStateException If the module is started.
      */
     @Override
@@ -283,6 +285,7 @@ public final class ModuleService implements IModuleService {
      * Install a module.
      *
      * @param file The file of the module.
+     *
      * @return true if the module has been installed, else false.
      */
     @Override
@@ -325,6 +328,7 @@ public final class ModuleService implements IModuleService {
      * Uninstall a module. The module must be stopped before uninstall it.
      *
      * @param module The module to uninstall.
+     *
      * @throws IllegalStateException If the module is started.
      */
     @Override
@@ -449,6 +453,7 @@ public final class ModuleService implements IModuleService {
      *
      * @param key      The i18n key.
      * @param replaces The i18n replaces.
+     *
      * @return The internationalized message.
      */
     private String getMessage(String key, String... replaces) {
@@ -459,6 +464,7 @@ public final class ModuleService implements IModuleService {
      * Indicate if all the dependencies of the module are satisfied.
      *
      * @param module The module to test.
+     *
      * @return <code>true</code> if all the dependencies are satisfied else <code>false</code>.
      */
     private boolean areAllDependenciesSatisfied(Module module) {

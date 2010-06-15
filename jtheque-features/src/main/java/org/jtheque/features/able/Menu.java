@@ -21,8 +21,8 @@ import java.util.List;
  */
 
 /**
- * A menu. It seems a container for features. This container has main features and
- * features for each of the core features.
+ * A menu. It seems a container for features. This container has main features and features for each of the core
+ * features.
  *
  * @author Baptiste Wicht
  */
@@ -31,6 +31,7 @@ public interface Menu extends Internationalizable {
      * Return all the sub features of this menu for the specified CoreFeature.
      *
      * @param feature The core feature.
+     *
      * @return A List containing all the sub features of this core feature.
      */
     List<IFeature> getSubFeatures(CoreFeature feature);

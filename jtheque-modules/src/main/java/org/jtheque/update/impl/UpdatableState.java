@@ -30,6 +30,7 @@ public final class UpdatableState extends AbstractState {
      * Return the version of the updatable.
      *
      * @param name The name of the updatable.
+     *
      * @return The version of the updatable.
      */
     public Version getVersion(String name) {

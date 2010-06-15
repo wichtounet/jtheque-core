@@ -44,8 +44,8 @@ public interface Entity extends Comparable<Entity> {
     void setId(int id);
 
     /**
-     * Return a displayable text of the Entity. This is not the same as toString(). This method
-     * provide an text of display on the application.
+     * Return a displayable text of the Entity. This is not the same as toString(). This method provide an text of
+     * display on the application.
      *
      * @return A string representation of the Entity.
      */

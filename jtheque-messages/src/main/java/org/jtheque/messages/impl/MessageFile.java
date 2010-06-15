@@ -24,10 +24,7 @@ import java.util.Collection;
 /**
  * @author Baptiste Wicht
  *         <p/>
- *         Created by IntelliJ IDEA.
- *         User: wichtounet
- *         Date: 20 mars 2009
- *         Time: 12:39:50
+ *         Created by IntelliJ IDEA. User: wichtounet Date: 20 mars 2009 Time: 12:39:50
  */
 public final class MessageFile {
     /**

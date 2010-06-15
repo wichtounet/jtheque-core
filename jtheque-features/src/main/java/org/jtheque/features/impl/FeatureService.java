@@ -79,7 +79,7 @@ public final class FeatureService implements IFeatureService, ModuleListener {
             ModuleResourceCache.addResource(moduleId, Menu.class, menu);
         }
 
-        SwingUtils.inEdt(new Runnable(){
+        SwingUtils.inEdt(new Runnable() {
             @Override
             public void run() {
                 for (CoreFeature feature : CoreFeature.values()) {
@@ -145,6 +145,7 @@ public final class FeatureService implements IFeatureService, ModuleListener {
      *
      * @param position The position of the feature.
      * @param key      The i18n key of the feature.
+     *
      * @return The added feature.
      */
     private Feature createAndAddFeature(int position, String key) {

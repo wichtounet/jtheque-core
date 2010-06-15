@@ -27,6 +27,7 @@ public interface ViewDelegate {
      *
      * @param text  The question.
      * @param title The question title.
+     *
      * @return true if the user has answered yes else false.
      */
     boolean askUserForConfirmation(String text, String title);
@@ -63,6 +64,7 @@ public interface ViewDelegate {
      * Ask the user for text.
      *
      * @param title The question to ask to the user.
+     *
      * @return The text of the user.
      */
     String askText(String title);

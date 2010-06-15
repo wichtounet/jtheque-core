@@ -27,8 +27,8 @@ import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
  */
 
 /**
- * An abstract schema. The only thing this abstract class do is implementing the compareTo() method to ensure for
- * good order in collections.
+ * An abstract schema. The only thing this abstract class do is implementing the compareTo() method to ensure for good
+ * order in collections.
  *
  * @author Baptiste Wicht
  */
@@ -77,8 +77,8 @@ public abstract class AbstractSchema implements Schema {
     }
 
     /**
-     * Alter the specified table using the specified command and args. All the {} will be
-     * replaced with the name of the table.
+     * Alter the specified table using the specified command and args. All the {} will be replaced with the name of the
+     * table.
      *
      * @param table   The table to alter.
      * @param command The command to alter the table with.
@@ -114,6 +114,7 @@ public abstract class AbstractSchema implements Schema {
      *
      * @param table  The table to insert into.
      * @param values The values of the insert request.
+     *
      * @return The insert into request.
      */
     protected static String insert(String table, String values) {

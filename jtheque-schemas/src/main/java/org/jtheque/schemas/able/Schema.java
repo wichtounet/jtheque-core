@@ -28,6 +28,7 @@ public interface Schema extends Comparable<Schema> {
      * Return the version of the schema.
      *
      * @return The version of the schema.
+     *
      * @see Version
      */
     Version getVersion();
@@ -55,6 +56,7 @@ public interface Schema extends Comparable<Schema> {
      * Update the schema from an another version.
      *
      * @param from The installed version.
+     *
      * @see Version
      */
     void update(Version from);

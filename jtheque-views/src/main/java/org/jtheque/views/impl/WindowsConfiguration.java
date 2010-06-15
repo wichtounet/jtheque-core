@@ -151,6 +151,7 @@ public final class WindowsConfiguration extends AbstractState {
      * Return the window configuration for a view.
      *
      * @param name The name of the view.
+     *
      * @return The window configuration for the view.
      */
     private IWindowConfiguration get(String name) {

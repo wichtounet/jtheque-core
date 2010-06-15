@@ -116,6 +116,7 @@ public class SimpleListModel<T> extends AbstractListModel implements ComboBoxMod
      * Remove the element at the given index.
      *
      * @param index The index to remove the element at.
+     *
      * @return The removed element.
      */
     public T removeElement(int index) {
@@ -180,6 +181,7 @@ public class SimpleListModel<T> extends AbstractListModel implements ComboBoxMod
      * Return the index of the element.
      *
      * @param element The element to get the index for.
+     *
      * @return The index of the element.
      */
     public int getIndexOfElement(T element) {

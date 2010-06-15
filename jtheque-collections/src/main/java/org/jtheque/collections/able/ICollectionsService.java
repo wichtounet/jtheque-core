@@ -28,13 +28,14 @@ public interface ICollectionsService extends DataContainer<Collection> {
     String DATA_TYPE = "Collections";
 
     /**
-     * Plug a collection. This method must only make the choose collection process and return the
-     * result of the choose. This method must not expensive cost process launch. All the
-     * module loading treatments must be made in the plugCollection() method.
+     * Plug a collection. This method must only make the choose collection process and return the result of the choose.
+     * This method must not expensive cost process launch. All the module loading treatments must be made in the
+     * plugCollection() method.
      *
      * @param collection The collection to use.
      * @param password   The entered password.
      * @param create     Indicate if we must create the collection or only select it.
+     *
      * @return true if the collection choose process has been good processed.
      */
     Response chooseCollection(String collection, String password, boolean create);

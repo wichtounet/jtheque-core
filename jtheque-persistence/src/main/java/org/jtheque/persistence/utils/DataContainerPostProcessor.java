@@ -47,6 +47,7 @@ public final class DataContainerPostProcessor implements BeanPostProcessor {
      * Test if a class is a data container or not.
      *
      * @param c The class to test.
+     *
      * @return true if the class is a data container else false.
      */
     private static boolean isDataContainer(Class<?> c) {

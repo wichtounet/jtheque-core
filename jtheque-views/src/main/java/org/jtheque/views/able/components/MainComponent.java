@@ -19,8 +19,8 @@ package org.jtheque.views.able.components;
 import javax.swing.JComponent;
 
 /**
- * A main component. This kind of component can be added to the main view. If there is only one main
- * component, it will be displayed normally else it will displayed inside a tabbed pane.
+ * A main component. This kind of component can be added to the main view. If there is only one main component, it will
+ * be displayed normally else it will displayed inside a tabbed pane.
  *
  * @author Baptiste Wicht
  */

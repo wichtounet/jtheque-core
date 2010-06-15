@@ -30,6 +30,7 @@ public interface IError {
      * Convert the action to an error info bean.
      *
      * @param languageService The language service to internationalize the error.
+     *
      * @return The ErrorInfo corresponding to the IError.
      */
     ErrorInfo toErrorInfo(ILanguageService languageService);

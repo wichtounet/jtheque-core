@@ -30,6 +30,7 @@ public interface IVersionsLoader {
      * Return the version of the object.
      *
      * @param object The object to get the version from.
+     *
      * @return The version of the object.
      */
     Version getVersion(Object object);
@@ -38,6 +39,7 @@ public interface IVersionsLoader {
      * Return all the versions of the object.
      *
      * @param object The object to get the versions from.
+     *
      * @return A List containing all the versions from.
      */
     Collection<Version> getVersions(Object object);
@@ -46,6 +48,7 @@ public interface IVersionsLoader {
      * Return the online versions of the object.
      *
      * @param object The object to get the version from.
+     *
      * @return A List containing all the online versions of the object.
      */
     Collection<OnlineVersion> getOnlineVersions(Object object);
@@ -55,6 +58,7 @@ public interface IVersionsLoader {
      *
      * @param version The version to search for.
      * @param object  The object to search in.
+     *
      * @return The corresponding online version.
      */
     OnlineVersion getOnlineVersion(Version version, Object object);
@@ -63,6 +67,7 @@ public interface IVersionsLoader {
      * Return the install version of the version file.
      *
      * @param versionFileURL The VersionFile URL.
+     *
      * @return The install version of the versions file.
      */
     InstallVersion getInstallVersion(String versionFileURL);
@@ -71,6 +76,7 @@ public interface IVersionsLoader {
      * Return the most recent version of the object.
      *
      * @param object The object. It can be the Core, a module or an updatable.
+     *
      * @return The most recent version of the object.
      */
     Version getMostRecentVersion(Object object);

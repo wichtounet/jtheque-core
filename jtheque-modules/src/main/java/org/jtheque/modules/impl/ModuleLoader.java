@@ -16,8 +16,9 @@ import org.jtheque.resources.able.IResource;
 import org.jtheque.resources.able.IResourceService;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.bean.Version;
+import org.jtheque.xml.utils.IXMLOverReader;
+import org.jtheque.xml.utils.XML;
 import org.jtheque.xml.utils.XMLException;
-import org.jtheque.xml.utils.javax.XMLOverReader;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -116,14 +117,14 @@ public final class ModuleLoader implements IModuleLoader, BundleContextAware {
             Bundle bundle = bundleContext.installBundle("file:" + file.getAbsolutePath());
             container.setBundle(bundle);
 
-            //Get informations from manifest
-            readManifestInformations(container, bundle);
-
             //Add images resources
             loadImageResources(container, bundle);
 
             //Add i18n resources
             loadI18NResources(container, bundle);
+
+            //Get informations from manifest
+            readManifestInformations(container, bundle);
         } catch (BundleException e) {
             LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
             OSGiUtils.getService(bundleContext, IErrorService.class).addError(new JThequeError(e));
@@ -166,10 +167,10 @@ public final class ModuleLoader implements IModuleLoader, BundleContextAware {
     }
 
     private void loadImageResources(Module container, Bundle bundle) {
-        for(ImageDescription imageDescription : container.getResources().getImageResources()){
+        for (ImageDescription imageDescription : container.getResources().getImageResources()) {
             String resource = imageDescription.getResource();
 
-            if(resource.startsWith("classpath:")){
+            if (resource.startsWith("classpath:")) {
                 imageService.registerResource(imageDescription.getName(),
                         new UrlResource(bundle.getResource(resource.substring(10))));
             }
@@ -211,17 +212,17 @@ public final class ModuleLoader implements IModuleLoader, BundleContextAware {
      * Import the configuration of the module from the module config XML file.
      *
      * @param stream The stream to the file.
+     *
      * @return The ModuleResources of the module.
      */
     private ModuleResources importConfig(InputStream stream) {
         ModuleResources resources = new ModuleResources();
 
-        XMLOverReader reader = new XMLOverReader();
+        IXMLOverReader reader = XML.newJavaFactory().newOverReader();
         try {
             reader.openStream(stream);
 
             while (reader.next("/config/i18n/i18nResource")) {
-
                 String name = reader.readString("@name");
                 Version version = new Version(reader.readString("@version"));
 
@@ -231,17 +232,9 @@ public final class ModuleLoader implements IModuleLoader, BundleContextAware {
                     String classpath = reader.readString("text()");
 
                     description.getResources().add("classpath:" + classpath);
-
-                    //i18NResources.add(I18NResourceFactory.fromURL(classpath.substring(classpath.lastIndexOf('/') + 1), bundle.getResource(classpath)));
-
-                    reader.switchToParent();
                 }
 
-                //languageService.registerResource(name, version, i18NResources.toArray(new I18NResource[i18NResources.size()]));
-
                 resources.addI18NResource(description);
-
-                reader.switchToParent();
             }
 
             while (reader.next("/config/images/resource")) {

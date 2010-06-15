@@ -36,6 +36,7 @@ public interface IUIUtils {
      *
      * @param textKey  The question key.
      * @param titleKey The title key.
+     *
      * @return true if the user has accepted else false.
      */
     boolean askI18nUserForConfirmation(String textKey, String titleKey);
@@ -47,6 +48,7 @@ public interface IUIUtils {
      * @param textReplaces  The text replaces.
      * @param titleKey      The title key.
      * @param titleReplaces The title replaces.
+     *
      * @return true if the user has accepted else false.
      */
     boolean askI18nUserForConfirmation(String textKey, Object[] textReplaces, String titleKey, Object[] titleReplaces);

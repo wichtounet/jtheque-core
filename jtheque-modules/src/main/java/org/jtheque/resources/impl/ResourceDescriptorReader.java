@@ -34,10 +34,12 @@ package org.jtheque.resources.impl;
 
 import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.io.FileUtils;
+import org.jtheque.xml.utils.IXMLReader;
+import org.jtheque.xml.utils.XML;
 import org.jtheque.xml.utils.XMLException;
-import org.jtheque.xml.utils.javax.XMLReader;
 
 import org.slf4j.LoggerFactory;
+import org.w3c.dom.Node;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -48,7 +50,7 @@ import java.net.URL;
  * @author Baptiste Wicht
  */
 public final class ResourceDescriptorReader {
-    private final XMLReader reader = new XMLReader();
+    private final IXMLReader<Node> reader = XML.newJavaFactory().newReader();
     private ResourceDescriptor resourceDescriptor;
 
     /**
@@ -70,6 +72,7 @@ public final class ResourceDescriptorReader {
      * Read a versions file and return it.
      *
      * @param url The URL of the file.
+     *
      * @return The versions file.
      */
     private ResourceDescriptor readDescriptor(URL url) {
@@ -77,7 +80,7 @@ public final class ResourceDescriptorReader {
             reader.openURL(url);
 
             String id = reader.readString("id", reader.getRootElement());
-            
+
             resourceDescriptor = new ResourceDescriptor(id);
 
             for (Object currentNode : reader.getNodes("version", reader.getRootElement())) {

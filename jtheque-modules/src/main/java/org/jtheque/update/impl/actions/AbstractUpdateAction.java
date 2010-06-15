@@ -68,6 +68,7 @@ public abstract class AbstractUpdateAction implements UpdateAction {
      *
      * @param folder The folder of the file path.
      * @param file   The file part of the path.
+     *
      * @return The file path.
      */
     static String buildFilePath(String folder, String file) {

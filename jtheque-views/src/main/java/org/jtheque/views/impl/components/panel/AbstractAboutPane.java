@@ -82,6 +82,7 @@ public abstract class AbstractAboutPane extends JXPanel {
      * Return an internationalized message.
      *
      * @param key The internationalization key.
+     *
      * @return The internationalized message.
      */
     private String getMessage(String key) {

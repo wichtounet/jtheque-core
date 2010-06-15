@@ -36,6 +36,7 @@ public interface IEventService {
      * Return all the events from a log.
      *
      * @param log The log to get the events from.
+     *
      * @return A List containing all the events of the log.
      */
     Collection<IEvent> getEvents(String log);

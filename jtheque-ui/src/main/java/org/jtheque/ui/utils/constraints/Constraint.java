@@ -49,8 +49,7 @@ public interface Constraint {
     void validate(Object field, Collection<IError> errors);
 
     /**
-     * Configure the given component. The implementation must not assume the type of component passed as
-     * argument.
+     * Configure the given component. The implementation must not assume the type of component passed as argument.
      *
      * @param component The component to configure.
      */
