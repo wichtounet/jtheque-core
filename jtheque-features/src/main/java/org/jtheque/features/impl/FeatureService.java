@@ -44,11 +44,8 @@ import java.util.Set;
  */
 public final class FeatureService implements IFeatureService, ModuleListener {
     private final WeakEventListenerList listeners = new WeakEventListenerList();
-
     private final Collection<IFeature> features;
-
     private final Map<CoreFeature, Feature> coreFeatures;
-
     private final ILanguageService languageService;
 
     /**
@@ -83,14 +80,10 @@ public final class FeatureService implements IFeatureService, ModuleListener {
             @Override
             public void run() {
                 for (CoreFeature feature : CoreFeature.values()) {
-                    for (IFeature f : menu.getSubFeatures(feature)) {
-                        coreFeatures.get(feature).addSubFeature(f);
-                    }
+                    coreFeatures.get(feature).addSubFeatures(menu.getSubFeatures(feature));
                 }
 
-                for (IFeature f : menu.getMainFeatures()) {
-                    addFeature(f);
-                }
+                addFeatures(menu.getMainFeatures());
 
                 menu.refreshText(languageService);
             }
@@ -98,18 +91,20 @@ public final class FeatureService implements IFeatureService, ModuleListener {
     }
 
     /**
-     * Add a feature to the menu.
+     * Add the given features into the menu.
      *
-     * @param feature The feature to add.
+     * @param newFeatures The features to add to the menu.
      */
-    private void addFeature(IFeature feature) {
-        if (feature.getType() != IFeature.FeatureType.PACK) {
-            throw new IllegalArgumentException("Can only add feature of type pack directly. ");
+    private void addFeatures(Iterable<IFeature> newFeatures) {
+        for (IFeature feature : newFeatures) {
+            if (feature.getType() != IFeature.FeatureType.PACK) {
+                throw new IllegalArgumentException("Can only add feature of type pack directly. ");
+            }
+
+            features.add(feature);
+
+            fireFeatureAdded(feature);
         }
-
-        features.add(feature);
-
-        fireFeatureAdded(feature);
     }
 
     /**
@@ -119,25 +114,14 @@ public final class FeatureService implements IFeatureService, ModuleListener {
      */
     private void removeMenu(Menu menu) {
         for (CoreFeature feature : CoreFeature.values()) {
-            for (IFeature f : menu.getSubFeatures(feature)) {
-                coreFeatures.get(feature).removeSubFeature(f);
-            }
+            coreFeatures.get(feature).removeSubFeatures(menu.getSubFeatures(feature));
         }
 
         for (IFeature f : menu.getMainFeatures()) {
-            removeFeature(f);
+            features.remove(f);
+
+            fireFeatureRemoved(f);
         }
-    }
-
-    /**
-     * Remove the features from the main menu.
-     *
-     * @param feature The feature to remove.
-     */
-    private void removeFeature(IFeature feature) {
-        features.remove(feature);
-
-        fireFeatureRemoved(feature);
     }
 
     /**

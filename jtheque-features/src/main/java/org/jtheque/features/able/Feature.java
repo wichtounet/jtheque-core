@@ -27,13 +27,13 @@ import java.util.Collection;
  * @author Baptiste Wicht
  */
 public class Feature implements IFeature {
-    private FeatureType type;
-    private String titleKey;
-    private Integer position;
-    private String icon;
-
     private final Collection<IFeature> subFeatures = new ArrayList<IFeature>(20);
     private final JThequeAction action;
+    private final Integer position;
+
+    private FeatureType type;
+    private String titleKey;
+    private String icon;
 
     /**
      * Construct a new Feature for an action.
@@ -105,6 +105,17 @@ public class Feature implements IFeature {
     }
 
     /**
+     * Add all the given sub features to this feature.
+     *
+     * @param subFeatures A collection of sub features to add to the feature.
+     */
+    public final void addSubFeatures(Iterable<IFeature> subFeatures) {
+        for (IFeature subFeature : subFeatures) {
+            addSubFeature(subFeature);
+        }
+    }
+
+    /**
      * Add a sub feature to the feature.
      *
      * @param feature The feature to add.
@@ -127,18 +138,18 @@ public class Feature implements IFeature {
         subFeatures.remove(feature);
     }
 
+    /**
+     * Remove all the given sub features from the feature.
+     *
+     * @param features The sub features to remove.
+     */
+    public final void removeSubFeatures(Collection<IFeature> features) {
+        subFeatures.removeAll(features);
+    }
+
     @Override
     public final Integer getPosition() {
         return position;
-    }
-
-    /**
-     * Set the position of the feature.
-     *
-     * @param position The position of the feature.
-     */
-    public final void setPosition(Integer position) {
-        this.position = position;
     }
 
     @Override

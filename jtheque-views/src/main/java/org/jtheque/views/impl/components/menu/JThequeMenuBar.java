@@ -43,13 +43,11 @@ import java.util.List;
  * @author Baptiste Wicht
  */
 public final class JThequeMenuBar extends JMenuBar implements FeatureListener, InternationalizableContainer {
+    private final Collection<Internationalizable> internationalizables = new ArrayList<Internationalizable>(25);
     private final Comparator<IFeature> featureComparator = new ByPositionComparator();
-
     private final IImageService imageService;
     private final ILanguageService languageService;
     private final IFeatureService featureService;
-
-    private final Collection<Internationalizable> internationalizables = new ArrayList<Internationalizable>(25);
 
     /**
      * Construct a JThequeMenuBar.
