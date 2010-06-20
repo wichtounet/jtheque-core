@@ -27,11 +27,10 @@ import java.util.Collection;
  *
  * @author Baptiste Wicht
  */
-public interface ICore {
+public interface ICore extends Versionable {
     Version VERSION = new Version("2.1.0");
 
-    String FORUM_URL = "http://www.developpez.net/forums/f751/applications/projets/projets-heberges/jtheque/";
-    String VERSIONS_FILE_URL = "http://jtheque.developpez.com/public/versions/Core.versions";
+    String DESCRIPTOR_FILE_URL = "http://jtheque.developpez.com/descriptors/jtheque-core.xml";
     String HELP_URL = "http://jtheque.developpez.com/";
 
     String WINDOW_ICON = "jtheque-core-window-icon";

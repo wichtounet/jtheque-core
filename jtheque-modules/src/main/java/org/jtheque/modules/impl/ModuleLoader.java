@@ -136,7 +136,7 @@ public final class ModuleLoader implements IModuleLoader, BundleContextAware {
         return container;
     }
 
-    private void readManifestInformations(ModuleContainer container, Bundle bundle) {
+    private static void readManifestInformations(ModuleContainer container, Bundle bundle) {
         Dictionary<String, String> headers = bundle.getHeaders();
 
         String id = StringUtils.isNotEmpty(headers.get("Module-Id")) ? headers.get("Module-Id") : headers.get("Bundle-SymbolicName");
@@ -222,48 +222,58 @@ public final class ModuleLoader implements IModuleLoader, BundleContextAware {
         try {
             reader.openStream(stream);
 
-            while (reader.next("/config/i18n/i18nResource")) {
-                String name = reader.readString("@name");
-                Version version = new Version(reader.readString("@version"));
-
-                I18NDescription description = new I18NDescription(name, version);
-
-                while (reader.next("classpath")) {
-                    String classpath = reader.readString("text()");
-
-                    description.getResources().add("classpath:" + classpath);
-                }
-
-                resources.addI18NResource(description);
-            }
-
-            while (reader.next("/config/images/resource")) {
-                String name = reader.readString("@name");
-                String classpath = reader.readString("classpath");
-
-                resources.addImageResource(new ImageDescription(name, "classpath:" + classpath));
-            }
-
-            while (reader.next("/config/resources/resource")) {
-                String id = reader.readString("@id");
-                String version = reader.readString("@version");
-                String url = reader.readString("@url");
-
-                IResource resource = resourceService.getResource(id, version);
-
-                if (resource != null) {
-                    resources.addResource(resource);
-                } else {
-                    resource = resourceService.downloadResource(url, version);
-
-                    resources.addResource(resource);
-                }
-            }
+            importI18NResources(resources, reader);
+            importImageResources(resources, reader);
+            importResources(resources, reader);
         } catch (XMLException e) {
             LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
             OSGiUtils.getService(bundleContext, IErrorService.class).addError(new JThequeError(e));
         }
 
         return resources;
+    }
+
+    private static void importI18NResources(ModuleResources resources, IXMLOverReader reader) throws XMLException {
+        while (reader.next("/config/i18n/i18nResource")) {
+            String name = reader.readString("@name");
+            Version version = new Version(reader.readString("@version"));
+
+            I18NDescription description = new I18NDescription(name, version);
+
+            while (reader.next("classpath")) {
+                String classpath = reader.readString("text()");
+
+                description.getResources().add("classpath:" + classpath);
+            }
+
+            resources.addI18NResource(description);
+        }
+    }
+
+    private static void importImageResources(ModuleResources resources, IXMLOverReader reader) throws XMLException {
+        while (reader.next("/config/images/resource")) {
+            String name = reader.readString("@name");
+            String classpath = reader.readString("classpath");
+
+            resources.addImageResource(new ImageDescription(name, "classpath:" + classpath));
+        }
+    }
+
+    private void importResources(ModuleResources resources, IXMLOverReader reader) throws XMLException {
+        while (reader.next("/config/resources/resource")) {
+            String id = reader.readString("@id");
+            Version version = new Version(reader.readString("@version"));
+            String url = reader.readString("@url");
+
+            IResource resource = resourceService.getResource(id, version);
+
+            if (resource != null) {
+                resources.addResource(resource);
+            } else {
+                resource = resourceService.downloadResource(url, version);
+
+                resources.addResource(resource);
+            }
+        }
     }
 }

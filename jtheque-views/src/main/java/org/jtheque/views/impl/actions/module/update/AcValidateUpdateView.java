@@ -66,7 +66,7 @@ public final class AcValidateUpdateView extends JThequeAction {
         @Override
         public void run() {
             if (updateView.getMode() == IUpdateView.Mode.KERNEL) {
-                updateService.update(updateView.getSelectedVersion());
+                updateService.updateCore(updateView.getSelectedVersion());
             } else if (updateView.getMode() == IUpdateView.Mode.MODULE) {
                 updateService.update(updateView.getModule(), updateView.getSelectedVersion());
             }

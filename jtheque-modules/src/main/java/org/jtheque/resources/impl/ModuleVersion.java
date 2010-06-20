@@ -18,33 +18,36 @@ import org.jtheque.utils.bean.Version;
  * limitations under the License.
  */
 
-/**
- * A File Descriptor. Describe a file or library in a resource descriptor.
- *
- * @author Baptiste Wicht
- */
-public class FileDescriptor {
-    private final String name;
-    private final String url;
-    private final Version version;
+public class ModuleVersion extends ResourceVersion {
+    private Version coreVersion;
+    private String moduleFile;
+    private String moduleURL;
 
-    public FileDescriptor(String name, String url, Version version) {
-        super();
-
-        this.name = name;
-        this.url = url;
-        this.version = version;
+    public ModuleVersion(Version version) {
+        super(version);
     }
 
-    public String getName() {
-        return name;
+    public Version getCoreVersion() {
+        return coreVersion;
     }
 
-    public String getUrl() {
-        return url;
+    public void setCoreVersion(Version coreVersion) {
+        this.coreVersion = coreVersion;
     }
 
-    public Version getVersion() {
-        return version;
+    public String getModuleFile() {
+        return moduleFile;
+    }
+
+    public void setModuleFile(String moduleFile) {
+        this.moduleFile = moduleFile;
+    }
+
+    public String getModuleURL() {
+        return moduleURL;
+    }
+
+    public void setModuleURL(String moduleURL) {
+        this.moduleURL = moduleURL;
     }
 }

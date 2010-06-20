@@ -16,6 +16,7 @@ package org.jtheque.update.able;
  * limitations under the License.
  */
 
+import org.jtheque.core.able.Versionable;
 import org.jtheque.modules.able.Module;
 import org.jtheque.modules.impl.InstallationResult;
 import org.jtheque.utils.bean.Version;
@@ -35,15 +36,15 @@ public interface IUpdateService {
      *
      * @param versionToDownload The version we want to download
      */
-    void update(Version versionToDownload);
+    void updateCore(Version versionToDownload);
 
     /**
      * Update the module.
      *
-     * @param module  The module to org.jtheque.update.
+     * @param object  The object to update.
      * @param version The current version.
      */
-    void update(Module module, Version version);
+    void update(Versionable object, Version version);
 
     /**
      * Return the list of available versions on internet.
@@ -74,7 +75,7 @@ public interface IUpdateService {
      *
      * @return true if the module is up to date else false.
      */
-    boolean isUpToDate(Object object);
+    boolean isUpToDate(Versionable object);
 
     /**
      * Return all the versions of the object.
@@ -83,7 +84,7 @@ public interface IUpdateService {
      *
      * @return A List containing all the versions of the updatable.
      */
-    Collection<Version> getVersions(Object object);
+    Collection<Version> getVersions(Versionable object);
 
     /**
      * Install a module from a versions file.
@@ -108,7 +109,7 @@ public interface IUpdateService {
      *
      * @return The most recent version of the object.
      */
-    Version getMostRecentVersion(Object object);
+    Version getMostRecentVersion(Versionable object);
 
     /**
      * Return the most recent version of the core.

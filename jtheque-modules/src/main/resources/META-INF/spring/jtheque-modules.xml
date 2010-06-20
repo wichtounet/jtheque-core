@@ -24,9 +24,8 @@
     </bean>
 
     <bean id="updateService" class="org.jtheque.update.impl.UpdateService">
-        <constructor-arg ref="stateService"/>
         <constructor-arg>
-            <bean id="versionsLoader" class="org.jtheque.update.impl.versions.VersionsLoader"/>
+            <bean id="versionsLoader" class="org.jtheque.update.impl.versions.DescriptorsLoader"/>
         </constructor-arg>
     </bean>
 

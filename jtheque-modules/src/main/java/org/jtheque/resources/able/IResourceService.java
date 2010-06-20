@@ -30,9 +30,11 @@ public interface IResourceService {
 
     boolean exists(String resourceName);
 
-    IResource getResource(String id, String version);
+    IResource getResource(String id, Version version);
 
-    IResource downloadResource(String url, String version);
+    IResource downloadResource(String url, Version version);
 
     void installResource(IResource resource);
+
+    boolean isInstalled(String name, Version version);
 }

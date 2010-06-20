@@ -61,7 +61,7 @@ public final class ResourceDescriptor {
      *
      * @return A list containing all the versions of the file.
      */
-    public Collection<ResourceVersion> getVersions() {
+    public Iterable<ResourceVersion> getVersions() {
         return versions;
     }
 

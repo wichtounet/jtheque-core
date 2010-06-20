@@ -61,7 +61,7 @@ public final class ModuleDescription implements IModuleDescription {
     }
 
     @Override
-    public String getVersionsFileURL() {
+    public String getDescriptorURL() {
         return versionsFileURL;
     }
 
@@ -100,6 +100,11 @@ public final class ModuleDescription implements IModuleDescription {
      */
     public void setId(String id) {
         this.id = id;
+    }
+
+    @Override
+    public Version getVersion() {
+        return null;  //Todo revoir
     }
 
     @Override

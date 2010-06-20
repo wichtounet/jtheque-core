@@ -73,11 +73,11 @@ public class ResourceVersion implements Comparable<ResourceVersion> {
     }
 
 
-    public List<FileDescriptor> getFiles() {
+    public Iterable<FileDescriptor> getFiles() {
         return Collections.unmodifiableList(files);
     }
 
-    public List<FileDescriptor> getLibraries() {
+    public Iterable<FileDescriptor> getLibraries() {
         return Collections.unmodifiableList(libraries);
     }
 

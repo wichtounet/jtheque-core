@@ -145,7 +145,7 @@ public final class ModuleContainer implements Module {
     }
 
     @Override
-    public String getUpdateUrl() {
+    public String getDescriptorURL() {
         return updateUrl;
     }
 
@@ -234,4 +234,5 @@ public final class ModuleContainer implements Module {
     public void setBundle(Bundle bundle) {
         this.bundle = bundle;
     }
+
 }

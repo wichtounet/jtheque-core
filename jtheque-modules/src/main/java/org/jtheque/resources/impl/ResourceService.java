@@ -86,11 +86,9 @@ public class ResourceService implements IResourceService, BundleContextAware {
     }
 
     @Override
-    public IResource getResource(String id, String version) {
-        Version searched = new Version(version);
-
+    public IResource getResource(String id, Version version) {
         for (IResource resource : resources) {
-            if (resource.getId().equals(id) && resource.getVersion().equals(searched)) {
+            if (resource.getId().equals(id) && resource.getVersion().equals(version)) {
                 return resource;
             }
         }
@@ -99,9 +97,9 @@ public class ResourceService implements IResourceService, BundleContextAware {
     }
 
     @Override
-    public IResource downloadResource(String url, String version) {
+    public IResource downloadResource(String url, Version version) {
         if (!descriptorCache.containsKey(url)) {
-            descriptorCache.put(url, new ResourceDescriptorReader().readURL(url));
+            descriptorCache.put(url, DescriptorReader.readResourceDescriptor(url));
         }
 
         ResourceDescriptor descriptor = descriptorCache.get(url);
@@ -116,35 +114,39 @@ public class ResourceService implements IResourceService, BundleContextAware {
         }
 
         for (ResourceVersion resourceVersion : descriptor.getVersions()) {
-            if (resourceVersion.getVersion().equals(new Version(version))) {
-                Resource resource = new Resource(descriptor.getId());
-
-                resource.setVersion(resourceVersion.getVersion());
-                resource.setUrl(url);
-
-                File resourceFolder = getResourceFolder(resource);
-                resourceFolder.mkdirs();
-
-                for (FileDescriptor file : resourceVersion.getFiles()) {
-                    downloadFile(resourceFolder, file);
-
-                    resource.getFiles().add(file.getName());
-                }
-
-                for (FileDescriptor library : resourceVersion.getLibraries()) {
-                    downloadFile(resourceFolder, library);
-
-                    resource.getLibraries().add(new Library(library.getName()));
-                }
-
-                resources.add(resource);
-                resourceState.addResource(resource);
-
-                return resource;
+            if (resourceVersion.getVersion().equals(version)) {
+                return downloadResource(url, descriptor, resourceVersion);
             }
         }
 
         return null;
+    }
+
+    private IResource downloadResource(String url, ResourceDescriptor descriptor, ResourceVersion resourceVersion) {
+        Resource resource = new Resource(descriptor.getId());
+
+        resource.setVersion(resourceVersion.getVersion());
+        resource.setUrl(url);
+
+        File resourceFolder = getResourceFolder(resource);
+        resourceFolder.mkdirs();
+
+        for (FileDescriptor file : resourceVersion.getFiles()) {
+            downloadFile(resourceFolder, file);
+
+            resource.getFiles().add(file.getName());
+        }
+
+        for (FileDescriptor library : resourceVersion.getLibraries()) {
+            downloadFile(resourceFolder, library);
+
+            resource.getLibraries().add(new Library(library.getName()));
+        }
+
+        resources.add(resource);
+        resourceState.addResource(resource);
+
+        return resource;
     }
 
     private void downloadFile(File resourceFolder, FileDescriptor fileDescriptor) {
@@ -163,13 +165,18 @@ public class ResourceService implements IResourceService, BundleContextAware {
             File folder = getResourceFolder(resource);
 
             try {
-                Bundle bundle = bundleContext.installBundle("file:" + folder.getAbsolutePath() + "/" + library.getId());
+                Bundle bundle = bundleContext.installBundle("file:" + folder.getAbsolutePath() + '/' + library.getId());
 
                 library.setBundle(bundle);
             } catch (BundleException e) {
                 LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
             }
         }
+    }
+
+    @Override
+    public boolean isInstalled(String name, Version version) {
+        return getResource(name, version) != null;
     }
 
     @Override

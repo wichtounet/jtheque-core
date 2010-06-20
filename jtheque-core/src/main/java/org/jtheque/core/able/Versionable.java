@@ -1,4 +1,6 @@
-package org.jtheque.update.impl.actions;
+package org.jtheque.core.able;
+
+import org.jtheque.utils.bean.Version;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -16,15 +18,7 @@ package org.jtheque.update.impl.actions;
  * limitations under the License.
  */
 
-/**
- * An org.jtheque.update action. It's an action the org.jtheque.update manager can execute when it updates the
- * application.
- *
- * @author Baptiste Wicht
- */
-public interface UpdateAction {
-    /**
-     * Execute the action.
-     */
-    void execute();
+public interface Versionable {
+    Version getVersion();
+    String getDescriptorURL();
 }

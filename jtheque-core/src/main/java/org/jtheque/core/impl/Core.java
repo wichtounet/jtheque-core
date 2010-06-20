@@ -43,7 +43,6 @@ public final class Core implements ICore {
     private static final String CORE_MESSAGES_FILE = "http://jtheque.developpez.com/public/messages/core.message";
 
     private final Collection<String> creditsMessage;
-
     private final IFoldersContainer foldersContainer;
     private final IFilesContainer filesContainer;
     private final ICoreConfiguration configuration;
@@ -144,5 +143,15 @@ public final class Core implements ICore {
         }
 
         return languagesLong;
+    }
+
+    @Override
+    public Version getVersion() {
+        return VERSION;
+    }
+
+    @Override
+    public String getDescriptorURL() {
+        return DESCRIPTOR_FILE_URL;
     }
 }

@@ -16,6 +16,7 @@ package org.jtheque.views.impl.components.panel;
  * limitations under the License.
  */
 
+import org.jtheque.core.able.Versionable;
 import org.jtheque.update.able.IUpdateService;
 
 import javax.swing.JLabel;
@@ -35,7 +36,7 @@ public final class VersionLabel extends JLabel {
      * @param foreground    The foreground color.
      * @param updateService The update service to use.
      */
-    public VersionLabel(Object object, Color foreground, IUpdateService updateService) {
+    public VersionLabel(Versionable object, Color foreground, IUpdateService updateService) {
         super();
 
         setForeground(foreground);

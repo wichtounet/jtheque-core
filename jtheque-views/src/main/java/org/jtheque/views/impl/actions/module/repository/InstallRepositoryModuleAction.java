@@ -59,7 +59,7 @@ public final class InstallRepositoryModuleAction extends JThequeAction {
             if (moduleService.isInstalled(description.getId())) {
                 utils.displayI18nText("message.repository.module.installed");
             } else {
-                moduleService.install(description.getVersionsFileURL());
+                moduleService.install(description.getDescriptorURL());
             }
         }
     }
