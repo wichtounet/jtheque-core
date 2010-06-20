@@ -34,6 +34,6 @@ public final class AcProposeImprovement extends AbstractBrowseAction {
 
     @Override
     public String getUrl() {
-        return ICore.FORUM_URL;
+        return ICore.HELP_URL;//TODO REvoir
     }
 }
