@@ -83,6 +83,8 @@ public class AutoRegistrationPostProcessor implements BeanPostProcessor, Applica
 
     @Override
     public Object postProcessAfterInitialization(Object bean, String beanName) {
+        System.out.println("\nPost process\n");
+
         if (bean instanceof IStateBarComponent) {
             views.addStateBarComponent(module, (IStateBarComponent) bean);
         } else if (bean instanceof Menu) {

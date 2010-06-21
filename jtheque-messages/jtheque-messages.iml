@@ -32,13 +32,15 @@
     <orderEntry type="library" exported="" name="Maven: javax.mail:mail:1.4.1" level="project" />
     <orderEntry type="library" exported="" name="Maven: javax.activation:activation:1.1" level="project" />
     <orderEntry type="module" module-name="jtheque-i18n" exported="" />
-    <orderEntry type="library" exported="" name="Maven: org.springframework:spring-context-support:3.0.0.RELEASE" level="project" />
-    <orderEntry type="library" exported="" name="Maven: org.springframework:spring-beans:3.0.0.RELEASE" level="project" />
-    <orderEntry type="library" exported="" name="Maven: org.springframework:spring-core:3.0.0.RELEASE" level="project" />
-    <orderEntry type="library" exported="" name="Maven: org.springframework:spring-asm:3.0.0.RELEASE" level="project" />
+    <orderEntry type="library" exported="" name="Maven: org.springframework:spring-context-support:3.0.3.RELEASE" level="project" />
+    <orderEntry type="library" exported="" name="Maven: org.springframework:spring-beans:3.0.3.RELEASE" level="project" />
+    <orderEntry type="library" exported="" name="Maven: org.springframework:spring-core:3.0.3.RELEASE" level="project" />
+    <orderEntry type="library" exported="" name="Maven: org.springframework:spring-asm:3.0.3.RELEASE" level="project" />
     <orderEntry type="library" exported="" name="Maven: commons-logging:commons-logging:1.1.1" level="project" />
-    <orderEntry type="library" exported="" name="Maven: org.springframework:spring-context:3.0.0.RELEASE" level="project" />
-    <orderEntry type="library" exported="" name="Maven: org.springframework:spring-expression:3.0.0.RELEASE" level="project" />
+    <orderEntry type="library" exported="" name="Maven: org.springframework:spring-context:3.0.3.RELEASE" level="project" />
+    <orderEntry type="library" exported="" name="Maven: org.springframework:spring-aop:3.0.3.RELEASE" level="project" />
+    <orderEntry type="library" exported="" name="Maven: aopalliance:aopalliance:1.0" level="project" />
+    <orderEntry type="library" exported="" name="Maven: org.springframework:spring-expression:3.0.3.RELEASE" level="project" />
     <orderEntry type="module" module-name="jtheque-states" exported="" />
     <orderEntry type="module" module-name="jtheque-ui" exported="" />
     <orderEntry type="module" module-name="jtheque-core" exported="" />
