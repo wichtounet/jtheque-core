@@ -292,7 +292,9 @@ public final class Views implements IViews, ApplicationContextAware, ModuleListe
         for (ConfigTabComponent component : components) {
             configPanels.remove(component);
 
-            getConfigView().sendMessage("remove", component);
+            if ("true".equals(SimplePropertiesCache.get("config-view-loaded"))) {
+                getConfigView().sendMessage("remove", component);
+            }
         }
     }
 }
