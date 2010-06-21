@@ -52,11 +52,9 @@ public class ModuleDescriptor {
      */
     public ModuleVersion getMostRecentVersion() {
         if (moduleVersions.isEmpty()) {
-            throw new NoSuchElementException("The version's file contains no versions. ");
+            throw new NoSuchElementException("The descriptor contains no versions. ");
         }
 
         return moduleVersions.get(moduleVersions.size() - 1);
     }
-
-
 }
