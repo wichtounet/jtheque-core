@@ -32,7 +32,6 @@ package org.jtheque.resources.impl;
  * limitations under the License.
  */
 
-import org.jtheque.core.able.Versionable;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.io.FileUtils;
 import org.jtheque.xml.utils.IXMLReader;
@@ -72,10 +71,6 @@ public final class DescriptorReader {
         }
     }
 
-    public static ModuleDescriptor readModuleDescriptor(Versionable object) {
-        return readModuleDescriptor(object.getDescriptorURL());
-    }
-
     public static ModuleDescriptor readModuleDescriptor(String url) {
         IXMLReader<Node> reader = XML.newJavaFactory().newReader();
 
@@ -90,7 +85,7 @@ public final class DescriptorReader {
      * Read a versions file and return it.
      *
      * @param reader The XML Reader
-     * @param url The URL of the file.
+     * @param url    The URL of the file.
      *
      * @return The versions file.
      */
@@ -155,7 +150,7 @@ public final class DescriptorReader {
 
         readResources(currentNode, reader, resourceVersion);
 
-        if(reader.existsNode("module", currentNode)){
+        if (reader.existsNode("module", currentNode)) {
             resourceVersion.setCoreVersion(new Version(reader.readString("module/@core", currentNode)));
             resourceVersion.setModuleFile(reader.readString("module/@file", currentNode));
             resourceVersion.setModuleURL(reader.readString("module/@url", currentNode));
