@@ -37,16 +37,16 @@ import java.util.Map;
  * @author Baptiste Wicht
  */
 public final class DescriptorsLoader implements IVersionsLoader {
-    private static final int CACHE_INITIAL_SIZE = 20;
+    private static final int CACHE_INITIAL_SIZE = 12;
 
-    private final Map<Object, ModuleDescriptor> cache = new HashMap<Object, ModuleDescriptor>(CACHE_INITIAL_SIZE);
+    private final Map<String, ModuleDescriptor> cache = new HashMap<String, ModuleDescriptor>(CACHE_INITIAL_SIZE);
 
     @Resource
     private IErrorService errorService;
 
     @Override
     public Collection<Version> getVersions(Versionable object) {
-        ModuleDescriptor descriptor = getModuleDescriptor(object);
+        ModuleDescriptor descriptor = getModuleDescriptor(object.getDescriptorURL());
 
         if (descriptor != null) {
             Collection<Version> versions = new ArrayList<Version>(descriptor.getVersions().size());
@@ -63,7 +63,7 @@ public final class DescriptorsLoader implements IVersionsLoader {
 
     @Override
     public Collection<ModuleVersion> getOnlineVersions(Versionable object) {
-        return getModuleDescriptor(object).getVersions();
+        return getModuleDescriptor(object.getDescriptorURL()).getVersions();
     }
 
     @Override
@@ -79,14 +79,14 @@ public final class DescriptorsLoader implements IVersionsLoader {
 
     @Override
     public Version getMostRecentVersion(Versionable object) {
-        ModuleDescriptor versionsFile = getModuleDescriptor(object);
+        ModuleDescriptor versionsFile = getModuleDescriptor(object.getDescriptorURL());
 
         return versionsFile != null ? versionsFile.getMostRecentVersion().getVersion() : null;
     }
 
     @Override
     public ModuleVersion getMostRecentModuleVersion(String url) {
-        ModuleDescriptor versionsFile = DescriptorReader.readModuleDescriptor(url);
+        ModuleDescriptor versionsFile = getModuleDescriptor(url);
 
         return versionsFile != null ? versionsFile.getMostRecentVersion() : null;
     }
@@ -94,19 +94,19 @@ public final class DescriptorsLoader implements IVersionsLoader {
     /**
      * Return the version's file of the object.
      *
-     * @param object The object to get the version's file.
+     * @param url The url of the descriptor.
      *
      * @return The version's file of the module.
      */
-    private ModuleDescriptor getModuleDescriptor(Versionable object) {
-        if (!cache.containsKey(object)) {
-            cache.put(object, DescriptorReader.readModuleDescriptor(object));
+    private ModuleDescriptor getModuleDescriptor(String url) {
+        if (!cache.containsKey(url)) {
+            cache.put(url, DescriptorReader.readModuleDescriptor(url));
 
-            if (!cache.containsKey(object)) {
+            if (!cache.containsKey(url)) {
                 errorService.addInternationalizedError("error.update.internet");
             }
         }
 
-        return cache.get(object);
+        return cache.get(url);
     }
 }
