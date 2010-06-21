@@ -285,6 +285,8 @@ public final class MainView extends SwingFrameView implements TitleListener, IMa
         } else {
             tab.refreshComponents();
         }
+
+        current++;
     }
 
     /**
@@ -318,6 +320,8 @@ public final class MainView extends SwingFrameView implements TitleListener, IMa
         } else {
             tab.removeMainComponent(component);
         }
+
+        current--;
     }
 
     @Override
