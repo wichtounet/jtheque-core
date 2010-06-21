@@ -231,12 +231,6 @@ public final class ModuleService implements IModuleService {
 
         LoggerFactory.getLogger(getClass()).debug("Stop module {}", module.getBundle().getSymbolicName());
 
-        try {
-            module.getBundle().stop();
-        } catch (BundleException e) {
-            LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
-        }
-
         setState(module, ModuleState.INSTALLED);
 
         fireModuleStopped(module);
@@ -254,6 +248,12 @@ public final class ModuleService implements IModuleService {
         }
 
         ModuleResourceCache.removeModule(module.getId());
+
+        try {
+            module.getBundle().stop();
+        } catch (BundleException e) {
+            LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
+        }
 
         LoggerFactory.getLogger(getClass()).debug("Module {} stopped", module.getBundle().getSymbolicName());
     }
