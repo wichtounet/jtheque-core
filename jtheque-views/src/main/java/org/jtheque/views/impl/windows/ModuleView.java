@@ -52,7 +52,7 @@ public final class ModuleView extends SwingFilthyBuildedDialogView<IModel> imple
         resourcePanel = getBean(IResourcePanelView.class);
 
         tabbed.addInternationalizedTab("modules.view.tab.modules", (JComponent) modulesPanel);
-        tabbed.addInternationalizedTab("modules.view.tab.updatables", (JComponent) resourcePanel);
+        tabbed.addInternationalizedTab("modules.view.tab.resources", (JComponent) resourcePanel);
 
         builder.add(tabbed, builder.gbcSet(0, 0, GridBagUtils.BOTH, GridBagUtils.BASELINE_LEADING, 1.0, 1.0));
     }

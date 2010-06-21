@@ -50,13 +50,11 @@ public final class ResourceListRenderer extends JPanel implements ListCellRender
 
         I18nPanelBuilder builder = new FilthyPanelBuilder(this);
 
-        labelName = builder.addLabel("", PanelBuilder.BOLD, TITLE_FONT_SIZE, builder.gbcSet(0, 0, GridBagUtils.HORIZONTAL, GridBagUtils.BASELINE, 2, 1));
+        labelName = builder.addLabel("", PanelBuilder.BOLD, TITLE_FONT_SIZE, builder.gbcSet(0, 0,
+                GridBagUtils.HORIZONTAL, GridBagUtils.BASELINE, 0, 1, 1.0, 0.0));
 
         labelCurrentVersion1 = builder.addI18nLabel("modules.view.label.versions.current", builder.gbcSet(0, 1));
         labelCurrentVersion = builder.addLabel(builder.gbcSet(1, 1));
-
-        /*labelOnlineVersion1 = builder.addI18nLabel("modules.view.label.versions.online", builder.gbcSet(0, 2));
-                labelOnlineVersion = builder.addLabel(builder.gbcSet(1, 2));*/
     }
 
     @Override

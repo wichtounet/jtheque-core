@@ -43,7 +43,7 @@ public final class StartModuleAction extends JThequeAction {
      * @param moduleView    The module view.
      */
     public StartModuleAction(IModuleService moduleService, IUIUtils uiUtils, IModuleView moduleView) {
-        super("modules.actions.load");
+        super("modules.actions.start");
 
         this.moduleService = moduleService;
         this.uiUtils = uiUtils;
