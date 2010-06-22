@@ -18,7 +18,9 @@ package org.jtheque.modules.impl;
 
 import org.jtheque.core.able.ICore;
 import org.jtheque.core.utils.WeakEventListenerList;
+import org.jtheque.i18n.able.I18NResource;
 import org.jtheque.i18n.able.ILanguageService;
+import org.jtheque.i18n.utils.I18NResourceFactory;
 import org.jtheque.images.able.IImageService;
 import org.jtheque.modules.able.IModuleDescription;
 import org.jtheque.modules.able.IModuleLoader;
@@ -28,6 +30,7 @@ import org.jtheque.modules.able.Module;
 import org.jtheque.modules.able.ModuleListener;
 import org.jtheque.modules.able.ModuleState;
 import org.jtheque.modules.able.Resources;
+import org.jtheque.modules.able.SwingLoader;
 import org.jtheque.modules.utils.I18NDescription;
 import org.jtheque.modules.utils.ImageDescription;
 import org.jtheque.modules.utils.ModuleResourceCache;
@@ -36,16 +39,20 @@ import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.update.able.IUpdateService;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.collections.CollectionUtils;
+import org.jtheque.utils.ui.SwingUtils;
 
 import org.osgi.framework.BundleException;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.UrlResource;
 
 import javax.annotation.Resource;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * A module manager implementation. It manage the cycle life of the modules.
@@ -56,6 +63,7 @@ public final class ModuleService implements IModuleService {
     private final WeakEventListenerList listeners = new WeakEventListenerList();
     private final List<Module> modules = new ArrayList<Module>(10);
     private final Collection<Module> modulesToLoad = new ArrayList<Module>(10);
+    private final Map<String, SwingLoader> loaders = new HashMap<String, SwingLoader>(10);
 
     private final IModuleLoader moduleLoader;
 
@@ -106,6 +114,8 @@ public final class ModuleService implements IModuleService {
 
     @Override
     public void load() {
+        SwingUtils.assertNotEDT("load()");
+
         modules.addAll(moduleLoader.loadModules());
 
         configureModules();
@@ -162,6 +172,8 @@ public final class ModuleService implements IModuleService {
      */
     @Override
     public void startModules() {
+        SwingUtils.assertNotEDT("startModules()");
+
         for (Module module : modulesToLoad) {
             startModule(module);
         }
@@ -203,17 +215,35 @@ public final class ModuleService implements IModuleService {
     }
 
     @Override
+    public void registerSwingLoader(String code, SwingLoader moviesModule) {
+        loaders.put(code, moviesModule);
+    }
+
+    @Override
     public void startModule(Module module) {
+        SwingUtils.assertNotEDT("startModule(Module)");
+
         if (module.getState() == ModuleState.STARTED) {
             throw new IllegalStateException("The module is already started. ");
         }
 
         LoggerFactory.getLogger(getClass()).debug("Start module {}", module.getBundle().getSymbolicName());
 
+        //Add images resources
+        loadImageResources(module);
+
+        //Add i18n resources
+        loadI18NResources(module);
+
         try {
             module.getBundle().start();
         } catch (BundleException e) {
             LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
+        }
+
+        if(loaders.containsKey(module.getId())){
+            loaders.get(module.getId()).afterAll();
+            loaders.remove(module.getId());
         }
 
         setState(module, ModuleState.STARTED);
@@ -223,8 +253,38 @@ public final class ModuleService implements IModuleService {
         LoggerFactory.getLogger(getClass()).debug("Module {} started", module.getBundle().getSymbolicName());
     }
 
+
+    private void loadImageResources(Module container) {
+        for (ImageDescription imageDescription : container.getResources().getImageResources()) {
+            String resource = imageDescription.getResource();
+
+            if (resource.startsWith("classpath:")) {
+                imageService.registerResource(imageDescription.getName(),
+                        new UrlResource(container.getBundle().getResource(resource.substring(10))));
+            }
+        }
+    }
+
+    private void loadI18NResources(Module container) {
+        for (I18NDescription i18NDescription : container.getResources().getI18NResources()) {
+            List<I18NResource> i18NResources = new ArrayList<I18NResource>(i18NDescription.getResources().size());
+
+            for (String resource : i18NDescription.getResources()) {
+                if (resource.startsWith("classpath:")) {
+                    i18NResources.add(I18NResourceFactory.fromURL(resource.substring(resource.lastIndexOf('/') + 1),
+                            container.getBundle().getResource(resource.substring(10))));
+                }
+            }
+
+            languageService.registerResource(i18NDescription.getName(), i18NDescription.getVersion(),
+                    i18NResources.toArray(new I18NResource[i18NResources.size()]));
+        }
+    }
+
     @Override
     public void stopModule(Module module) {
+        SwingUtils.assertNotEDT("stopModule(Module)");
+
         if (module.getState() != ModuleState.STARTED) {
             throw new IllegalStateException("The module is already started. ");
         }

@@ -24,6 +24,7 @@ import org.jtheque.features.able.IFeature;
 import org.jtheque.features.able.IFeatureService;
 import org.jtheque.features.able.Menu;
 import org.jtheque.i18n.able.ILanguageService;
+import org.jtheque.modules.able.IModuleService;
 import org.jtheque.modules.able.Module;
 import org.jtheque.modules.able.ModuleListener;
 import org.jtheque.modules.utils.ModuleResourceCache;
@@ -53,10 +54,12 @@ public final class FeatureService implements IFeatureService, ModuleListener {
      *
      * @param languageService The language service.
      */
-    public FeatureService(ILanguageService languageService) {
+    public FeatureService(ILanguageService languageService, IModuleService moduleService) {
         super();
 
         this.languageService = languageService;
+
+        moduleService.addModuleListener("", this);
 
         features = new ArrayList<IFeature>(10);
 

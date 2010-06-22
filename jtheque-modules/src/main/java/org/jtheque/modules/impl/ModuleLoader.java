@@ -4,10 +4,7 @@ import org.jtheque.core.able.ICore;
 import org.jtheque.core.utils.OSGiUtils;
 import org.jtheque.errors.able.IErrorService;
 import org.jtheque.errors.utils.JThequeError;
-import org.jtheque.i18n.able.I18NResource;
 import org.jtheque.i18n.able.ILanguageService;
-import org.jtheque.i18n.utils.I18NResourceFactory;
-import org.jtheque.images.able.IImageService;
 import org.jtheque.modules.able.IModuleLoader;
 import org.jtheque.modules.able.Module;
 import org.jtheque.modules.utils.I18NDescription;
@@ -24,7 +21,6 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleException;
 import org.slf4j.LoggerFactory;
-import org.springframework.core.io.UrlResource;
 import org.springframework.osgi.context.BundleContextAware;
 
 import javax.annotation.Resource;
@@ -65,12 +61,6 @@ public final class ModuleLoader implements IModuleLoader, BundleContextAware {
     private static final String[] EMPTY_ARRAY = new String[0];
 
     private BundleContext bundleContext;
-
-    @Resource
-    private ILanguageService languageService;
-
-    @Resource
-    private IImageService imageService;
 
     @Resource
     private IResourceService resourceService;
@@ -117,11 +107,7 @@ public final class ModuleLoader implements IModuleLoader, BundleContextAware {
             Bundle bundle = bundleContext.installBundle("file:" + file.getAbsolutePath());
             container.setBundle(bundle);
 
-            //Add images resources
-            loadImageResources(container, bundle);
-
-            //Add i18n resources
-            loadI18NResources(container, bundle);
+            container.setLanguageService(OSGiUtils.getService(bundleContext, ILanguageService.class));
 
             //Get informations from manifest
             readManifestInformations(container, bundle);
@@ -164,35 +150,6 @@ public final class ModuleLoader implements IModuleLoader, BundleContextAware {
         } else {
             container.setDependencies(EMPTY_ARRAY);
         }
-    }
-
-    private void loadImageResources(Module container, Bundle bundle) {
-        for (ImageDescription imageDescription : container.getResources().getImageResources()) {
-            String resource = imageDescription.getResource();
-
-            if (resource.startsWith("classpath:")) {
-                imageService.registerResource(imageDescription.getName(),
-                        new UrlResource(bundle.getResource(resource.substring(10))));
-            }
-        }
-    }
-
-    private void loadI18NResources(ModuleContainer container, Bundle bundle) {
-        for (I18NDescription i18NDescription : container.getResources().getI18NResources()) {
-            List<I18NResource> i18NResources = new ArrayList<I18NResource>(i18NDescription.getResources().size());
-
-            for (String resource : i18NDescription.getResources()) {
-                if (resource.startsWith("classpath:")) {
-                    i18NResources.add(I18NResourceFactory.fromURL(resource.substring(resource.lastIndexOf('/') + 1),
-                            bundle.getResource(resource.substring(10))));
-                }
-            }
-
-            languageService.registerResource(i18NDescription.getName(), i18NDescription.getVersion(),
-                    i18NResources.toArray(new I18NResource[i18NResources.size()]));
-        }
-
-        container.setLanguageService(OSGiUtils.getService(bundleContext, ILanguageService.class));
     }
 
     private void readConfig(File file, ModuleContainer container) throws IOException {

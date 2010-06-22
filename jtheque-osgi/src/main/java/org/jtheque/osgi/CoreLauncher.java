@@ -84,11 +84,11 @@ public final class CoreLauncher implements Closeable {
         startIfNotStarted("org.jtheque.i18n");
         startIfNotStarted("org.jtheque.ui");
         startIfNotStarted("org.jtheque.errors");
-        startIfNotStarted("org.jtheque.features");
-        startIfNotStarted("org.jtheque.undo");
         startIfNotStarted("org.jtheque.schemas");
         startIfNotStarted("org.jtheque.persistence");
         startIfNotStarted("org.jtheque.modules");
+        startIfNotStarted("org.jtheque.features");
+        startIfNotStarted("org.jtheque.undo");
         startIfNotStarted("org.jtheque.messages");
         startIfNotStarted("org.jtheque.file");
         startIfNotStarted("org.jtheque.collections");

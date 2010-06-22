@@ -37,6 +37,8 @@ import org.jtheque.modules.able.Module;
 import org.jtheque.modules.able.ModuleState;
 import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.ui.utils.actions.JThequeAction;
+import org.jtheque.utils.ui.SwingUtils;
+import org.jtheque.utils.ui.edt.SimpleTask;
 import org.jtheque.views.able.panel.IModuleView;
 
 import java.awt.event.ActionEvent;
@@ -68,13 +70,44 @@ public final class StopModuleAction extends JThequeAction {
 
     @Override
     public void actionPerformed(ActionEvent arg0) {
-        Module module = moduleView.getSelectedModule();
+        final Module module = moduleView.getSelectedModule();
 
         if (module.getState() == ModuleState.STARTED) {
-            moduleService.stopModule(module);
+            SwingUtils.execute(new SimpleTask() {
+                @Override
+                public void run() {
+                    moduleView.startWait();
+
+                    Thread starter = new Thread(new StopModuleRunnable(module));
+                    starter.setName("Module unloader");
+                    starter.start();
+                }
+            });
+
             moduleView.refreshList();
         } else {
             uiUtils.displayI18nText("error.module.not.started");
+        }
+    }
+
+    private class StopModuleRunnable implements Runnable {
+        private final Module module;
+
+        private StopModuleRunnable(Module module) {
+            this.module = module;
+        }
+
+        @Override
+        public void run() {
+            moduleService.stopModule(module);
+
+            SwingUtils.execute(new SimpleTask() {
+                @Override
+                public void run() {
+                    moduleView.refreshList();
+                    moduleView.stopWait();
+                }
+            });
         }
     }
 }

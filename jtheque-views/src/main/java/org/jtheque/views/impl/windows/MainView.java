@@ -248,11 +248,25 @@ public final class MainView extends SwingFrameView implements TitleListener, IMa
     }
 
     @Override
-    public void sendMessage(String message, Object value) {
+    public void sendMessage(String message, final Object value) {
         if ("add".equals(message)) {
-            addComponent();
+            SwingUtils.inEdt(new Runnable(){
+                @Override
+                public void run() {
+                    addComponent();
+
+                    refresh();
+                }
+            });
         } else if ("remove".equals(message)) {
-            removeComponent((MainComponent) value);
+            SwingUtils.inEdt(new Runnable() {
+                @Override
+                public void run() {
+                    removeComponent((MainComponent) value);
+
+                    refresh();
+                }
+            });
         }
     }
 

@@ -159,4 +159,6 @@ public interface IModuleService {
      * Load the modules.
      */
     void load();
+
+    void registerSwingLoader(String code, SwingLoader moviesModule);
 }
