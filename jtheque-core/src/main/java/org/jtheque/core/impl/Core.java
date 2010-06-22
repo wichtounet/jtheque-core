@@ -40,7 +40,7 @@ import java.util.Collection;
  * @author Baptiste Wicht
  */
 public final class Core implements ICore {
-    private static final String CORE_MESSAGES_FILE = "http://jtheque.developpez.com/public/messages/core.message";
+    private static final String CORE_MESSAGES_FILE = "http://jtheque.baptiste-wicht.com/files/messages/jtheque-core.xml";
 
     private final Collection<String> creditsMessage;
     private final IFoldersContainer foldersContainer;
