@@ -44,8 +44,8 @@ final class Instances {
     private static final int PORT = 12345;
 
     /**
-     * Launch the application. If an other instance of the application is soon launched,
-     * call it and exit the current instance.
+     * Launch the application. If an other instance of the application is soon launched, call it and exit the current
+     * instance.
      */
     public void launchApplication() {
         try {

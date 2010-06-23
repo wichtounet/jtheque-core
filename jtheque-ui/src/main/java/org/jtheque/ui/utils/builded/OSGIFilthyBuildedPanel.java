@@ -53,6 +53,7 @@ public abstract class OSGIFilthyBuildedPanel extends FilthyBuildedPanel implemen
      *
      * @param classz The class to get the service.
      * @param <T>    The type of service.
+     *
      * @return The service of the given class if it's exists otherwise null.
      */
     protected <T> T getService(Class<T> classz) {
@@ -69,6 +70,7 @@ public abstract class OSGIFilthyBuildedPanel extends FilthyBuildedPanel implemen
      *
      * @param classz The classz of the bean to get from application context.
      * @param <T>    The type of bean to get.
+     *
      * @return The bean of the given class or null if it doesn't exist.
      */
     protected <T> T getBean(Class<T> classz) {
@@ -76,11 +78,12 @@ public abstract class OSGIFilthyBuildedPanel extends FilthyBuildedPanel implemen
     }
 
     /**
-     * Return the bean of the given class using the application context. The bean will be retrieved in the EDT, so
-     * it can be used for a Swing bean.
+     * Return the bean of the given class using the application context. The bean will be retrieved in the EDT, so it
+     * can be used for a Swing bean.
      *
      * @param classz The classz of the bean to get from application context.
      * @param <T>    The type of bean to get.
+     *
      * @return The bean of the given class or null if it doesn't exist.
      */
     protected <T> T getBeanFromEDT(Class<T> classz) {
@@ -121,5 +124,5 @@ public abstract class OSGIFilthyBuildedPanel extends FilthyBuildedPanel implemen
      */
     public void validate(Collection<IError> errors) {
         //Default empty implementation
-	}
+    }
 }

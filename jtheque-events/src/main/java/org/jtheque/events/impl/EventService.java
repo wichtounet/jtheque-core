@@ -6,9 +6,10 @@ import org.jtheque.events.able.IEvent;
 import org.jtheque.events.able.IEventService;
 import org.jtheque.events.utils.Event;
 import org.jtheque.utils.io.FileUtils;
+import org.jtheque.xml.utils.IXMLReader;
+import org.jtheque.xml.utils.IXMLWriter;
+import org.jtheque.xml.utils.XML;
 import org.jtheque.xml.utils.XMLException;
-import org.jtheque.xml.utils.javax.XMLReader;
-import org.jtheque.xml.utils.javax.XMLWriter;
 
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Node;
@@ -95,7 +96,7 @@ public final class EventService implements IEventService {
             createEmptyEventFile(f);
         }
 
-        XMLReader reader = new XMLReader();
+        IXMLReader<Node> reader = XML.newJavaFactory().newReader();
 
         try {
             reader.openFile(f);
@@ -126,7 +127,7 @@ public final class EventService implements IEventService {
      * @param f The file.
      */
     private static void createEmptyEventFile(File f) {
-        XMLWriter writer = new XMLWriter("logs");
+        IXMLWriter<Node> writer = XML.newJavaFactory().newWriter("logs");
 
         writer.write(f.getAbsolutePath());
     }
@@ -137,10 +138,12 @@ public final class EventService implements IEventService {
      * @param reader  The reader to use.
      * @param name    The name of the log.
      * @param element The element to read the log from.
+     *
      * @return The Event.
+     *
      * @throws XMLException If an error occurs during the xml reading.
      */
-    private static Event readLog(XMLReader reader, String name, Object element) throws XMLException {
+    private static Event readLog(IXMLReader<Node> reader, String name, Object element) throws XMLException {
         Event log = new Event(
                 EventLevel.get(reader.readInt("level", element)),
                 new Date(reader.readLong("date", element)),
@@ -157,7 +160,7 @@ public final class EventService implements IEventService {
      * Save the events to XML.
      */
     private void saveXML() {
-        XMLWriter writer = new XMLWriter("logs");
+        IXMLWriter<Node> writer = XML.newJavaFactory().newWriter("logs");
 
         for (Map.Entry<String, Collection<IEvent>> entry : logs.entrySet()) {
             writer.add("log");
@@ -178,7 +181,7 @@ public final class EventService implements IEventService {
      * @param writer The writer to use.
      * @param logs   The logs to write.
      */
-    private static void writeEvents(XMLWriter writer, Iterable<IEvent> logs) {
+    private static void writeEvents(IXMLWriter<Node> writer, Iterable<IEvent> logs) {
         for (IEvent log : logs) {
             writer.add("event");
 

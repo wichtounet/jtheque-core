@@ -4,10 +4,7 @@ import org.jtheque.core.able.ICore;
 import org.jtheque.core.utils.OSGiUtils;
 import org.jtheque.errors.able.IErrorService;
 import org.jtheque.errors.utils.JThequeError;
-import org.jtheque.i18n.able.I18NResource;
 import org.jtheque.i18n.able.ILanguageService;
-import org.jtheque.i18n.utils.I18NResourceFactory;
-import org.jtheque.images.able.IImageService;
 import org.jtheque.modules.able.IModuleLoader;
 import org.jtheque.modules.able.Module;
 import org.jtheque.modules.utils.I18NDescription;
@@ -16,14 +13,14 @@ import org.jtheque.resources.able.IResource;
 import org.jtheque.resources.able.IResourceService;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.bean.Version;
+import org.jtheque.xml.utils.IXMLOverReader;
+import org.jtheque.xml.utils.XML;
 import org.jtheque.xml.utils.XMLException;
-import org.jtheque.xml.utils.javax.XMLOverReader;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleException;
 import org.slf4j.LoggerFactory;
-import org.springframework.core.io.UrlResource;
 import org.springframework.osgi.context.BundleContextAware;
 
 import javax.annotation.Resource;
@@ -64,12 +61,6 @@ public final class ModuleLoader implements IModuleLoader, BundleContextAware {
     private static final String[] EMPTY_ARRAY = new String[0];
 
     private BundleContext bundleContext;
-
-    @Resource
-    private ILanguageService languageService;
-
-    @Resource
-    private IImageService imageService;
 
     @Resource
     private IResourceService resourceService;
@@ -116,14 +107,10 @@ public final class ModuleLoader implements IModuleLoader, BundleContextAware {
             Bundle bundle = bundleContext.installBundle("file:" + file.getAbsolutePath());
             container.setBundle(bundle);
 
+            container.setLanguageService(OSGiUtils.getService(bundleContext, ILanguageService.class));
+
             //Get informations from manifest
             readManifestInformations(container, bundle);
-
-            //Add images resources
-            loadImageResources(container, bundle);
-
-            //Add i18n resources
-            loadI18NResources(container, bundle);
         } catch (BundleException e) {
             LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
             OSGiUtils.getService(bundleContext, IErrorService.class).addError(new JThequeError(e));
@@ -135,7 +122,7 @@ public final class ModuleLoader implements IModuleLoader, BundleContextAware {
         return container;
     }
 
-    private void readManifestInformations(ModuleContainer container, Bundle bundle) {
+    private static void readManifestInformations(ModuleContainer container, Bundle bundle) {
         Dictionary<String, String> headers = bundle.getHeaders();
 
         String id = StringUtils.isNotEmpty(headers.get("Module-Id")) ? headers.get("Module-Id") : headers.get("Bundle-SymbolicName");
@@ -165,35 +152,6 @@ public final class ModuleLoader implements IModuleLoader, BundleContextAware {
         }
     }
 
-    private void loadImageResources(Module container, Bundle bundle) {
-        for(ImageDescription imageDescription : container.getResources().getImageResources()){
-            String resource = imageDescription.getResource();
-
-            if(resource.startsWith("classpath:")){
-                imageService.registerResource(imageDescription.getName(),
-                        new UrlResource(bundle.getResource(resource.substring(10))));
-            }
-        }
-    }
-
-    private void loadI18NResources(ModuleContainer container, Bundle bundle) {
-        for (I18NDescription i18NDescription : container.getResources().getI18NResources()) {
-            List<I18NResource> i18NResources = new ArrayList<I18NResource>(i18NDescription.getResources().size());
-
-            for (String resource : i18NDescription.getResources()) {
-                if (resource.startsWith("classpath:")) {
-                    i18NResources.add(I18NResourceFactory.fromURL(resource.substring(resource.lastIndexOf('/') + 1),
-                            bundle.getResource(resource.substring(10))));
-                }
-            }
-
-            languageService.registerResource(i18NDescription.getName(), i18NDescription.getVersion(),
-                    i18NResources.toArray(new I18NResource[i18NResources.size()]));
-        }
-
-        container.setLanguageService(OSGiUtils.getService(bundleContext, ILanguageService.class));
-    }
-
     private void readConfig(File file, ModuleContainer container) throws IOException {
         JarFile jarFile = new JarFile(file);
         ZipEntry configEntry = jarFile.getEntry("module.xml");
@@ -211,66 +169,68 @@ public final class ModuleLoader implements IModuleLoader, BundleContextAware {
      * Import the configuration of the module from the module config XML file.
      *
      * @param stream The stream to the file.
+     *
      * @return The ModuleResources of the module.
      */
     private ModuleResources importConfig(InputStream stream) {
         ModuleResources resources = new ModuleResources();
 
-        XMLOverReader reader = new XMLOverReader();
+        IXMLOverReader reader = XML.newJavaFactory().newOverReader();
         try {
             reader.openStream(stream);
 
-            while (reader.next("/config/i18n/i18nResource")) {
-
-                String name = reader.readString("@name");
-                Version version = new Version(reader.readString("@version"));
-
-                I18NDescription description = new I18NDescription(name, version);
-
-                while (reader.next("classpath")) {
-                    String classpath = reader.readString("text()");
-
-                    description.getResources().add("classpath:" + classpath);
-
-                    //i18NResources.add(I18NResourceFactory.fromURL(classpath.substring(classpath.lastIndexOf('/') + 1), bundle.getResource(classpath)));
-
-                    reader.switchToParent();
-                }
-
-                //languageService.registerResource(name, version, i18NResources.toArray(new I18NResource[i18NResources.size()]));
-
-                resources.addI18NResource(description);
-
-                reader.switchToParent();
-            }
-
-            while (reader.next("/config/images/resource")) {
-                String name = reader.readString("@name");
-                String classpath = reader.readString("classpath");
-
-                resources.addImageResource(new ImageDescription(name, "classpath:" + classpath));
-            }
-
-            while (reader.next("/config/resources/resource")) {
-                String id = reader.readString("@id");
-                String version = reader.readString("@version");
-                String url = reader.readString("@url");
-
-                IResource resource = resourceService.getResource(id, version);
-
-                if (resource != null) {
-                    resources.addResource(resource);
-                } else {
-                    resource = resourceService.downloadResource(url, version);
-
-                    resources.addResource(resource);
-                }
-            }
+            importI18NResources(resources, reader);
+            importImageResources(resources, reader);
+            importResources(resources, reader);
         } catch (XMLException e) {
             LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
             OSGiUtils.getService(bundleContext, IErrorService.class).addError(new JThequeError(e));
         }
 
         return resources;
+    }
+
+    private static void importI18NResources(ModuleResources resources, IXMLOverReader reader) throws XMLException {
+        while (reader.next("/config/i18n/i18nResource")) {
+            String name = reader.readString("@name");
+            Version version = new Version(reader.readString("@version"));
+
+            I18NDescription description = new I18NDescription(name, version);
+
+            while (reader.next("classpath")) {
+                String classpath = reader.readString("text()");
+
+                description.getResources().add("classpath:" + classpath);
+            }
+
+            resources.addI18NResource(description);
+        }
+    }
+
+    private static void importImageResources(ModuleResources resources, IXMLOverReader reader) throws XMLException {
+        while (reader.next("/config/images/resource")) {
+            String name = reader.readString("@name");
+            String classpath = reader.readString("classpath");
+
+            resources.addImageResource(new ImageDescription(name, "classpath:" + classpath));
+        }
+    }
+
+    private void importResources(ModuleResources resources, IXMLOverReader reader) throws XMLException {
+        while (reader.next("/config/resources/resource")) {
+            String id = reader.readString("@id");
+            Version version = new Version(reader.readString("@version"));
+            String url = reader.readString("@url");
+
+            IResource resource = resourceService.getResource(id, version);
+
+            if (resource != null) {
+                resources.addResource(resource);
+            } else {
+                resource = resourceService.downloadResource(url, version);
+
+                resources.addResource(resource);
+            }
+        }
     }
 }

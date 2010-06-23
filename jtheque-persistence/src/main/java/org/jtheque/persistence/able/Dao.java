@@ -25,8 +25,7 @@ import java.util.Collection;
  */
 public interface Dao<T extends Entity> {
     /**
-     * Clear all the content of the Dao. All the instances will be removed
-     * and all the physical data too.
+     * Clear all the content of the Dao. All the instances will be removed and all the physical data too.
      */
     void clearAll();
 
@@ -55,6 +54,7 @@ public interface Dao<T extends Entity> {
      * Return the entity of a specific id.
      *
      * @param id The id for which we search the entity.
+     *
      * @return The Entity.
      */
     T get(int id);
@@ -84,6 +84,7 @@ public interface Dao<T extends Entity> {
      * Delete the entity.
      *
      * @param entity The entity to delete.
+     *
      * @return true if the object is deleted else false.
      */
     boolean delete(T entity);
@@ -92,6 +93,7 @@ public interface Dao<T extends Entity> {
      * Delete the entity with the specified ID.
      *
      * @param id The id of the entity to delete.
+     *
      * @return true if the entity has been deleted else false.
      */
     boolean delete(int id);
@@ -107,6 +109,7 @@ public interface Dao<T extends Entity> {
      * Indicate if the simple entity exists or not.
      *
      * @param entity The entity to test for exists or not.
+     *
      * @return <code>true</code> if the entity exists else <code>false</code>.
      */
     boolean exists(T entity);

@@ -21,6 +21,8 @@ import org.jtheque.modules.able.Module;
 import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.ui.utils.actions.JThequeAction;
 import org.jtheque.utils.StringUtils;
+import org.jtheque.utils.ui.SwingUtils;
+import org.jtheque.utils.ui.edt.SimpleTask;
 import org.jtheque.views.able.panel.IModuleView;
 
 import java.awt.event.ActionEvent;
@@ -39,11 +41,11 @@ public final class StartModuleAction extends JThequeAction {
      * Construct a new StartModuleAction.
      *
      * @param moduleService The module service.
-     * @param uiUtils The UI Utils.
-     * @param moduleView The module view. 
+     * @param uiUtils       The UI Utils.
+     * @param moduleView    The module view.
      */
     public StartModuleAction(IModuleService moduleService, IUIUtils uiUtils, IModuleView moduleView) {
-        super("modules.actions.load");
+        super("modules.actions.start");
 
         this.moduleService = moduleService;
         this.uiUtils = uiUtils;
@@ -52,15 +54,44 @@ public final class StartModuleAction extends JThequeAction {
 
     @Override
     public void actionPerformed(ActionEvent arg0) {
-        Module module = moduleView.getSelectedModule();
+        final Module module = moduleView.getSelectedModule();
 
         String error = moduleService.canModuleLaunched(module);
 
         if (StringUtils.isEmpty(error)) {
-            moduleService.startModule(module);
-            moduleView.refreshList();
+            SwingUtils.execute(new SimpleTask(){
+                @Override
+                public void run() {
+                    moduleView.startWait();
+
+                    Thread starter = new Thread(new StartModuleRunnable(module));
+                    starter.setName("Module loader");
+                    starter.start();
+                }
+            });
         } else {
             uiUtils.getDelegate().displayText(error);
+        }
+    }
+
+    private class StartModuleRunnable implements Runnable {
+        private final Module module;
+
+        private StartModuleRunnable(Module module) {
+            this.module = module;
+        }
+
+        @Override
+        public void run() {
+            moduleService.startModule(module);
+
+            SwingUtils.execute(new SimpleTask() {
+                @Override
+                public void run() {
+                    moduleView.refreshList();
+                    moduleView.stopWait();
+                }
+            });
         }
     }
 }

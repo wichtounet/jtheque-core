@@ -36,6 +36,7 @@ public interface IModuleLoader {
      * Install the module.
      *
      * @param file The file to the module to install.
+     *
      * @return The installed module.
      */
     Module installModule(File file);

@@ -113,6 +113,7 @@ public class LayerTabbedPane extends JTabbedPane implements ViewComponent {
      * Return the layer at a certain index.
      *
      * @param index The index for which we search the layer.
+     *
      * @return the corresponding layer.
      */
     final JXLayer<JComponent> getLayerAt(int index) {

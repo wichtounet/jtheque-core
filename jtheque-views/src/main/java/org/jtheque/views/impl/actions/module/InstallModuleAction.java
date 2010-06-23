@@ -38,7 +38,7 @@ public final class InstallModuleAction extends JThequeAction {
      * Construct a new InstallModuleAction.
      *
      * @param moduleService The module service.
-     * @param uiUtils The UI Utils. 
+     * @param uiUtils       The UI Utils.
      */
     public InstallModuleAction(IModuleService moduleService, IUIUtils uiUtils) {
         super("modules.actions.new");

@@ -45,8 +45,7 @@ import java.awt.LayoutManager;
  */
 
 /**
- * A basic PanelBuilder. It seems a panel with no internationalization and that works only with basic swing
- * components.
+ * A basic PanelBuilder. It seems a panel with no internationalization and that works only with basic swing components.
  *
  * @author Baptiste Wicht
  */
@@ -128,6 +127,7 @@ public class BasicPanelBuilder extends AbstractPanelBuilder {
      *
      * @param model    The model of the list.
      * @param renderer The renderer. Can be null.
+     *
      * @return The created JList.
      */
     private static JList createJList(ListModel model, ListCellRenderer renderer) {
@@ -195,6 +195,7 @@ public class BasicPanelBuilder extends AbstractPanelBuilder {
      *
      * @param style     The font style to apply.
      * @param component The component to apply the style on.
+     *
      * @see PanelBuilder#BOLD
      * @see PanelBuilder#ITALIC
      */

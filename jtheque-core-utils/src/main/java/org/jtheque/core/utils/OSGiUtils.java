@@ -38,6 +38,7 @@ public final class OSGiUtils {
      * @param context The bundle context
      * @param classz  The class to get the service for.
      * @param <T>     The type of service.
+     *
      * @return The service of the given type.
      */
     public static <T> T getService(BundleContext context, Class<T> classz) {

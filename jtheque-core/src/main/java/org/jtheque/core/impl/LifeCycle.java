@@ -129,7 +129,7 @@ public class LifeCycle implements ILifeCycle {
      * Start the exit process but not stop the application.
      */
     private void releaseAll() {
-        eventService.addEvent("JTheque Core", new Event(EventLevel.INFO, "User", "events.close"));
+        eventService.addEvent(IEventService.CORE_EVENT_LOG, new Event(EventLevel.INFO, "User", "events.close"));
     }
 
     /**
@@ -197,9 +197,9 @@ public class LifeCycle implements ILifeCycle {
     }
 
     /**
-     * This class is a hook on the shutdown of JTheque. When a shutdown is detected, the thread
-     * detect it and if this isn't JTheque who has executed the close, we properly close the
-     * resources. This is for prevent accident kill of JTheque.
+     * This class is a hook on the shutdown of JTheque. When a shutdown is detected, the thread detect it and if this
+     * isn't JTheque who has executed the close, we properly close the resources. This is for prevent accident kill of
+     * JTheque.
      *
      * @author Baptiste Wicht
      */

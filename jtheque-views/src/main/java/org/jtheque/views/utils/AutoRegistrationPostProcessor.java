@@ -6,19 +6,12 @@ import org.jtheque.file.able.IFileService;
 import org.jtheque.file.able.ModuleBackuper;
 import org.jtheque.schemas.able.ISchemaService;
 import org.jtheque.schemas.able.Schema;
-import org.jtheque.utils.ui.SwingUtils;
 import org.jtheque.views.able.IViews;
 import org.jtheque.views.able.components.ConfigTabComponent;
 import org.jtheque.views.able.components.IStateBarComponent;
 import org.jtheque.views.able.components.MainComponent;
 
 import org.springframework.beans.factory.config.BeanPostProcessor;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
-
-import javax.annotation.PostConstruct;
-
-import java.util.Arrays;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -37,18 +30,13 @@ import java.util.Arrays;
  */
 
 /**
- * A bean post processor to register all the resources of a module in the application context. This
- * post processor add automatically state bar components to state bar.
+ * A bean post processor to register all the resources of a module in the application context. This post processor add
+ * automatically state bar components to state bar.
  *
  * @author Baptiste Wicht
  */
-public class AutoRegistrationPostProcessor implements BeanPostProcessor, ApplicationContextAware {
-    private static final String[] EMPTY_BEANS = new String[0];
-
+public class AutoRegistrationPostProcessor implements BeanPostProcessor {
     private final String module;
-    private final String[] beans;
-
-    private ApplicationContext applicationContext;
 
     private IViews views;
     private IFeatureService featureService;
@@ -64,21 +52,6 @@ public class AutoRegistrationPostProcessor implements BeanPostProcessor, Applica
         super();
 
         this.module = module;
-
-        beans = EMPTY_BEANS;
-    }
-
-    /**
-     * Construct a new AutoRegistrationPostProcessor.
-     *
-     * @param module The module ID.
-     * @param beans  The beans to auto load.
-     */
-    public AutoRegistrationPostProcessor(String module, String... beans) {
-        super();
-
-        this.module = module;
-        this.beans = Arrays.copyOf(beans, beans.length);
     }
 
     @Override
@@ -103,26 +76,6 @@ public class AutoRegistrationPostProcessor implements BeanPostProcessor, Applica
     @Override
     public Object postProcessBeforeInitialization(Object bean, String beanName) {
         return bean;
-    }
-
-    /**
-     * Load the beans in EDT.
-     */
-    @PostConstruct
-    public void loadEDTBeans() {
-        SwingUtils.inEdt(new Runnable() {
-            @Override
-            public void run() {
-                for (String bean : beans) {
-                    applicationContext.getBean(bean);
-                }
-            }
-        });
-    }
-
-    @Override
-    public void setApplicationContext(ApplicationContext applicationContext) {
-        this.applicationContext = applicationContext;
     }
 
     /**
@@ -158,6 +111,6 @@ public class AutoRegistrationPostProcessor implements BeanPostProcessor, Applica
      * @param fileService The file service.
      */
     public void setFileService(IFileService fileService) {
-		this.fileService = fileService;
-	}
+        this.fileService = fileService;
+    }
 }

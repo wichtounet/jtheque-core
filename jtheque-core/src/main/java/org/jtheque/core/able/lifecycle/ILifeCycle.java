@@ -40,32 +40,32 @@ public interface ILifeCycle {
     String getTitle();
 
     /**
-     * Add title listener to receive title events from the application. If the listener is null, no exception is
-     * thrown and no action is performed.
+     * Add title listener to receive title events from the application. If the listener is null, no exception is thrown
+     * and no action is performed.
      *
      * @param listener The title listener.
      */
     void addTitleListener(TitleListener listener);
 
     /**
-     * Remove the specified title listener so that it no longer receives title events from the application. If
-     * the listener is null, no exception is thrown and no action is performed.
+     * Remove the specified title listener so that it no longer receives title events from the application. If the
+     * listener is null, no exception is thrown and no action is performed.
      *
      * @param listener The title listener.
      */
     void removeTitleListener(TitleListener listener);
 
     /**
-     * Add function listener to receive function events from the application. If the listener is null, no exception
-     * is thrown and no action is performed.
+     * Add function listener to receive function events from the application. If the listener is null, no exception is
+     * thrown and no action is performed.
      *
      * @param listener The function listener.
      */
     void addFunctionListener(FunctionListener listener);
 
     /**
-     * Remove the specified function listener so that it no longer receives function events from the application. If
-     * the listener is null, no exception is thrown and no action is performed.
+     * Remove the specified function listener so that it no longer receives function events from the application. If the
+     * listener is null, no exception is thrown and no action is performed.
      *
      * @param listener The function listener.
      */

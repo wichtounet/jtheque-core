@@ -35,6 +35,7 @@ public interface IDaoNotes {
      * Return the note with the specific value.
      *
      * @param value The value of the note we want
+     *
      * @return The note with this value or <code>null</code> if we doesn't it.
      */
     Note getNote(NoteType value);
@@ -50,6 +51,7 @@ public interface IDaoNotes {
      * Return the image for the specified note. The image is still buffered.
      *
      * @param note The note to get the image for.
+     *
      * @return The image for the note.
      */
     Image getImage(Note note);
@@ -58,6 +60,7 @@ public interface IDaoNotes {
      * Return the internationalized text of the note.
      *
      * @param note The note.
+     *
      * @return The internationalized text of the note.
      */
     String getInternationalizedText(Note note);
@@ -101,6 +104,7 @@ public interface IDaoNotes {
          * Return the enum with the enum int value.
          *
          * @param e The int value to search.
+         *
          * @return The NoteType corresponding to the int value to search.
          */
         public static NoteType getEnum(int e) {

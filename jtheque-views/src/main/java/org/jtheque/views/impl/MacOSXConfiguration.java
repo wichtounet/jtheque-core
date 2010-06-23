@@ -53,8 +53,8 @@ public final class MacOSXConfiguration {
     }
 
     /**
-     * An application adapter for MAC OS X. This application handles the event
-     * of the MAC menu to the jtheque application.
+     * An application adapter for MAC OS X. This application handles the event of the MAC menu to the jtheque
+     * application.
      *
      * @author Baptiste Wicht
      */

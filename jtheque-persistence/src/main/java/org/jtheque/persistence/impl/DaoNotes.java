@@ -1,9 +1,9 @@
 package org.jtheque.persistence.impl;
 
 import org.jtheque.i18n.able.ILanguageService;
+import org.jtheque.images.able.IImageService;
 import org.jtheque.persistence.able.IDaoNotes;
 import org.jtheque.persistence.able.Note;
-import org.jtheque.images.able.IImageService;
 
 import org.springframework.core.io.ClassPathResource;
 
@@ -42,7 +42,7 @@ public final class DaoNotes implements IDaoNotes {
     /**
      * Construct a new DaoNotes.
      *
-     * @param imageService The resources.
+     * @param imageService    The resources.
      * @param languageService The language service.
      */
     public DaoNotes(IImageService imageService, ILanguageService languageService) {

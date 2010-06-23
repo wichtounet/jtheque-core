@@ -27,11 +27,10 @@ import java.util.Collection;
  *
  * @author Baptiste Wicht
  */
-public interface ICore {
+public interface ICore extends Versionable {
     Version VERSION = new Version("2.1.0");
 
-    String FORUM_URL = "http://www.developpez.net/forums/f751/applications/projets/projets-heberges/jtheque/";
-    String VERSIONS_FILE_URL = "http://jtheque.developpez.com/public/versions/Core.versions";
+    String DESCRIPTOR_FILE_URL = "http://jtheque.developpez.com/descriptors/jtheque-core.xml";
     String HELP_URL = "http://jtheque.developpez.com/";
 
     String WINDOW_ICON = "jtheque-core-window-icon";
@@ -82,6 +81,7 @@ public interface ICore {
      * Indicate if the current version of the core is compatible with an other version.
      *
      * @param version The version to test the compatibility with.
+     *
      * @return true if the current version is compatible with the other version.
      */
     boolean isNotCompatibleWith(Version version);

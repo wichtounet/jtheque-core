@@ -51,6 +51,7 @@ public enum ImageType {
      * Resolve the string type to the ImageType value.
      *
      * @param type The string type of the image.
+     *
      * @return The corresponding ImageType value.
      */
     public static ImageType resolve(String type) {

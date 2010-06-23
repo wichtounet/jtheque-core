@@ -16,6 +16,7 @@ package org.jtheque.modules.able;
  * limitations under the License.
  */
 
+import org.jtheque.core.able.Versionable;
 import org.jtheque.utils.bean.Version;
 
 import org.osgi.framework.Bundle;
@@ -25,7 +26,7 @@ import org.osgi.framework.Bundle;
  *
  * @author Baptiste Wicht
  */
-public interface Module {
+public interface Module extends Versionable {
     /**
      * Return the real module.
      *
@@ -69,13 +70,6 @@ public interface Module {
     String getDescription();
 
     /**
-     * Return the version of the module.
-     *
-     * @return The version of the module.
-     */
-    Version getVersion();
-
-    /**
      * Return the needed version of the core.
      *
      * @return The needed version of the core.
@@ -90,15 +84,8 @@ public interface Module {
     String getUrl();
 
     /**
-     * Return the URL of the update file of the module.
-     *
-     * @return The URL of the update file of the module.
-     */
-    String getUpdateUrl();
-
-    /**
-     * Return all the dependencies of the module. The dependencies are a link to a module that must be started
-     * before this module.
+     * Return all the dependencies of the module. The dependencies are a link to a module that must be started before
+     * this module.
      *
      * @return An array containing all the module dependencies of the module.
      */

@@ -21,7 +21,8 @@
             <item name="Overview" href="index.html"/>
             <item name="News" href="news.html"/>
             <item name="FAQ" href="faq.html"/>
-            <item name="JTheque Forum (French)" href="http://www.developpez.net/forums/f751/applications/projets/jtheque/"/>
+            <item name="JTheque Forum (French)"
+                  href="http://www.developpez.net/forums/f751/applications/projets/jtheque/"/>
         </menu>
 
         <menu name="Get JTheque Core">

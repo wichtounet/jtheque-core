@@ -84,6 +84,7 @@ public final class EventsTableModel extends AbstractTableModel {
      * Return the event log at the index.
      *
      * @param row The index of the event to get.
+     *
      * @return The event level at the position or null if there is no event at this position.
      */
     public IEvent getValueAt(int row) {

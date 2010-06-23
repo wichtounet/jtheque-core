@@ -145,7 +145,7 @@ public final class ModuleContainer implements Module {
     }
 
     @Override
-    public String getUpdateUrl() {
+    public String getDescriptorURL() {
         return updateUrl;
     }
 
@@ -167,6 +167,7 @@ public final class ModuleContainer implements Module {
      * Set the dependencies of the module.
      *
      * @param dependencies The dependencies of the module.
+     *
      * @see #getDependencies()
      */
     public void setDependencies(String[] dependencies) {
@@ -218,11 +219,11 @@ public final class ModuleContainer implements Module {
      */
     public void setResources(ModuleResources resources) {
         this.resources = resources;
-	}
+    }
 
     /**
-     * Set the language service of the container. If this service is not setted, the informations will
-     * not be internationalized. 
+     * Set the language service of the container. If this service is not setted, the informations will not be
+     * internationalized.
      *
      * @param languageService The language service.
      */
@@ -233,4 +234,5 @@ public final class ModuleContainer implements Module {
     public void setBundle(Bundle bundle) {
         this.bundle = bundle;
     }
+
 }

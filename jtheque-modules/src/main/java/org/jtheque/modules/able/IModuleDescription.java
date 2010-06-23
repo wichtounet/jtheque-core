@@ -1,5 +1,6 @@
 package org.jtheque.modules.able;
 
+import org.jtheque.core.able.Versionable;
 import org.jtheque.utils.bean.InternationalString;
 import org.jtheque.utils.bean.Version;
 
@@ -8,7 +9,7 @@ import org.jtheque.utils.bean.Version;
  *
  * @author Baptiste Wicht
  */
-public interface IModuleDescription {
+public interface IModuleDescription extends Versionable {
     /**
      * Return the name of the module.
      *
@@ -22,13 +23,6 @@ public interface IModuleDescription {
      * @return The description of the module.
      */
     InternationalString getDescription();
-
-    /**
-     * Return the versions file URL.
-     *
-     * @return The URL of the versions file.
-     */
-    String getVersionsFileURL();
 
     /**
      * Return the core version.

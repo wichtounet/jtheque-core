@@ -181,6 +181,7 @@ public final class AboutPane extends AbstractAboutPane implements IAboutView, In
      *
      * @param g2     The graphics 2D elements.
      * @param yStart The y position to start from to paint.
+     *
      * @return The y position stop of the infos.
      */
     private int paintInfos(Graphics2D g2, int yStart) {
@@ -196,8 +197,8 @@ public final class AboutPane extends AbstractAboutPane implements IAboutView, In
     }
 
     /**
-     * Create the image of the informations to improve performance. The image is only modified when the size of the window
-     * has changed.
+     * Create the image of the informations to improve performance. The image is only modified when the size of the
+     * window has changed.
      *
      * @param startY The y position to start painting.
      * @param startX The x position to start painting.

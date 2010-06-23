@@ -20,8 +20,10 @@ import org.jtheque.core.able.ICore;
 import org.jtheque.file.able.IFileService.XmlBackupVersion;
 import org.jtheque.file.able.ModuleBackup;
 import org.jtheque.utils.bean.IntDate;
-import org.jtheque.xml.utils.javax.NodeSaver;
-import org.jtheque.xml.utils.javax.XMLWriter;
+import org.jtheque.xml.utils.IXMLWriter;
+import org.jtheque.xml.utils.XML;
+
+import org.w3c.dom.Node;
 
 import java.io.File;
 
@@ -45,7 +47,7 @@ public final class XMLBackuper {
      * @param backups The backups to write.
      */
     public static void backup(File file, Iterable<ModuleBackup> backups) {
-        XMLWriter writer = new XMLWriter("jtheque-backup");
+        IXMLWriter<Node> writer = XML.newJavaFactory().newWriter("jtheque-backup");
 
         writeHeader(writer);
 
@@ -61,7 +63,7 @@ public final class XMLBackuper {
      *
      * @param writer The writer in which add the header.
      */
-    private static void writeHeader(XMLWriter writer) {
+    private static void writeHeader(IXMLWriter<Node> writer) {
         writer.add("header");
 
         writer.addOnly("date", Integer.toString(IntDate.today().intValue()));
@@ -77,7 +79,7 @@ public final class XMLBackuper {
      * @param writer The write to use.
      * @param backup The backup to write.
      */
-    private static void writeBackup(XMLWriter writer, ModuleBackup backup) {
+    private static void writeBackup(IXMLWriter<Node> writer, ModuleBackup backup) {
         writer.add("backup");
 
         writer.addOnly("id", backup.getId());
@@ -85,7 +87,7 @@ public final class XMLBackuper {
 
         writer.add("nodes");
 
-        NodeSaver.writeNodes(writer, backup.getNodes());
+        XML.newJavaFactory().newNodeSaver().writeNodes(writer, backup.getNodes());
 
         writer.switchToParent(); //Out from "nodes"
 

@@ -31,8 +31,7 @@ import java.awt.Component;
  */
 public interface IMainView extends IView {
     /**
-     * Return the principal tabbed pane. This tabbed pane is used to display the different principal data of
-     * JTheque.
+     * Return the principal tabbed pane. This tabbed pane is used to display the different principal data of JTheque.
      *
      * @return The tabbed pane who display the principal data.
      */

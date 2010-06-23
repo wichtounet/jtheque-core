@@ -48,10 +48,10 @@ public final class CollectionsService implements ICollectionsService {
      * Construct a new CollectionsService.
      *
      * @param daoCollections The dao collections.
-     * @param fileService The file service.
-     * @param core The core.
-     * @param schemaService The schema service.
-     * @param schema The schema of the collections. 
+     * @param fileService    The file service.
+     * @param core           The core.
+     * @param schemaService  The schema service.
+     * @param schema         The schema of the collections.
      */
     public CollectionsService(IDaoCollections daoCollections, IFileService fileService, ICore core,
                               ISchemaService schemaService, Schema schema) {
@@ -133,6 +133,7 @@ public final class CollectionsService implements ICollectionsService {
      *
      * @param title    The collection title.
      * @param password The password.
+     *
      * @return <code>true</code> if the login is correct else <code>false</code>.
      */
     public boolean login(String title, String password) {
@@ -152,6 +153,7 @@ public final class CollectionsService implements ICollectionsService {
      *
      * @param title    The title of the collection.
      * @param password The password to login to the collection.
+     *
      * @return true if the login is correct else false.
      */
     private boolean isLoginIncorrect(String title, String password) {
@@ -189,7 +191,7 @@ public final class CollectionsService implements ICollectionsService {
     }
 
     @Override
-    public String getDataType(){
-		return DATA_TYPE;
-	}
+    public String getDataType() {
+        return DATA_TYPE;
+    }
 }

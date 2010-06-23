@@ -23,6 +23,7 @@ import org.jtheque.ui.utils.builded.FilthyBuildedPanel;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.ui.utils.builders.PanelBuilder;
 import org.jtheque.update.able.IUpdateService;
+import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.views.impl.actions.module.UpdateKernelAction;
 
@@ -67,7 +68,12 @@ public final class KernelInfoPanel extends FilthyBuildedPanel {
 
         builder.addI18nLabel("modules.view.core.version.online", builder.gbcSet(2, 0));
 
-        builder.addLabel(updateService.getMostRecentCoreVersion().getVersion(), getForeground(), builder.gbcSet(2, 1));
+        Version version = updateService.getMostRecentCoreVersion();
+        if (version == null) {
+            builder.addLabel("", getForeground(), builder.gbcSet(2, 1));
+        } else {
+            builder.addLabel(version.getVersion(), getForeground(), builder.gbcSet(2, 1));
+        }
 
         builder.addButton(new UpdateKernelAction(), builder.gbcSet(4, 0, GridBagUtils.NONE, GridBagUtils.LINE_START, 1, 3));
     }

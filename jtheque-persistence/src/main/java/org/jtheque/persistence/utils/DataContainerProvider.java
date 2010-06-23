@@ -23,8 +23,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
- * A provider for dao. This class give access to all DAOs or to specific dao with different
- * parameters of search.
+ * A provider for dao. This class give access to all DAOs or to specific dao with different parameters of search.
  *
  * @author Baptiste Wicht
  */
@@ -75,6 +74,7 @@ public final class DataContainerProvider {
      * Return the DAO for a specific data type.
      *
      * @param dataType The data type for which we want the DAO.
+     *
      * @return The dao or <code>null</code> if we don't find one.
      */
     public DataContainer<? extends Entity> getContainerForDataType(String dataType) {

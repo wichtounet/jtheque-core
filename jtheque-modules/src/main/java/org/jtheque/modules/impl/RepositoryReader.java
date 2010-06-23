@@ -22,8 +22,9 @@ import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.bean.InternationalString;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.io.FileUtils;
+import org.jtheque.xml.utils.IXMLReader;
+import org.jtheque.xml.utils.XML;
 import org.jtheque.xml.utils.XMLException;
-import org.jtheque.xml.utils.javax.XMLReader;
 
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Node;
@@ -34,23 +35,14 @@ import org.w3c.dom.Node;
  * @author Baptiste Wicht
  */
 public final class RepositoryReader {
-    private final Repository repository;
-    private final XMLReader reader;
-
-    /**
-     * Construct a new RepositoryReader.
-     */
-    public RepositoryReader() {
-        super();
-
-        repository = new Repository();
-        reader = new XMLReader();
-    }
+    private final Repository repository = new Repository();
+    private final IXMLReader<Node> reader = XML.newJavaFactory().newReader();
 
     /**
      * Read a repository file.
      *
      * @param strUrl The URL of the repository file.
+     *
      * @return The repository.
      */
     public IRepository read(String strUrl) {
@@ -82,9 +74,10 @@ public final class RepositoryReader {
      * Read the application informations from the reader.
      *
      * @param reader The reader to use.
+     *
      * @throws XMLException If an error occurs during the XML reading process.
      */
-    private void readApplication(XMLReader reader) throws XMLException {
+    private void readApplication(IXMLReader<Node> reader) throws XMLException {
         repository.setApplication(reader.readString("application", reader.getRootElement()));
     }
 
@@ -92,9 +85,10 @@ public final class RepositoryReader {
      * Read the modules informations from the reader.
      *
      * @param reader The reader to use.
+     *
      * @throws XMLException If an error occurs during the XML reading process.
      */
-    private void readModules(XMLReader reader) throws XMLException {
+    private void readModules(IXMLReader<Node> reader) throws XMLException {
         for (Object currentNode : reader.getNodes("modules/module", reader.getRootElement())) {
             ModuleDescription module = new ModuleDescription();
 
@@ -125,9 +119,10 @@ public final class RepositoryReader {
      * Read the title of the repository from the reader.
      *
      * @param reader The reader to use.
+     *
      * @throws XMLException If an error occurs during the XML reading process.
      */
-    private void readTitle(XMLReader reader) throws XMLException {
+    private void readTitle(IXMLReader<Node> reader) throws XMLException {
         InternationalString title = new InternationalString();
 
         for (Node child : reader.getNodes("title/*", reader.getRootElement())) {

@@ -237,7 +237,7 @@ public final class MainView extends SwingFrameView implements TitleListener, IMa
         emptyPanel.setBackground(Color.white);
 
         builder.add(emptyPanel, builder.gbcSet(0, 0, GridBagUtils.BOTH, GridBagUtils.FIRST_LINE_START, 1.0, 1.0));
-        
+
         stateBar = new JThequeStateBar(views);
 
         SimplePropertiesCache.put("statebar-loaded", "true");
@@ -248,11 +248,25 @@ public final class MainView extends SwingFrameView implements TitleListener, IMa
     }
 
     @Override
-    public void sendMessage(String message, Object value) {
+    public void sendMessage(String message, final Object value) {
         if ("add".equals(message)) {
-            addComponent();
+            SwingUtils.inEdt(new Runnable(){
+                @Override
+                public void run() {
+                    addComponent();
+
+                    refresh();
+                }
+            });
         } else if ("remove".equals(message)) {
-            removeComponent((MainComponent) value);
+            SwingUtils.inEdt(new Runnable() {
+                @Override
+                public void run() {
+                    removeComponent((MainComponent) value);
+
+                    refresh();
+                }
+            });
         }
     }
 
@@ -285,6 +299,8 @@ public final class MainView extends SwingFrameView implements TitleListener, IMa
         } else {
             tab.refreshComponents();
         }
+
+        current++;
     }
 
     /**
@@ -318,6 +334,8 @@ public final class MainView extends SwingFrameView implements TitleListener, IMa
         } else {
             tab.removeMainComponent(component);
         }
+
+        current--;
     }
 
     @Override

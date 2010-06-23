@@ -242,6 +242,7 @@ public final class InfiniteWaitFigure implements WaitFigure, ActionListener {
      * Build the tickers.
      *
      * @param barCount The number of bars
+     *
      * @return All the tickers
      */
     private Area[] buildTicker(int barCount) {

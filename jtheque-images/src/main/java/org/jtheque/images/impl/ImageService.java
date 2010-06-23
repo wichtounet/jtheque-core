@@ -115,6 +115,7 @@ public final class ImageService implements IImageService {
      * Indicate if an image is not cached.
      *
      * @param index The index of the image.
+     *
      * @return true if the image is not cached else false.
      */
     private boolean isImageNotCached(String index) {
@@ -136,6 +137,7 @@ public final class ImageService implements IImageService {
      * Read the image and make it compatible with the environment.
      *
      * @param path The path to the image.
+     *
      * @return The compatible image.
      */
     private BufferedImage getCompatibleImage(String path) {
@@ -146,6 +148,7 @@ public final class ImageService implements IImageService {
      * Return the stream to the resource of the given id.
      *
      * @param id The id of the resource.
+     *
      * @return The input stream to the resource.
      */
     private InputStream getResourceAsStream(String id) {
@@ -166,6 +169,7 @@ public final class ImageService implements IImageService {
      *
      * @param image The image to make the thumbnail from.
      * @param width The width of the thumbnail.
+     *
      * @return The thumbnail of the image, with the specified width.
      */
     private static BufferedImage getThumbnail(BufferedImage image, int width) {

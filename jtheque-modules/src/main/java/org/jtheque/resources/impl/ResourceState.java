@@ -61,7 +61,7 @@ public class ResourceState {
         resources.add(resource);
     }
 
-    public Collection<IResource> getResources(){
+    public Collection<IResource> getResources() {
         return resources;
     }
 
@@ -74,10 +74,10 @@ public class ResourceState {
         resource.setVersion(version);
         resource.setUrl(url);
 
-        for(Node child : node.getChildrens()){
-            if("file".equals(child.getName())){
+        for (Node child : node.getChildrens()) {
+            if ("file".equals(child.getName())) {
                 resource.addFile(child.getText());
-            } else if("library".equals(child.getName())){
+            } else if ("library".equals(child.getName())) {
                 resource.addLibrary(new Library(child.getText()));
             }
         }
@@ -92,11 +92,11 @@ public class ResourceState {
         node.setAttribute("url", resource.getUrl());
         node.setAttribute("version", resource.getVersion().getVersion());
 
-        for(String file : resource.getFiles()){
+        for (String file : resource.getFiles()) {
             node.addSimpleChildValue("file", file);
         }
 
-        for(Library library : resource.getLibraries()){
+        for (Library library : resource.getLibraries()) {
             node.addSimpleChildValue("library", library.getId());
         }
 

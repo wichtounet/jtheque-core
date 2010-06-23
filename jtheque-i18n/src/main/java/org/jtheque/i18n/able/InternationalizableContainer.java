@@ -17,8 +17,8 @@ package org.jtheque.i18n.able;
  */
 
 /**
- * An internationalizable container. It's a internationalize who contains also some
- * internationalizables and are responsible to internationalize all the childs.
+ * An internationalizable container. It's a internationalize who contains also some internationalizables and are
+ * responsible to internationalize all the childs.
  *
  * @author Baptiste Wicht
  */

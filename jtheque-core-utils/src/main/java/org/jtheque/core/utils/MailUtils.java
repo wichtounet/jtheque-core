@@ -54,6 +54,7 @@ public final class MailUtils {
      *
      * @param email The email to send.
      * @param host  The host to send the message.
+     *
      * @throws MessagingException Can throw this exception if an exception occurs during the send of the mail
      */
     public static void send(Email email, String host) throws MessagingException {
@@ -82,6 +83,7 @@ public final class MailUtils {
      *
      * @param email The email to get the infos from.
      * @param msg   The msg to configure.
+     *
      * @throws MessagingException Throw if an error occurs during the treatment.
      */
     private static void configureMessage(Email email, MimeMessage msg) throws MessagingException {
@@ -99,6 +101,7 @@ public final class MailUtils {
      * Create a message with a specific host.
      *
      * @param host The host to use.
+     *
      * @return The mime message.
      */
     private static MimeMessage createMessage(String host) {
@@ -116,6 +119,7 @@ public final class MailUtils {
      *
      * @param email The email to get the files from.
      * @param mp    The multi part message.
+     *
      * @throws MessagingException Throw if an error occurs during the attaching files process.
      */
     private static void attachFiles(Email email, Multipart mp) throws MessagingException {

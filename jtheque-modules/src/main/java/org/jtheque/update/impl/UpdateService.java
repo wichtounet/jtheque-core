@@ -17,29 +17,40 @@ package org.jtheque.update.impl;
  */
 
 import org.jtheque.core.able.ICore;
+import org.jtheque.core.able.Versionable;
+import org.jtheque.errors.able.IErrorService;
+import org.jtheque.events.able.EventLevel;
+import org.jtheque.events.able.IEventService;
+import org.jtheque.events.utils.Event;
 import org.jtheque.modules.able.IModuleService;
 import org.jtheque.modules.able.Module;
 import org.jtheque.modules.impl.InstallationResult;
-import org.jtheque.states.able.IStateService;
+import org.jtheque.resources.able.IResourceService;
+import org.jtheque.resources.impl.FileDescriptor;
+import org.jtheque.resources.impl.ModuleVersion;
 import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.update.able.IUpdateService;
-import org.jtheque.update.impl.actions.UpdateAction;
 import org.jtheque.update.impl.versions.IVersionsLoader;
-import org.jtheque.update.impl.versions.InstallVersion;
-import org.jtheque.update.impl.versions.OnlineVersion;
+import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.bean.Version;
+import org.jtheque.utils.collections.CollectionUtils;
+import org.jtheque.utils.io.FileException;
+import org.jtheque.utils.io.WebUtils;
 
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.Resource;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 /**
- * Manage the org.jtheque.update of the application. This class can go on internet to verify if a more recent
- * version of JTheque is available and download one new version if there is one.
+ * Manage the update of the application. This class can go on internet to verify if a more recent version of
+ * JTheque is available and download one new version if there is one.
+ *
+ * This service manage also the updates of the modules. 
  *
  * @author Baptiste Wicht
  */
@@ -53,60 +64,59 @@ public final class UpdateService implements IUpdateService {
     @Resource
     private IModuleService moduleService;
 
+    @Resource
+    private IEventService eventService;
+
+    @Resource
+    private IErrorService errorService;
+
+    @Resource
+    private IResourceService resourceService;
+
     private final IVersionsLoader versionsLoader;
 
     /**
      * Create a new UpdateService.
      *
-     * @param stateService   The state service.
      * @param versionsLoader The versions loader.
      */
-    public UpdateService(IStateService stateService, IVersionsLoader versionsLoader) {
+    public UpdateService(IVersionsLoader versionsLoader) {
         super();
 
         this.versionsLoader = versionsLoader;
     }
 
     @Override
-    public void update(Version versionToDownload) {
-        for (OnlineVersion onlineVersion : versionsLoader.getOnlineVersions(core)) {
-            if (onlineVersion.getVersion().equals(versionToDownload)) {
-                applyOnlineVersion(onlineVersion);
-
-                break;
-            }
-        }
-
-        uiUtils.displayI18nText("message.application.updated");
-    }
-
-    /**
-     * Apply the online version.
-     *
-     * @param onlineVersion The online version to apply.
-     */
-    private static void applyOnlineVersion(OnlineVersion onlineVersion) {
-        for (UpdateAction action : onlineVersion.getActions()) {
-            action.execute();
-        }
+    public void updateCore(Version versionToDownload) {
+        update(core, versionToDownload);
     }
 
     @Override
-    public InstallationResult install(String versionFileURL) {
+    public InstallationResult install(String url) {
         InstallationResult result = new InstallationResult();
 
-        try {
-            InstallVersion version = versionsLoader.getInstallVersion(versionFileURL);
+        if(WebUtils.isURLReachable(url)){
+            try {
+                ModuleVersion moduleVersion = versionsLoader.getMostRecentModuleVersion(url);
 
-            for (UpdateAction action : version.getActions()) {
-                action.execute();
+                applyModuleVersion(moduleVersion);
+
+                result.setJarFile(moduleVersion.getModuleFile());
+                result.setInstalled(true);
+            } catch (Exception e) {
+                LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
+                result.setInstalled(false);
+            }
+        } else {
+            if (WebUtils.isInternetReachable()) {
+                errorService.addInternationalizedError("modules.updates.network.resource", url);
+            } else {
+                errorService.addInternationalizedError("modules.updates.network.internet", url);
             }
 
-            result.setJarFile(version.getJarFile());
-            result.setName(version.getTitle());
-            result.setInstalled(true);
-        } catch (Exception e) {
-            LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
+            eventService.addEvent(IEventService.CORE_EVENT_LOG,
+                    new Event(EventLevel.ERROR, "System", "events.updates.network"));
+
             result.setInstalled(false);
         }
 
@@ -114,30 +124,82 @@ public final class UpdateService implements IUpdateService {
     }
 
     @Override
-    public void update(Module module, Version version) {
-        OnlineVersion onlineVersion = versionsLoader.getOnlineVersion(version, module);
+    public void update(Versionable object, Version version) {
+        if(isDescriptorNotReachable(object)){
+            return;
+        }
+
+        ModuleVersion onlineVersion = versionsLoader.getModuleVersion(version, object);
+
+        if (onlineVersion == null) {
+            return;
+        }
 
         if (onlineVersion.getCoreVersion().isGreaterThan(ICore.VERSION)) {
             uiUtils.displayI18nText("modules.message.versionproblem");
         } else {
-            //Download all files
-            for (UpdateAction action : onlineVersion.getActions()) {
-                action.execute();
-            }
+            applyModuleVersion(onlineVersion);
 
             uiUtils.displayI18nText("message.application.updated");
+        }
+    }
 
-            core.getLifeCycle().restart();
+    private boolean isDescriptorNotReachable(Versionable object) {
+        if(WebUtils.isURLReachable(object.getDescriptorURL())){
+            return false;
+        }
+
+        if (WebUtils.isInternetReachable()) {
+            errorService.addInternationalizedError("modules.updates.network.resource", object.getDescriptorURL());
+        } else {
+            errorService.addInternationalizedError("modules.updates.network.internet", object.getDescriptorURL());
+        }
+
+        eventService.addEvent(IEventService.CORE_EVENT_LOG,
+                new Event(EventLevel.ERROR, "System", "events.updates.network"));
+
+        return true;
+    }
+
+    private void applyModuleVersion(ModuleVersion moduleVersion) {
+        try {
+            if(StringUtils.isNotEmpty(moduleVersion.getModuleFile())){
+                WebUtils.downloadFile(moduleVersion.getModuleURL(),
+                        new File(core.getFolders().getModulesFolder(), moduleVersion.getModuleFile()).getAbsolutePath());
+            }
+            
+            downloadResources(moduleVersion.getFiles());
+            downloadResources(moduleVersion.getLibraries());
+        } catch (FileException e) {
+            LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
+        }
+    }
+
+    private void downloadResources(Iterable<FileDescriptor> resources) {
+        for (FileDescriptor descriptor : resources) {
+            if (!resourceService.isInstalled(descriptor.getName(), descriptor.getVersion())) {
+                resourceService.downloadResource(descriptor.getUrl(), descriptor.getVersion());
+            }
         }
     }
 
     @Override
     public Collection<Version> getKernelVersions() {
+        if (isDescriptorNotReachable(core)) {
+            return CollectionUtils.emptyList();
+        }
+
         return getVersions(core);
     }
 
     @Override
     public List<String> getPossibleUpdates() {
+        if(!WebUtils.isInternetReachable()){
+            errorService.addInternationalizedError("internet.necessary");
+
+            return CollectionUtils.emptyList();
+        }
+
         List<String> messages = new ArrayList<String>(2);
 
         if (!isCurrentVersionUpToDate()) {
@@ -153,16 +215,11 @@ public final class UpdateService implements IUpdateService {
 
     @Override
     public boolean isCurrentVersionUpToDate() {
-        boolean upToDate = true;
-
-        for (Version version : getKernelVersions()) {
-            if (!ICore.VERSION.isGreaterThan(version)) {
-                upToDate = false;
-                break;
-            }
+        if (isDescriptorNotReachable(core)) {
+            return true;
         }
 
-        return upToDate;
+        return isUpToDate(core);
     }
 
     /**
@@ -171,22 +228,23 @@ public final class UpdateService implements IUpdateService {
      * @return true if all modules are up to date else false.
      */
     private boolean isAModuleNotUpToDate() {
-        boolean notUpToDate = false;
-
         for (Module module : moduleService.getModules()) {
             if (!isUpToDate(module)) {
-                notUpToDate = true;
-                break;
+                return true;
             }
         }
 
-        return notUpToDate;
+        return false;
     }
 
     @Override
-    public boolean isUpToDate(Object object) {
+    public boolean isUpToDate(Versionable object) {
+        if (isDescriptorNotReachable(core)) {
+            return true;
+        }
+
         for (Version version : versionsLoader.getVersions(object)) {
-            if (!versionsLoader.getVersion(object).isGreaterThan(version)) {
+            if (version.isGreaterThan(object.getVersion())) {
                 return false;
             }
         }
@@ -196,6 +254,10 @@ public final class UpdateService implements IUpdateService {
 
     @Override
     public void updateToMostRecentVersion(Module module) {
+        if (isDescriptorNotReachable(core)) {
+            return;
+        }
+
         Version maxVersion = null;
 
         for (Version version : versionsLoader.getVersions(module)) {
@@ -208,12 +270,20 @@ public final class UpdateService implements IUpdateService {
     }
 
     @Override
-    public Version getMostRecentVersion(Object object) {
+    public Version getMostRecentVersion(Versionable object) {
+        if (isDescriptorNotReachable(core)) {
+            return null;
+        }
+
         return versionsLoader.getMostRecentVersion(object);
     }
 
     @Override
-    public Collection<Version> getVersions(Object object) {
+    public Collection<Version> getVersions(Versionable object) {
+        if (isDescriptorNotReachable(core)) {
+            return null;
+        }
+
         return versionsLoader.getVersions(object);
     }
 

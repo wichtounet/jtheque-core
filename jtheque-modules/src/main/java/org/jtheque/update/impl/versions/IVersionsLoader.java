@@ -16,6 +16,8 @@ package org.jtheque.update.impl.versions;
  * limitations under the License.
  */
 
+import org.jtheque.core.able.Versionable;
+import org.jtheque.resources.impl.ModuleVersion;
 import org.jtheque.utils.bean.Version;
 
 import java.util.Collection;
@@ -27,51 +29,41 @@ import java.util.Collection;
  */
 public interface IVersionsLoader {
     /**
-     * Return the version of the object.
-     *
-     * @param object The object to get the version from.
-     * @return The version of the object.
-     */
-    Version getVersion(Object object);
-
-    /**
      * Return all the versions of the object.
      *
      * @param object The object to get the versions from.
+     *
      * @return A List containing all the versions from.
      */
-    Collection<Version> getVersions(Object object);
+    Collection<Version> getVersions(Versionable object);
 
     /**
      * Return the online versions of the object.
      *
      * @param object The object to get the version from.
+     *
      * @return A List containing all the online versions of the object.
      */
-    Collection<OnlineVersion> getOnlineVersions(Object object);
+    Collection<ModuleVersion> getOnlineVersions(Versionable object);
 
     /**
      * Return the online version corresponding to the specified version.
      *
      * @param version The version to search for.
      * @param object  The object to search in.
+     *
      * @return The corresponding online version.
      */
-    OnlineVersion getOnlineVersion(Version version, Object object);
-
-    /**
-     * Return the install version of the version file.
-     *
-     * @param versionFileURL The VersionFile URL.
-     * @return The install version of the versions file.
-     */
-    InstallVersion getInstallVersion(String versionFileURL);
+    ModuleVersion getModuleVersion(Version version, Versionable object);
 
     /**
      * Return the most recent version of the object.
      *
      * @param object The object. It can be the Core, a module or an updatable.
+     *
      * @return The most recent version of the object.
      */
-    Version getMostRecentVersion(Object object);
+    Version getMostRecentVersion(Versionable object);
+
+    ModuleVersion getMostRecentModuleVersion(String url);
 }

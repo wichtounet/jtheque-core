@@ -72,6 +72,7 @@ public final class I18nAplicationProperties implements ApplicationProperties {
      * Return the message with the specified key in the application resource bundle.
      *
      * @param key The key of the message.
+     *
      * @return The String value of the message with the specified key.
      */
     private String getMessage(String key) {

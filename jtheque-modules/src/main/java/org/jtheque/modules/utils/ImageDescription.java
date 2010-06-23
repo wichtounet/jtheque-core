@@ -20,11 +20,11 @@ public class ImageDescription {
     private final String name;
     private final String resource;
 
-    public ImageDescription(String resource, String name) {
+    public ImageDescription(String name, String resource) {
         super();
 
-        this.resource = resource;
         this.name = name;
+        this.resource = resource;
     }
 
     public String getName() {

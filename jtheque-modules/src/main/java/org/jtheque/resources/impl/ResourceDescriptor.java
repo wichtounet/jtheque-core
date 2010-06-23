@@ -38,7 +38,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 /**
- * A resource descriptor. 
+ * A resource descriptor.
  *
  * @author Baptiste Wicht
  */
@@ -61,7 +61,7 @@ public final class ResourceDescriptor {
      *
      * @return A list containing all the versions of the file.
      */
-    public Collection<ResourceVersion> getVersions() {
+    public Iterable<ResourceVersion> getVersions() {
         return versions;
     }
 

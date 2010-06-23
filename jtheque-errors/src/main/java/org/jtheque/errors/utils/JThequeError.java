@@ -57,8 +57,7 @@ public class JThequeError implements IError {
     }
 
     /**
-     * Construct a new Error from an existing exception. The message of the error will be the message
-     * of the exception.
+     * Construct a new Error from an existing exception. The message of the error will be the message of the exception.
      *
      * @param exception The existing exception.
      */

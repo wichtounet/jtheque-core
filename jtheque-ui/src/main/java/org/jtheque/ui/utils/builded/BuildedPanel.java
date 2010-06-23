@@ -149,7 +149,7 @@ public abstract class BuildedPanel extends JPanel implements Internationalizable
      *
      * @param model The model of the view.
      */
-    protected void setModel(IModel model){
+    protected void setModel(IModel model) {
         this.model = model;
     }
 }

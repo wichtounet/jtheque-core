@@ -39,6 +39,7 @@ public interface IUndoRedoService {
      * Add an <code>UndoableEdit</code>.
      *
      * @param edit The edit to add.
+     *
      * @return true if the action has been added else false.
      */
     boolean addEdit(UndoableEdit edit);

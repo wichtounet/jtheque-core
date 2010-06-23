@@ -62,6 +62,7 @@ public enum EventLevel {
      * Return the EventLevel corresponding to the value.
      *
      * @param value The int value.
+     *
      * @return The EventLevel corresponding to the value.
      */
     public static EventLevel get(int value) {

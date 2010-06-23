@@ -37,7 +37,7 @@ public class UIUtils implements IUIUtils {
      *
      * @param viewDelegate    The view delegate.
      * @param languageService The language service.
-     * @param imageService The resource service.
+     * @param imageService    The resource service.
      */
     public UIUtils(ViewDelegate viewDelegate, ILanguageService languageService, IImageService imageService) {
         super();

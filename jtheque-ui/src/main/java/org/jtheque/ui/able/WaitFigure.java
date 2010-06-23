@@ -49,8 +49,8 @@ public interface WaitFigure {
     void paint(Graphics graphics);
 
     /**
-     * Set the bounds of the figure. This method is called when the same method is called on the glass pane. We
-     * use that to be sure that its correctly resized.
+     * Set the bounds of the figure. This method is called when the same method is called on the glass pane. We use that
+     * to be sure that its correctly resized.
      *
      * @param width  The width of the glass pane
      * @param height The height of the glass pane

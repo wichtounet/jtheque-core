@@ -50,8 +50,8 @@ public final class ViewService implements IViewService, ApplicationContextAware 
     /**
      * Construct a new ViewService.
      *
-     * @param stateService    The state service.
-     * @param core            The core.
+     * @param stateService The state service.
+     * @param core         The core.
      * @param imageService The resource service.
      */
     public ViewService(IStateService stateService, ICore core, IImageService imageService) {

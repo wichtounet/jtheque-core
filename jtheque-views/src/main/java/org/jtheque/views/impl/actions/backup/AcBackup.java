@@ -54,7 +54,7 @@ public class AcBackup extends JThequeAction {
         if (yes) {
             File file = SwingUtils.chooseFile(new SimpleFilter("XML(*.xml)", ".xml"));
 
-            if(file != null){
+            if (file != null) {
                 fileService.backup(file);
             }
         }

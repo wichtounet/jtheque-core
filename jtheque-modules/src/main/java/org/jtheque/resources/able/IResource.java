@@ -15,7 +15,7 @@ public interface IResource {
     /**
      * Return the version of the resource.
      *
-     * @return The version of the resource. 
+     * @return The version of the resource.
      */
     Version getVersion();
 

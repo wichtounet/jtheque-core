@@ -19,8 +19,7 @@ package org.jtheque.core.able.lifecycle;
 import java.util.EventListener;
 
 /**
- * This listener enable an objet to be up to date with the current function of the
- * application.
+ * This listener enable an objet to be up to date with the current function of the application.
  *
  * @author Baptiste Wicht
  */

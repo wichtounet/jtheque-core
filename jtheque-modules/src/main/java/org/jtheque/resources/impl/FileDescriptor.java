@@ -1,5 +1,7 @@
 package org.jtheque.resources.impl;
 
+import org.jtheque.utils.bean.Version;
+
 /*
  * Copyright JTheque (Baptiste Wicht)
  *
@@ -24,12 +26,14 @@ package org.jtheque.resources.impl;
 public class FileDescriptor {
     private final String name;
     private final String url;
+    private final Version version;
 
-    public FileDescriptor(String name, String url) {
+    public FileDescriptor(String name, String url, Version version) {
         super();
 
         this.name = name;
         this.url = url;
+        this.version = version;
     }
 
     public String getName() {
@@ -38,5 +42,9 @@ public class FileDescriptor {
 
     public String getUrl() {
         return url;
+    }
+
+    public Version getVersion() {
+        return version;
     }
 }

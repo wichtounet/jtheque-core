@@ -55,6 +55,7 @@ public final class ModuleConfiguration extends AbstractState {
      * Convert the node state to a ModuleInfo.
      *
      * @param node The node state to convert to ModuleInfo.
+     *
      * @return The ModuleInfo.
      */
     private static ModuleInfo convertToModuleInfo(Node node) {
@@ -97,6 +98,7 @@ public final class ModuleConfiguration extends AbstractState {
      * Convert the module info the node state.
      *
      * @param info The module info.
+     *
      * @return The node state.
      */
     private static Node convertToNodeState(ModuleInfo info) {
@@ -112,6 +114,7 @@ public final class ModuleConfiguration extends AbstractState {
      * Return the module information of a module.
      *
      * @param moduleName The name of the module.
+     *
      * @return The module information.
      */
     ModuleInfo getModuleInfo(String moduleName) {
@@ -128,6 +131,7 @@ public final class ModuleConfiguration extends AbstractState {
      * Return the state of the module.
      *
      * @param moduleName The name of the module.
+     *
      * @return The state of the module.
      */
     public ModuleState getState(String moduleName) {
@@ -158,6 +162,7 @@ public final class ModuleConfiguration extends AbstractState {
      * Indicate if the configuration contains a module or not.
      *
      * @param module The module to test.
+     *
      * @return true if the manager contains the module.
      */
     public boolean containsModule(Module module) {

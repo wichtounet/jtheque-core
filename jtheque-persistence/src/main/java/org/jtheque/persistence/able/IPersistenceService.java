@@ -17,8 +17,8 @@ package org.jtheque.persistence.able;
  */
 
 /**
- * A persistence manager. It seems the manager who's responsible for the persistence of the work entities. This
- * manager provide methods to manage entities and to open secondary connection.
+ * A persistence manager. It seems the manager who's responsible for the persistence of the work entities. This manager
+ * provide methods to manage entities and to open secondary connection.
  *
  * @author Baptiste Wicht
  */

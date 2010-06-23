@@ -24,7 +24,6 @@ package org.jtheque.modules.impl;
 public final class InstallationResult {
     private boolean installed;
     private String jarFile;
-    private String name;
 
     /**
      * Indicate if the module has been installed.
@@ -60,23 +59,5 @@ public final class InstallationResult {
      */
     public void setJarFile(String jarFile) {
         this.jarFile = jarFile;
-    }
-
-    /**
-     * Return the name of the module.
-     *
-     * @return The name of the module.
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * Set the name of the module.
-     *
-     * @param name The name of the module.
-     */
-    public void setName(String name) {
-        this.name = name;
     }
 }

@@ -39,12 +39,12 @@ public final class DisableModuleAction extends JThequeAction {
      * Construct a new DisableModuleAction.
      *
      * @param moduleService The module service.
-     * @param uiUtils The UI Utils.
-     * @param moduleView The module view. 
+     * @param uiUtils       The UI Utils.
+     * @param moduleView    The module view.
      */
     public DisableModuleAction(IModuleService moduleService, IUIUtils uiUtils, IModuleView moduleView) {
         super("modules.actions.desactivate");
-        
+
         this.moduleService = moduleService;
         this.uiUtils = uiUtils;
         this.moduleView = moduleView;
@@ -58,7 +58,7 @@ public final class DisableModuleAction extends JThequeAction {
             uiUtils.displayI18nText("error.module.not.enabled");
         } else if (module.getState() == ModuleState.STARTED) {
             uiUtils.displayI18nText("error.module.started");
-        }else {
+        } else {
             moduleService.disableModule(module);
             moduleView.refreshList();
 

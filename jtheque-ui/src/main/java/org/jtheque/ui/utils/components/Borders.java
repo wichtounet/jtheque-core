@@ -39,6 +39,7 @@ public final class Borders {
      * Create empty borders with a size of i on all side.
      *
      * @param i The size of borders.
+     *
      * @return the <code>Border</code> object
      */
     public static Border createEmptyBorder(int i) {
@@ -46,14 +47,14 @@ public final class Borders {
     }
 
     /**
-     * Creates an empty border that takes up space but which does
-     * no drawing, specifying the width of the top, left, bottom, and
-     * right sides.
+     * Creates an empty border that takes up space but which does no drawing, specifying the width of the top, left,
+     * bottom, and right sides.
      *
      * @param top    an integer specifying the width of the top, in pixels
      * @param left   an integer specifying the width of the left side, in pixels
      * @param bottom an integer specifying the width of the bottom, in pixels
      * @param right  an integer specifying the width of the right side, in pixels
+     *
      * @return the <code>Border</code> object
      */
     public static Border createEmptyBorder(int top, int left, int bottom, int right) {

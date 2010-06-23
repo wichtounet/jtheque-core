@@ -31,6 +31,7 @@ public final class SchemaConfiguration extends AbstractState {
      * Return the version of the schema.
      *
      * @param name The name of the schema.
+     *
      * @return The version of the schema.
      */
     public Version getVersion(String name) {

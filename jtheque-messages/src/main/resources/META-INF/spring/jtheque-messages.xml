@@ -15,6 +15,12 @@
         <constructor-arg>
             <osgi:reference interface="org.jtheque.modules.able.IModuleService"/>
         </constructor-arg>
+        <constructor-arg>
+            <osgi:reference interface="org.jtheque.errors.able.IErrorService"/>
+        </constructor-arg>
+        <constructor-arg>
+            <osgi:reference interface="org.jtheque.events.able.IEventService"/>
+        </constructor-arg>
     </bean>
 
     <osgi:service ref="messageService" interface="org.jtheque.messages.able.IMessageService"/>

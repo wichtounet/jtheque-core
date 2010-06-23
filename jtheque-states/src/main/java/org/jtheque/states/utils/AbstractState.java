@@ -32,8 +32,8 @@ public abstract class AbstractState {
     private final Map<String, String> properties = new HashMap<String, String>(10);
 
     /**
-     * Set the properties of this state. This method is made to be called from the state service. It will
-     * be called only once, at startup.
+     * Set the properties of this state. This method is made to be called from the state service. It will be called only
+     * once, at startup.
      *
      * @param properties The properties of this state.
      */
@@ -43,8 +43,8 @@ public abstract class AbstractState {
     }
 
     /**
-     * Return all the properties of the state. This method is made to be called from the state service. It will
-     * be called only once, at application shutdown.
+     * Return all the properties of the state. This method is made to be called from the state service. It will be
+     * called only once, at application shutdown.
      *
      * @return The properties of the state.
      */
@@ -57,6 +57,7 @@ public abstract class AbstractState {
      * Return the value of a property.
      *
      * @param key The key of the property.
+     *
      * @return The value of the property with the given key or null if the property doesn't exist.
      */
     protected final String getProperty(String key) {
@@ -68,6 +69,7 @@ public abstract class AbstractState {
      *
      * @param key      The key of the property.
      * @param defaults The default value to use if the property doesn't exist.
+     *
      * @return The value of the property with the given key or the given default value if the property doesn't exist.
      */
     protected final String getProperty(String key, String defaults) {

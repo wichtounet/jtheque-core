@@ -40,10 +40,9 @@ import java.util.Collection;
  * @author Baptiste Wicht
  */
 public final class Core implements ICore {
-    private static final String CORE_MESSAGES_FILE = "http://jtheque.developpez.com/public/messages/core.message";
+    private static final String CORE_MESSAGES_FILE = "http://jtheque.baptiste-wicht.com/files/messages/jtheque-core.xml";
 
     private final Collection<String> creditsMessage;
-
     private final IFoldersContainer foldersContainer;
     private final IFilesContainer filesContainer;
     private final ICoreConfiguration configuration;
@@ -55,9 +54,9 @@ public final class Core implements ICore {
     /**
      * Construct a new Core.
      *
-     * @param stateService    The state service.
+     * @param stateService The state service.
      * @param imageService The resource service.
-     * @param eventService    The event service.
+     * @param eventService The event service.
      */
     public Core(IStateService stateService, IImageService imageService, IEventService eventService) {
         super();
@@ -144,5 +143,15 @@ public final class Core implements ICore {
         }
 
         return languagesLong;
+    }
+
+    @Override
+    public Version getVersion() {
+        return VERSION;
+    }
+
+    @Override
+    public String getDescriptorURL() {
+        return DESCRIPTOR_FILE_URL;
     }
 }

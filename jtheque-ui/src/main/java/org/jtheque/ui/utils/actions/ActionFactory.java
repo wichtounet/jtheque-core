@@ -36,6 +36,7 @@ public final class ActionFactory {
      *
      * @param key  The i18n key.
      * @param view The view to close.
+     *
      * @return An action to close the view.
      */
     public static JThequeAction createCloseViewAction(String key, IView view) {
@@ -47,6 +48,7 @@ public final class ActionFactory {
      *
      * @param key  The i18n key.
      * @param view The view to close.
+     *
      * @return An action to close the view.
      */
     public static JThequeAction createDisplayViewAction(String key, IView view) {

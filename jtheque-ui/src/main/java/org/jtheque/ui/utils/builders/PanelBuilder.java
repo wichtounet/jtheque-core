@@ -55,6 +55,7 @@ public interface PanelBuilder {
      * @param component   The component to add.
      * @param constraints The constraints to use to add to the panel.
      * @param <T>         The type of component.
+     *
      * @return The added component.
      */
     <T extends Component> T add(T component, Object constraints);
@@ -64,6 +65,7 @@ public interface PanelBuilder {
      *
      * @param view        The view.
      * @param constraints The constraints to use to add to the panel.
+     *
      * @return The component added inside the JScrollPane.
      */
     <T extends Component> T addScrolled(T view, Object constraints);
@@ -73,6 +75,7 @@ public interface PanelBuilder {
      *
      * @param model       The combo box model.
      * @param constraints The constraints to use to add to the panel.
+     *
      * @return The added JComboBox.
      */
     JComboBox addComboBox(ComboBoxModel model, Object constraints);
@@ -83,6 +86,7 @@ public interface PanelBuilder {
      * @param model       The combo box model.
      * @param renderer    The renderer to use.
      * @param constraints The constraints to use to add to the panel.
+     *
      * @return The added JComboBox.
      */
     JComboBox addComboBox(ComboBoxModel model, ListCellRenderer renderer, Object constraints);
@@ -92,6 +96,7 @@ public interface PanelBuilder {
      *
      * @param model       The model to use.
      * @param constraints The constraints to use to add to the panel.
+     *
      * @return The added JList.
      */
     JList addList(ListModel model, Object constraints);
@@ -102,6 +107,7 @@ public interface PanelBuilder {
      * @param model       The model to use.
      * @param renderer    The list renderer.
      * @param constraints The constraints to use to add to the panel.
+     *
      * @return The added JList.
      */
     JList addList(ListModel model, ListCellRenderer renderer, Object constraints);
@@ -111,6 +117,7 @@ public interface PanelBuilder {
      *
      * @param model       The model to use.
      * @param constraints The constraints to use to add to the panel.
+     *
      * @return The added JList.
      */
     JList addScrolledList(ListModel model, Object constraints);
@@ -121,6 +128,7 @@ public interface PanelBuilder {
      * @param model       The model to use.
      * @param renderer    The list renderer.
      * @param constraints The constraints to use to add to the panel.
+     *
      * @return The added JList.
      */
     JList addScrolledList(ListModel model, ListCellRenderer renderer, Object constraints);
@@ -130,6 +138,7 @@ public interface PanelBuilder {
      *
      * @param action      The action to use with the button.
      * @param constraints The constraints to use to add to the panel.
+     *
      * @return The added button.
      */
     JButton addButton(Action action, Object constraints);
@@ -139,6 +148,7 @@ public interface PanelBuilder {
      *
      * @param text        The action to set on the button.
      * @param constraints The constraints to use to add to the panel.
+     *
      * @return The added button.
      */
     JButton addButton(String text, Object constraints);
@@ -147,6 +157,7 @@ public interface PanelBuilder {
      * Add a label to the panel.
      *
      * @param constraints The constraints to use to add to the panel.
+     *
      * @return The added label.
      */
     JLabel addLabel(Object constraints);
@@ -156,6 +167,7 @@ public interface PanelBuilder {
      *
      * @param text        The text of the label.
      * @param constraints The constraints to use to add to the panel.
+     *
      * @return The added label.
      */
     JLabel addLabel(String text, Object constraints);
@@ -166,6 +178,7 @@ public interface PanelBuilder {
      * @param text        The text of the label.
      * @param foreground  The foreground color.
      * @param constraints The constraints to use to add to the panel.
+     *
      * @return The added label.
      */
     JLabel addLabel(String text, Color foreground, Object constraints);
@@ -176,6 +189,7 @@ public interface PanelBuilder {
      * @param text        The text.
      * @param constraints The constraints to use to add to the panel.
      * @param style       The font style.
+     *
      * @return The added label.
      */
     JLabel addLabel(String text, int style, Object constraints);
@@ -187,6 +201,7 @@ public interface PanelBuilder {
      * @param constraints The constraints to use to add to the panel.
      * @param style       The font style.
      * @param size        The font size.
+     *
      * @return The added label.
      */
     JLabel addLabel(String text, int style, float size, Object constraints);
@@ -196,6 +211,7 @@ public interface PanelBuilder {
      *
      * @param text        The text of the check box.
      * @param constraints The constraints to add to the panel.
+     *
      * @return The added checkbox.
      */
     JCheckBox addCheckbox(String text, Object constraints);
@@ -205,6 +221,7 @@ public interface PanelBuilder {
      *
      * @param model       The table model.
      * @param constraints The constraints.
+     *
      * @return The added table.
      */
     JTable addTable(TableModel model, Object constraints);
@@ -214,6 +231,7 @@ public interface PanelBuilder {
      *
      * @param model       The table model.
      * @param constraints The constraints.
+     *
      * @return The added table.
      */
     JTable addScrolledTable(TableModel model, Object constraints);
@@ -222,6 +240,7 @@ public interface PanelBuilder {
      * Add a text area.
      *
      * @param constraints The constraints to use to add to the panel.
+     *
      * @return The added text area.
      */
     JTextArea addTextArea(Object constraints);
@@ -231,6 +250,7 @@ public interface PanelBuilder {
      *
      * @param text        The text of the text area.
      * @param constraints The constraints to use to add to the panel.
+     *
      * @return The added text area.
      */
     JTextArea addTextArea(String text, Object constraints);
@@ -239,6 +259,7 @@ public interface PanelBuilder {
      * Add a scrolled text area.
      *
      * @param constraints The constraints to use to add to the panel.
+     *
      * @return The added text area.
      */
     JTextArea addScrolledTextArea(Object constraints);
@@ -248,6 +269,7 @@ public interface PanelBuilder {
      *
      * @param text        The text of the text area.
      * @param constraints The constraints to use to add to the panel.
+     *
      * @return The added text area.
      */
     JTextArea addScrolledTextArea(String text, Object constraints);
@@ -258,6 +280,7 @@ public interface PanelBuilder {
      * @param model       The tree model.
      * @param renderer    The tree renderer.
      * @param constraints The constraints to add the tree with.
+     *
      * @return The added tree.
      */
     JTree addScrolledTree(TreeModel model, TreeCellRenderer renderer, Object constraints);
@@ -274,6 +297,7 @@ public interface PanelBuilder {
      * Add a panel to the panel.
      *
      * @param constraints The constraints to use to add to the panel.
+     *
      * @return The builder of the intern panel builder.
      */
     PanelBuilder addPanel(Object constraints);
@@ -283,6 +307,7 @@ public interface PanelBuilder {
      *
      * @param layout      The layout to use.
      * @param constraints The constraints to use to add to the panel.
+     *
      * @return The builder of the intern panel builder.
      */
     PanelBuilder addPanel(LayoutManager layout, Object constraints);
@@ -324,6 +349,7 @@ public interface PanelBuilder {
      * @param anchor  The anchor constraint.
      * @param weightx The weight in x axis.
      * @param weighty The weight in y axis.
+     *
      * @return The layout constraints.
      */
     Object gbcSet(int x, int y, int fill, int anchor, double weightx, double weighty);
@@ -339,6 +365,7 @@ public interface PanelBuilder {
      * @param height  The row span.
      * @param weightx The weight in x axis.
      * @param weighty The weight in y axis.
+     *
      * @return The layout constraints.
      */
     Object gbcSet(int x, int y, int fill, int anchor, int width, int height, double weightx, double weighty);
@@ -356,6 +383,7 @@ public interface PanelBuilder {
      * @param weighty The row fill weight.
      * @param ipadx   The x internal padding width.
      * @param ipady   The y internal padding height.
+     *
      * @return The <code>GridBagConstraints</code> object.
      */
     Object gbcSet(int x, int y, int fill, int anchor, int width, int height, double weightx, double weighty, int ipadx, int ipady);
@@ -369,6 +397,7 @@ public interface PanelBuilder {
      * @param anchor The anchor constraint.
      * @param width  The col span.
      * @param height The row span.
+     *
      * @return The layout constraints.
      */
     Object gbcSet(int x, int y, int fill, int anchor, int width, int height);
@@ -381,6 +410,7 @@ public interface PanelBuilder {
      * @param fill   The fill constraint.
      * @param width  The col span.
      * @param height The row span.
+     *
      * @return The layout constraints.
      */
     Object gbcSet(int x, int y, int fill, int width, int height);
@@ -392,6 +422,7 @@ public interface PanelBuilder {
      * @param y      The y position on the grid.
      * @param fill   The fill constraint.
      * @param anchor The anchor constraint.
+     *
      * @return The layout constraints.
      */
     Object gbcSet(int x, int y, int fill, int anchor);
@@ -402,6 +433,7 @@ public interface PanelBuilder {
      * @param x    The x position on the grid.
      * @param y    The y position on the grid.
      * @param fill The fill constraint.
+     *
      * @return The layout constraints.
      */
     Object gbcSet(int x, int y, int fill);
@@ -411,6 +443,7 @@ public interface PanelBuilder {
      *
      * @param x The x position on the grid.
      * @param y The y position on the grid.
+     *
      * @return The layout constraints.
      */
     Object gbcSet(int x, int y);

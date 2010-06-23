@@ -50,6 +50,7 @@ public final class LanguageState extends AbstractState {
      * Return the version of the resource.
      *
      * @param resource The resource to get the version for.
+     *
      * @return The installed version of the  resource or null if the resource is not installed.
      */
     public Version getResourceVersion(String resource) {

@@ -136,6 +136,7 @@ public interface Application {
      * Return the application property.
      *
      * @param key The key of the property.
+     *
      * @return The value of the property or empty string if there is no property with this key.
      */
     String getProperty(String key);

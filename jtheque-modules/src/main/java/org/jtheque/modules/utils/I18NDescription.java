@@ -3,6 +3,7 @@ package org.jtheque.modules.utils;
 import org.jtheque.utils.bean.Version;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /*
@@ -43,7 +44,7 @@ public class I18NDescription {
         return version;
     }
 
-    public List<String> getResources() {
+    public Collection<String> getResources() {
         return resources;
     }
 }

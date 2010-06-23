@@ -23,8 +23,8 @@ import org.osgi.framework.BundleContext;
 import org.springframework.osgi.context.BundleContextAware;
 
 /**
- * A default schema implementation. This schema implements the basic methods of the Schema interface and get
- * parameters in constructor.
+ * A default schema implementation. This schema implements the basic methods of the Schema interface and get parameters
+ * in constructor.
  *
  * @author Baptiste Wicht
  */

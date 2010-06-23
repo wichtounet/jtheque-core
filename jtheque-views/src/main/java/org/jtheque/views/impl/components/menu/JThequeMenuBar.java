@@ -43,18 +43,16 @@ import java.util.List;
  * @author Baptiste Wicht
  */
 public final class JThequeMenuBar extends JMenuBar implements FeatureListener, InternationalizableContainer {
+    private final Collection<Internationalizable> internationalizables = new ArrayList<Internationalizable>(25);
     private final Comparator<IFeature> featureComparator = new ByPositionComparator();
-
     private final IImageService imageService;
     private final ILanguageService languageService;
     private final IFeatureService featureService;
 
-    private final Collection<Internationalizable> internationalizables = new ArrayList<Internationalizable>(25);
-
     /**
      * Construct a JThequeMenuBar.
      *
-     * @param imageService The resource service.
+     * @param imageService    The resource service.
      * @param languageService The language service.
      * @param featureService  The feature service.
      */
@@ -243,6 +241,7 @@ public final class JThequeMenuBar extends JMenuBar implements FeatureListener, I
      *
      * @param feature The feature to test.
      * @param menu    The menu to test.
+     *
      * @return true if the menu is corresponding to the feature else false.
      */
     private boolean isCorrespondingMenu(IFeature feature, AbstractButton menu) {
@@ -304,6 +303,7 @@ public final class JThequeMenuBar extends JMenuBar implements FeatureListener, I
      * Return the title of the given sub feature.
      *
      * @param subFeature The sub feature to get the title from.
+     *
      * @return The title of the given sub feature.
      */
     private String getSubtitle(IFeature subFeature) {

@@ -33,6 +33,7 @@ public interface IDaoPersistenceContext {
      * @param <T>    The entity class type.
      * @param table  The entity table.
      * @param mapper The row mapper.
+     *
      * @return A List sorted by entity displayable text containing all the entity of the class.
      */
     <T extends Entity> Collection<T> getSortedList(String table, RowMapper<T> mapper);
@@ -44,6 +45,7 @@ public interface IDaoPersistenceContext {
      * @param id     The searched id.
      * @param table  The entity table.
      * @param mapper The row mapper.
+     *
      * @return The entity.
      */
     <T extends Entity> T getDataByID(String table, int id, RowMapper<T> mapper);
@@ -53,6 +55,7 @@ public interface IDaoPersistenceContext {
      *
      * @param id    The searched id.
      * @param table The entity table.
+     *
      * @return true if the object is deleted else false.
      */
     boolean delete(String table, int id);
@@ -62,6 +65,7 @@ public interface IDaoPersistenceContext {
      *
      * @param d     The entity to delete.
      * @param table The entity table.
+     *
      * @return true if the object is deleted else false.
      */
     boolean delete(String table, Entity d);
@@ -71,7 +75,9 @@ public interface IDaoPersistenceContext {
      *
      * @param entity The entity to save or org.jtheque.update.
      * @param mapper The query mapper.
+     *
      * @return true if the object is saved else false.
+     *
      * @throws IllegalArgumentException if entity is null.
      */
     boolean saveOrUpdate(Entity entity, QueryMapper mapper);

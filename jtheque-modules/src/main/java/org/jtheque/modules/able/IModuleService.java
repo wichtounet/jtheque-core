@@ -36,8 +36,8 @@ public interface IModuleService {
     /**
      * Add a module listener.
      *
-     * @param moduleId The id of the module who want to add a listener. If this id is given, the listener will
-     *                 be automatically removed after it stopped.
+     * @param moduleId The id of the module who want to add a listener. If this id is given, the listener will be
+     *                 automatically removed after it stopped.
      * @param listener The listener to add.
      */
     void addModuleListener(String moduleId, ModuleListener listener);
@@ -60,6 +60,7 @@ public interface IModuleService {
      * Test if the module is installed.
      *
      * @param module The module name.
+     *
      * @return true if the module is installed.
      */
     boolean isInstalled(String module);
@@ -68,6 +69,7 @@ public interface IModuleService {
      * Return the module with the name.
      *
      * @param name The name of the module.
+     *
      * @return The module.
      */
     Module getModuleById(String name);
@@ -107,6 +109,7 @@ public interface IModuleService {
      * Install the module of the file.
      *
      * @param file The file of the module.
+     *
      * @return true if the module has been installed else false.
      */
     boolean installModule(File file);
@@ -122,6 +125,7 @@ public interface IModuleService {
      * Test if a module can ben launched.
      *
      * @param module The module to be launched.
+     *
      * @return The error message. If the error is empty, the module can be launched.
      */
     String canModuleLaunched(Module module);
@@ -155,4 +159,6 @@ public interface IModuleService {
      * Load the modules.
      */
     void load();
+
+    void registerSwingLoader(String code, SwingLoader moviesModule);
 }

@@ -20,9 +20,9 @@ import org.jtheque.file.able.IFileService.XmlBackupVersion;
 import org.jtheque.file.able.ModuleBackup;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.io.FileUtils;
+import org.jtheque.xml.utils.IXMLReader;
+import org.jtheque.xml.utils.XML;
 import org.jtheque.xml.utils.XMLException;
-import org.jtheque.xml.utils.javax.NodeLoader;
-import org.jtheque.xml.utils.javax.XMLReader;
 
 import org.w3c.dom.Node;
 
@@ -47,13 +47,15 @@ public final class XMLRestorer {
      * Import all the data from the file.
      *
      * @param file The file.
+     *
      * @return All the module backups.
+     *
      * @throws XMLException When an error occurs during the restore process.
      */
     public static List<ModuleBackup> restore(File file) throws XMLException {
         List<ModuleBackup> backups = new ArrayList<ModuleBackup>(10);
 
-        XMLReader reader = new XMLReader();
+        IXMLReader<Node> reader = XML.newJavaFactory().newReader();
 
         try {
             reader.openFile(file);
@@ -70,7 +72,7 @@ public final class XMLRestorer {
                 backup.setId(reader.readString("id", backupElement));
                 backup.setVersion(new Version(reader.readString("version", backupElement)));
 
-                backup.setNodes(NodeLoader.resolveNodeStates(reader.getNodes("nodes/*", backupElement)));
+                backup.setNodes(XML.newJavaFactory().newNodeLoader().resolveNodeStates(reader.getNodes("nodes/*", backupElement)));
             }
         } finally {
             FileUtils.close(reader);
