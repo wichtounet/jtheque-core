@@ -17,6 +17,10 @@ package org.jtheque.messages.impl;
  */
 
 import org.jtheque.core.able.ICore;
+import org.jtheque.errors.able.IErrorService;
+import org.jtheque.events.able.EventLevel;
+import org.jtheque.events.able.IEventService;
+import org.jtheque.events.utils.Event;
 import org.jtheque.messages.able.IMessage;
 import org.jtheque.messages.able.IMessageService;
 import org.jtheque.modules.able.IModuleService;
@@ -25,6 +29,7 @@ import org.jtheque.modules.able.ModuleListener;
 import org.jtheque.modules.utils.ModuleResourceCache;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.bean.IntDate;
+import org.jtheque.utils.io.WebUtils;
 import org.jtheque.xml.utils.XMLException;
 
 import org.slf4j.LoggerFactory;
@@ -39,6 +44,8 @@ public final class MessageService implements IMessageService, ModuleListener {
     private final Collection<IMessage> messages = new ArrayList<IMessage>(10);
 
     private final ICore core;
+    private final IErrorService errorService;
+    private final IEventService eventService;
 
     /**
      * Construct a new MessageService.
@@ -46,10 +53,12 @@ public final class MessageService implements IMessageService, ModuleListener {
      * @param core          The core.
      * @param moduleService The module service.
      */
-    public MessageService(ICore core, IModuleService moduleService) {
+    public MessageService(ICore core, IModuleService moduleService, IErrorService errorService, IEventService eventService) {
         super();
 
         this.core = core;
+        this.errorService = errorService;
+        this.eventService = eventService;
 
         moduleService.addModuleListener("", this);
     }
@@ -130,16 +139,27 @@ public final class MessageService implements IMessageService, ModuleListener {
      * @param module The module to load the message file from.
      */
     private void loadMessageFile(String url, Module module) {
-        try {
-            MessageFile file = MessageFileReader.readMessagesFile(url);
+        if (WebUtils.isURLReachable(core.getCoreMessageFileURL())) {
+            try {
+                MessageFile file = MessageFileReader.readMessagesFile(url);
 
-            for (IMessage message : file.getMessages()) {
-                messages.add(message);
+                for (IMessage message : file.getMessages()) {
+                    messages.add(message);
 
-                ModuleResourceCache.addResource(module.getId(), IMessage.class, message);
+                    ModuleResourceCache.addResource(module.getId(), IMessage.class, message);
+                }
+            } catch (XMLException e) {
+                LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
             }
-        } catch (XMLException e) {
-            LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
+        } else {
+            if (WebUtils.isInternetReachable()) {
+                errorService.addInternationalizedError("messages.network.resource", url);
+            } else {
+                errorService.addInternationalizedError("messages.network.internet", url);
+            }
+
+            eventService.addEvent(IEventService.CORE_EVENT_LOG,
+                    new Event(EventLevel.ERROR, "System", "events.messages.network"));
         }
     }
 }

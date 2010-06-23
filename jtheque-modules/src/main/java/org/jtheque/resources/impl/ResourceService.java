@@ -1,12 +1,17 @@
 package org.jtheque.resources.impl;
 
 import org.jtheque.core.utils.SystemProperty;
+import org.jtheque.errors.able.IErrorService;
+import org.jtheque.events.able.EventLevel;
+import org.jtheque.events.able.IEventService;
+import org.jtheque.events.utils.Event;
 import org.jtheque.resources.able.IResource;
 import org.jtheque.resources.able.IResourceService;
 import org.jtheque.states.able.IStateService;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.io.FileException;
-import org.jtheque.utils.io.FileUtils;
+import org.jtheque.utils.io.WebUtils;
+import org.jtheque.utils.ui.SwingUtils;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -42,9 +47,14 @@ public class ResourceService implements IResourceService, BundleContextAware {
     private final ResourceState resourceState;
 
     private BundleContext bundleContext;
+    private final IErrorService errorService;
+    private final IEventService eventService;
 
-    public ResourceService(IStateService stateService) {
+    public ResourceService(IStateService stateService, IErrorService errorService, IEventService eventService) {
         super();
+
+        this.errorService = errorService;
+        this.eventService = eventService;
 
         resourceState = stateService.getState(new ResourceState());
 
@@ -98,6 +108,21 @@ public class ResourceService implements IResourceService, BundleContextAware {
 
     @Override
     public IResource downloadResource(String url, Version version) {
+        SwingUtils.assertNotEDT("downloadResource(String, Version)");
+
+        if(!WebUtils.isURLReachable(url)){
+            if(WebUtils.isInternetReachable()){
+                errorService.addInternationalizedError("modules.resources.network.resource", url);
+            } else {
+                errorService.addInternationalizedError("modules.resources.network.internet", url);
+            }
+
+            eventService.addEvent(IEventService.CORE_EVENT_LOG,
+                    new Event(EventLevel.ERROR, "System", "events.resources.network"));
+
+            return null;
+        }
+
         if (!descriptorCache.containsKey(url)) {
             descriptorCache.put(url, DescriptorReader.readResourceDescriptor(url));
         }
@@ -153,7 +178,7 @@ public class ResourceService implements IResourceService, BundleContextAware {
         File filePath = new File(resourceFolder, fileDescriptor.getName());
 
         try {
-            FileUtils.downloadFile(fileDescriptor.getUrl(), filePath.getAbsolutePath());
+            WebUtils.downloadFile(fileDescriptor.getUrl(), filePath.getAbsolutePath());
         } catch (FileException e) {
             LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
         }
@@ -161,6 +186,8 @@ public class ResourceService implements IResourceService, BundleContextAware {
 
     @Override
     public void installResource(IResource resource) {
+        SwingUtils.assertNotEDT("installResource(IResource)");
+
         for (Library library : resource.getLibraries()) {
             File folder = getResourceFolder(resource);
 

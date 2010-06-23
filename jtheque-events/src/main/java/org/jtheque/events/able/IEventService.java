@@ -25,6 +25,8 @@ import java.util.Set;
  * @author Baptiste Wicht
  */
 public interface IEventService {
+    String CORE_EVENT_LOG = "JTheque Core";
+
     /**
      * Return all the logs.
      *

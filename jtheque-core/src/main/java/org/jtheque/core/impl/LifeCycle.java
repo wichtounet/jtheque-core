@@ -129,7 +129,7 @@ public class LifeCycle implements ILifeCycle {
      * Start the exit process but not stop the application.
      */
     private void releaseAll() {
-        eventService.addEvent("JTheque Core", new Event(EventLevel.INFO, "User", "events.close"));
+        eventService.addEvent(IEventService.CORE_EVENT_LOG, new Event(EventLevel.INFO, "User", "events.close"));
     }
 
     /**

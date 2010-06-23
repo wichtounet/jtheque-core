@@ -72,7 +72,7 @@ public class LifeCycleActivator implements BundleActivator, CollectionListener {
 
         getService(IViews.class).init();
 
-        getService(IEventService.class).addEvent("JTheque Core", new Event(EventLevel.INFO, "User", "events.start"));
+        getService(IEventService.class).addEvent(IEventService.CORE_EVENT_LOG, new Event(EventLevel.INFO, "User", "events.start"));
 
         getService(IModuleService.class).load();
 

@@ -107,7 +107,7 @@ public interface IUpdateService {
      *
      * @param object The object. It can be the Core, a module or an updatable.
      *
-     * @return The most recent version of the object.
+     * @return The most recent version of the object or null if the resource is not reachable over the internet
      */
     Version getMostRecentVersion(Versionable object);
 
