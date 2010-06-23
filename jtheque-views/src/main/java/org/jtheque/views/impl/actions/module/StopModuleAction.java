@@ -104,6 +104,7 @@ public final class StopModuleAction extends JThequeAction {
             SwingUtils.execute(new SimpleTask() {
                 @Override
                 public void run() {
+                    uiUtils.displayI18nText("message.module.stopped");
                     moduleView.refreshList();
                     moduleView.stopWait();
                 }
