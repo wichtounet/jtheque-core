@@ -21,6 +21,8 @@ import org.jtheque.ui.able.IModel;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.ui.utils.builders.JThequePanelBuilder;
 
+import javax.swing.JComponent;
+
 import java.awt.Container;
 
 /**
@@ -47,7 +49,7 @@ public abstract class SwingBuildedDialogView<T extends IModel> extends SwingDial
      *
      * @return The builded content pane.
      */
-    private Container buildContentPane() {
+    private JComponent buildContentPane() {
         I18nPanelBuilder builder = createBuilder();
 
         builder.setInternationalizableContainer(this);

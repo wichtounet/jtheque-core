@@ -1,5 +1,6 @@
 package org.jtheque.views.impl.components.panel;
 
+import org.jtheque.errors.able.IErrorService;
 import org.jtheque.i18n.able.ILanguageService;
 import org.jtheque.modules.able.IModuleService;
 import org.jtheque.modules.able.Module;
@@ -11,6 +12,7 @@ import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.update.able.IUpdateService;
 import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.utils.ui.SwingUtils;
+import org.jtheque.views.able.IViews;
 import org.jtheque.views.able.components.IModulesPanelView;
 import org.jtheque.views.able.panel.IModuleView;
 import org.jtheque.views.able.panel.IRepositoryView;
@@ -55,12 +57,15 @@ public final class ModulesPanel extends OSGIFilthyBuildedPanel implements IModul
         IUpdateService updateService = getService(IUpdateService.class);
         ILanguageService languageService = getService(ILanguageService.class);
         IModuleService moduleService = getService(IModuleService.class);
+        IErrorService errorService = getService(IErrorService.class);
+        IViews views = getService(IViews.class);
         IUIUtils uiUtils = getService(IUIUtils.class);
 
         IRepositoryView repositoryView = getBeanFromEDT(IRepositoryView.class);
         IModuleView moduleView = getBean(IModuleView.class);
 
-        builder.add(new KernelInfoPanel(languageService, getService(IFilthyUtils.class), updateService),
+        builder.add(new KernelInfoPanel(languageService, getService(IFilthyUtils.class), updateService,
+                errorService, uiUtils, views),
                 builder.gbcSet(0, 0, GridBagUtils.HORIZONTAL, GridBagUtils.BASELINE_LEADING, 1.0, 0.0));
 
         modulesList = builder.addScrolledList(new ModuleListModel(moduleService), new ModuleListRenderer(updateService, languageService),
@@ -72,7 +77,7 @@ public final class ModulesPanel extends OSGIFilthyBuildedPanel implements IModul
                 new EnableModuleAction(moduleService, uiUtils, moduleView),
                 new DisableModuleAction(moduleService, uiUtils, moduleView),
                 new UninstallModuleAction(moduleService, uiUtils, moduleView),
-                new UpdateModuleAction());
+                new UpdateModuleAction(updateService, errorService, uiUtils, views));
 
         builder.addButtonBar(builder.gbcSet(0, 3, GridBagUtils.HORIZONTAL, GridBagUtils.BASELINE_LEADING, 1.0, 0.0),
                 new InstallModuleAction(moduleService, uiUtils),

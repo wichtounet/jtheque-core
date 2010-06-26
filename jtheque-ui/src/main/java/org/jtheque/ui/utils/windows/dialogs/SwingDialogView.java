@@ -28,14 +28,14 @@ import org.jtheque.images.able.IImageService;
 import org.jtheque.spring.utils.SwingSpringProxy;
 import org.jtheque.ui.able.IModel;
 import org.jtheque.ui.able.IWindowView;
-import org.jtheque.ui.able.WaitFigure;
 import org.jtheque.ui.utils.actions.ActionFactory;
 import org.jtheque.ui.utils.constraints.Constraint;
-import org.jtheque.ui.utils.windows.ExtendedGlassPane;
-import org.jtheque.ui.utils.windows.InfiniteWaitFigure;
+import org.jtheque.ui.utils.windows.BusyPainterUI;
 import org.jtheque.utils.collections.ArrayUtils;
 import org.jtheque.utils.ui.SwingUtils;
 
+import org.jdesktop.jxlayer.JXLayer;
+import org.jdesktop.jxlayer.plaf.ext.LockableUI;
 import org.osgi.framework.BundleContext;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -43,10 +43,13 @@ import org.springframework.osgi.context.BundleContextAware;
 
 import javax.annotation.PostConstruct;
 import javax.swing.Action;
+import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 import java.awt.Component;
+import java.awt.Container;
 import java.awt.Frame;
 import java.awt.Image;
 import java.util.ArrayList;
@@ -66,17 +69,18 @@ public abstract class SwingDialogView<T extends IModel> extends JDialog
 
     private T model;
 
-    private boolean glassPaneInstalled;
-    private boolean waitFigureInstalled;
+    private boolean builded;
 
     private final Collection<Internationalizable> internationalizables = new ArrayList<Internationalizable>(10);
+    private final Map<Object, Constraint> constraintCache = new HashMap<Object, Constraint>(5);
 
     private BundleContext bundleContext;
-
-    private boolean builded;
     private ApplicationContext applicationContext;
 
-    private final Map<Object, Constraint> constraintCache = new HashMap<Object, Constraint>(5);
+    private JXLayer<JComponent> content;
+    //private InfiniteWaitUI waitUI;
+
+    private LockableUI busyPainterUI;
 
     /**
      * Construct a SwingDialogView modal to the main view.
@@ -98,9 +102,42 @@ public abstract class SwingDialogView<T extends IModel> extends JDialog
 
         getService(ILanguageService.class).addInternationalizable(this);
 
+        content = new JXLayer<JComponent>();
+        super.setContentPane(content);
+
         init();
 
         builded = true;
+    }
+
+    public void setContentPane(JComponent contentPane) {
+        content.setView(contentPane);
+    }
+
+    @Override
+    public void setContentPane(Container contentPane) {
+        throw new UnsupportedOperationException("Cannot set the content pane");
+    }
+
+    @Override
+    public void setGlassPane(final Component glassPane) {
+        SwingUtils.inEdt(new Runnable() {
+            @Override
+            public void run() {
+                if (glassPane == null) {
+                    content.setGlassPane(content.createGlassPane());
+                } else {
+                    content.setGlassPane((JPanel) glassPane);
+
+                    glassPane.setVisible(true);
+                    glassPane.repaint();
+
+                    SwingUtils.refresh(glassPane);
+                }
+
+                refresh();
+            }
+        });
     }
 
     /**
@@ -108,54 +145,33 @@ public abstract class SwingDialogView<T extends IModel> extends JDialog
      */
     protected abstract void init();
 
-    /**
-     * Install the default glass pane. If you need to install another glass pane, simply override this method.
-     */
-    void installGlassPane() {
-        Component glassPane = new ExtendedGlassPane(this);
-        setGlassPane(glassPane);
-        glassPane.setVisible(false);
-    }
-
-    /**
-     * Install the default wait figure. If you need to use another wait figure, simply override this method.
-     */
-    void installWaitFigure() {
-        setWaitFigure(new InfiniteWaitFigure());
-    }
-
-    /**
-     * Return The extendedGlassPane of this frame.
-     *
-     * @return The glass pane
-     */
-    final ExtendedGlassPane getExtendedGlassPane() {
-        return (ExtendedGlassPane) getGlassPane();
+    @Override
+    public Component getGlassPane() {
+        return content.getGlassPane();
     }
 
     @Override
-    public Component getGlassPane() {
-        installGlassPaneIfNecessary();
+    public void startWait() {
+        installWaitUIIfNecessary();
+        content.setUI(busyPainterUI);
+        busyPainterUI.setLocked(true);
+    }
 
-        return super.getGlassPane();
+    @Override
+    public void stopWait() {
+        if (busyPainterUI != null) {
+            busyPainterUI.setLocked(false);
+            content.setUI(null);
+        }
     }
 
     /**
-     * Start the wait. The glass pane will start the wait animation.
+     * Create the wait UI only if this has not been done before.
      */
-    public final void startWait() {
-        installWaitFigureIfNecessary();
-
-        getExtendedGlassPane().startWait();
-    }
-
-    /**
-     * Stop the wait. The glass pane will stop the wait animation.
-     */
-    public final void stopWait() {
-        installWaitFigureIfNecessary();
-
-        getExtendedGlassPane().stopWait();
+    private void installWaitUIIfNecessary() {
+        if (busyPainterUI == null) {
+            busyPainterUI = new BusyPainterUI(this);
+        }
     }
 
     /**
@@ -165,15 +181,6 @@ public abstract class SwingDialogView<T extends IModel> extends JDialog
      */
     protected Image getDefaultWindowIcon() {
         return getService(IImageService.class).getImage(ICore.WINDOW_ICON);
-    }
-
-    /**
-     * Set the wait figure of the dialog view. Must be called in the installWaitFigure() method.
-     *
-     * @param waitFigure The wait figure.
-     */
-    protected final void setWaitFigure(WaitFigure waitFigure) {
-        getExtendedGlassPane().setWaitFigure(waitFigure);
     }
 
     /**
@@ -333,16 +340,6 @@ public abstract class SwingDialogView<T extends IModel> extends JDialog
         constraint.configure(field);
     }
 
-    /**
-     * Install the glass pane of the view if necessary.
-     */
-    private void installGlassPaneIfNecessary() {
-        if (!glassPaneInstalled) {
-            installGlassPane();
-            glassPaneInstalled = true;
-        }
-    }
-
     @Override
     public void setBundleContext(BundleContext bundleContext) {
         this.bundleContext = bundleContext;
@@ -388,17 +385,5 @@ public abstract class SwingDialogView<T extends IModel> extends JDialog
      */
     protected <T> T getBeanFromEDT(Class<T> classz) {
         return new SwingSpringProxy<T>(classz, applicationContext).get();
-    }
-
-    /**
-     * Install the wait figure if necessary.
-     */
-    private void installWaitFigureIfNecessary() {
-        installGlassPaneIfNecessary();
-
-        if (!waitFigureInstalled) {
-            installWaitFigure();
-            waitFigureInstalled = true;
-        }
     }
 }

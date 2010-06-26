@@ -63,12 +63,10 @@ public final class StartModuleAction extends JThequeAction {
                 @Override
                 public void run() {
                     moduleView.startWait();
-
-                    Thread starter = new Thread(new StartModuleRunnable(module));
-                    starter.setName("Module loader");
-                    starter.start();
                 }
             });
+
+            new Thread(new StartModuleRunnable(module), "Module loader").start();
         } else {
             uiUtils.getDelegate().displayText(error);
         }

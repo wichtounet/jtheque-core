@@ -1,0 +1,86 @@
+package org.jtheque.ui.utils.windows;
+
+/*
+ * Copyright JTheque (Baptiste Wicht)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+import org.jdesktop.jxlayer.JXLayer;
+import org.jdesktop.jxlayer.plaf.ext.LockableUI;
+import org.jdesktop.swingx.painter.BusyPainter;
+
+import javax.swing.JComponent;
+import javax.swing.Timer;
+
+import java.awt.Component;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.geom.Ellipse2D;
+
+/**
+ * Subclass of the {@link LockableUI} which uses the {@link BusyPainterUI} from the SwingX project to implement the
+ * "busy effect" when {@link JXLayer} is locked.
+ *
+ * @author Alexander Potochkin
+ */
+public class BusyPainterUI extends LockableUI implements ActionListener {
+    private final BusyPainter busyPainter;
+    private final Timer timer;
+
+    public BusyPainterUI(Component view) {
+        busyPainter = new BusyPainter() {
+            protected void doPaint(Graphics2D g, JComponent object,
+                                   int width, int height) {
+                // centralize the effect
+                Rectangle r = getTrajectory().getBounds();
+                int tw = width - r.width - 2 * r.x;
+                int th = height - r.height - 2 * r.y;
+                g.translate(tw / 2, th / 2);
+                super.doPaint(g, object, width, height);
+            }
+        };
+
+        busyPainter.setPointShape(new Ellipse2D.Double(0, 0, 20, 20));
+        busyPainter.setTrajectory(new Ellipse2D.Double(0, 0, view.getWidth() / 2, view.getHeight() / 2));
+        timer = new Timer(200, this);
+    }
+
+    @Override
+    protected void paintLayer(Graphics2D g2, JXLayer<? extends JComponent> l) {
+        super.paintLayer(g2, l);
+
+        if (isLocked()) {
+            busyPainter.paint(g2, l, l.getWidth(), l.getHeight());
+        }
+    }
+
+    @Override
+    public void setLocked(boolean isLocked) {
+        super.setLocked(isLocked);
+
+        if (isLocked) {
+            timer.start();
+        } else {
+            timer.stop();
+        }
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        busyPainter.setFrame((busyPainter.getFrame() + 1) % 8);
+        setDirty(true);
+    }
+}

@@ -36,25 +36,27 @@ import java.awt.event.ActionEvent;
  * @author Baptiste Wicht
  */
 public abstract class AbstractUpdateAction extends JThequeAction {
-    @Resource
-    private IViews views;
-
-    @Resource
-    private IUIUtils uiUtils;
-
-    @Resource
-    private IErrorService errorService;
-
-    @Resource
-    private IUpdateService updateService;
+    private final IViews views;
+    private final IUIUtils uiUtils;
+    private final IErrorService errorService;
+    private final IUpdateService updateService;
 
     /**
      * Construct a new AbstractUpdateAction.
      *
      * @param key The internationalization key.
+     * @param updateService
+     * @param errorService
+     * @param uiUtils
+     * @param views
      */
-    AbstractUpdateAction(String key) {
+    AbstractUpdateAction(String key, IUpdateService updateService, IErrorService errorService, IUIUtils uiUtils, IViews views) {
         super(key);
+        
+        this.updateService = updateService;
+        this.errorService = errorService;
+        this.uiUtils = uiUtils;
+        this.views = views;
     }
 
     @Override

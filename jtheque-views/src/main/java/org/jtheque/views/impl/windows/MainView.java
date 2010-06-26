@@ -26,6 +26,7 @@ import org.jtheque.ui.utils.builders.JThequePanelBuilder;
 import org.jtheque.ui.utils.builders.PanelBuilder;
 import org.jtheque.ui.utils.components.Borders;
 import org.jtheque.ui.utils.components.LayerTabbedPane;
+import org.jtheque.ui.utils.windows.BusyPainterUI;
 import org.jtheque.ui.utils.windows.frames.SwingFrameView;
 import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.ui.GridBagUtils;
@@ -35,7 +36,6 @@ import org.jtheque.views.able.IViews;
 import org.jtheque.views.able.components.MainComponent;
 import org.jtheque.views.able.windows.IMainView;
 import org.jtheque.views.impl.MainController;
-import org.jtheque.views.impl.components.InfiniteWaitUI;
 import org.jtheque.views.impl.components.MainTabbedPane;
 import org.jtheque.views.impl.components.menu.JThequeMenuBar;
 import org.jtheque.views.impl.components.panel.JThequeStateBar;
@@ -72,7 +72,7 @@ public final class MainView extends SwingFrameView implements TitleListener, IMa
 
     private JXLayer<JComponent> content;
 
-    private InfiniteWaitUI waitUI;
+    private BusyPainterUI waitUI;
 
     private int current;
 
@@ -95,7 +95,8 @@ public final class MainView extends SwingFrameView implements TitleListener, IMa
      * @param menuBar         The menu bar.
      * @param languageService The language service.
      */
-    public MainView(ICore core, IViewService viewService, IViews views, IUIUtils uiUtils, JThequeMenuBar menuBar, ILanguageService languageService) {
+    public MainView(ICore core, IViewService viewService, IViews views, IUIUtils uiUtils, JThequeMenuBar menuBar,
+                    ILanguageService languageService) {
         super();
 
         this.core = core;
@@ -175,14 +176,14 @@ public final class MainView extends SwingFrameView implements TitleListener, IMa
     public void startWait() {
         installWaitUIIfNecessary();
         content.setUI(waitUI);
-        waitUI.start();
+        waitUI.setLocked(true);
         setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
     }
 
     @Override
     public void stopWait() {
         if (waitUI != null) {
-            waitUI.stop();
+            waitUI.setLocked(false);
             setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
             content.setUI(null);
         }
@@ -193,7 +194,7 @@ public final class MainView extends SwingFrameView implements TitleListener, IMa
      */
     private void installWaitUIIfNecessary() {
         if (waitUI == null) {
-            waitUI = new InfiniteWaitUI(content);
+            waitUI = new BusyPainterUI(content);
         }
     }
 
@@ -250,7 +251,7 @@ public final class MainView extends SwingFrameView implements TitleListener, IMa
     @Override
     public void sendMessage(String message, final Object value) {
         if ("add".equals(message)) {
-            SwingUtils.inEdt(new Runnable(){
+            SwingUtils.inEdt(new Runnable() {
                 @Override
                 public void run() {
                     addComponent();

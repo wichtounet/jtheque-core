@@ -47,7 +47,7 @@
     <orderEntry type="module" module-name="jtheque-spring-utils" exported="" />
     <orderEntry type="module" module-name="jtheque-errors" exported="" />
     <orderEntry type="module" module-name="jtheque-swingx" exported="" />
-    <orderEntry type="library" exported="" name="Maven: org.swinglabs:swingx:1.6" level="project" />
+    <orderEntry type="library" exported="" name="Maven: org.swinglabs:swingx:2010.06.14" level="project" />
     <orderEntry type="library" exported="" name="Maven: com.apple:org.jtheque.apple-extensions:1.0.0" level="project" />
     <orderEntry type="library" exported="" name="Maven: com.apple:javaextensions:1.0" level="project" />
     <orderEntry type="module" module-name="jtheque-apple-extensions" exported="" />
