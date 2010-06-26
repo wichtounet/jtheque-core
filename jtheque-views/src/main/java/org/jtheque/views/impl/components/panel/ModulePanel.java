@@ -52,23 +52,26 @@ public final class ModulePanel extends JPanel {
 
     private static final int TITLE_FONT_SIZE = 16;
 
-    @Resource
-    private IModuleService moduleService;
-
-    @Resource
-    private ILanguageService languageService;
-
-    @Resource
-    private IUpdateService updateService;
+    private final IModuleService moduleService;
+    private final ILanguageService languageService;
+    private final IUpdateService updateService;
 
     /**
      * Construct a new ModulePanel.
      *
      * @param value      The value.
+     *
      * @param isSelected A boolean tag indicating if the module is selected or not.
+     * @param moduleService
+     * @param languageService
+     * @param updateService
      */
-    public ModulePanel(Object value, boolean isSelected) {
+    public ModulePanel(Object value, boolean isSelected, IModuleService moduleService, ILanguageService languageService, IUpdateService updateService) {
         super();
+
+        this.moduleService = moduleService;
+        this.languageService = languageService;
+        this.updateService = updateService;
 
         PanelBuilder builder = new FilthyPanelBuilder(this);
         builder.setBorder(Borders.createEmptyBorder(2, 2, 2, 10));

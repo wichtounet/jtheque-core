@@ -16,6 +16,9 @@ package org.jtheque.views.impl.components.renderers;
  * limitations under the License.
  */
 
+import org.jtheque.i18n.able.ILanguageService;
+import org.jtheque.modules.able.IModuleService;
+import org.jtheque.update.able.IUpdateService;
 import org.jtheque.views.impl.components.panel.ModulePanel;
 
 import javax.swing.JList;
@@ -32,22 +35,30 @@ import java.util.Map;
  */
 public final class ModuleRepositoryListRenderer implements ListCellRenderer {
     private final Map<Integer, ModulePanel> panels;
+    private final IModuleService moduleService;
+    private final ILanguageService languageService;
+    private final IUpdateService updateService;
 
     /**
      * Construct a new ModuleListRenderer.
      */
-    public ModuleRepositoryListRenderer() {
+    public ModuleRepositoryListRenderer(IModuleService moduleService, ILanguageService languageService,
+                                        IUpdateService updateService) {
         super();
+
+        this.moduleService = moduleService;
+        this.languageService = languageService;
+        this.updateService = updateService;
 
         panels = new HashMap<Integer, ModulePanel>(10);
     }
 
     @Override
     public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
-        if (panels.get(index) == null) {
-            panels.put(index, new ModulePanel(value, isSelected));
-        } else {
+        if (panels.containsKey(index)) {
             panels.get(index).updateUI(isSelected);
+        } else {
+            panels.put(index, new ModulePanel(value, isSelected, moduleService, languageService, updateService));
         }
 
         return panels.get(index);
