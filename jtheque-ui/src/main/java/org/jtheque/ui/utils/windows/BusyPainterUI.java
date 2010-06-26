@@ -54,7 +54,9 @@ public class BusyPainterUI extends LockableUI implements ActionListener {
         };
 
         busyPainter.setPointShape(new Ellipse2D.Double(0, 0, 20, 20));
-        busyPainter.setTrajectory(new Ellipse2D.Double(0, 0, view.getWidth() / 2, view.getHeight() / 2));
+        busyPainter.setTrajectory(new Ellipse2D.Double(
+                view.getWidth() / 4, view.getHeight() / 4, 
+                view.getWidth() / 2, view.getHeight() / 2));
         timer = new Timer(200, this);
     }
 

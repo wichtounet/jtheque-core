@@ -78,8 +78,6 @@ public abstract class SwingDialogView<T extends IModel> extends JDialog
     private ApplicationContext applicationContext;
 
     private JXLayer<JComponent> content;
-    //private InfiniteWaitUI waitUI;
-
     private LockableUI busyPainterUI;
 
     /**
