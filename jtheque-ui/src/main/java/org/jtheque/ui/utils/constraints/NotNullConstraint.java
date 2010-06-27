@@ -53,7 +53,7 @@ public final class NotNullConstraint implements Constraint {
     @Override
     public void validate(Object field, Collection<IError> errors) {
         if (field == null) {
-            errors.add(new InternationalizedError("error.validation.field.empty", fieldName));
+            errors.add(new InternationalizedError("error.validation.field.empty", new Object[]{fieldName}));
         }
     }
 

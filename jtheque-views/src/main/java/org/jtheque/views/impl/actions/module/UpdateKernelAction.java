@@ -31,7 +31,7 @@ public final class UpdateKernelAction extends AbstractUpdateAction {
      * Construct a new UpdateKernelAction.
      */
     public UpdateKernelAction(IUpdateService updateService, IErrorService errorService, IUIUtils uiUtils, IViews views) {
-        super("modules.actions.update.kernel", updateService, errorService, uiUtils, views);
+        super("modules.actions.update.kernel", updateService, uiUtils, views);
     }
 
     @Override

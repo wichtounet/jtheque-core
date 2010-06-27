@@ -1,17 +1,11 @@
 package org.jtheque.views.impl.actions.module;
 
-import org.jtheque.errors.able.IErrorService;
 import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.ui.utils.actions.JThequeAction;
 import org.jtheque.update.able.IUpdateService;
 import org.jtheque.views.able.IViews;
 import org.jtheque.views.able.windows.IUpdateView;
 
-import org.slf4j.LoggerFactory;
-
-import javax.annotation.Resource;
-
-import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 
 /*
@@ -38,23 +32,20 @@ import java.awt.event.ActionEvent;
 public abstract class AbstractUpdateAction extends JThequeAction {
     private final IViews views;
     private final IUIUtils uiUtils;
-    private final IErrorService errorService;
     private final IUpdateService updateService;
 
     /**
      * Construct a new AbstractUpdateAction.
      *
-     * @param key The internationalization key.
+     * @param key           The internationalization key.
      * @param updateService
-     * @param errorService
      * @param uiUtils
      * @param views
      */
-    AbstractUpdateAction(String key, IUpdateService updateService, IErrorService errorService, IUIUtils uiUtils, IViews views) {
+    AbstractUpdateAction(String key, IUpdateService updateService, IUIUtils uiUtils, IViews views) {
         super(key);
-        
+
         this.updateService = updateService;
-        this.errorService = errorService;
         this.uiUtils = uiUtils;
         this.views = views;
     }
@@ -63,16 +54,11 @@ public abstract class AbstractUpdateAction extends JThequeAction {
     public final void actionPerformed(ActionEvent e) {
         IUpdateView updateView = views.getUpdateView();
 
-        try {
-            if (isUpToDate()) {
-                uiUtils.displayI18nText("message.update.no.version");
-            } else {
-                updateView.sendMessage(getMessage(), getSelectedObject());
-                updateView.display();
-            }
-        } catch (HeadlessException e2) {
-            LoggerFactory.getLogger(getClass()).error(e2.getMessage(), e2);
-            errorService.addInternationalizedError("error.update.internet");
+        if (isUpToDate()) {
+            uiUtils.displayI18nText("message.update.no.version");
+        } else {
+            updateView.sendMessage(getMessage(), getSelectedObject());
+            updateView.display();
         }
     }
 

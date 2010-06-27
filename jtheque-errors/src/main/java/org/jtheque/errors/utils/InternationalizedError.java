@@ -43,20 +43,10 @@ public final class InternationalizedError extends JThequeError {
      * @param message  The message key.
      * @param replaces The replaces for the internationalization variable arguments of the message.
      */
-    public InternationalizedError(String message, Object... replaces) {
+    public InternationalizedError(String message, Object[] replaces) {
         super(message);
 
         titleReplaces = ArrayUtils.copyOf(replaces);
-    }
-
-    /**
-     * Construct a new InternationalizedError.
-     *
-     * @param message The message key.
-     * @param details The details key.
-     */
-    public InternationalizedError(String message, String details) {
-        super(message, details);
     }
 
     /**
@@ -100,6 +90,6 @@ public final class InternationalizedError extends JThequeError {
                     '\n' + getCustomStackTrace(exception);
         }
 
-        return details;
+        return languageService.getMessage(details, detailsReplaces);
     }
 }

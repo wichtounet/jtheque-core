@@ -47,16 +47,14 @@ import static org.jtheque.utils.ui.GridBagUtils.*;
  *
  * @author Baptiste Wicht
  */
-public final class ErrorView extends SwingFilthyBuildedFrameView<IModel> implements ListSelectionListener, IErrorView, ErrorListener {
+public final class ErrorView extends SwingFilthyBuildedFrameView<IModel> implements ListSelectionListener,
+        IErrorView, ErrorListener {
     private ImageIcon errorIcon;
     private ImageIcon warningIcon;
 
     private JList listEvents;
-    private ErrorsListModel errorsModel;
 
     private JLabel labelTitle;
-    private JLabel labelLevel;
-    private JLabel labelLevelImage;
 
     private JTextArea areaDetails;
     private ILanguageService languageService;
@@ -71,11 +69,9 @@ public final class ErrorView extends SwingFilthyBuildedFrameView<IModel> impleme
     protected void buildView(I18nPanelBuilder builder) {
         builder.setDefaultInsets(new Insets(4, 4, 4, 4));
 
-        errorsModel = new ErrorsListModel(getService(IErrorService.class));
-
         languageService = getService(ILanguageService.class);
 
-        listEvents = builder.addScrolledList(errorsModel,
+        listEvents = builder.addScrolledList(new ErrorsListModel(getService(IErrorService.class)),
                 new ErrorListRenderer(getService(IImageService.class), languageService),
                 builder.gbcSet(0, 1, BOTH, LINE_START, 2, 1, 1.0, 0.67));
         listEvents.getSelectionModel().addListSelectionListener(this);
@@ -100,27 +96,27 @@ public final class ErrorView extends SwingFilthyBuildedFrameView<IModel> impleme
         builder.setI18nTitleBorder("error.view.details");
 
         labelTitle = builder.addLabel(builder.gbcSet(0, 0, HORIZONTAL, BASELINE_LEADING));
-        labelLevel = builder.addLabel(builder.gbcSet(1, 3, HORIZONTAL, BASELINE_LEADING, 0.5, 0.0));
-        labelLevelImage = builder.addLabel(builder.gbcSet(0, 1, NONE, BASELINE_LEADING, 1, 2, 0.5, 0.0));
 
         areaDetails = new JTextArea();
         areaDetails.setRows(3);
+        areaDetails.setWrapStyleWord(true);
+        areaDetails.setLineWrap(true);
 
-        builder.addScrolled(areaDetails, builder.gbcSet(0, 5, BOTH, LINE_START, 2, 1, 1.0, 1.0));
+        builder.addScrolled(areaDetails, builder.gbcSet(0, 2, BOTH, LINE_START, 1.0, 1.0));
     }
 
     @Override
     public void valueChanged(ListSelectionEvent e) {
         if (listEvents.getSelectedValues().length > 0) {
-            IError error = errorsModel.getSelectedItem();
+            IError error = (IError) listEvents.getSelectedValue();
 
             labelTitle.setText(error.getTitle(languageService));
-            labelLevel.setText(error.getLevel().toString());
+            labelTitle.setToolTipText(error.getLevel().toString());
 
             if (error.getLevel() == Level.WARNING) {
-                labelLevelImage.setIcon(warningIcon);
+                labelTitle.setIcon(warningIcon);
             } else {
-                labelLevelImage.setIcon(errorIcon);
+                labelTitle.setIcon(errorIcon);
             }
 
             areaDetails.setText(error.getDetails(languageService));

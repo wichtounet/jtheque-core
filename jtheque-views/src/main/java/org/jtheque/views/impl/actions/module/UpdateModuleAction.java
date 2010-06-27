@@ -32,7 +32,7 @@ public final class UpdateModuleAction extends AbstractUpdateAction {
      * Construct a new UpdateModuleAction.
      */
     public UpdateModuleAction(IUpdateService updateService, IErrorService errorService, IUIUtils uiUtils, IViews views) {
-        super("modules.actions.update", updateService, errorService, uiUtils, views);
+        super("modules.actions.update", updateService, uiUtils, views);
     }
 
     @Override

@@ -46,7 +46,7 @@ public interface IErrorService {
      * @param titleKey      the internationalized key.
      * @param titleReplaces the object to use in replaces.
      */
-    void addInternationalizedError(String titleKey, Object... titleReplaces);
+    void addInternationalizedError(String titleKey, Object[] titleReplaces);
     void addInternationalizedError(String titleKey, Object[] titleReplaces, String detailsKey);
     void addInternationalizedError(String titleKey, Object[] titleReplaces, String detailsKey, Object[] detailsReplaces);
 
