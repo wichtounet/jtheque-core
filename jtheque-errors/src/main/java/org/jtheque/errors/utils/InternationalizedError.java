@@ -2,10 +2,6 @@ package org.jtheque.errors.utils;
 
 import org.jtheque.i18n.able.ILanguageService;
 
-import org.jdesktop.swingx.error.ErrorInfo;
-
-import java.util.logging.Level;
-
 /*
  * Copyright JTheque (Baptiste Wicht)
  *
@@ -28,7 +24,7 @@ import java.util.logging.Level;
  * @author Baptiste Wicht
  */
 public final class InternationalizedError extends JThequeError {
-    private Object[] messageReplaces;
+    private Object[] titleReplaces;
     private Object[] detailsReplaces;
 
     /**
@@ -49,7 +45,7 @@ public final class InternationalizedError extends JThequeError {
     public InternationalizedError(String message, Object... replaces) {
         super(message);
 
-        messageReplaces = replaces.clone();
+        titleReplaces = replaces.clone();
     }
 
     /**
@@ -72,7 +68,7 @@ public final class InternationalizedError extends JThequeError {
     public InternationalizedError(String message, Object[] replaces, String details) {
         super(message, details);
 
-        messageReplaces = replaces.clone();
+        titleReplaces = replaces.clone();
     }
 
     /**
@@ -86,15 +82,23 @@ public final class InternationalizedError extends JThequeError {
     public InternationalizedError(String message, Object[] replaces, String details, Object[] replacesDetails) {
         super(message, details);
 
-        messageReplaces = replaces.clone();
+        titleReplaces = replaces.clone();
         detailsReplaces = replacesDetails.clone();
     }
 
     @Override
-    public ErrorInfo toErrorInfo(ILanguageService languageService) {
-        return new ErrorInfo("Error",
-                languageService.getMessage(getMessage(), messageReplaces),
-                languageService.getMessage(getDetails(), detailsReplaces),
-                "", null, Level.SEVERE, null);
+    public String getTitle(ILanguageService languageService) {
+        return languageService.getMessage(title, titleReplaces);
+    }
+
+    @Override
+    public String getDetails(ILanguageService languageService) {
+        if (exception != null) {
+            return languageService.getMessage(details, detailsReplaces) +
+                    '\n' + exception.getMessage() +
+                    '\n' + getCustomStackTrace(exception);
+        }
+
+        return details;
     }
 }
