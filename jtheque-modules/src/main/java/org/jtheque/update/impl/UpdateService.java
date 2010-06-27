@@ -202,24 +202,15 @@ public final class UpdateService implements IUpdateService {
 
         List<String> messages = new ArrayList<String>(2);
 
-        if (!isCurrentVersionUpToDate()) {
-            messages.add("dialogs.propose.update");
-        }
-
         if (!isAModuleNotUpToDate()) {
             messages.add("dialogs.propose.module.update");
         }
 
-        return messages;
-    }
-
-    @Override
-    public boolean isCurrentVersionUpToDate() {
-        if (isDescriptorNotReachable(core)) {
-            return true;
+        if (!isCurrentVersionUpToDate()) {
+            messages.add("dialogs.propose.update");
         }
 
-        return isUpToDate(core);
+        return messages;
     }
 
     /**
@@ -238,8 +229,13 @@ public final class UpdateService implements IUpdateService {
     }
 
     @Override
+    public boolean isCurrentVersionUpToDate() {
+        return isUpToDate(core);
+    }
+
+    @Override
     public boolean isUpToDate(Versionable object) {
-        if (isDescriptorNotReachable(core)) {
+        if (isDescriptorNotReachable(object)) {
             return true;
         }
 
@@ -254,7 +250,7 @@ public final class UpdateService implements IUpdateService {
 
     @Override
     public void updateToMostRecentVersion(Module module) {
-        if (isDescriptorNotReachable(core)) {
+        if (isDescriptorNotReachable(module)) {
             return;
         }
 
@@ -270,8 +266,13 @@ public final class UpdateService implements IUpdateService {
     }
 
     @Override
+    public Version getMostRecentCoreVersion() {
+        return getMostRecentVersion(core);
+    }
+
+    @Override
     public Version getMostRecentVersion(Versionable object) {
-        if (isDescriptorNotReachable(core)) {
+        if (isDescriptorNotReachable(object)) {
             return null;
         }
 
@@ -280,15 +281,10 @@ public final class UpdateService implements IUpdateService {
 
     @Override
     public Collection<Version> getVersions(Versionable object) {
-        if (isDescriptorNotReachable(core)) {
+        if (isDescriptorNotReachable(object)) {
             return null;
         }
 
         return versionsLoader.getVersions(object);
-    }
-
-    @Override
-    public Version getMostRecentCoreVersion() {
-        return getMostRecentVersion(core);
     }
 }
