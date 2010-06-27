@@ -91,15 +91,6 @@ public class JThequeError implements IError {
         level = Level.ERROR;
     }
 
-    /**
-     * Return the exception of the error.
-     *
-     * @return The exception who cause this error.
-     */
-    final Throwable getException() {
-        return exception;
-    }
-
     @Override
     public Level getLevel() {
         return level;

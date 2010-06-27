@@ -1,6 +1,7 @@
 package org.jtheque.errors.utils;
 
 import org.jtheque.i18n.able.ILanguageService;
+import org.jtheque.utils.collections.ArrayUtils;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -45,7 +46,7 @@ public final class InternationalizedError extends JThequeError {
     public InternationalizedError(String message, Object... replaces) {
         super(message);
 
-        titleReplaces = replaces.clone();
+        titleReplaces = ArrayUtils.copyOf(replaces);
     }
 
     /**
@@ -68,7 +69,7 @@ public final class InternationalizedError extends JThequeError {
     public InternationalizedError(String message, Object[] replaces, String details) {
         super(message, details);
 
-        titleReplaces = replaces.clone();
+        titleReplaces = ArrayUtils.copyOf(replaces);
     }
 
     /**
@@ -82,8 +83,8 @@ public final class InternationalizedError extends JThequeError {
     public InternationalizedError(String message, Object[] replaces, String details, Object[] replacesDetails) {
         super(message, details);
 
-        titleReplaces = replaces.clone();
-        detailsReplaces = replacesDetails.clone();
+        titleReplaces = ArrayUtils.copyOf(replaces);
+        detailsReplaces = ArrayUtils.copyOf(replacesDetails);
     }
 
     @Override
