@@ -26,7 +26,6 @@ import org.jtheque.ui.utils.builders.JThequePanelBuilder;
 import org.jtheque.ui.utils.builders.PanelBuilder;
 import org.jtheque.ui.utils.components.Borders;
 import org.jtheque.ui.utils.components.LayerTabbedPane;
-import org.jtheque.ui.utils.windows.BusyPainterUI;
 import org.jtheque.ui.utils.windows.frames.SwingFrameView;
 import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.ui.GridBagUtils;
@@ -40,15 +39,12 @@ import org.jtheque.views.impl.components.MainTabbedPane;
 import org.jtheque.views.impl.components.menu.JThequeMenuBar;
 import org.jtheque.views.impl.components.panel.JThequeStateBar;
 
-import org.jdesktop.jxlayer.JXLayer;
-
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -69,10 +65,6 @@ public final class MainView extends SwingFrameView implements TitleListener, IMa
     private static final int DEFAULT_HEIGHT = 645;
 
     private WindowListener tempListener;
-
-    private JXLayer<JComponent> content;
-
-    private BusyPainterUI waitUI;
 
     private int current;
 
@@ -110,7 +102,8 @@ public final class MainView extends SwingFrameView implements TitleListener, IMa
     /**
      * Build the view.
      */
-    public void build() {
+    @Override
+    public void init() {
         setTitle(core.getLifeCycle().getTitle());
         setResizable(false);
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -122,25 +115,12 @@ public final class MainView extends SwingFrameView implements TitleListener, IMa
         JComponent background = new JPanel();
         background.setBackground(Color.black);
 
-        content = new JXLayer<JComponent>(background);
-
-        setContentPane(content);
+        setContentPane(background);
 
         setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
         setMinimumSize(new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT));
 
-        SwingUtils.centerFrame(this);
-
         core.getLifeCycle().addTitleListener(this);
-    }
-
-    /**
-     * Return the content pane.
-     *
-     * @return the content pane.
-     */
-    public JXLayer<JComponent> getContent() {
-        return content;
     }
 
     /**
@@ -152,12 +132,10 @@ public final class MainView extends SwingFrameView implements TitleListener, IMa
 
         controller = new MainController(core, uiUtils);
 
-        content = buildContentPane();
-
         SwingUtils.inEdt(new Runnable() {
             @Override
             public void run() {
-                setContentPane(content);
+                setContentPane(buildContentPane());
 
                 menuBar.buildMenu();
 
@@ -172,65 +150,12 @@ public final class MainView extends SwingFrameView implements TitleListener, IMa
         });
     }
 
-    @Override
-    public void startWait() {
-        installWaitUIIfNecessary();
-        content.setUI(waitUI);
-        waitUI.setLocked(true);
-        setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-    }
-
-    @Override
-    public void stopWait() {
-        if (waitUI != null) {
-            waitUI.setLocked(false);
-            setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-            content.setUI(null);
-        }
-    }
-
-    /**
-     * Create the wait UI only if this has not been done before.
-     */
-    private void installWaitUIIfNecessary() {
-        if (waitUI == null) {
-            waitUI = new BusyPainterUI(content);
-        }
-    }
-
-    @Override
-    public void setGlassPane(final Component glassPane) {
-        SwingUtils.inEdt(new Runnable() {
-            @Override
-            public void run() {
-                if (glassPane == null) {
-                    content.setGlassPane(content.createGlassPane());
-                } else {
-                    content.setGlassPane((JPanel) glassPane);
-
-                    glassPane.setVisible(true);
-
-                    glassPane.repaint();
-
-                    SwingUtils.refresh(glassPane);
-                }
-
-                refresh();
-            }
-        });
-    }
-
-    @Override
-    public Component getGlassPane() {
-        return content.getGlassPane();
-    }
-
     /**
      * Build the content pane.
      *
-     * @return le contentPane
+     * @return the contentPane
      */
-    private JXLayer<JComponent> buildContentPane() {
+    private JComponent buildContentPane() {
         PanelBuilder builder = new JThequePanelBuilder();
         builder.setBorder(Borders.EMPTY_BORDER);
 
@@ -245,7 +170,7 @@ public final class MainView extends SwingFrameView implements TitleListener, IMa
 
         builder.add(stateBar, builder.gbcSet(0, 1, GridBagUtils.HORIZONTAL, GridBagUtils.LAST_LINE_START));
 
-        return new JXLayer<JComponent>(builder.getPanel());
+        return builder.getPanel();
     }
 
     @Override
@@ -276,27 +201,27 @@ public final class MainView extends SwingFrameView implements TitleListener, IMa
      */
     private void addComponent() {
         if (current == 0) {
-            content.getView().removeAll();
+            getContentPane().removeAll();
 
             GridBagUtils gbc = new GridBagUtils();
 
             Collection<MainComponent> components = views.getMainComponents();
 
-            content.getView().add(CollectionUtils.first(components).getImpl(),
+            getContentPane().add(CollectionUtils.first(components).getImpl(),
                     gbc.gbcSet(0, 0, GridBagUtils.BOTH, GridBagUtils.FIRST_LINE_START, 1.0, 1.0));
 
-            content.getView().add(stateBar, gbc.gbcSet(0, 1, GridBagUtils.HORIZONTAL, GridBagUtils.LAST_LINE_START));
+            getContentPane().add(stateBar, gbc.gbcSet(0, 1, GridBagUtils.HORIZONTAL, GridBagUtils.LAST_LINE_START));
         } else if (current == 1) {
-            content.getView().removeAll();
+            getContentPane().removeAll();
 
             GridBagUtils gbc = new GridBagUtils();
 
             tab = new MainTabbedPane(languageService, views);
             tab.addChangeListener(controller);
 
-            content.getView().add(tab, gbc.gbcSet(0, 0, GridBagUtils.BOTH, GridBagUtils.FIRST_LINE_START, 1.0, 1.0));
+            getContentPane().add(tab, gbc.gbcSet(0, 0, GridBagUtils.BOTH, GridBagUtils.FIRST_LINE_START, 1.0, 1.0));
 
-            content.getView().add(stateBar, gbc.gbcSet(0, 1, GridBagUtils.HORIZONTAL, GridBagUtils.LAST_LINE_START));
+            getContentPane().add(stateBar, gbc.gbcSet(0, 1, GridBagUtils.HORIZONTAL, GridBagUtils.LAST_LINE_START));
         } else {
             tab.refreshComponents();
         }
@@ -311,27 +236,26 @@ public final class MainView extends SwingFrameView implements TitleListener, IMa
      */
     private void removeComponent(MainComponent component) {
         if (current == 1) {
-            content.getView().removeAll();
+            getContentPane().removeAll();
 
             GridBagUtils gbc = new GridBagUtils();
 
             Component emptyPanel = new JPanel();
             emptyPanel.setBackground(Color.white);
 
-            content.getView().add(emptyPanel, gbc.gbcSet(0, 0, GridBagUtils.BOTH, GridBagUtils.FIRST_LINE_START, 1.0, 1.0));
-
-            content.getView().add(stateBar, gbc.gbcSet(0, 1, GridBagUtils.HORIZONTAL, GridBagUtils.LAST_LINE_START));
+            getContentPane().add(emptyPanel, gbc.gbcSet(0, 0, GridBagUtils.BOTH, GridBagUtils.FIRST_LINE_START, 1.0, 1.0));
+            getContentPane().add(stateBar, gbc.gbcSet(0, 1, GridBagUtils.HORIZONTAL, GridBagUtils.LAST_LINE_START));
         } else if (current == 2) {
-            content.getView().removeAll();
+            getContentPane().removeAll();
 
             GridBagUtils gbc = new GridBagUtils();
 
             Collection<MainComponent> components = views.getMainComponents();
 
-            content.getView().add(CollectionUtils.first(components).getImpl(),
+            getContentPane().add(CollectionUtils.first(components).getImpl(),
                     gbc.gbcSet(0, 0, GridBagUtils.BOTH, GridBagUtils.FIRST_LINE_START, 1.0, 1.0));
 
-            content.getView().add(stateBar, gbc.gbcSet(0, 1, GridBagUtils.HORIZONTAL, GridBagUtils.LAST_LINE_START));
+            getContentPane().add(stateBar, gbc.gbcSet(0, 1, GridBagUtils.HORIZONTAL, GridBagUtils.LAST_LINE_START));
         } else {
             tab.removeMainComponent(component);
         }
@@ -350,20 +274,6 @@ public final class MainView extends SwingFrameView implements TitleListener, IMa
     }
 
     @Override
-    public void closeDown() {
-        if (viewService != null) {
-            viewService.saveState(this, "main");
-        }
-
-        super.closeDown();
-    }
-
-    @Override
-    public boolean validateContent() {
-        return true;
-    }
-
-    @Override
     public void setSelectedComponent(Object component) {
         tab.setSelectedComponent((Component) component);
     }
@@ -376,6 +286,15 @@ public final class MainView extends SwingFrameView implements TitleListener, IMa
     @Override
     public JThequeStateBar getStateBar() {
         return stateBar;
+    }
+
+    @Override
+    public void closeDown() {
+        if (viewService != null) {
+            viewService.saveState(this, "main");
+        }
+
+        super.closeDown();
     }
 
     /**

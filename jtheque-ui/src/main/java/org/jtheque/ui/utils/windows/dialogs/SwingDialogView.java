@@ -31,6 +31,7 @@ import org.jtheque.ui.able.IWindowView;
 import org.jtheque.ui.utils.actions.ActionFactory;
 import org.jtheque.ui.utils.constraints.Constraint;
 import org.jtheque.ui.utils.windows.BusyPainterUI;
+import org.jtheque.ui.utils.windows.WindowHelper;
 import org.jtheque.utils.collections.ArrayUtils;
 import org.jtheque.utils.ui.SwingUtils;
 
@@ -113,29 +114,19 @@ public abstract class SwingDialogView<T extends IModel> extends JDialog
     }
 
     @Override
+    public Container getContentPane() {
+        return content.getView();
+    }
+
+    @Override
     public void setContentPane(Container contentPane) {
         throw new UnsupportedOperationException("Cannot set the content pane");
     }
 
     @Override
     public void setGlassPane(final Component glassPane) {
-        SwingUtils.inEdt(new Runnable() {
-            @Override
-            public void run() {
-                if (glassPane == null) {
-                    content.setGlassPane(content.createGlassPane());
-                } else {
-                    content.setGlassPane((JPanel) glassPane);
-
-                    glassPane.setVisible(true);
-                    glassPane.repaint();
-
-                    SwingUtils.refresh(glassPane);
-                }
-
-                refresh();
-            }
-        });
+        WindowHelper.applyGlassPane(glassPane, content);
+        refresh();
     }
 
     /**

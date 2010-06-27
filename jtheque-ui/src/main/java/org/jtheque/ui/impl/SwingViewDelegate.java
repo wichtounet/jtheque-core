@@ -1,12 +1,9 @@
 package org.jtheque.ui.impl;
 
 import org.jtheque.core.utils.SimplePropertiesCache;
-import org.jtheque.errors.utils.JThequeError;
 import org.jtheque.ui.able.ViewDelegate;
 import org.jtheque.utils.ui.SwingUtils;
 
-import org.jdesktop.swingx.JXErrorPane;
-import org.jdesktop.swingx.error.ErrorInfo;
 import org.slf4j.LoggerFactory;
 
 import javax.swing.JOptionPane;
@@ -15,7 +12,6 @@ import javax.swing.SwingUtilities;
 import java.awt.Component;
 import java.awt.Window;
 import java.lang.reflect.InvocationTargetException;
-import java.util.logging.Level;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -78,13 +74,6 @@ public final class SwingViewDelegate implements ViewDelegate {
     }
 
     @Override
-    public void displayError(JThequeError error) {
-        final ErrorInfo info = new ErrorInfo("Error", error.getMessage(), error.getDetails(), "", error.getException(), Level.SEVERE, null);
-
-        run(new DisplayErrorRunnable(info));
-    }
-
-    @Override
     public void displayText(String text) {
         run(new DisplayTextRunnable(text));
     }
@@ -108,29 +97,6 @@ public final class SwingViewDelegate implements ViewDelegate {
         }
 
         return JOptionPane.showInputDialog(parent, text);
-    }
-
-    /**
-     * A Runnable to display an error.
-     *
-     * @author Baptiste Wicht
-     */
-    private static class DisplayErrorRunnable implements Runnable {
-        private final ErrorInfo info;
-
-        /**
-         * The error info to display.
-         *
-         * @param info The error info to display.
-         */
-        DisplayErrorRunnable(ErrorInfo info) {
-            this.info = info;
-        }
-
-        @Override
-        public void run() {
-            JXErrorPane.showDialog(null, info);
-        }
     }
 
     /**
