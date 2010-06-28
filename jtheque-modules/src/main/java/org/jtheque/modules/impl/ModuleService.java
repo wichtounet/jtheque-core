@@ -39,6 +39,7 @@ import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.update.able.IUpdateService;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.collections.CollectionUtils;
+import org.jtheque.utils.io.FileUtils;
 import org.jtheque.utils.ui.SwingUtils;
 
 import org.osgi.framework.BundleException;
@@ -384,22 +385,24 @@ public final class ModuleService implements IModuleService {
         }
     }
 
-    /**
-     * Uninstall a module. The module must be stopped before uninstall it.
-     *
-     * @param module The module to uninstall.
-     *
-     * @throws IllegalStateException If the module is started.
-     */
     @Override
     public void uninstallModule(Module module) {
         if (module.getState() == ModuleState.STARTED) {
-            throw new IllegalStateException("The module cannot be disabled when started. ");
+            stopModule(module);
         }
 
         configuration.remove(module);
         modulesToLoad.remove(module);
         modules.remove(module);
+
+        try {
+            module.getBundle().uninstall();
+        } catch (BundleException e) {
+            LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
+        }
+
+        //Delete the bundle file
+        FileUtils.delete(StringUtils.delete(module.getBundle().getLocation(), "file:"));
 
         fireModuleUninstalled(module);
 
@@ -408,6 +411,8 @@ public final class ModuleService implements IModuleService {
         }
 
         ModuleResourceCache.removeModule(module.getId());
+
+
     }
 
     @Override
