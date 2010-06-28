@@ -92,7 +92,6 @@ public final class XMLApplicationReader {
         readApplicationValues(application);
         readInternationalization(application);
         application.setImages(readImageDescriptor("logo"), readImagePath("icon"));
-        readModules(application);
         readOptions(application);
         readProperties(application);
     }
@@ -301,29 +300,6 @@ public final class XMLApplicationReader {
         }
 
         return null;
-    }
-
-    /**
-     * Read all the modules of the application.
-     *
-     * @param application The application to get the modules for.
-     *
-     * @throws XMLException Thrown if an error occurs during XML reading.
-     */
-    private void readModules(XMLApplication application) throws XMLException {
-        if (reader.existsNode("modules", reader.getRootElement())) {
-            Object modulesElement = reader.getNode("modules", reader.getRootElement());
-
-            if (reader.existsValue("@discovery", modulesElement) && StringUtils.isNotEmpty(reader.readString("@discovery", modulesElement))) {
-                String discovery = reader.readString("@discovery", modulesElement);
-
-                application.setAutoDiscovery("true".equals(discovery));
-            }
-
-            for (Node child : reader.getNodes("*", modulesElement)) {
-                application.getModules().add(child.getNodeName());
-            }
-        }
     }
 
     /**

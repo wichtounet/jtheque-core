@@ -140,7 +140,15 @@ public final class ModuleService implements IModuleService {
     private void configureModules() {
         configuration = stateService.getState(new ModuleConfiguration());
 
-        CollectionUtils.filter(modules, new ConfigurationFilter(configuration, core.getApplication()));
+        for(Module module : modules){
+            if (configuration.containsModule(module)) {
+                module.setState(configuration.getState(module.getId()));
+            } else  {
+                module.setState(ModuleState.INSTALLED);
+                configuration.add(module);
+            }
+        }
+        
         CollectionUtils.filter(modules, new CoreVersionFilter(core, uiUtils));
 
         CollectionUtils.sort(modules, new ModuleComparator());
