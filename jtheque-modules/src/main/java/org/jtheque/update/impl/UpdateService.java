@@ -123,11 +123,11 @@ public final class UpdateService implements IUpdateService {
     private void addNotReachableError(String url) {
         if (WebUtils.isInternetReachable()) {
             errorService.addInternationalizedError(
-                    "modules.updates.network.resource.title", ArrayUtils.ZERO_LENGTH_ARRAY,
+                    "modules.updates.network.resource.title", ArrayUtils.EMPTY_ARRAY,
                     "modules.updates.network.resource", new Object[]{url});
         } else {
             errorService.addInternationalizedError(
-                    "modules.updates.network.internet.title", ArrayUtils.ZERO_LENGTH_ARRAY,
+                    "modules.updates.network.internet.title", ArrayUtils.EMPTY_ARRAY,
                     "modules.updates.network.internet", new Object[]{url});
         }
     }

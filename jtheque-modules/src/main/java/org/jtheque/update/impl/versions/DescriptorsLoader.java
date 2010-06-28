@@ -105,7 +105,7 @@ public final class DescriptorsLoader implements IVersionsLoader {
 
             if (!cache.containsKey(url)) {
                 errorService.addInternationalizedError(
-                        "error.update.internet.title", ArrayUtils.ZERO_LENGTH_ARRAY,
+                        "error.update.internet.title", ArrayUtils.EMPTY_ARRAY,
                         "error.update.internet");
             }
         }

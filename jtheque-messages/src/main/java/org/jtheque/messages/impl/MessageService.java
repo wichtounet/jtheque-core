@@ -155,11 +155,11 @@ public final class MessageService implements IMessageService, ModuleListener {
         } else {
             if (WebUtils.isInternetReachable()) {
                 errorService.addInternationalizedError(
-                        "messages.network.resource.title", ArrayUtils.ZERO_LENGTH_ARRAY,
+                        "messages.network.resource.title", ArrayUtils.EMPTY_ARRAY,
                         "messages.network.resource", new Object[]{url});
             } else {
                 errorService.addInternationalizedError(
-                        "messages.network.internet.title", ArrayUtils.ZERO_LENGTH_ARRAY,
+                        "messages.network.internet.title", ArrayUtils.EMPTY_ARRAY,
                         "messages.network.internet", new Object[]{url});
             }
 

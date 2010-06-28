@@ -114,11 +114,11 @@ public class ResourceService implements IResourceService, BundleContextAware {
         if(!WebUtils.isURLReachable(url)){
             if (WebUtils.isInternetReachable()) {
                 errorService.addInternationalizedError(
-                        "modules.resources.network.resource.title", ArrayUtils.ZERO_LENGTH_ARRAY,
+                        "modules.resources.network.resource.title", ArrayUtils.EMPTY_ARRAY,
                         "modules.resources.network.resource", new Object[]{url});
             } else {
                 errorService.addInternationalizedError(
-                        "modules.resources.network.internet.title", ArrayUtils.ZERO_LENGTH_ARRAY,
+                        "modules.resources.network.internet.title", ArrayUtils.EMPTY_ARRAY,
                         "modules.resources.network.internet", new Object[]{url});
             }
 
