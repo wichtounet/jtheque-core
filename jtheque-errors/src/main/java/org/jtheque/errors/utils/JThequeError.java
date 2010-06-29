@@ -3,10 +3,6 @@ package org.jtheque.errors.utils;
 import org.jtheque.errors.able.IError;
 import org.jtheque.i18n.able.ILanguageService;
 
-import org.jdesktop.swingx.error.ErrorInfo;
-
-import java.util.logging.Level;
-
 /*
  * Copyright JTheque (Baptiste Wicht)
  *
@@ -29,31 +25,43 @@ import java.util.logging.Level;
  * @author Baptiste Wicht
  */
 public class JThequeError implements IError {
-    private final String message;
-    private Throwable exception;
-    private String details;
+    final String title;
+    Throwable exception;
+    String details;
+    Level level;
 
     /**
      * Construct a new Error with a simple message.
      *
-     * @param message The message of the error.
+     * @param title The message of the error.
      */
-    public JThequeError(String message) {
+    public JThequeError(String title) {
         super();
 
-        this.message = message;
+        this.title = title;
+
+        level = Level.ERROR;
+    }
+
+    public JThequeError(String title, Level level) {
+        super();
+
+        this.title = title;
+        this.level = level;
     }
 
     /**
      * Construct a new Error with a message and some details.
      *
-     * @param message The message of the error.
+     * @param title The message of the error.
      * @param details Some details about the error.
      */
-    public JThequeError(String message, String details) {
-        this(message);
+    public JThequeError(String title, String details) {
+        this(title);
 
         this.details = details;
+
+        level = Level.ERROR;
     }
 
     /**
@@ -65,49 +73,56 @@ public class JThequeError implements IError {
         this(exception.getMessage());
 
         this.exception = exception;
+
+        level = Level.ERROR;
     }
 
     /**
      * Construct a new Error from an existing exception with a specific message.
      *
      * @param exception The exception to encapsulate in the error.
-     * @param message   The message.
+     * @param title   The message.
      */
-    public JThequeError(Throwable exception, String message) {
-        this(message);
+    public JThequeError(Throwable exception, String title) {
+        this(title);
 
         this.exception = exception;
-    }
 
-    /**
-     * Return the message of the error.
-     *
-     * @return The message of the error.
-     */
-    public String getMessage() {
-        return message;
-    }
-
-    /**
-     * Return the exception of the error.
-     *
-     * @return The exception who cause this error.
-     */
-    public final Throwable getException() {
-        return exception;
-    }
-
-    /**
-     * Return the details of the error.
-     *
-     * @return The details of the error.
-     */
-    public String getDetails() {
-        return details;
+        level = Level.ERROR;
     }
 
     @Override
-    public ErrorInfo toErrorInfo(ILanguageService languageService) {
-        return new ErrorInfo(message, message, details, "", exception, Level.SEVERE, null);
+    public Level getLevel() {
+        return level;
+    }
+
+    @Override
+    public String getTitle(ILanguageService languageService) {
+        return title;
+    }
+
+    @Override
+    public String getDetails(ILanguageService languageService) {
+        if(exception != null){
+            return details == null ? "" : details +
+                    '\n' + exception.getMessage() +
+                    '\n' + getCustomStackTrace(exception);
+        }
+
+        return details;
+    }
+
+    static String getCustomStackTrace(Throwable aThrowable) {
+        final StringBuilder result = new StringBuilder(500);
+
+        result.append(aThrowable.toString());
+        result.append('\n');
+
+        for (StackTraceElement element : aThrowable.getStackTrace()) {
+            result.append(element);
+            result.append('\n');
+        }
+
+        return result.toString();
     }
 }

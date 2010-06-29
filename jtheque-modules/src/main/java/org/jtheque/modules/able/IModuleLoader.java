@@ -40,4 +40,6 @@ public interface IModuleLoader {
      * @return The installed module.
      */
     Module installModule(File file);
+
+    void uninstallModule(Module module);
 }

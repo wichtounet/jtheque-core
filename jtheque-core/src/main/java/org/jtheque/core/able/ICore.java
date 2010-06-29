@@ -30,7 +30,7 @@ import java.util.Collection;
 public interface ICore extends Versionable {
     Version VERSION = new Version("2.1.0");
 
-    String DESCRIPTOR_FILE_URL = "http://jtheque.developpez.com/descriptors/jtheque-core.xml";
+    String DESCRIPTOR_FILE_URL = "http://jtheque.baptiste-wicht.com/files/descriptors/jtheque-core.xml";
     String HELP_URL = "http://jtheque.developpez.com/";
 
     String WINDOW_ICON = "jtheque-core-window-icon";

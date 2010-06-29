@@ -16,6 +16,7 @@ package org.jtheque.views.impl.windows;
  * limitations under the License.
  */
 
+import org.jtheque.i18n.able.ILanguageService;
 import org.jtheque.modules.able.IModuleDescription;
 import org.jtheque.modules.able.IModuleService;
 import org.jtheque.ui.able.IModel;
@@ -23,6 +24,7 @@ import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.ui.utils.builders.PanelBuilder;
 import org.jtheque.ui.utils.models.SimpleListModel;
 import org.jtheque.ui.utils.windows.dialogs.SwingFilthyBuildedDialogView;
+import org.jtheque.update.able.IUpdateService;
 import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.utils.ui.SwingUtils;
 import org.jtheque.views.able.panel.IRepositoryView;
@@ -45,6 +47,12 @@ public final class RepositoryView extends SwingFilthyBuildedDialogView<IModel> i
     @Resource
     private IModuleService moduleService;
 
+    @Resource
+    private ILanguageService languageService;
+
+    @Resource
+    private IUpdateService updateService;
+
     @Override
     protected void initView() {
         setTitleKey("repository.view.title", moduleService.getRepository().getApplication());
@@ -57,7 +65,8 @@ public final class RepositoryView extends SwingFilthyBuildedDialogView<IModel> i
                 builder.gbcSet(0, 0, GridBagUtils.HORIZONTAL));
 
         list = builder.addScrolledList(new SimpleListModel<IModuleDescription>(moduleService.getModulesFromRepository()),
-                new ModuleRepositoryListRenderer(), builder.gbcSet(0, 1, GridBagUtils.BOTH));
+                new ModuleRepositoryListRenderer(moduleService, languageService, updateService),
+                builder.gbcSet(0, 1, GridBagUtils.BOTH));
 
         builder.addButtonBar(builder.gbcSet(0, 2, GridBagUtils.HORIZONTAL),
                 new ExpandRepositoryModuleAction(this),

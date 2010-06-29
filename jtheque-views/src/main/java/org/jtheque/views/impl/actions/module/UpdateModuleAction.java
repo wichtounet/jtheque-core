@@ -1,6 +1,10 @@
 package org.jtheque.views.impl.actions.module;
 
+import org.jtheque.errors.able.IErrorService;
 import org.jtheque.modules.able.Module;
+import org.jtheque.ui.able.IUIUtils;
+import org.jtheque.update.able.IUpdateService;
+import org.jtheque.views.able.IViews;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -27,8 +31,8 @@ public final class UpdateModuleAction extends AbstractUpdateAction {
     /**
      * Construct a new UpdateModuleAction.
      */
-    public UpdateModuleAction() {
-        super("modules.actions.update");
+    public UpdateModuleAction(IUpdateService updateService, IErrorService errorService, IUIUtils uiUtils, IViews views) {
+        super("modules.actions.update", updateService, uiUtils, views);
     }
 
     @Override

@@ -77,14 +77,10 @@ public final class StopModuleAction extends JThequeAction {
                 @Override
                 public void run() {
                     moduleView.startWait();
-
-                    Thread starter = new Thread(new StopModuleRunnable(module));
-                    starter.setName("Module unloader");
-                    starter.start();
                 }
             });
 
-            moduleView.refreshList();
+            new Thread(new StopModuleRunnable(module), "Module unloader").start();
         } else {
             uiUtils.displayI18nText("error.module.not.started");
         }

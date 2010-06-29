@@ -33,6 +33,7 @@ import org.jtheque.update.able.IUpdateService;
 import org.jtheque.update.impl.versions.IVersionsLoader;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.bean.Version;
+import org.jtheque.utils.collections.ArrayUtils;
 import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.io.FileException;
 import org.jtheque.utils.io.WebUtils;
@@ -47,10 +48,10 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * Manage the update of the application. This class can go on internet to verify if a more recent version of
- * JTheque is available and download one new version if there is one.
- *
- * This service manage also the updates of the modules. 
+ * Manage the update of the application. This class can go on internet to verify if a more recent version of JTheque is
+ * available and download one new version if there is one.
+ * <p/>
+ * This service manage also the updates of the modules.
  *
  * @author Baptiste Wicht
  */
@@ -95,7 +96,7 @@ public final class UpdateService implements IUpdateService {
     public InstallationResult install(String url) {
         InstallationResult result = new InstallationResult();
 
-        if(WebUtils.isURLReachable(url)){
+        if (WebUtils.isURLReachable(url)) {
             try {
                 ModuleVersion moduleVersion = versionsLoader.getMostRecentModuleVersion(url);
 
@@ -108,11 +109,7 @@ public final class UpdateService implements IUpdateService {
                 result.setInstalled(false);
             }
         } else {
-            if (WebUtils.isInternetReachable()) {
-                errorService.addInternationalizedError("modules.updates.network.resource", url);
-            } else {
-                errorService.addInternationalizedError("modules.updates.network.internet", url);
-            }
+            addNotReachableError(url);
 
             eventService.addEvent(IEventService.CORE_EVENT_LOG,
                     new Event(EventLevel.ERROR, "System", "events.updates.network"));
@@ -123,9 +120,21 @@ public final class UpdateService implements IUpdateService {
         return result;
     }
 
+    private void addNotReachableError(String url) {
+        if (WebUtils.isInternetReachable()) {
+            errorService.addInternationalizedError(
+                    "modules.updates.network.resource.title", ArrayUtils.EMPTY_ARRAY,
+                    "modules.updates.network.resource", new Object[]{url});
+        } else {
+            errorService.addInternationalizedError(
+                    "modules.updates.network.internet.title", ArrayUtils.EMPTY_ARRAY,
+                    "modules.updates.network.internet", new Object[]{url});
+        }
+    }
+
     @Override
     public void update(Versionable object, Version version) {
-        if(isDescriptorNotReachable(object)){
+        if (isDescriptorNotReachable(object)) {
             return;
         }
 
@@ -145,15 +154,11 @@ public final class UpdateService implements IUpdateService {
     }
 
     private boolean isDescriptorNotReachable(Versionable object) {
-        if(WebUtils.isURLReachable(object.getDescriptorURL())){
+        if (WebUtils.isURLReachable(object.getDescriptorURL())) {
             return false;
         }
 
-        if (WebUtils.isInternetReachable()) {
-            errorService.addInternationalizedError("modules.updates.network.resource", object.getDescriptorURL());
-        } else {
-            errorService.addInternationalizedError("modules.updates.network.internet", object.getDescriptorURL());
-        }
+        addNotReachableError(object.getDescriptorURL());
 
         eventService.addEvent(IEventService.CORE_EVENT_LOG,
                 new Event(EventLevel.ERROR, "System", "events.updates.network"));
@@ -163,11 +168,11 @@ public final class UpdateService implements IUpdateService {
 
     private void applyModuleVersion(ModuleVersion moduleVersion) {
         try {
-            if(StringUtils.isNotEmpty(moduleVersion.getModuleFile())){
+            if (StringUtils.isNotEmpty(moduleVersion.getModuleFile())) {
                 WebUtils.downloadFile(moduleVersion.getModuleURL(),
                         new File(core.getFolders().getModulesFolder(), moduleVersion.getModuleFile()).getAbsolutePath());
             }
-            
+
             downloadResources(moduleVersion.getFiles());
             downloadResources(moduleVersion.getLibraries());
         } catch (FileException e) {
@@ -194,7 +199,7 @@ public final class UpdateService implements IUpdateService {
 
     @Override
     public List<String> getPossibleUpdates() {
-        if(!WebUtils.isInternetReachable()){
+        if (!WebUtils.isInternetReachable()) {
             errorService.addInternationalizedError("internet.necessary");
 
             return CollectionUtils.emptyList();
@@ -202,24 +207,15 @@ public final class UpdateService implements IUpdateService {
 
         List<String> messages = new ArrayList<String>(2);
 
-        if (!isCurrentVersionUpToDate()) {
-            messages.add("dialogs.propose.update");
-        }
-
         if (!isAModuleNotUpToDate()) {
             messages.add("dialogs.propose.module.update");
         }
 
-        return messages;
-    }
-
-    @Override
-    public boolean isCurrentVersionUpToDate() {
-        if (isDescriptorNotReachable(core)) {
-            return true;
+        if (!isCurrentVersionUpToDate()) {
+            messages.add("dialogs.propose.update");
         }
 
-        return isUpToDate(core);
+        return messages;
     }
 
     /**
@@ -238,8 +234,13 @@ public final class UpdateService implements IUpdateService {
     }
 
     @Override
+    public boolean isCurrentVersionUpToDate() {
+        return isUpToDate(core);
+    }
+
+    @Override
     public boolean isUpToDate(Versionable object) {
-        if (isDescriptorNotReachable(core)) {
+        if (isDescriptorNotReachable(object)) {
             return true;
         }
 
@@ -254,7 +255,7 @@ public final class UpdateService implements IUpdateService {
 
     @Override
     public void updateToMostRecentVersion(Module module) {
-        if (isDescriptorNotReachable(core)) {
+        if (isDescriptorNotReachable(module)) {
             return;
         }
 
@@ -270,8 +271,13 @@ public final class UpdateService implements IUpdateService {
     }
 
     @Override
+    public Version getMostRecentCoreVersion() {
+        return getMostRecentVersion(core);
+    }
+
+    @Override
     public Version getMostRecentVersion(Versionable object) {
-        if (isDescriptorNotReachable(core)) {
+        if (isDescriptorNotReachable(object)) {
             return null;
         }
 
@@ -280,15 +286,10 @@ public final class UpdateService implements IUpdateService {
 
     @Override
     public Collection<Version> getVersions(Versionable object) {
-        if (isDescriptorNotReachable(core)) {
+        if (isDescriptorNotReachable(object)) {
             return null;
         }
 
         return versionsLoader.getVersions(object);
-    }
-
-    @Override
-    public Version getMostRecentCoreVersion() {
-        return getMostRecentVersion(core);
     }
 }

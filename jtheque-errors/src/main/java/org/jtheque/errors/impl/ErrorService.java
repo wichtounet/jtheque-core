@@ -43,13 +43,24 @@ public final class ErrorService implements IErrorService {
     }
 
     @Override
-    public void addInternationalizedError(String messageKey) {
-        addError(new InternationalizedError(messageKey));
+    public void addInternationalizedError(String titleKey) {
+        addError(new InternationalizedError(titleKey));
     }
 
     @Override
-    public void addInternationalizedError(String messageKey, Object... messageReplaces) {
-        addError(new InternationalizedError(messageKey, messageReplaces));
+    public void addInternationalizedError(String titleKey, Object[] titleReplaces) {
+        addError(new InternationalizedError(titleKey, titleReplaces));
+    }
+
+    @Override
+    public void addInternationalizedError(String titleKey, Object[] titleReplaces, String detailsKey) {
+        addError(new InternationalizedError(titleKey, titleReplaces, detailsKey));
+    }
+
+    @Override
+    public void addInternationalizedError(String titleKey, Object[] titleReplaces, String detailsKey,
+                                          Object[] detailsReplaces) {
+        addError(new InternationalizedError(titleKey, titleReplaces, detailsKey, detailsReplaces));
     }
 
     @Override

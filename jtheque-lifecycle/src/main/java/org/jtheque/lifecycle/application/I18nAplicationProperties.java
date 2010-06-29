@@ -76,6 +76,6 @@ public final class I18nAplicationProperties implements ApplicationProperties {
      * @return The String value of the message with the specified key.
      */
     private String getMessage(String key) {
-        return resourceBundle.getMessage(key, ArrayUtils.ZERO_LENGTH_ARRAY, Locale.getDefault());
+        return resourceBundle.getMessage(key, ArrayUtils.EMPTY_ARRAY, Locale.getDefault());
     }
 }

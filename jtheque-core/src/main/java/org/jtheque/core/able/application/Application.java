@@ -3,8 +3,6 @@ package org.jtheque.core.able.application;
 import org.jtheque.core.utils.ImageType;
 import org.jtheque.utils.bean.Version;
 
-import java.util.Set;
-
 /*
  * Copyright JTheque (Baptiste Wicht)
  *
@@ -140,18 +138,4 @@ public interface Application {
      * @return The value of the property or empty string if there is no property with this key.
      */
     String getProperty(String key);
-
-    /**
-     * Indicate if the application allows module discovery.
-     *
-     * @return true if the application allows module discovery.
-     */
-    boolean isModuleDiscovery();
-
-    /**
-     * Return the modules configured in the application.
-     *
-     * @return A Set containing all the modules configured in the application.
-     */
-    Set<String> getModules();
 }

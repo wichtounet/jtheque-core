@@ -17,14 +17,17 @@ package org.jtheque.views.impl.components.panel;
  */
 
 import org.jtheque.core.able.ICore;
+import org.jtheque.errors.able.IErrorService;
 import org.jtheque.i18n.able.ILanguageService;
 import org.jtheque.ui.able.IFilthyUtils;
+import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.ui.utils.builded.FilthyBuildedPanel;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.ui.utils.builders.PanelBuilder;
 import org.jtheque.update.able.IUpdateService;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.ui.GridBagUtils;
+import org.jtheque.views.able.IViews;
 import org.jtheque.views.impl.actions.module.UpdateKernelAction;
 
 import java.awt.Insets;
@@ -36,7 +39,11 @@ import java.awt.Insets;
  */
 public final class KernelInfoPanel extends FilthyBuildedPanel {
     private static final int TITLE_FONT_SIZE = 16;
+    
     private final IUpdateService updateService;
+    private final IErrorService errorService;
+    private final IUIUtils uiUtils;
+    private final IViews views;
 
     /**
      * Construct a new KernelInfoPanel.
@@ -45,10 +52,14 @@ public final class KernelInfoPanel extends FilthyBuildedPanel {
      * @param filthyUtils     The filthy utils.
      * @param updateService   The update service.
      */
-    public KernelInfoPanel(ILanguageService languageService, IFilthyUtils filthyUtils, IUpdateService updateService) {
+    public KernelInfoPanel(ILanguageService languageService, IFilthyUtils filthyUtils, IUpdateService updateService,
+                           IErrorService errorService, IUIUtils uiUtils, IViews views) {
         super(filthyUtils, languageService);
 
         this.updateService = updateService;
+        this.errorService = errorService;
+        this.uiUtils = uiUtils;
+        this.views = views;
 
         build();
 
@@ -75,6 +86,7 @@ public final class KernelInfoPanel extends FilthyBuildedPanel {
             builder.addLabel(version.getVersion(), getForeground(), builder.gbcSet(2, 1));
         }
 
-        builder.addButton(new UpdateKernelAction(), builder.gbcSet(4, 0, GridBagUtils.NONE, GridBagUtils.LINE_START, 1, 3));
+        builder.addButton(new UpdateKernelAction(updateService, errorService, uiUtils, views),
+                builder.gbcSet(4, 0, GridBagUtils.NONE, GridBagUtils.LINE_START, 1, 3));
     }
 }

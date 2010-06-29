@@ -42,11 +42,8 @@ public final class XMLApplication implements Application {
     private ImageDescriptor logo;
 
     private boolean displayLicence;
-    private boolean moduleDiscovery;
 
     private String[] supportedLanguages = {"fr", "en"};
-
-    private final Set<String> modules = new HashSet<String>(5);
 
     private final Map<String, String> properties = new HashMap<String, String>(5);
 
@@ -130,16 +127,6 @@ public final class XMLApplication implements Application {
         return getProperty("application.folder.path");
     }
 
-    @Override
-    public boolean isModuleDiscovery() {
-        return moduleDiscovery;
-    }
-
-    @Override
-    public Set<String> getModules() {
-        return modules;
-    }
-
     //Package protected methods to fill the application
 
     /**
@@ -195,14 +182,5 @@ public final class XMLApplication implements Application {
     void setImages(ImageDescriptor logo, String icon) {
         this.logo = logo;
         this.icon = icon;
-    }
-
-    /**
-     * Set if the application allows auto discovery of new modules.
-     *
-     * @param discovery A boolean tag indicating if the application allows auto discovery.
-     */
-    public void setAutoDiscovery(boolean discovery) {
-        moduleDiscovery = discovery;
     }
 }

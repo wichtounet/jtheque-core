@@ -6,6 +6,7 @@ import org.jtheque.resources.impl.DescriptorReader;
 import org.jtheque.resources.impl.ModuleDescriptor;
 import org.jtheque.resources.impl.ModuleVersion;
 import org.jtheque.utils.bean.Version;
+import org.jtheque.utils.collections.ArrayUtils;
 import org.jtheque.utils.collections.CollectionUtils;
 
 import javax.annotation.Resource;
@@ -103,7 +104,9 @@ public final class DescriptorsLoader implements IVersionsLoader {
             cache.put(url, DescriptorReader.readModuleDescriptor(url));
 
             if (!cache.containsKey(url)) {
-                errorService.addInternationalizedError("error.update.internet");
+                errorService.addInternationalizedError(
+                        "error.update.internet.title", ArrayUtils.EMPTY_ARRAY,
+                        "error.update.internet");
             }
         }
 

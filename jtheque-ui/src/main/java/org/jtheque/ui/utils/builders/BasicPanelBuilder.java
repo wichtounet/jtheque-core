@@ -134,7 +134,6 @@ public class BasicPanelBuilder extends AbstractPanelBuilder {
         JList list = new JList(model);
         list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         list.setVisibleRowCount(12);
-        list.setValueIsAdjusting(true);
 
         if (renderer != null) {
             list.setCellRenderer(renderer);

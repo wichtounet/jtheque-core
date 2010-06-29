@@ -1,4 +1,4 @@
-package org.jtheque.ui.utils.windows.dialogs;
+package org.jtheque.ui.utils.windows.frames;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -22,14 +22,12 @@ import org.jtheque.ui.utils.builders.FilthyPanelBuilder;
 import org.jtheque.ui.utils.builders.JThequePanelBuilder;
 import org.jtheque.ui.utils.filthy.FilthyBackgroundPanel;
 
-import java.awt.Frame;
-
 /**
  * A swing dialog view.
  *
  * @author Baptiste Wicht
  */
-public abstract class SwingFilthyBuildedDialogView<T extends IModel> extends SwingBuildedDialogView<T> {
+public abstract class SwingFilthyBuildedFrameView<T extends IModel> extends SwingBuildedFrameView<T> {
     @Override
     JThequePanelBuilder createBuilder() {
         return new FilthyPanelBuilder(new FilthyBackgroundPanel(getService(IFilthyUtils.class)));

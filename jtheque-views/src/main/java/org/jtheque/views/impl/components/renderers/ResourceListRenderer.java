@@ -20,6 +20,7 @@ import org.jtheque.resources.able.IResource;
 import org.jtheque.ui.utils.builders.FilthyPanelBuilder;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.ui.utils.builders.PanelBuilder;
+import org.jtheque.ui.utils.components.Borders;
 import org.jtheque.utils.ui.GridBagUtils;
 
 import javax.swing.JLabel;
@@ -49,6 +50,7 @@ public final class ResourceListRenderer extends JPanel implements ListCellRender
         super();
 
         I18nPanelBuilder builder = new FilthyPanelBuilder(this);
+        builder.setBorder(Borders.createEmptyBorder(2, 2, 2, 10));
 
         labelName = builder.addLabel("", PanelBuilder.BOLD, TITLE_FONT_SIZE, builder.gbcSet(0, 0,
                 GridBagUtils.HORIZONTAL, GridBagUtils.BASELINE, 0, 1, 1.0, 0.0));

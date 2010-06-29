@@ -170,7 +170,6 @@ public final class FilthyPanelBuilder extends JThequePanelBuilder {
 
         list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         list.setVisibleRowCount(10);
-        list.setValueIsAdjusting(true);
 
         if (renderer != null) {
             list.setCellRenderer(renderer);

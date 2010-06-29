@@ -1,4 +1,4 @@
-package org.jtheque.ui.utils.windows.dialogs;
+package org.jtheque.ui.utils.windows.frames;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -20,18 +20,16 @@ import org.jtheque.i18n.able.ILanguageService;
 import org.jtheque.ui.able.IModel;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.ui.utils.builders.JThequePanelBuilder;
+import org.jtheque.ui.utils.windows.dialogs.SwingDialogView;
 
 import javax.swing.JComponent;
-
-import java.awt.Container;
-import java.awt.Frame;
 
 /**
  * A swing dialog view.
  *
  * @author Baptiste Wicht
  */
-public abstract class SwingBuildedDialogView<T extends IModel> extends SwingDialogView<T> {
+public abstract class SwingBuildedFrameView<T extends IModel> extends SwingFrameView<T> {
     @Override
     protected final void init() {
         initView();

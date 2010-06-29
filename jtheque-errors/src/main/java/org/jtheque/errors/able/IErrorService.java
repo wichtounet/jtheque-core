@@ -1,5 +1,7 @@
 package org.jtheque.errors.able;
 
+import org.jtheque.errors.utils.InternationalizedError;
+
 import java.util.List;
 
 /*
@@ -34,17 +36,19 @@ public interface IErrorService {
     /**
      * Add an internationalizable error.
      *
-     * @param messageKey the internationalized key.
+     * @param titleKey the internationalized key.
      */
-    void addInternationalizedError(String messageKey);
+    void addInternationalizedError(String titleKey);
 
     /**
      * Add an internationalizable error.
      *
-     * @param messageKey      the internationalized key.
-     * @param messageReplaces the object to use in replaces.
+     * @param titleKey      the internationalized key.
+     * @param titleReplaces the object to use in replaces.
      */
-    void addInternationalizedError(String messageKey, Object... messageReplaces);
+    void addInternationalizedError(String titleKey, Object[] titleReplaces);
+    void addInternationalizedError(String titleKey, Object[] titleReplaces, String detailsKey);
+    void addInternationalizedError(String titleKey, Object[] titleReplaces, String detailsKey, Object[] detailsReplaces);
 
     /**
      * Return all the errors occurred in this session.

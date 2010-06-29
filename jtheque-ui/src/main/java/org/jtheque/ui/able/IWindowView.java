@@ -21,7 +21,7 @@ package org.jtheque.ui.able;
  *
  * @author Baptiste Wicht
  */
-public interface IWindowView extends IView {
+public interface IWindowView extends IView, WaitableView {
     /**
      * Return the width of the window.
      *

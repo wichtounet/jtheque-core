@@ -9,6 +9,7 @@ import org.jtheque.resources.able.IResource;
 import org.jtheque.resources.able.IResourceService;
 import org.jtheque.states.able.IStateService;
 import org.jtheque.utils.bean.Version;
+import org.jtheque.utils.collections.ArrayUtils;
 import org.jtheque.utils.io.FileException;
 import org.jtheque.utils.io.WebUtils;
 import org.jtheque.utils.ui.SwingUtils;
@@ -111,10 +112,14 @@ public class ResourceService implements IResourceService, BundleContextAware {
         SwingUtils.assertNotEDT("downloadResource(String, Version)");
 
         if(!WebUtils.isURLReachable(url)){
-            if(WebUtils.isInternetReachable()){
-                errorService.addInternationalizedError("modules.resources.network.resource", url);
+            if (WebUtils.isInternetReachable()) {
+                errorService.addInternationalizedError(
+                        "modules.resources.network.resource.title", ArrayUtils.EMPTY_ARRAY,
+                        "modules.resources.network.resource", new Object[]{url});
             } else {
-                errorService.addInternationalizedError("modules.resources.network.internet", url);
+                errorService.addInternationalizedError(
+                        "modules.resources.network.internet.title", ArrayUtils.EMPTY_ARRAY,
+                        "modules.resources.network.internet", new Object[]{url});
             }
 
             eventService.addEvent(IEventService.CORE_EVENT_LOG,

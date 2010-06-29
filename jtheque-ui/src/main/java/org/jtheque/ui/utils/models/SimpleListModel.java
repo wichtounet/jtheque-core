@@ -91,25 +91,8 @@ public class SimpleListModel<T> extends AbstractListModel implements ComboBoxMod
      *
      * @param element The element to add.
      */
-    public void addElement(T element) {
-        int index = objects.size();
-
-        objects.add(element);
-
-        fireIntervalAdded(this, index, getSize());
-    }
-
-    /**
-     * Add the element to the model.
-     *
-     * @param element The element to add.
-     */
     public void removeElement(T element) {
-        int index = objects.size();
-
-        objects.remove(element);
-
-        fireIntervalRemoved(this, index, getSize());
+        removeElement(getIndexOfElement(element));
     }
 
     /**
@@ -122,9 +105,22 @@ public class SimpleListModel<T> extends AbstractListModel implements ComboBoxMod
     public T removeElement(int index) {
         T removed = objects.remove(index);
 
-        fireIntervalRemoved(this, index, index);
+        fireContentsChanged(this, index, index);
 
         return removed;
+    }
+
+    /**
+     * Add the element to the model.
+     *
+     * @param element The element to add.
+     */
+    public void addElement(T element) {
+        int index = objects.size();
+
+        objects.add(element);
+
+        fireIntervalAdded(this, index, getSize());
     }
 
     /**

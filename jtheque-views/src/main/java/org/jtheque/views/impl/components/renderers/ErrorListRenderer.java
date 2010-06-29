@@ -16,10 +16,11 @@ package org.jtheque.views.impl.components.renderers;
  * limitations under the License.
  */
 
+import org.jtheque.errors.able.IError;
+import org.jtheque.errors.able.IError.Level;
+import org.jtheque.i18n.able.ILanguageService;
 import org.jtheque.images.able.IImageService;
 import org.jtheque.views.impl.ViewsResources;
-
-import org.jdesktop.swingx.error.ErrorInfo;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -28,7 +29,6 @@ import javax.swing.ListCellRenderer;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.util.logging.Level;
 
 /**
  * A renderer to display a module in a list.
@@ -38,14 +38,17 @@ import java.util.logging.Level;
 public final class ErrorListRenderer extends JLabel implements ListCellRenderer {
     private final ImageIcon errorIcon;
     private final ImageIcon warningIcon;
+    private final ILanguageService languageService;
 
     /**
      * Construct a new ModuleListRenderer.
      *
      * @param imageService The resource service.
      */
-    public ErrorListRenderer(IImageService imageService) {
+    public ErrorListRenderer(IImageService imageService, ILanguageService languageService) {
         super();
+
+        this.languageService = languageService;
 
         errorIcon = imageService.getIcon(ViewsResources.ERROR_ICON);
         warningIcon = imageService.getIcon(ViewsResources.WARNING_ICON);
@@ -61,11 +64,11 @@ public final class ErrorListRenderer extends JLabel implements ListCellRenderer 
             setForeground(Color.white);
         }
 
-        ErrorInfo error = (ErrorInfo) value;
+        IError error = (IError) value;
 
-        setText(error.getTitle());
+        setText(error.getTitle(languageService));
 
-        if (error.getErrorLevel() == Level.WARNING) {
+        if (error.getLevel() == Level.WARNING) {
             setIcon(warningIcon);
         } else {
             setIcon(errorIcon);

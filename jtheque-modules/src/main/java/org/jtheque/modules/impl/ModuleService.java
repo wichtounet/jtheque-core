@@ -18,9 +18,7 @@ package org.jtheque.modules.impl;
 
 import org.jtheque.core.able.ICore;
 import org.jtheque.core.utils.WeakEventListenerList;
-import org.jtheque.i18n.able.I18NResource;
 import org.jtheque.i18n.able.ILanguageService;
-import org.jtheque.i18n.utils.I18NResourceFactory;
 import org.jtheque.images.able.IImageService;
 import org.jtheque.modules.able.IModuleDescription;
 import org.jtheque.modules.able.IModuleLoader;
@@ -31,7 +29,6 @@ import org.jtheque.modules.able.ModuleListener;
 import org.jtheque.modules.able.ModuleState;
 import org.jtheque.modules.able.Resources;
 import org.jtheque.modules.able.SwingLoader;
-import org.jtheque.modules.utils.I18NDescription;
 import org.jtheque.modules.utils.ImageDescription;
 import org.jtheque.modules.utils.ModuleResourceCache;
 import org.jtheque.states.able.IStateService;
@@ -39,6 +36,8 @@ import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.update.able.IUpdateService;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.collections.CollectionUtils;
+import org.jtheque.utils.io.CopyException;
+import org.jtheque.utils.io.FileUtils;
 import org.jtheque.utils.ui.SwingUtils;
 
 import org.osgi.framework.BundleException;
@@ -62,7 +61,6 @@ import java.util.Map;
 public final class ModuleService implements IModuleService {
     private final WeakEventListenerList listeners = new WeakEventListenerList();
     private final List<Module> modules = new ArrayList<Module>(10);
-    private final Collection<Module> modulesToLoad = new ArrayList<Module>(10);
     private final Map<String, SwingLoader> loaders = new HashMap<String, SwingLoader>(10);
 
     private final IModuleLoader moduleLoader;
@@ -85,13 +83,13 @@ public final class ModuleService implements IModuleService {
     private IStateService stateService;
 
     @Resource
-    private ILanguageService languageService;
-
-    @Resource
     private IImageService imageService;
 
     @Resource
     private IUpdateService updateService;
+
+    @Resource
+    private ILanguageService languageService;
 
     @Resource
     private IUIUtils uiUtils;
@@ -110,6 +108,8 @@ public final class ModuleService implements IModuleService {
         super();
 
         this.moduleLoader = moduleLoader;
+
+        Runtime.getRuntime().addShutdownHook(new ModuleStopHook());
     }
 
     @Override
@@ -118,41 +118,27 @@ public final class ModuleService implements IModuleService {
 
         modules.addAll(moduleLoader.loadModules());
 
-        configureModules();
+        configuration = stateService.getState(new ModuleConfiguration());
 
-        addLoadableModules();
+        CollectionUtils.filter(modules, new CoreVersionFilter(core, uiUtils));
+        CollectionUtils.sort(modules, new ModuleComparator());
 
         for (Module module : modules) {
-            setState(module, ModuleState.INSTALLED);
+            //Configuration
+            if (configuration.containsModule(module)) {
+                module.setState(configuration.getState(module.getId()));
+            } else {
+                module.setState(ModuleState.INSTALLED);
+                configuration.add(module);
+            }
 
+            //Colllection modules
             if (module.isCollection()) {
                 collectionModule = true;
             }
 
+            //Indicate the module as installed
             fireModuleInstalled(module);
-        }
-    }
-
-    /**
-     * Configure the modules.
-     */
-    private void configureModules() {
-        configuration = stateService.getState(new ModuleConfiguration());
-
-        CollectionUtils.filter(modules, new ConfigurationFilter(configuration, core.getApplication()));
-        CollectionUtils.filter(modules, new CoreVersionFilter(core, uiUtils));
-
-        CollectionUtils.sort(modules, new ModuleComparator());
-    }
-
-    /**
-     * Add the loadable modules to the modules to load list.
-     */
-    private void addLoadableModules() {
-        for (Module module : modules) {
-            if (canBeLoaded(module) && areAllDependenciesSatisfied(module)) {
-                modulesToLoad.add(module);
-            }
         }
     }
 
@@ -174,8 +160,10 @@ public final class ModuleService implements IModuleService {
     public void startModules() {
         SwingUtils.assertNotEDT("startModules()");
 
-        for (Module module : modulesToLoad) {
-            startModule(module);
+        for (Module module : modules) {
+            if (canBeLoaded(module) && areAllDependenciesSatisfied(module)) {
+                startModule(module);
+            }
         }
     }
 
@@ -184,7 +172,7 @@ public final class ModuleService implements IModuleService {
      */
     @Override
     public void stopModules() {
-        List<Module> modulesToUnplug = CollectionUtils.copyOf(modulesToLoad);
+        List<Module> modulesToUnplug = CollectionUtils.copyOf(modules);
 
         CollectionUtils.reverse(modulesToUnplug);
 
@@ -232,16 +220,13 @@ public final class ModuleService implements IModuleService {
         //Add images resources
         loadImageResources(module);
 
-        //Add i18n resources
-        loadI18NResources(module);
-
         try {
             module.getBundle().start();
         } catch (BundleException e) {
             LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
         }
 
-        if(loaders.containsKey(module.getId())){
+        if (loaders.containsKey(module.getId())) {
             loaders.get(module.getId()).afterAll();
             loaders.remove(module.getId());
         }
@@ -265,22 +250,6 @@ public final class ModuleService implements IModuleService {
         }
     }
 
-    private void loadI18NResources(Module container) {
-        for (I18NDescription i18NDescription : container.getResources().getI18NResources()) {
-            List<I18NResource> i18NResources = new ArrayList<I18NResource>(i18NDescription.getResources().size());
-
-            for (String resource : i18NDescription.getResources()) {
-                if (resource.startsWith("classpath:")) {
-                    i18NResources.add(I18NResourceFactory.fromURL(resource.substring(resource.lastIndexOf('/') + 1),
-                            container.getBundle().getResource(resource.substring(10))));
-                }
-            }
-
-            languageService.registerResource(i18NDescription.getName(), i18NDescription.getVersion(),
-                    i18NResources.toArray(new I18NResource[i18NResources.size()]));
-        }
-    }
-
     @Override
     public void stopModule(Module module) {
         SwingUtils.assertNotEDT("stopModule(Module)");
@@ -298,10 +267,6 @@ public final class ModuleService implements IModuleService {
         Resources resources = module.getResources();
 
         if (resources != null) {
-            for (I18NDescription i18NDescription : resources.getI18NResources()) {
-                languageService.releaseResource(i18NDescription.getName());
-            }
-
             for (ImageDescription imageDescription : resources.getImageResources()) {
                 imageService.releaseResource(imageDescription.getName());
             }
@@ -341,28 +306,66 @@ public final class ModuleService implements IModuleService {
         setState(module, ModuleState.DISABLED);
     }
 
-    /**
-     * Install a module.
-     *
-     * @param file The file of the module.
-     *
-     * @return true if the module has been installed, else false.
-     */
     @Override
-    public boolean installModule(File file) {
-        Module module = moduleLoader.installModule(file);
+    public void installModule(File file) {
+        File moduleFile = installModuleFile(file);
 
-        if (module == null) {
-            return false;
+        if(moduleFile != null){
+            Module module = moduleLoader.installModule(moduleFile);
+
+            if (module == null) {
+                FileUtils.delete(moduleFile);
+
+                uiUtils.displayI18nText("error.module.not.installed");
+            } else if (exists(module.getId())) {
+                uiUtils.displayI18nText("errors.module.install.already.exists");
+            } else {
+                module.setState(ModuleState.INSTALLED);
+
+                modules.add(module);
+                configuration.add(module);
+
+                fireModuleInstalled(module);
+
+                uiUtils.displayI18nText("message.module.installed");
+            }
+        }
+    }
+
+    private File installModuleFile(File file) {
+        File target = file;
+
+        if (!FileUtils.isFileInDirectory(file, core.getFolders().getModulesFolder())) {
+            target = new File(core.getFolders().getModulesFolder(), file.getName());
+
+            if (target.exists()) {
+                uiUtils.displayI18nText("errors.module.install.already.exists");
+
+                return null;
+            } else {
+                try {
+                    FileUtils.copy(file, target);
+                } catch (CopyException e) {
+                    LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
+
+                    uiUtils.displayI18nText("errors.module.install.copy");
+
+                    return null;
+                }
+            }
         }
 
-        modules.add(module);
+        return target;
+    }
 
-        fireModuleInstalled(module);
+    private boolean exists(String id) {
+        for(Module module : modules){
+            if(id.equals(module.getId())){
+                return true;
+            }
+        }
 
-        configuration.add(module);
-
-        return true;
+        return false;
     }
 
     @Override
@@ -384,22 +387,25 @@ public final class ModuleService implements IModuleService {
         }
     }
 
-    /**
-     * Uninstall a module. The module must be stopped before uninstall it.
-     *
-     * @param module The module to uninstall.
-     *
-     * @throws IllegalStateException If the module is started.
-     */
     @Override
     public void uninstallModule(Module module) {
         if (module.getState() == ModuleState.STARTED) {
-            throw new IllegalStateException("The module cannot be disabled when started. ");
+            stopModule(module);
         }
 
+        moduleLoader.uninstallModule(module);
+
         configuration.remove(module);
-        modulesToLoad.remove(module);
         modules.remove(module);
+
+        try {
+            module.getBundle().uninstall();
+        } catch (BundleException e) {
+            LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
+        }
+
+        //Delete the bundle file
+        FileUtils.delete(StringUtils.delete(module.getBundle().getLocation(), "file:"));
 
         fireModuleUninstalled(module);
 
@@ -541,5 +547,12 @@ public final class ModuleService implements IModuleService {
         }
 
         return true;
+    }
+
+    private final class ModuleStopHook extends Thread {
+        @Override
+        public void run() {
+            stopModules();
+        }
     }
 }

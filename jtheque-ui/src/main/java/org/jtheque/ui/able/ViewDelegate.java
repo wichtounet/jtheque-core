@@ -16,8 +16,6 @@ package org.jtheque.ui.able;
  * limitations under the License.
  */
 
-import org.jtheque.errors.utils.JThequeError;
-
 /**
  * @author Baptiste Wicht
  */
@@ -31,13 +29,6 @@ public interface ViewDelegate {
      * @return true if the user has answered yes else false.
      */
     boolean askUserForConfirmation(String text, String title);
-
-    /**
-     * Display an error.
-     *
-     * @param error The error to display.
-     */
-    void displayError(JThequeError error);
 
     /**
      * Display the text.

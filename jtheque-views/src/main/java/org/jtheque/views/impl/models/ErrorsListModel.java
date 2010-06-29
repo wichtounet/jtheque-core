@@ -35,10 +35,7 @@ package org.jtheque.views.impl.models;
 import org.jtheque.errors.able.ErrorListener;
 import org.jtheque.errors.able.IError;
 import org.jtheque.errors.able.IErrorService;
-import org.jtheque.i18n.able.ILanguageService;
 import org.jtheque.ui.utils.models.SimpleListModel;
-
-import org.jdesktop.swingx.error.ErrorInfo;
 
 import java.util.List;
 
@@ -47,32 +44,27 @@ import java.util.List;
  *
  * @author Baptiste Wicht
  */
-public final class ErrorsListModel extends SimpleListModel<ErrorInfo> implements ErrorListener {
-    private final ILanguageService languageService;
-
+public final class ErrorsListModel extends SimpleListModel<IError> implements ErrorListener {
     /**
      * Construct a new ErrorsListModel.
      *
-     * @param errorService    The error service.
-     * @param languageService The language service.
+     * @param errorService The error service.
      */
-    public ErrorsListModel(IErrorService errorService, ILanguageService languageService) {
+    public ErrorsListModel(IErrorService errorService) {
         super();
-
-        this.languageService = languageService;
 
         errorService.addErrorListener(this);
 
         List<IError> errorsList = errorService.getErrors();
 
         for (IError error : errorsList) {
-            addElement(error.toErrorInfo(languageService));
+            addElement(error);
         }
     }
 
     @Override
     public void errorOccurred(IError error) {
-        addElement(error.toErrorInfo(languageService));
+        addElement(error);
 
         fireContentsChanged(this, getSize() - 2, getSize());
     }

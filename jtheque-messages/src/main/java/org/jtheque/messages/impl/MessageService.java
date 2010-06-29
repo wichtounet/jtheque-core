@@ -29,6 +29,7 @@ import org.jtheque.modules.able.ModuleListener;
 import org.jtheque.modules.utils.ModuleResourceCache;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.bean.IntDate;
+import org.jtheque.utils.collections.ArrayUtils;
 import org.jtheque.utils.io.WebUtils;
 import org.jtheque.xml.utils.XMLException;
 
@@ -153,9 +154,13 @@ public final class MessageService implements IMessageService, ModuleListener {
             }
         } else {
             if (WebUtils.isInternetReachable()) {
-                errorService.addInternationalizedError("messages.network.resource", url);
+                errorService.addInternationalizedError(
+                        "messages.network.resource.title", ArrayUtils.EMPTY_ARRAY,
+                        "messages.network.resource", new Object[]{url});
             } else {
-                errorService.addInternationalizedError("messages.network.internet", url);
+                errorService.addInternationalizedError(
+                        "messages.network.internet.title", ArrayUtils.EMPTY_ARRAY,
+                        "messages.network.internet", new Object[]{url});
             }
 
             eventService.addEvent(IEventService.CORE_EVENT_LOG,
