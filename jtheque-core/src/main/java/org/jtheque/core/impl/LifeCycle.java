@@ -36,8 +36,6 @@ import org.jtheque.utils.DesktopUtils;
 public class LifeCycle implements ILifeCycle {
     private final WeakEventListenerList listenerList = new WeakEventListenerList();
 
-    private final Thread shutdownHook = new ApplicationShutDownHook();
-
     private String currentFunction;
     private String title = "JTheque";
 
@@ -55,6 +53,8 @@ public class LifeCycle implements ILifeCycle {
 
         this.eventService = eventService;
         this.core = core;
+
+        Runtime.getRuntime().addShutdownHook(new ApplicationShutDownHook());
     }
 
     @Override
@@ -64,18 +64,14 @@ public class LifeCycle implements ILifeCycle {
 
     @Override
     public void exit() {
-        releaseAll();
-
-        closeVM();
+        System.exit(0);
     }
 
     @Override
     public void restart() {
-        releaseAll();
-
         DesktopUtils.open(core.getFiles().getLauncherFile());
 
-        closeVM();
+        System.exit(0);
     }
 
     @Override
@@ -123,24 +119,6 @@ public class LifeCycle implements ILifeCycle {
         if (listener != null) {
             listenerList.remove(FunctionListener.class, listener);
         }
-    }
-
-    /**
-     * Start the exit process but not stop the application.
-     */
-    private void releaseAll() {
-        eventService.addEvent(IEventService.CORE_EVENT_LOG, new Event(EventLevel.INFO, "User", "events.close"));
-    }
-
-    /**
-     * Close the VM.
-     */
-    private void closeVM() {
-
-
-        Runtime.getRuntime().removeShutdownHook(shutdownHook);
-
-        System.exit(0);
     }
 
     /**
@@ -213,7 +191,7 @@ public class LifeCycle implements ILifeCycle {
 
         @Override
         public void run() {
-            exit();
+            eventService.addEvent(IEventService.CORE_EVENT_LOG, new Event(EventLevel.INFO, "User", "events.close"));
         }
     }
 }

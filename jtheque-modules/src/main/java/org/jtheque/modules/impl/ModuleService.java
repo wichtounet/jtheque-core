@@ -111,6 +111,8 @@ public final class ModuleService implements IModuleService {
         super();
 
         this.moduleLoader = moduleLoader;
+
+        Runtime.getRuntime().addShutdownHook(new ModuleStopHook());
     }
 
     @Override
@@ -119,49 +121,32 @@ public final class ModuleService implements IModuleService {
 
         modules.addAll(moduleLoader.loadModules());
 
-        configureModules();
-
-        addLoadableModules();
-
-        for (Module module : modules) {
-            setState(module, ModuleState.INSTALLED);
-
-            if (module.isCollection()) {
-                collectionModule = true;
-            }
-
-            fireModuleInstalled(module);
-        }
-    }
-
-    /**
-     * Configure the modules.
-     */
-    private void configureModules() {
         configuration = stateService.getState(new ModuleConfiguration());
 
+        CollectionUtils.filter(modules, new CoreVersionFilter(core, uiUtils));
+        CollectionUtils.sort(modules, new ModuleComparator());
+
         for(Module module : modules){
+            //Configuration
             if (configuration.containsModule(module)) {
                 module.setState(configuration.getState(module.getId()));
             } else  {
                 module.setState(ModuleState.INSTALLED);
                 configuration.add(module);
             }
-        }
-        
-        CollectionUtils.filter(modules, new CoreVersionFilter(core, uiUtils));
 
-        CollectionUtils.sort(modules, new ModuleComparator());
-    }
+            //Colllection modules
+            if (module.isCollection()) {
+                collectionModule = true;
+            }
 
-    /**
-     * Add the loadable modules to the modules to load list.
-     */
-    private void addLoadableModules() {
-        for (Module module : modules) {
+            //Loadable modules
             if (canBeLoaded(module) && areAllDependenciesSatisfied(module)) {
                 modulesToLoad.add(module);
             }
+
+            //Indicate the module as installed
+            fireModuleInstalled(module);
         }
     }
 
@@ -554,5 +539,12 @@ public final class ModuleService implements IModuleService {
         }
 
         return true;
+    }
+
+    private final class ModuleStopHook extends Thread {
+        @Override
+        public void run() {
+            stopModules();
+        }
     }
 }
