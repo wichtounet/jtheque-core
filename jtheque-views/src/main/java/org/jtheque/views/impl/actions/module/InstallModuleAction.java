@@ -31,20 +31,17 @@ import java.io.File;
  * @author Baptiste Wicht
  */
 public final class InstallModuleAction extends JThequeAction {
-    private final IUIUtils uiUtils;
     private final IModuleService moduleService;
 
     /**
      * Construct a new InstallModuleAction.
      *
      * @param moduleService The module service.
-     * @param uiUtils       The UI Utils.
      */
-    public InstallModuleAction(IModuleService moduleService, IUIUtils uiUtils) {
+    public InstallModuleAction(IModuleService moduleService) {
         super("modules.actions.new");
 
         this.moduleService = moduleService;
-        this.uiUtils = uiUtils;
     }
 
     @Override
@@ -52,13 +49,7 @@ public final class InstallModuleAction extends JThequeAction {
         File file = SwingUtils.chooseFile(new SimpleFilter("JAR File (*.jar)", "jar"));
 
         if (file != null) {
-            boolean installed = moduleService.installModule(file);
-
-            if (installed) {
-                uiUtils.displayI18nText("message.module.installed");
-            } else {
-                uiUtils.displayI18nText("error.module.not.installed");
-            }
+            moduleService.installModule(file);
         }
     }
 }

@@ -306,45 +306,66 @@ public final class ModuleService implements IModuleService {
         setState(module, ModuleState.DISABLED);
     }
 
-    /**
-     * Install a module.
-     *
-     * @param file The file of the module.
-     *
-     * @return true if the module has been installed, else false.
-     */
     @Override
-    public boolean installModule(File file) {
+    public void installModule(File file) {
+        File moduleFile = installModuleFile(file);
+
+        if(moduleFile != null){
+            Module module = moduleLoader.installModule(moduleFile);
+
+            if (module == null) {
+                FileUtils.delete(moduleFile);
+
+                uiUtils.displayI18nText("error.module.not.installed");
+            } else if (exists(module.getId())) {
+                uiUtils.displayI18nText("errors.module.install.already.exists");
+            } else {
+                module.setState(ModuleState.INSTALLED);
+
+                modules.add(module);
+                configuration.add(module);
+
+                fireModuleInstalled(module);
+
+                uiUtils.displayI18nText("message.module.installed");
+            }
+        }
+    }
+
+    private File installModuleFile(File file) {
         File target = file;
 
         if (!FileUtils.isFileInDirectory(file, core.getFolders().getModulesFolder())) {
             target = new File(core.getFolders().getModulesFolder(), file.getName());
 
-            try {
-                FileUtils.copy(file, target);
-            } catch (CopyException e) {
-                LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
+            if (target.exists()) {
+                uiUtils.displayI18nText("errors.module.install.already.exists");
 
-                return false;
+                return null;
+            } else {
+                try {
+                    FileUtils.copy(file, target);
+                } catch (CopyException e) {
+                    LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
+
+                    uiUtils.displayI18nText("errors.module.install.copy");
+
+                    return null;
+                }
             }
         }
 
-        Module module = moduleLoader.installModule(target);
+        return target;
+    }
 
-        if (module == null) {
-            FileUtils.delete(target);
-
-            return false;
+    private boolean exists(String id) {
+        for(Module module : modules){
+            if(id.equals(module.getId())){
+                return true;
+            }
         }
 
-        module.setState(ModuleState.INSTALLED);
-
-        modules.add(module);
-        configuration.add(module);
-
-        fireModuleInstalled(module);
-
-        return true;
+        return false;
     }
 
     @Override

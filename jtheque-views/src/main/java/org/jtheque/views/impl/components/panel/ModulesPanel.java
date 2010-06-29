@@ -82,7 +82,7 @@ public final class ModulesPanel extends OSGIFilthyBuildedPanel implements IModul
                 new UpdateModuleAction(updateService, errorService, uiUtils, views));
 
         builder.addButtonBar(builder.gbcSet(0, 3, GridBagUtils.HORIZONTAL, GridBagUtils.BASELINE_LEADING, 1.0, 0.0),
-                new InstallModuleAction(moduleService, uiUtils),
+                new InstallModuleAction(moduleService),
                 new StartModuleAction(moduleService, uiUtils, moduleView),
                 ActionFactory.createDisplayViewAction("modules.actions.repository", repositoryView));
     }

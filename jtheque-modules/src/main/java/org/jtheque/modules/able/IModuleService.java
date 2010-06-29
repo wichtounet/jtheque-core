@@ -112,7 +112,7 @@ public interface IModuleService {
      *
      * @return true if the module has been installed else false.
      */
-    boolean installModule(File file);
+    void installModule(File file);
 
     /**
      * Uninstall the module.
