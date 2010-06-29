@@ -18,9 +18,7 @@ package org.jtheque.modules.impl;
 
 import org.jtheque.core.able.ICore;
 import org.jtheque.core.utils.WeakEventListenerList;
-import org.jtheque.i18n.able.I18NResource;
 import org.jtheque.i18n.able.ILanguageService;
-import org.jtheque.i18n.utils.I18NResourceFactory;
 import org.jtheque.images.able.IImageService;
 import org.jtheque.modules.able.IModuleDescription;
 import org.jtheque.modules.able.IModuleLoader;
@@ -31,7 +29,6 @@ import org.jtheque.modules.able.ModuleListener;
 import org.jtheque.modules.able.ModuleState;
 import org.jtheque.modules.able.Resources;
 import org.jtheque.modules.able.SwingLoader;
-import org.jtheque.modules.utils.I18NDescription;
 import org.jtheque.modules.utils.ImageDescription;
 import org.jtheque.modules.utils.ModuleResourceCache;
 import org.jtheque.states.able.IStateService;
@@ -39,6 +36,7 @@ import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.update.able.IUpdateService;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.collections.CollectionUtils;
+import org.jtheque.utils.io.CopyException;
 import org.jtheque.utils.io.FileUtils;
 import org.jtheque.utils.ui.SwingUtils;
 
@@ -63,7 +61,6 @@ import java.util.Map;
 public final class ModuleService implements IModuleService {
     private final WeakEventListenerList listeners = new WeakEventListenerList();
     private final List<Module> modules = new ArrayList<Module>(10);
-    private final Collection<Module> modulesToLoad = new ArrayList<Module>(10);
     private final Map<String, SwingLoader> loaders = new HashMap<String, SwingLoader>(10);
 
     private final IModuleLoader moduleLoader;
@@ -86,13 +83,13 @@ public final class ModuleService implements IModuleService {
     private IStateService stateService;
 
     @Resource
-    private ILanguageService languageService;
-
-    @Resource
     private IImageService imageService;
 
     @Resource
     private IUpdateService updateService;
+
+    @Resource
+    private ILanguageService languageService;
 
     @Resource
     private IUIUtils uiUtils;
@@ -126,11 +123,11 @@ public final class ModuleService implements IModuleService {
         CollectionUtils.filter(modules, new CoreVersionFilter(core, uiUtils));
         CollectionUtils.sort(modules, new ModuleComparator());
 
-        for(Module module : modules){
+        for (Module module : modules) {
             //Configuration
             if (configuration.containsModule(module)) {
                 module.setState(configuration.getState(module.getId()));
-            } else  {
+            } else {
                 module.setState(ModuleState.INSTALLED);
                 configuration.add(module);
             }
@@ -138,11 +135,6 @@ public final class ModuleService implements IModuleService {
             //Colllection modules
             if (module.isCollection()) {
                 collectionModule = true;
-            }
-
-            //Loadable modules
-            if (canBeLoaded(module) && areAllDependenciesSatisfied(module)) {
-                modulesToLoad.add(module);
             }
 
             //Indicate the module as installed
@@ -168,8 +160,10 @@ public final class ModuleService implements IModuleService {
     public void startModules() {
         SwingUtils.assertNotEDT("startModules()");
 
-        for (Module module : modulesToLoad) {
-            startModule(module);
+        for (Module module : modules) {
+            if (canBeLoaded(module) && areAllDependenciesSatisfied(module)) {
+                startModule(module);
+            }
         }
     }
 
@@ -178,7 +172,7 @@ public final class ModuleService implements IModuleService {
      */
     @Override
     public void stopModules() {
-        List<Module> modulesToUnplug = CollectionUtils.copyOf(modulesToLoad);
+        List<Module> modulesToUnplug = CollectionUtils.copyOf(modules);
 
         CollectionUtils.reverse(modulesToUnplug);
 
@@ -226,16 +220,13 @@ public final class ModuleService implements IModuleService {
         //Add images resources
         loadImageResources(module);
 
-        //Add i18n resources
-        loadI18NResources(module);
-
         try {
             module.getBundle().start();
         } catch (BundleException e) {
             LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
         }
 
-        if(loaders.containsKey(module.getId())){
+        if (loaders.containsKey(module.getId())) {
             loaders.get(module.getId()).afterAll();
             loaders.remove(module.getId());
         }
@@ -259,22 +250,6 @@ public final class ModuleService implements IModuleService {
         }
     }
 
-    private void loadI18NResources(Module container) {
-        for (I18NDescription i18NDescription : container.getResources().getI18NResources()) {
-            List<I18NResource> i18NResources = new ArrayList<I18NResource>(i18NDescription.getResources().size());
-
-            for (String resource : i18NDescription.getResources()) {
-                if (resource.startsWith("classpath:")) {
-                    i18NResources.add(I18NResourceFactory.fromURL(resource.substring(resource.lastIndexOf('/') + 1),
-                            container.getBundle().getResource(resource.substring(10))));
-                }
-            }
-
-            languageService.registerResource(i18NDescription.getName(), i18NDescription.getVersion(),
-                    i18NResources.toArray(new I18NResource[i18NResources.size()]));
-        }
-    }
-
     @Override
     public void stopModule(Module module) {
         SwingUtils.assertNotEDT("stopModule(Module)");
@@ -292,10 +267,6 @@ public final class ModuleService implements IModuleService {
         Resources resources = module.getResources();
 
         if (resources != null) {
-            for (I18NDescription i18NDescription : resources.getI18NResources()) {
-                languageService.releaseResource(i18NDescription.getName());
-            }
-
             for (ImageDescription imageDescription : resources.getImageResources()) {
                 imageService.releaseResource(imageDescription.getName());
             }
@@ -344,17 +315,34 @@ public final class ModuleService implements IModuleService {
      */
     @Override
     public boolean installModule(File file) {
-        Module module = moduleLoader.installModule(file);
+        File target = file;
+
+        if (!FileUtils.isFileInDirectory(file, core.getFolders().getModulesFolder())) {
+            target = new File(core.getFolders().getModulesFolder(), file.getName());
+
+            try {
+                FileUtils.copy(file, target);
+            } catch (CopyException e) {
+                LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
+
+                return false;
+            }
+        }
+
+        Module module = moduleLoader.installModule(target);
 
         if (module == null) {
+            FileUtils.delete(target);
+
             return false;
         }
 
+        module.setState(ModuleState.INSTALLED);
+
         modules.add(module);
+        configuration.add(module);
 
         fireModuleInstalled(module);
-
-        configuration.add(module);
 
         return true;
     }
@@ -384,8 +372,9 @@ public final class ModuleService implements IModuleService {
             stopModule(module);
         }
 
+        moduleLoader.uninstallModule(module);
+
         configuration.remove(module);
-        modulesToLoad.remove(module);
         modules.remove(module);
 
         try {
@@ -404,8 +393,6 @@ public final class ModuleService implements IModuleService {
         }
 
         ModuleResourceCache.removeModule(module.getId());
-
-
     }
 
     @Override

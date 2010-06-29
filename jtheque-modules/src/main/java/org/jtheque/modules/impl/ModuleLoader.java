@@ -4,9 +4,12 @@ import org.jtheque.core.able.ICore;
 import org.jtheque.core.utils.OSGiUtils;
 import org.jtheque.errors.able.IErrorService;
 import org.jtheque.errors.utils.JThequeError;
+import org.jtheque.i18n.able.I18NResource;
 import org.jtheque.i18n.able.ILanguageService;
+import org.jtheque.i18n.utils.I18NResourceFactory;
 import org.jtheque.modules.able.IModuleLoader;
 import org.jtheque.modules.able.Module;
+import org.jtheque.modules.able.Resources;
 import org.jtheque.modules.utils.I18NDescription;
 import org.jtheque.modules.utils.ImageDescription;
 import org.jtheque.resources.able.IResource;
@@ -65,6 +68,8 @@ public final class ModuleLoader implements IModuleLoader, BundleContextAware {
     @Resource
     private IResourceService resourceService;
 
+    @Resource
+    private ILanguageService languageService;
 
     @Override
     public void setBundleContext(BundleContext bundleContext) {
@@ -111,6 +116,9 @@ public final class ModuleLoader implements IModuleLoader, BundleContextAware {
 
             //Get informations from manifest
             readManifestInformations(container, bundle);
+
+            //Add i18n resources
+            loadI18NResources(container);
         } catch (BundleException e) {
             LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
             OSGiUtils.getService(bundleContext, IErrorService.class).addError(new JThequeError(e));
@@ -120,6 +128,17 @@ public final class ModuleLoader implements IModuleLoader, BundleContextAware {
         }
 
         return container;
+    }
+
+    @Override
+    public void uninstallModule(Module module) {
+        Resources resources = module.getResources();
+
+        if (resources != null) {
+            for (I18NDescription i18NDescription : resources.getI18NResources()) {
+                languageService.releaseResource(i18NDescription.getName());
+            }
+        }
     }
 
     private static void readManifestInformations(ModuleContainer container, Bundle bundle) {
@@ -149,6 +168,22 @@ public final class ModuleLoader implements IModuleLoader, BundleContextAware {
             container.setDependencies(COMMA_DELIMITER_PATTERN.split(headers.get("Module-Dependencies")));
         } else {
             container.setDependencies(EMPTY_ARRAY);
+        }
+    }
+
+    private void loadI18NResources(Module container) {
+        for (I18NDescription i18NDescription : container.getResources().getI18NResources()) {
+            List<I18NResource> i18NResources = new ArrayList<I18NResource>(i18NDescription.getResources().size());
+
+            for (String resource : i18NDescription.getResources()) {
+                if (resource.startsWith("classpath:")) {
+                    i18NResources.add(I18NResourceFactory.fromURL(resource.substring(resource.lastIndexOf('/') + 1),
+                            container.getBundle().getResource(resource.substring(10))));
+                }
+            }
+
+            languageService.registerResource(i18NDescription.getName(), i18NDescription.getVersion(),
+                    i18NResources.toArray(new I18NResource[i18NResources.size()]));
         }
     }
 
