@@ -16,21 +16,37 @@ package org.jtheque.modules.utils;
  * limitations under the License.
  */
 
-public class ImageDescription {
+public class ImageResource {
     private final String name;
     private final String resource;
 
-    public ImageDescription(String name, String resource) {
+    /**
+     * Construct  a new ImageResource.
+     *
+     * @param name The name of the description.
+     * @param resource
+     */
+    public ImageResource(String name, String resource) {
         super();
 
         this.name = name;
         this.resource = resource;
     }
 
+    /**
+     * Return the name of the image.
+     *
+     * @return The name of the image.
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Return the resource.
+     *
+     * @return The resource.
+     */
     public String getResource() {
         return resource;
     }

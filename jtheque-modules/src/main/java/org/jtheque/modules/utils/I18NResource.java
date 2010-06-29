@@ -22,12 +22,23 @@ import java.util.List;
  * limitations under the License.
  */
 
-public class I18NDescription {
+/**
+ * An i18n description.
+ *
+ * @author Baptiste Wicht
+ */
+public class I18NResource {
     private final String name;
     private final Version version;
     private final List<String> resources;
 
-    public I18NDescription(String name, Version version) {
+    /**
+     * Construct a new I18NResource.
+     *
+     * @param name    The name of the resource.
+     * @param version The version of the resource.
+     */
+    public I18NResource(String name, Version version) {
         super();
 
         this.name = name;
@@ -36,10 +47,19 @@ public class I18NDescription {
         resources = new ArrayList<String>(5);
     }
 
+    /**
+     * Return the name of the i18n resource.
+     *
+     * @return The name of the i18n resource.
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Return the version of the i18n resource.
+     * @return The version of the i18n resource.
+     */
     public Version getVersion() {
         return version;
     }
