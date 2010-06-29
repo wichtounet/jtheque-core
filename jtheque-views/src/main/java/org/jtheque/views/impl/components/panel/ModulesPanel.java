@@ -68,7 +68,9 @@ public final class ModulesPanel extends OSGIFilthyBuildedPanel implements IModul
                 errorService, uiUtils, views),
                 builder.gbcSet(0, 0, GridBagUtils.HORIZONTAL, GridBagUtils.BASELINE_LEADING, 1.0, 0.0));
 
-        modulesList = builder.addScrolledList(new ModuleListModel(moduleService), new ModuleListRenderer(updateService, languageService),
+        modulesList = builder.addScrolledList(
+                new ModuleListModel(moduleService),
+                new ModuleListRenderer(updateService, languageService),
                 builder.gbcSet(0, 1, GridBagUtils.BOTH, GridBagUtils.BASELINE_LEADING, 1.0, 1.0));
         modulesList.setVisibleRowCount(4);
 

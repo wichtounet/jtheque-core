@@ -19,14 +19,15 @@ package org.jtheque.views.impl.models;
 import org.jtheque.modules.able.IModuleService;
 import org.jtheque.modules.able.Module;
 import org.jtheque.modules.able.ModuleListener;
-import org.jtheque.ui.utils.models.SimpleListModel;
+
+import javax.swing.DefaultListModel;
 
 /**
  * A List model to display the modules.
  *
  * @author Baptiste Wicht
  */
-public final class ModuleListModel extends SimpleListModel<Module> implements ModuleListener {
+public final class ModuleListModel extends DefaultListModel implements ModuleListener {
     /**
      * Construct a new ModuleListModel.
      *
@@ -37,19 +38,21 @@ public final class ModuleListModel extends SimpleListModel<Module> implements Mo
 
         moduleService.addModuleListener("", this);
 
-        setElements(moduleService.getModules());
+        for (Module module : moduleService.getModules()) {
+            addElement(module);
+        }
     }
 
     @Override
     public void moduleStarted(Module module) {
-        int index = getIndexOfElement(module);
+        int index = indexOf(module);
 
         fireContentsChanged(this, index, index);
     }
 
     @Override
     public void moduleStopped(Module module) {
-        int index = getIndexOfElement(module);
+        int index = indexOf(module);
 
         fireContentsChanged(this, index, index);
     }

@@ -55,7 +55,7 @@ public final class ModuleListRenderer extends JPanel implements ListCellRenderer
     private final IUpdateService updateService;
     private final ILanguageService languageService;
 
-    private final Map<Integer, ModuleListPanel> panels = new HashMap<Integer, ModuleListPanel>(10);
+    private final Map<Module, ModuleListPanel> panels = new HashMap<Module, ModuleListPanel>(10);
 
     /**
      * Construct a new ModuleListRenderer.
@@ -74,11 +74,11 @@ public final class ModuleListRenderer extends JPanel implements ListCellRenderer
     public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
         Module module = (Module) value;
 
-        if(!panels.containsKey(index)){
-            panels.put(index, new ModuleListPanel(module));
+        if(!panels.containsKey(module)){
+            panels.put(module, new ModuleListPanel(module));
         }
 
-        ModuleListPanel panel = panels.get(index);
+        ModuleListPanel panel = panels.get(module);
 
         panel.initFonts();
 
