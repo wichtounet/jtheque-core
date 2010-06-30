@@ -53,6 +53,7 @@ public final class FeatureService implements IFeatureService, ModuleListener {
      * Construct a new FeatureService.
      *
      * @param languageService The language service.
+     * @param moduleService   The module service.
      */
     public FeatureService(ILanguageService languageService, IModuleService moduleService) {
         super();

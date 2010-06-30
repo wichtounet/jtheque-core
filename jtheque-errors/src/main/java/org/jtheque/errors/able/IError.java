@@ -24,12 +24,38 @@ import org.jtheque.i18n.able.ILanguageService;
  * @author Baptiste Wicht
  */
 public interface IError {
+    /**
+     * The level of the error.
+     *
+     * @author Baptiste Wicht
+     */
     enum Level {
         ERROR,
         WARNING
     }
 
+    /**
+     * Return the level of the errors.
+     *
+     * @return The level of the errors.
+     */
     Level getLevel();
+
+    /**
+     * Return the title of the error.
+     *
+     * @param languageService The language service to internationalize the title if necessary.
+     *
+     * @return The title, internationalized or not.
+     */
     String getTitle(ILanguageService languageService);
+
+    /**
+     * Return the details of the error.
+     *
+     * @param languageService The language service to internationalize the details if necessary.
+     *
+     * @return The details, internationalized or not.
+     */
     String getDetails(ILanguageService languageService);
 }

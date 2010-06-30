@@ -4,14 +4,13 @@ import org.jtheque.core.able.ICore;
 import org.jtheque.core.utils.OSGiUtils;
 import org.jtheque.errors.able.IErrorService;
 import org.jtheque.errors.utils.JThequeError;
-import org.jtheque.i18n.able.I18NResource;
 import org.jtheque.i18n.able.ILanguageService;
 import org.jtheque.i18n.utils.I18NResourceFactory;
 import org.jtheque.modules.able.IModuleLoader;
 import org.jtheque.modules.able.Module;
 import org.jtheque.modules.able.Resources;
-import org.jtheque.modules.utils.I18NDescription;
-import org.jtheque.modules.utils.ImageDescription;
+import org.jtheque.modules.utils.I18NResource;
+import org.jtheque.modules.utils.ImageResource;
 import org.jtheque.resources.able.IResource;
 import org.jtheque.resources.able.IResourceService;
 import org.jtheque.utils.StringUtils;
@@ -135,8 +134,8 @@ public final class ModuleLoader implements IModuleLoader, BundleContextAware {
         Resources resources = module.getResources();
 
         if (resources != null) {
-            for (I18NDescription i18NDescription : resources.getI18NResources()) {
-                languageService.releaseResource(i18NDescription.getName());
+            for (I18NResource i18NResource : resources.getI18NResources()) {
+                languageService.releaseResource(i18NResource.getName());
             }
         }
     }
@@ -172,18 +171,18 @@ public final class ModuleLoader implements IModuleLoader, BundleContextAware {
     }
 
     private void loadI18NResources(Module container) {
-        for (I18NDescription i18NDescription : container.getResources().getI18NResources()) {
-            List<I18NResource> i18NResources = new ArrayList<I18NResource>(i18NDescription.getResources().size());
+        for (I18NResource i18NResource : container.getResources().getI18NResources()) {
+            List<org.jtheque.i18n.able.I18NResource> i18NResources = new ArrayList<org.jtheque.i18n.able.I18NResource>(i18NResource.getResources().size());
 
-            for (String resource : i18NDescription.getResources()) {
+            for (String resource : i18NResource.getResources()) {
                 if (resource.startsWith("classpath:")) {
                     i18NResources.add(I18NResourceFactory.fromURL(resource.substring(resource.lastIndexOf('/') + 1),
                             container.getBundle().getResource(resource.substring(10))));
                 }
             }
 
-            languageService.registerResource(i18NDescription.getName(), i18NDescription.getVersion(),
-                    i18NResources.toArray(new I18NResource[i18NResources.size()]));
+            languageService.registerResource(i18NResource.getName(), i18NResource.getVersion(),
+                    i18NResources.toArray(new org.jtheque.i18n.able.I18NResource[i18NResources.size()]));
         }
     }
 
@@ -230,15 +229,15 @@ public final class ModuleLoader implements IModuleLoader, BundleContextAware {
             String name = reader.readString("@name");
             Version version = new Version(reader.readString("@version"));
 
-            I18NDescription description = new I18NDescription(name, version);
+            I18NResource i18NResource = new I18NResource(name, version);
 
             while (reader.next("classpath")) {
                 String classpath = reader.readString("text()");
 
-                description.getResources().add("classpath:" + classpath);
+                i18NResource.getResources().add("classpath:" + classpath);
             }
 
-            resources.addI18NResource(description);
+            resources.addI18NResource(i18NResource);
         }
     }
 
@@ -247,7 +246,7 @@ public final class ModuleLoader implements IModuleLoader, BundleContextAware {
             String name = reader.readString("@name");
             String classpath = reader.readString("classpath");
 
-            resources.addImageResource(new ImageDescription(name, "classpath:" + classpath));
+            resources.addImageResource(new ImageResource(name, "classpath:" + classpath));
         }
     }
 

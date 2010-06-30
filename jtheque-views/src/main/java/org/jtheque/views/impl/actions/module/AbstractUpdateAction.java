@@ -38,9 +38,9 @@ public abstract class AbstractUpdateAction extends JThequeAction {
      * Construct a new AbstractUpdateAction.
      *
      * @param key           The internationalization key.
-     * @param updateService
-     * @param uiUtils
-     * @param views
+     * @param updateService The update service.
+     * @param uiUtils       The ui utils.
+     * @param views         The views. 
      */
     AbstractUpdateAction(String key, IUpdateService updateService, IUIUtils uiUtils, IViews views) {
         super(key);

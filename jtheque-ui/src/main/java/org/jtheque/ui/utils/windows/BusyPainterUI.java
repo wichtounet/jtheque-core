@@ -40,11 +40,15 @@ public class BusyPainterUI extends LockableUI implements ActionListener {
     private final BusyPainter busyPainter;
     private final Timer timer;
 
+    /**
+     * Create a new BusyPainterUI.
+     *
+     * @param view The view to create the painter to.
+     */
     public BusyPainterUI(Component view) {
         busyPainter = new BusyPainter() {
-            protected void doPaint(Graphics2D g, JComponent object,
-                                   int width, int height) {
-                // centralize the effect
+            @Override
+            protected void doPaint(Graphics2D g, Object object, int width, int height) {
                 Rectangle r = getTrajectory().getBounds();
                 int tw = width - r.width - 2 * r.x;
                 int th = height - r.height - 2 * r.y;

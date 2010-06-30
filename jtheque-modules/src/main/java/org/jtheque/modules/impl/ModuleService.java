@@ -29,7 +29,7 @@ import org.jtheque.modules.able.ModuleListener;
 import org.jtheque.modules.able.ModuleState;
 import org.jtheque.modules.able.Resources;
 import org.jtheque.modules.able.SwingLoader;
-import org.jtheque.modules.utils.ImageDescription;
+import org.jtheque.modules.utils.ImageResource;
 import org.jtheque.modules.utils.ModuleResourceCache;
 import org.jtheque.states.able.IStateService;
 import org.jtheque.ui.able.IUIUtils;
@@ -203,8 +203,8 @@ public final class ModuleService implements IModuleService {
     }
 
     @Override
-    public void registerSwingLoader(String code, SwingLoader moviesModule) {
-        loaders.put(code, moviesModule);
+    public void registerSwingLoader(String moduleId, SwingLoader swingLoader) {
+        loaders.put(moduleId, swingLoader);
     }
 
     @Override
@@ -240,11 +240,11 @@ public final class ModuleService implements IModuleService {
 
 
     private void loadImageResources(Module container) {
-        for (ImageDescription imageDescription : container.getResources().getImageResources()) {
-            String resource = imageDescription.getResource();
+        for (ImageResource imageResource : container.getResources().getImageResources()) {
+            String resource = imageResource.getResource();
 
             if (resource.startsWith("classpath:")) {
-                imageService.registerResource(imageDescription.getName(),
+                imageService.registerResource(imageResource.getName(),
                         new UrlResource(container.getBundle().getResource(resource.substring(10))));
             }
         }
@@ -267,8 +267,8 @@ public final class ModuleService implements IModuleService {
         Resources resources = module.getResources();
 
         if (resources != null) {
-            for (ImageDescription imageDescription : resources.getImageResources()) {
-                imageService.releaseResource(imageDescription.getName());
+            for (ImageResource imageResource : resources.getImageResources()) {
+                imageService.releaseResource(imageResource.getName());
             }
         }
 

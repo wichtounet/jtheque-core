@@ -41,5 +41,10 @@ public interface IModuleLoader {
      */
     Module installModule(File file);
 
+    /**
+     * Uninstall the given module.
+     *
+     * @param module The module to uninstall.
+     */
     void uninstallModule(Module module);
 }

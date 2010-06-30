@@ -43,7 +43,8 @@ public final class ErrorListRenderer extends JLabel implements ListCellRenderer 
     /**
      * Construct a new ModuleListRenderer.
      *
-     * @param imageService The resource service.
+     * @param imageService    The resource service.
+     * @param languageService The language service.
      */
     public ErrorListRenderer(IImageService imageService, ILanguageService languageService) {
         super();

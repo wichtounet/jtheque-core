@@ -160,5 +160,11 @@ public interface IModuleService {
      */
     void load();
 
-    void registerSwingLoader(String code, SwingLoader moviesModule);
+    /**
+     * Register a swing loader. This loader will be called after the module loading.
+     *
+     * @param moduleId    The id of the module.
+     * @param swingLoader The swing loader.
+     */
+    void registerSwingLoader(String moduleId, SwingLoader swingLoader);
 }

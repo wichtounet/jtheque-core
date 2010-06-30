@@ -17,8 +17,8 @@ package org.jtheque.modules.impl;
  */
 
 import org.jtheque.modules.able.Resources;
-import org.jtheque.modules.utils.I18NDescription;
-import org.jtheque.modules.utils.ImageDescription;
+import org.jtheque.modules.utils.I18NResource;
+import org.jtheque.modules.utils.ImageResource;
 import org.jtheque.resources.able.IResource;
 
 import java.util.ArrayList;
@@ -30,8 +30,8 @@ import java.util.List;
  * @author Baptiste Wicht
  */
 public class ModuleResources implements Resources {
-    private final List<ImageDescription> imageResources = new ArrayList<ImageDescription>(5);
-    private final List<I18NDescription> i18nResources = new ArrayList<I18NDescription>(5);
+    private final List<ImageResource> imageResources = new ArrayList<ImageResource>(5);
+    private final List<I18NResource> i18nResources = new ArrayList<I18NResource>(5);
     private final List<IResource> resources = new ArrayList<IResource>(5);
 
     /**
@@ -39,7 +39,7 @@ public class ModuleResources implements Resources {
      *
      * @param name The name of the resource.
      */
-    void addImageResource(ImageDescription name) {
+    void addImageResource(ImageResource name) {
         imageResources.add(name);
     }
 
@@ -48,7 +48,7 @@ public class ModuleResources implements Resources {
      *
      * @param name The name of the i18n resource.
      */
-    void addI18NResource(I18NDescription name) {
+    void addI18NResource(I18NResource name) {
         i18nResources.add(name);
     }
 
@@ -57,12 +57,12 @@ public class ModuleResources implements Resources {
     }
 
     @Override
-    public List<ImageDescription> getImageResources() {
+    public List<ImageResource> getImageResources() {
         return imageResources;
     }
 
     @Override
-    public List<I18NDescription> getI18NResources() {
+    public List<I18NResource> getI18NResources() {
         return i18nResources;
     }
 

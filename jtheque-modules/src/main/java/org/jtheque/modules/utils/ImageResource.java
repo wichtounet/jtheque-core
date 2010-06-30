@@ -23,8 +23,8 @@ public class ImageResource {
     /**
      * Construct  a new ImageResource.
      *
-     * @param name The name of the description.
-     * @param resource
+     * @param name     The name of the description.
+     * @param resource The image resource.
      */
     public ImageResource(String name, String resource) {
         super();

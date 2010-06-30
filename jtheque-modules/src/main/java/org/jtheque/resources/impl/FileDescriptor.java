@@ -28,6 +28,13 @@ public class FileDescriptor {
     private final String url;
     private final Version version;
 
+    /**
+     * Create a new FileDescriptor.
+     *
+     * @param name    The name of the file.
+     * @param url     The url to the file.
+     * @param version The version of the file.
+     */
     public FileDescriptor(String name, String url, Version version) {
         super();
 
@@ -36,14 +43,29 @@ public class FileDescriptor {
         this.version = version;
     }
 
+    /**
+     * Return the name of the file descriptor.
+     *
+     * @return The name of the file descriptor. 
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Return the URL of the file descriptor.
+     *
+     * @return The URL.
+     */
     public String getUrl() {
         return url;
     }
 
+    /**
+     * Return the version of the file descriptor.
+     *
+     * @return The version of the file descriptor.
+     */
     public Version getVersion() {
         return version;
     }
