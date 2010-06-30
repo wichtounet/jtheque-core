@@ -5,15 +5,26 @@ import org.jtheque.utils.bean.Version;
 
 import java.util.List;
 
+/**
+ * A resource specification.
+ *
+ * @author Baptiste Wicht
+ */
 public interface IResource {
     /**
      * Return the id of the resource.
+     *
      * @return The id of the resource.
      */
     String getId();
 
     List<String> getFiles();
 
+    /**
+     * Return all the libraries of the resource.
+     *
+     * @return A List containing all the libraries of the resource.
+     */
     List<Library> getLibraries();
 
     /**
@@ -25,6 +36,7 @@ public interface IResource {
 
     /**
      * Return the URL of the resource.
+     *
      * @return The URL of the resource.
      */
     String getUrl();

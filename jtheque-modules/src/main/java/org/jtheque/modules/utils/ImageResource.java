@@ -16,6 +16,11 @@ package org.jtheque.modules.utils;
  * limitations under the License.
  */
 
+/**
+ * An image resource.
+ *
+ * @author Baptiste Wicht
+ */
 public class ImageResource {
     private final String name;
     private final String resource;

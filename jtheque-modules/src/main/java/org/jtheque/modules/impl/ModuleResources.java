@@ -52,6 +52,11 @@ public class ModuleResources implements Resources {
         i18nResources.add(name);
     }
 
+    /**
+     * Add a new resource.
+     *
+     * @param resource The resource to add. 
+     */
     void addResource(IResource resource) {
         resources.add(resource);
     }

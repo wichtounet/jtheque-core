@@ -42,6 +42,11 @@ import java.util.Map;
  * limitations under the License.
  */
 
+/**
+ * A resource service implementation.
+ *
+ * @author Baptiste Wicht
+ */
 public class ResourceService implements IResourceService, BundleContextAware {
     private final List<IResource> resources = new ArrayList<IResource>(10);
     private final Map<String, ResourceDescriptor> descriptorCache = new HashMap<String, ResourceDescriptor>(5);
@@ -111,7 +116,7 @@ public class ResourceService implements IResourceService, BundleContextAware {
     public IResource downloadResource(String url, Version version) {
         SwingUtils.assertNotEDT("downloadResource(String, Version)");
 
-        if(!WebUtils.isURLReachable(url)){
+        if (!WebUtils.isURLReachable(url)) {
             if (WebUtils.isInternetReachable()) {
                 errorService.addInternationalizedError(
                         "modules.resources.network.resource.title", ArrayUtils.EMPTY_ARRAY,
@@ -207,8 +212,8 @@ public class ResourceService implements IResourceService, BundleContextAware {
     }
 
     @Override
-    public boolean isInstalled(String name, Version version) {
-        return getResource(name, version) != null;
+    public boolean isInstalled(String id, Version version) {
+        return getResource(id, version) != null;
     }
 
     @Override

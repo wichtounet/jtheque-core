@@ -42,5 +42,10 @@ public interface Resources {
      */
     List<I18NResource> getI18NResources();
 
+    /**
+     * Return all the resources.
+     *
+     * @return A List containing all the resources. 
+     */
     List<IResource> getResources();
 }

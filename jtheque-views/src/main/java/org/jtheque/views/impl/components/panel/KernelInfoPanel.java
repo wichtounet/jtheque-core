@@ -39,7 +39,7 @@ import java.awt.Insets;
  */
 public final class KernelInfoPanel extends FilthyBuildedPanel {
     private static final int TITLE_FONT_SIZE = 16;
-    
+
     private final IUpdateService updateService;
     private final IErrorService errorService;
     private final IUIUtils uiUtils;
@@ -51,6 +51,9 @@ public final class KernelInfoPanel extends FilthyBuildedPanel {
      * @param languageService The language service.
      * @param filthyUtils     The filthy utils.
      * @param updateService   The update service.
+     * @param errorService    The error service.
+     * @param uiUtils         The ui utils.
+     * @param views           The views
      */
     public KernelInfoPanel(ILanguageService languageService, IFilthyUtils filthyUtils, IUpdateService updateService,
                            IErrorService errorService, IUIUtils uiUtils, IViews views) {

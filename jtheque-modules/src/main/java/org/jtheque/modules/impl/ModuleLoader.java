@@ -170,14 +170,19 @@ public final class ModuleLoader implements IModuleLoader, BundleContextAware {
         }
     }
 
-    private void loadI18NResources(Module container) {
-        for (I18NResource i18NResource : container.getResources().getI18NResources()) {
+    /**
+     * Load the i18n resources of the given module.
+     *
+     * @param module The module to load i18n resources for.
+     */
+    private void loadI18NResources(Module module) {
+        for (I18NResource i18NResource : module.getResources().getI18NResources()) {
             List<org.jtheque.i18n.able.I18NResource> i18NResources = new ArrayList<org.jtheque.i18n.able.I18NResource>(i18NResource.getResources().size());
 
             for (String resource : i18NResource.getResources()) {
                 if (resource.startsWith("classpath:")) {
                     i18NResources.add(I18NResourceFactory.fromURL(resource.substring(resource.lastIndexOf('/') + 1),
-                            container.getBundle().getResource(resource.substring(10))));
+                            module.getBundle().getResource(resource.substring(10))));
                 }
             }
 
@@ -186,14 +191,22 @@ public final class ModuleLoader implements IModuleLoader, BundleContextAware {
         }
     }
 
-    private void readConfig(File file, ModuleContainer container) throws IOException {
+    /**
+     * Read the config of the module.
+     *
+     * @param file   The file of the module.
+     * @param module The module
+     *
+     * @throws IOException If an error occurs during Jar File reading.
+     */
+    private void readConfig(File file, ModuleContainer module) throws IOException {
         JarFile jarFile = new JarFile(file);
         ZipEntry configEntry = jarFile.getEntry("module.xml");
 
         if (configEntry != null) {
-            container.setResources(importConfig(jarFile.getInputStream(configEntry)));
+            module.setResources(importConfig(jarFile.getInputStream(configEntry)));
         } else {
-            container.setResources(new ModuleResources());
+            module.setResources(new ModuleResources());
         }
 
         jarFile.close();
@@ -224,6 +237,14 @@ public final class ModuleLoader implements IModuleLoader, BundleContextAware {
         return resources;
     }
 
+    /**
+     * Import the i18n resources.
+     *
+     * @param resources The resources of the module.
+     * @param reader    The XML reader.
+     *
+     * @throws XMLException If an error occurs during XML parsing.
+     */
     private static void importI18NResources(ModuleResources resources, IXMLOverReader reader) throws XMLException {
         while (reader.next("/config/i18n/i18nResource")) {
             String name = reader.readString("@name");
@@ -241,6 +262,14 @@ public final class ModuleLoader implements IModuleLoader, BundleContextAware {
         }
     }
 
+    /**
+     * Import the image resources.
+     *
+     * @param resources The resources to fill.
+     * @param reader    The XML reader.
+     *
+     * @throws XMLException If an exception occurs during XML parsing.
+     */
     private static void importImageResources(ModuleResources resources, IXMLOverReader reader) throws XMLException {
         while (reader.next("/config/images/resource")) {
             String name = reader.readString("@name");
@@ -250,6 +279,14 @@ public final class ModuleLoader implements IModuleLoader, BundleContextAware {
         }
     }
 
+    /**
+     * Import the resources.
+     *
+     * @param resources The resources to fill.
+     * @param reader    The XML reader.
+     *
+     * @throws XMLException If an exception occurs during XML parsing.
+     */
     private void importResources(ModuleResources resources, IXMLOverReader reader) throws XMLException {
         while (reader.next("/config/resources/resource")) {
             String id = reader.readString("@id");

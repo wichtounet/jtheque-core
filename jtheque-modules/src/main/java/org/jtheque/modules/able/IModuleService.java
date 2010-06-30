@@ -109,8 +109,6 @@ public interface IModuleService {
      * Install the module of the file.
      *
      * @param file The file of the module.
-     *
-     * @return true if the module has been installed else false.
      */
     void installModule(File file);
 

@@ -21,24 +21,49 @@ import java.util.NoSuchElementException;
  * limitations under the License.
  */
 
+/**
+ * A module descriptor.
+ *
+ * @author Baptiste Wicht
+ */
 public class ModuleDescriptor {
     private final String id;
     private final List<ModuleVersion> moduleVersions = new ArrayList<ModuleVersion>(5);
 
+    /**
+     * Construct a new ModuleDescriptor.
+     *
+     * @param id The id of the module.
+     */
     public ModuleDescriptor(String id) {
         super();
 
         this.id = id;
     }
 
+    /**
+     * Return the id of the module.
+     *
+     * @return The id of the module.
+     */
     public String getId() {
         return id;
     }
 
+    /**
+     * Return all the versions of the descriptor.
+     *
+     * @return A Collection containing all the versions of the descriptor.
+     */
     public Collection<ModuleVersion> getVersions() {
         return moduleVersions;
     }
 
+    /**
+     * Add a version to the descriptor.
+     *
+     * @param version The version to add.
+     */
     public void addVersion(ModuleVersion version) {
         moduleVersions.add(version);
     }

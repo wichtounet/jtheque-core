@@ -26,6 +26,11 @@ import org.jtheque.ui.utils.models.SimpleListModel;
  * @author Baptiste Wicht
  */
 public final class ResourceListModel extends SimpleListModel<IResource> {
+    /**
+     * Create a new ResourceListModel.
+     *
+     * @param resourceService The resource service.
+     */
     public ResourceListModel(IResourceService resourceService) {
         super();
 

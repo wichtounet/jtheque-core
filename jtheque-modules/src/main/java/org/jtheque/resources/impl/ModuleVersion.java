@@ -31,10 +31,20 @@ public class ModuleVersion extends ResourceVersion {
         return coreVersion;
     }
 
+    /**
+     * Set the core version needed by this version of the module.
+     *
+     * @param coreVersion The core version this module version needs.
+     */
     public void setCoreVersion(Version coreVersion) {
         this.coreVersion = coreVersion;
     }
 
+    /**
+     * Return the module file name.
+     *
+     * @return The module file name. 
+     */
     public String getModuleFile() {
         return moduleFile;
     }

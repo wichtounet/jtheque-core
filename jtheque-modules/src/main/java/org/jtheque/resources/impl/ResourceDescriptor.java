@@ -33,7 +33,6 @@ package org.jtheque.resources.impl;
  */
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -46,12 +45,22 @@ public final class ResourceDescriptor {
     private final String id;
     private final List<ResourceVersion> versions = new ArrayList<ResourceVersion>(5);
 
+    /**
+     * Construct a new ImageDescriptor with the given ID.
+     *
+     * @param id The id of the resource.
+     */
     public ResourceDescriptor(String id) {
         super();
 
         this.id = id;
     }
 
+    /**
+     * Return the id of the resource.
+     *
+     * @return The id of the resource.
+     */
     public String getId() {
         return id;
     }
@@ -65,6 +74,11 @@ public final class ResourceDescriptor {
         return versions;
     }
 
+    /**
+     * Add a version to the resource descriptor.
+     *
+     * @param version The new version to add to the descriptor. 
+     */
     public void addVersion(ResourceVersion version) {
         versions.add(version);
     }

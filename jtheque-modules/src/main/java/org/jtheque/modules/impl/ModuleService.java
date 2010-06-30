@@ -310,7 +310,7 @@ public final class ModuleService implements IModuleService {
     public void installModule(File file) {
         File moduleFile = installModuleFile(file);
 
-        if(moduleFile != null){
+        if (moduleFile != null) {
             Module module = moduleLoader.installModule(moduleFile);
 
             if (module == null) {
@@ -332,6 +332,14 @@ public final class ModuleService implements IModuleService {
         }
     }
 
+    /**
+     * Install the module file. It seems copy it into the application directory and make verifications for the existance
+     * of the file.
+     *
+     * @param file The file of the module.
+     *
+     * @return The file were the module has been installed.
+     */
     private File installModuleFile(File file) {
         File target = file;
 
@@ -358,9 +366,16 @@ public final class ModuleService implements IModuleService {
         return target;
     }
 
+    /**
+     * Indicate if a module with the given id exists or not.
+     *
+     * @param id The id to search for.
+     *
+     * @return true if a module exists with this id otherwise false.
+     */
     private boolean exists(String id) {
-        for(Module module : modules){
-            if(id.equals(module.getId())){
+        for (Module module : modules) {
+            if (id.equals(module.getId())) {
                 return true;
             }
         }
@@ -549,6 +564,11 @@ public final class ModuleService implements IModuleService {
         return true;
     }
 
+    /**
+     * A Shutdown Hook to stop modules.
+     *
+     * @author Baptiste Wicht
+     */
     private final class ModuleStopHook extends Thread {
         @Override
         public void run() {

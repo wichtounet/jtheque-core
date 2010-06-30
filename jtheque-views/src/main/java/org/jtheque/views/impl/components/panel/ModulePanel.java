@@ -25,7 +25,6 @@ import org.jtheque.ui.utils.components.Borders;
 import org.jtheque.update.able.IUpdateService;
 import org.jtheque.utils.ui.GridBagUtils;
 
-import javax.annotation.Resource;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -59,12 +58,11 @@ public final class ModulePanel extends JPanel {
     /**
      * Construct a new ModulePanel.
      *
-     * @param value      The value.
-     *
-     * @param isSelected A boolean tag indicating if the module is selected or not.
-     * @param moduleService
-     * @param languageService
-     * @param updateService
+     * @param value           The value.
+     * @param isSelected      A boolean tag indicating if the module is selected or not.
+     * @param moduleService   The module service.
+     * @param languageService The language service.
+     * @param updateService   The update service.
      */
     public ModulePanel(Object value, boolean isSelected, IModuleService moduleService, ILanguageService languageService, IUpdateService updateService) {
         super();

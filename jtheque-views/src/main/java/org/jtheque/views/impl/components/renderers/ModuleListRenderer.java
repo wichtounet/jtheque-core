@@ -94,6 +94,11 @@ public final class ModuleListRenderer extends JPanel implements ListCellRenderer
     }
 
 
+    /**
+     * A panel for a module in the renderer
+     *
+     * @author Baptiste Wicht
+     */
     private class ModuleListPanel extends JPanel {
         private final JLabel labelTitle;
         private final JLabel labelState;
@@ -101,6 +106,11 @@ public final class ModuleListRenderer extends JPanel implements ListCellRenderer
         private final JLabel labelOnlineVersion;
         private final JXHyperlink labelSite;
 
+        /**
+         * Construct a new ModuleListPanel.
+         *
+         * @param module The module to get the informations from. 
+         */
         private ModuleListPanel(Module module){
             super();
 

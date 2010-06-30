@@ -70,6 +70,11 @@ public class Resource implements IResource {
         return installed;
     }
 
+    /**
+     * Set the installed status of the resource.
+     *
+     * @param installed A boolean tag indicating if the resource is installed or not. 
+     */
     public void setInstalled(boolean installed) {
         this.installed = installed;
     }

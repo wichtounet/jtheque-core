@@ -94,12 +94,19 @@ public final class ModuleContainer implements Module {
         return internationalize(state.getKey());
     }
 
-    private String internationalize(String field) {
+    /**
+     * Internationalize the given key.
+     *
+     * @param key The i18n key.
+     *
+     * @return The internationalized message.
+     */
+    private String internationalize(String key) {
         if (languageService == null) {
-            return field;
+            return key;
         }
 
-        return languageService.getMessage(field);
+        return languageService.getMessage(key);
     }
 
     @Override
@@ -231,8 +238,12 @@ public final class ModuleContainer implements Module {
         this.languageService = languageService;
     }
 
+    /**
+     * Set the bundle of the module.
+     *
+     * @param bundle The bundle.
+     */
     public void setBundle(Bundle bundle) {
         this.bundle = bundle;
     }
-
 }

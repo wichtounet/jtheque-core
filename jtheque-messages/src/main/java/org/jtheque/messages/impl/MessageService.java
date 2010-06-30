@@ -53,6 +53,8 @@ public final class MessageService implements IMessageService, ModuleListener {
      *
      * @param core          The core.
      * @param moduleService The module service.
+     * @param errorService  The error service.
+     * @param eventService  The event service.
      */
     public MessageService(ICore core, IModuleService moduleService, IErrorService errorService, IEventService eventService) {
         super();

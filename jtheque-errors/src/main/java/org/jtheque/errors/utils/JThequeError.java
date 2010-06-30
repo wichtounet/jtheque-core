@@ -43,6 +43,12 @@ public class JThequeError implements IError {
         level = Level.ERROR;
     }
 
+    /**
+     * Create a new error.
+     *
+     * @param title The title of the error.
+     * @param level The level of error.
+     */
     public JThequeError(String title, Level level) {
         super();
 
@@ -53,7 +59,7 @@ public class JThequeError implements IError {
     /**
      * Construct a new Error with a message and some details.
      *
-     * @param title The message of the error.
+     * @param title   The message of the error.
      * @param details Some details about the error.
      */
     public JThequeError(String title, String details) {
@@ -81,7 +87,7 @@ public class JThequeError implements IError {
      * Construct a new Error from an existing exception with a specific message.
      *
      * @param exception The exception to encapsulate in the error.
-     * @param title   The message.
+     * @param title     The message.
      */
     public JThequeError(Throwable exception, String title) {
         this(title);
@@ -103,7 +109,7 @@ public class JThequeError implements IError {
 
     @Override
     public String getDetails(ILanguageService languageService) {
-        if(exception != null){
+        if (exception != null) {
             return details == null ? "" : details +
                     '\n' + exception.getMessage() +
                     '\n' + getCustomStackTrace(exception);
@@ -112,13 +118,20 @@ public class JThequeError implements IError {
         return details;
     }
 
-    static String getCustomStackTrace(Throwable aThrowable) {
+    /**
+     * Return the stacktrace into a String.
+     *
+     * @param throwable The throwable to extract the stack trace from.
+     *
+     * @return A String representing the stack trace.
+     */
+    static String getCustomStackTrace(Throwable throwable) {
         final StringBuilder result = new StringBuilder(500);
 
-        result.append(aThrowable.toString());
+        result.append(throwable.toString());
         result.append('\n');
 
-        for (StackTraceElement element : aThrowable.getStackTrace()) {
+        for (StackTraceElement element : throwable.getStackTrace()) {
             result.append(element);
             result.append('\n');
         }

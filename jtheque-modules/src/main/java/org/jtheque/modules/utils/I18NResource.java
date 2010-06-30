@@ -64,6 +64,10 @@ public class I18NResource {
         return version;
     }
 
+    /**
+     * Return the resources.
+     * @return A Collection containing all the resources. 
+     */
     public Collection<String> getResources() {
         return resources;
     }

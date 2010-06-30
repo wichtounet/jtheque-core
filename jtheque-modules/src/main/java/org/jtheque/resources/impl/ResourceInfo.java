@@ -31,6 +31,11 @@ public class ResourceInfo {
         this.versions = versions;
     }
 
+    /**
+     * Return the id of the resource.
+     *
+     * @return The id of the resource.
+     */
     public String getId() {
         return id;
     }

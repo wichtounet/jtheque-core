@@ -65,5 +65,12 @@ public interface IVersionsLoader {
      */
     Version getMostRecentVersion(Versionable object);
 
+    /**
+     * Return the most recent version of the module at the given url.
+     *
+     * @param url The url of the descriptor.
+     *
+     * @return The most recent module version of the descriptor.
+     */
     ModuleVersion getMostRecentModuleVersion(String url);
 }

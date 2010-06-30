@@ -41,6 +41,10 @@ public final class ModuleRepositoryListRenderer implements ListCellRenderer {
 
     /**
      * Construct a new ModuleListRenderer.
+     *
+     * @param moduleService   The module service.
+     * @param languageService The language service.
+     * @param updateService   The update service.
      */
     public ModuleRepositoryListRenderer(IModuleService moduleService, ILanguageService languageService,
                                         IUpdateService updateService) {

@@ -28,18 +28,38 @@ public class Library {
         this.id = id;
     }
 
+    /**
+     * Return the id of the library.
+     *
+     * @return The id of the library.
+     */
     public String getId() {
         return id;
     }
 
+    /**
+     * Set the id of the library.
+     *
+     * @param id The id of the library.
+     */
     public void setId(String id) {
         this.id = id;
     }
 
+    /**
+     * Return the bundle of the library.
+     *
+     * @return The bundle of the library.
+     */
     public Bundle getBundle() {
         return bundle;
     }
 
+    /**
+     * Set the bundle of the library.
+     *
+     * @param bundle The bundle of the library.
+     */
     public void setBundle(Bundle bundle) {
         this.bundle = bundle;
     }
