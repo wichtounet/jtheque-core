@@ -56,7 +56,7 @@ public final class StartModuleAction extends JThequeAction {
     public void actionPerformed(ActionEvent arg0) {
         final Module module = moduleView.getSelectedModule();
 
-        String error = moduleService.canModuleLaunched(module);
+        String error = moduleService.canBeStarted(module);
 
         if (StringUtils.isEmpty(error)) {
             SwingUtils.execute(new SimpleTask(){

@@ -162,9 +162,7 @@ public final class DescriptorReader {
      * @throws XMLException If an error occurs during XML parsing.
      */
     private static ResourceVersion readResourceVersion(Object currentNode, IXMLReader<Node> reader) throws XMLException {
-        Version version = new Version(reader.readString("@name", currentNode));
-
-        ResourceVersion resourceVersion = new ResourceVersion(version);
+        ResourceVersion resourceVersion = new ResourceVersion(new Version(reader.readString("@name", currentNode)));
 
         readResources(currentNode, reader, resourceVersion);
 
@@ -182,16 +180,14 @@ public final class DescriptorReader {
      * @throws XMLException If an error occurs during XML parsing.
      */
     private static ModuleVersion readModuleVersion(Object currentNode, IXMLReader<Node> reader) throws XMLException {
-        Version version = new Version(reader.readString("@name", currentNode));
-
-        ModuleVersion resourceVersion = new ModuleVersion(version);
+        ModuleVersion resourceVersion = new ModuleVersion(new Version(reader.readString("@name", currentNode)));
 
         readResources(currentNode, reader, resourceVersion);
 
         if (reader.existsNode("module", currentNode)) {
             resourceVersion.setCoreVersion(new Version(reader.readString("module/@core", currentNode)));
-            resourceVersion.setModuleFile(reader.readString("module/@file", currentNode));
-            resourceVersion.setModuleURL(reader.readString("module/@url", currentNode));
+            resourceVersion.setModuleFile(reader.readString("module/file", currentNode));
+            resourceVersion.setModuleURL(reader.readString("module/url", currentNode));
         }
 
         return resourceVersion;

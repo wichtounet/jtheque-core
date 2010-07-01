@@ -35,6 +35,7 @@ import org.jtheque.states.able.IStateService;
 import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.update.able.IUpdateService;
 import org.jtheque.utils.StringUtils;
+import org.jtheque.utils.collections.ArrayUtils;
 import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.io.CopyException;
 import org.jtheque.utils.io.FileUtils;
@@ -52,6 +53,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static org.jtheque.modules.able.ModuleState.*;
 
 /**
  * A module manager implementation. It manage the cycle life of the modules.
@@ -128,7 +131,7 @@ public final class ModuleService implements IModuleService {
             if (configuration.containsModule(module)) {
                 module.setState(configuration.getState(module.getId()));
             } else {
-                module.setState(ModuleState.INSTALLED);
+                module.setState(INSTALLED);
                 configuration.add(module);
             }
 
@@ -150,7 +153,7 @@ public final class ModuleService implements IModuleService {
      * @return true if the module can be loaded else false.
      */
     private static boolean canBeLoaded(Module module) {
-        return !(module.getState() == ModuleState.DISABLED);
+        return !(module.getState() == DISABLED);
     }
 
     /**
@@ -177,7 +180,7 @@ public final class ModuleService implements IModuleService {
         CollectionUtils.reverse(modulesToUnplug);
 
         for (Module module : modulesToUnplug) {
-            if (module.getState() == ModuleState.STARTED) {
+            if (module.getState() == STARTED) {
                 stopModule(module);
             }
         }
@@ -211,7 +214,7 @@ public final class ModuleService implements IModuleService {
     public void startModule(Module module) {
         SwingUtils.assertNotEDT("startModule(Module)");
 
-        if (module.getState() == ModuleState.STARTED) {
+        if (module.getState() == STARTED) {
             throw new IllegalStateException("The module is already started. ");
         }
 
@@ -231,7 +234,7 @@ public final class ModuleService implements IModuleService {
             loaders.remove(module.getId());
         }
 
-        setState(module, ModuleState.STARTED);
+        setState(module, STARTED);
 
         fireModuleStarted(module);
 
@@ -254,13 +257,13 @@ public final class ModuleService implements IModuleService {
     public void stopModule(Module module) {
         SwingUtils.assertNotEDT("stopModule(Module)");
 
-        if (module.getState() != ModuleState.STARTED) {
+        if (module.getState() != STARTED) {
             throw new IllegalStateException("The module is already started. ");
         }
 
         LoggerFactory.getLogger(getClass()).debug("Stop module {}", module.getBundle().getSymbolicName());
 
-        setState(module, ModuleState.INSTALLED);
+        setState(module, INSTALLED);
 
         fireModuleStopped(module);
 
@@ -285,25 +288,18 @@ public final class ModuleService implements IModuleService {
 
     @Override
     public void enableModule(Module module) {
-        if (module.getState() == ModuleState.DISABLED) {
-            setState(module, ModuleState.INSTALLED);
+        if (module.getState() == DISABLED) {
+            setState(module, INSTALLED);
         }
     }
 
-    /**
-     * Disable a module. The module must be stopped before disabling it.
-     *
-     * @param module The module to disable.
-     *
-     * @throws IllegalStateException If the module is started.
-     */
     @Override
     public void disableModule(Module module) {
-        if (module.getState() == ModuleState.STARTED) {
-            throw new IllegalStateException("The module cannot be disabled when started. ");
+        if (module.getState() == STARTED) {
+            stopModule(module);
         }
 
-        setState(module, ModuleState.DISABLED);
+        setState(module, DISABLED);
     }
 
     @Override
@@ -320,7 +316,7 @@ public final class ModuleService implements IModuleService {
             } else if (exists(module.getId())) {
                 uiUtils.displayI18nText("errors.module.install.already.exists");
             } else {
-                module.setState(ModuleState.INSTALLED);
+                module.setState(INSTALLED);
 
                 modules.add(module);
                 configuration.add(module);
@@ -384,12 +380,14 @@ public final class ModuleService implements IModuleService {
     }
 
     @Override
-    public void install(String versionsFileURL) {
-        InstallationResult result = updateService.install(versionsFileURL);
+    public void install(String url) {
+        InstallationResult result = updateService.install(url);
 
         if (result.isInstalled()) {
             Module module = moduleLoader.installModule(new File(core.getFolders().getModulesFolder(), result.getJarFile()));
 
+            module.setState(INSTALLED);
+            
             modules.add(module);
 
             configuration.add(module);
@@ -404,7 +402,7 @@ public final class ModuleService implements IModuleService {
 
     @Override
     public void uninstallModule(Module module) {
-        if (module.getState() == ModuleState.STARTED) {
+        if (module.getState() == STARTED) {
             stopModule(module);
         }
 
@@ -439,14 +437,79 @@ public final class ModuleService implements IModuleService {
     }
 
     @Override
-    public String canModuleLaunched(Module module) {
+    public String canBeStarted(Module module) {
         if (module.getCoreVersion() != null && module.getCoreVersion().isGreaterThan(ICore.VERSION)) {
             return getMessage("modules.message.versionproblem");
-        } else if (!areAllDependenciesSatisfied(module)) {
-            return getMessage("error.module.not.loaded.dependency", module.getDependencies());
+        }
+
+        if (!areAllDependenciesSatisfiedAndActive(module)) {
+            return getMessage("error.module.not.loaded.dependency");
         }
 
         return "";
+    }
+
+    @Override
+    public String canBeStopped(Module module) {
+        if(module.getState() != STARTED){
+            return getMessage("error.module.not.started");
+        }
+
+        if(isThereIsActiveDependenciesOn(module)){
+            return getMessage("error.module.dependencies");
+        }
+
+        return "";
+    }
+
+    @Override
+    public String canBeUninstalled(Module module) {
+        if (module.getState() == STARTED && isThereIsActiveDependenciesOn(module)) {
+            return getMessage("error.module.dependencies");
+        }
+
+        return "";
+    }
+
+    @Override
+    public String canBeDisabled(Module module) {
+        if (module.getState() == DISABLED) {
+            return getMessage("error.module.not.enabled");
+        } else if (module.getState() == STARTED && isThereIsActiveDependenciesOn(module)) {
+            return getMessage("error.module.dependencies");
+        }
+
+        return "";
+    }
+
+    /**
+     * Test if there is a dependency on the given module.
+     *
+     * @param module The module to test for dependencies.
+     *
+     * @return true if there is a dependency on the given module.
+     */
+    private boolean isThereIsActiveDependenciesOn(Module module) {
+        for(Module other : modules){
+            if(other != module && other.getState() == STARTED &&
+                    ArrayUtils.contains(other.getDependencies(), module.getId())){
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Return the internationalized message with the given key.
+     *
+     * @param key      The i18n key.
+     * @param replaces The i18n replaces.
+     *
+     * @return The internationalized message.
+     */
+    private String getMessage(String key, String... replaces) {
+        return languageService.getMessage(key, replaces);
     }
 
     @Override
@@ -530,18 +593,6 @@ public final class ModuleService implements IModuleService {
     }
 
     /**
-     * Return the internationalized message with the given key.
-     *
-     * @param key      The i18n key.
-     * @param replaces The i18n replaces.
-     *
-     * @return The internationalized message.
-     */
-    private String getMessage(String key, String... replaces) {
-        return languageService.getMessage(key, replaces);
-    }
-
-    /**
      * Indicate if all the dependencies of the module are satisfied.
      *
      * @param module The module to test.
@@ -557,6 +608,22 @@ public final class ModuleService implements IModuleService {
             Module resolvedDependency = getModuleById(dependency);
 
             if (resolvedDependency == null || !canBeLoaded(resolvedDependency)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private boolean areAllDependenciesSatisfiedAndActive(Module module) {
+        if (StringUtils.isEmpty(module.getDependencies())) {
+            return true;
+        }
+
+        for (String dependencyId : module.getDependencies()) {
+            Module dependency = getModuleById(dependencyId);
+
+            if (dependency == null || dependency.getState() != STARTED) {
                 return false;
             }
         }

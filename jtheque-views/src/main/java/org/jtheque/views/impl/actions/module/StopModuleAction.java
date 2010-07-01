@@ -37,6 +37,7 @@ import org.jtheque.modules.able.Module;
 import org.jtheque.modules.able.ModuleState;
 import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.ui.utils.actions.JThequeAction;
+import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.ui.SwingUtils;
 import org.jtheque.utils.ui.edt.SimpleTask;
 import org.jtheque.views.able.panel.IModuleView;
@@ -72,7 +73,9 @@ public final class StopModuleAction extends JThequeAction {
     public void actionPerformed(ActionEvent arg0) {
         final Module module = moduleView.getSelectedModule();
 
-        if (module.getState() == ModuleState.STARTED) {
+        String error = moduleService.canBeStopped(module);
+
+        if (StringUtils.isEmpty(error)) {
             SwingUtils.execute(new SimpleTask() {
                 @Override
                 public void run() {
@@ -82,7 +85,7 @@ public final class StopModuleAction extends JThequeAction {
 
             new Thread(new StopModuleRunnable(module), "Module unloader").start();
         } else {
-            uiUtils.displayI18nText("error.module.not.started");
+            uiUtils.getDelegate().displayText(error);
         }
     }
 

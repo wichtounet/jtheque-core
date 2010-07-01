@@ -120,13 +120,26 @@ public interface IModuleService {
     void uninstallModule(Module module);
 
     /**
-     * Test if a module can ben launched.
+     * Test if a module can ben started.
      *
-     * @param module The module to be launched.
+     * @param module The module to be started.
      *
      * @return The error message. If the error is empty, the module can be launched.
      */
-    String canModuleLaunched(Module module);
+    String canBeStarted(Module module);
+
+    /**
+     * Test if a module can ben stopped.
+     *
+     * @param module The module to be stopped.
+     *
+     * @return The error message. If the error is empty, the module can be launched.
+     */
+    String canBeStopped(Module module);
+
+    String canBeUninstalled(Module module);
+
+    String canBeDisabled(Module module);
 
     /**
      * Start a module. The module cannot be started if it's already started.

@@ -21,6 +21,7 @@ import org.jtheque.modules.able.Module;
 import org.jtheque.modules.able.ModuleState;
 import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.ui.utils.actions.JThequeAction;
+import org.jtheque.utils.StringUtils;
 import org.jtheque.views.able.panel.IModuleView;
 
 import java.awt.event.ActionEvent;
@@ -54,15 +55,15 @@ public final class DisableModuleAction extends JThequeAction {
     public void actionPerformed(ActionEvent arg0) {
         Module module = moduleView.getSelectedModule();
 
-        if (module.getState() == ModuleState.DISABLED) {
-            uiUtils.displayI18nText("error.module.not.enabled");
-        } else if (module.getState() == ModuleState.STARTED) {
-            uiUtils.displayI18nText("error.module.started");
-        } else {
+        String error = moduleService.canBeDisabled(module);
+
+        if (StringUtils.isEmpty(error)) {
             moduleService.disableModule(module);
             moduleView.refreshList();
 
             uiUtils.displayI18nText("message.module.disabled");
+        } else {
+            uiUtils.getDelegate().displayText(error);
         }
     }
 }

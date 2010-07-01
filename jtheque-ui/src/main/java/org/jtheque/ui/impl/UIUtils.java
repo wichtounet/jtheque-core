@@ -66,6 +66,11 @@ public class UIUtils implements IUIUtils {
     }
 
     @Override
+    public String askI18nText(String key) {
+        return viewDelegate.askText(languageService.getMessage(key));
+    }
+
+    @Override
     public ViewDelegate getDelegate() {
         return viewDelegate;
     }

@@ -20,6 +20,7 @@ import org.jtheque.modules.able.IModuleService;
 import org.jtheque.modules.able.Module;
 import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.ui.utils.actions.JThequeAction;
+import org.jtheque.utils.StringUtils;
 import org.jtheque.views.able.panel.IModuleView;
 
 import java.awt.event.ActionEvent;
@@ -53,13 +54,19 @@ public final class UninstallModuleAction extends JThequeAction {
     public void actionPerformed(ActionEvent e) {
         Module module = moduleView.getSelectedModule();
 
-        boolean confirm = uiUtils.askI18nUserForConfirmation(
-                "dialogs.confirm.uninstall",
-                "dialogs.confirm.uninstall.title");
+        String error = moduleService.canBeUninstalled(module);
 
-        if (confirm) {
-            moduleService.uninstallModule(module);
-            moduleView.refreshList();
+        if (StringUtils.isEmpty(error)) {
+            boolean confirm = uiUtils.askI18nUserForConfirmation(
+                    "dialogs.confirm.uninstall",
+                    "dialogs.confirm.uninstall.title");
+
+            if (confirm) {
+                moduleService.uninstallModule(module);
+                moduleView.refreshList();
+            }
+        } else {
+            uiUtils.getDelegate().displayText(error);
         }
     }
 }

@@ -59,4 +59,6 @@ public interface IUIUtils {
      * @param key The internationalization key.
      */
     void displayI18nText(String key);
+
+    String askI18nText(String key);
 }

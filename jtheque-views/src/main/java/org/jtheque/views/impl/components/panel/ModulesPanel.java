@@ -18,7 +18,8 @@ import org.jtheque.views.able.panel.IModuleView;
 import org.jtheque.views.able.panel.IRepositoryView;
 import org.jtheque.views.impl.actions.module.DisableModuleAction;
 import org.jtheque.views.impl.actions.module.EnableModuleAction;
-import org.jtheque.views.impl.actions.module.InstallModuleAction;
+import org.jtheque.views.impl.actions.module.InstallModuleFileAction;
+import org.jtheque.views.impl.actions.module.InstallModuleURLAction;
 import org.jtheque.views.impl.actions.module.StartModuleAction;
 import org.jtheque.views.impl.actions.module.StopModuleAction;
 import org.jtheque.views.impl.actions.module.UninstallModuleAction;
@@ -76,14 +77,15 @@ public final class ModulesPanel extends OSGIFilthyBuildedPanel implements IModul
 
         builder.addButtonBar(builder.gbcSet(0, 2, GridBagUtils.HORIZONTAL, GridBagUtils.BASELINE_LEADING, 1.0, 0.0),
                 new StopModuleAction(moduleService, uiUtils, moduleView),
+                new StartModuleAction(moduleService, uiUtils, moduleView),
                 new EnableModuleAction(moduleService, uiUtils, moduleView),
-                new DisableModuleAction(moduleService, uiUtils, moduleView),
-                new UninstallModuleAction(moduleService, uiUtils, moduleView),
-                new UpdateModuleAction(updateService, errorService, uiUtils, views));
+                new DisableModuleAction(moduleService, uiUtils, moduleView));
 
         builder.addButtonBar(builder.gbcSet(0, 3, GridBagUtils.HORIZONTAL, GridBagUtils.BASELINE_LEADING, 1.0, 0.0),
-                new InstallModuleAction(moduleService),
-                new StartModuleAction(moduleService, uiUtils, moduleView),
+                new InstallModuleFileAction(moduleService),
+                new InstallModuleURLAction(moduleService, uiUtils),
+                new UninstallModuleAction(moduleService, uiUtils, moduleView),
+                new UpdateModuleAction(updateService, errorService, uiUtils, views), 
                 ActionFactory.createDisplayViewAction("modules.actions.repository", repositoryView));
     }
 
