@@ -74,6 +74,10 @@ public final class FileService implements IFileService, ModuleListener {
     @Override
     public void registerBackuper(String moduleId, ModuleBackuper backuper) {
         backupers.add(backuper);
+
+        if (StringUtils.isNotEmpty(moduleId)) {
+            ModuleResourceCache.addResource(moduleId, ModuleBackuper.class, backuper);
+        }
     }
 
     @Override
