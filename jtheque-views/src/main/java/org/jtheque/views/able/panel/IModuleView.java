@@ -2,8 +2,7 @@ package org.jtheque.views.able.panel;
 
 import org.jtheque.modules.able.Module;
 import org.jtheque.resources.able.IResource;
-import org.jtheque.ui.able.IView;
-import org.jtheque.ui.able.WaitableView;
+import org.jtheque.ui.able.IWindowView;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -24,7 +23,7 @@ import org.jtheque.ui.able.WaitableView;
 /**
  * @author Baptiste Wicht
  */
-public interface IModuleView extends IView, WaitableView {
+public interface IModuleView extends IWindowView {
     /**
      * Return the selected module.
      *

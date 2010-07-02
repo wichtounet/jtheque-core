@@ -1,31 +1,18 @@
 package org.jtheque.views.impl.components.panel;
 
-import org.jtheque.collections.able.ICollectionsService;
-import org.jtheque.errors.able.IErrorService;
 import org.jtheque.i18n.able.ILanguageService;
 import org.jtheque.modules.able.IModuleService;
 import org.jtheque.modules.able.Module;
 import org.jtheque.ui.able.IFilthyUtils;
-import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.ui.utils.actions.ActionFactory;
 import org.jtheque.ui.utils.builded.OSGIFilthyBuildedPanel;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.update.able.IUpdateService;
 import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.utils.ui.SwingUtils;
-import org.jtheque.views.able.IViewService;
-import org.jtheque.views.able.IViews;
 import org.jtheque.views.able.components.IModulesPanelView;
 import org.jtheque.views.able.panel.IModuleView;
 import org.jtheque.views.able.panel.IRepositoryView;
-import org.jtheque.views.impl.actions.module.DisableModuleAction;
-import org.jtheque.views.impl.actions.module.EnableModuleAction;
-import org.jtheque.views.impl.actions.module.InstallModuleFileAction;
-import org.jtheque.views.impl.actions.module.InstallModuleURLAction;
-import org.jtheque.views.impl.actions.module.StartModuleAction;
-import org.jtheque.views.impl.actions.module.StopModuleAction;
-import org.jtheque.views.impl.actions.module.UninstallModuleAction;
-import org.jtheque.views.impl.actions.module.UpdateModuleAction;
 import org.jtheque.views.impl.components.renderers.ModuleListRenderer;
 import org.jtheque.views.impl.models.ModuleListModel;
 
@@ -60,17 +47,12 @@ public final class ModulesPanel extends OSGIFilthyBuildedPanel implements IModul
         IUpdateService updateService = getService(IUpdateService.class);
         ILanguageService languageService = getService(ILanguageService.class);
         IModuleService moduleService = getService(IModuleService.class);
-        IErrorService errorService = getService(IErrorService.class);
-        IViews views = getService(IViews.class);
-        IUIUtils uiUtils = getService(IUIUtils.class);
-        ICollectionsService collectionsService= getService(ICollectionsService.class);
-        IViewService viewService = getService(IViewService.class);
 
-        IRepositoryView repositoryView = getBeanFromEDT(IRepositoryView.class);
         IModuleView moduleView = getBean(IModuleView.class);
+        IRepositoryView repositoryView = getBeanFromEDT(IRepositoryView.class);
 
         builder.add(new KernelInfoPanel(languageService, getService(IFilthyUtils.class), updateService,
-                errorService, uiUtils, views),
+                moduleView),
                 builder.gbcSet(0, 0, GridBagUtils.HORIZONTAL, GridBagUtils.BASELINE_LEADING, 1.0, 0.0));
 
         modulesList = builder.addScrolledList(
@@ -80,16 +62,16 @@ public final class ModulesPanel extends OSGIFilthyBuildedPanel implements IModul
         modulesList.setVisibleRowCount(4);
 
         builder.addButtonBar(builder.gbcSet(0, 2, GridBagUtils.HORIZONTAL, GridBagUtils.BASELINE_LEADING, 1.0, 0.0),
-                new StopModuleAction(moduleService, uiUtils, moduleView),
-                new StartModuleAction(moduleService, uiUtils, moduleView, collectionsService, viewService),
-                new EnableModuleAction(moduleService, uiUtils, moduleView),
-                new DisableModuleAction(moduleService, uiUtils, moduleView));
+                moduleView.getControllerAction("modules.actions.stop", "stop"),
+                moduleView.getControllerAction("modules.actions.start", "start"),
+                moduleView.getControllerAction("modules.actions.activate", "enable"),
+                moduleView.getControllerAction("modules.actions.desactivate", "disable"));
 
         builder.addButtonBar(builder.gbcSet(0, 3, GridBagUtils.HORIZONTAL, GridBagUtils.BASELINE_LEADING, 1.0, 0.0),
-                new InstallModuleFileAction(moduleService),
-                new InstallModuleURLAction(moduleService, uiUtils),
-                new UninstallModuleAction(moduleService, uiUtils, moduleView),
-                new UpdateModuleAction(updateService, errorService, uiUtils, views), 
+                moduleView.getControllerAction("modules.actions.url.new", "installURL"),
+                moduleView.getControllerAction("modules.actions.file.new", "installFile"),
+                moduleView.getControllerAction("modules.actions.uninstall", "uninstall"),
+                moduleView.getControllerAction("modules.actions.update", "updateModule"),
                 ActionFactory.createDisplayViewAction("modules.actions.repository", repositoryView));
     }
 

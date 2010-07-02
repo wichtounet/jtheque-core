@@ -17,18 +17,15 @@ package org.jtheque.views.impl.components.panel;
  */
 
 import org.jtheque.core.able.ICore;
-import org.jtheque.errors.able.IErrorService;
 import org.jtheque.i18n.able.ILanguageService;
 import org.jtheque.ui.able.IFilthyUtils;
-import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.ui.utils.builded.FilthyBuildedPanel;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.ui.utils.builders.PanelBuilder;
 import org.jtheque.update.able.IUpdateService;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.ui.GridBagUtils;
-import org.jtheque.views.able.IViews;
-import org.jtheque.views.impl.actions.module.UpdateKernelAction;
+import org.jtheque.views.able.panel.IModuleView;
 
 import java.awt.Insets;
 
@@ -41,9 +38,7 @@ public final class KernelInfoPanel extends FilthyBuildedPanel {
     private static final int TITLE_FONT_SIZE = 16;
 
     private final IUpdateService updateService;
-    private final IErrorService errorService;
-    private final IUIUtils uiUtils;
-    private final IViews views;
+    private final IModuleView moduleView;
 
     /**
      * Construct a new KernelInfoPanel.
@@ -51,18 +46,14 @@ public final class KernelInfoPanel extends FilthyBuildedPanel {
      * @param languageService The language service.
      * @param filthyUtils     The filthy utils.
      * @param updateService   The update service.
-     * @param errorService    The error service.
-     * @param uiUtils         The ui utils.
-     * @param views           The views
+     * @param moduleView      The module view.
      */
     public KernelInfoPanel(ILanguageService languageService, IFilthyUtils filthyUtils, IUpdateService updateService,
-                           IErrorService errorService, IUIUtils uiUtils, IViews views) {
+                           IModuleView moduleView) {
         super(filthyUtils, languageService);
 
         this.updateService = updateService;
-        this.errorService = errorService;
-        this.uiUtils = uiUtils;
-        this.views = views;
+        this.moduleView = moduleView;
 
         build();
 
@@ -89,7 +80,7 @@ public final class KernelInfoPanel extends FilthyBuildedPanel {
             builder.addLabel(version.getVersion(), getForeground(), builder.gbcSet(2, 1));
         }
 
-        builder.addButton(new UpdateKernelAction(updateService, errorService, uiUtils, views),
+        builder.addButton(moduleView.getControllerAction("modules.actions.update.kernel", "updateCore"),
                 builder.gbcSet(4, 0, GridBagUtils.NONE, GridBagUtils.LINE_START, 1, 3));
     }
 }

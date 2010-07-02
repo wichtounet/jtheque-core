@@ -54,6 +54,10 @@
     <bean id="updateView" class="org.jtheque.views.impl.windows.UpdateView" lazy-init="true"/>
     <bean id="errorView" class="org.jtheque.views.impl.windows.ErrorView" lazy-init="true"/>
 
+    <!-- controller -->
+
+    <bean id="moduleController" class="org.jtheque.views.impl.controllers.ModuleController" lazy-init="true" />
+
     <!-- Config panels -->
 
     <bean class="org.jtheque.views.impl.components.config.JPanelConfigAppearance" lazy-init="true"/>
