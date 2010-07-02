@@ -69,6 +69,8 @@
 
     <bean class="org.jtheque.views.impl.components.panel.CollectionPane" lazy-init="true">
         <constructor-arg ref="core"/>
+        <constructor-arg ref="languageService"/>
+        <constructor-arg ref="collectionsService"/>
     </bean>
 
     <bean class="org.jtheque.views.impl.components.panel.AboutPane" lazy-init="true">
@@ -83,6 +85,7 @@
     <osgi:reference id="uiUtils" interface="org.jtheque.ui.able.IUIUtils"/>
     <osgi:reference id="filthyUtils" interface="org.jtheque.ui.able.IFilthyUtils"/>
     <osgi:reference id="undoRedoService" interface="org.jtheque.undo.able.IUndoRedoService"/>
+    <osgi:reference id="collectionsService" interface="org.jtheque.collections.able.ICollectionsService"/>
     <osgi:reference id="languageService" interface="org.jtheque.i18n.able.ILanguageService"/>
     <osgi:reference id="updateService" interface="org.jtheque.update.able.IUpdateService"/>
     <osgi:reference id="featureService" interface="org.jtheque.features.able.IFeatureService"/>

@@ -60,9 +60,7 @@ public final class SplashService implements ISplashService, ApplicationContextAw
             @Override
             public void run() {
                 mainView = (MainView) applicationContext.getBean(IMainView.class);
-
-                SimplePropertiesCache.put("mainView", mainView);
-
+                
                 splashScreenPane = new SplashScreenPane(core);
             }
         });

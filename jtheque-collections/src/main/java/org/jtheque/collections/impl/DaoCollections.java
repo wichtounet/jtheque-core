@@ -19,15 +19,12 @@ package org.jtheque.collections.impl;
 import org.jtheque.collections.able.Collection;
 import org.jtheque.collections.able.IDaoCollections;
 import org.jtheque.persistence.able.Entity;
-import org.jtheque.persistence.able.IDaoPersistenceContext;
 import org.jtheque.persistence.able.QueryMapper;
 import org.jtheque.persistence.utils.CachedJDBCDao;
 import org.jtheque.persistence.utils.Query;
 
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
-
-import javax.annotation.Resource;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -41,9 +38,6 @@ import java.util.List;
 public final class DaoCollections extends CachedJDBCDao<Collection> implements IDaoCollections {
     private final RowMapper<Collection> rowMapper = new CollectionRowMapper();
     private final QueryMapper queryMapper = new CollectionQueryMapper();
-
-    @Resource
-    private IDaoPersistenceContext daoPersistenceContext;
 
     /**
      * The current collection.
@@ -90,7 +84,7 @@ public final class DaoCollections extends CachedJDBCDao<Collection> implements I
 
     @Override
     public Collection getCollection(String name) {
-        List<Collection> collections = daoPersistenceContext.getTemplate().query(
+        List<Collection> collections = getContext().getTemplate().query(
                 "SELECT * FROM " + TABLE + " WHERE TITLE = ?", rowMapper, name);
 
         if (collections.isEmpty()) {
@@ -118,7 +112,7 @@ public final class DaoCollections extends CachedJDBCDao<Collection> implements I
 
     @Override
     protected void loadCache() {
-        java.util.Collection<Collection> collections = daoPersistenceContext.getSortedList(TABLE, rowMapper);
+        java.util.Collection<Collection> collections = getContext().getSortedList(TABLE, rowMapper);
 
         for (Collection collection : collections) {
             getCache().put(collection.getId(), collection);
@@ -129,7 +123,7 @@ public final class DaoCollections extends CachedJDBCDao<Collection> implements I
 
     @Override
     protected void load(int i) {
-        Collection collection = daoPersistenceContext.getDataByID(TABLE, i, rowMapper);
+        Collection collection = getContext().getDataByID(TABLE, i, rowMapper);
 
         getCache().put(i, collection);
     }

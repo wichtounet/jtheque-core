@@ -16,10 +16,13 @@ package org.jtheque.views.impl.components.panel;
  * limitations under the License.
  */
 
+import org.jtheque.collections.able.ICollectionsService;
 import org.jtheque.core.able.ICore;
 import org.jtheque.core.utils.SimplePropertiesCache;
+import org.jtheque.i18n.able.ILanguageService;
 import org.jtheque.ui.able.Filthy;
 import org.jtheque.ui.utils.AnimationUtils;
+import org.jtheque.ui.utils.actions.JThequeAction;
 import org.jtheque.ui.utils.components.JThequeI18nLabel;
 import org.jtheque.ui.utils.filthy.FilthyPasswordField;
 import org.jtheque.ui.utils.filthy.FilthyTextField;
@@ -33,7 +36,6 @@ import org.jtheque.views.impl.actions.collections.CreateAction;
 import org.jdesktop.swingx.JXPanel;
 
 import javax.annotation.PostConstruct;
-import javax.swing.Action;
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -58,19 +60,26 @@ public final class CollectionPane extends JXPanel implements ICollectionView, Fi
 
     private static final int LEFT_MARGIN_WIDTH = 200;
 
-    private final Action chooseAction = new ChooseAction();
+    private final JThequeAction chooseAction;
 
     private final ICore core;
+
+    private ICollectionsService collectionsService;
+    private ILanguageService languageService;
 
     /**
      * Construct a new CollectionPane.
      *
      * @param core The core.
      */
-    public CollectionPane(ICore core) {
+    public CollectionPane(ICore core, ILanguageService languageService, ICollectionsService collectionsService) {
         super();
 
         this.core = core;
+        chooseAction = new ChooseAction(languageService, collectionsService, this);
+
+        this.languageService = languageService;
+        this.collectionsService = collectionsService;
     }
 
     /**
@@ -87,7 +96,7 @@ public final class CollectionPane extends JXPanel implements ICollectionView, Fi
 
         gbc.setDefaultInsets(new Insets(0, 0, 0, 0));
 
-        add(Box.createVerticalStrut(SimplePropertiesCache.<Window>get("MainView").getHeight() / 3),
+        add(Box.createVerticalStrut(SimplePropertiesCache.<Window>get("mainView").getHeight() / 3),
                 gbc.gbcSet(0, 0, GridBagConstraints.NONE, GridBagConstraints.CENTER, 4, 1, 1.0, 0.0));
 
         add(Box.createHorizontalStrut(LEFT_MARGIN_WIDTH), gbc.gbcSet(0, 1, GridBagConstraints.HORIZONTAL, GridBagConstraints.CENTER, 1, 4, 0.3, 0.0));
@@ -176,9 +185,16 @@ public final class CollectionPane extends JXPanel implements ICollectionView, Fi
     private void addButtonBar(GridBagUtils gbc) {
         Container buttonsPanel = new JPanel();
 
-        buttonsPanel.add(new JButton(new CreateAction()));
-        buttonsPanel.add(new JButton(new ChooseAction()));
-        buttonsPanel.add(new JButton(new CancelAction()));
+        CreateAction createAction = new CreateAction(languageService, collectionsService, this);
+        CancelAction cancelAction = new CancelAction(core);
+
+        createAction.refreshText(languageService);
+        cancelAction.refreshText(languageService);
+        chooseAction.refreshText(languageService);
+
+        buttonsPanel.add(new JButton(createAction));
+        buttonsPanel.add(new JButton(chooseAction));
+        buttonsPanel.add(new JButton(cancelAction));
 
         buttonsPanel.setBackground(BACKGROUND_COLOR);
 

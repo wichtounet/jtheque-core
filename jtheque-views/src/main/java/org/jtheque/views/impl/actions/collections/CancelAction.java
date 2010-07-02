@@ -29,14 +29,15 @@ import java.awt.event.ActionEvent;
  * @author Baptiste Wicht
  */
 public final class CancelAction extends JThequeAction {
-    @Resource
     private ICore core;
 
     /**
      * Construct a new CancelAction.
+     * @param core
      */
-    public CancelAction() {
+    public CancelAction(ICore core) {
         super("collections.actions.cancel");
+        this.core = core;
     }
 
     @Override

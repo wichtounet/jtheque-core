@@ -84,4 +84,6 @@ public interface IViewService {
      * @param view          The view to configure.
      */
     void configure(IWindowConfiguration configuration, IView view);
+
+    void closeCollectionView();
 }

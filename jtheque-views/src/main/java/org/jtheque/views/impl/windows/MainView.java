@@ -97,6 +97,8 @@ public final class MainView extends SwingFrameView implements TitleListener, IMa
         this.uiUtils = uiUtils;
         this.menuBar = menuBar;
         this.languageService = languageService;
+
+        SimplePropertiesCache.put("mainView", this);
     }
 
     /**

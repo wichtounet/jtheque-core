@@ -32,20 +32,19 @@ import java.awt.event.ActionEvent;
  * @author Baptiste Wicht
  */
 public final class ChooseAction extends JThequeAction {
-    @Resource
     private ICollectionView collectionView;
-
-    @Resource
     private ICollectionsService collectionsService;
-
-    @Resource
     private ILanguageService languageService;
 
     /**
      * Construct a new ChooseAction.
      */
-    public ChooseAction() {
+    public ChooseAction(ILanguageService languageService, ICollectionsService collectionsService, ICollectionView collectionView) {
         super("collections.actions.choose");
+
+        this.languageService = languageService;
+        this.collectionsService = collectionsService;
+        this.collectionView = collectionView;
     }
 
     @Override

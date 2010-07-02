@@ -17,6 +17,7 @@ package org.jtheque.modules.impl;
  */
 
 import org.jtheque.core.able.ICore;
+import org.jtheque.core.utils.SimplePropertiesCache;
 import org.jtheque.core.utils.WeakEventListenerList;
 import org.jtheque.i18n.able.ILanguageService;
 import org.jtheque.images.able.IImageService;
@@ -119,6 +120,7 @@ public final class ModuleService implements IModuleService {
     public void load() {
         SwingUtils.assertNotEDT("load()");
 
+        //Load all modules
         modules.addAll(moduleLoader.loadModules());
 
         configuration = stateService.getState(new ModuleConfiguration());
@@ -135,8 +137,8 @@ public final class ModuleService implements IModuleService {
                 configuration.add(module);
             }
 
-            //Colllection modules
-            if (module.isCollection()) {
+            //If a collection module must be launched
+            if (canBeLoaded(module) && module.isCollection()) {
                 collectionModule = true;
             }
 
@@ -153,7 +155,7 @@ public final class ModuleService implements IModuleService {
      * @return true if the module can be loaded else false.
      */
     private static boolean canBeLoaded(Module module) {
-        return !(module.getState() == DISABLED);
+        return module.getState() != DISABLED;
     }
 
     /**
@@ -211,11 +213,20 @@ public final class ModuleService implements IModuleService {
     }
 
     @Override
+    public boolean needTwoPhasesLoading(Module module) {
+        return module.isCollection() && !SimplePropertiesCache.<Boolean>get("collectionChosen");
+    }
+
+    @Override
     public void startModule(Module module) {
         SwingUtils.assertNotEDT("startModule(Module)");
 
         if (module.getState() == STARTED) {
             throw new IllegalStateException("The module is already started. ");
+        }
+
+        if (needTwoPhasesLoading(module)) {
+            throw new IllegalStateException("The module needs a collection");
         }
 
         LoggerFactory.getLogger(getClass()).debug("Start module {}", module.getBundle().getSymbolicName());
@@ -387,7 +398,7 @@ public final class ModuleService implements IModuleService {
             Module module = moduleLoader.installModule(new File(core.getFolders().getModulesFolder(), result.getJarFile()));
 
             module.setState(INSTALLED);
-            
+
             modules.add(module);
 
             configuration.add(module);
@@ -451,11 +462,11 @@ public final class ModuleService implements IModuleService {
 
     @Override
     public String canBeStopped(Module module) {
-        if(module.getState() != STARTED){
+        if (module.getState() != STARTED) {
             return getMessage("error.module.not.started");
         }
 
-        if(isThereIsActiveDependenciesOn(module)){
+        if (isThereIsActiveDependenciesOn(module)) {
             return getMessage("error.module.dependencies");
         }
 
@@ -490,9 +501,9 @@ public final class ModuleService implements IModuleService {
      * @return true if there is a dependency on the given module.
      */
     private boolean isThereIsActiveDependenciesOn(Module module) {
-        for(Module other : modules){
-            if(other != module && other.getState() == STARTED &&
-                    ArrayUtils.contains(other.getDependencies(), module.getId())){
+        for (Module other : modules) {
+            if (other != module && other.getState() == STARTED &&
+                    ArrayUtils.contains(other.getDependencies(), module.getId())) {
                 return true;
             }
         }

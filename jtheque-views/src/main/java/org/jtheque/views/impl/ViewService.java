@@ -77,6 +77,11 @@ public final class ViewService implements IViewService, ApplicationContextAware 
     }
 
     @Override
+    public void closeCollectionView() {
+        SimplePropertiesCache.<IMainView>get("mainView").setGlassPane(null);
+    }
+
+    @Override
     public void saveState(IView window, String name) {
         if (configuration != null) {
             configuration.update(name, window);

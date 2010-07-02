@@ -16,6 +16,8 @@ package org.jtheque.views.impl.actions.module;
  * limitations under the License.
  */
 
+import org.jtheque.collections.able.CollectionListener;
+import org.jtheque.collections.able.ICollectionsService;
 import org.jtheque.modules.able.IModuleService;
 import org.jtheque.modules.able.Module;
 import org.jtheque.ui.able.IUIUtils;
@@ -23,6 +25,7 @@ import org.jtheque.ui.utils.actions.JThequeAction;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.ui.SwingUtils;
 import org.jtheque.utils.ui.edt.SimpleTask;
+import org.jtheque.views.able.IViewService;
 import org.jtheque.views.able.panel.IModuleView;
 
 import java.awt.event.ActionEvent;
@@ -32,44 +35,74 @@ import java.awt.event.ActionEvent;
  *
  * @author Baptiste Wicht
  */
-public final class StartModuleAction extends JThequeAction {
+public final class StartModuleAction extends JThequeAction implements CollectionListener {
     private final IModuleView moduleView;
     private final IUIUtils uiUtils;
     private final IModuleService moduleService;
+    private final ICollectionsService collectionsService;
+    private final IViewService viewService;
+
+    private Module module;
 
     /**
      * Construct a new StartModuleAction.
      *
-     * @param moduleService The module service.
-     * @param uiUtils       The UI Utils.
-     * @param moduleView    The module view.
+     * @param moduleService      The module service.
+     * @param uiUtils            The UI Utils.
+     * @param moduleView         The module view.
+     * @param collectionsService The collection services.
+     * @param viewService        The view service
      */
-    public StartModuleAction(IModuleService moduleService, IUIUtils uiUtils, IModuleView moduleView) {
+    public StartModuleAction(IModuleService moduleService, IUIUtils uiUtils, IModuleView moduleView,
+                             ICollectionsService collectionsService, IViewService viewService) {
         super("modules.actions.start");
 
         this.moduleService = moduleService;
         this.uiUtils = uiUtils;
         this.moduleView = moduleView;
+        this.collectionsService = collectionsService;
+        this.viewService = viewService;
     }
 
     @Override
     public void actionPerformed(ActionEvent arg0) {
-        final Module module = moduleView.getSelectedModule();
+        module = moduleView.getSelectedModule();
 
         String error = moduleService.canBeStarted(module);
 
         if (StringUtils.isEmpty(error)) {
-            SwingUtils.execute(new SimpleTask(){
-                @Override
-                public void run() {
-                    moduleView.startWait();
-                }
-            });
-
-            new Thread(new StartModuleRunnable(module), "Module loader").start();
+            if (moduleService.needTwoPhasesLoading(module)) {
+                moduleView.closeDown();
+                viewService.displayCollectionView();
+                collectionsService.addCollectionListener(this);
+            } else {
+                loadModule(module);
+            }
         } else {
             uiUtils.getDelegate().displayText(error);
         }
+    }
+
+    @Override
+    public void collectionChoosed() {
+        collectionsService.removeCollectionListener(this);
+
+        viewService.closeCollectionView();
+
+        loadModule(module);
+
+        moduleView.display();
+    }
+
+    private void loadModule(Module module) {
+        SwingUtils.execute(new SimpleTask() {
+            @Override
+            public void run() {
+                moduleView.startWait();
+            }
+        });
+
+        new Thread(new StartModuleRunnable(module), "Module loader").start();
     }
 
     private class StartModuleRunnable implements Runnable {

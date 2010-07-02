@@ -22,6 +22,7 @@ import org.jtheque.collections.able.ICollectionsService;
 import org.jtheque.collections.able.IDaoCollections;
 import org.jtheque.core.able.ICore;
 import org.jtheque.core.utils.Response;
+import org.jtheque.core.utils.SimplePropertiesCache;
 import org.jtheque.core.utils.WeakEventListenerList;
 import org.jtheque.file.able.IFileService;
 import org.jtheque.persistence.able.DataListener;
@@ -63,6 +64,8 @@ public final class CollectionsService implements ICollectionsService {
         fileService.registerBackuper("jtheque-collections", new CoreBackuper(daoCollections));
 
         schemaService.registerSchema("", schema);
+
+        SimplePropertiesCache.put("collectionChosen", false);
     }
 
     @Override
@@ -80,6 +83,8 @@ public final class CollectionsService implements ICollectionsService {
         } else if (!login(collection, password)) {
             return new Response(false, "error.module.collection");
         }
+
+        SimplePropertiesCache.put("collectionChosen", true);
 
         fireCollectionChoosed();
 
@@ -193,5 +198,10 @@ public final class CollectionsService implements ICollectionsService {
     @Override
     public String getDataType() {
         return DATA_TYPE;
+    }
+
+    @Override
+    public boolean isCollectionChosen() {
+        return SimplePropertiesCache.<Boolean>get("collectionChosen");//Does not compile without generic type
     }
 }

@@ -178,4 +178,6 @@ public interface IModuleService {
      * @param swingLoader The swing loader.
      */
     void registerSwingLoader(String moduleId, SwingLoader swingLoader);
+
+    boolean needTwoPhasesLoading(Module module);
 }

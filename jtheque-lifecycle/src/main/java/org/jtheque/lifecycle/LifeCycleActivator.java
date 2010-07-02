@@ -119,6 +119,7 @@ public class LifeCycleActivator implements BundleActivator, CollectionListener {
 
     @Override
     public void collectionChoosed() {
+        getService(IViewService.class).closeCollectionView();
         startSecondPhase();
 
         getService(ICollectionsService.class).removeCollectionListener(this);

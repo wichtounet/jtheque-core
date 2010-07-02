@@ -6,6 +6,7 @@ import org.jdesktop.jxlayer.JXLayer;
 
 import javax.swing.JComponent;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 import java.awt.Component;
 
@@ -35,15 +36,22 @@ public class WindowHelper {
             @Override
             public void run() {
                 if (glassPane == null) {
-                    content.setGlassPane(content.createGlassPane());
+                    JPanel glasspane = content.createGlassPane();
+
+                    glasspane.setVisible(false);
+                    glasspane.setOpaque(false);
+
+                    content.setGlassPane(glasspane);
                 } else {
                     content.setGlassPane((JPanel) glassPane);
 
                     glassPane.setVisible(true);
                     glassPane.repaint();
 
-                    SwingUtils.refresh(glassPane);
+                    SwingUtilities.updateComponentTreeUI(glassPane);
                 }
+
+                SwingUtilities.updateComponentTreeUI(content);
             }
         });
     }

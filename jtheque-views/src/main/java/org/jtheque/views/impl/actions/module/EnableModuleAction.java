@@ -61,8 +61,6 @@ public final class EnableModuleAction extends JThequeAction {
             } else {
                 moduleService.enableModule(module);
                 moduleView.refreshList();
-
-                uiUtils.displayI18nText("message.module.enabled");
             }
         } else {
             uiUtils.displayI18nText("error.module.not.disabled");

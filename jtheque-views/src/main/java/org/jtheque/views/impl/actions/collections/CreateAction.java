@@ -32,20 +32,22 @@ import java.awt.event.ActionEvent;
  * @author Baptiste Wicht
  */
 public final class CreateAction extends JThequeAction {
-    @Resource
     private ICollectionView collectionView;
-
-    @Resource
     private ICollectionsService collectionsService;
-
-    @Resource
     private ILanguageService languageService;
 
     /**
      * Construct a new CreateAction.
+     * @param languageService
+     * @param collectionsService
+     * @param collectionView
      */
-    public CreateAction() {
+    public CreateAction(ILanguageService languageService, ICollectionsService collectionsService, ICollectionView collectionView) {
         super("collections.actions.create");
+
+        this.languageService = languageService;
+        this.collectionsService = collectionsService;
+        this.collectionView = collectionView;
     }
 
     @Override

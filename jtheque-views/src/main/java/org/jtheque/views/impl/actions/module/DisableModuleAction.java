@@ -18,7 +18,6 @@ package org.jtheque.views.impl.actions.module;
 
 import org.jtheque.modules.able.IModuleService;
 import org.jtheque.modules.able.Module;
-import org.jtheque.modules.able.ModuleState;
 import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.ui.utils.actions.JThequeAction;
 import org.jtheque.utils.StringUtils;
@@ -60,8 +59,6 @@ public final class DisableModuleAction extends JThequeAction {
         if (StringUtils.isEmpty(error)) {
             moduleService.disableModule(module);
             moduleView.refreshList();
-
-            uiUtils.displayI18nText("message.module.disabled");
         } else {
             uiUtils.getDelegate().displayText(error);
         }

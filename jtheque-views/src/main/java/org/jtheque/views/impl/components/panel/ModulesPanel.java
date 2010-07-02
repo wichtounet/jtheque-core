@@ -1,5 +1,6 @@
 package org.jtheque.views.impl.components.panel;
 
+import org.jtheque.collections.able.ICollectionsService;
 import org.jtheque.errors.able.IErrorService;
 import org.jtheque.i18n.able.ILanguageService;
 import org.jtheque.modules.able.IModuleService;
@@ -12,6 +13,7 @@ import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.update.able.IUpdateService;
 import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.utils.ui.SwingUtils;
+import org.jtheque.views.able.IViewService;
 import org.jtheque.views.able.IViews;
 import org.jtheque.views.able.components.IModulesPanelView;
 import org.jtheque.views.able.panel.IModuleView;
@@ -61,6 +63,8 @@ public final class ModulesPanel extends OSGIFilthyBuildedPanel implements IModul
         IErrorService errorService = getService(IErrorService.class);
         IViews views = getService(IViews.class);
         IUIUtils uiUtils = getService(IUIUtils.class);
+        ICollectionsService collectionsService= getService(ICollectionsService.class);
+        IViewService viewService = getService(IViewService.class);
 
         IRepositoryView repositoryView = getBeanFromEDT(IRepositoryView.class);
         IModuleView moduleView = getBean(IModuleView.class);
@@ -77,7 +81,7 @@ public final class ModulesPanel extends OSGIFilthyBuildedPanel implements IModul
 
         builder.addButtonBar(builder.gbcSet(0, 2, GridBagUtils.HORIZONTAL, GridBagUtils.BASELINE_LEADING, 1.0, 0.0),
                 new StopModuleAction(moduleService, uiUtils, moduleView),
-                new StartModuleAction(moduleService, uiUtils, moduleView),
+                new StartModuleAction(moduleService, uiUtils, moduleView, collectionsService, viewService),
                 new EnableModuleAction(moduleService, uiUtils, moduleView),
                 new DisableModuleAction(moduleService, uiUtils, moduleView));
 

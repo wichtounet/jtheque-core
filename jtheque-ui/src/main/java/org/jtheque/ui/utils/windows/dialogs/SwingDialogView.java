@@ -47,7 +47,6 @@ import javax.swing.Action;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 
 import java.awt.Component;
 import java.awt.Container;
@@ -190,16 +189,21 @@ public abstract class SwingDialogView<T extends IModel> extends JDialog
 
     @Override
     public void display() {
+        if (!builded) {
+            SwingUtils.inEdt(new Runnable() {
+                @Override
+                public void run() {
+                    build();
+                }
+            });
+        }
+        
         SwingUtils.inEdt(new Runnable() {
             @Override
             public void run() {
-                if (!builded) {
-                    build();
-                }
+                setVisible(true);
             }
         });
-
-        setVisible(true);
     }
 
     @Override

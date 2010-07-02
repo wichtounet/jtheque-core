@@ -48,6 +48,5 @@
     <osgi:service ref="persistenceManager" interface="org.jtheque.persistence.able.IPersistenceService"/>
     <osgi:service ref="daoNotes" interface="org.jtheque.persistence.able.IDaoNotes"/>
     <osgi:service ref="daoPersistenceContext" interface="org.jtheque.persistence.able.IDaoPersistenceContext"/>
-    <osgi:service ref="jdbcTemplate" interface="org.springframework.jdbc.core.simple.SimpleJdbcTemplate"/>
 
 </beans>
