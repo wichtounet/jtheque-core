@@ -25,7 +25,7 @@ import java.util.EventListener;
  */
 public interface CollectionListener extends EventListener {
     /**
-     * Collection choosed.
+     * Collection chosen.
      */
-    void collectionChoosed();
+    void collectionChosen();
 }

@@ -86,17 +86,17 @@ public final class CollectionsService implements ICollectionsService {
 
         SimplePropertiesCache.put("collectionChosen", true);
 
-        fireCollectionChoosed();
+        fireCollectionChosen();
 
         return new Response(true);
     }
 
     /**
-     * Fire a collection choosed event.
+     * Fire a collection chosen event.
      */
-    private void fireCollectionChoosed() {
+    private void fireCollectionChosen() {
         for (CollectionListener listener : listeners.getListeners(CollectionListener.class)) {
-            listener.collectionChoosed();
+            listener.collectionChosen();
         }
     }
 

@@ -200,7 +200,7 @@ public class ModuleController extends AbstractController {
         }
 
         @Override
-        public void collectionChoosed() {
+        public void collectionChosen() {
             collectionsService.removeCollectionListener(this);
 
             viewService.closeCollectionView();
