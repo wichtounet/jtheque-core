@@ -24,8 +24,10 @@ import org.jtheque.i18n.able.Internationalizable;
 import org.jtheque.i18n.able.InternationalizableContainer;
 import org.jtheque.images.able.IImageService;
 import org.jtheque.spring.utils.SwingSpringProxy;
+import org.jtheque.ui.able.IController;
 import org.jtheque.ui.able.IModel;
 import org.jtheque.ui.able.IWindowView;
+import org.jtheque.ui.utils.actions.ControllerAction;
 import org.jtheque.ui.utils.constraints.Constraint;
 import org.jtheque.ui.utils.windows.BusyPainterUI;
 import org.jtheque.ui.utils.windows.WindowHelper;
@@ -40,13 +42,13 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.osgi.context.BundleContextAware;
 
 import javax.annotation.PostConstruct;
+import javax.swing.Action;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Cursor;
-import java.awt.Dialog.ModalExclusionType;
 import java.awt.Image;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -75,6 +77,8 @@ public abstract class SwingFrameView<T extends IModel> extends JFrame
     
     private ApplicationContext applicationContext;
     private BundleContext bundleContext;
+
+    private IController controller;
 
     /**
      * Build the view.
@@ -352,5 +356,14 @@ public abstract class SwingFrameView<T extends IModel> extends JFrame
      */
     protected String getMessage(String key, Object... replaces) {
         return getService(ILanguageService.class).getMessage(key, replaces);
+    }
+
+    protected void setController(IController controller) {
+        this.controller = controller;
+    }
+
+    @Override
+    public Action getControllerAction(String key, String action) {
+        return new ControllerAction(key, action, controller);
     }
 }

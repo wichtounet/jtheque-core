@@ -1,5 +1,7 @@
 package org.jtheque.ui.able;
 
+import javax.swing.Action;
+
 /*
  * Copyright JTheque (Baptiste Wicht)
  *
@@ -35,4 +37,6 @@ public interface IWindowView extends IView, WaitableView {
      * @return The height of the window.
      */
     int getHeight();
+
+    Action getControllerAction(String key, String action);
 }

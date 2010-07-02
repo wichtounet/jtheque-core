@@ -26,9 +26,11 @@ import org.jtheque.i18n.able.Internationalizable;
 import org.jtheque.i18n.able.InternationalizableContainer;
 import org.jtheque.images.able.IImageService;
 import org.jtheque.spring.utils.SwingSpringProxy;
+import org.jtheque.ui.able.IController;
 import org.jtheque.ui.able.IModel;
 import org.jtheque.ui.able.IWindowView;
 import org.jtheque.ui.utils.actions.ActionFactory;
+import org.jtheque.ui.utils.actions.ControllerAction;
 import org.jtheque.ui.utils.constraints.Constraint;
 import org.jtheque.ui.utils.windows.BusyPainterUI;
 import org.jtheque.ui.utils.windows.WindowHelper;
@@ -79,6 +81,8 @@ public abstract class SwingDialogView<T extends IModel> extends JDialog
 
     private JXLayer<JComponent> content;
     private LockableUI busyPainterUI;
+
+    private IController controller;
 
     /**
      * Construct a SwingDialogView modal to the main view.
@@ -180,6 +184,11 @@ public abstract class SwingDialogView<T extends IModel> extends JDialog
      */
     public Action getCloseAction(String key) {
         return ActionFactory.createCloseViewAction(key, this);
+    }
+
+    @Override
+    public Action getControllerAction(String key, String action){
+        return new ControllerAction(key, action, controller);
     }
 
     @Override
@@ -378,5 +387,9 @@ public abstract class SwingDialogView<T extends IModel> extends JDialog
      */
     protected <T> T getBeanFromEDT(Class<T> classz) {
         return new SwingSpringProxy<T>(classz, applicationContext).get();
+    }
+
+    protected void setController(IController controller) {
+        this.controller = controller;
     }
 }
