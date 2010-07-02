@@ -28,8 +28,6 @@ import org.jtheque.update.able.IUpdateService;
 import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.utils.ui.SwingUtils;
 import org.jtheque.views.able.panel.IRepositoryView;
-import org.jtheque.views.impl.actions.module.repository.ExpandRepositoryModuleAction;
-import org.jtheque.views.impl.actions.module.repository.InstallRepositoryModuleAction;
 import org.jtheque.views.impl.components.panel.ModulePanel;
 import org.jtheque.views.impl.components.renderers.ModuleRepositoryListRenderer;
 
@@ -69,8 +67,8 @@ public final class RepositoryView extends SwingFilthyBuildedDialogView<IModel> i
                 builder.gbcSet(0, 1, GridBagUtils.BOTH));
 
         builder.addButtonBar(builder.gbcSet(0, 2, GridBagUtils.HORIZONTAL),
-                new ExpandRepositoryModuleAction(this),
-                new InstallRepositoryModuleAction());
+                getControllerAction("repository.actions.expand", "expand"),
+                getControllerAction("repository.actions.install", "install"));
     }
 
     @Override

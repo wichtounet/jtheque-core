@@ -6,11 +6,17 @@ import org.jtheque.features.able.IFeature;
 import org.jtheque.features.able.Menu;
 import org.jtheque.i18n.able.ILanguageService;
 import org.jtheque.i18n.able.Internationalizable;
+import org.jtheque.ui.able.IController;
 import org.jtheque.ui.able.IView;
 import org.jtheque.ui.utils.actions.ActionFactory;
+import org.jtheque.ui.utils.actions.ControllerAction;
 import org.jtheque.ui.utils.actions.JThequeAction;
 import org.jtheque.utils.collections.CollectionUtils;
 
+import javax.swing.Action;
+import javax.swing.KeyStroke;
+
+import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -222,6 +228,15 @@ public abstract class AbstractMenu implements Menu {
         return f;
     }
 
+    protected IFeature createSeparatedSubFeature(int position, JThequeAction action, String image, int accelerator) {
+        IFeature feature = createSeparatedSubFeature(position, action, image);
+
+        feature.getAction().putValue(Action.ACCELERATOR_KEY,
+                KeyStroke.getKeyStroke(accelerator, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+
+        return feature;
+    }
+
     /**
      * Create a separated (it seems with a line separator) feature.
      *
@@ -304,6 +319,10 @@ public abstract class AbstractMenu implements Menu {
      */
     public static JThequeAction createDisplayViewAction(String key, IView view) {
         return ActionFactory.createDisplayViewAction(key, view);
+    }
+
+    public static JThequeAction createControllerAction(String key, String action, IController controller) {
+        return ActionFactory.createControllerAction(key, action, controller);
     }
 
     @Override

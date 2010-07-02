@@ -45,18 +45,42 @@
 
     <!--  Views -->
 
-    <bean id="configView" class="org.jtheque.views.impl.windows.ConfigView" lazy-init="true"/>
-    <bean id="licenceView" class="org.jtheque.views.impl.windows.LicenceView" lazy-init="true"/>
-    <bean id="eventView" class="org.jtheque.views.impl.windows.EventView" lazy-init="true"/>
-    <bean id="messageView" class="org.jtheque.views.impl.windows.MessageView" lazy-init="true"/>
-    <bean id="moduleView" class="org.jtheque.views.impl.windows.ModuleView" lazy-init="true"/>
-    <bean id="repositoryView" class="org.jtheque.views.impl.windows.RepositoryView" lazy-init="true"/>
-    <bean id="updateView" class="org.jtheque.views.impl.windows.UpdateView" lazy-init="true"/>
+    <bean id="configView" class="org.jtheque.views.impl.windows.ConfigView" lazy-init="true">
+        <property name="controller" ref="configController"/>
+    </bean>
+
+    <bean id="eventView" class="org.jtheque.views.impl.windows.EventView" lazy-init="true">
+        <property name="controller" ref="eventController" />
+    </bean>
+
+    <bean id="messageView" class="org.jtheque.views.impl.windows.MessageView" lazy-init="true">
+        <property name="controller" ref="messageController"/>
+    </bean>
+
+    <bean id="moduleView" class="org.jtheque.views.impl.windows.ModuleView" lazy-init="true">
+        <property name="controller" ref="moduleController"/>
+    </bean>
+    
+    <bean id="repositoryView" class="org.jtheque.views.impl.windows.RepositoryView" lazy-init="true">
+        <property name="controller" ref="repositoryController"/>
+    </bean>
+
+    <bean id="updateView" class="org.jtheque.views.impl.windows.UpdateView" lazy-init="true">
+        <property name="controller" ref="updateController"/>
+    </bean>
+
     <bean id="errorView" class="org.jtheque.views.impl.windows.ErrorView" lazy-init="true"/>
+    <bean id="licenceView" class="org.jtheque.views.impl.windows.LicenceView" lazy-init="true"/>
 
     <!-- controller -->
 
     <bean id="moduleController" class="org.jtheque.views.impl.controllers.ModuleController" lazy-init="true" />
+    <bean id="messageController" class="org.jtheque.views.impl.controllers.MessageController" lazy-init="true"/>
+    <bean id="configController" class="org.jtheque.views.impl.controllers.ConfigController" lazy-init="true"/>
+    <bean id="eventController" class="org.jtheque.views.impl.controllers.EventController" lazy-init="true"/>
+    <bean id="updateController" class="org.jtheque.views.impl.controllers.UpdateController" lazy-init="true"/>
+    <bean id="generalController" class="org.jtheque.views.impl.controllers.GeneralController" lazy-init="true"/>
+    <bean id="repositoryController" class="org.jtheque.views.impl.controllers.RepositoryController" lazy-init="true"/>
 
     <!-- Config panels -->
 

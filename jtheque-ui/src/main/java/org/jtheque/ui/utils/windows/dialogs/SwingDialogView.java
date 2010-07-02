@@ -188,7 +188,7 @@ public abstract class SwingDialogView<T extends IModel> extends JDialog
 
     @Override
     public Action getControllerAction(String key, String action){
-        return new ControllerAction(key, action, controller);
+        return ActionFactory.createControllerAction(key, action, controller);
     }
 
     @Override
@@ -389,7 +389,7 @@ public abstract class SwingDialogView<T extends IModel> extends JDialog
         return new SwingSpringProxy<T>(classz, applicationContext).get();
     }
 
-    protected void setController(IController controller) {
+    public void setController(IController controller) {
         this.controller = controller;
     }
 }

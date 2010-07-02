@@ -11,7 +11,6 @@ import org.jtheque.ui.utils.models.SimpleListModel;
 import org.jtheque.ui.utils.windows.dialogs.SwingFilthyBuildedDialogView;
 import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.views.able.windows.IEventView;
-import org.jtheque.views.impl.actions.event.UpdateAction;
 import org.jtheque.views.impl.models.EventsTableModel;
 
 import org.jdesktop.swingx.JXTable;
@@ -98,7 +97,9 @@ public final class EventView extends SwingFilthyBuildedDialogView<IModel> implem
 
         createInfosPanel(builder);
 
-        builder.addButton(new UpdateAction(this), builder.gbcSet(1, 3, GridBagUtils.NONE, GridBagUtils.LINE_END));
+        builder.addButton(
+                getControllerAction("log.view.actions.update", "update"),
+                builder.gbcSet(1, 3, GridBagUtils.NONE, GridBagUtils.LINE_END));
     }
 
     /**

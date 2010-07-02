@@ -1,5 +1,6 @@
 package org.jtheque.ui.utils.actions;
 
+import org.jtheque.ui.able.IController;
 import org.jtheque.ui.able.IView;
 
 /*
@@ -53,5 +54,9 @@ public final class ActionFactory {
      */
     public static JThequeAction createDisplayViewAction(String key, IView view) {
         return new DisplayViewAction(key, view);
+    }
+
+    public static JThequeAction createControllerAction(String key, String action, IController controller) {
+        return new ControllerAction(key, action, controller);
     }
 }

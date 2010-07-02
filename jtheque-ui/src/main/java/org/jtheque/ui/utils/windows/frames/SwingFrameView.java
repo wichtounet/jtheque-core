@@ -27,6 +27,7 @@ import org.jtheque.spring.utils.SwingSpringProxy;
 import org.jtheque.ui.able.IController;
 import org.jtheque.ui.able.IModel;
 import org.jtheque.ui.able.IWindowView;
+import org.jtheque.ui.utils.actions.ActionFactory;
 import org.jtheque.ui.utils.actions.ControllerAction;
 import org.jtheque.ui.utils.constraints.Constraint;
 import org.jtheque.ui.utils.windows.BusyPainterUI;
@@ -364,6 +365,6 @@ public abstract class SwingFrameView<T extends IModel> extends JFrame
 
     @Override
     public Action getControllerAction(String key, String action) {
-        return new ControllerAction(key, action, controller);
+        return ActionFactory.createControllerAction(key, action, controller);
     }
 }

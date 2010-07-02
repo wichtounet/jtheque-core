@@ -41,12 +41,8 @@ public final class ModuleView extends SwingFilthyBuildedDialogView<IModel> imple
     private IModulesPanelView modulesPanel;
     private IResourcePanelView resourcePanel;
 
-    @Resource
-    private IController moduleController;
-
     @Override
     protected void initView() {
-        setController(moduleController);
         setTitleKey("module.view.title");
     }
 

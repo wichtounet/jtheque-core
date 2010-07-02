@@ -1,7 +1,9 @@
-package org.jtheque.views.impl.actions.author;
+package org.jtheque.views.impl.controllers;
 
-import org.jtheque.core.able.ICore;
-import org.jtheque.ui.utils.actions.AbstractBrowseAction;
+import org.jtheque.ui.utils.AbstractController;
+import org.jtheque.views.able.windows.IMessageView;
+
+import javax.annotation.Resource;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -19,21 +21,15 @@ import org.jtheque.ui.utils.actions.AbstractBrowseAction;
  * limitations under the License.
  */
 
-/**
- * Action to propose an improvement.
- *
- * @author Baptiste Wicht
- */
-public final class AcProposeImprovement extends AbstractBrowseAction {
-    /**
-     * Construct a new AcProposeImprovement with a specific key.
-     */
-    public AcProposeImprovement() {
-        super("menu.features");
+public class MessageController extends AbstractController {
+    @Resource
+    private IMessageView messageView;
+
+    private void next() {
+        messageView.next();
     }
 
-    @Override
-    public String getUrl() {
-        return ICore.HELP_URL;//TODO REvoir
+    private void previous() {
+        messageView.previous();
     }
 }

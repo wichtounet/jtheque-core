@@ -23,8 +23,6 @@ import org.jtheque.ui.utils.builders.PanelBuilder;
 import org.jtheque.ui.utils.windows.dialogs.SwingFilthyBuildedDialogView;
 import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.views.able.windows.IMessageView;
-import org.jtheque.views.impl.actions.messages.DisplayNextMessageAction;
-import org.jtheque.views.impl.actions.messages.DisplayPreviousMessageAction;
 import org.jtheque.views.impl.models.IMessageModel;
 import org.jtheque.views.impl.models.MessageModel;
 
@@ -55,7 +53,9 @@ public final class MessageView extends SwingFilthyBuildedDialogView<IMessageMode
         addFields(builder);
 
         builder.addButtonBar(builder.gbcSet(0, 4, GridBagUtils.HORIZONTAL, GridBagUtils.LINE_END, 2, 1),
-                getCloseAction("messages.actions.close"), new DisplayNextMessageAction(this), new DisplayPreviousMessageAction(this));
+                getCloseAction("messages.actions.close"),
+                getControllerAction("messages.actions.display.next", "next"),
+                getControllerAction("messages.actions.display.previous", "previous"));
     }
 
     /**

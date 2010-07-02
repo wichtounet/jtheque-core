@@ -1,25 +1,14 @@
-package org.jtheque.views.impl.actions.errors;
+package org.jtheque.views.impl.controllers;
 
-import org.jtheque.ui.utils.actions.JThequeAction;
+import org.jtheque.core.able.ICore;
+import org.jtheque.modules.able.IModuleDescription;
+import org.jtheque.modules.able.IModuleService;
+import org.jtheque.ui.able.IUIUtils;
+import org.jtheque.ui.utils.AbstractController;
 import org.jtheque.views.able.IViews;
+import org.jtheque.views.able.panel.IRepositoryView;
 
-import java.awt.event.ActionEvent;
-
-/*
- * Copyright JTheque (Baptiste Wicht)
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+import javax.annotation.Resource;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -37,27 +26,50 @@ import java.awt.event.ActionEvent;
  * limitations under the License.
  */
 
-/**
- * An action to display the errors view.
+/*
+ * Copyright JTheque (Baptiste Wicht)
  *
- * @author Baptiste Wicht
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
-public class DisplayErrorsViewAction extends JThequeAction {
-    private final IViews views;
 
-    /**
-     * Construct a new DisplayErrorsViewAction
-     *
-     * @param views The views.
-     */
-    public DisplayErrorsViewAction(IViews views) {
-        super("error.view.actions.display");
+public class RepositoryController extends AbstractController {
+    @Resource
+    private IRepositoryView repositoryView;
 
-        this.views = views;
+    @Resource
+    private IViews views;
+
+    @Resource
+    private IUIUtils uiUtils;
+
+    @Resource
+    private IModuleService moduleService;
+
+    private void expand() {
+        repositoryView.expandSelectedModule();
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        views.getErrorView().display();
+    private void install() {
+        IModuleDescription description = views.getRepositoryView().getSelectedModule();
+
+        if (description.getCoreVersion().isGreaterThan(ICore.VERSION)) {
+            uiUtils.displayI18nText("error.module.version.core");
+        } else {
+            if (moduleService.isInstalled(description.getId())) {
+                uiUtils.displayI18nText("message.repository.module.installed");
+            } else {
+                moduleService.install(description.getDescriptorURL());
+            }
+        }
     }
 }

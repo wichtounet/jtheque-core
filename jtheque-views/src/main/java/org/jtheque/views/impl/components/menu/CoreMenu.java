@@ -1,27 +1,14 @@
 package org.jtheque.views.impl.components.menu;
 
-import org.jtheque.core.able.ICore;
 import org.jtheque.features.able.IFeature;
+import org.jtheque.ui.able.IController;
 import org.jtheque.undo.able.IUndoRedoService;
-import org.jtheque.views.able.IViewService;
-import org.jtheque.views.able.IViews;
 import org.jtheque.views.impl.ViewsResources;
-import org.jtheque.views.impl.actions.ExitAction;
-import org.jtheque.views.impl.actions.about.DisplayAboutViewAction;
-import org.jtheque.views.impl.actions.author.AcInformOfABug;
-import org.jtheque.views.impl.actions.author.AcOpenHelp;
-import org.jtheque.views.impl.actions.author.AcProposeImprovement;
-import org.jtheque.views.impl.actions.backup.AcBackup;
-import org.jtheque.views.impl.actions.backup.AcRestore;
-import org.jtheque.views.impl.actions.config.DisplayConfigViewAction;
-import org.jtheque.views.impl.actions.errors.DisplayErrorsViewAction;
-import org.jtheque.views.impl.actions.event.DisplayEventsViewAction;
-import org.jtheque.views.impl.actions.messages.DisplayMessagesViewAction;
-import org.jtheque.views.impl.actions.module.DisplayModuleViewAction;
 import org.jtheque.views.impl.actions.undo.RedoAction;
 import org.jtheque.views.impl.actions.undo.UndoAction;
 import org.jtheque.views.utils.OSGIMenu;
 
+import java.awt.event.KeyEvent;
 import java.util.List;
 
 /*
@@ -48,10 +35,12 @@ import java.util.List;
 public final class CoreMenu extends OSGIMenu {
     @Override
     protected List<IFeature> getFileMenuSubFeatures() {
+        IController controller = getBean("generalController");
+
         return features(
-                createSeparatedSubFeature(200, new AcBackup(), ViewsResources.XML_ICON),
-                createSubFeature(201, new AcRestore(), ViewsResources.XML_ICON),
-                createSeparatedSubFeature(1000, new ExitAction(getService(ICore.class)), ViewsResources.EXIT_ICON)
+                createSeparatedSubFeature(200, createControllerAction("menu.backup", "backup", controller), ViewsResources.XML_ICON),
+                createSubFeature(201, createControllerAction("menu.restore", "restore", controller), ViewsResources.XML_ICON),
+                createSeparatedSubFeature(1000, createControllerAction("", "exit", controller), ViewsResources.EXIT_ICON)
         );
     }
 
@@ -67,28 +56,27 @@ public final class CoreMenu extends OSGIMenu {
 
     @Override
     protected List<IFeature> getAdvancedMenuSubFeatures() {
-        IViews views = getService(IViews.class);
+        IController controller = getBean("generalController");
 
         return features(
-                createSeparatedSubFeature(500, new DisplayConfigViewAction(views), ViewsResources.OPTIONS_ICON),
-                createSeparatedSubFeature(750, new DisplayModuleViewAction(views), ViewsResources.UPDATE_ICON)
+                createSeparatedSubFeature(500, createControllerAction("config.actions.display", "config", controller), ViewsResources.OPTIONS_ICON),
+                createSeparatedSubFeature(750, createControllerAction("modules.actions.manage", "modules", controller), ViewsResources.UPDATE_ICON)
         );
     }
 
     @Override
     protected List<IFeature> getHelpMenuSubFeatures() {
-        IViews views = getService(IViews.class);
-        ICore core = getService(ICore.class);
-        IViewService viewService = getService(IViewService.class);
+        IController controller = getBean("generalController");
+
 
         return features(
-                createSeparatedSubFeature(1, new AcOpenHelp(), ViewsResources.HELP_ICON),
-                createSeparatedSubFeature(2, new AcInformOfABug(), ViewsResources.MAIL_ICON),
-                createSeparatedSubFeature(4, new AcProposeImprovement(), ViewsResources.IDEA_ICON),
-                createSeparatedSubFeature(6, new DisplayMessagesViewAction(views)),
-                createSeparatedSubFeature(25, new DisplayEventsViewAction(views)),
-                createSeparatedSubFeature(50, new DisplayErrorsViewAction(views)),
-                createSeparatedSubFeature(150, new DisplayAboutViewAction(core, viewService), ViewsResources.MAIL_ICON)
+                createSeparatedSubFeature(1, createControllerAction("menu.help", "help", controller), ViewsResources.HELP_ICON, KeyEvent.VK_F1),
+                createSeparatedSubFeature(2, createControllerAction("menu.bug", "bug", controller), ViewsResources.MAIL_ICON),
+                createSeparatedSubFeature(4, createControllerAction("menu.features", "improvement", controller), ViewsResources.IDEA_ICON),
+                createSeparatedSubFeature(6, createControllerAction("messages.actions.display", "messages", controller)),
+                createSeparatedSubFeature(6, createControllerAction("log.view.actions.display", "events", controller)),
+                createSeparatedSubFeature(6, createControllerAction("error.view.actions.display", "errors", controller)),
+                createSeparatedSubFeature(6, createControllerAction("about.actions.display", "about", controller), ViewsResources.MAIL_ICON)
         );
     }
 }

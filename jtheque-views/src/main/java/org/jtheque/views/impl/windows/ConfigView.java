@@ -18,6 +18,7 @@ package org.jtheque.views.impl.windows;
 
 import org.jtheque.core.utils.SimplePropertiesCache;
 import org.jtheque.i18n.able.ILanguageService;
+import org.jtheque.ui.able.IController;
 import org.jtheque.ui.able.IModel;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.ui.utils.components.LayerTabbedPane;
@@ -27,9 +28,8 @@ import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.views.able.IViews;
 import org.jtheque.views.able.components.ConfigTabComponent;
 import org.jtheque.views.able.windows.IConfigView;
-import org.jtheque.views.impl.actions.config.ApplyChangesAction;
-import org.jtheque.views.impl.actions.config.ApplyChangesAndCloseAction;
-import org.jtheque.views.impl.actions.config.CancelChangesAction;
+
+import javax.annotation.Resource;
 
 import java.util.Map;
 
@@ -64,7 +64,9 @@ public final class ConfigView extends SwingFilthyBuildedDialogView<IModel> imple
         builder.add(tab, builder.gbcSet(0, 0, GridBagUtils.BOTH));
 
         builder.addButtonBar(builder.gbcSet(0, 1, GridBagUtils.HORIZONTAL),
-                new ApplyChangesAndCloseAction(this), new ApplyChangesAction(this), new CancelChangesAction(this));
+                getControllerAction("config.actions.ok", "applyClose"),
+                getControllerAction("config.actions.apply", "apply"),
+                getControllerAction("config.actions.cancel", "cancel"));
 
         SimplePropertiesCache.put("config-view-loaded", "true");
     }

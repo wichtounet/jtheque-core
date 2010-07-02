@@ -69,6 +69,10 @@ public class OSGIMenu extends AbstractMenu implements BundleContextAware, Applic
         return applicationContext.getBean(classz);
     }
 
+    protected <T> T getBean(String bean) {
+        return (T) applicationContext.getBean(bean);
+    }
+
     /**
      * Return the bean of the given class using the application context. The bean will be retrieved in the EDT, so it
      * can be used for a Swing bean.

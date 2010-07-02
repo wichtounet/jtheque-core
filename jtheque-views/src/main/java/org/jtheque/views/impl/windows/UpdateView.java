@@ -25,7 +25,6 @@ import org.jtheque.update.able.IUpdateService;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.views.able.windows.IUpdateView;
-import org.jtheque.views.impl.actions.module.update.AcValidateUpdateView;
 import org.jtheque.views.impl.models.VersionsComboBoxModel;
 
 /**
@@ -53,7 +52,9 @@ public final class UpdateView extends SwingFilthyBuildedDialogView<IModel> imple
 
         builder.addComboBox(model, new FilthyRenderer(), builder.gbcSet(0, 1, GridBagUtils.HORIZONTAL));
 
-        builder.addButtonBar(builder.gbcSet(0, 2, GridBagUtils.HORIZONTAL), new AcValidateUpdateView(), getCloseAction("update.actions.cancel"));
+        builder.addButtonBar(builder.gbcSet(0, 2, GridBagUtils.HORIZONTAL),
+                getControllerAction("update.actions.update", "update"),
+                getCloseAction("update.actions.cancel"));
     }
 
     @Override
