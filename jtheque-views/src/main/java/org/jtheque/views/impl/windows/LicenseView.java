@@ -23,31 +23,31 @@ import org.jtheque.ui.utils.windows.dialogs.SwingFilthyBuildedDialogView;
 import org.jtheque.utils.io.FileUtils;
 import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.views.able.IViewService;
-import org.jtheque.views.able.windows.ILicenceView;
+import org.jtheque.views.able.windows.ILicenseView;
 
 /**
- * A view to display the licence.
+ * A view to display the license.
  *
  * @author Baptiste Wicht
  */
-public final class LicenceView extends SwingFilthyBuildedDialogView<IModel> implements ILicenceView {
+public final class LicenseView extends SwingFilthyBuildedDialogView<IModel> implements ILicenseView {
     private static final int DEFAULT_WIDTH = 800;
     private static final int DEFAULT_HEIGHT = 600;
 
     @Override
     protected void initView() {
-        setTitleKey("licence.view.title", getService(ICore.class).getApplication().getName());
+        setTitleKey("license.view.title", getService(ICore.class).getApplication().getName());
     }
 
     @Override
     protected void buildView(I18nPanelBuilder builder) {
-        builder.addScrolledTextArea(FileUtils.getTextOf(getService(ICore.class).getApplication().getLicenceFilePath()),
+        builder.addScrolledTextArea(FileUtils.getTextOf(getService(ICore.class).getApplication().getLicenseFilePath()),
                 builder.gbcSet(0, 0, GridBagUtils.BOTH, GridBagUtils.BELOW_BASELINE_LEADING, 1.0, 1.0));
 
         builder.addButtonBar(builder.gbcSet(0, 1, GridBagUtils.HORIZONTAL),
-                getControllerAction("licence.actions.print", "print"),
-                getCloseAction("licence.actions.close"));
+                getControllerAction("license.actions.print", "print"),
+                getCloseAction("license.actions.close"));
 
-        getService(IViewService.class).configureView(this, "licence", DEFAULT_WIDTH, DEFAULT_HEIGHT);
+        getService(IViewService.class).configureView(this, "license", DEFAULT_WIDTH, DEFAULT_HEIGHT);
     }
 }

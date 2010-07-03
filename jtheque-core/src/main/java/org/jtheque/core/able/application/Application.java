@@ -47,11 +47,11 @@ public interface Application {
     String getWindowIcon();
 
     /**
-     * Return the path to the licence.
+     * Return the path to the license.
      *
-     * @return The path to the licence of the application.
+     * @return The path to the license of the application.
      */
-    String getLicenceFilePath();
+    String getLicenseFilePath();
 
     /**
      * Return the application version.
@@ -68,11 +68,11 @@ public interface Application {
     String getFolderPath();
 
     /**
-     * Indicate if we must display the licence.
+     * Indicate if we must display the license.
      *
-     * @return true if we must display the licence else false.
+     * @return true if we must display the license else false.
      */
-    boolean isDisplayLicence();
+    boolean isDisplayLicense();
 
     /**
      * Return the url of the application repository.

@@ -12,7 +12,7 @@ import org.jtheque.utils.ui.PaintUtils;
 import org.jtheque.utils.ui.SizeTracker;
 import org.jtheque.utils.ui.SwingUtils;
 import org.jtheque.views.able.windows.IAboutView;
-import org.jtheque.views.able.windows.ILicenceView;
+import org.jtheque.views.able.windows.ILicenseView;
 
 import org.pushingpixels.trident.Timeline;
 import org.pushingpixels.trident.callback.TimelineCallbackAdapter;
@@ -89,21 +89,21 @@ public final class AboutPane extends AbstractAboutPane implements IAboutView, In
 
     private int paintWidth;
 
-    private final ILicenceView licenceView;
+    private final ILicenseView licenseView;
     private final ICore core;
     private final ILanguageService languageService;
 
     /**
      * Construct a new AboutPane.
      *
-     * @param licenceView     The licence view.
+     * @param licenseView     The license view.
      * @param core            The core.
      * @param languageService The language service.
      */
-    public AboutPane(ILicenceView licenceView, ICore core, ILanguageService languageService) {
+    public AboutPane(ILicenseView licenseView, ICore core, ILanguageService languageService) {
         super(languageService, core);
 
-        this.licenceView = licenceView;
+        this.licenseView = licenseView;
         this.core = core;
         this.languageService = languageService;
     }
@@ -132,7 +132,7 @@ public final class AboutPane extends AbstractAboutPane implements IAboutView, In
 
         setTimeline(AnimationUtils.createInterpolationAnimation(this, 4 * 1000, "start", 0, getCreditsHeight()));
 
-        shapes.put("licence", new GeneralPath()); //Set a default path to avoid NPE if display licence is false
+        shapes.put("license", new GeneralPath()); //Set a default path to avoid NPE if display license is false
     }
 
     @Override
@@ -171,7 +171,7 @@ public final class AboutPane extends AbstractAboutPane implements IAboutView, In
 
         PaintUtils.drawString(g2, getCopyright(), xStart, y + 120, fontInfos, textColor);
 
-        paintLicence(g2, textColor, x, y);
+        paintLicense(g2, textColor, x, y);
 
         tracker.updateSize();
     }
@@ -244,24 +244,24 @@ public final class AboutPane extends AbstractAboutPane implements IAboutView, In
     }
 
     /**
-     * Paint the licence clickable text.
+     * Paint the license clickable text.
      *
      * @param g2        The graphics 2D elements.
      * @param textColor The text color.
-     * @param x         The x position to start painting the licence.
-     * @param y         The y position to start painting the licence.
+     * @param x         The x position to start painting the license.
+     * @param y         The y position to start painting the license.
      */
-    private void paintLicence(Graphics g2, Color textColor, int x, int y) {
-        if (core.getApplication().isDisplayLicence()) {
-            Path2D licencePath = new GeneralPath();
+    private void paintLicense(Graphics g2, Color textColor, int x, int y) {
+        if (core.getApplication().isDisplayLicense()) {
+            Path2D licensePath = new GeneralPath();
 
-            int xLicence = x + paintWidth - getFontMetrics(fontInfos).stringWidth(getLicenceMessage());
+            int xLicense = x + paintWidth - getFontMetrics(fontInfos).stringWidth(getLicenseMessage());
 
-            PaintUtils.drawString(g2, getLicenceMessage(), xLicence, y + 150, fontInfos, textColor);
+            PaintUtils.drawString(g2, getLicenseMessage(), xLicense, y + 150, fontInfos, textColor);
 
-            licencePath.append(new Rectangle(xLicence, y + 140, getFontMetrics(fontInfos).stringWidth(getLicenceMessage()), CREDIT_HEIGHT), false);
+            licensePath.append(new Rectangle(xLicense, y + 140, getFontMetrics(fontInfos).stringWidth(getLicenseMessage()), CREDIT_HEIGHT), false);
 
-            shapes.put("licence", licencePath);
+            shapes.put("license", licensePath);
         }
     }
 
@@ -489,10 +489,10 @@ public final class AboutPane extends AbstractAboutPane implements IAboutView, In
                         return;
                     }
                 }
-            } else if (shapes.get("licence").contains(event.getPoint())) {
+            } else if (shapes.get("license").contains(event.getPoint())) {
                 disappear();
 
-                licenceView.display();
+                licenseView.display();
             }
         }
     }
@@ -505,7 +505,7 @@ public final class AboutPane extends AbstractAboutPane implements IAboutView, In
         public void mouseMoved(MouseEvent event) {
             if (shapes.get("quit").contains(event.getPoint()) ||
                     shapes.get("url").contains(event.getPoint()) ||
-                    shapes.get("licence").contains(event.getPoint())) {
+                    shapes.get("license").contains(event.getPoint())) {
                 setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             } else {
                 setCursor(Cursor.getDefaultCursor());

@@ -4,7 +4,7 @@ import org.jtheque.core.utils.SystemProperty;
 import org.jtheque.ui.utils.AbstractController;
 import org.jtheque.utils.print.PrintUtils;
 import org.jtheque.utils.ui.SimpleSwingWorker;
-import org.jtheque.views.able.windows.ILicenceView;
+import org.jtheque.views.able.windows.ILicenseView;
 
 import javax.annotation.Resource;
 
@@ -44,7 +44,7 @@ import java.io.File;
 
 public class LicenseController extends AbstractController {
     @Resource
-    private ILicenceView licenceView;
+    private ILicenseView licenseView;
 
     private void print() {
         new PrintWorker().start();
@@ -53,7 +53,7 @@ public class LicenseController extends AbstractController {
     private final class PrintWorker extends SimpleSwingWorker {
         @Override
         protected void before() {
-            licenceView.startWait();
+            licenseView.startWait();
         }
 
         @Override
@@ -63,7 +63,7 @@ public class LicenseController extends AbstractController {
 
         @Override
         protected void done() {
-            licenceView.stopWait();
+            licenseView.stopWait();
         }
     }
 }

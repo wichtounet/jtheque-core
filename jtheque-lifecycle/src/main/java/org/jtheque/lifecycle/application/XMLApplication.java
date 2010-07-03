@@ -8,9 +8,7 @@ import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.collections.ArrayUtils;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -41,7 +39,7 @@ public final class XMLApplication implements Application {
     private String icon;
     private ImageDescriptor logo;
 
-    private boolean displayLicence;
+    private boolean displayLicense;
 
     private String[] supportedLanguages = {"fr", "en"};
 
@@ -93,8 +91,8 @@ public final class XMLApplication implements Application {
     }
 
     @Override
-    public boolean isDisplayLicence() {
-        return displayLicence;
+    public boolean isDisplayLicense() {
+        return displayLicense;
     }
 
     @Override
@@ -118,8 +116,8 @@ public final class XMLApplication implements Application {
     }
 
     @Override
-    public String getLicenceFilePath() {
-        return getProperty("application.licence");
+    public String getLicenseFilePath() {
+        return getProperty("application.license");
     }
 
     @Override
@@ -140,10 +138,10 @@ public final class XMLApplication implements Application {
     }
 
     /**
-     * Set that the application must diplay licence.
+     * Set that the application must display license.
      */
-    void displayLicence() {
-        displayLicence = true;
+    void displayLicense() {
+        displayLicense = true;
     }
 
     /**

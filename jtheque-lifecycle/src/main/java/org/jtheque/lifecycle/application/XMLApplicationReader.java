@@ -313,9 +313,9 @@ public final class XMLApplicationReader {
         if (reader.existsNode("options", reader.getRootElement())) {
             Object optionsElement = reader.getNode("options", reader.getRootElement());
 
-            if (reader.existsValue("licence", optionsElement) && StringUtils.isNotEmpty(reader.readString("licence", optionsElement))) {
-                application.displayLicence();
-                application.setProperty("application.licence", SystemProperty.USER_DIR.get() + reader.readString("licence", optionsElement));
+            if (reader.existsValue("license", optionsElement) && StringUtils.isNotEmpty(reader.readString("license", optionsElement))) {
+                application.displayLicense();
+                application.setProperty("application.license", SystemProperty.USER_DIR.get() + reader.readString("license", optionsElement));
             }
         }
     }

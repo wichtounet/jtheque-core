@@ -34,7 +34,7 @@ import java.util.Collection;
 public abstract class AbstractAboutPane extends JXPanel {
     private Timeline timeline;
 
-    private String licence;
+    private String license;
     private String copyright;
     private Info[] infos;
     private Collection<String> credits;
@@ -60,7 +60,7 @@ public abstract class AbstractAboutPane extends JXPanel {
      */
     void init() {
         copyright = core.getApplication().getCopyright();
-        licence = getMessage("about.actions.read");
+        license = getMessage("about.actions.read");
 
         infos = new Info[4];
 
@@ -108,12 +108,12 @@ public abstract class AbstractAboutPane extends JXPanel {
     }
 
     /**
-     * The licence message.
+     * The license message.
      *
-     * @return The licence message.
+     * @return The license message.
      */
-    final String getLicenceMessage() {
-        return licence;
+    final String getLicenseMessage() {
+        return license;
     }
 
     /**

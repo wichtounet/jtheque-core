@@ -24,7 +24,7 @@ import org.jtheque.views.able.panel.IRepositoryView;
 import org.jtheque.views.able.windows.IConfigView;
 import org.jtheque.views.able.windows.IErrorView;
 import org.jtheque.views.able.windows.IEventView;
-import org.jtheque.views.able.windows.ILicenceView;
+import org.jtheque.views.able.windows.ILicenseView;
 import org.jtheque.views.able.windows.IMainView;
 import org.jtheque.views.able.windows.IMessageView;
 import org.jtheque.views.able.windows.IUpdateView;
@@ -45,11 +45,11 @@ public interface IViews {
     IMainView getMainView();
 
     /**
-     * Return the licence view.
+     * Return the license view.
      *
-     * @return The licence view.
+     * @return The license view.
      */
-    ILicenceView getLicenceView();
+    ILicenseView getLicenseView();
 
     /**
      * Return the config view.

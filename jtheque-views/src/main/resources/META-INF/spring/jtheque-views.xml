@@ -69,7 +69,7 @@
         <property name="controller" ref="updateController"/>
     </bean>
     
-    <bean id="licenceView" class="org.jtheque.views.impl.windows.LicenceView" lazy-init="true">
+    <bean id="licenseView" class="org.jtheque.views.impl.windows.LicenseView" lazy-init="true">
         <property name="controller" ref="licenseController"/>
     </bean>
 
@@ -107,7 +107,7 @@
     </bean>
 
     <bean class="org.jtheque.views.impl.components.panel.AboutPane" lazy-init="true">
-        <constructor-arg ref="licenceView"/>
+        <constructor-arg ref="licenseView"/>
         <constructor-arg ref="core"/>
         <constructor-arg ref="languageService"/>
     </bean>

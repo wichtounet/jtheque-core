@@ -32,7 +32,7 @@ import org.jtheque.views.able.panel.IRepositoryView;
 import org.jtheque.views.able.windows.IConfigView;
 import org.jtheque.views.able.windows.IErrorView;
 import org.jtheque.views.able.windows.IEventView;
-import org.jtheque.views.able.windows.ILicenceView;
+import org.jtheque.views.able.windows.ILicenseView;
 import org.jtheque.views.able.windows.IMainView;
 import org.jtheque.views.able.windows.IMessageView;
 import org.jtheque.views.able.windows.IUpdateView;
@@ -56,7 +56,7 @@ import java.util.Collection;
  * @author Baptiste Wicht
  */
 public final class Views implements IViews, ApplicationContextAware, ModuleListener {
-    private SwingSpringProxy<ILicenceView> licenceView;
+    private SwingSpringProxy<ILicenseView> licenseView;
     private SwingSpringProxy<IConfigView> configView;
     private SwingSpringProxy<IModuleView> moduleView;
     private SwingSpringProxy<IMessageView> messageView;
@@ -110,8 +110,8 @@ public final class Views implements IViews, ApplicationContextAware, ModuleListe
     }
 
     @Override
-    public ILicenceView getLicenceView() {
-        return licenceView.get();
+    public ILicenseView getLicenseView() {
+        return licenseView.get();
     }
 
     @Override
@@ -154,7 +154,7 @@ public final class Views implements IViews, ApplicationContextAware, ModuleListe
         this.applicationContext = applicationContext;
 
         mainView = new SwingSpringProxy<IMainView>(IMainView.class, applicationContext);
-        licenceView = new SwingSpringProxy<ILicenceView>(ILicenceView.class, applicationContext);
+        licenseView = new SwingSpringProxy<ILicenseView>(ILicenseView.class, applicationContext);
         configView = new SwingSpringProxy<IConfigView>(IConfigView.class, applicationContext);
         moduleView = new SwingSpringProxy<IModuleView>(IModuleView.class, applicationContext);
         messageView = new SwingSpringProxy<IMessageView>(IMessageView.class, applicationContext);

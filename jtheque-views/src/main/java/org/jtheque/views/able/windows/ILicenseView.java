@@ -20,10 +20,10 @@ import org.jtheque.ui.able.WaitableView;
  */
 
 /**
- * A licence view specification.
+ * A license view specification.
  *
  * @author Baptiste Wicht
  */
-public interface ILicenceView extends IView, WaitableView {
+public interface ILicenseView extends IView, WaitableView {
 
 }
