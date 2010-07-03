@@ -21,7 +21,9 @@ import org.jtheque.core.able.ICore;
 import org.jtheque.core.utils.SimplePropertiesCache;
 import org.jtheque.i18n.able.ILanguageService;
 import org.jtheque.ui.able.Filthy;
+import org.jtheque.ui.able.IController;
 import org.jtheque.ui.utils.AnimationUtils;
+import org.jtheque.ui.utils.actions.ActionFactory;
 import org.jtheque.ui.utils.actions.JThequeAction;
 import org.jtheque.ui.utils.components.JThequeI18nLabel;
 import org.jtheque.ui.utils.filthy.FilthyPasswordField;
@@ -29,9 +31,6 @@ import org.jtheque.ui.utils.filthy.FilthyTextField;
 import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.utils.ui.SwingUtils;
 import org.jtheque.views.able.panel.ICollectionView;
-import org.jtheque.views.impl.actions.collections.CancelAction;
-import org.jtheque.views.impl.actions.collections.ChooseAction;
-import org.jtheque.views.impl.actions.collections.CreateAction;
 
 import org.jdesktop.swingx.JXPanel;
 
@@ -63,23 +62,23 @@ public final class CollectionPane extends JXPanel implements ICollectionView, Fi
     private final JThequeAction chooseAction;
 
     private final ICore core;
+    private final IController controller;
 
-    private ICollectionsService collectionsService;
-    private ILanguageService languageService;
+    private final ILanguageService languageService;
 
     /**
      * Construct a new CollectionPane.
      *
      * @param core The core.
      */
-    public CollectionPane(ICore core, ILanguageService languageService, ICollectionsService collectionsService) {
+    public CollectionPane(ICore core, ILanguageService languageService, IController controller) {
         super();
 
         this.core = core;
-        chooseAction = new ChooseAction(languageService, collectionsService, this);
+        this.controller = controller;
+        chooseAction = ActionFactory.createControllerAction("collections.actions.choose", "choose", controller);
 
         this.languageService = languageService;
-        this.collectionsService = collectionsService;
     }
 
     /**
@@ -185,8 +184,8 @@ public final class CollectionPane extends JXPanel implements ICollectionView, Fi
     private void addButtonBar(GridBagUtils gbc) {
         Container buttonsPanel = new JPanel();
 
-        CreateAction createAction = new CreateAction(languageService, collectionsService, this);
-        CancelAction cancelAction = new CancelAction(core);
+        JThequeAction createAction = ActionFactory.createControllerAction("collections.actions.create", "create", controller);
+        JThequeAction cancelAction = ActionFactory.createControllerAction("collections.actions.cancel", "cancel", controller);
 
         createAction.refreshText(languageService);
         cancelAction.refreshText(languageService);

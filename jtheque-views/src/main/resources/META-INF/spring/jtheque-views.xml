@@ -68,9 +68,12 @@
     <bean id="updateView" class="org.jtheque.views.impl.windows.UpdateView" lazy-init="true">
         <property name="controller" ref="updateController"/>
     </bean>
+    
+    <bean id="licenceView" class="org.jtheque.views.impl.windows.LicenceView" lazy-init="true">
+        <property name="controller" ref="licenseController"/>
+    </bean>
 
     <bean id="errorView" class="org.jtheque.views.impl.windows.ErrorView" lazy-init="true"/>
-    <bean id="licenceView" class="org.jtheque.views.impl.windows.LicenceView" lazy-init="true"/>
 
     <!-- controller -->
 
@@ -81,6 +84,8 @@
     <bean id="updateController" class="org.jtheque.views.impl.controllers.UpdateController" lazy-init="true"/>
     <bean id="generalController" class="org.jtheque.views.impl.controllers.GeneralController" lazy-init="true"/>
     <bean id="repositoryController" class="org.jtheque.views.impl.controllers.RepositoryController" lazy-init="true"/>
+    <bean id="collectionController" class="org.jtheque.views.impl.controllers.CollectionController" lazy-init="true"/>
+    <bean id="licenseController" class="org.jtheque.views.impl.controllers.LicenseController" lazy-init="true"/>
 
     <!-- Config panels -->
 
@@ -98,7 +103,7 @@
     <bean class="org.jtheque.views.impl.components.panel.CollectionPane" lazy-init="true">
         <constructor-arg ref="core"/>
         <constructor-arg ref="languageService"/>
-        <constructor-arg ref="collectionsService"/>
+        <constructor-arg ref="collectionController"/>
     </bean>
 
     <bean class="org.jtheque.views.impl.components.panel.AboutPane" lazy-init="true">

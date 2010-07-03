@@ -40,7 +40,7 @@ public final class CoreMenu extends OSGIMenu {
         return features(
                 createSeparatedSubFeature(200, createControllerAction("menu.backup", "backup", controller), ViewsResources.XML_ICON),
                 createSubFeature(201, createControllerAction("menu.restore", "restore", controller), ViewsResources.XML_ICON),
-                createSeparatedSubFeature(1000, createControllerAction("", "exit", controller), ViewsResources.EXIT_ICON)
+                createSeparatedSubFeature(1000, createControllerAction("menu.exit", "exit", controller), ViewsResources.EXIT_ICON, KeyEvent.VK_E)
         );
     }
 
@@ -67,7 +67,6 @@ public final class CoreMenu extends OSGIMenu {
     @Override
     protected List<IFeature> getHelpMenuSubFeatures() {
         IController controller = getBean("generalController");
-
 
         return features(
                 createSeparatedSubFeature(1, createControllerAction("menu.help", "help", controller), ViewsResources.HELP_ICON, KeyEvent.VK_F1),

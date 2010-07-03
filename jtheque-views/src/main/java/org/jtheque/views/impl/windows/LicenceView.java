@@ -24,7 +24,6 @@ import org.jtheque.utils.io.FileUtils;
 import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.views.able.IViewService;
 import org.jtheque.views.able.windows.ILicenceView;
-import org.jtheque.views.impl.actions.about.PrintLicenseAction;
 
 /**
  * A view to display the licence.
@@ -46,7 +45,8 @@ public final class LicenceView extends SwingFilthyBuildedDialogView<IModel> impl
                 builder.gbcSet(0, 0, GridBagUtils.BOTH, GridBagUtils.BELOW_BASELINE_LEADING, 1.0, 1.0));
 
         builder.addButtonBar(builder.gbcSet(0, 1, GridBagUtils.HORIZONTAL),
-                new PrintLicenseAction(), getCloseAction("licence.actions.close"));
+                getControllerAction("licence.actions.print", "print"),
+                getCloseAction("licence.actions.close"));
 
         getService(IViewService.class).configureView(this, "licence", DEFAULT_WIDTH, DEFAULT_HEIGHT);
     }
