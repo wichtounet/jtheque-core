@@ -25,27 +25,36 @@ import java.util.Map;
  * limitations under the License.
  */
 
-public class AbstractController implements IController {
+public abstract class AbstractController implements IController {
     private final Map<String, Method> methodCache = new HashMap<String, Method>(10);
+    private final Map<String, String> translations = new HashMap<String, String>(15);
 
     @Override
     public void handleAction(String actionName) {
-        if (!methodCache.containsKey(actionName)) {
+        if(translations.isEmpty()){
+            translations.putAll(getTranslations());
+        }
+
+        String action = translations.get(actionName);
+
+        if (!methodCache.containsKey(action)) {
             try {
-                Method method = getClass().getDeclaredMethod(actionName);
+                Method method = getClass().getDeclaredMethod(action);
                 method.setAccessible(true);
-                methodCache.put(actionName, method);
+                methodCache.put(action, method);
             } catch (NoSuchMethodException e) {
                 LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
             }
         }
 
         try {
-            methodCache.get(actionName).invoke(this);
+            methodCache.get(action).invoke(this);
         } catch (InvocationTargetException e) {
             LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
         } catch (IllegalAccessException e) {
             LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
         }
     }
+
+    protected abstract Map<String, String> getTranslations();
 }

@@ -56,7 +56,7 @@ public final class ActionFactory {
         return new DisplayViewAction(key, view);
     }
 
-    public static JThequeAction createControllerAction(String key, String action, IController controller) {
-        return new ControllerAction(key, action, controller);
+    public static JThequeAction createControllerAction(String key, IController controller) {
+        return new ControllerAction(key, controller);
     }
 }

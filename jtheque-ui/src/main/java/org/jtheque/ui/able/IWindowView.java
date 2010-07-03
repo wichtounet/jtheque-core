@@ -38,5 +38,5 @@ public interface IWindowView extends IView, WaitableView {
      */
     int getHeight();
 
-    Action getControllerAction(String key, String action);
+    Action getControllerAction(String key);
 }

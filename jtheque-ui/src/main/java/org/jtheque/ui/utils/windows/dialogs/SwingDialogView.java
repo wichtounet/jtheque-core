@@ -187,8 +187,8 @@ public abstract class SwingDialogView<T extends IModel> extends JDialog
     }
 
     @Override
-    public Action getControllerAction(String key, String action){
-        return ActionFactory.createControllerAction(key, action, controller);
+    public Action getControllerAction(String key){
+        return ActionFactory.createControllerAction(key, controller);
     }
 
     @Override

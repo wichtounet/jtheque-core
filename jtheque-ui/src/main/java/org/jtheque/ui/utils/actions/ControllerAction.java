@@ -21,18 +21,18 @@ import java.awt.event.ActionEvent;
  */
 
 public class ControllerAction extends JThequeAction {
-    private final String action;
-    private final IController controller;
+    private final String key;
+    private final transient IController controller;
 
-    public ControllerAction(String key, String action, IController controller) {
+    public ControllerAction(String key, IController controller) {
         super(key);
 
-        this.action = action;
+        this.key = key;
         this.controller = controller;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        controller.handleAction(action);
+        controller.handleAction(key);
     }
 }
