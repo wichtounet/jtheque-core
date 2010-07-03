@@ -12,6 +12,7 @@ import org.jtheque.utils.ui.SwingUtils;
 import org.jtheque.views.able.IViewService;
 import org.jtheque.views.able.IViews;
 import org.jtheque.views.able.windows.IMainView;
+import org.jtheque.views.impl.ViewsResources;
 import org.jtheque.xml.utils.XMLException;
 
 import org.slf4j.LoggerFactory;
@@ -19,6 +20,8 @@ import org.slf4j.LoggerFactory;
 import javax.annotation.Resource;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -111,6 +114,26 @@ public class GeneralController extends AbstractController {
 
     private void modules() {
         viewService.displayAboutView();
+    }
+
+    @Override
+    protected Map<String, String> getTranslations() {
+        Map<String, String> translations = new HashMap<String, String>(12);
+
+        translations.put("menu.backup", "backup");
+        translations.put("menu.restore", "restore");
+        translations.put("menu.exit", "exit");
+        translations.put("menu.config", "config");
+        translations.put("menu.modules", "modules");
+        translations.put("menu.help", "help");
+        translations.put("menu.bug", "bug");
+        translations.put("menu.improvement", "improvement");
+        translations.put("menu.events", "events");
+        translations.put("menu.messages", "messages");
+        translations.put("menu.errors", "errors");
+        translations.put("menu.events", "events");
+
+        return translations;
     }
 
     private final class RestoreWorker extends SimpleSwingWorker {

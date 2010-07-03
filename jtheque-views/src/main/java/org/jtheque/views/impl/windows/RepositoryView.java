@@ -67,8 +67,8 @@ public final class RepositoryView extends SwingFilthyBuildedDialogView<IModel> i
                 builder.gbcSet(0, 1, GridBagUtils.BOTH));
 
         builder.addButtonBar(builder.gbcSet(0, 2, GridBagUtils.HORIZONTAL),
-                getControllerAction("repository.actions.expand", "expand"),
-                getControllerAction("repository.actions.install", "install"));
+                getControllerAction("repository.actions.expand"),
+                getControllerAction("repository.actions.install"));
     }
 
     @Override

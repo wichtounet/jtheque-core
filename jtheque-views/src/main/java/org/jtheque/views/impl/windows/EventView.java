@@ -97,8 +97,7 @@ public final class EventView extends SwingFilthyBuildedDialogView<IModel> implem
 
         createInfosPanel(builder);
 
-        builder.addButton(
-                getControllerAction("log.view.actions.update", "update"),
+        builder.addButton(getControllerAction("log.view.actions.update"),
                 builder.gbcSet(1, 3, GridBagUtils.NONE, GridBagUtils.LINE_END));
     }
 

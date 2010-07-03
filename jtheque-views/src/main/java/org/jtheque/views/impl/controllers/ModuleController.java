@@ -21,6 +21,8 @@ import org.jtheque.views.able.windows.IUpdateView;
 import javax.annotation.Resource;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -60,7 +62,24 @@ public class ModuleController extends AbstractController {
     @Resource
     private IUpdateService updateService;
 
-    private void disable(){
+    @Override
+    protected Map<String, String> getTranslations() {
+        Map<String, String> translations = new HashMap<String, String>(8);
+
+        translations.put("modules.actions.stop", "stop");
+        translations.put("modules.actions.start", "start");
+        translations.put("modules.actions.enable", "enable");
+        translations.put("modules.actions.update", "updateModule");
+        translations.put("modules.actions.disable", "disable");
+        translations.put("modules.actions.url.new", "installURL");
+        translations.put("modules.actions.file.new", "installFile");
+        translations.put("modules.actions.uninstall", "uninstall");
+        translations.put("modules.actions.update.kernel", "updateCore");
+
+        return translations;
+    }
+
+    private void disable() {
         Module module = moduleView.getSelectedModule();
 
         String error = moduleService.canBeDisabled(module);
@@ -73,7 +92,7 @@ public class ModuleController extends AbstractController {
         }
     }
 
-    private void enable(){
+    private void enable() {
         Module module = moduleView.getSelectedModule();
 
         if (module.getState() == ModuleState.DISABLED) {
@@ -88,7 +107,7 @@ public class ModuleController extends AbstractController {
         }
     }
 
-    private void installFile(){
+    private void installFile() {
         File file = SwingUtils.chooseFile(new SimpleFilter("JAR File (*.jar)", "jar"));
 
         if (file != null) {
@@ -96,7 +115,7 @@ public class ModuleController extends AbstractController {
         }
     }
 
-    private void installURL(){
+    private void installURL() {
         String url = uiUtils.askI18nText("dialogs.modules.install.url");
 
         if (StringUtils.isNotEmpty(url)) {
@@ -104,7 +123,7 @@ public class ModuleController extends AbstractController {
         }
     }
 
-    private void uninstall(){
+    private void uninstall() {
         Module module = moduleView.getSelectedModule();
 
         String error = moduleService.canBeUninstalled(module);
@@ -123,7 +142,7 @@ public class ModuleController extends AbstractController {
         }
     }
 
-    private void stop(){
+    private void stop() {
         final Module module = moduleView.getSelectedModule();
 
         String error = moduleService.canBeStopped(module);
@@ -135,7 +154,7 @@ public class ModuleController extends AbstractController {
         }
     }
 
-    private void start(){
+    private void start() {
         Module module = moduleView.getSelectedModule();
 
         String error = moduleService.canBeStarted(module);
@@ -153,7 +172,7 @@ public class ModuleController extends AbstractController {
         }
     }
 
-    private void updateModule(){
+    private void updateModule() {
         final Module module = moduleView.getSelectedModule();
 
         update(module, updateService.isUpToDate(module), "module");

@@ -321,8 +321,8 @@ public abstract class AbstractMenu implements Menu {
         return ActionFactory.createDisplayViewAction(key, view);
     }
 
-    public static JThequeAction createControllerAction(String key, String action, IController controller) {
-        return ActionFactory.createControllerAction(key, action, controller);
+    public static JThequeAction createControllerAction(String key, IController controller) {
+        return ActionFactory.createControllerAction(key, controller);
     }
 
     @Override

@@ -9,6 +9,8 @@ import org.jtheque.views.able.windows.ILicenseView;
 import javax.annotation.Resource;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -48,6 +50,15 @@ public class LicenseController extends AbstractController {
 
     private void print() {
         new PrintWorker().start();
+    }
+    
+    @Override
+    protected Map<String, String> getTranslations() {
+        Map<String, String> translations = new HashMap<String, String>(1);
+
+        translations.put("license.actions.print", "print");
+
+        return translations;
     }
 
     private final class PrintWorker extends SimpleSwingWorker {

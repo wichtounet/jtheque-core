@@ -9,6 +9,9 @@ import org.jtheque.views.able.panel.ICollectionView;
 
 import javax.annotation.Resource;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /*
  * Copyright JTheque (Baptiste Wicht)
  *
@@ -56,7 +59,18 @@ public class CollectionController extends AbstractController {
 
     private void displayResponse(Response response) {
         if (!response.isOk()) {
-            collectionView.setErrorMessage(languageService.getMessage(response.getKey(), response.getReplaces()));
+            collectionView.setErrorMessage(languageService.getMessage(response.getKey(), (Object[]) response.getReplaces()));
         }
+    }
+
+    @Override
+    protected Map<String, String> getTranslations() {
+        Map<String, String> translations = new HashMap<String, String>(3);
+
+        translations.put("collections.actions.choose", "choose");
+        translations.put("collections.actions.cancel", "cancel");
+        translations.put("collections.actions.create", "create");
+
+        return translations;
     }
 }

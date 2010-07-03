@@ -16,7 +16,6 @@ package org.jtheque.views.impl.components.panel;
  * limitations under the License.
  */
 
-import org.jtheque.collections.able.ICollectionsService;
 import org.jtheque.core.able.ICore;
 import org.jtheque.core.utils.SimplePropertiesCache;
 import org.jtheque.i18n.able.ILanguageService;
@@ -76,7 +75,7 @@ public final class CollectionPane extends JXPanel implements ICollectionView, Fi
 
         this.core = core;
         this.controller = controller;
-        chooseAction = ActionFactory.createControllerAction("collections.actions.choose", "choose", controller);
+        chooseAction = ActionFactory.createControllerAction("collections.actions.choose", controller);
 
         this.languageService = languageService;
     }
@@ -184,8 +183,8 @@ public final class CollectionPane extends JXPanel implements ICollectionView, Fi
     private void addButtonBar(GridBagUtils gbc) {
         Container buttonsPanel = new JPanel();
 
-        JThequeAction createAction = ActionFactory.createControllerAction("collections.actions.create", "create", controller);
-        JThequeAction cancelAction = ActionFactory.createControllerAction("collections.actions.cancel", "cancel", controller);
+        JThequeAction createAction = ActionFactory.createControllerAction("collections.actions.create", controller);
+        JThequeAction cancelAction = ActionFactory.createControllerAction("collections.actions.cancel", controller);
 
         createAction.refreshText(languageService);
         cancelAction.refreshText(languageService);

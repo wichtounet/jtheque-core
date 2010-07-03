@@ -53,7 +53,7 @@ public final class UpdateView extends SwingFilthyBuildedDialogView<IModel> imple
         builder.addComboBox(model, new FilthyRenderer(), builder.gbcSet(0, 1, GridBagUtils.HORIZONTAL));
 
         builder.addButtonBar(builder.gbcSet(0, 2, GridBagUtils.HORIZONTAL),
-                getControllerAction("update.actions.update", "update"),
+                getControllerAction("update.actions.update"),
                 getCloseAction("update.actions.cancel"));
     }
 

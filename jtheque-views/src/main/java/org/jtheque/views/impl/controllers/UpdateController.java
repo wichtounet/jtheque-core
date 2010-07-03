@@ -10,6 +10,9 @@ import org.jtheque.views.able.windows.IUpdateView;
 
 import javax.annotation.Resource;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /*
  * Copyright JTheque (Baptiste Wicht)
  *
@@ -35,6 +38,15 @@ public class UpdateController extends AbstractController {
 
     private void update() {
         new UpdateWorker().start();
+    }
+
+    @Override
+    protected Map<String, String> getTranslations() {
+        Map<String, String> translations = new HashMap<String, String>(1);
+
+        translations.put("update.actions.update", "update");
+
+        return translations;
     }
 
     private final class UpdateWorker extends SimpleSwingWorker {

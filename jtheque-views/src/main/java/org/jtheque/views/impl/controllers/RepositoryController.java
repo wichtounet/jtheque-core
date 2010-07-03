@@ -10,6 +10,9 @@ import org.jtheque.views.able.panel.IRepositoryView;
 
 import javax.annotation.Resource;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /*
  * Copyright JTheque (Baptiste Wicht)
  *
@@ -54,6 +57,16 @@ public class RepositoryController extends AbstractController {
 
     @Resource
     private IModuleService moduleService;
+
+    @Override
+    protected Map<String, String> getTranslations() {
+        Map<String, String> translations = new HashMap<String, String>(2);
+
+        translations.put("repository.actions.expand", "expand");
+        translations.put("repository.actions.install", "install");
+
+        return translations;
+    }
 
     private void expand() {
         repositoryView.expandSelectedModule();

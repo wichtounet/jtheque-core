@@ -126,6 +126,7 @@
     <osgi:reference id="moduleService" interface="org.jtheque.modules.able.IModuleService"/>
     <osgi:reference id="imageService" interface="org.jtheque.images.able.IImageService"/>
     <osgi:reference id="errorsService" interface="org.jtheque.errors.able.IErrorService"/>
+    <osgi:reference id="fileService" interface="org.jtheque.file.able.IFileService"/>
 
     <!-- OSGi Services -->
 

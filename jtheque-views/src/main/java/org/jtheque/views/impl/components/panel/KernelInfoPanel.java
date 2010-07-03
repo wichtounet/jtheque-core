@@ -80,7 +80,7 @@ public final class KernelInfoPanel extends FilthyBuildedPanel {
             builder.addLabel(version.getVersion(), getForeground(), builder.gbcSet(2, 1));
         }
 
-        builder.addButton(moduleView.getControllerAction("modules.actions.update.kernel", "updateCore"),
+        builder.addButton(moduleView.getControllerAction("modules.actions.update.kernel"),
                 builder.gbcSet(4, 0, GridBagUtils.NONE, GridBagUtils.LINE_START, 1, 3));
     }
 }

@@ -5,6 +5,9 @@ import org.jtheque.views.able.windows.IConfigView;
 
 import javax.annotation.Resource;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /*
  * Copyright JTheque (Baptiste Wicht)
  *
@@ -41,5 +44,16 @@ public class ConfigController extends AbstractController {
     private void cancel(){
         configView.getSelectedPanelConfig().cancel();
         configView.closeDown();
+    }
+
+    @Override
+    protected Map<String, String> getTranslations() {
+        Map<String, String> translations = new HashMap<String, String>(3);
+
+        translations.put("config.actions.ok", "applyClose");
+        translations.put("config.actions.apply", "apply");
+        translations.put("config.actions.cancel", "cancel");
+
+        return translations;
     }
 }

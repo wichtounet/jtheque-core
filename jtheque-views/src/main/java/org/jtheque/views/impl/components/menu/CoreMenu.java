@@ -38,9 +38,9 @@ public final class CoreMenu extends OSGIMenu {
         IController controller = getBean("generalController");
 
         return features(
-                createSeparatedSubFeature(200, createControllerAction("menu.backup", "backup", controller), ViewsResources.XML_ICON),
-                createSubFeature(201, createControllerAction("menu.restore", "restore", controller), ViewsResources.XML_ICON),
-                createSeparatedSubFeature(1000, createControllerAction("menu.exit", "exit", controller), ViewsResources.EXIT_ICON, KeyEvent.VK_E)
+                createSeparatedSubFeature(200, createControllerAction("menu.backup", controller), ViewsResources.XML_ICON),
+                createSubFeature(201, createControllerAction("menu.restore", controller), ViewsResources.XML_ICON),
+                createSeparatedSubFeature(1000, createControllerAction("menu.exit", controller), ViewsResources.EXIT_ICON, KeyEvent.VK_E)
         );
     }
 
@@ -59,8 +59,8 @@ public final class CoreMenu extends OSGIMenu {
         IController controller = getBean("generalController");
 
         return features(
-                createSeparatedSubFeature(500, createControllerAction("config.actions.display", "config", controller), ViewsResources.OPTIONS_ICON),
-                createSeparatedSubFeature(750, createControllerAction("modules.actions.manage", "modules", controller), ViewsResources.UPDATE_ICON)
+                createSeparatedSubFeature(500, createControllerAction("menu.config", controller), ViewsResources.OPTIONS_ICON),
+                createSeparatedSubFeature(750, createControllerAction("menu.modules", controller), ViewsResources.UPDATE_ICON)
         );
     }
 
@@ -69,13 +69,13 @@ public final class CoreMenu extends OSGIMenu {
         IController controller = getBean("generalController");
 
         return features(
-                createSeparatedSubFeature(1, createControllerAction("menu.help", "help", controller), ViewsResources.HELP_ICON, KeyEvent.VK_F1),
-                createSeparatedSubFeature(2, createControllerAction("menu.bug", "bug", controller), ViewsResources.MAIL_ICON),
-                createSeparatedSubFeature(4, createControllerAction("menu.features", "improvement", controller), ViewsResources.IDEA_ICON),
-                createSeparatedSubFeature(6, createControllerAction("messages.actions.display", "messages", controller)),
-                createSeparatedSubFeature(6, createControllerAction("log.view.actions.display", "events", controller)),
-                createSeparatedSubFeature(6, createControllerAction("error.view.actions.display", "errors", controller)),
-                createSeparatedSubFeature(6, createControllerAction("about.actions.display", "about", controller), ViewsResources.MAIL_ICON)
+                createSeparatedSubFeature(1, createControllerAction("menu.help", controller), ViewsResources.HELP_ICON, KeyEvent.VK_F1),
+                createSeparatedSubFeature(2, createControllerAction("menu.bug", controller), ViewsResources.MAIL_ICON),
+                createSeparatedSubFeature(4, createControllerAction("menu.improvement", controller), ViewsResources.IDEA_ICON),
+                createSeparatedSubFeature(6, createControllerAction("menu.messages", controller)),
+                createSeparatedSubFeature(6, createControllerAction("menu.events", controller)),
+                createSeparatedSubFeature(6, createControllerAction("menu.errors", controller)),
+                createSeparatedSubFeature(6, createControllerAction("menu.about", controller), ViewsResources.MAIL_ICON)
         );
     }
 }

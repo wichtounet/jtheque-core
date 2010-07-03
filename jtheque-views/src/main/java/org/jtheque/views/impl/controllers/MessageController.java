@@ -5,6 +5,9 @@ import org.jtheque.views.able.windows.IMessageView;
 
 import javax.annotation.Resource;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /*
  * Copyright JTheque (Baptiste Wicht)
  *
@@ -31,5 +34,15 @@ public class MessageController extends AbstractController {
 
     private void previous() {
         messageView.previous();
+    }
+
+    @Override
+    protected Map<String, String> getTranslations() {
+        Map<String, String> translations = new HashMap<String, String>(2);
+
+        translations.put("messages.actions.display.next", "next");
+        translations.put("messages.actions.display.previous", "previous");
+
+        return translations;
     }
 }
