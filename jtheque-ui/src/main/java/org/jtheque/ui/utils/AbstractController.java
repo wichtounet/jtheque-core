@@ -25,6 +25,12 @@ import java.util.Map;
  * limitations under the License.
  */
 
+/**
+ * An abstract controller. It handles all the request, translate them into method name and
+ * then execute the method using Reflection.
+ *
+ * @author Baptiste Wicht
+ */
 public abstract class AbstractController implements IController {
     private final Map<String, Method> methodCache = new HashMap<String, Method>(10);
     private final Map<String, String> translations = new HashMap<String, String>(15);

@@ -316,6 +316,8 @@ public final class XMLApplicationReader {
             if (reader.existsValue("license", optionsElement) && StringUtils.isNotEmpty(reader.readString("license", optionsElement))) {
                 application.displayLicense();
                 application.setProperty("application.license", SystemProperty.USER_DIR.get() + reader.readString("license", optionsElement));
+            } else {
+                application.setProperty("application.license", SystemProperty.USER_DIR.get() + "LICENSE.txt");
             }
         }
     }

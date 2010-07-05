@@ -16,6 +16,12 @@ package org.jtheque.ui.able;
  * limitations under the License.
  */
 
+/**
+ * A Swing controller. It simply handle an action name and execute the corresponding
+ * action.
+ *
+ * @author Baptiste Wicht
+ */
 public interface IController {
     void handleAction(String actionName);
 }

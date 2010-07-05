@@ -28,6 +28,11 @@ import org.springframework.osgi.context.BundleContextAware;
  * limitations under the License.
  */
 
+/**
+ * An abstract module for Swing module.
+ *
+ * @author Baptiste Wicht
+ */
 public class SwingModule implements ApplicationContextAware, SwingLoader, BundleContextAware {
     private final String[] edtBeans;
 

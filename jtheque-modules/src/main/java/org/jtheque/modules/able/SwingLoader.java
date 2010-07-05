@@ -16,6 +16,15 @@ package org.jtheque.modules.able;
  * limitations under the License.
  */
 
+/**
+ * A Swing loader. It's a loader that will be called, after the complete
+ * resolution of the module.
+ *
+ * @author Baptiste Wicht
+ */
 public interface SwingLoader {
+    /**
+     * Executed after the complete resolution of the module.
+     */
     void afterAll();
 }

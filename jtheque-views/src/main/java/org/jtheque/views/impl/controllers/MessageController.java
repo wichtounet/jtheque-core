@@ -24,6 +24,11 @@ import java.util.Map;
  * limitations under the License.
  */
 
+/**
+ * A controller for the messages view.
+ *
+ * @author Baptiste Wicht
+ */
 public class MessageController extends AbstractController {
     @Resource
     private IMessageView messageView;

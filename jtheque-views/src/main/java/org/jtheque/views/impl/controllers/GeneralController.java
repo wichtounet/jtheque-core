@@ -12,7 +12,6 @@ import org.jtheque.utils.ui.SwingUtils;
 import org.jtheque.views.able.IViewService;
 import org.jtheque.views.able.IViews;
 import org.jtheque.views.able.windows.IMainView;
-import org.jtheque.views.impl.ViewsResources;
 import org.jtheque.xml.utils.XMLException;
 
 import org.slf4j.LoggerFactory;
@@ -58,6 +57,9 @@ public class GeneralController extends AbstractController {
     @Resource
     private IViewService viewService;
 
+    @Resource
+    private ICore core;
+
     private void backup() {
         final boolean yes = uiUtils.askI18nUserForConfirmation(
                 "dialogs.confirm.backup", "dialogs.confirm.backup.title");
@@ -80,7 +82,7 @@ public class GeneralController extends AbstractController {
         new RestoreWorker(yes, file).start();
     }
 
-    private void help(){
+    private void help() {
         DesktopUtils.browse(ICore.HELP_URL);
     }
 
@@ -92,28 +94,53 @@ public class GeneralController extends AbstractController {
         DesktopUtils.browse(ICore.HELP_URL); //TODO REview that
     }
 
-    private void messages(){
+    /**
+     * Display the messages view.
+     */
+    private void messages() {
         views.getMessagesView().display();
     }
 
+    /**
+     * Display the events view.
+     */
     private void events() {
         views.getEventView().display();
     }
 
+    /**
+     * Display the errors view.
+     */
     private void errors() {
         views.getErrorView().display();
     }
 
+    /**
+     * Display the about view.
+     */
     private void about() {
         viewService.displayAboutView();
     }
 
+    /**
+     * Display the config view.
+     */
     private void config() {
         views.getConfigView().display();
     }
 
+    /**
+     * Display the modules view.
+     */
     private void modules() {
-        viewService.displayAboutView();
+        views.getModuleView().display();
+    }
+
+    /**
+     * Exit from the application. 
+     */
+    private void exit() {
+        core.getLifeCycle().exit();
     }
 
     @Override
@@ -136,6 +163,11 @@ public class GeneralController extends AbstractController {
         return translations;
     }
 
+    /**
+     * A swing worker to restore the database. 
+     *
+     * @author Baptiste Wicht
+     */
     private final class RestoreWorker extends SimpleSwingWorker {
         private final boolean clear;
         private final File file;

@@ -137,8 +137,22 @@ public interface IModuleService {
      */
     String canBeStopped(Module module);
 
+    /**
+     * Test if a module can ben uninstalled.
+     *
+     * @param module The module to be uninstalled.
+     *
+     * @return The error message. If the error is empty, the module can be uninstalled.
+     */
     String canBeUninstalled(Module module);
 
+    /**
+     * Test if a module can ben disabled.
+     *
+     * @param module The module to be disabled.
+     *
+     * @return The error message. If the error is empty, the module can be disabled.
+     */
     String canBeDisabled(Module module);
 
     /**
@@ -179,5 +193,13 @@ public interface IModuleService {
      */
     void registerSwingLoader(String moduleId, SwingLoader swingLoader);
 
+    /**
+     * Indicate if the given module need two phases loading or not. A two phases loading indicate that we must
+     * previously set the collection and then load the module.
+     *
+     * @param module The module.
+     *
+     * @return true if the module need two phases loading else false.
+     */
     boolean needTwoPhasesLoading(Module module);
 }

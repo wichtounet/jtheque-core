@@ -57,6 +57,11 @@ public class CollectionController extends AbstractController {
         displayResponse(response);
     }
 
+    /**
+     * Display the response if necessary.
+     *
+     * @param response The response to display. 
+     */
     private void displayResponse(Response response) {
         if (!response.isOk()) {
             collectionView.setErrorMessage(languageService.getMessage(response.getKey(), (Object[]) response.getReplaces()));

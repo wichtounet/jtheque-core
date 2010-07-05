@@ -18,6 +18,11 @@ public interface IResource {
      */
     String getId();
 
+    /**
+     * Return all the files of the resources.
+     *
+     * @return A List containing all the files of the resource. 
+     */
     List<String> getFiles();
 
     /**

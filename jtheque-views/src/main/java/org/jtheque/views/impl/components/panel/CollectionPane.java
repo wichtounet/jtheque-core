@@ -34,6 +34,7 @@ import org.jtheque.views.able.panel.ICollectionView;
 import org.jdesktop.swingx.JXPanel;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -58,33 +59,24 @@ public final class CollectionPane extends JXPanel implements ICollectionView, Fi
 
     private static final int LEFT_MARGIN_WIDTH = 200;
 
-    private final JThequeAction chooseAction;
+    @Resource
+    private ICore core;
 
-    private final ICore core;
-    private final IController controller;
+    @Resource
+    private IController collectionController;
 
-    private final ILanguageService languageService;
+    @Resource
+    private ILanguageService languageService;
 
-    /**
-     * Construct a new CollectionPane.
-     *
-     * @param core The core.
-     */
-    public CollectionPane(ICore core, ILanguageService languageService, IController controller) {
-        super();
-
-        this.core = core;
-        this.controller = controller;
-        chooseAction = ActionFactory.createControllerAction("collections.actions.choose", controller);
-
-        this.languageService = languageService;
-    }
+    private JThequeAction chooseAction;
 
     /**
      * Build the view.
      */
     @PostConstruct
     void build() {
+        chooseAction = ActionFactory.createControllerAction("collections.actions.choose", collectionController);
+
         setOpaque(true);
         setBackground(BACKGROUND_COLOR);
         setAlpha(1.0f);
@@ -183,8 +175,8 @@ public final class CollectionPane extends JXPanel implements ICollectionView, Fi
     private void addButtonBar(GridBagUtils gbc) {
         Container buttonsPanel = new JPanel();
 
-        JThequeAction createAction = ActionFactory.createControllerAction("collections.actions.create", controller);
-        JThequeAction cancelAction = ActionFactory.createControllerAction("collections.actions.cancel", controller);
+        JThequeAction createAction = ActionFactory.createControllerAction("collections.actions.create", collectionController);
+        JThequeAction cancelAction = ActionFactory.createControllerAction("collections.actions.cancel", collectionController);
 
         createAction.refreshText(languageService);
         cancelAction.refreshText(languageService);

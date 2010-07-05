@@ -18,7 +18,23 @@ import org.jtheque.utils.bean.Version;
  * limitations under the License.
  */
 
+/**
+ * A Versionable object.
+ *
+ * @author Baptiste Wicht
+ */
 public interface Versionable {
+    /**
+     * Return the current version of the object.
+     *
+     * @return The current version of the object. 
+     */
     Version getVersion();
+
+    /**
+     * Return the URL of the descriptor.
+     *
+     * @return The URL of the descriptor. 
+     */
     String getDescriptorURL();
 }

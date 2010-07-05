@@ -20,6 +20,11 @@ import java.util.Set;
  * limitations under the License.
  */
 
+/**
+ * Information about a resource.
+ *
+ * @author Baptiste Wicht
+ */
 public class ResourceInfo {
     private final String id;
     private final Set<Version> versions;

@@ -56,6 +56,13 @@ public class ResourceService implements IResourceService, BundleContextAware {
     private final IErrorService errorService;
     private final IEventService eventService;
 
+    /**
+     * Construct a new Resource Service.
+     *
+     * @param stateService The state service.
+     * @param errorService The error service.
+     * @param eventService The event service.
+     */
     public ResourceService(IStateService stateService, IErrorService errorService, IEventService eventService) {
         super();
 
@@ -157,6 +164,15 @@ public class ResourceService implements IResourceService, BundleContextAware {
         return null;
     }
 
+    /**
+     * Download the given resource.
+     *
+     * @param url The url of the resource.
+     * @param descriptor The descriptor of the resource.
+     * @param resourceVersion The version to download from.
+     *
+     * @return The downloaded resource.
+     */
     private IResource downloadResource(String url, ResourceDescriptor descriptor, ResourceVersion resourceVersion) {
         Resource resource = new Resource(descriptor.getId());
 
@@ -184,6 +200,12 @@ public class ResourceService implements IResourceService, BundleContextAware {
         return resource;
     }
 
+    /**
+     * Download the file descriptor.
+     *
+     * @param resourceFolder The folder to put the resource into.
+     * @param fileDescriptor The file descriptor of the resource.
+     */
     private void downloadFile(File resourceFolder, FileDescriptor fileDescriptor) {
         File filePath = new File(resourceFolder, fileDescriptor.getName());
 
@@ -221,6 +243,13 @@ public class ResourceService implements IResourceService, BundleContextAware {
         this.bundleContext = bundleContext;
     }
 
+    /**
+     * Return the resource folder for the given resource.
+     *
+     * @param resource The resource to get the folder for.
+     *
+     * @return The folder. 
+     */
     private static File getResourceFolder(IResource resource) {
         return new File(SystemProperty.USER_DIR.get(), "resources/" + resource.getId() + '/' + resource.getVersion());
     }

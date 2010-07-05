@@ -85,6 +85,13 @@ public class ResourceState {
         return resource;
     }
 
+    /**
+     * Convert the resource to a XML node.
+     *
+     * @param resource The resource to convert.
+     *
+     * @return The Node corresponding to the resource. 
+     */
     private static Node convertToNode(IResource resource) {
         Node node = new Node("resource");
 

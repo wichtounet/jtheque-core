@@ -112,6 +112,11 @@ public abstract class SwingDialogView<T extends IModel> extends JDialog
         builded = true;
     }
 
+    /**
+     * Set the content pane of the dialog.
+     *
+     * @param contentPane The contentpane to set.
+     */
     public void setContentPane(JComponent contentPane) {
         content.setView(contentPane);
     }
@@ -389,6 +394,11 @@ public abstract class SwingDialogView<T extends IModel> extends JDialog
         return new SwingSpringProxy<T>(classz, applicationContext).get();
     }
 
+    /**
+     * Set the controller of the view.
+     *
+     * @param controller The controller of the view. 
+     */
     public void setController(IController controller) {
         this.controller = controller;
     }

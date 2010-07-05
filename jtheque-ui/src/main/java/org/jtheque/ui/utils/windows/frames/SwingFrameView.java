@@ -102,6 +102,11 @@ public abstract class SwingFrameView<T extends IModel> extends JFrame
         builded = true;
     }
 
+    /**
+     * Set the content pane of the frame.
+     *
+     * @param contentPane The content pane of the frame. 
+     */
     public void setContentPane(JComponent contentPane) {
         content.setView(contentPane);
     }
@@ -359,6 +364,11 @@ public abstract class SwingFrameView<T extends IModel> extends JFrame
         return getService(ILanguageService.class).getMessage(key, replaces);
     }
 
+    /**
+     * Set the controller of the frame.
+     *
+     * @param controller The controller of the view. 
+     */
     protected void setController(IController controller) {
         this.controller = controller;
     }

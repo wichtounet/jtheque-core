@@ -84,8 +84,8 @@
     <bean id="updateController" class="org.jtheque.views.impl.controllers.UpdateController" lazy-init="true"/>
     <bean id="generalController" class="org.jtheque.views.impl.controllers.GeneralController" lazy-init="true"/>
     <bean id="repositoryController" class="org.jtheque.views.impl.controllers.RepositoryController" lazy-init="true"/>
-    <bean id="collectionController" class="org.jtheque.views.impl.controllers.CollectionController" lazy-init="true"/>
     <bean id="licenseController" class="org.jtheque.views.impl.controllers.LicenseController" lazy-init="true"/>
+    <bean id="collectionController" class="org.jtheque.views.impl.controllers.CollectionController" lazy-init="true" />
 
     <!-- Config panels -->
 
@@ -100,11 +100,7 @@
 
     <!-- Java2D panes -->
 
-    <bean class="org.jtheque.views.impl.components.panel.CollectionPane" lazy-init="true">
-        <constructor-arg ref="core"/>
-        <constructor-arg ref="languageService"/>
-        <constructor-arg ref="collectionController"/>
-    </bean>
+    <bean class="org.jtheque.views.impl.components.panel.CollectionPane" lazy-init="true" />
 
     <bean class="org.jtheque.views.impl.components.panel.AboutPane" lazy-init="true">
         <constructor-arg ref="licenseView"/>
@@ -127,6 +123,7 @@
     <osgi:reference id="imageService" interface="org.jtheque.images.able.IImageService"/>
     <osgi:reference id="errorsService" interface="org.jtheque.errors.able.IErrorService"/>
     <osgi:reference id="fileService" interface="org.jtheque.file.able.IFileService"/>
+    <osgi:reference id="persistenceService" interface="org.jtheque.persistence.able.IPersistenceService"/>
 
     <!-- OSGi Services -->
 

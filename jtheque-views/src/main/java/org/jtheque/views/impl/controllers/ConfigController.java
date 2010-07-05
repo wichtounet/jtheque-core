@@ -24,6 +24,11 @@ import java.util.Map;
  * limitations under the License.
  */
 
+/**
+ * A controller for the config view.
+ *
+ * @author Baptiste Wicht
+ */
 public class ConfigController extends AbstractController {
     @Resource
     private IConfigView configView;

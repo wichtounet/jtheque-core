@@ -56,6 +56,15 @@ public final class ActionFactory {
         return new DisplayViewAction(key, view);
     }
 
+
+    /**
+     * Create an action linked to the controller.
+     *
+     * @param key The i18n key of the action.
+     * @param controller The controller to bind the action to.
+     *
+     * @return The JThequeAction for this controller binding.
+     */
     public static JThequeAction createControllerAction(String key, IController controller) {
         return new ControllerAction(key, controller);
     }

@@ -85,5 +85,8 @@ public interface IViewService {
      */
     void configure(IWindowConfiguration configuration, IView view);
 
+    /**
+     * Close the collection view. 
+     */
     void closeCollectionView();
 }

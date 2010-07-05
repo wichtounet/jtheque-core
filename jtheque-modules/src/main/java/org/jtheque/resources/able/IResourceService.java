@@ -36,6 +36,13 @@ public interface IResourceService {
      */
     List<IResource> getResources();
 
+    /**
+     * Return all the versions of the resource with the given name.
+     *
+     * @param resourceName The name of the resource to search the versions for.
+     *
+     * @return A List containing all the versions of the given resource. 
+     */
     List<Version> getVersions(String resourceName);
 
     /**

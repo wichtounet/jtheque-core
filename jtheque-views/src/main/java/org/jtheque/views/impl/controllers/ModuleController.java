@@ -178,10 +178,20 @@ public class ModuleController extends AbstractController {
         update(module, updateService.isUpToDate(module), "module");
     }
 
+    /**
+     * Update the core.
+     */
     private void updateCore() {
         update(null, updateService.isCurrentVersionUpToDate(), "kernel");
     }
 
+    /**
+     * Update the given object.
+     *
+     * @param object The object to update.
+     * @param upToDate A boolean tag indicating if the object is up to date or not.
+     * @param message The message to send to the update view.
+     */
     private void update(Object object, boolean upToDate, String message) {
         IUpdateView updateView = views.getUpdateView();
 
@@ -193,6 +203,11 @@ public class ModuleController extends AbstractController {
         }
     }
 
+    /**
+     * A simple swing worker to make work in the module view. The module view is waiting during the operations.
+     *
+     * @author Baptiste Wicht
+     */
     private abstract class ModuleWorker extends SimpleSwingWorker {
         @Override
         protected void before() {

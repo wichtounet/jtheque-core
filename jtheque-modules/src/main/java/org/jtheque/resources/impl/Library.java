@@ -22,6 +22,11 @@ public class Library {
     private String id;
     private Bundle bundle;
 
+    /**
+     * Construct a new Library.
+     *
+     * @param id The id of the library. 
+     */
     public Library(String id) {
         super();
 

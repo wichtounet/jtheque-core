@@ -60,5 +60,12 @@ public interface IUIUtils {
      */
     void displayI18nText(String key);
 
+    /**
+     * Ask the user for text using the internationalized key as the prompt.
+     *
+     * @param key The i18n key.
+     *
+     * @return The text the user has entered. 
+     */
     String askI18nText(String key);
 }

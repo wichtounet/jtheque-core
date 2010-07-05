@@ -86,10 +86,20 @@ public class ResourceVersion implements Comparable<ResourceVersion> {
         return version.compareTo(o.version);
     }
 
+    /**
+     * Add the file to the version.
+     *
+     * @param descriptor The descriptor.
+     */
     public void addFile(FileDescriptor descriptor) {
         files.add(descriptor);
     }
 
+    /**
+     * Add the library to the version.
+     *
+     * @param descriptor The descriptor.
+     */
     public void addLibrary(FileDescriptor descriptor) {
         libraries.add(descriptor);
     }

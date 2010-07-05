@@ -38,5 +38,12 @@ public interface IWindowView extends IView, WaitableView {
      */
     int getHeight();
 
+    /**
+     * Return the controller action with the given i18n key.
+     *
+     * @param key The key.
+     *
+     * @return The action bind to the controller of the view. 
+     */
     Action getControllerAction(String key);
 }

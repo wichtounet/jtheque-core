@@ -44,6 +44,11 @@ import java.util.Map;
  * limitations under the License.
  */
 
+/**
+ * A controller for the license view.
+ *
+ * @author Baptiste Wicht
+ */
 public class LicenseController extends AbstractController {
     @Resource
     private ILicenseView licenseView;

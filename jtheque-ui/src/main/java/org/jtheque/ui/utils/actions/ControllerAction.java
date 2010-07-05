@@ -24,6 +24,12 @@ public class ControllerAction extends JThequeAction {
     private final String key;
     private final transient IController controller;
 
+    /**
+     * Construct a new controller action.
+     *
+     * @param key The i18n key of the action. 
+     * @param controller The controller to bind the action. 
+     */
     public ControllerAction(String key, IController controller) {
         super(key);
 

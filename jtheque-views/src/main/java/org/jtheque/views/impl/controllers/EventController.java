@@ -28,6 +28,9 @@ public class EventController extends AbstractController {
     @Resource
     private IEventView eventView;
 
+    /**
+     * Update the event view. 
+     */
     private void update() {
         eventView.refresh();
     }

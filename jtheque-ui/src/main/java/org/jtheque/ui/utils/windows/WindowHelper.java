@@ -26,6 +26,11 @@ import java.awt.Component;
  * limitations under the License.
  */
 
+/**
+ * A Window Helper. It's a simple utility class for windows.
+ *
+ * @author Baptiste Wicht
+ */
 public class WindowHelper {
     private WindowHelper() {
         super();
