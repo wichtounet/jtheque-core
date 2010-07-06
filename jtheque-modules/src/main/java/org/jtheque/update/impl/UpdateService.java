@@ -36,13 +36,17 @@ import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.collections.ArrayUtils;
 import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.io.FileException;
+import org.jtheque.utils.io.FileUtils;
 import org.jtheque.utils.io.WebUtils;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.BundleException;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.Resource;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -75,6 +79,8 @@ public final class UpdateService implements IUpdateService {
     private IResourceService resourceService;
 
     private final IVersionsLoader versionsLoader;
+
+    private BundleContext bundleContext;
 
     /**
      * Create a new UpdateService.
@@ -148,6 +154,19 @@ public final class UpdateService implements IUpdateService {
             uiUtils.displayI18nText("modules.message.versionproblem");
         } else {
             applyModuleVersion(onlineVersion);
+
+            if (object instanceof Module) {
+                Module module = (Module) object;
+
+                try {
+                    module.getBundle().update(FileUtils.asInputStream(
+                            new File(core.getFolders().getModulesFolder(), onlineVersion.getModuleFile())));
+                } catch (BundleException e) {
+                    LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
+                } catch (FileNotFoundException e) {
+                    LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
+                }
+            }
 
             uiUtils.displayI18nText("message.application.updated");
         }

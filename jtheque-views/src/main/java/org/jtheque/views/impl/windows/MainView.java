@@ -107,7 +107,6 @@ public final class MainView extends SwingFrameView implements TitleListener, IMa
     @Override
     public void init() {
         setTitle(core.getLifeCycle().getTitle());
-        setResizable(false);
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
         tempListener = new TempWindowAdapter();
@@ -129,8 +128,7 @@ public final class MainView extends SwingFrameView implements TitleListener, IMa
      * Build the entire view with the final content.
      */
     public void fill() {
-        setIconImage(getDefaultWindowIcon());
-        setResizable(true);
+        //setIconImage(getDefaultWindowIcon());
 
         controller = new MainController(core, uiUtils);
 

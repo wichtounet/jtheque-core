@@ -16,7 +16,7 @@ package org.jtheque.views.able.windows;
  * limitations under the License.
  */
 
-import org.jtheque.ui.able.IView;
+import org.jtheque.ui.able.IWindowView;
 import org.jtheque.views.impl.components.panel.JThequeStateBar;
 
 import javax.swing.JComponent;
@@ -29,7 +29,7 @@ import java.awt.Component;
  *
  * @author Baptiste Wicht
  */
-public interface IMainView extends IView {
+public interface IMainView extends IWindowView {
     /**
      * Return the principal tabbed pane. This tabbed pane is used to display the different principal data of JTheque.
      *
@@ -43,23 +43,6 @@ public interface IMainView extends IView {
      * @param glassPane The glass pane.
      */
     void setGlassPane(Component glassPane);
-
-    /**
-     * Return the height of the view.
-     *
-     * @return The height of the view.
-     */
-    int getHeight();
-
-    /**
-     * Start the waiting process.
-     */
-    void startWait();
-
-    /**
-     * Stop the waiting process.
-     */
-    void stopWait();
 
     /**
      * Set the selected component.

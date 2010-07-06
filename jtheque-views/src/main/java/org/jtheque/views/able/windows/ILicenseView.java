@@ -1,7 +1,6 @@
 package org.jtheque.views.able.windows;
 
-import org.jtheque.ui.able.IView;
-import org.jtheque.ui.able.WaitableView;
+import org.jtheque.ui.able.IWindowView;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -24,6 +23,6 @@ import org.jtheque.ui.able.WaitableView;
  *
  * @author Baptiste Wicht
  */
-public interface ILicenseView extends IView, WaitableView {
+public interface ILicenseView extends IWindowView {
 
 }

@@ -69,7 +69,7 @@ public class LicenseController extends AbstractController {
     private final class PrintWorker extends SimpleSwingWorker {
         @Override
         protected void before() {
-            licenseView.startWait();
+            licenseView.getWindowState().startWait();
         }
 
         @Override
@@ -79,7 +79,7 @@ public class LicenseController extends AbstractController {
 
         @Override
         protected void done() {
-            licenseView.stopWait();
+            licenseView.getWindowState().stopWait();
         }
     }
 }

@@ -52,7 +52,7 @@ public class UpdateController extends AbstractController {
     private final class UpdateWorker extends SimpleSwingWorker {
         @Override
         protected void before() {
-            updateView.startWait();
+            updateView.getWindowState().startWait();
         }
 
         @Override
@@ -66,7 +66,7 @@ public class UpdateController extends AbstractController {
 
         @Override
         public void done() {
-            updateView.stopWait();
+            updateView.getWindowState().stopWait();
         }
     }
 }

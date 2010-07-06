@@ -23,7 +23,7 @@ import javax.swing.Action;
  *
  * @author Baptiste Wicht
  */
-public interface IWindowView extends IView, WaitableView {
+public interface IWindowView extends IView {
     /**
      * Return the width of the window.
      *
@@ -46,4 +46,6 @@ public interface IWindowView extends IView, WaitableView {
      * @return The action bind to the controller of the view. 
      */
     Action getControllerAction(String key);
+
+    IWindowState getWindowState();
 }

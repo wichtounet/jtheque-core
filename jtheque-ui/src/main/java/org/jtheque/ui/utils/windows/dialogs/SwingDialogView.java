@@ -16,29 +16,22 @@ package org.jtheque.ui.utils.windows.dialogs;
  * limitations under the License.
  */
 
-import org.jtheque.core.able.ICore;
 import org.jtheque.core.utils.OSGiUtils;
 import org.jtheque.core.utils.SimplePropertiesCache;
 import org.jtheque.errors.able.IError;
-import org.jtheque.errors.able.IErrorService;
 import org.jtheque.i18n.able.ILanguageService;
 import org.jtheque.i18n.able.Internationalizable;
 import org.jtheque.i18n.able.InternationalizableContainer;
-import org.jtheque.images.able.IImageService;
-import org.jtheque.spring.utils.SwingSpringProxy;
 import org.jtheque.ui.able.IController;
 import org.jtheque.ui.able.IModel;
+import org.jtheque.ui.able.IWindowState;
 import org.jtheque.ui.able.IWindowView;
 import org.jtheque.ui.utils.actions.ActionFactory;
-import org.jtheque.ui.utils.actions.ControllerAction;
 import org.jtheque.ui.utils.constraints.Constraint;
-import org.jtheque.ui.utils.windows.BusyPainterUI;
-import org.jtheque.ui.utils.windows.WindowHelper;
-import org.jtheque.utils.collections.ArrayUtils;
+import org.jtheque.ui.utils.windows.ManagedWindow;
+import org.jtheque.ui.utils.windows.WindowState;
 import org.jtheque.utils.ui.SwingUtils;
 
-import org.jdesktop.jxlayer.JXLayer;
-import org.jdesktop.jxlayer.plaf.ext.LockableUI;
 import org.osgi.framework.BundleContext;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -53,11 +46,7 @@ import javax.swing.JFrame;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Frame;
-import java.awt.Image;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * A swing dialog view.
@@ -65,24 +54,10 @@ import java.util.Map;
  * @author Baptiste Wicht
  */
 public abstract class SwingDialogView<T extends IModel> extends JDialog
-        implements IWindowView, InternationalizableContainer, BundleContextAware, ApplicationContextAware {
-    private String titleKey;
-    private Object[] titleReplaces;
-
+        implements ManagedWindow, IWindowView, InternationalizableContainer, BundleContextAware, ApplicationContextAware {
     private T model;
 
-    private boolean builded;
-
-    private final Collection<Internationalizable> internationalizables = new ArrayList<Internationalizable>(10);
-    private final Map<Object, Constraint> constraintCache = new HashMap<Object, Constraint>(5);
-
-    private BundleContext bundleContext;
-    private ApplicationContext applicationContext;
-
-    private JXLayer<JComponent> content;
-    private LockableUI busyPainterUI;
-
-    private IController controller;
+    private final WindowState state = new WindowState(this);
 
     /**
      * Construct a SwingDialogView modal to the main view.
@@ -91,39 +66,35 @@ public abstract class SwingDialogView<T extends IModel> extends JDialog
         super(SimplePropertiesCache.<Frame>get("mainView"));
     }
 
-    /**
-     * Build the view.
-     */
     @PostConstruct
-    protected final void build() {
+    @Override
+    public final void build() {
         setModal(true);
-        setResizable(true);
 
+        state.build();
+
+        setResizable(true);
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-        setIconImage(getDefaultWindowIcon());
 
         getService(ILanguageService.class).addInternationalizable(this);
 
-        content = new JXLayer<JComponent>();
-        super.setContentPane(content);
+        super.setContentPane(state.getContent());
 
         init();
-
-        builded = true;
     }
 
     /**
      * Set the content pane of the dialog.
      *
-     * @param contentPane The contentpane to set.
+     * @param contentPane The content pane to set.
      */
     public void setContentPane(JComponent contentPane) {
-        content.setView(contentPane);
+        state.getContent().setView(contentPane);
     }
 
     @Override
     public Container getContentPane() {
-        return content.getView();
+        return state.getContent().getView();
     }
 
     @Override
@@ -132,8 +103,8 @@ public abstract class SwingDialogView<T extends IModel> extends JDialog
     }
 
     @Override
-    public void setGlassPane(final Component glassPane) {
-        WindowHelper.applyGlassPane(glassPane, content);
+    public void setGlassPane(Component glassPane) {
+        state.setGlassPane(glassPane);
         refresh();
     }
 
@@ -144,40 +115,7 @@ public abstract class SwingDialogView<T extends IModel> extends JDialog
 
     @Override
     public Component getGlassPane() {
-        return content.getGlassPane();
-    }
-
-    @Override
-    public void startWait() {
-        installWaitUIIfNecessary();
-        content.setUI(busyPainterUI);
-        busyPainterUI.setLocked(true);
-    }
-
-    @Override
-    public void stopWait() {
-        if (busyPainterUI != null) {
-            busyPainterUI.setLocked(false);
-            content.setUI(null);
-        }
-    }
-
-    /**
-     * Create the wait UI only if this has not been done before.
-     */
-    private void installWaitUIIfNecessary() {
-        if (busyPainterUI == null) {
-            busyPainterUI = new BusyPainterUI(this);
-        }
-    }
-
-    /**
-     * Return the default window icon.
-     *
-     * @return The default window icon.
-     */
-    protected Image getDefaultWindowIcon() {
-        return getService(IImageService.class).getImage(ICore.WINDOW_ICON);
+        return state.getContent().getGlassPane();
     }
 
     /**
@@ -192,32 +130,13 @@ public abstract class SwingDialogView<T extends IModel> extends JDialog
     }
 
     @Override
-    public Action getControllerAction(String key){
-        return ActionFactory.createControllerAction(key, controller);
-    }
-
-    @Override
     public void closeDown() {
         setVisible(false);
     }
 
     @Override
     public void display() {
-        if (!builded) {
-            SwingUtils.inEdt(new Runnable() {
-                @Override
-                public void run() {
-                    build();
-                }
-            });
-        }
-        
-        SwingUtils.inEdt(new Runnable() {
-            @Override
-            public void run() {
-                setVisible(true);
-            }
-        });
+        state.display();
     }
 
     @Override
@@ -242,29 +161,17 @@ public abstract class SwingDialogView<T extends IModel> extends JDialog
      * @param replaces The replacements objects for the i18n methods.
      */
     protected final void setTitleKey(String key, Object... replaces) {
-        titleKey = key;
-
-        if (!ArrayUtils.isEmpty(replaces)) {
-            titleReplaces = ArrayUtils.copyOf(replaces);
-        }
-
-        setTitle(getMessage(key, replaces));
+        state.setTitleKey(key, replaces);
     }
 
     @Override
     public void addInternationalizable(Internationalizable internationalizable) {
-        internationalizables.add(internationalizable);
+        state.addInternationalizable(internationalizable);
     }
 
     @Override
     public void refreshText(ILanguageService languageService) {
-        if (titleKey != null) {
-            setTitleKey(titleKey, titleReplaces);
-        }
-
-        for (Internationalizable internationalizable : internationalizables) {
-            internationalizable.refreshText(languageService);
-        }
+        state.refreshText(languageService);
     }
 
     /**
@@ -288,17 +195,7 @@ public abstract class SwingDialogView<T extends IModel> extends JDialog
 
     @Override
     public final boolean validateContent() {
-        Collection<IError> errors = new ArrayList<IError>(5);
-
-        validate(errors);
-
-        IErrorService errorService = getService(IErrorService.class);
-
-        for (IError error : errors) {
-            errorService.addError(error);
-        }
-
-        return errors.isEmpty();
+        return state.validateContent();
     }
 
     /**
@@ -324,15 +221,9 @@ public abstract class SwingDialogView<T extends IModel> extends JDialog
         return getService(ILanguageService.class).getMessage(key, replaces);
     }
 
-    /**
-     * Validate the view and save all the validation's errors in the list.
-     *
-     * @param errors The error's list.
-     */
-    protected void validate(Collection<IError> errors) {
-        for (Map.Entry<Object, Constraint> constraint : constraintCache.entrySet()) {
-            constraint.getValue().validate(constraint.getKey(), errors);
-        }
+    @Override
+    public void validate(Collection<IError> errors) {
+        state.validate(errors); //Default validation using constraint
     }
 
     /**
@@ -342,19 +233,17 @@ public abstract class SwingDialogView<T extends IModel> extends JDialog
      * @param constraint The constraint to add.
      */
     protected void addConstraint(Object field, Constraint constraint) {
-        constraintCache.put(field, constraint);
-
-        constraint.configure(field);
+        state.addConstraint(field, constraint);
     }
 
     @Override
     public void setBundleContext(BundleContext bundleContext) {
-        this.bundleContext = bundleContext;
+        state.setBundleContext(bundleContext);
     }
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) {
-        this.applicationContext = applicationContext;
+        state.setApplicationContext(applicationContext);
     }
 
     /**
@@ -366,7 +255,7 @@ public abstract class SwingDialogView<T extends IModel> extends JDialog
      * @return The service of the given class if it's exists otherwise null.
      */
     protected <T> T getService(Class<T> classz) {
-        return OSGiUtils.getService(bundleContext, classz);
+        return OSGiUtils.getService(state.getBundleContext(), classz);
     }
 
     /**
@@ -378,28 +267,25 @@ public abstract class SwingDialogView<T extends IModel> extends JDialog
      * @return The bean of the given class or null if it doesn't exist.
      */
     protected <T> T getBean(Class<T> classz) {
-        return applicationContext.getBean(classz);
-    }
-
-    /**
-     * Return the bean of the given class using the application context. The bean will be retrieved in the EDT, so it
-     * can be used for a Swing bean.
-     *
-     * @param classz The classz of the bean to get from application context.
-     * @param <T>    The type of bean to get.
-     *
-     * @return The bean of the given class or null if it doesn't exist.
-     */
-    protected <T> T getBeanFromEDT(Class<T> classz) {
-        return new SwingSpringProxy<T>(classz, applicationContext).get();
+        return state.getApplicationContext().getBean(classz);
     }
 
     /**
      * Set the controller of the view.
      *
-     * @param controller The controller of the view. 
+     * @param controller The controller of the view.
      */
     public void setController(IController controller) {
-        this.controller = controller;
+        state.setController(controller);
+    }
+
+    @Override
+    public Action getControllerAction(String key) {
+        return ActionFactory.createControllerAction(key, state.getController());
+    }
+
+    @Override
+    public IWindowState getWindowState() {
+        return state;
     }
 }

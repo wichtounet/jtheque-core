@@ -16,24 +16,19 @@ package org.jtheque.ui.utils.windows.frames;
  * limitations under the License.
  */
 
-import org.jtheque.core.able.ICore;
 import org.jtheque.core.utils.OSGiUtils;
 import org.jtheque.errors.able.IError;
 import org.jtheque.i18n.able.ILanguageService;
 import org.jtheque.i18n.able.Internationalizable;
 import org.jtheque.i18n.able.InternationalizableContainer;
-import org.jtheque.images.able.IImageService;
-import org.jtheque.spring.utils.SwingSpringProxy;
 import org.jtheque.ui.able.IController;
 import org.jtheque.ui.able.IModel;
+import org.jtheque.ui.able.IWindowState;
 import org.jtheque.ui.able.IWindowView;
 import org.jtheque.ui.utils.actions.ActionFactory;
-import org.jtheque.ui.utils.actions.ControllerAction;
 import org.jtheque.ui.utils.constraints.Constraint;
-import org.jtheque.ui.utils.windows.BusyPainterUI;
-import org.jtheque.ui.utils.windows.WindowHelper;
-import org.jtheque.utils.StringUtils;
-import org.jtheque.utils.collections.ArrayUtils;
+import org.jtheque.ui.utils.windows.ManagedWindow;
+import org.jtheque.ui.utils.windows.WindowState;
 import org.jtheque.utils.ui.SwingUtils;
 
 import org.jdesktop.jxlayer.JXLayer;
@@ -49,12 +44,7 @@ import javax.swing.JFrame;
 
 import java.awt.Component;
 import java.awt.Container;
-import java.awt.Cursor;
-import java.awt.Image;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * A swing frame view.
@@ -62,53 +52,36 @@ import java.util.Map;
  * @author Baptiste Wicht
  */
 public abstract class SwingFrameView<T extends IModel> extends JFrame
-        implements IWindowView, BundleContextAware, ApplicationContextAware, InternationalizableContainer {
-    private String titleKey;
-    private Object[] titleReplaces;
-
-    private final Collection<Internationalizable> internationalizables = new ArrayList<Internationalizable>(10);
-    private final Map<Object, Constraint> constraintCache = new HashMap<Object, Constraint>(5);
+        implements ManagedWindow, IWindowView, BundleContextAware, ApplicationContextAware, InternationalizableContainer {
 
     private T model;
 
-    private JXLayer<JComponent> content;
-    private BusyPainterUI waitUI;
+    private final WindowState state = new WindowState(this);
 
-    private boolean builded;
-    
-    private ApplicationContext applicationContext;
-    private BundleContext bundleContext;
-
-    private IController controller;
-
-    /**
-     * Build the view.
-     */
     @PostConstruct
-    protected final void build() {
+    @Override
+    public final void build() {
+        state.build();
+
         setResizable(true);
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-        setIconImage(getDefaultWindowIcon());
 
         getService(ILanguageService.class).addInternationalizable(this);
 
-        content = new JXLayer<JComponent>();
-        super.setContentPane(content);
+        super.setContentPane(state.getContent());
 
         init();
 
         SwingUtils.centerFrame(this);
-
-        builded = true;
     }
 
     /**
      * Set the content pane of the frame.
      *
-     * @param contentPane The content pane of the frame. 
+     * @param contentPane The content pane of the frame.
      */
     public void setContentPane(JComponent contentPane) {
-        content.setView(contentPane);
+        state.getContent().setView(contentPane);
     }
 
     @Override
@@ -118,12 +91,12 @@ public abstract class SwingFrameView<T extends IModel> extends JFrame
 
     @Override
     public Container getContentPane() {
-        return content.getView();
+        return state.getContent().getView();
     }
 
     @Override
     public void setGlassPane(Component glassPane) {
-        WindowHelper.applyGlassPane(glassPane, content);
+        state.setGlassPane(glassPane);
         refresh();
     }
 
@@ -132,18 +105,9 @@ public abstract class SwingFrameView<T extends IModel> extends JFrame
      */
     protected abstract void init();
 
-    /**
-     * Return the default icon for the window icon.
-     *
-     * @return The default icon.
-     */
-    protected Image getDefaultWindowIcon() {
-        return getService(IImageService.class).getImage(ICore.WINDOW_ICON);
-    }
-
     @Override
     public Component getGlassPane() {
-        return content.getGlassPane();
+        return state.getContent().getGlassPane();
     }
 
     @Override
@@ -168,12 +132,12 @@ public abstract class SwingFrameView<T extends IModel> extends JFrame
 
     @Override
     public void setBundleContext(BundleContext bundleContext) {
-        this.bundleContext = bundleContext;
+        state.setBundleContext(bundleContext);
     }
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) {
-        this.applicationContext = applicationContext;
+        state.setApplicationContext(applicationContext);
     }
 
     /**
@@ -201,33 +165,7 @@ public abstract class SwingFrameView<T extends IModel> extends JFrame
      * @return the content pane.
      */
     public JXLayer<JComponent> getContent() {
-        return content;
-    }
-
-    @Override
-    public void startWait() {
-        installWaitUIIfNecessary();
-        content.setUI(waitUI);
-        waitUI.setLocked(true);
-        setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-    }
-
-    @Override
-    public void stopWait() {
-        if (waitUI != null) {
-            waitUI.setLocked(false);
-            setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-            content.setUI(null);
-        }
-    }
-
-    /**
-     * Create the wait UI only if this has not been done before.
-     */
-    private void installWaitUIIfNecessary() {
-        if (waitUI == null) {
-            waitUI = new BusyPainterUI(content);
-        }
+        return state.getContent();
     }
 
     @Override
@@ -237,16 +175,7 @@ public abstract class SwingFrameView<T extends IModel> extends JFrame
 
     @Override
     public void display() {
-        SwingUtils.inEdt(new Runnable() {
-            @Override
-            public void run() {
-                if (!builded) {
-                    build();
-                }
-            }
-        });
-
-        setVisible(true);
+        state.display();
     }
 
     /**
@@ -256,29 +185,17 @@ public abstract class SwingFrameView<T extends IModel> extends JFrame
      * @param replaces The replacements objects for the i18n methods.
      */
     protected final void setTitleKey(String key, Object... replaces) {
-        titleKey = key;
-
-        if (!ArrayUtils.isEmpty(replaces)) {
-            titleReplaces = ArrayUtils.copyOf(replaces);
-        }
-
-        setTitle(getMessage(key, replaces));
+        state.setTitleKey(key, replaces);
     }
 
     @Override
     public void addInternationalizable(Internationalizable internationalizable) {
-        internationalizables.add(internationalizable);
+        state.addInternationalizable(internationalizable);
     }
 
     @Override
     public void refreshText(ILanguageService languageService) {
-        if (StringUtils.isNotEmpty(titleKey)) {
-            setTitleKey(titleKey, titleReplaces);
-        }
-
-        for (Internationalizable internationalizable : internationalizables) {
-            internationalizable.refreshText(languageService);
-        }
+        state.refreshText(languageService);
     }
 
     /**
@@ -286,10 +203,9 @@ public abstract class SwingFrameView<T extends IModel> extends JFrame
      *
      * @param errors The error's list.
      */
-    protected void validate(Collection<IError> errors) {
-        for (Map.Entry<Object, Constraint> constraint : constraintCache.entrySet()) {
-            constraint.getValue().validate(constraint.getKey(), errors);
-        }
+    @Override
+    public void validate(Collection<IError> errors) {
+        state.validate(errors); //Default validation using constraints
     }
 
     /**
@@ -299,9 +215,7 @@ public abstract class SwingFrameView<T extends IModel> extends JFrame
      * @param constraint The constraint to add.
      */
     protected void addConstraint(Object field, Constraint constraint) {
-        constraintCache.put(field, constraint);
-
-        constraint.configure(field);
+        state.addConstraint(field, constraint);
     }
 
     /**
@@ -313,7 +227,7 @@ public abstract class SwingFrameView<T extends IModel> extends JFrame
      * @return The service of the given class if it's exists otherwise null.
      */
     protected <T> T getService(Class<T> classz) {
-        return OSGiUtils.getService(bundleContext, classz);
+        return OSGiUtils.getService(state.getBundleContext(), classz);
     }
 
     /**
@@ -325,20 +239,7 @@ public abstract class SwingFrameView<T extends IModel> extends JFrame
      * @return The bean of the given class or null if it doesn't exist.
      */
     protected <T> T getBean(Class<T> classz) {
-        return applicationContext.getBean(classz);
-    }
-
-    /**
-     * Return the bean of the given class using the application context. The bean will be retrieved in the EDT, so it
-     * can be used for a Swing bean.
-     *
-     * @param classz The classz of the bean to get from application context.
-     * @param <T>    The type of bean to get.
-     *
-     * @return The bean of the given class or null if it doesn't exist.
-     */
-    protected <T> T getBeanFromEDT(Class<T> classz) {
-        return new SwingSpringProxy<T>(classz, applicationContext).get();
+        return state.getApplicationContext().getBean(classz);
     }
 
     /**
@@ -367,14 +268,19 @@ public abstract class SwingFrameView<T extends IModel> extends JFrame
     /**
      * Set the controller of the frame.
      *
-     * @param controller The controller of the view. 
+     * @param controller The controller of the view.
      */
-    protected void setController(IController controller) {
-        this.controller = controller;
+    public void setController(IController controller) {
+        state.setController(controller);
     }
 
     @Override
     public Action getControllerAction(String key) {
-        return ActionFactory.createControllerAction(key, controller);
+        return ActionFactory.createControllerAction(key, state.getController());
+    }
+
+    @Override
+    public IWindowState getWindowState() {
+        return state;
     }
 }

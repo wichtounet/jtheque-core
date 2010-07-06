@@ -187,7 +187,7 @@ public class GeneralController extends AbstractController {
 
         @Override
         protected void before() {
-            mainView.startWait();
+            mainView.getWindowState().startWait();
         }
 
         @Override
@@ -205,7 +205,7 @@ public class GeneralController extends AbstractController {
 
         @Override
         protected void done() {
-            mainView.stopWait();
+            mainView.getWindowState().stopWait();
         }
     }
 }

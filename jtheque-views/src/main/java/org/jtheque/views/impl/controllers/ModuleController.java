@@ -211,13 +211,13 @@ public class ModuleController extends AbstractController {
     private abstract class ModuleWorker extends SimpleSwingWorker {
         @Override
         protected void before() {
-            moduleView.startWait();
+            moduleView.getWindowState().startWait();
         }
 
         @Override
         protected void done() {
             moduleView.refreshList();
-            moduleView.stopWait();
+            moduleView.getWindowState().stopWait();
         }
     }
 
