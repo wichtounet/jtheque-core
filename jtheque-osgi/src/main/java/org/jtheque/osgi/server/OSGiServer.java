@@ -128,4 +128,6 @@ public interface OSGiServer {
      * @return The bundle with the specified name.
      */
     Bundle getBundle(String bundleName);
+
+    void restart();
 }

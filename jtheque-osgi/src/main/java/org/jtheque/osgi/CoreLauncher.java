@@ -38,8 +38,8 @@ public final class CoreLauncher implements Closeable {
     private CoreLauncher() {
         super();
 
-        instances = new Instances();
         server = new FelixServer();
+        instances = new Instances(server);
     }
 
     /**

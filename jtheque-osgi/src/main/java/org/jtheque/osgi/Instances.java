@@ -16,6 +16,7 @@ package org.jtheque.osgi;
  * limitations under the License.
  */
 
+import org.jtheque.osgi.server.OSGiServer;
 import org.jtheque.utils.io.FileUtils;
 import org.jtheque.utils.io.SocketUtils;
 
@@ -42,6 +43,14 @@ final class Instances {
 
     private static final String LOCALHOST = "127.0.0.1";
     private static final int PORT = 12345;
+
+    private final OSGiServer server;
+
+    Instances(OSGiServer server) {
+        super();
+
+        this.server = server;
+    }
 
     /**
      * Launch the application. If an other instance of the application is soon launched, call it and exit the current
@@ -137,7 +146,7 @@ final class Instances {
         public void run() {
             while (!socket.isClosed() && socket != null) {
                 try {
-                    Client client = new Client(socket.accept());
+                    Client client = new Client(socket.accept(), server);
                     clients.add(client);
 
                     client.start();

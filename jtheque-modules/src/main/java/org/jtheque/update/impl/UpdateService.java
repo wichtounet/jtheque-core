@@ -93,7 +93,19 @@ public final class UpdateService implements IUpdateService {
 
     @Override
     public void updateCore(Version versionToDownload) {
-        update(core, versionToDownload);
+        if (isDescriptorNotReachable(core)) {
+            return;
+        }
+
+        ModuleVersion onlineVersion = versionsLoader.getModuleVersion(versionToDownload, core);
+
+        if (onlineVersion == null) {
+            return;
+        }
+
+        applyModuleVersion(onlineVersion);
+
+        core.getLifeCycle().restart();
     }
 
     @Override

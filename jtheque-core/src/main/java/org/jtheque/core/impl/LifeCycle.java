@@ -10,7 +10,15 @@ import org.jtheque.core.utils.WeakEventListenerList;
 import org.jtheque.events.able.EventLevel;
 import org.jtheque.events.able.IEventService;
 import org.jtheque.events.utils.Event;
-import org.jtheque.utils.DesktopUtils;
+import org.jtheque.utils.io.FileUtils;
+import org.jtheque.utils.io.SocketUtils;
+
+import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
+import java.io.PrintStream;
+import java.net.Socket;
+import java.net.UnknownHostException;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -69,9 +77,22 @@ public class LifeCycle implements ILifeCycle {
 
     @Override
     public void restart() {
-        DesktopUtils.open(core.getFiles().getLauncherFile());
+        Socket clientSocket = null;
+        PrintStream stream = null;
 
-        System.exit(0);
+        try {
+            clientSocket = new Socket("127.0.0.1", 12345);
+            stream = new PrintStream(clientSocket.getOutputStream());
+
+            stream.println("restart");
+        } catch (UnknownHostException e) {
+            LoggerFactory.getLogger(getClass()).error("The host is unknown", e);
+        } catch (IOException e) {
+            LoggerFactory.getLogger(getClass()).error("I/O error", e);
+        } finally {
+            FileUtils.close(stream);
+            SocketUtils.close(clientSocket);
+        }
     }
 
     @Override

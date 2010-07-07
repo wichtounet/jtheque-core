@@ -1,5 +1,7 @@
 package org.jtheque.osgi.server;
 
+import org.jtheque.utils.io.FileUtils;
+
 import org.apache.felix.framework.Felix;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleException;
@@ -35,9 +37,12 @@ import java.util.Map;
  * @author Baptiste Wicht
  */
 public class FelixServer implements OSGiServer {
-    private Felix felix;
+    public static final File BUNDLES_DIR = new File(System.getProperty("user.dir") + "/bundles");
 
     private final Map<String, Bundle> bundles = new HashMap<String, Bundle>(10);
+
+    private Felix felix;
+
 
     @Override
     public void start() {
@@ -58,13 +63,13 @@ public class FelixServer implements OSGiServer {
             getLogger().error(e.getMessage(), e);
         }
 
-        getLogger().debug("Felix Server started in {} ms", System.currentTimeMillis() - startTime);
-
-        autoDeploy();
-
         for (Bundle bundle : felix.getBundleContext().getBundles()) {
             bundles.put(bundle.getSymbolicName(), bundle);
         }
+
+        getLogger().debug("Felix Server started in {} ms", System.currentTimeMillis() - startTime);
+
+        autoDeploy();
 
         getLogger().info("Felix started with {} cached bundles : {}", bundles.size(), bundles);
     }
@@ -73,36 +78,25 @@ public class FelixServer implements OSGiServer {
      * Auto deploy the bundles in the "bundles" folder of the user dir.
      */
     private void autoDeploy() {
-        File deployDir = new File(System.getProperty("user.dir") + "/bundles");
+        long startTime = System.currentTimeMillis();
 
         getLogger().info("Auto deploy start");
 
-        for (File f : deployDir.listFiles(new JarFileFilter())) {
+        for (File f : BUNDLES_DIR.listFiles(new JarFileFilter())) {
             String name = f.getName();
 
-            String symbolicName = name.substring(0, name.indexOf('-'));
-
-            getLogger().info("Auto deploy : " + symbolicName);
-
-            installIfNecessary(symbolicName, f.getAbsolutePath());
+            installIfNecessary(
+                    name.substring(0, name.indexOf('-')),
+                    f.getAbsolutePath());
         }
 
-        getLogger().info("Auto deploy ends");
+        getLogger().info("Auto deploy ends in {} ms", System.currentTimeMillis() - startTime);
     }
 
     @Override
     public void stop() {
         try {
-            try {
-                for (Bundle bundle : bundles.values()) {
-                    if (!"org.apache.felix.framework".equals(bundle.getSymbolicName())) {
-                        bundle.stop();
-                    }
-                }
-            } catch (BundleException e) {
-                LoggerFactory.getLogger(getClass()).error("Cannot stop System Bundle");
-                LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
-            }
+            stopBundles();
 
             felix.stop();
             felix.waitForStop(1000);
@@ -114,6 +108,19 @@ public class FelixServer implements OSGiServer {
         } catch (InterruptedException e) {
             getLogger().error("Unable to stop Felix due to {}", e.getMessage());
             getLogger().error(e.getMessage(), e);
+        }
+    }
+
+    private void stopBundles() {
+        try {
+            for (Bundle bundle : bundles.values()) {
+                if (!"org.apache.felix.framework".equals(bundle.getSymbolicName())) {
+                    bundle.stop();
+                }
+            }
+        } catch (BundleException e) {
+            LoggerFactory.getLogger(getClass()).error("Cannot stop System Bundle");
+            LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
         }
     }
 
@@ -276,6 +283,16 @@ public class FelixServer implements OSGiServer {
     @Override
     public Bundle getBundle(String bundleName) {
         return bundles.get(bundleName);
+    }
+
+    @Override
+    public void restart() {
+        stop();
+
+        //Clean the cache
+        FileUtils.clearFolder(BUNDLES_DIR);
+
+        start();
     }
 
     /**
