@@ -22,7 +22,7 @@ package org.jtheque.osgi.server;
  * @author Baptiste Wicht
  */
 public enum BundleState {
-    NOTINSTALLED,
+    NOT_INSTALLED,
     UNINSTALLED,
     INSTALLED,
     RESOLVED,

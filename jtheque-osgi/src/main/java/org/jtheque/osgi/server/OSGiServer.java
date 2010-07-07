@@ -116,11 +116,6 @@ public interface OSGiServer {
     Version getVersion(Bundle bundle);
 
     /**
-     * Print debug informations about the current state of the server.
-     */
-    void debug();
-
-    /**
      * Return the bundle of the specified name.
      *
      * @param bundleName The name
@@ -129,5 +124,8 @@ public interface OSGiServer {
      */
     Bundle getBundle(String bundleName);
 
+    /**
+     * Restart the server without the bundle cache.
+     */
     void restart();
 }

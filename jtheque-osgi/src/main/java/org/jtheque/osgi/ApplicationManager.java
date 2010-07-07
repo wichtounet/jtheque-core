@@ -36,17 +36,22 @@ import java.util.Collection;
  *
  * @author Baptiste Wicht
  */
-final class Instances {
-    private ServerSocket socket;
-    private final Collection<Client> clients = new ArrayList<Client>(5);
-    private Thread thread;
-
+final class ApplicationManager {
     private static final String LOCALHOST = "127.0.0.1";
     private static final int PORT = 12345;
 
+    private final Collection<Application> applications = new ArrayList<Application>(2);
     private final OSGiServer server;
 
-    Instances(OSGiServer server) {
+    private ServerSocket serverSocket;
+    private Thread thread;
+
+    /**
+     * Construct a new ApplicationManager for the given OSGiServer.
+     *
+     * @param server The OSGi server.
+     */
+    ApplicationManager(OSGiServer server) {
         super();
 
         this.server = server;
@@ -56,40 +61,32 @@ final class Instances {
      * Launch the application. If an other instance of the application is soon launched, call it and exit the current
      * instance.
      */
-    public void launchApplication() {
+    public void tryLaunchApplication() {
         try {
-            socket = new ServerSocket(PORT);
+            serverSocket = new ServerSocket(PORT);
 
-            registerNewClient();
+            registerApplication();
         } catch (IOException e) {
             LoggerFactory.getLogger(getClass()).debug("The application is already launched");
 
-            exit();
+            wakeUpApplication();
+
+            System.exit(1); //At this moment, nothing need to be released
         }
     }
 
     /**
-     * Register a new client.
+     * Register the application. .
      */
-    private void registerNewClient() {
+    private void registerApplication() {
         thread = new ServerThread();
-
         thread.start();
-    }
-
-    /**
-     * Exit.
-     */
-    private void exit() {
-        callInstance();
-
-        System.exit(1); //At this moment, nothing need to be released
     }
 
     /**
      * Call the another instance of JTheque.
      */
-    private void callInstance() {
+    private void wakeUpApplication() {
         Socket clientSocket = null;
         PrintStream stream = null;
 
@@ -114,15 +111,15 @@ final class Instances {
     public void closeInstance() {
         stopClients();
         stopServer();
-        SocketUtils.close(socket);
+        SocketUtils.close(serverSocket);
     }
 
     /**
-     * Stop all the clients.
+     * Stop all the applications.
      */
     private void stopClients() {
-        for (Client client : clients) {
-            client.interrupt();
+        for (Application application : applications) {
+            application.interrupt();
         }
     }
 
@@ -144,12 +141,14 @@ final class Instances {
     private final class ServerThread extends Thread {
         @Override
         public void run() {
-            while (!socket.isClosed() && socket != null) {
+            while (!serverSocket.isClosed() && serverSocket != null) {
                 try {
-                    Client client = new Client(socket.accept(), server);
-                    clients.add(client);
 
-                    client.start();
+
+                    Application application = new Application(serverSocket.accept(), server);
+                    applications.add(application);
+
+                    application.start();
                 } catch (SocketException e1) {
                     LoggerFactory.getLogger(getClass()).debug("The socket has been closed. Normally no problems. ");
                 } catch (IOException e2) {
@@ -161,7 +160,7 @@ final class Instances {
 
         @Override
         public void interrupt() {
-            SocketUtils.close(socket);
+            SocketUtils.close(serverSocket);
 
             super.interrupt();
         }

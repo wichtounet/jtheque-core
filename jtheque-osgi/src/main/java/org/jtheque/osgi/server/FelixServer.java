@@ -32,17 +32,16 @@ import java.util.Map;
  */
 
 /**
- * A Felix OSGI server implementation.
+ * A Felix OSGi server implementation.
  *
  * @author Baptiste Wicht
  */
-public class FelixServer implements OSGiServer {
-    public static final File BUNDLES_DIR = new File(System.getProperty("user.dir") + "/bundles");
+public final class FelixServer implements OSGiServer {
+    private static final File BUNDLES_DIR = new File(System.getProperty("user.dir") + "/bundles");
 
-    private final Map<String, Bundle> bundles = new HashMap<String, Bundle>(10);
+    private final Map<String, Bundle> bundles = new HashMap<String, Bundle>(50);
 
     private Felix felix;
-
 
     @Override
     public void start() {
@@ -111,6 +110,9 @@ public class FelixServer implements OSGiServer {
         }
     }
 
+    /**
+     * Stop all the bundles other than the felix framework system bundle.
+     */
     private void stopBundles() {
         try {
             for (Bundle bundle : bundles.values()) {
@@ -219,8 +221,10 @@ public class FelixServer implements OSGiServer {
         return null;
     }
 
-    @Override
-    public void debug() {
+    /**
+     * Debug the server. It seems print all the installed bundles with informations about them.
+     */
+    private void debug() {
         getLogger().debug("Installed bundles : ");
 
         for (Bundle bundle : getBundles()) {
@@ -234,7 +238,7 @@ public class FelixServer implements OSGiServer {
     @Override
     public BundleState getState(String bundle) {
         if (!isInstalled(bundle)) {
-            return BundleState.NOTINSTALLED;
+            return BundleState.NOT_INSTALLED;
         }
 
         return getState(getBundle(bundle));
@@ -309,7 +313,7 @@ public class FelixServer implements OSGiServer {
      *
      * @author Baptiste Wicht
      */
-    private static class JarFileFilter implements FilenameFilter {
+    private static final class JarFileFilter implements FilenameFilter {
         @Override
         public boolean accept(File dir, String name) {
             return name.endsWith(".jar");
