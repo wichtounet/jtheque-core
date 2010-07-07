@@ -24,6 +24,7 @@ import org.jtheque.events.able.IEventService;
 import org.jtheque.events.utils.Event;
 import org.jtheque.modules.able.IModuleService;
 import org.jtheque.modules.able.Module;
+import org.jtheque.modules.able.ModuleState;
 import org.jtheque.modules.impl.InstallationResult;
 import org.jtheque.resources.able.IResourceService;
 import org.jtheque.resources.impl.FileDescriptor;
@@ -39,7 +40,6 @@ import org.jtheque.utils.io.FileException;
 import org.jtheque.utils.io.FileUtils;
 import org.jtheque.utils.io.WebUtils;
 
-import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleException;
 import org.slf4j.LoggerFactory;
 
@@ -79,8 +79,6 @@ public final class UpdateService implements IUpdateService {
     private IResourceService resourceService;
 
     private final IVersionsLoader versionsLoader;
-
-    private BundleContext bundleContext;
 
     /**
      * Create a new UpdateService.
@@ -159,8 +157,20 @@ public final class UpdateService implements IUpdateService {
                 Module module = (Module) object;
 
                 try {
+                    boolean restart = false;
+
+                    if (module.getState() == ModuleState.STARTED) {
+                        moduleService.stopModule(module);
+
+                        restart = true;
+                    }
+
                     module.getBundle().update(FileUtils.asInputStream(
                             new File(core.getFolders().getModulesFolder(), onlineVersion.getModuleFile())));
+
+                    if (restart) {
+                        moduleService.startModule(module);
+                    }
                 } catch (BundleException e) {
                     LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
                 } catch (FileNotFoundException e) {

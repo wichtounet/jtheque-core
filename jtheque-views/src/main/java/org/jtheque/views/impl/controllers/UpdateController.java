@@ -3,9 +3,6 @@ package org.jtheque.views.impl.controllers;
 import org.jtheque.ui.utils.AbstractController;
 import org.jtheque.update.able.IUpdateService;
 import org.jtheque.utils.ui.SimpleSwingWorker;
-import org.jtheque.utils.ui.SwingUtils;
-import org.jtheque.utils.ui.edt.SimpleTask;
-import org.jtheque.views.able.windows.IMessageView;
 import org.jtheque.views.able.windows.IUpdateView;
 
 import javax.annotation.Resource;
@@ -62,6 +59,8 @@ public class UpdateController extends AbstractController {
             } else if (updateView.getMode() == IUpdateView.Mode.MODULE) {
                 updateService.update(updateView.getModule(), updateView.getSelectedVersion());
             }
+
+            updateView.closeDown();
         }
 
         @Override
