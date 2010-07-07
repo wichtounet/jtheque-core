@@ -18,6 +18,11 @@ import org.osgi.framework.Bundle;
  * limitations under the License.
  */
 
+/**
+ * A library to have installed when running a module.
+ *
+ * @author Baptiste Wicht
+ */
 public class Library {
     private String id;
     private Bundle bundle;

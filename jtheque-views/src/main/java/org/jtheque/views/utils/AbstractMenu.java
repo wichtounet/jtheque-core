@@ -9,7 +9,6 @@ import org.jtheque.i18n.able.Internationalizable;
 import org.jtheque.ui.able.IController;
 import org.jtheque.ui.able.IView;
 import org.jtheque.ui.utils.actions.ActionFactory;
-import org.jtheque.ui.utils.actions.ControllerAction;
 import org.jtheque.ui.utils.actions.JThequeAction;
 import org.jtheque.utils.collections.CollectionUtils;
 
@@ -228,6 +227,16 @@ public abstract class AbstractMenu implements Menu {
         return f;
     }
 
+    /**
+     * Create a separated (it seems with a line separator) feature.
+     *
+     * @param position    The position of the feature.
+     * @param action      The action.
+     * @param image       The image name.
+     * @param accelerator The menu accelerator.
+     *
+     * @return The created separated feature.
+     */
     protected IFeature createSeparatedSubFeature(int position, JThequeAction action, String image, int accelerator) {
         IFeature feature = createSeparatedSubFeature(position, action, image);
 
@@ -324,7 +333,7 @@ public abstract class AbstractMenu implements Menu {
     /**
      * Create an action linked to the controller.
      *
-     * @param key The i18n key of the action.
+     * @param key        The i18n key of the action.
      * @param controller The controller to bind the action to.
      *
      * @return The JThequeAction for this controller binding.

@@ -38,6 +38,11 @@ import java.util.Map;
  * limitations under the License.
  */
 
+/**
+ * A controller for the module view.
+ *
+ * @author Baptiste Wicht
+ */
 public class ModuleController extends AbstractController {
     @Resource
     private IModuleView moduleView;
@@ -74,6 +79,9 @@ public class ModuleController extends AbstractController {
         return translations;
     }
 
+    /**
+     * Disable the selected module.
+     */
     private void disable() {
         Module module = moduleView.getSelectedModule();
 
@@ -87,6 +95,9 @@ public class ModuleController extends AbstractController {
         }
     }
 
+    /**
+     * Enable the selected module.
+     */
     private void enable() {
         Module module = moduleView.getSelectedModule();
 
@@ -102,6 +113,9 @@ public class ModuleController extends AbstractController {
         }
     }
 
+    /**
+     * Install a module from a file.
+     */
     private void installFile() {
         File file = SwingUtils.chooseFile(new SimpleFilter("JAR File (*.jar)", "jar"));
 
@@ -110,6 +124,9 @@ public class ModuleController extends AbstractController {
         }
     }
 
+    /**
+     * Install a module from an URL.
+     */
     private void installURL() {
         String url = uiUtils.askI18nText("dialogs.modules.install.url");
 
@@ -118,6 +135,9 @@ public class ModuleController extends AbstractController {
         }
     }
 
+    /**
+     * Uninstall the given module.
+     */
     private void uninstall() {
         Module module = moduleView.getSelectedModule();
 
@@ -137,6 +157,9 @@ public class ModuleController extends AbstractController {
         }
     }
 
+    /**
+     * Stop the selected module. 
+     */
     private void stop() {
         final Module module = moduleView.getSelectedModule();
 
@@ -149,6 +172,9 @@ public class ModuleController extends AbstractController {
         }
     }
 
+    /**
+     * Start the selected module.
+     */
     private void start() {
         Module module = moduleView.getSelectedModule();
 
@@ -167,6 +193,9 @@ public class ModuleController extends AbstractController {
         }
     }
 
+    /**
+     * Update the selected module.
+     */
     private void updateModule() {
         final Module module = moduleView.getSelectedModule();
 
@@ -206,9 +235,19 @@ public class ModuleController extends AbstractController {
         }
     }
 
+    /**
+     * A simple swing worker to start the module.
+     *
+     * @author Baptiste Wicht
+     */
     private class StartModuleWorker extends ModuleWorker implements CollectionListener {
         private final Module module;
 
+        /**
+         * Construct a new StartModuleWorker for the given module.
+         *
+         * @param module The module to start.
+         */
         private StartModuleWorker(Module module) {
             this.module = module;
         }
@@ -230,9 +269,19 @@ public class ModuleController extends AbstractController {
         }
     }
 
+    /**
+     * A simple swing worker to stop the module.
+     *
+     * @author Baptiste Wicht
+     */
     private class StopModuleWorker extends ModuleWorker {
         private final Module module;
 
+        /**
+         * Construct a new StopModuleWorker for the given module.
+         *
+         * @param module The module to start.
+         */
         private StopModuleWorker(Module module) {
             this.module = module;
         }
@@ -243,6 +292,11 @@ public class ModuleController extends AbstractController {
         }
     }
 
+    /**
+     * A simple swing worker to update the core.
+     *
+     * @author Baptiste Wicht
+     */
     private class UpdateCoreWorker extends ModuleWorker {
         @Override
         protected void doWork() {
@@ -250,9 +304,19 @@ public class ModuleController extends AbstractController {
         }
     }
 
+    /**
+     * A simple swing worker to update a module. 
+     *
+     * @author Baptiste Wicht
+     */
     private class UpdateModuleWorker extends ModuleWorker {
         private final Module module;
 
+        /**
+         * Construct a new UpdateModuleWorker for the given module.
+         *
+         * @param module The module to start.
+         */
         private UpdateModuleWorker(Module module) {
             this.module = module;
         }

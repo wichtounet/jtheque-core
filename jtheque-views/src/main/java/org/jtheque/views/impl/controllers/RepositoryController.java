@@ -45,6 +45,11 @@ import java.util.Map;
  * limitations under the License.
  */
 
+/**
+ * The controller for the repository view.
+ *
+ * @author Baptiste Wicht
+ */
 public class RepositoryController extends AbstractController {
     @Resource
     private IRepositoryView repositoryView;
@@ -68,10 +73,16 @@ public class RepositoryController extends AbstractController {
         return translations;
     }
 
+    /**
+     * Expand the selected module.
+     */
     private void expand() {
         repositoryView.expandSelectedModule();
     }
 
+    /**
+     * install the selected module.
+     */
     private void install() {
         IModuleDescription description = views.getRepositoryView().getSelectedModule();
 

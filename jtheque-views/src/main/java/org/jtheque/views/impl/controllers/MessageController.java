@@ -33,10 +33,16 @@ public class MessageController extends AbstractController {
     @Resource
     private IMessageView messageView;
 
+    /**
+     * Open the next message.
+     */
     private void next() {
         messageView.next();
     }
 
+    /**
+     * Open the previous message. 
+     */
     private void previous() {
         messageView.previous();
     }

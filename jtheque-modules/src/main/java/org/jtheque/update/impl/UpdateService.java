@@ -136,6 +136,11 @@ public final class UpdateService implements IUpdateService {
         return result;
     }
 
+    /**
+     * Add a not reachable error to the errors.
+     *
+     * @param url the not reachable URL.
+     */
     private void addNotReachableError(String url) {
         if (WebUtils.isInternetReachable()) {
             errorService.addInternationalizedError(
@@ -194,6 +199,13 @@ public final class UpdateService implements IUpdateService {
         }
     }
 
+    /**
+     * Indicate if the descriptor is not reachable.
+     *
+     * @param object The versionable object to test for descriptor's reachability.
+     *
+     * @return true if the descriptor is not reachable else false.
+     */
     private boolean isDescriptorNotReachable(Versionable object) {
         if (WebUtils.isURLReachable(object.getDescriptorURL())) {
             return false;
@@ -207,6 +219,11 @@ public final class UpdateService implements IUpdateService {
         return true;
     }
 
+    /**
+     * Apply the module version.
+     *
+     * @param moduleVersion The module version to apply.
+     */
     private void applyModuleVersion(ModuleVersion moduleVersion) {
         try {
             if (StringUtils.isNotEmpty(moduleVersion.getModuleFile())) {
@@ -221,6 +238,11 @@ public final class UpdateService implements IUpdateService {
         }
     }
 
+    /**
+     * Download the resources.
+     *
+     * @param resources The resources to download.
+     */
     private void downloadResources(Iterable<FileDescriptor> resources) {
         for (FileDescriptor descriptor : resources) {
             if (!resourceService.isInstalled(descriptor.getName(), descriptor.getVersion())) {

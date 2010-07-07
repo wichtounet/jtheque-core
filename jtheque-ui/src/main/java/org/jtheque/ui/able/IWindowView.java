@@ -47,5 +47,10 @@ public interface IWindowView extends IView {
      */
     Action getControllerAction(String key);
 
+    /**
+     * Return the window state.
+     *
+     * @return The window state. 
+     */
     IWindowState getWindowState();
 }

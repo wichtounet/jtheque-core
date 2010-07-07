@@ -6,6 +6,11 @@ import org.jtheque.utils.bean.Version;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A resource implementation.
+ *
+ * @author Baptiste Wicht
+ */
 public class Resource implements IResource {
     private final String id;
     private final List<String> files;
@@ -15,6 +20,11 @@ public class Resource implements IResource {
     private String url;
     private boolean installed;
 
+    /**
+     * Construct a new Resource.
+     *
+     * @param id The id of the resource.
+     */
     public Resource(String id) {
         super();
 
@@ -29,10 +39,20 @@ public class Resource implements IResource {
         return id;
     }
 
-    public void addFile(String text) {
-        files.add(text);
+    /**
+     * Add a file to the resource.
+     *
+     * @param name The name of the file.
+     */
+    public void addFile(String name) {
+        files.add(name);
     }
 
+    /**
+     * Add a library to the resource.
+     *
+     * @param library The library to add.
+     */
     public void addLibrary(Library library) {
         libraries.add(library);
     }
@@ -52,6 +72,11 @@ public class Resource implements IResource {
         return version;
     }
 
+    /**
+     * Set the version of the of the resource.
+     *
+     * @param version The version of the resource. 
+     */
     public void setVersion(Version version) {
         this.version = version;
     }
@@ -61,6 +86,11 @@ public class Resource implements IResource {
         return url;
     }
 
+    /**
+     * Set the URL of the resource.
+     *
+     * @param url The url of the resource. 
+     */
     public void setUrl(String url) {
         this.url = url;
     }

@@ -20,6 +20,11 @@ import java.awt.event.ActionEvent;
  * limitations under the License.
  */
 
+/**
+ * A controller action. It's an action bound to a controller.
+ *
+ * @author Baptiste Wicht
+ */
 public class ControllerAction extends JThequeAction {
     private final String key;
     private final transient IController controller;

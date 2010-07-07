@@ -252,14 +252,18 @@ public final class ModuleService implements IModuleService {
         LoggerFactory.getLogger(getClass()).debug("Module {} started", module.getBundle().getSymbolicName());
     }
 
-
-    private void loadImageResources(Module container) {
-        for (ImageResource imageResource : container.getResources().getImageResources()) {
+    /**
+     * Load the image resources of the module.
+     *
+     * @param module The module to load the image resources for.
+     */
+    private void loadImageResources(Module module) {
+        for (ImageResource imageResource : module.getResources().getImageResources()) {
             String resource = imageResource.getResource();
 
             if (resource.startsWith("classpath:")) {
                 imageService.registerResource(imageResource.getName(),
-                        new UrlResource(container.getBundle().getResource(resource.substring(10))));
+                        new UrlResource(module.getBundle().getResource(resource.substring(10))));
             }
         }
     }
@@ -626,6 +630,13 @@ public final class ModuleService implements IModuleService {
         return true;
     }
 
+    /**
+     * Indicate if all the dependencies of the given module are satisfied.
+     *
+     * @param module The module to test.
+     *
+     * @return true if the all the dependencies of the module are satisfied else false.
+     */
     private boolean areAllDependenciesSatisfiedAndActive(Module module) {
         if (StringUtils.isEmpty(module.getDependencies())) {
             return true;

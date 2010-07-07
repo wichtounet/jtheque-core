@@ -1,11 +1,18 @@
 package org.jtheque.ui.able;
 
 /**
- * Created by IntelliJ IDEA. User: wichtounet Date: Jul 6, 2010 Time: 1:08:31 PM To change this template use File |
- * Settings | File Templates.
+ * The state of a JTheque Window.
+ *
+ * @author Baptiste Wicht
  */
 public interface IWindowState {
+    /**
+     * Make the window waiting.
+     */
     void startWait();
 
+    /**
+     * Make the window stop waiting. 
+     */
     void stopWait();
 }

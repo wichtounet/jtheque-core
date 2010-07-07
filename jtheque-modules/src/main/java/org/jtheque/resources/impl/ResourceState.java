@@ -9,7 +9,6 @@ import org.jtheque.xml.utils.Node;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -27,16 +26,20 @@ import java.util.List;
  * limitations under the License.
  */
 
+/**
+ * The JTheque state to keep the installed resources in the application.
+ *
+ * @author Baptiste Wicht
+ */
 @State(id = "jtheque-resources", delegated = true)
 public class ResourceState {
-    private final List<IResource> resources;
+    private final Collection<IResource> resources = new ArrayList<IResource>(10);
 
-    public ResourceState() {
-        super();
-
-        resources = new ArrayList<IResource>(10);
-    }
-
+    /**
+     * Delegate the load of the state.
+     *
+     * @param nodes The nodes to load.
+     */
     @Load
     public void delegateLoad(Iterable<Node> nodes) {
         for (Node node : nodes) {
@@ -46,6 +49,11 @@ public class ResourceState {
         }
     }
 
+    /**
+     * Delegate the save of the state.
+     *
+     * @return The nodes of the state.
+     */
     @Save
     public Collection<Node> delegateSave() {
         Collection<Node> states = new ArrayList<Node>(25);
@@ -57,14 +65,31 @@ public class ResourceState {
         return states;
     }
 
+    /**
+     * Add a resource to the state.
+     *
+     * @param resource The resource to add to the state.
+     */
     public void addResource(IResource resource) {
         resources.add(resource);
     }
 
+    /**
+     * Return all the resources of the state.
+     *
+     * @return All the resources of the state.
+     */
     public Collection<IResource> getResources() {
         return resources;
     }
 
+    /**
+     * Convert the given node to the IResource.
+     *
+     * @param node The node to convert.
+     *
+     * @return The corresponding IResource.
+     */
     private static IResource convertToResource(Node node) {
         String id = node.getAttributeValue("id");
         String url = node.getAttributeValue("url");
@@ -90,7 +115,7 @@ public class ResourceState {
      *
      * @param resource The resource to convert.
      *
-     * @return The Node corresponding to the resource. 
+     * @return The Node corresponding to the resource.
      */
     private static Node convertToNode(IResource resource) {
         Node node = new Node("resource");

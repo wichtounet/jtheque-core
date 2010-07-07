@@ -18,15 +18,30 @@ import org.jtheque.utils.bean.Version;
  * limitations under the License.
  */
 
+/**
+ * A Module version.
+ *
+ * @author Baptiste Wicht
+ */
 public class ModuleVersion extends ResourceVersion {
     private Version coreVersion;
     private String moduleFile;
     private String moduleURL;
 
+    /**
+     * Create a new ModuleVersion.
+     *
+     * @param version The version.
+     */
     public ModuleVersion(Version version) {
         super(version);
     }
 
+    /**
+     * Return the version of the core this version of the module needs.
+     *
+     * @return The Version of the core needed to run this module version.
+     */
     public Version getCoreVersion() {
         return coreVersion;
     }
@@ -49,14 +64,29 @@ public class ModuleVersion extends ResourceVersion {
         return moduleFile;
     }
 
+    /**
+     * Set the module file. It's the name of the module jar file.
+     *
+     * @param moduleFile The module file.
+     */
     public void setModuleFile(String moduleFile) {
         this.moduleFile = moduleFile;
     }
 
+    /**
+     * Return the URL to the module file.
+     *
+     * @return The URL to the module file.
+     */
     public String getModuleURL() {
         return moduleURL;
     }
 
+    /**
+     * Set the module URL.
+     *
+     * @param moduleURL The module URL.
+     */
     public void setModuleURL(String moduleURL) {
         this.moduleURL = moduleURL;
     }

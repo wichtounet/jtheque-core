@@ -38,6 +38,11 @@ import java.util.Map;
  * limitations under the License.
  */
 
+/**
+ * The global controller.
+ *
+ * @author Baptiste Wicht
+ */
 public class GeneralController extends AbstractController {
     @Resource
     private IUIUtils uiUtils;
@@ -60,6 +65,9 @@ public class GeneralController extends AbstractController {
     @Resource
     private ICore core;
 
+    /**
+     * Backup the database.
+     */
     private void backup() {
         final boolean yes = uiUtils.askI18nUserForConfirmation(
                 "dialogs.confirm.backup", "dialogs.confirm.backup.title");
@@ -73,6 +81,9 @@ public class GeneralController extends AbstractController {
         }
     }
 
+    /**
+     * Restore the database. 
+     */
     private void restore() {
         final File file = SwingUtils.chooseFile(new SimpleFilter("XML(*.xml)", ".xml"));
 
@@ -82,14 +93,23 @@ public class GeneralController extends AbstractController {
         new RestoreWorker(yes, file).start();
     }
 
+    /**
+     * Open the help.
+     */
     private void help() {
         DesktopUtils.browse(ICore.HELP_URL);
     }
 
+    /**
+     * Send a request for a Bug.
+     */
     private void bug() {
         DesktopUtils.browse(ICore.HELP_URL);
     }
 
+    /**
+     * Give an improvement proposal.
+     */
     private void improvement() {
         DesktopUtils.browse(ICore.HELP_URL); //TODO REview that
     }

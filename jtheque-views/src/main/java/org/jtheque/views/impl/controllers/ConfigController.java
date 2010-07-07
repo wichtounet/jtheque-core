@@ -33,12 +33,18 @@ public class ConfigController extends AbstractController {
     @Resource
     private IConfigView configView;
 
+    /**
+     * Apply the changes.
+     */
     private void apply(){
         if (configView.validateContent()) {
             configView.getSelectedPanelConfig().apply();
         }
     }
 
+    /**
+     * Apply the changes and close the view.
+     */
     private void applyClose(){
         if (configView.validateContent()) {
             configView.getSelectedPanelConfig().apply();
@@ -46,6 +52,9 @@ public class ConfigController extends AbstractController {
         }
     }
 
+    /**
+     * Cancel the changes. 
+     */
     private void cancel(){
         configView.getSelectedPanelConfig().cancel();
         configView.closeDown();

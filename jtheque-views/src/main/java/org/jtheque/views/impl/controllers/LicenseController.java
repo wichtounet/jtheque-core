@@ -53,6 +53,9 @@ public class LicenseController extends AbstractController {
     @Resource
     private ILicenseView licenseView;
 
+    /**
+     * Print the license.
+     */
     private void print() {
         new PrintWorker().start();
     }
@@ -66,6 +69,12 @@ public class LicenseController extends AbstractController {
         return translations;
     }
 
+    /**
+     * A simple swing worker to print the license and make the license view waiting during
+     * the print operation.
+     *
+     * @author Baptiste Wicht
+     */
     private final class PrintWorker extends SimpleSwingWorker {
         @Override
         protected void before() {

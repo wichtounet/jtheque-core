@@ -49,8 +49,9 @@ import java.util.Map;
  */
 
 /**
- * Created by IntelliJ IDEA. User: wichtounet Date: Jul 6, 2010 Time: 10:49:45 AM To change this template use File |
- * Settings | File Templates.
+ * A Window state implementation. This state manage the state of Dialogs and Frames.
+ *
+ * @author Baptiste Wicht
  */
 public class WindowState implements IWindowState {
     private String titleKey;
@@ -70,13 +71,21 @@ public class WindowState implements IWindowState {
 
     private boolean builded;
 
+    /**
+     * Construct a new WindowState.
+     *
+     * @param window The window to manage.
+     */
     public WindowState(Window window) {
         super();
 
         this.window = window;
     }
 
-    public void build(){
+    /**
+     * Build the state.
+     */
+    public void build() {
         content = new JXLayer<JComponent>();
 
         window.setIconImage(getDefaultWindowIcon());
@@ -131,10 +140,20 @@ public class WindowState implements IWindowState {
         }
     }
 
+    /**
+     * Return the content pane of the view.
+     *
+     * @return The content pane of the view.
+     */
     public JXLayer<JComponent> getContent() {
         return content;
     }
 
+    /**
+     * Set a glass pane over the view.
+     *
+     * @param glassPane The glass pane to set over the view.
+     */
     public void setGlassPane(final Component glassPane) {
         SwingUtils.inEdt(new Runnable() {
             @Override
@@ -159,13 +178,16 @@ public class WindowState implements IWindowState {
             }
         });
     }
-    
+
+    /**
+     * Display the view.
+     */
     public void display() {
         if (!builded) {
             SwingUtils.inEdt(new Runnable() {
                 @Override
                 public void run() {
-                    ((ManagedWindow)window).build();
+                    ((ManagedWindow) window).build();
                 }
             });
         }
@@ -178,34 +200,74 @@ public class WindowState implements IWindowState {
         });
     }
 
+    /**
+     * Return the controller of the view.
+     *
+     * @return The controller of the view.
+     */
     public IController getController() {
         return controller;
     }
 
+    /**
+     * Set the controller of the view.
+     *
+     * @param controller The controller of the view.
+     */
     public void setController(IController controller) {
         this.controller = controller;
     }
 
+    /**
+     * Return the bundle context.
+     *
+     * @return The bundle context of the view.
+     */
     public BundleContext getBundleContext() {
         return bundleContext;
     }
 
+    /**
+     * Return the bundle context.
+     *
+     * @param bundleContext The bundle context.
+     */
     public void setBundleContext(BundleContext bundleContext) {
         this.bundleContext = bundleContext;
     }
 
+    /**
+     * Return the application context.
+     *
+     * @return The application context.
+     */
     public ApplicationContext getApplicationContext() {
         return applicationContext;
     }
 
+    /**
+     * Return the application context.
+     *
+     * @param applicationContext The application context.
+     */
     public void setApplicationContext(ApplicationContext applicationContext) {
         this.applicationContext = applicationContext;
     }
 
+    /**
+     * Add an internationalizable to the container.
+     *
+     * @param internationalizable The internationalizable to add.
+     */
     public void addInternationalizable(Internationalizable internationalizable) {
         internationalizables.add(internationalizable);
     }
 
+    /**
+     * Refresh the title of the window.
+     *
+     * @param languageService The language service to use for i18n.
+     */
     public void refreshText(ILanguageService languageService) {
         if (StringUtils.isNotEmpty(titleKey)) {
             setTitleKey(titleKey, titleReplaces);
@@ -216,6 +278,12 @@ public class WindowState implements IWindowState {
         }
     }
 
+    /**
+     * Set the title key of the window.
+     *
+     * @param key      The key of the title.
+     * @param replaces The replaces of the title.
+     */
     public void setTitleKey(String key, Object... replaces) {
         titleKey = key;
 
@@ -223,7 +291,7 @@ public class WindowState implements IWindowState {
             titleReplaces = ArrayUtils.copyOf(replaces);
         }
 
-        ((ManagedWindow)window).setTitle(getMessage(key, replaces));
+        ((ManagedWindow) window).setTitle(getMessage(key, replaces));
     }
 
     /**
@@ -249,16 +317,27 @@ public class WindowState implements IWindowState {
         return getService(ILanguageService.class).getMessage(key, replaces);
     }
 
+    /**
+     * Add a constraint to the view.
+     *
+     * @param field      The field to validate.
+     * @param constraint The constraint to add to the view.
+     */
     public void addConstraint(Object field, Constraint constraint) {
         constraintCache.put(field, constraint);
 
         constraint.configure(field);
     }
 
+    /**
+     * Validate the content of the view.
+     *
+     * @return true if the view content is valid else false.
+     */
     public boolean validateContent() {
         Collection<IError> errors = new ArrayList<IError>(5);
 
-        ((ManagedWindow)window).validate(errors);
+        ((ManagedWindow) window).validate(errors);
 
         IErrorService errorService = getService(IErrorService.class);
 
@@ -269,6 +348,11 @@ public class WindowState implements IWindowState {
         return errors.isEmpty();
     }
 
+    /**
+     * Validate the view using the setted constraints.
+     *
+     * @param errors The errors collection to fill.
+     */
     public void validate(Collection<IError> errors) {
         for (Map.Entry<Object, Constraint> constraint : constraintCache.entrySet()) {
             constraint.getValue().validate(constraint.getKey(), errors);

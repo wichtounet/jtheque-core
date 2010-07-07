@@ -39,6 +39,12 @@ public class SwingModule implements ApplicationContextAware, SwingLoader, Bundle
     private ApplicationContext applicationContext;
     private final String id;
 
+    /**
+     * Construct a new SwingModule.
+     *
+     * @param id       The id of the module.
+     * @param edtBeans The beans to load in EDT.
+     */
     public SwingModule(String id, String[] edtBeans) {
         super();
 

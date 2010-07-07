@@ -48,6 +48,11 @@ public class ResourceVersion implements Comparable<ResourceVersion> {
     private final List<FileDescriptor> files = new ArrayList<FileDescriptor>(5);
     private final List<FileDescriptor> libraries = new ArrayList<FileDescriptor>(5);
 
+    /**
+     * Construct a new ResourceVersion.
+     *
+     * @param version The version of the resource.
+     */
     public ResourceVersion(Version version) {
         super();
 
@@ -72,11 +77,20 @@ public class ResourceVersion implements Comparable<ResourceVersion> {
         return version.getVersion();
     }
 
-
+    /**
+     * Return all the files of the resource.
+     *
+     * @return An Iterable on all the files of the resource.
+     */
     public Iterable<FileDescriptor> getFiles() {
         return Collections.unmodifiableList(files);
     }
 
+    /**
+     * Return all the libraries of the resource.
+     *
+     * @return An Iterable on all the libraries of the resource. 
+     */
     public Iterable<FileDescriptor> getLibraries() {
         return Collections.unmodifiableList(libraries);
     }

@@ -62,5 +62,10 @@ public abstract class AbstractController implements IController {
         }
     }
 
+    /**
+     * Return the translations of the i18n actions name to the method names.
+     *
+     * @return A Map containing all the translations of the controller. 
+     */
     protected abstract Map<String, String> getTranslations();
 }

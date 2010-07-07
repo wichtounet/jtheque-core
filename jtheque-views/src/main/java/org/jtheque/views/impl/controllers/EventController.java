@@ -24,6 +24,11 @@ import java.util.Map;
  * limitations under the License.
  */
 
+/**
+ * The controller of the event view.
+ *
+ * @author Baptiste Wicht
+ */
 public class EventController extends AbstractController {
     @Resource
     private IEventView eventView;

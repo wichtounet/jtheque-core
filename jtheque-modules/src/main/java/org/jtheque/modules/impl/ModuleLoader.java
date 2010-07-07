@@ -140,6 +140,12 @@ public final class ModuleLoader implements IModuleLoader, BundleContextAware {
         }
     }
 
+    /**
+     * Read the manifest informations of the given module.
+     *
+     * @param container The module.
+     * @param bundle    The bundle.
+     */
     private static void readManifestInformations(ModuleContainer container, Bundle bundle) {
         Dictionary<String, String> headers = bundle.getHeaders();
 

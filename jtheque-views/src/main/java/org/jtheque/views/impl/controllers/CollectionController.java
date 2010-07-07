@@ -28,6 +28,11 @@ import java.util.Map;
  * limitations under the License.
  */
 
+/**
+ * A controller for the collection view.
+ *
+ * @author Baptiste Wicht
+ */
 public class CollectionController extends AbstractController {
     @Resource
     private ICollectionView collectionView;
@@ -41,16 +46,25 @@ public class CollectionController extends AbstractController {
     @Resource
     private ICore core;
 
+    /**
+     * Cancel the current operation.
+     */
     private void cancel(){
         core.getLifeCycle().exit();
     }
 
+    /**
+     * Choose the collection.
+     */
     private void choose() {
         Response response = collectionsService.chooseCollection(collectionView.getCollection(), collectionView.getPassword(), false);
 
         displayResponse(response);
     }
 
+    /**
+     * Create a collection.
+     */
     private void create() {
         Response response = collectionsService.chooseCollection(collectionView.getCollection(), collectionView.getPassword(), true);
 

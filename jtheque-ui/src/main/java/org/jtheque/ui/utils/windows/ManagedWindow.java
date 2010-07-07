@@ -20,12 +20,22 @@ import java.util.Collection;
  * limitations under the License.
  */
 
+/**
+ * A JTheque managed window.
+ *
+ * @author Baptiste Wicht
+ */
 public interface ManagedWindow {
     /**
      * Build the view.
      */
     void build();
 
+    /**
+     * Set the title of the window.
+     *
+     * @param title The title of the window. 
+     */
     void setTitle(String title);
 
     /**

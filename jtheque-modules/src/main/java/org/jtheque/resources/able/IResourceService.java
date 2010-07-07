@@ -27,6 +27,11 @@ import java.util.List;
  * @author Baptiste Wicht
  */
 public interface IResourceService {
+    /**
+     * Add a resource.
+     *
+     * @param resource The resource to add to the service. 
+     */
     void addResource(Resource resource);
 
     /**
