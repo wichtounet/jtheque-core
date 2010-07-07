@@ -27,7 +27,6 @@ import org.jtheque.views.able.windows.IEventView;
 import org.jtheque.views.able.windows.ILicenseView;
 import org.jtheque.views.able.windows.IMainView;
 import org.jtheque.views.able.windows.IMessageView;
-import org.jtheque.views.able.windows.IUpdateView;
 
 import java.util.Collection;
 
@@ -99,13 +98,6 @@ public interface IViews {
      * @return The repository view.
      */
     IRepositoryView getRepositoryView();
-
-    /**
-     * Return the update view.
-     *
-     * @return The update view.
-     */
-    IUpdateView getUpdateView();
 
     /**
      * Return the error view.

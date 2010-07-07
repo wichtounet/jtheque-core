@@ -14,9 +14,7 @@ import org.jtheque.utils.io.SimpleFilter;
 import org.jtheque.utils.ui.SimpleSwingWorker;
 import org.jtheque.utils.ui.SwingUtils;
 import org.jtheque.views.able.IViewService;
-import org.jtheque.views.able.IViews;
 import org.jtheque.views.able.panel.IModuleView;
-import org.jtheque.views.able.windows.IUpdateView;
 
 import javax.annotation.Resource;
 
@@ -55,9 +53,6 @@ public class ModuleController extends AbstractController {
 
     @Resource
     private IViewService viewService;
-
-    @Resource
-    private IViews views;
 
     @Resource
     private IUpdateService updateService;
@@ -175,31 +170,21 @@ public class ModuleController extends AbstractController {
     private void updateModule() {
         final Module module = moduleView.getSelectedModule();
 
-        update(module, updateService.isUpToDate(module), "module");
+        if (updateService.isUpToDate(module)) {
+            uiUtils.displayI18nText("message.update.no.version");
+        } else {
+            new UpdateModuleWorker(module).start();
+        }
     }
 
     /**
      * Update the core.
      */
-    private void updateCore() {
-        update(null, updateService.isCurrentVersionUpToDate(), "kernel");
-    }
-
-    /**
-     * Update the given object.
-     *
-     * @param object The object to update.
-     * @param upToDate A boolean tag indicating if the object is up to date or not.
-     * @param message The message to send to the update view.
-     */
-    private void update(Object object, boolean upToDate, String message) {
-        IUpdateView updateView = views.getUpdateView();
-
-        if (upToDate) {
+    private void updateCore(){
+        if (updateService.isCurrentVersionUpToDate()) {
             uiUtils.displayI18nText("message.update.no.version");
         } else {
-            updateView.sendMessage(message, object);
-            updateView.display();
+            new UpdateCoreWorker().start();
         }
     }
 
@@ -255,6 +240,26 @@ public class ModuleController extends AbstractController {
         @Override
         protected void doWork() {
             moduleService.stopModule(module);
+        }
+    }
+
+    private class UpdateCoreWorker extends ModuleWorker {
+        @Override
+        protected void doWork() {
+            updateService.updateCore(updateService.getMostRecentCoreVersion());
+        }
+    }
+
+    private class UpdateModuleWorker extends ModuleWorker {
+        private final Module module;
+
+        private UpdateModuleWorker(Module module) {
+            this.module = module;
+        }
+
+        @Override
+        protected void doWork() {
+            updateService.updateToMostRecentVersion(module);
         }
     }
 }

@@ -64,10 +64,6 @@
     <bean id="repositoryView" class="org.jtheque.views.impl.windows.RepositoryView" lazy-init="true">
         <property name="controller" ref="repositoryController"/>
     </bean>
-
-    <bean id="updateView" class="org.jtheque.views.impl.windows.UpdateView" lazy-init="true">
-        <property name="controller" ref="updateController"/>
-    </bean>
     
     <bean id="licenseView" class="org.jtheque.views.impl.windows.LicenseView" lazy-init="true">
         <property name="controller" ref="licenseController"/>
@@ -81,7 +77,6 @@
     <bean id="messageController" class="org.jtheque.views.impl.controllers.MessageController" lazy-init="true"/>
     <bean id="configController" class="org.jtheque.views.impl.controllers.ConfigController" lazy-init="true"/>
     <bean id="eventController" class="org.jtheque.views.impl.controllers.EventController" lazy-init="true"/>
-    <bean id="updateController" class="org.jtheque.views.impl.controllers.UpdateController" lazy-init="true"/>
     <bean id="generalController" class="org.jtheque.views.impl.controllers.GeneralController" lazy-init="true"/>
     <bean id="repositoryController" class="org.jtheque.views.impl.controllers.RepositoryController" lazy-init="true"/>
     <bean id="licenseController" class="org.jtheque.views.impl.controllers.LicenseController" lazy-init="true"/>

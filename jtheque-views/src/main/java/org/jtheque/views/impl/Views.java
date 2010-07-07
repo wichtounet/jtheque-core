@@ -35,7 +35,6 @@ import org.jtheque.views.able.windows.IEventView;
 import org.jtheque.views.able.windows.ILicenseView;
 import org.jtheque.views.able.windows.IMainView;
 import org.jtheque.views.able.windows.IMessageView;
-import org.jtheque.views.able.windows.IUpdateView;
 import org.jtheque.views.impl.components.config.JPanelConfigAppearance;
 import org.jtheque.views.impl.components.config.JPanelConfigNetwork;
 import org.jtheque.views.impl.components.config.JPanelConfigOthers;
@@ -62,7 +61,6 @@ public final class Views implements IViews, ApplicationContextAware, ModuleListe
     private SwingSpringProxy<IMessageView> messageView;
     private SwingSpringProxy<IEventView> eventView;
     private SwingSpringProxy<IRepositoryView> repositoryView;
-    private SwingSpringProxy<IUpdateView> updateView;
     private SwingSpringProxy<IErrorView> errorView;
     private SwingSpringProxy<IMainView> mainView;
 
@@ -145,11 +143,6 @@ public final class Views implements IViews, ApplicationContextAware, ModuleListe
     }
 
     @Override
-    public IUpdateView getUpdateView() {
-        return updateView.get();
-    }
-
-    @Override
     public void setApplicationContext(ApplicationContext applicationContext) {
         this.applicationContext = applicationContext;
 
@@ -160,7 +153,6 @@ public final class Views implements IViews, ApplicationContextAware, ModuleListe
         messageView = new SwingSpringProxy<IMessageView>(IMessageView.class, applicationContext);
         eventView = new SwingSpringProxy<IEventView>(IEventView.class, applicationContext);
         repositoryView = new SwingSpringProxy<IRepositoryView>(IRepositoryView.class, applicationContext);
-        updateView = new SwingSpringProxy<IUpdateView>(IUpdateView.class, applicationContext);
         errorView = new SwingSpringProxy<IErrorView>(IErrorView.class, applicationContext);
 
         //Pre init the view
