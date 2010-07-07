@@ -2,8 +2,6 @@ package org.jtheque.ui.utils;
 
 import org.jtheque.ui.able.IController;
 
-import org.slf4j.LoggerFactory;
-
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
@@ -26,8 +24,8 @@ import java.util.Map;
  */
 
 /**
- * An abstract controller. It handles all the request, translate them into method name and
- * then execute the method using Reflection.
+ * An abstract controller. It handles all the request, translate them into method name and then execute the method using
+ * Reflection.
  *
  * @author Baptiste Wicht
  */
@@ -37,35 +35,59 @@ public abstract class AbstractController implements IController {
 
     @Override
     public void handleAction(String actionName) {
-        if(translations.isEmpty()){
+        if (translations.isEmpty()) {
             translations.putAll(getTranslations());
         }
 
-        String action = translations.get(actionName);
+        Method method = getCachedMethod(actionName);
 
-        if (!methodCache.containsKey(action)) {
-            try {
-                Method method = getClass().getDeclaredMethod(action);
-                method.setAccessible(true);
-                methodCache.put(action, method);
-            } catch (NoSuchMethodException e) {
-                LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
-            }
+        if (method == null) {
+            throw new RuntimeException("There is no method for the action (" + actionName + ')');
         }
 
         try {
-            methodCache.get(action).invoke(this);
+            method.invoke(this);
         } catch (InvocationTargetException e) {
-            LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
+            throw new RuntimeException("Unable to invoke the method (" + method + ')', e);
         } catch (IllegalAccessException e) {
-            LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
+            throw new RuntimeException("Unable to invoke the method (" + method + ')', e);
         }
+    }
+
+    /**
+     * Return the cached method corresponding the i18n action name. The methods are
+     * put in cache for later usages. 
+     *
+     * @param actionName The i18n action name.
+     *
+     * @return The method corresponding to the i18n action name.
+     */
+    private Method getCachedMethod(String actionName) {
+        Method method;
+        String action = translations.get(actionName);
+
+        if (!translations.containsKey(actionName)) {
+            throw new RuntimeException("There is no translation for the action (" + actionName + ')');
+        }
+
+        if (methodCache.containsKey(action)) {
+            method = methodCache.get(action);
+        } else {
+            try {
+                method = getClass().getDeclaredMethod(action);
+                method.setAccessible(true);
+                methodCache.put(action, method);
+            } catch (NoSuchMethodException e) {
+                throw new RuntimeException("There is no method for the action (" + actionName + ')');
+            }
+        }
+        return method;
     }
 
     /**
      * Return the translations of the i18n actions name to the method names.
      *
-     * @return A Map containing all the translations of the controller. 
+     * @return A Map containing all the translations of the controller.
      */
     protected abstract Map<String, String> getTranslations();
 }
