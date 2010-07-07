@@ -1,12 +1,15 @@
 package org.jtheque.resources.impl;
 
+import org.jtheque.core.utils.SystemProperty;
 import org.jtheque.resources.able.IResource;
+import org.jtheque.resources.able.SimpleResource;
 import org.jtheque.states.able.Load;
 import org.jtheque.states.able.Save;
 import org.jtheque.states.able.State;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.xml.utils.Node;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -99,15 +102,28 @@ public class ResourceState {
         resource.setVersion(version);
         resource.setUrl(url);
 
+        File resourceFolder = getResourceFolder(resource);
+
         for (Node child : node.getChildrens()) {
             if ("file".equals(child.getName())) {
-                resource.addFile(child.getText());
+                resource.addSimpleResource(new FileResource(child.getText(), resourceFolder));
             } else if ("library".equals(child.getName())) {
-                resource.addLibrary(new Library(child.getText()));
+                resource.addSimpleResource(new LibraryResource(child.getText(), resourceFolder));
             }
         }
 
         return resource;
+    }
+
+    /**
+     * Return the resource folder for the given resource.
+     *
+     * @param resource The resource to get the folder for.
+     *
+     * @return The folder.
+     */
+    private static File getResourceFolder(IResource resource) {
+        return new File(SystemProperty.USER_DIR.get(), "resources/" + resource.getId() + '/' + resource.getVersion());
     }
 
     /**
@@ -124,12 +140,12 @@ public class ResourceState {
         node.setAttribute("url", resource.getUrl());
         node.setAttribute("version", resource.getVersion().getVersion());
 
-        for (String file : resource.getFiles()) {
-            node.addSimpleChildValue("file", file);
-        }
-
-        for (Library library : resource.getLibraries()) {
-            node.addSimpleChildValue("library", library.getId());
+        for (SimpleResource r : resource.getResources()) {
+            if(r instanceof LibraryResource){
+                node.addSimpleChildValue("library", r.getId());
+            } else {
+                node.addSimpleChildValue("file", r.getId());
+            }
         }
 
         return node;

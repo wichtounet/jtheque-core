@@ -41,8 +41,7 @@ import java.util.NoSuchElementException;
  *
  * @author Baptiste Wicht
  */
-public final class ResourceDescriptor {
-    private final String id;
+public final class ResourceDescriptor extends AbstractDescriptor {
     private final List<ResourceVersion> versions = new ArrayList<ResourceVersion>(5);
 
     /**
@@ -51,18 +50,8 @@ public final class ResourceDescriptor {
      * @param id The id of the resource.
      */
     public ResourceDescriptor(String id) {
-        super();
+        super(id);
 
-        this.id = id;
-    }
-
-    /**
-     * Return the id of the resource.
-     *
-     * @return The id of the resource.
-     */
-    public String getId() {
-        return id;
     }
 
     /**

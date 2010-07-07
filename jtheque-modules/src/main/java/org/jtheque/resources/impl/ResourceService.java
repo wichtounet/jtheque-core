@@ -7,6 +7,7 @@ import org.jtheque.events.able.IEventService;
 import org.jtheque.events.utils.Event;
 import org.jtheque.resources.able.IResource;
 import org.jtheque.resources.able.IResourceService;
+import org.jtheque.resources.able.SimpleResource;
 import org.jtheque.states.able.IStateService;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.collections.ArrayUtils;
@@ -14,9 +15,7 @@ import org.jtheque.utils.io.FileException;
 import org.jtheque.utils.io.WebUtils;
 import org.jtheque.utils.ui.SwingUtils;
 
-import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.BundleException;
 import org.slf4j.LoggerFactory;
 import org.springframework.osgi.context.BundleContextAware;
 
@@ -173,7 +172,7 @@ public class ResourceService implements IResourceService, BundleContextAware {
      *
      * @return The downloaded resource.
      */
-    private IResource downloadResource(String url, ResourceDescriptor descriptor, ResourceVersion resourceVersion) {
+    private IResource downloadResource(String url, AbstractDescriptor descriptor, ResourceVersion resourceVersion) {
         Resource resource = new Resource(descriptor.getId());
 
         resource.setVersion(resourceVersion.getVersion());
@@ -185,13 +184,13 @@ public class ResourceService implements IResourceService, BundleContextAware {
         for (FileDescriptor file : resourceVersion.getFiles()) {
             downloadFile(resourceFolder, file);
 
-            resource.getFiles().add(file.getName());
+            resource.getResources().add(new FileResource(file.getName(), resourceFolder));
         }
 
         for (FileDescriptor library : resourceVersion.getLibraries()) {
             downloadFile(resourceFolder, library);
 
-            resource.getLibraries().add(new Library(library.getName()));
+            resource.getResources().add(new LibraryResource(library.getName(), resourceFolder));
         }
 
         resources.add(resource);
@@ -220,16 +219,8 @@ public class ResourceService implements IResourceService, BundleContextAware {
     public void installResource(IResource resource) {
         SwingUtils.assertNotEDT("installResource(IResource)");
 
-        for (Library library : resource.getLibraries()) {
-            File folder = getResourceFolder(resource);
-
-            try {
-                Bundle bundle = bundleContext.installBundle("file:" + folder.getAbsolutePath() + '/' + library.getId());
-
-                library.setBundle(bundle);
-            } catch (BundleException e) {
-                LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
-            }
+        for (SimpleResource r : resource.getResources()) {
+            r.install(bundleContext);
         }
     }
 

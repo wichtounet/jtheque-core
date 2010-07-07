@@ -26,8 +26,7 @@ import java.util.NoSuchElementException;
  *
  * @author Baptiste Wicht
  */
-public class ModuleDescriptor {
-    private final String id;
+public class ModuleDescriptor extends AbstractDescriptor {
     private final List<ModuleVersion> moduleVersions = new ArrayList<ModuleVersion>(5);
 
     /**
@@ -36,18 +35,7 @@ public class ModuleDescriptor {
      * @param id The id of the module.
      */
     public ModuleDescriptor(String id) {
-        super();
-
-        this.id = id;
-    }
-
-    /**
-     * Return the id of the module.
-     *
-     * @return The id of the module.
-     */
-    public String getId() {
-        return id;
+        super(id);
     }
 
     /**

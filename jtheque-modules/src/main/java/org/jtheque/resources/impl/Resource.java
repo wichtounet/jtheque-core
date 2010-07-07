@@ -1,6 +1,7 @@
 package org.jtheque.resources.impl;
 
 import org.jtheque.resources.able.IResource;
+import org.jtheque.resources.able.SimpleResource;
 import org.jtheque.utils.bean.Version;
 
 import java.util.ArrayList;
@@ -13,8 +14,7 @@ import java.util.List;
  */
 public class Resource implements IResource {
     private final String id;
-    private final List<String> files;
-    private final List<Library> libraries;
+    private final List<SimpleResource> resources = new ArrayList<SimpleResource>(10);
 
     private Version version;
     private String url;
@@ -29,9 +29,6 @@ public class Resource implements IResource {
         super();
 
         this.id = id;
-
-        files = new ArrayList<String>(5);
-        libraries = new ArrayList<Library>(5);
     }
 
     @Override
@@ -39,32 +36,13 @@ public class Resource implements IResource {
         return id;
     }
 
-    /**
-     * Add a file to the resource.
-     *
-     * @param name The name of the file.
-     */
-    public void addFile(String name) {
-        files.add(name);
-    }
-
-    /**
-     * Add a library to the resource.
-     *
-     * @param library The library to add.
-     */
-    public void addLibrary(Library library) {
-        libraries.add(library);
+    public void addSimpleResource(SimpleResource simpleResource) {
+        resources.add(simpleResource);
     }
 
     @Override
-    public List<String> getFiles() {
-        return files;
-    }
-
-    @Override
-    public List<Library> getLibraries() {
-        return libraries;
+    public List<SimpleResource> getResources() {
+        return resources;
     }
 
     @Override

@@ -1,6 +1,5 @@
 package org.jtheque.resources.able;
 
-import org.jtheque.resources.impl.Library;
 import org.jtheque.utils.bean.Version;
 
 import java.util.List;
@@ -18,19 +17,7 @@ public interface IResource {
      */
     String getId();
 
-    /**
-     * Return all the files of the resources.
-     *
-     * @return A List containing all the files of the resource. 
-     */
-    List<String> getFiles();
-
-    /**
-     * Return all the libraries of the resource.
-     *
-     * @return A List containing all the libraries of the resource.
-     */
-    List<Library> getLibraries();
+    List<SimpleResource> getResources();
 
     /**
      * Return the version of the resource.
