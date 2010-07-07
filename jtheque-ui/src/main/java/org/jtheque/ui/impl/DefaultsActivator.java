@@ -9,7 +9,6 @@ import org.pushingpixels.substance.api.skin.SubstanceBusinessBlackSteelLookAndFe
 import org.pushingpixels.trident.TridentConfig;
 import org.pushingpixels.trident.interpolator.CorePropertyInterpolators;
 import org.pushingpixels.trident.swing.AWTPropertyInterpolators;
-import org.slf4j.LoggerFactory;
 
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -75,7 +74,7 @@ public class DefaultsActivator implements BundleActivator {
             try {
                 UIManager.setLookAndFeel(new SubstanceBusinessBlackSteelLookAndFeel());
             } catch (UnsupportedLookAndFeelException e) {
-                LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
+                throw new RuntimeException(e);
             }
 
             UIManager.getLookAndFeelDefaults().put("ClassLoader", SubstanceBusinessBlackSteelLookAndFeel.class.getClassLoader());
