@@ -246,13 +246,22 @@ public final class UpdateService implements IUpdateService {
         for (FileDescriptor newBundle : coreVersion.getBundles()) {
             File f = new File(bundlesFolder, newBundle.getName());
 
-            if (currentBundles.contains(f)) {
-                currentBundles.remove(f);
-            } else {
+            //Download the start file
+            if("start".equals(f.getName())){
                 try {
                     WebUtils.downloadFile(newBundle.getUrl(), f.getAbsolutePath());
                 } catch (FileException e) {
                     LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
+                }
+            } else {
+                if (currentBundles.contains(f)) {
+                    currentBundles.remove(f);
+                } else {
+                    try {
+                        WebUtils.downloadFile(newBundle.getUrl(), f.getAbsolutePath());
+                    } catch (FileException e) {
+                        LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
+                    }
                 }
             }
         }

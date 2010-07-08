@@ -209,6 +209,10 @@
                 <name>org.jtheque.trident-1.2.0.jar</name>
                 <url>http://jtheque.baptiste-wicht.com/files/core/2.1.0/org.jtheque.trident-1.2.0.jar</url>
             </bundle>
+            <bundle>
+                <name>start</name>
+                <url>http://jtheque.baptiste-wicht.com/files/core/2.1.0/start</url>
+            </bundle>
         </bundles>
     </version>
 </descriptor>

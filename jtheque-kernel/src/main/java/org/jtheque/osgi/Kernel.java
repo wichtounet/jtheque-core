@@ -3,8 +3,11 @@ package org.jtheque.osgi;
 import org.jtheque.osgi.server.BundleState;
 import org.jtheque.osgi.server.FelixServer;
 import org.jtheque.osgi.server.OSGiServer;
+import org.jtheque.utils.io.FileUtils;
 
 import java.io.Closeable;
+import java.io.File;
+import java.util.Collection;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -38,7 +41,7 @@ public final class Kernel implements Closeable {
         super();
 
         server = new FelixServer();
-        applicationManager = new ApplicationManager(server);
+        applicationManager = new ApplicationManager(this);
     }
 
     /**
@@ -51,8 +54,15 @@ public final class Kernel implements Closeable {
 
         Runtime.getRuntime().addShutdownHook(new StopServerHook());
 
-        launchSpring();
-        launchJTheque();
+        startBundles();
+    }
+
+    private void startBundles() {
+        Collection<String> bundles = FileUtils.getLinesOf(new File(System.getProperty("user.dir"), "bundles"));
+
+        for(String bundle : bundles){
+            startIfNotStarted(bundle);
+        }
     }
 
     @Override
@@ -60,39 +70,6 @@ public final class Kernel implements Closeable {
         applicationManager.closeInstance();
 
         server.stop();
-    }
-
-    /**
-     * Launch the spring bundles.
-     */
-    private void launchSpring() {
-        startIfNotStarted("org.springframework.osgi.extender");
-        startIfNotStarted("org.springframework.osgi.core");
-        startIfNotStarted("org.springframework.osgi.io");
-    }
-
-    /**
-     * Launch the JTheque bundles.
-     */
-    private void launchJTheque() {
-        startIfNotStarted("org.jtheque.spring.utils");
-        startIfNotStarted("org.jtheque.states");
-        startIfNotStarted("org.jtheque.events");
-        startIfNotStarted("org.jtheque.images");
-        startIfNotStarted("org.jtheque.core");
-        startIfNotStarted("org.jtheque.i18n");
-        startIfNotStarted("org.jtheque.ui");
-        startIfNotStarted("org.jtheque.errors");
-        startIfNotStarted("org.jtheque.schemas");
-        startIfNotStarted("org.jtheque.persistence");
-        startIfNotStarted("org.jtheque.modules");
-        startIfNotStarted("org.jtheque.features");
-        startIfNotStarted("org.jtheque.undo");
-        startIfNotStarted("org.jtheque.messages");
-        startIfNotStarted("org.jtheque.file");
-        startIfNotStarted("org.jtheque.collections");
-        startIfNotStarted("org.jtheque.views");
-        startIfNotStarted("org.jtheque.lifecycle");
     }
 
     /**
@@ -104,6 +81,11 @@ public final class Kernel implements Closeable {
         if (server.getState(name) != BundleState.ACTIVE) {
             server.startBundle(name);
         }
+    }
+
+    public void restart() {
+        server.restart();
+        startBundles();
     }
 
     /**

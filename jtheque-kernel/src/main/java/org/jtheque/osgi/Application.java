@@ -17,7 +17,6 @@ package org.jtheque.osgi;
  */
 
 import org.jtheque.core.utils.SimplePropertiesCache;
-import org.jtheque.osgi.server.OSGiServer;
 import org.jtheque.ui.able.IView;
 import org.jtheque.utils.io.FileUtils;
 
@@ -36,7 +35,7 @@ import java.net.Socket;
  */
 final class Application extends Thread {
     private final Socket socket;
-    private final OSGiServer server;
+    private final Kernel kernel;
 
     private BufferedReader reader;
 
@@ -44,13 +43,13 @@ final class Application extends Thread {
      * Construct a new Application.
      *
      * @param socket The socket to listen the data.
-     * @param server The OSGi server.
+     * @param kernel The kernel.
      */
-    Application(Socket socket, OSGiServer server) {
+    Application(Socket socket, Kernel kernel) {
         super();
 
         this.socket = socket;
-        this.server = server;
+        this.kernel = kernel;
 
         try {
             reader = new BufferedReader(new InputStreamReader(new DataInputStream(socket.getInputStream())));
@@ -68,7 +67,7 @@ final class Application extends Thread {
                 if ("open".equals(command)) {
                     SimplePropertiesCache.<IView>get("mainView").toFirstPlan();
                 } else if ("restart".equals(command)) {
-                    server.restart();
+                    kernel.restart();
                 }
 
                 interrupt();

@@ -16,7 +16,6 @@ package org.jtheque.osgi;
  * limitations under the License.
  */
 
-import org.jtheque.osgi.server.OSGiServer;
 import org.jtheque.utils.io.FileUtils;
 import org.jtheque.utils.io.SocketUtils;
 
@@ -41,7 +40,7 @@ final class ApplicationManager {
     private static final int PORT = 12345;
 
     private final Collection<Application> applications = new ArrayList<Application>(2);
-    private final OSGiServer server;
+    private final Kernel kernel;
 
     private ServerSocket serverSocket;
     private Thread thread;
@@ -49,12 +48,12 @@ final class ApplicationManager {
     /**
      * Construct a new ApplicationManager for the given OSGiServer.
      *
-     * @param server The OSGi server.
+     * @param kernel The OSGi server.
      */
-    ApplicationManager(OSGiServer server) {
+    ApplicationManager(Kernel kernel) {
         super();
 
-        this.server = server;
+        this.kernel = kernel;
     }
 
     /**
@@ -145,7 +144,7 @@ final class ApplicationManager {
                 try {
 
 
-                    Application application = new Application(serverSocket.accept(), server);
+                    Application application = new Application(serverSocket.accept(), kernel);
                     applications.add(application);
 
                     application.start();
