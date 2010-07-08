@@ -31,7 +31,7 @@ public final class AnimationUtils {
      * This is an utility class, not instanciable.
      */
     private AnimationUtils() {
-        super();
+        throw new AssertionError();
     }
 
     /**

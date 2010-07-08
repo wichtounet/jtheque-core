@@ -37,7 +37,7 @@ public final class PropertiesUtils {
      * Construct a new PropertiesUtils. This constructor is private, because this is an utility class.
      */
     private PropertiesUtils() {
-        super();
+        throw new AssertionError();
     }
 
     /**

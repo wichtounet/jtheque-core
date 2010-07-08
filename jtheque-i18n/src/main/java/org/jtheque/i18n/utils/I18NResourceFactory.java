@@ -32,12 +32,12 @@ import java.net.URL;
  *
  * @author Baptiste Wicht
  */
-public class I18NResourceFactory {
+public final class I18NResourceFactory {
     /**
      * Utility class, not instantiable.
      */
     private I18NResourceFactory() {
-        super();
+        throw new AssertionError();
     }
 
     /**

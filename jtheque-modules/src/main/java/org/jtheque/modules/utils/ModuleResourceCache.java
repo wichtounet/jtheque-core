@@ -36,7 +36,7 @@ public final class ModuleResourceCache {
      * Utility class, not instantiable.
      */
     private ModuleResourceCache() {
-        super();
+        throw new AssertionError();
     }
 
     /**

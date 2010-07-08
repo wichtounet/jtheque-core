@@ -31,7 +31,7 @@ public final class SimplePropertiesCache {
      * Utility class, not instantiable.
      */
     private SimplePropertiesCache() {
-        super();
+        throw new AssertionError();
     }
 
     /**

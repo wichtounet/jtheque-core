@@ -26,10 +26,10 @@ import org.osgi.framework.ServiceReference;
  */
 public final class OSGiUtils {
     /**
-     * Utility class, not instantiatable.
+     * Utility class, not instantiable.
      */
     private OSGiUtils() {
-        super();
+        throw new AssertionError();
     }
 
     /**

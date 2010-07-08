@@ -46,7 +46,7 @@ public final class MailUtils {
      * Construct a new MailUtils. This class isn't instanciable.
      */
     private MailUtils() {
-        super();
+        throw new AssertionError();
     }
 
     /**

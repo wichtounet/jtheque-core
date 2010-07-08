@@ -32,7 +32,7 @@ public final class Borders {
      * This is an utility class, not instanciable.
      */
     private Borders() {
-        super();
+        throw new AssertionError();
     }
 
     /**
