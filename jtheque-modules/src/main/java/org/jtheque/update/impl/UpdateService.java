@@ -18,6 +18,7 @@ package org.jtheque.update.impl;
 
 import org.jtheque.core.able.ICore;
 import org.jtheque.core.able.Versionable;
+import org.jtheque.core.utils.SystemProperty;
 import org.jtheque.errors.able.IErrorService;
 import org.jtheque.events.able.EventLevel;
 import org.jtheque.events.able.IEventService;
@@ -51,6 +52,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Manage the update of the application. This class can go on internet to verify if a more recent version of JTheque is
@@ -155,12 +157,12 @@ public final class UpdateService implements IUpdateService {
     }
 
     @Override
-    public void update(Module object, Version version) {
-        if (isDescriptorNotReachable(object)) {
+    public void update(Module module, Version version) {
+        if (isDescriptorNotReachable(module)) {
             return;
         }
 
-        ModuleVersion onlineVersion = versionsLoader.getModuleVersion(version, object);
+        ModuleVersion onlineVersion = versionsLoader.getModuleVersion(version, module);
 
         if (onlineVersion == null) {
             return;
@@ -171,29 +173,25 @@ public final class UpdateService implements IUpdateService {
         } else {
             applyModuleVersion(onlineVersion);
 
-            if (object instanceof Module) {
-                Module module = (Module) object;
+            try {
+                boolean restart = false;
 
-                try {
-                    boolean restart = false;
+                if (module.getState() == ModuleState.STARTED) {
+                    moduleService.stopModule(module);
 
-                    if (module.getState() == ModuleState.STARTED) {
-                        moduleService.stopModule(module);
-
-                        restart = true;
-                    }
-
-                    module.getBundle().update(FileUtils.asInputStream(
-                            new File(core.getFolders().getModulesFolder(), onlineVersion.getModuleFile())));
-
-                    if (restart) {
-                        moduleService.startModule(module);
-                    }
-                } catch (BundleException e) {
-                    LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
-                } catch (FileNotFoundException e) {
-                    LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
+                    restart = true;
                 }
+
+                module.getBundle().update(FileUtils.asInputStream(
+                        new File(core.getFolders().getModulesFolder(), onlineVersion.getModuleFile())));
+
+                if (restart) {
+                    moduleService.startModule(module);
+                }
+            } catch (BundleException e) {
+                LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
+            } catch (FileNotFoundException e) {
+                LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
             }
 
             uiUtils.displayI18nText("message.application.updated");
@@ -240,11 +238,29 @@ public final class UpdateService implements IUpdateService {
     }
 
     private void applyCoreVersion(CoreVersion coreVersion) {
-        //TODO Coder
+        File bundlesFolder = new File(SystemProperty.USER_DIR.get(), "bundles");
 
-        //On garde tous les bons fichiers bundles
-        //On supprimme les autres
-        //On télécharge les nouveaux
+        Set<File> currentBundles = ArrayUtils.asSet(bundlesFolder.listFiles());
+
+        //Make the diffs and download the new bundles
+        for (FileDescriptor newBundle : coreVersion.getBundles()) {
+            File f = new File(bundlesFolder, newBundle.getName());
+
+            if (currentBundles.contains(f)) {
+                currentBundles.remove(f);
+            } else {
+                try {
+                    WebUtils.downloadFile(newBundle.getUrl(), f.getAbsolutePath());
+                } catch (FileException e) {
+                    LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
+                }
+            }
+        }
+
+        //Delete the remaining files
+        for (File f : currentBundles) {
+            FileUtils.delete(f);
+        }
     }
 
     /**

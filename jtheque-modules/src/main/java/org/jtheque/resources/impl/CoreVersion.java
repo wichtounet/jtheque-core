@@ -51,15 +51,6 @@ public class CoreVersion implements Comparable<CoreVersion> {
         return version;
     }
 
-    /**
-     * Return the version transformed to string.
-     *
-     * @return The string version.
-     */
-    public final String getStringVersion() {
-        return version.getVersion();
-    }
-
     public Iterable<FileDescriptor> getBundles() {
         return Collections.unmodifiableList(bundles);
     }
