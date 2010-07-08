@@ -32,6 +32,7 @@ package org.jtheque.resources.impl;
  * limitations under the License.
  */
 
+import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.io.FileUtils;
 import org.jtheque.xml.utils.IXMLReader;
@@ -271,6 +272,10 @@ public final class DescriptorReader {
         String url = reader.readString("url", currentNode);
         String version = reader.readString("version", currentNode);
 
-        return new FileDescriptor(name, url, new Version(version));
+        if(StringUtils.isNotEmpty(version)){
+            return new FileDescriptor(name, url, new Version(version));
+        } else {
+            return new FileDescriptor(name, url);
+        }
     }
 }
