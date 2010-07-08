@@ -229,7 +229,7 @@ public final class FeatureService implements IFeatureService, ModuleListener {
          * @param titleKey The title key.
          * @param position The position of the feature.
          */
-        protected ManagedFeature(FeatureType type, String titleKey, Integer position) {
+        protected ManagedFeature(FeatureType type, String titleKey, int position) {
             super(type, titleKey, position);
         }
 

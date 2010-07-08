@@ -23,6 +23,7 @@ import org.jtheque.i18n.able.ILanguageService;
 import org.jtheque.i18n.able.Internationalizable;
 import org.jtheque.i18n.able.InternationalizableContainer;
 import org.jtheque.images.able.IImageService;
+import org.jtheque.utils.bean.Numbers;
 import org.jtheque.utils.ui.SwingUtils;
 
 import javax.swing.AbstractButton;
@@ -74,7 +75,7 @@ public final class JThequeMenuBar extends JMenuBar implements FeatureListener, I
     private static final class ByPositionComparator implements Comparator<IFeature> {
         @Override
         public int compare(IFeature feature, IFeature other) {
-            return feature.getPosition().compareTo(other.getPosition());
+            return Numbers.compare(feature.getPosition(), other.getPosition());
         }
     }
 

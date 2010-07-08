@@ -37,7 +37,7 @@ public interface MainComponent {
      *
      * @return An Integer representing the position of the tab component.
      */
-    Integer getPosition();
+    int getPosition();
 
     /**
      * Return the title key of the tab component. This method is not used if there is only one main component.

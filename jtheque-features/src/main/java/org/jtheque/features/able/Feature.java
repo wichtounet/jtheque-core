@@ -29,7 +29,7 @@ import java.util.Collection;
 public class Feature implements IFeature {
     private final Collection<IFeature> subFeatures = new ArrayList<IFeature>(20);
     private final JThequeAction action;
-    private final Integer position;
+    private final int position;
 
     private FeatureType type;
     private String titleKey;
@@ -42,7 +42,7 @@ public class Feature implements IFeature {
      * @param position The position of the feature in the parent.
      * @param action   The action to execute when the feature is pressed.
      */
-    public Feature(FeatureType type, Integer position, JThequeAction action) {
+    public Feature(FeatureType type, int position, JThequeAction action) {
         super();
 
         this.action = action;
@@ -57,7 +57,7 @@ public class Feature implements IFeature {
      * @param titleKey The i18n key of the title of the feature.
      * @param position The position of the feature in the parent.
      */
-    public Feature(FeatureType type, String titleKey, Integer position) {
+    public Feature(FeatureType type, String titleKey, int position) {
         super();
 
         action = null;
@@ -148,7 +148,7 @@ public class Feature implements IFeature {
     }
 
     @Override
-    public final Integer getPosition() {
+    public final int getPosition() {
         return position;
     }
 

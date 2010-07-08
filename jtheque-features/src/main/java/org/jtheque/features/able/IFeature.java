@@ -44,7 +44,7 @@ public interface IFeature {
      *
      * @return The position of the feature.
      */
-    Integer getPosition();
+    int getPosition();
 
     /**
      * Return the icon id of the feature.

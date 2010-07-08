@@ -3,6 +3,7 @@ package org.jtheque.views.impl.components;
 import org.jtheque.i18n.able.ILanguageService;
 import org.jtheque.ui.utils.components.LayerTabbedPane;
 import org.jtheque.ui.utils.components.TabTitleUpdater;
+import org.jtheque.utils.bean.Numbers;
 import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.ui.SwingUtils;
 import org.jtheque.views.able.IViews;
@@ -113,7 +114,7 @@ public final class MainTabbedPane extends LayerTabbedPane {
     private static final class PositionComparator implements Comparator<MainComponent>, Serializable {
         @Override
         public int compare(MainComponent component, MainComponent other) {
-            return component.getPosition().compareTo(other.getPosition());
+            return Numbers.compare(component.getPosition(), other.getPosition());
         }
     }
 }
