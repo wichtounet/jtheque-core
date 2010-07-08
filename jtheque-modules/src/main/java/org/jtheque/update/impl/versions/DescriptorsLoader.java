@@ -1,7 +1,10 @@
 package org.jtheque.update.impl.versions;
 
-import org.jtheque.core.able.Versionable;
+import org.jtheque.core.able.ICore;
 import org.jtheque.errors.able.IErrorService;
+import org.jtheque.modules.able.Module;
+import org.jtheque.resources.impl.CoreDescriptor;
+import org.jtheque.resources.impl.CoreVersion;
 import org.jtheque.resources.impl.DescriptorReader;
 import org.jtheque.resources.impl.ModuleDescriptor;
 import org.jtheque.resources.impl.ModuleVersion;
@@ -42,11 +45,16 @@ public final class DescriptorsLoader implements IVersionsLoader {
 
     private final Map<String, ModuleDescriptor> cache = new HashMap<String, ModuleDescriptor>(CACHE_INITIAL_SIZE);
 
+    private CoreDescriptor coreDescriptor;
+
     @Resource
     private IErrorService errorService;
 
+    @Resource
+    private ICore core;
+
     @Override
-    public Collection<Version> getVersions(Versionable object) {
+    public Collection<Version> getVersions(Module object) {
         ModuleDescriptor descriptor = getModuleDescriptor(object.getDescriptorURL());
 
         if (descriptor != null) {
@@ -63,12 +71,33 @@ public final class DescriptorsLoader implements IVersionsLoader {
     }
 
     @Override
-    public Collection<ModuleVersion> getOnlineVersions(Versionable object) {
-        return getModuleDescriptor(object.getDescriptorURL()).getVersions();
+    public Collection<Version> getCoreVersions() {
+        CoreDescriptor descriptor = getCoreDescriptor();
+
+        if(descriptor != null){
+            Collection<Version> versions = new ArrayList<Version>(descriptor.getVersions().size());
+
+            for (CoreVersion v : descriptor.getVersions()) {
+                versions.add(v.getVersion());
+            }
+
+            return versions;
+        }
+
+        return CollectionUtils.emptyList();
     }
 
     @Override
-    public ModuleVersion getModuleVersion(Version version, Versionable object) {
+    public Collection<ModuleVersion> getOnlineVersions(Module object) {
+        return getModuleDescriptor(object.getDescriptorURL()).getVersions();
+    }
+
+    private Iterable<CoreVersion> getOnlineCoreVersions() {
+        return getCoreDescriptor().getVersions();
+    }
+
+    @Override
+    public ModuleVersion getModuleVersion(Version version, Module object) {
         for (ModuleVersion m : getOnlineVersions(object)) {
             if (m.getVersion().equals(version)) {
                 return m;
@@ -79,10 +108,28 @@ public final class DescriptorsLoader implements IVersionsLoader {
     }
 
     @Override
-    public Version getMostRecentVersion(Versionable object) {
-        ModuleDescriptor versionsFile = getModuleDescriptor(object.getDescriptorURL());
+    public CoreVersion getCoreVersion(Version version) {
+        for (CoreVersion m : getOnlineCoreVersions()) {
+            if (m.getVersion().equals(version)) {
+                return m;
+            }
+        }
 
-        return versionsFile != null ? versionsFile.getMostRecentVersion().getVersion() : null;
+        return null;
+    }
+
+    @Override
+    public Version getMostRecentCoreVersion() {
+        CoreDescriptor descriptor = getCoreDescriptor();
+
+        return descriptor != null ? descriptor.getMostRecentVersion().getVersion() : null;
+    }
+
+    @Override
+    public Version getMostRecentVersion(Module object) {
+        ModuleDescriptor descriptor = getModuleDescriptor(object.getDescriptorURL());
+
+        return descriptor != null ? descriptor.getMostRecentVersion().getVersion() : null;
     }
 
     @Override
@@ -91,6 +138,7 @@ public final class DescriptorsLoader implements IVersionsLoader {
 
         return versionsFile != null ? versionsFile.getMostRecentVersion() : null;
     }
+
 
     /**
      * Return the version's file of the object.
@@ -111,5 +159,19 @@ public final class DescriptorsLoader implements IVersionsLoader {
         }
 
         return cache.get(url);
+    }
+
+    public CoreDescriptor getCoreDescriptor() {
+        if (coreDescriptor == null) {
+            coreDescriptor = DescriptorReader.readCoreDescriptor(core.getDescriptorURL());
+
+            if (coreDescriptor == null) {
+                errorService.addInternationalizedError(
+                        "error.update.internet.title", ArrayUtils.EMPTY_ARRAY,
+                        "error.update.internet");
+            }
+        }
+
+        return coreDescriptor;
     }
 }

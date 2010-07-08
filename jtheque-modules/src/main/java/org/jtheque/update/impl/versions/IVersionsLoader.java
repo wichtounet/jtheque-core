@@ -17,6 +17,8 @@ package org.jtheque.update.impl.versions;
  */
 
 import org.jtheque.core.able.Versionable;
+import org.jtheque.modules.able.Module;
+import org.jtheque.resources.impl.CoreVersion;
 import org.jtheque.resources.impl.ModuleVersion;
 import org.jtheque.utils.bean.Version;
 
@@ -35,7 +37,7 @@ public interface IVersionsLoader {
      *
      * @return A List containing all the versions from.
      */
-    Collection<Version> getVersions(Versionable object);
+    Collection<Version> getVersions(Module object);
 
     /**
      * Return the online versions of the object.
@@ -44,7 +46,7 @@ public interface IVersionsLoader {
      *
      * @return A List containing all the online versions of the object.
      */
-    Collection<ModuleVersion> getOnlineVersions(Versionable object);
+    Collection<ModuleVersion> getOnlineVersions(Module object);
 
     /**
      * Return the online version corresponding to the specified version.
@@ -54,7 +56,7 @@ public interface IVersionsLoader {
      *
      * @return The corresponding online version.
      */
-    ModuleVersion getModuleVersion(Version version, Versionable object);
+    ModuleVersion getModuleVersion(Version version, Module object);
 
     /**
      * Return the most recent version of the object.
@@ -63,7 +65,7 @@ public interface IVersionsLoader {
      *
      * @return The most recent version of the object.
      */
-    Version getMostRecentVersion(Versionable object);
+    Version getMostRecentVersion(Module object);
 
     /**
      * Return the most recent version of the module at the given url.
@@ -73,4 +75,10 @@ public interface IVersionsLoader {
      * @return The most recent module version of the descriptor.
      */
     ModuleVersion getMostRecentModuleVersion(String url);
+
+    CoreVersion getCoreVersion(Version versionToDownload);
+
+    Collection<Version> getCoreVersions();
+
+    Version getMostRecentCoreVersion();
 }

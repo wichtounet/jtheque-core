@@ -74,6 +74,16 @@ public final class DescriptorReader {
         }
     }
 
+    public static CoreDescriptor readCoreDescriptor(String url) {
+        IXMLReader<Node> reader = XML.newJavaFactory().newReader();
+
+        try {
+            return readCoreDescriptor(reader, new URL(url));
+        } catch (MalformedURLException e) {
+            return null;
+        }
+    }
+
     /**
      * Read the module from the given URL.
      *
@@ -89,6 +99,26 @@ public final class DescriptorReader {
         } catch (MalformedURLException e) {
             return null;
         }
+    }
+
+    private static CoreDescriptor readCoreDescriptor(IXMLReader<Node> reader, URL url) {
+        try {
+            reader.openURL(url);
+
+            CoreDescriptor descriptor = new CoreDescriptor();
+
+            for (Object currentNode : reader.getNodes("version", reader.getRootElement())) {
+                descriptor.addVersion(readCoreVersion(currentNode, reader));
+            }
+
+            return descriptor;
+        } catch (XMLException e) {
+            LoggerFactory.getLogger(DescriptorReader.class).error("Unable to read versions file", e);
+        } finally {
+            FileUtils.close(reader);
+        }
+
+        return null;
     }
 
     /**
@@ -151,6 +181,14 @@ public final class DescriptorReader {
         return null;
     }
 
+    private static CoreVersion readCoreVersion(Object currentNode, IXMLReader<Node> reader) throws XMLException {
+        CoreVersion resourceVersion = new CoreVersion(new Version(reader.readString("@name", currentNode)));
+
+        readResources(currentNode, reader, resourceVersion);
+
+        return resourceVersion;
+    }
+
     /**
      * Read the resource version.
      *
@@ -191,6 +229,12 @@ public final class DescriptorReader {
         }
 
         return resourceVersion;
+    }
+
+    private static void readResources(Object currentNode, IXMLReader<Node> reader, CoreVersion coreVersion) throws XMLException {
+        for (Object libraryNode : reader.getNodes("bundles/bundle", currentNode)) {
+            coreVersion.addBundle(readFileDescriptor(libraryNode, reader));
+        }
     }
 
     /**

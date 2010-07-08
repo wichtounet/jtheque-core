@@ -27,6 +27,7 @@ import org.jtheque.modules.able.Module;
 import org.jtheque.modules.able.ModuleState;
 import org.jtheque.modules.impl.InstallationResult;
 import org.jtheque.resources.able.IResourceService;
+import org.jtheque.resources.impl.CoreVersion;
 import org.jtheque.resources.impl.FileDescriptor;
 import org.jtheque.resources.impl.ModuleVersion;
 import org.jtheque.ui.able.IUIUtils;
@@ -97,13 +98,13 @@ public final class UpdateService implements IUpdateService {
             return;
         }
 
-        ModuleVersion onlineVersion = versionsLoader.getModuleVersion(versionToDownload, core);
+        CoreVersion onlineVersion = versionsLoader.getCoreVersion(versionToDownload);
 
         if (onlineVersion == null) {
             return;
         }
 
-        applyModuleVersion(onlineVersion);
+        applyCoreVersion(onlineVersion);
 
         core.getLifeCycle().restart();
     }
@@ -154,7 +155,7 @@ public final class UpdateService implements IUpdateService {
     }
 
     @Override
-    public void update(Versionable object, Version version) {
+    public void update(Module object, Version version) {
         if (isDescriptorNotReachable(object)) {
             return;
         }
@@ -238,6 +239,14 @@ public final class UpdateService implements IUpdateService {
         }
     }
 
+    private void applyCoreVersion(CoreVersion coreVersion) {
+        //TODO Coder
+
+        //On garde tous les bons fichiers bundles
+        //On supprimme les autres
+        //On télécharge les nouveaux
+    }
+
     /**
      * Download the resources.
      *
@@ -257,7 +266,7 @@ public final class UpdateService implements IUpdateService {
             return CollectionUtils.emptyList();
         }
 
-        return getVersions(core);
+        return versionsLoader.getCoreVersions();
     }
 
     @Override
@@ -298,16 +307,25 @@ public final class UpdateService implements IUpdateService {
 
     @Override
     public boolean isCurrentVersionUpToDate() {
-        return isUpToDate(core);
+        if (isDescriptorNotReachable(core)) {
+            return true;
+        }
+
+        return isUpToDate(core, versionsLoader.getCoreVersions());
     }
 
     @Override
-    public boolean isUpToDate(Versionable object) {
+    public boolean isUpToDate(Module object) {
         if (isDescriptorNotReachable(object)) {
             return true;
         }
 
-        for (Version version : versionsLoader.getVersions(object)) {
+        return isUpToDate(object, versionsLoader.getVersions(object));
+
+    }
+
+    private static boolean isUpToDate(Versionable object, Iterable<Version> versions) {
+        for (Version version : versions) {
             if (version.isGreaterThan(object.getVersion())) {
                 return false;
             }
@@ -335,11 +353,15 @@ public final class UpdateService implements IUpdateService {
 
     @Override
     public Version getMostRecentCoreVersion() {
-        return getMostRecentVersion(core);
+        if (isDescriptorNotReachable(core)) {
+            return null;
+        }
+
+        return versionsLoader.getMostRecentCoreVersion();
     }
 
     @Override
-    public Version getMostRecentVersion(Versionable object) {
+    public Version getMostRecentVersion(Module object) {
         if (isDescriptorNotReachable(object)) {
             return null;
         }
@@ -348,7 +370,7 @@ public final class UpdateService implements IUpdateService {
     }
 
     @Override
-    public Collection<Version> getVersions(Versionable object) {
+    public Collection<Version> getVersions(Module object) {
         if (isDescriptorNotReachable(object)) {
             return null;
         }

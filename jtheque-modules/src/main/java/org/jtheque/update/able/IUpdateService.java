@@ -44,7 +44,7 @@ public interface IUpdateService {
      * @param object  The object to update.
      * @param version The current version.
      */
-    void update(Versionable object, Version version);
+    void update(Module object, Version version);
 
     /**
      * Return the list of available versions on internet.
@@ -75,7 +75,7 @@ public interface IUpdateService {
      *
      * @return true if the module is up to date else false.
      */
-    boolean isUpToDate(Versionable object);
+    boolean isUpToDate(Module object);
 
     /**
      * Return all the versions of the object.
@@ -84,7 +84,7 @@ public interface IUpdateService {
      *
      * @return A List containing all the versions of the updatable.
      */
-    Collection<Version> getVersions(Versionable object);
+    Collection<Version> getVersions(Module object);
 
     /**
      * Install a module from a versions file.
@@ -109,7 +109,7 @@ public interface IUpdateService {
      *
      * @return The most recent version of the object or null if the resource is not reachable over the internet
      */
-    Version getMostRecentVersion(Versionable object);
+    Version getMostRecentVersion(Module object);
 
     /**
      * Return the most recent version of the core.

@@ -26,7 +26,21 @@ import org.jtheque.utils.bean.Version;
 public class FileDescriptor {
     private final String name;
     private final String url;
-    private final Version version;
+
+    private Version version;
+
+    /**
+     * Create a new FileDescriptor.
+     *
+     * @param name    The name of the file.
+     * @param url     The url to the file.
+     */
+    public FileDescriptor(String name, String url) {
+        super();
+
+        this.name = name;
+        this.url = url;
+    }
 
     /**
      * Create a new FileDescriptor.
