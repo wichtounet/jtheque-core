@@ -18,10 +18,10 @@ package org.jtheque.views.impl.components.config;
 
 import org.jtheque.core.able.ICore;
 import org.jtheque.i18n.able.ILanguageService;
+import org.jtheque.ui.able.constraints.Constraints;
 import org.jtheque.ui.utils.builded.OSGIFilthyBuildedPanel;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
-import org.jtheque.ui.utils.constraints.AtLeastOneConstraint;
-import org.jtheque.ui.utils.constraints.Constraint;
+import org.jtheque.ui.able.constraints.Constraint;
 import org.jtheque.ui.utils.filthy.FilthyRenderer;
 import org.jtheque.ui.utils.models.SimpleListModel;
 import org.jtheque.utils.ui.GridBagUtils;
@@ -64,7 +64,7 @@ public final class JPanelConfigAppearance extends OSGIFilthyBuildedPanel impleme
     public Map<Object, Constraint> getConstraints() {
         Map<Object, Constraint> constraints = new HashMap<Object, Constraint>(1);
 
-        constraints.put(modelLanguages, new AtLeastOneConstraint("config.appearance.language"));
+        constraints.put(modelLanguages, Constraints.atLeastOne("config.appearance.language"));
 
         return constraints;
     }

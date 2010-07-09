@@ -1,6 +1,7 @@
-package org.jtheque.ui.utils.constraints;
+package org.jtheque.ui.impl.constraints;
 
 import org.jtheque.errors.able.IError;
+import org.jtheque.ui.able.constraints.Constraint;
 import org.jtheque.ui.utils.ValidationUtils;
 import org.jtheque.utils.ui.SwingUtils;
 
@@ -92,16 +93,20 @@ public final class MaxLengthConstraint implements Constraint {
             return;
         }
 
-        CharSequence str = null;
+        String str = null;
 
         if (field instanceof JTextComponent) {
             str = ((JTextComponent) field).getText();
-        } else if (field instanceof CharSequence) {
-            str = (CharSequence) field;
+        } else if (field instanceof String) {
+            str = (String) field;
         }
 
         if (!canBeNull) {
             ValidationUtils.rejectIfEmpty(str, fieldName, errors);
+        }
+
+        if(numerical){
+            ValidationUtils.rejectIfNotNumerical(str, fieldName, errors);
         }
 
         ValidationUtils.rejectIfLongerThan(str, fieldName, maxLength, errors);

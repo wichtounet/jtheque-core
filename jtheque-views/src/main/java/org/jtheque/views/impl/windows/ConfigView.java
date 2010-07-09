@@ -18,18 +18,15 @@ package org.jtheque.views.impl.windows;
 
 import org.jtheque.core.utils.SimplePropertiesCache;
 import org.jtheque.i18n.able.ILanguageService;
-import org.jtheque.ui.able.IController;
 import org.jtheque.ui.able.IModel;
+import org.jtheque.ui.able.constraints.Constraint;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.ui.utils.components.LayerTabbedPane;
-import org.jtheque.ui.utils.constraints.Constraint;
 import org.jtheque.ui.utils.windows.dialogs.SwingFilthyBuildedDialogView;
 import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.views.able.IViews;
 import org.jtheque.views.able.components.ConfigTabComponent;
 import org.jtheque.views.able.windows.IConfigView;
-
-import javax.annotation.Resource;
 
 import java.util.Map;
 

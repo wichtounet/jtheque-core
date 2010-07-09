@@ -1,4 +1,4 @@
-package org.jtheque.ui.utils.constraints;
+package org.jtheque.ui.able.constraints;
 
 import org.jtheque.errors.able.IError;
 

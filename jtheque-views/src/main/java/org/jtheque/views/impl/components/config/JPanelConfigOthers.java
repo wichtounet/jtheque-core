@@ -20,7 +20,7 @@ import org.jtheque.core.able.ICore;
 import org.jtheque.core.able.ICoreConfiguration;
 import org.jtheque.ui.utils.builded.OSGIFilthyBuildedPanel;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
-import org.jtheque.ui.utils.constraints.Constraint;
+import org.jtheque.ui.able.constraints.Constraint;
 import org.jtheque.ui.utils.filthy.FilthyTextField;
 import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.views.able.components.ConfigTabComponent;

@@ -1,7 +1,8 @@
-package org.jtheque.ui.utils.constraints;
+package org.jtheque.ui.impl.constraints;
 
 import org.jtheque.errors.able.IError;
 import org.jtheque.errors.utils.Errors;
+import org.jtheque.ui.able.constraints.Constraint;
 import org.jtheque.ui.utils.ValidationUtils;
 import org.jtheque.ui.utils.components.FileChooserPanel;
 
@@ -37,15 +38,6 @@ public final class ValidFileConstraint implements Constraint {
      * Construct a new NotNullConstraint.
      *
      * @param fieldName The field name.
-     */
-    public ValidFileConstraint(String fieldName) {
-        this(fieldName, -1);
-    }
-
-    /**
-     * Construct a new NotNullConstraint.
-     *
-     * @param fieldName The field name.
      * @param maxLength The max length of the field.
      */
     public ValidFileConstraint(String fieldName, int maxLength) {
@@ -57,7 +49,7 @@ public final class ValidFileConstraint implements Constraint {
 
     @Override
     public int maxLength() {
-        return -1;
+        return maxLength;
     }
 
     @Override

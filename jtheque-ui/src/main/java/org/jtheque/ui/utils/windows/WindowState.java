@@ -9,7 +9,7 @@ import org.jtheque.i18n.able.Internationalizable;
 import org.jtheque.images.able.IImageService;
 import org.jtheque.ui.able.IController;
 import org.jtheque.ui.able.IWindowState;
-import org.jtheque.ui.utils.constraints.Constraint;
+import org.jtheque.ui.able.constraints.Constraint;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.collections.ArrayUtils;
 import org.jtheque.utils.ui.SwingUtils;

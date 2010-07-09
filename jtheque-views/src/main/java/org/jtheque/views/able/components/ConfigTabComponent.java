@@ -16,7 +16,7 @@ package org.jtheque.views.able.components;
  * limitations under the License.
  */
 
-import org.jtheque.ui.utils.constraints.Constraint;
+import org.jtheque.ui.able.constraints.Constraint;
 
 import javax.swing.JComponent;
 

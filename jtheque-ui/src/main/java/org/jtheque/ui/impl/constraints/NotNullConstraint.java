@@ -1,12 +1,9 @@
-package org.jtheque.ui.utils.constraints;
+package org.jtheque.ui.impl.constraints;
 
 import org.jtheque.errors.able.IError;
 import org.jtheque.errors.utils.Errors;
+import org.jtheque.ui.able.constraints.Constraint;
 
-import javax.swing.ComboBoxModel;
-import javax.swing.JList;
-
-import java.awt.ItemSelectable;
 import java.util.Collection;
 
 /*
@@ -30,7 +27,7 @@ import java.util.Collection;
  *
  * @author Baptiste Wicht
  */
-public final class AtLeastOneConstraint implements Constraint {
+public final class NotNullConstraint implements Constraint {
     private final String fieldName;
 
     /**
@@ -38,7 +35,7 @@ public final class AtLeastOneConstraint implements Constraint {
      *
      * @param fieldName The field name.
      */
-    public AtLeastOneConstraint(String fieldName) {
+    public NotNullConstraint(String fieldName) {
         super();
 
         this.fieldName = fieldName;
@@ -56,17 +53,7 @@ public final class AtLeastOneConstraint implements Constraint {
 
     @Override
     public void validate(Object field, Collection<IError> errors) {
-        int count = 0;
-
-        if (field instanceof ItemSelectable) {
-            count = ((ItemSelectable) field).getSelectedObjects().length;
-        } else if (field instanceof ComboBoxModel) {
-            count = ((ComboBoxModel) field).getSelectedItem() == null ? 0 : 1;
-        } else if (field instanceof JList) {
-            count = ((JList) field).getSelectedValues().length;
-        }
-
-        if (count <= 0) {
+        if (field == null) {
             errors.add(Errors.newI18nError("error.validation.field.empty", new Object[]{fieldName}));
         }
     }

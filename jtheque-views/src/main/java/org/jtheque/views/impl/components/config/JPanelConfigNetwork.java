@@ -18,10 +18,10 @@ package org.jtheque.views.impl.components.config;
 
 import org.jtheque.core.able.ICore;
 import org.jtheque.core.able.ICoreConfiguration;
+import org.jtheque.ui.able.constraints.Constraint;
+import org.jtheque.ui.able.constraints.Constraints;
 import org.jtheque.ui.utils.builded.OSGIFilthyBuildedPanel;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
-import org.jtheque.ui.utils.constraints.Constraint;
-import org.jtheque.ui.utils.constraints.MaxLengthConstraint;
 import org.jtheque.ui.utils.filthy.FilthyTextField;
 import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.views.able.components.ConfigTabComponent;
@@ -111,8 +111,8 @@ public final class JPanelConfigNetwork extends OSGIFilthyBuildedPanel implements
     public Map<Object, Constraint> getConstraints() {
         Map<Object, Constraint> constraints = new HashMap<Object, Constraint>(1);
 
-        constraints.put(fieldAddress, new MaxLengthConstraint(false, "config.network.proxy.address"));
-        constraints.put(fieldPort, new MaxLengthConstraint(false, "config.network.proxy.port"));
+        constraints.put(fieldAddress, Constraints.notNull("config.network.proxy.address"));
+        constraints.put(fieldPort, Constraints.notNull("config.network.proxy.port"));
 
         return constraints;
     }
