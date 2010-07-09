@@ -18,7 +18,6 @@ package org.jtheque.features.impl;
 
 import org.jtheque.core.utils.WeakEventListenerList;
 import org.jtheque.features.able.CoreFeature;
-import org.jtheque.features.able.Feature;
 import org.jtheque.features.able.FeatureListener;
 import org.jtheque.features.able.IFeature;
 import org.jtheque.features.able.IFeatureService;
@@ -221,7 +220,7 @@ public final class FeatureService implements IFeatureService, ModuleListener {
      *
      * @author Baptiste Wicht
      */
-    protected final class ManagedFeature extends Feature {
+    private final class ManagedFeature extends Feature {
         /**
          * Construct a new ManagedFeature.
          *
@@ -230,7 +229,7 @@ public final class FeatureService implements IFeatureService, ModuleListener {
          * @param position The position of the feature.
          */
         protected ManagedFeature(FeatureType type, String titleKey, int position) {
-            super(type, titleKey, position);
+            super(null, position, type, titleKey, null);
         }
 
         @Override

@@ -1,8 +1,9 @@
 package org.jtheque.views.utils;
 
 import org.jtheque.features.able.CoreFeature;
-import org.jtheque.features.able.Feature;
+import org.jtheque.features.able.Features;
 import org.jtheque.features.able.IFeature;
+import org.jtheque.features.able.IFeature.FeatureType;
 import org.jtheque.features.able.Menu;
 import org.jtheque.i18n.able.ILanguageService;
 import org.jtheque.i18n.able.Internationalizable;
@@ -161,13 +162,7 @@ public abstract class AbstractMenu implements Menu {
      * @return The created main feature.
      */
     protected static IFeature createMainFeature(int position, String key, IFeature... features) {
-        Feature feature = new Feature(IFeature.FeatureType.PACK, key, position);
-
-        for (IFeature f : features) {
-            feature.addSubFeature(f);
-        }
-
-        return feature;
+        return Features.newFeature(FeatureType.PACK, key, position, features);
     }
 
     /**
@@ -180,13 +175,7 @@ public abstract class AbstractMenu implements Menu {
      * @return The created separated feature.
      */
     protected static IFeature createSeparatedSubFeature(int position, String key, IFeature... features) {
-        Feature feature = new Feature(IFeature.FeatureType.SEPARATED_ACTIONS, key, position);
-
-        for (IFeature f : features) {
-            feature.addSubFeature(f);
-        }
-
-        return feature;
+        return Features.newFeature(FeatureType.SEPARATED_ACTIONS, key, position, features);
     }
 
     /**
@@ -199,13 +188,7 @@ public abstract class AbstractMenu implements Menu {
      * @return The created feature.
      */
     protected static IFeature createSubFeature(int position, String key, IFeature... features) {
-        Feature feature = new Feature(IFeature.FeatureType.ACTIONS, key, position);
-
-        for (IFeature f : features) {
-            feature.addSubFeature(f);
-        }
-
-        return feature;
+        return Features.newFeature(FeatureType.ACTIONS, key, position, features);
     }
 
     /**
@@ -220,11 +203,7 @@ public abstract class AbstractMenu implements Menu {
     protected IFeature createSeparatedSubFeature(int position, JThequeAction action, String image) {
         internationalizables.add(action);
 
-        Feature f = new Feature(IFeature.FeatureType.SEPARATED_ACTION, position, action);
-
-        f.setIcon(image);
-
-        return f;
+        return Features.newFeature(FeatureType.SEPARATED_ACTION, position, action, image);
     }
 
     /**
@@ -257,7 +236,7 @@ public abstract class AbstractMenu implements Menu {
     protected IFeature createSeparatedSubFeature(int position, JThequeAction action) {
         internationalizables.add(action);
 
-        return new Feature(IFeature.FeatureType.SEPARATED_ACTION, position, action);
+        return Features.newFeature(FeatureType.SEPARATED_ACTION, position, action);
     }
 
     /**
@@ -272,11 +251,7 @@ public abstract class AbstractMenu implements Menu {
     protected IFeature createSubFeature(int position, JThequeAction action, String image) {
         internationalizables.add(action);
 
-        Feature f = new Feature(IFeature.FeatureType.ACTION, position, action);
-
-        f.setIcon(image);
-
-        return f;
+        return Features.newFeature(FeatureType.ACTION, position, action, image);
     }
 
     /**
@@ -290,7 +265,7 @@ public abstract class AbstractMenu implements Menu {
     protected IFeature createSubFeature(int position, JThequeAction action) {
         internationalizables.add(action);
 
-        return new Feature(IFeature.FeatureType.ACTION, position, action);
+        return Features.newFeature(FeatureType.ACTION, position, action);
     }
 
     /**

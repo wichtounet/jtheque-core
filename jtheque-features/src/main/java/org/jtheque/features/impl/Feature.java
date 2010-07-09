@@ -1,4 +1,4 @@
-package org.jtheque.features.able;
+package org.jtheque.features.impl;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -16,10 +16,12 @@ package org.jtheque.features.able;
  * limitations under the License.
  */
 
+import org.jtheque.features.able.IFeature;
 import org.jtheque.ui.utils.actions.JThequeAction;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 
 /**
  * A Feature of JTheque.
@@ -27,43 +29,21 @@ import java.util.Collection;
  * @author Baptiste Wicht
  */
 public class Feature implements IFeature {
-    private final Collection<IFeature> subFeatures = new ArrayList<IFeature>(20);
+    private final Collection<IFeature> subFeatures = new ArrayList<IFeature>(15);
     private final JThequeAction action;
+    private final FeatureType type;
+    private final String titleKey;
+    private final String icon;
     private final int position;
 
-    private FeatureType type;
-    private String titleKey;
-    private String icon;
-
-    /**
-     * Construct a new Feature for an action.
-     *
-     * @param type     The type of feature.
-     * @param position The position of the feature in the parent.
-     * @param action   The action to execute when the feature is pressed.
-     */
-    public Feature(FeatureType type, int position, JThequeAction action) {
+    public Feature(JThequeAction action, int position, FeatureType type, String titleKey, String icon) {
         super();
 
         this.action = action;
-        this.type = type;
         this.position = position;
-    }
-
-    /**
-     * Construct a new Feature for a menu.
-     *
-     * @param type     The type of feature.
-     * @param titleKey The i18n key of the title of the feature.
-     * @param position The position of the feature in the parent.
-     */
-    public Feature(FeatureType type, String titleKey, int position) {
-        super();
-
-        action = null;
         this.type = type;
         this.titleKey = titleKey;
-        this.position = position;
+        this.icon = icon;
     }
 
     @Override
@@ -71,27 +51,9 @@ public class Feature implements IFeature {
         return type;
     }
 
-    /**
-     * Set the type of the feature.
-     *
-     * @param type The type of the feature.
-     */
-    public final void setType(FeatureType type) {
-        this.type = type;
-    }
-
     @Override
     public final String getTitleKey() {
         return titleKey;
-    }
-
-    /**
-     * Set the internationalization key of the title of the feature.
-     *
-     * @param titleKey The title key.
-     */
-    public final void setTitleKey(String titleKey) {
-        this.titleKey = titleKey;
     }
 
     @Override
@@ -101,7 +63,7 @@ public class Feature implements IFeature {
 
     @Override
     public final Collection<IFeature> getSubFeatures() {
-        return subFeatures;
+        return Collections.unmodifiableCollection(subFeatures);
     }
 
     /**
@@ -115,11 +77,7 @@ public class Feature implements IFeature {
         }
     }
 
-    /**
-     * Add a sub feature to the feature.
-     *
-     * @param feature The feature to add.
-     */
+    @Override
     public void addSubFeature(IFeature feature) {
         if (feature.getType() == FeatureType.PACK) {
             throw new IllegalArgumentException(
@@ -155,14 +113,5 @@ public class Feature implements IFeature {
     @Override
     public final String getIcon() {
         return icon;
-    }
-
-    /**
-     * Set the icon of the feature.
-     *
-     * @param icon The icon of the feature.
-     */
-    public final void setIcon(String icon) {
-        this.icon = icon;
     }
 }

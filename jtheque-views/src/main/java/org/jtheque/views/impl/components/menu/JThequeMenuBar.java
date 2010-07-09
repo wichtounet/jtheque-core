@@ -105,6 +105,14 @@ public final class JThequeMenuBar extends JMenuBar implements FeatureListener, I
 
         addInternationalizable(menu);
 
+        addSubFeatures(feature, menu);
+
+        menu.refreshText(languageService);
+
+        add(menu);
+    }
+
+    private void addSubFeatures(IFeature feature, JMenu menu) {
         List<IFeature> subFeatures = new ArrayList<IFeature>(feature.getSubFeatures());
 
         Collections.sort(subFeatures, featureComparator);
@@ -112,10 +120,6 @@ public final class JThequeMenuBar extends JMenuBar implements FeatureListener, I
         for (IFeature subFeature : subFeatures) {
             addFeature(menu, subFeature);
         }
-
-        menu.refreshText(languageService);
-
-        add(menu);
     }
 
     /**
@@ -224,13 +228,7 @@ public final class JThequeMenuBar extends JMenuBar implements FeatureListener, I
             if (isCorrespondingMenu(feature, menu)) {
                 menu.removeAll();
 
-                List<IFeature> subFeatures = new ArrayList<IFeature>(feature.getSubFeatures());
-
-                Collections.sort(subFeatures, featureComparator);
-
-                for (IFeature sub : subFeatures) {
-                    addFeature(menu, sub);
-                }
+                addSubFeatures(feature, menu);
 
                 break;
             }

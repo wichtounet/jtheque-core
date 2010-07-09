@@ -54,6 +54,13 @@ public interface IFeature {
     String getIcon();
 
     /**
+     * Add a sub feature to the feature.
+     *
+     * @param feature The feature to add.
+     */
+    void addSubFeature(IFeature feature);
+
+    /**
      * The Feature Type.
      *
      * @author Baptiste Wicht
