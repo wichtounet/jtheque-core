@@ -20,21 +20,24 @@ import org.jtheque.i18n.able.ILanguageService;
  */
 
 /**
- * A basic error implementation.
+ * A basic error implementation. This class is immutable. 
  *
  * @author Baptiste Wicht
+ * @see org.jtheque.errors.utils.Errors
  */
 public class JThequeError implements IError {
-    final String title;
-    final Throwable exception;
-    final String details;
-    final Level level;
+    private final String title;
+    private final Throwable exception;
+    private final String details;
+    private final Level level;
 
     /**
      * Create a new error.
      *
-     * @param title The title of the error.
-     * @param level The level of error.
+     * @param title     The title of the error.
+     * @param level     The level of error.
+     * @param details   The details of the error.
+     * @param exception The exception that caused this error.
      */
     public JThequeError(String title, Level level, String details, Throwable exception) {
         super();
@@ -67,7 +70,34 @@ public class JThequeError implements IError {
     }
 
     /**
-     * Return the stacktrace into a String.
+     * Return the base title of the error.
+     *
+     * @return The base title of the error.
+     */
+    String getTitle() {
+        return title;
+    }
+
+    /**
+     * Return the base details of the error.
+     *
+     * @return The base details of the error.
+     */
+    String getDetails() {
+        return details;
+    }
+
+    /**
+     * Return the base details of the error.
+     *
+     * @return The base details of the error.
+     */
+    Throwable getException() {
+        return exception;
+    }
+
+    /**
+     * Return the stack trace into a String.
      *
      * @param throwable The throwable to extract the stack trace from.
      *

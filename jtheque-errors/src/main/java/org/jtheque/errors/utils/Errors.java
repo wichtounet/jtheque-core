@@ -22,6 +22,12 @@ import org.jtheque.utils.collections.ArrayUtils;
  * limitations under the License.
  */
 
+/**
+ * IError builder. 
+ *
+ * @author Baptiste Wicht
+ * @see org.jtheque.errors.able.IError
+ */
 public class Errors {
     public static final Object[] EMPTY_REPLACES = ArrayUtils.EMPTY_ARRAY;
 
@@ -36,6 +42,8 @@ public class Errors {
      * Construct a new IError with a simple message.
      *
      * @param title The message of the error.
+     *
+     * @return The created error. 
      */
     public static IError newError(String title) {
         return new JThequeError(title, Level.ERROR, null, null);
@@ -46,6 +54,8 @@ public class Errors {
      *
      * @param title The title of the error.
      * @param level The level of error.
+     *
+     * @return The created error.
      */
     public static IError newError(String title, Level level) {
         return new JThequeError(title, level, null, null);
@@ -56,6 +66,8 @@ public class Errors {
      *
      * @param title   The message of the error.
      * @param details Some details about the error.
+     *
+     * @return The created error.
      */
     public static IError newError(String title, String details) {
         return new JThequeError(title, Level.ERROR, details, null);
@@ -65,6 +77,8 @@ public class Errors {
      * Construct a new Error from an existing exception. The message of the error will be the message of the exception.
      *
      * @param exception The existing exception.
+     *
+     * @return The created error.
      */
     public static IError newError(Throwable exception) {
         return new JThequeError(exception.getMessage(), Level.ERROR, null, exception);
@@ -75,6 +89,8 @@ public class Errors {
      *
      * @param title     The message.
      * @param exception The exception to encapsulate in the error.
+     *
+     * @return The created error.
      */
     public static IError newError(String title, Throwable exception) {
         return new JThequeError(title, Level.ERROR, null, exception);
@@ -84,6 +100,8 @@ public class Errors {
      * Construct a new i18n IError.
      *
      * @param message The message key.
+     *
+     * @return The created error.
      */
     public static IError newI18nError(String message) {
         return new InternationalizedError(message, EMPTY_REPLACES, null, EMPTY_REPLACES);
@@ -94,6 +112,8 @@ public class Errors {
      *
      * @param message  The message key.
      * @param replaces The replaces for the internationalization variable arguments of the message.
+     *
+     * @return The created error.
      */
     public static IError newI18nError(String message, Object[] replaces) {
         return new InternationalizedError(message, replaces, null, EMPTY_REPLACES);
@@ -105,6 +125,8 @@ public class Errors {
      * @param message  The message key.
      * @param replaces The replaces for the internationalization variable arguments of the message.
      * @param details  The details key.
+     *
+     * @return The created error.
      */
     public static IError newI18nError(String message, Object[] replaces, String details) {
         return new InternationalizedError(message, replaces, details, EMPTY_REPLACES);
@@ -117,6 +139,8 @@ public class Errors {
      * @param replaces        The replaces for the internationalization variable arguments of the message.
      * @param details         The details key.
      * @param replacesDetails The replaces for the internationalization variable arguments of the details.
+     *
+     * @return The created error.
      */
     public static IError newI18nError(String message, Object[] replaces, String details, Object[] replacesDetails) {
         return new InternationalizedError(message, replaces, details, replacesDetails);

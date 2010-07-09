@@ -20,9 +20,10 @@ import org.jtheque.utils.collections.ArrayUtils;
  */
 
 /**
- * An internationalized error implementation.
+ * An internationalized error implementation. This class is immutable. 
  *
  * @author Baptiste Wicht
+ * @see org.jtheque.errors.utils.Errors
  */
 public final class InternationalizedError extends JThequeError {
     private final Object[] titleReplaces;
@@ -45,17 +46,17 @@ public final class InternationalizedError extends JThequeError {
 
     @Override
     public String getTitle(ILanguageService languageService) {
-        return languageService.getMessage(title, titleReplaces);
+        return languageService.getMessage(getTitle(), titleReplaces);
     }
 
     @Override
     public String getDetails(ILanguageService languageService) {
-        if (exception != null) {
-            return languageService.getMessage(details, detailsReplaces) +
-                    '\n' + exception.getMessage() +
-                    '\n' + getCustomStackTrace(exception);
+        if (getException() != null) {
+            return languageService.getMessage(getDetails(), detailsReplaces) +
+                    '\n' + getException().getMessage() +
+                    '\n' + getCustomStackTrace(getException());
         }
 
-        return languageService.getMessage(details, detailsReplaces);
+        return languageService.getMessage(getDetails(), detailsReplaces);
     }
 }
