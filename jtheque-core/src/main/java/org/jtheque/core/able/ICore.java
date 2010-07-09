@@ -27,7 +27,7 @@ import java.util.Collection;
  *
  * @author Baptiste Wicht
  */
-public interface ICore extends Versionable {
+public interface ICore {
     Version VERSION = new Version("2.1.0");
 
     String DESCRIPTOR_FILE_URL = "http://jtheque.baptiste-wicht.com/files/descriptors/jtheque-core.xml";

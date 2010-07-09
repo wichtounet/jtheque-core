@@ -1,6 +1,7 @@
 package org.jtheque.update.impl.versions;
 
 import org.jtheque.core.able.ICore;
+import org.jtheque.core.able.Versionable;
 import org.jtheque.errors.able.IErrorService;
 import org.jtheque.errors.utils.Errors;
 import org.jtheque.modules.able.Module;
@@ -50,9 +51,6 @@ public final class DescriptorsLoader implements IVersionsLoader {
 
     @Resource
     private IErrorService errorService;
-
-    @Resource
-    private ICore core;
 
     @Override
     public Collection<Version> getVersions(Module object) {
@@ -127,7 +125,7 @@ public final class DescriptorsLoader implements IVersionsLoader {
     }
 
     @Override
-    public Version getMostRecentVersion(Module object) {
+    public Version getMostRecentVersion(Versionable object) {
         ModuleDescriptor descriptor = getModuleDescriptor(object.getDescriptorURL());
 
         return descriptor != null ? descriptor.getMostRecentVersion().getVersion() : null;
@@ -164,7 +162,7 @@ public final class DescriptorsLoader implements IVersionsLoader {
 
     public CoreDescriptor getCoreDescriptor() {
         if (coreDescriptor == null) {
-            coreDescriptor = DescriptorReader.readCoreDescriptor(core.getDescriptorURL());
+            coreDescriptor = DescriptorReader.readCoreDescriptor(ICore.DESCRIPTOR_FILE_URL);
 
             if (coreDescriptor == null) {
                 errorService.addError(Errors.newI18nError(

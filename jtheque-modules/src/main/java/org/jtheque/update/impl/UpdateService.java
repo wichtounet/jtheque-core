@@ -97,7 +97,7 @@ public final class UpdateService implements IUpdateService {
 
     @Override
     public void updateCore(Version versionToDownload) {
-        if (isDescriptorNotReachable(core)) {
+        if (isDescriptorNotReachable(ICore.DESCRIPTOR_FILE_URL)) {
             return;
         }
 
@@ -159,7 +159,7 @@ public final class UpdateService implements IUpdateService {
 
     @Override
     public void update(Module module, Version version) {
-        if (isDescriptorNotReachable(module)) {
+        if (isDescriptorNotReachable(module.getDescriptorURL())) {
             return;
         }
 
@@ -202,16 +202,16 @@ public final class UpdateService implements IUpdateService {
     /**
      * Indicate if the descriptor is not reachable.
      *
-     * @param object The versionable object to test for descriptor's reachability.
+     * @param url The descriptor's url to test for reachability.
      *
      * @return true if the descriptor is not reachable else false.
      */
-    private boolean isDescriptorNotReachable(Versionable object) {
-        if (WebUtils.isURLReachable(object.getDescriptorURL())) {
+    private boolean isDescriptorNotReachable(String url) {
+        if (WebUtils.isURLReachable(url)) {
             return false;
         }
 
-        addNotReachableError(object.getDescriptorURL());
+        addNotReachableError(url);
 
         eventService.addEvent(IEventService.CORE_EVENT_LOG,
                 Event.newEvent(EventLevel.ERROR, "System", "events.updates.network"));
@@ -288,7 +288,7 @@ public final class UpdateService implements IUpdateService {
 
     @Override
     public Collection<Version> getKernelVersions() {
-        if (isDescriptorNotReachable(core)) {
+        if (isDescriptorNotReachable(ICore.DESCRIPTOR_FILE_URL)) {
             return CollectionUtils.emptyList();
         }
 
@@ -333,26 +333,26 @@ public final class UpdateService implements IUpdateService {
 
     @Override
     public boolean isCurrentVersionUpToDate() {
-        if (isDescriptorNotReachable(core)) {
+        if (isDescriptorNotReachable(ICore.DESCRIPTOR_FILE_URL)) {
             return true;
         }
 
-        return isUpToDate(core, versionsLoader.getCoreVersions());
+        return isUpToDate(ICore.VERSION, versionsLoader.getCoreVersions());
     }
 
     @Override
     public boolean isUpToDate(Module object) {
-        if (isDescriptorNotReachable(object)) {
+        if (isDescriptorNotReachable(object.getDescriptorURL())) {
             return true;
         }
 
-        return isUpToDate(object, versionsLoader.getVersions(object));
+        return isUpToDate(object.getVersion(), versionsLoader.getVersions(object));
 
     }
 
-    private static boolean isUpToDate(Versionable object, Iterable<Version> versions) {
-        for (Version version : versions) {
-            if (version.isGreaterThan(object.getVersion())) {
+    private static boolean isUpToDate(Version version, Iterable<Version> versions) {
+        for (Version v : versions) {
+            if (v.isGreaterThan(version)) {
                 return false;
             }
         }
@@ -362,7 +362,7 @@ public final class UpdateService implements IUpdateService {
 
     @Override
     public void updateToMostRecentVersion(Module module) {
-        if (isDescriptorNotReachable(module)) {
+        if (isDescriptorNotReachable(module.getDescriptorURL())) {
             return;
         }
 
@@ -379,7 +379,7 @@ public final class UpdateService implements IUpdateService {
 
     @Override
     public Version getMostRecentCoreVersion() {
-        if (isDescriptorNotReachable(core)) {
+        if (isDescriptorNotReachable(ICore.DESCRIPTOR_FILE_URL)) {
             return null;
         }
 
@@ -387,8 +387,8 @@ public final class UpdateService implements IUpdateService {
     }
 
     @Override
-    public Version getMostRecentVersion(Module object) {
-        if (isDescriptorNotReachable(object)) {
+    public Version getMostRecentVersion(Versionable object) {
+        if (isDescriptorNotReachable(object.getDescriptorURL())) {
             return null;
         }
 
@@ -397,7 +397,7 @@ public final class UpdateService implements IUpdateService {
 
     @Override
     public Collection<Version> getVersions(Module object) {
-        if (isDescriptorNotReachable(object)) {
+        if (isDescriptorNotReachable(object.getDescriptorURL())) {
             return null;
         }
 

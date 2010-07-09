@@ -144,14 +144,4 @@ public final class Core implements ICore {
 
         return languagesLong;
     }
-
-    @Override
-    public Version getVersion() {
-        return VERSION;
-    }
-
-    @Override
-    public String getDescriptorURL() {
-        return DESCRIPTOR_FILE_URL;
-    }
 }

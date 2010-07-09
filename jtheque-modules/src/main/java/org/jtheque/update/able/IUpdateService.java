@@ -109,7 +109,7 @@ public interface IUpdateService {
      *
      * @return The most recent version of the object or null if the resource is not reachable over the internet
      */
-    Version getMostRecentVersion(Module object);
+    Version getMostRecentVersion(Versionable object);
 
     /**
      * Return the most recent version of the core.

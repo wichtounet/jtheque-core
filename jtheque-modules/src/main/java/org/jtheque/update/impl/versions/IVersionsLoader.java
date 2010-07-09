@@ -65,7 +65,7 @@ public interface IVersionsLoader {
      *
      * @return The most recent version of the object.
      */
-    Version getMostRecentVersion(Module object);
+    Version getMostRecentVersion(Versionable object);
 
     /**
      * Return the most recent version of the module at the given url.
