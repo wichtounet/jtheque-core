@@ -15,6 +15,7 @@ import org.jtheque.utils.ui.SimpleSwingWorker;
 import org.jtheque.utils.ui.SwingUtils;
 import org.jtheque.views.able.IViewService;
 import org.jtheque.views.able.panel.IModuleView;
+import org.jtheque.views.able.panel.IRepositoryView;
 
 import javax.annotation.Resource;
 
@@ -48,6 +49,9 @@ public class ModuleController extends AbstractController {
     private IModuleView moduleView;
 
     @Resource
+    private IRepositoryView repositoryView;
+
+    @Resource
     private IUIUtils uiUtils;
 
     @Resource
@@ -75,6 +79,7 @@ public class ModuleController extends AbstractController {
         translations.put("modules.actions.file.new", "installFile");
         translations.put("modules.actions.uninstall", "uninstall");
         translations.put("modules.actions.update.kernel", "updateCore");
+        translations.put("modules.actions.repository", "repository");
 
         return translations;
     }
@@ -215,6 +220,13 @@ public class ModuleController extends AbstractController {
         } else {
             new UpdateCoreWorker().start();
         }
+    }
+
+    /**
+     * Display the repository.
+     */
+    private void repository() {
+        repositoryView.display();
     }
 
     /**

@@ -4,7 +4,6 @@ import org.jtheque.i18n.able.ILanguageService;
 import org.jtheque.modules.able.IModuleService;
 import org.jtheque.modules.able.Module;
 import org.jtheque.ui.able.IFilthyUtils;
-import org.jtheque.ui.utils.actions.ActionFactory;
 import org.jtheque.ui.utils.builded.OSGIFilthyBuildedPanel;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.update.able.IUpdateService;
@@ -12,7 +11,6 @@ import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.utils.ui.SwingUtils;
 import org.jtheque.views.able.components.IModulesPanelView;
 import org.jtheque.views.able.panel.IModuleView;
-import org.jtheque.views.able.panel.IRepositoryView;
 import org.jtheque.views.impl.components.renderers.ModuleListRenderer;
 import org.jtheque.views.impl.models.ModuleListModel;
 
@@ -49,7 +47,6 @@ public final class ModulesPanel extends OSGIFilthyBuildedPanel implements IModul
         IModuleService moduleService = getService(IModuleService.class);
 
         IModuleView moduleView = getBean(IModuleView.class);
-        IRepositoryView repositoryView = getBeanFromEDT(IRepositoryView.class);
 
         builder.add(new KernelInfoPanel(languageService, getService(IFilthyUtils.class), updateService,
                 moduleView),
@@ -72,7 +69,7 @@ public final class ModulesPanel extends OSGIFilthyBuildedPanel implements IModul
                 moduleView.getControllerAction("modules.actions.file.new"),
                 moduleView.getControllerAction("modules.actions.uninstall"),
                 moduleView.getControllerAction("modules.actions.update"),
-                ActionFactory.createDisplayViewAction("modules.actions.repository", repositoryView));
+                moduleView.getControllerAction("modules.actions.repository"));
     }
 
     @Override
