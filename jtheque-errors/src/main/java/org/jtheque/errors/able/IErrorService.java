@@ -32,40 +32,6 @@ public interface IErrorService {
     void addError(IError error);
 
     /**
-     * Add an internationalizable error.
-     *
-     * @param titleKey the internationalized key.
-     */
-    void addInternationalizedError(String titleKey);
-
-    /**
-     * Add an internationalizable error.
-     *
-     * @param titleKey      the internationalized key.
-     * @param titleReplaces the object to use in replaces.
-     */
-    void addInternationalizedError(String titleKey, Object[] titleReplaces);
-
-    /**
-     * Add an internationalized error.
-     *
-     * @param titleKey      The internationalized key of the title.
-     * @param titleReplaces The replaces of the title.
-     * @param detailsKey    The internationalization key of the details.
-     */
-    void addInternationalizedError(String titleKey, Object[] titleReplaces, String detailsKey);
-
-    /**
-     * Add an internationalized error.
-     *
-     * @param titleKey        The internationalized key of the title.
-     * @param titleReplaces   The replaces of the title.
-     * @param detailsKey      The internationalization key of the details.
-     * @param detailsReplaces The replaces of the details.
-     */
-    void addInternationalizedError(String titleKey, Object[] titleReplaces, String detailsKey, Object[] detailsReplaces);
-
-    /**
      * Return all the errors occurred in this session.
      *
      * @return A List containing all the errors occurred in this session.

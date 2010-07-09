@@ -1,7 +1,7 @@
 package org.jtheque.ui.utils.constraints;
 
 import org.jtheque.errors.able.IError;
-import org.jtheque.errors.utils.InternationalizedError;
+import org.jtheque.errors.utils.Errors;
 
 import javax.swing.ComboBoxModel;
 import javax.swing.JList;
@@ -67,7 +67,7 @@ public final class AtLeastOneConstraint implements Constraint {
         }
 
         if (count <= 0) {
-            errors.add(new InternationalizedError("error.validation.field.empty", new Object[]{fieldName}));
+            errors.add(Errors.newI18nError("error.validation.field.empty", new Object[]{fieldName}));
         }
     }
 

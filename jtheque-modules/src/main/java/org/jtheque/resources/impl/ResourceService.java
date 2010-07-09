@@ -2,6 +2,7 @@ package org.jtheque.resources.impl;
 
 import org.jtheque.core.utils.SystemProperty;
 import org.jtheque.errors.able.IErrorService;
+import org.jtheque.errors.utils.Errors;
 import org.jtheque.events.able.EventLevel;
 import org.jtheque.events.able.IEventService;
 import org.jtheque.events.utils.Event;
@@ -124,13 +125,13 @@ public class ResourceService implements IResourceService, BundleContextAware {
 
         if (!WebUtils.isURLReachable(url)) {
             if (WebUtils.isInternetReachable()) {
-                errorService.addInternationalizedError(
+                errorService.addError(Errors.newI18nError(
                         "modules.resources.network.resource.title", ArrayUtils.EMPTY_ARRAY,
-                        "modules.resources.network.resource", new Object[]{url});
+                        "modules.resources.network.resource", new Object[]{url}));
             } else {
-                errorService.addInternationalizedError(
+                errorService.addError(Errors.newI18nError(
                         "modules.resources.network.internet.title", ArrayUtils.EMPTY_ARRAY,
-                        "modules.resources.network.internet", new Object[]{url});
+                        "modules.resources.network.internet", new Object[]{url}));
             }
 
             eventService.addEvent(IEventService.CORE_EVENT_LOG,

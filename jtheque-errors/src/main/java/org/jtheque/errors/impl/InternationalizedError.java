@@ -1,4 +1,4 @@
-package org.jtheque.errors.utils;
+package org.jtheque.errors.impl;
 
 import org.jtheque.i18n.able.ILanguageService;
 import org.jtheque.utils.collections.ArrayUtils;
@@ -25,42 +25,8 @@ import org.jtheque.utils.collections.ArrayUtils;
  * @author Baptiste Wicht
  */
 public final class InternationalizedError extends JThequeError {
-    private Object[] titleReplaces;
-    private Object[] detailsReplaces;
-
-    /**
-     * Construct a new InternationalizedError.
-     *
-     * @param message The message key.
-     */
-    public InternationalizedError(String message) {
-        super(message);
-    }
-
-    /**
-     * Construct a new InternationalizedError.
-     *
-     * @param message  The message key.
-     * @param replaces The replaces for the internationalization variable arguments of the message.
-     */
-    public InternationalizedError(String message, Object[] replaces) {
-        super(message);
-
-        titleReplaces = ArrayUtils.copyOf(replaces);
-    }
-
-    /**
-     * Construct a new InternationalizedError.
-     *
-     * @param message  The message key.
-     * @param replaces The replaces for the internationalization variable arguments of the message.
-     * @param details  The details key.
-     */
-    public InternationalizedError(String message, Object[] replaces, String details) {
-        super(message, details);
-
-        titleReplaces = ArrayUtils.copyOf(replaces);
-    }
+    private final Object[] titleReplaces;
+    private final Object[] detailsReplaces;
 
     /**
      * Construct a new InternationalizedError.
@@ -71,7 +37,7 @@ public final class InternationalizedError extends JThequeError {
      * @param replacesDetails The replaces for the internationalization variable arguments of the details.
      */
     public InternationalizedError(String message, Object[] replaces, String details, Object[] replacesDetails) {
-        super(message, details);
+        super(message, Level.ERROR, details, null);
 
         titleReplaces = ArrayUtils.copyOf(replaces);
         detailsReplaces = ArrayUtils.copyOf(replacesDetails);

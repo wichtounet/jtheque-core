@@ -2,6 +2,7 @@ package org.jtheque.update.impl.versions;
 
 import org.jtheque.core.able.ICore;
 import org.jtheque.errors.able.IErrorService;
+import org.jtheque.errors.utils.Errors;
 import org.jtheque.modules.able.Module;
 import org.jtheque.resources.impl.CoreDescriptor;
 import org.jtheque.resources.impl.CoreVersion;
@@ -152,9 +153,9 @@ public final class DescriptorsLoader implements IVersionsLoader {
             cache.put(url, DescriptorReader.readModuleDescriptor(url));
 
             if (!cache.containsKey(url)) {
-                errorService.addInternationalizedError(
+                errorService.addError(Errors.newI18nError(
                         "error.update.internet.title", ArrayUtils.EMPTY_ARRAY,
-                        "error.update.internet");
+                        "error.update.internet"));
             }
         }
 
@@ -166,9 +167,9 @@ public final class DescriptorsLoader implements IVersionsLoader {
             coreDescriptor = DescriptorReader.readCoreDescriptor(core.getDescriptorURL());
 
             if (coreDescriptor == null) {
-                errorService.addInternationalizedError(
+                errorService.addError(Errors.newI18nError(
                         "error.update.internet.title", ArrayUtils.EMPTY_ARRAY,
-                        "error.update.internet");
+                        "error.update.internet"));
             }
         }
 

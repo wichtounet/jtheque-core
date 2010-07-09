@@ -1,4 +1,4 @@
-package org.jtheque.errors.utils;
+package org.jtheque.errors.impl;
 
 import org.jtheque.errors.able.IError;
 import org.jtheque.i18n.able.ILanguageService;
@@ -26,22 +26,9 @@ import org.jtheque.i18n.able.ILanguageService;
  */
 public class JThequeError implements IError {
     final String title;
-    Throwable exception;
-    String details;
-    Level level;
-
-    /**
-     * Construct a new Error with a simple message.
-     *
-     * @param title The message of the error.
-     */
-    public JThequeError(String title) {
-        super();
-
-        this.title = title;
-
-        level = Level.ERROR;
-    }
+    final Throwable exception;
+    final String details;
+    final Level level;
 
     /**
      * Create a new error.
@@ -49,52 +36,13 @@ public class JThequeError implements IError {
      * @param title The title of the error.
      * @param level The level of error.
      */
-    public JThequeError(String title, Level level) {
+    public JThequeError(String title, Level level, String details, Throwable exception) {
         super();
 
         this.title = title;
         this.level = level;
-    }
-
-    /**
-     * Construct a new Error with a message and some details.
-     *
-     * @param title   The message of the error.
-     * @param details Some details about the error.
-     */
-    public JThequeError(String title, String details) {
-        this(title);
-
         this.details = details;
-
-        level = Level.ERROR;
-    }
-
-    /**
-     * Construct a new Error from an existing exception. The message of the error will be the message of the exception.
-     *
-     * @param exception The existing exception.
-     */
-    public JThequeError(Throwable exception) {
-        this(exception.getMessage());
-
         this.exception = exception;
-
-        level = Level.ERROR;
-    }
-
-    /**
-     * Construct a new Error from an existing exception with a specific message.
-     *
-     * @param exception The exception to encapsulate in the error.
-     * @param title     The message.
-     */
-    public JThequeError(Throwable exception, String title) {
-        this(title);
-
-        this.exception = exception;
-
-        level = Level.ERROR;
     }
 
     @Override

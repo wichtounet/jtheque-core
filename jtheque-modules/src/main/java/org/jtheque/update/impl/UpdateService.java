@@ -20,6 +20,7 @@ import org.jtheque.core.able.ICore;
 import org.jtheque.core.able.Versionable;
 import org.jtheque.core.utils.SystemProperty;
 import org.jtheque.errors.able.IErrorService;
+import org.jtheque.errors.utils.Errors;
 import org.jtheque.events.able.EventLevel;
 import org.jtheque.events.able.IEventService;
 import org.jtheque.events.utils.Event;
@@ -146,13 +147,13 @@ public final class UpdateService implements IUpdateService {
      */
     private void addNotReachableError(String url) {
         if (WebUtils.isInternetReachable()) {
-            errorService.addInternationalizedError(
+            errorService.addError(Errors.newI18nError(
                     "modules.updates.network.resource.title", ArrayUtils.EMPTY_ARRAY,
-                    "modules.updates.network.resource", new Object[]{url});
+                    "modules.updates.network.resource", new Object[]{url}));
         } else {
-            errorService.addInternationalizedError(
+            errorService.addError(Errors.newI18nError(
                     "modules.updates.network.internet.title", ArrayUtils.EMPTY_ARRAY,
-                    "modules.updates.network.internet", new Object[]{url});
+                    "modules.updates.network.internet", new Object[]{url}));
         }
     }
 
@@ -297,7 +298,7 @@ public final class UpdateService implements IUpdateService {
     @Override
     public List<String> getPossibleUpdates() {
         if (!WebUtils.isInternetReachable()) {
-            errorService.addInternationalizedError("internet.necessary");
+            errorService.addError(Errors.newI18nError("internet.necessary"));
 
             return CollectionUtils.emptyList();
         }

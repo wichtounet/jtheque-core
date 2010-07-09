@@ -20,7 +20,6 @@ import org.jtheque.core.utils.WeakEventListenerList;
 import org.jtheque.errors.able.ErrorListener;
 import org.jtheque.errors.able.IError;
 import org.jtheque.errors.able.IErrorService;
-import org.jtheque.errors.utils.InternationalizedError;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -40,27 +39,6 @@ public final class ErrorService implements IErrorService {
         errors.add(error);
 
         fireErrorOccurred(error);
-    }
-
-    @Override
-    public void addInternationalizedError(String titleKey) {
-        addError(new InternationalizedError(titleKey));
-    }
-
-    @Override
-    public void addInternationalizedError(String titleKey, Object[] titleReplaces) {
-        addError(new InternationalizedError(titleKey, titleReplaces));
-    }
-
-    @Override
-    public void addInternationalizedError(String titleKey, Object[] titleReplaces, String detailsKey) {
-        addError(new InternationalizedError(titleKey, titleReplaces, detailsKey));
-    }
-
-    @Override
-    public void addInternationalizedError(String titleKey, Object[] titleReplaces, String detailsKey,
-                                          Object[] detailsReplaces) {
-        addError(new InternationalizedError(titleKey, titleReplaces, detailsKey, detailsReplaces));
     }
 
     @Override

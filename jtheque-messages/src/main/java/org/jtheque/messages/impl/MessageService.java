@@ -18,6 +18,7 @@ package org.jtheque.messages.impl;
 
 import org.jtheque.core.able.ICore;
 import org.jtheque.errors.able.IErrorService;
+import org.jtheque.errors.utils.Errors;
 import org.jtheque.events.able.EventLevel;
 import org.jtheque.events.able.IEventService;
 import org.jtheque.events.utils.Event;
@@ -156,13 +157,13 @@ public final class MessageService implements IMessageService, ModuleListener {
             }
         } else {
             if (WebUtils.isInternetReachable()) {
-                errorService.addInternationalizedError(
+                errorService.addError(Errors.newI18nError(
                         "messages.network.resource.title", ArrayUtils.EMPTY_ARRAY,
-                        "messages.network.resource", new Object[]{url});
+                        "messages.network.resource", new Object[]{url}));
             } else {
-                errorService.addInternationalizedError(
+                errorService.addError(Errors.newI18nError(
                         "messages.network.internet.title", ArrayUtils.EMPTY_ARRAY,
-                        "messages.network.internet", new Object[]{url});
+                        "messages.network.internet", new Object[]{url}));
             }
 
             eventService.addEvent(IEventService.CORE_EVENT_LOG,

@@ -1,7 +1,7 @@
 package org.jtheque.ui.utils.constraints;
 
 import org.jtheque.errors.able.IError;
-import org.jtheque.errors.utils.InternationalizedError;
+import org.jtheque.errors.utils.Errors;
 
 import java.util.Collection;
 
@@ -53,7 +53,7 @@ public final class NotNullConstraint implements Constraint {
     @Override
     public void validate(Object field, Collection<IError> errors) {
         if (field == null) {
-            errors.add(new InternationalizedError("error.validation.field.empty", new Object[]{fieldName}));
+            errors.add(Errors.newI18nError("error.validation.field.empty", new Object[]{fieldName}));
         }
     }
 

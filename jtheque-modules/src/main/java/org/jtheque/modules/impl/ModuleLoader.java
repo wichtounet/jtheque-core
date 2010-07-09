@@ -3,7 +3,7 @@ package org.jtheque.modules.impl;
 import org.jtheque.core.able.ICore;
 import org.jtheque.core.utils.OSGiUtils;
 import org.jtheque.errors.able.IErrorService;
-import org.jtheque.errors.utils.JThequeError;
+import org.jtheque.errors.utils.Errors;
 import org.jtheque.i18n.able.ILanguageService;
 import org.jtheque.i18n.utils.I18NResourceFactory;
 import org.jtheque.modules.able.IModuleLoader;
@@ -120,10 +120,10 @@ public final class ModuleLoader implements IModuleLoader, BundleContextAware {
             loadI18NResources(container);
         } catch (BundleException e) {
             LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
-            OSGiUtils.getService(bundleContext, IErrorService.class).addError(new JThequeError(e));
+            OSGiUtils.getService(bundleContext, IErrorService.class).addError(Errors.newError(e));
         } catch (IOException e) {
             LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
-            OSGiUtils.getService(bundleContext, IErrorService.class).addError(new JThequeError(e));
+            OSGiUtils.getService(bundleContext, IErrorService.class).addError(Errors.newError(e));
         }
 
         return container;
@@ -237,7 +237,7 @@ public final class ModuleLoader implements IModuleLoader, BundleContextAware {
             importResources(resources, reader);
         } catch (XMLException e) {
             LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
-            OSGiUtils.getService(bundleContext, IErrorService.class).addError(new JThequeError(e));
+            OSGiUtils.getService(bundleContext, IErrorService.class).addError(Errors.newError(e));
         }
 
         return resources;

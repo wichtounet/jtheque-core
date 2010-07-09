@@ -17,7 +17,7 @@ package org.jtheque.ui.utils;
  */
 
 import org.jtheque.errors.able.IError;
-import org.jtheque.errors.utils.InternationalizedError;
+import org.jtheque.errors.utils.Errors;
 import org.jtheque.utils.StringUtils;
 
 import javax.swing.ComboBoxModel;
@@ -47,7 +47,7 @@ public final class ValidationUtils {
      */
     public static void rejectIfEmpty(CharSequence field, String name, Collection<IError> errors) {
         if (StringUtils.isEmpty(field)) {
-            errors.add(new InternationalizedError("error.validation.field.empty", new Object[]{name}));
+            errors.add(Errors.newI18nError("error.validation.field.empty", new Object[]{name}));
         }
     }
 
@@ -61,7 +61,7 @@ public final class ValidationUtils {
      */
     public static void rejectIfLongerThan(CharSequence field, String name, int max, Collection<IError> errors) {
         if (!StringUtils.isEmpty(field) && field.length() > max) {
-            errors.add(new InternationalizedError("error.validation.field.lenght", new Object[]{name, max}));
+            errors.add(Errors.newI18nError("error.validation.field.lenght", new Object[]{name, max}));
         }
     }
 
@@ -74,7 +74,7 @@ public final class ValidationUtils {
      */
     public static void rejectIfNothingSelected(JList list, String name, Collection<IError> errors) {
         if (list.getSelectedIndex() <= -1) {
-            errors.add(new InternationalizedError("error.validation.nothing.selected", new Object[]{name}));
+            errors.add(Errors.newI18nError("error.validation.nothing.selected", new Object[]{name}));
         }
     }
 
@@ -87,7 +87,7 @@ public final class ValidationUtils {
      */
     public static void rejectIfNothingSelected(ComboBoxModel model, String name, Collection<IError> errors) {
         if (model.getSelectedItem() == null) {
-            errors.add(new InternationalizedError("error.validation.nothing.selected", new Object[]{name}));
+            errors.add(Errors.newI18nError("error.validation.nothing.selected", new Object[]{name}));
         }
     }
 
@@ -102,7 +102,7 @@ public final class ValidationUtils {
         try {
             Integer.parseInt(field);
         } catch (NumberFormatException e) {
-            errors.add(new InternationalizedError("error.validation.field.numerical", new Object[]{name}));
+            errors.add(Errors.newI18nError("error.validation.field.numerical", new Object[]{name}));
         }
     }
 
@@ -115,7 +115,7 @@ public final class ValidationUtils {
      */
     public static void rejectIfEmpty(Collection<?> list, String name, Collection<IError> errors) {
         if (list != null && list.isEmpty()) {
-            errors.add(new InternationalizedError("error.validation.field.empty", new Object[]{name}));
+            errors.add(Errors.newI18nError("error.validation.field.empty", new Object[]{name}));
         }
     }
 
@@ -128,7 +128,7 @@ public final class ValidationUtils {
      */
     public static void rejectIfEmpty(JList list, String name, Collection<IError> errors) {
         if (list != null && list.getModel().getSize() < 1) {
-            errors.add(new InternationalizedError("error.validation.field.empty", new Object[]{name}));
+            errors.add(Errors.newI18nError("error.validation.field.empty", new Object[]{name}));
         }
     }
 }

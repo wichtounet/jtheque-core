@@ -1,7 +1,7 @@
 package org.jtheque.ui.utils.constraints;
 
 import org.jtheque.errors.able.IError;
-import org.jtheque.errors.utils.InternationalizedError;
+import org.jtheque.errors.utils.Errors;
 import org.jtheque.ui.utils.ValidationUtils;
 import org.jtheque.ui.utils.components.FileChooserPanel;
 
@@ -75,7 +75,7 @@ public final class ValidFileConstraint implements Constraint {
             }
 
             if (errors.isEmpty() && !new File(filePath).exists()) {
-                errors.add(new InternationalizedError("error.validation.field.file", new Object[]{fieldName}));
+                errors.add(Errors.newI18nError("error.validation.field.file", new Object[]{fieldName}));
             }
         }
     }

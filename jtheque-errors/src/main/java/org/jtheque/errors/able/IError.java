@@ -19,9 +19,10 @@ package org.jtheque.errors.able;
 import org.jtheque.i18n.able.ILanguageService;
 
 /**
- * An error. That error must be convertible to an error info to be managed by the error service.
+ * An error.
  *
  * @author Baptiste Wicht
+ * @see org.jtheque.errors.utils.Errors
  */
 public interface IError {
     /**
