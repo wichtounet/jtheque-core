@@ -132,7 +132,7 @@ public final class UpdateService implements IUpdateService {
             addNotReachableError(url);
 
             eventService.addEvent(IEventService.CORE_EVENT_LOG,
-                    new Event(EventLevel.ERROR, "System", "events.updates.network"));
+                    Event.newEvent(EventLevel.ERROR, "System", "events.updates.network"));
 
             result.setInstalled(false);
         }
@@ -214,7 +214,7 @@ public final class UpdateService implements IUpdateService {
         addNotReachableError(object.getDescriptorURL());
 
         eventService.addEvent(IEventService.CORE_EVENT_LOG,
-                new Event(EventLevel.ERROR, "System", "events.updates.network"));
+                Event.newEvent(EventLevel.ERROR, "System", "events.updates.network"));
 
         return true;
     }

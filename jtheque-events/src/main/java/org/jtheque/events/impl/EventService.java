@@ -109,9 +109,7 @@ public final class EventService implements IEventService {
                 logs.put(name, new ArrayList<IEvent>(elements.size()));
 
                 for (Node element : elements) {
-                    Event log = readLog(reader, name, element);
-
-                    logs.get(name).add(log);
+                    logs.get(name).add(readEvent(reader, name, element));
                 }
             }
         } catch (XMLException e) {
@@ -143,17 +141,17 @@ public final class EventService implements IEventService {
      *
      * @throws XMLException If an error occurs during the xml reading.
      */
-    private static Event readLog(IXMLReader<Node> reader, String name, Object element) throws XMLException {
-        Event log = new Event(
+    private static IEvent readEvent(IXMLReader<Node> reader, String name, Object element) throws XMLException {
+        IEvent event = Event.newEvent(
                 EventLevel.get(reader.readInt("level", element)),
                 new Date(reader.readLong("date", element)),
                 reader.readString("source", element),
-                reader.readString("title", element));
+                reader.readString("title", element),
+                reader.readString("details", element));
 
-        log.setDetailsKey(reader.readString("details", element));
-        log.setLog(name);
+        event.setLog(name);
 
-        return log;
+        return event;
     }
 
     /**
@@ -179,16 +177,16 @@ public final class EventService implements IEventService {
      * Write the events to the XML file.
      *
      * @param writer The writer to use.
-     * @param logs   The logs to write.
+     * @param events   The logs to write.
      */
-    private static void writeEvents(IXMLWriter<Node> writer, Iterable<IEvent> logs) {
-        for (IEvent log : logs) {
+    private static void writeEvents(IXMLWriter<Node> writer, Iterable<IEvent> events) {
+        for (IEvent event : events) {
             writer.add("event");
 
-            writer.addOnly("level", Integer.toString(log.getLevel().intValue()));
-            writer.addOnly("date", Long.toString(log.getDate().getTime()));
-            writer.addOnly("source", log.getSource());
-            writer.addOnly("title", log.getTitleKey());
+            writer.addOnly("level", Integer.toString(event.getLevel().intValue()));
+            writer.addOnly("date", Long.toString(event.getDate().getTime()));
+            writer.addOnly("source", event.getSource());
+            writer.addOnly("title", event.getTitleKey());
 
             writer.switchToParent();
         }

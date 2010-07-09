@@ -135,7 +135,7 @@ public class ResourceService implements IResourceService, BundleContextAware {
             }
 
             eventService.addEvent(IEventService.CORE_EVENT_LOG,
-                    new Event(EventLevel.ERROR, "System", "events.resources.network"));
+                    Event.newEvent(EventLevel.ERROR, "System", "events.resources.network"));
 
             return null;
         }

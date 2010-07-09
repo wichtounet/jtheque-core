@@ -22,7 +22,7 @@ import java.util.Date;
  */
 
 /**
- * An event log.
+ * An event.
  *
  * @author Baptiste Wicht
  */
@@ -31,35 +31,26 @@ public final class Event implements IEvent {
     private final Date date;
     private final String source;
     private final String titleKey;
+    private final String detailsKey;
     private String log;
-    private String detailsKey;
 
     /**
      * Construct a new Event.
      *
-     * @param level    The level of the event.
-     * @param source   The source of the event.
-     * @param titleKey The internationalization key of the title.
+     * @param level      The level of the event.
+     * @param date       The date of the event.
+     * @param source     The source of the event.
+     * @param titleKey   The internationalization key of the title.
+     * @param detailsKey The internationalization key of the details.
      */
-    public Event(EventLevel level, String source, String titleKey) {
-        this(level, new Date(), source, titleKey);
-    }
-
-    /**
-     * Construct a new Event.
-     *
-     * @param level    The level of the event.
-     * @param date     The date of the event.
-     * @param source   The source of the event.
-     * @param titleKey The internationalization key of the title.
-     */
-    public Event(EventLevel level, Date date, String source, String titleKey) {
+    private Event(EventLevel level, Date date, String source, String titleKey, String detailsKey) {
         super();
 
         this.level = level;
         this.date = new Date(date.getTime());
         this.source = source;
         this.titleKey = titleKey;
+        this.detailsKey = detailsKey;
     }
 
     @Override
@@ -75,15 +66,6 @@ public final class Event implements IEvent {
     @Override
     public String getDetailsKey() {
         return detailsKey;
-    }
-
-    /**
-     * Set the details internationalization key.
-     *
-     * @param detailsKey The details internationalization key.
-     */
-    public void setDetailsKey(String detailsKey) {
-        this.detailsKey = detailsKey;
     }
 
     @Override
@@ -104,5 +86,47 @@ public final class Event implements IEvent {
     @Override
     public String getTitleKey() {
         return titleKey;
+    }
+
+    /**
+     * Construct a new Event.
+     *
+     * @param level    The level of the event.
+     * @param source   The source of the event.
+     * @param titleKey The internationalization key of the title.
+     *
+     * @return The created event.
+     */
+    public static Event newEvent(EventLevel level, String source, String titleKey) {
+        return newEvent(level, new Date(), source, titleKey, null);
+    }
+
+    /**
+     * Construct a new Event.
+     *
+     * @param level    The level of the event.
+     * @param date     The date of the event.
+     * @param source   The source of the event.
+     * @param titleKey The internationalization key of the title.
+     *
+     * @return The created event.
+     */
+    public static Event newEvent(EventLevel level, Date date, String source, String titleKey) {
+        return newEvent(level, date, source, titleKey, null);
+    }
+
+    /**
+     * Construct a new Event.
+     *
+     * @param level      The level of the event.
+     * @param date       The date of the event.
+     * @param source     The source of the event.
+     * @param titleKey   The internationalization key of the title.
+     * @param detailsKey The internationalization key of the details.
+     *
+     * @return The created event.
+     */
+    public static Event newEvent(EventLevel level, Date date, String source, String titleKey, String detailsKey) {
+        return new Event(level, date, source, titleKey, detailsKey);
     }
 }
