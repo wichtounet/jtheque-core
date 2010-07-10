@@ -75,7 +75,7 @@ public final class CollectionPane extends JXPanel implements ICollectionView, Fi
      */
     @PostConstruct
     void build() {
-        chooseAction = ActionFactory.createControllerAction("collections.actions.choose", collectionController);
+        chooseAction = ActionFactory.createAction("collections.actions.choose", collectionController);
 
         setOpaque(true);
         setBackground(BACKGROUND_COLOR);
@@ -175,8 +175,8 @@ public final class CollectionPane extends JXPanel implements ICollectionView, Fi
     private void addButtonBar(GridBagUtils gbc) {
         Container buttonsPanel = new JPanel();
 
-        JThequeAction createAction = ActionFactory.createControllerAction("collections.actions.create", collectionController);
-        JThequeAction cancelAction = ActionFactory.createControllerAction("collections.actions.cancel", collectionController);
+        JThequeAction createAction = ActionFactory.createAction("collections.actions.create", collectionController);
+        JThequeAction cancelAction = ActionFactory.createAction("collections.actions.cancel", collectionController);
 
         createAction.refreshText(languageService);
         cancelAction.refreshText(languageService);

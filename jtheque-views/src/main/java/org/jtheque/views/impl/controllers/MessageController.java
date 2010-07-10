@@ -33,6 +33,10 @@ public class MessageController extends AbstractController {
     @Resource
     private IMessageView messageView;
 
+    private void close() {
+        messageView.closeDown();
+    }
+
     /**
      * Open the next message.
      */
@@ -53,6 +57,7 @@ public class MessageController extends AbstractController {
 
         translations.put("messages.actions.display.next", "next");
         translations.put("messages.actions.display.previous", "previous");
+        translations.put("messages.actions.close", "close");
 
         return translations;
     }

@@ -31,19 +31,7 @@ public final class ActionFactory {
     private ActionFactory() {
         super();
     }
-
-    /**
-     * Create an action to close the view.
-     *
-     * @param key  The i18n key.
-     * @param view The view to close.
-     *
-     * @return An action to close the view.
-     */
-    public static JThequeAction createCloseViewAction(String key, IView view) {
-        return new CloseViewAction(key, view);
-    }
-
+    
     /**
      * Create an action to display the view.
      *
@@ -65,7 +53,7 @@ public final class ActionFactory {
      *
      * @return The JThequeAction for this controller binding.
      */
-    public static JThequeAction createControllerAction(String key, IController controller) {
+    public static JThequeAction createAction(String key, IController controller) {
         return new ControllerAction(key, controller);
     }
 }

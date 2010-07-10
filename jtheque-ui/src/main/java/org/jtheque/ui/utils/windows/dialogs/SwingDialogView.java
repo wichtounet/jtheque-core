@@ -118,17 +118,6 @@ public abstract class SwingDialogView<T extends IModel> extends JDialog
         return state.getContent().getGlassPane();
     }
 
-    /**
-     * Return an action to close this view.
-     *
-     * @param key The i18n key.
-     *
-     * @return An action to close this view.
-     */
-    public Action getCloseAction(String key) {
-        return ActionFactory.createCloseViewAction(key, this);
-    }
-
     @Override
     public void closeDown() {
         setVisible(false);
@@ -280,8 +269,8 @@ public abstract class SwingDialogView<T extends IModel> extends JDialog
     }
 
     @Override
-    public Action getControllerAction(String key) {
-        return ActionFactory.createControllerAction(key, state.getController());
+    public Action getAction(String key) {
+        return ActionFactory.createAction(key, state.getController());
     }
 
     @Override

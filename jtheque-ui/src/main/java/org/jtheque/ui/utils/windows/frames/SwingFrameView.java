@@ -275,8 +275,8 @@ public abstract class SwingFrameView<T extends IModel> extends JFrame
     }
 
     @Override
-    public Action getControllerAction(String key) {
-        return ActionFactory.createControllerAction(key, state.getController());
+    public Action getAction(String key) {
+        return ActionFactory.createAction(key, state.getController());
     }
 
     @Override

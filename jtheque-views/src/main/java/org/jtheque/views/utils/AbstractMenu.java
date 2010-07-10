@@ -282,18 +282,6 @@ public abstract class AbstractMenu implements Menu {
     //Utility action methods
 
     /**
-     * Create an action to close the view.
-     *
-     * @param key  The i18n key.
-     * @param view The view to close.
-     *
-     * @return An action to close the view.
-     */
-    public static JThequeAction createCloseViewAction(String key, IView view) {
-        return ActionFactory.createCloseViewAction(key, view);
-    }
-
-    /**
      * Create an action to display the view.
      *
      * @param key  The i18n key.
@@ -314,7 +302,7 @@ public abstract class AbstractMenu implements Menu {
      * @return The JThequeAction for this controller binding.
      */
     public static JThequeAction createControllerAction(String key, IController controller) {
-        return ActionFactory.createControllerAction(key, controller);
+        return ActionFactory.createAction(key, controller);
     }
 
     @Override

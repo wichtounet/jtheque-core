@@ -61,9 +61,9 @@ public final class ConfigView extends SwingFilthyBuildedDialogView<IModel> imple
         builder.add(tab, builder.gbcSet(0, 0, GridBagUtils.BOTH));
 
         builder.addButtonBar(builder.gbcSet(0, 1, GridBagUtils.HORIZONTAL),
-                getControllerAction("config.actions.ok"),
-                getControllerAction("config.actions.apply"),
-                getControllerAction("config.actions.cancel"));
+                getAction("config.actions.ok"),
+                getAction("config.actions.apply"),
+                getAction("config.actions.cancel"));
 
         SimplePropertiesCache.put("config-view-loaded", "true");
     }

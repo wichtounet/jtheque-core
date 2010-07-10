@@ -45,7 +45,7 @@ public interface IWindowView extends IView {
      *
      * @return The action bind to the controller of the view. 
      */
-    Action getControllerAction(String key);
+    Action getAction(String key);
 
     /**
      * Return the window state.
