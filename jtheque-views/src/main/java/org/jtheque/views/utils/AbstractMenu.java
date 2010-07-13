@@ -8,7 +8,6 @@ import org.jtheque.features.able.Menu;
 import org.jtheque.i18n.able.ILanguageService;
 import org.jtheque.i18n.able.Internationalizable;
 import org.jtheque.ui.able.IController;
-import org.jtheque.ui.able.IView;
 import org.jtheque.ui.utils.actions.ActionFactory;
 import org.jtheque.ui.utils.actions.JThequeAction;
 import org.jtheque.utils.collections.CollectionUtils;

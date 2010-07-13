@@ -18,6 +18,7 @@ package org.jtheque.ui.utils.actions;
 
 import org.jtheque.i18n.able.ILanguageService;
 import org.jtheque.i18n.able.Internationalizable;
+import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.collections.ArrayUtils;
 
 import javax.swing.AbstractAction;
@@ -33,6 +34,12 @@ public abstract class JThequeAction extends AbstractAction implements Internatio
     private Object[] replaces;
 
     private static final Object[] EMPTY_REPLACES = {};
+
+    protected JThequeAction() {
+        super();
+
+        key = "";
+    }
 
     /**
      * Construct a new JThequeAction.
@@ -81,10 +88,12 @@ public abstract class JThequeAction extends AbstractAction implements Internatio
 
     @Override
     public final void refreshText(ILanguageService languageService) {
-        if (replaces == null) {
-            setText(languageService.getMessage(key));
-        } else {
-            setText(languageService.getMessage(key, replaces));
+        if(StringUtils.isNotEmpty(key)){
+            if (replaces == null) {
+                setText(languageService.getMessage(key));
+            } else {
+                setText(languageService.getMessage(key, replaces));
+            }
         }
     }
 }

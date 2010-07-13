@@ -21,6 +21,7 @@ import org.jtheque.core.able.lifecycle.TitleEvent;
 import org.jtheque.core.able.lifecycle.TitleListener;
 import org.jtheque.core.utils.SimplePropertiesCache;
 import org.jtheque.i18n.able.ILanguageService;
+import org.jtheque.ui.able.IModel;
 import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.ui.utils.builders.JThequePanelBuilder;
 import org.jtheque.ui.utils.builders.PanelBuilder;
@@ -56,7 +57,7 @@ import java.util.Collection;
  *
  * @author Baptiste Wicht
  */
-public final class MainView extends SwingFrameView implements TitleListener, IMainView {
+public final class MainView extends SwingFrameView<IModel> implements TitleListener, IMainView {
     private MainTabbedPane tab;
 
     private MainController controller;

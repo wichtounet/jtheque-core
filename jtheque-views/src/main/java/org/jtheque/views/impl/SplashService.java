@@ -1,7 +1,6 @@
 package org.jtheque.views.impl;
 
 import org.jtheque.core.able.ICore;
-import org.jtheque.core.utils.SimplePropertiesCache;
 import org.jtheque.features.able.IFeatureService;
 import org.jtheque.utils.ui.SwingUtils;
 import org.jtheque.views.able.ISplashService;

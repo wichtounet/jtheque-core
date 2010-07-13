@@ -23,9 +23,6 @@ import org.jtheque.ui.utils.builders.JThequePanelBuilder;
 
 import javax.swing.JComponent;
 
-import java.awt.Container;
-import java.awt.Frame;
-
 /**
  * A swing dialog view.
  *

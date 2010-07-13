@@ -20,7 +20,6 @@ import org.jtheque.i18n.able.ILanguageService;
 import org.jtheque.ui.able.IModel;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.ui.utils.builders.JThequePanelBuilder;
-import org.jtheque.ui.utils.windows.dialogs.SwingDialogView;
 
 import javax.swing.JComponent;
 
