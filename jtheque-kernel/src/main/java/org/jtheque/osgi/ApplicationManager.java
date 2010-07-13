@@ -136,7 +136,6 @@ final class ApplicationManager {
      *
      * @author Baptiste Wicht
      */
-    @SuppressWarnings({"SocketOpenedButNotSafelyClosed"})
     private final class ServerThread extends Thread {
         @Override
         public void run() {
