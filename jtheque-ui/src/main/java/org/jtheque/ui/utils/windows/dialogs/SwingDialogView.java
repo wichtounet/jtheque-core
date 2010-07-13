@@ -63,7 +63,7 @@ public abstract class SwingDialogView<T extends IModel> extends JDialog
      * Construct a SwingDialogView modal to the main view.
      */
     protected SwingDialogView() {
-        super(SimplePropertiesCache.<Frame>get("mainView"));
+        super(SimplePropertiesCache.<Frame>get("mainView", Frame.class));
     }
 
     @PostConstruct

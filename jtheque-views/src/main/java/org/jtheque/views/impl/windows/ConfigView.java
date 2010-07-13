@@ -65,7 +65,7 @@ public final class ConfigView extends SwingFilthyBuildedDialogView<IModel> imple
                 getAction("config.actions.apply"),
                 getAction("config.actions.cancel"));
 
-        SimplePropertiesCache.put("config-view-loaded", "true");
+        SimplePropertiesCache.put("config-view-loaded", true);
     }
 
     @Override

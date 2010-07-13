@@ -41,8 +41,8 @@ public final class SwingViewDelegate implements ViewDelegate {
 
         Window parent = null;
 
-        if (SimplePropertiesCache.get(MAIN_VIEW_CACHE) != null) {
-            parent = SimplePropertiesCache.get(MAIN_VIEW_CACHE);
+        if (SimplePropertiesCache.get(MAIN_VIEW_CACHE, Window.class) != null) {
+            parent = SimplePropertiesCache.get(MAIN_VIEW_CACHE, Window.class);
         }
 
         final Window p = parent;
@@ -92,8 +92,8 @@ public final class SwingViewDelegate implements ViewDelegate {
     public String askText(String text) {
         Window parent = null;
 
-        if (SimplePropertiesCache.<Component>get(MAIN_VIEW_CACHE) != null) {
-            parent = (Window) SimplePropertiesCache.<Component>get(MAIN_VIEW_CACHE);
+        if (SimplePropertiesCache.get(MAIN_VIEW_CACHE, Component.class) != null) {
+            parent = (Window) SimplePropertiesCache.get(MAIN_VIEW_CACHE, Component.class);
         }
 
         return JOptionPane.showInputDialog(parent, text);
@@ -118,7 +118,7 @@ public final class SwingViewDelegate implements ViewDelegate {
 
         @Override
         public void run() {
-            JOptionPane.showMessageDialog(SimplePropertiesCache.<Component>get(MAIN_VIEW_CACHE), text);
+            JOptionPane.showMessageDialog(SimplePropertiesCache.get(MAIN_VIEW_CACHE, Component.class), text);
         }
     }
 }

@@ -214,7 +214,7 @@ public final class ModuleService implements IModuleService {
 
     @Override
     public boolean needTwoPhasesLoading(Module module) {
-        return module.isCollection() && !SimplePropertiesCache.<Boolean>get("collectionChosen");
+        return module.isCollection() && !SimplePropertiesCache.get("collectionChosen", Boolean.class);
     }
 
     @Override

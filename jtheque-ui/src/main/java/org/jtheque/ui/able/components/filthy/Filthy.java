@@ -19,6 +19,7 @@ import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.ListCellRenderer;
 import javax.swing.ListModel;
 import javax.swing.text.DefaultFormatter;
 
@@ -81,7 +82,7 @@ public class Filthy {
         return new FilthyFormattedTextField(formatter);
     }
 
-    public static DefaultListCellRenderer newListRenderer() {
+    public static ListCellRenderer newListRenderer() {
         return new FilthyRenderer();
     }
 

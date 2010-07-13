@@ -185,7 +185,7 @@ public final class Views implements IViews, ApplicationContextAware, ModuleListe
         if (component != null && component.getComponent() != null) {
             stateBarComponents.add(component);
 
-            if ("true".equals(SimplePropertiesCache.get("statebar-loaded"))) {
+            if (SimplePropertiesCache.get("statebar-loaded", Boolean.class)) {
                 getMainView().getStateBar().addComponent(component);
             }
 
@@ -202,7 +202,7 @@ public final class Views implements IViews, ApplicationContextAware, ModuleListe
     public void addConfigTabComponent(String moduleId, ConfigTabComponent component) {
         configPanels.add(component);
 
-        if ("true".equals(SimplePropertiesCache.get("config-view-loaded"))) {
+        if (SimplePropertiesCache.get("config-view-loaded", Boolean.class)) {
             getConfigView().sendMessage("add", component);
         }
 
@@ -284,7 +284,7 @@ public final class Views implements IViews, ApplicationContextAware, ModuleListe
         for (ConfigTabComponent component : components) {
             configPanels.remove(component);
 
-            if ("true".equals(SimplePropertiesCache.get("config-view-loaded"))) {
+            if (SimplePropertiesCache.get("config-view-loaded", Boolean.class)) {
                 getConfigView().sendMessage("remove", component);
             }
         }

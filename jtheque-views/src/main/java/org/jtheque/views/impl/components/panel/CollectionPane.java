@@ -87,7 +87,7 @@ public final class CollectionPane extends JXPanel implements ICollectionView {
 
         gbc.setDefaultInsets(new Insets(0, 0, 0, 0));
 
-        add(Box.createVerticalStrut(SimplePropertiesCache.<Window>get("mainView").getHeight() / 3),
+        add(Box.createVerticalStrut(SimplePropertiesCache.get("mainView", Window.class).getHeight() / 3),
                 gbc.gbcSet(0, 0, GridBagConstraints.NONE, GridBagConstraints.CENTER, 4, 1, 1.0, 0.0));
 
         add(Box.createHorizontalStrut(LEFT_MARGIN_WIDTH), gbc.gbcSet(0, 1, GridBagConstraints.HORIZONTAL, GridBagConstraints.CENTER, 1, 4, 0.3, 0.0));

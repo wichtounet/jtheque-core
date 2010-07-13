@@ -65,7 +65,7 @@ final class Application extends Thread {
                 String command = reader.readLine();
 
                 if ("open".equals(command)) {
-                    SimplePropertiesCache.<IView>get("mainView").toFirstPlan();
+                    SimplePropertiesCache.<IView>get("mainView", IView.class).toFirstPlan();
                 } else if ("restart".equals(command)) {
                     kernel.restart();
                 }

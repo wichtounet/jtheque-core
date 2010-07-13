@@ -167,7 +167,7 @@ public final class MainView extends SwingFrameView<IModel> implements TitleListe
 
         stateBar = new JThequeStateBar(views);
 
-        SimplePropertiesCache.put("statebar-loaded", "true");
+        SimplePropertiesCache.put("statebar-loaded", true);
 
         builder.add(stateBar, builder.gbcSet(0, 1, GridBagUtils.HORIZONTAL, GridBagUtils.LAST_LINE_START));
 
