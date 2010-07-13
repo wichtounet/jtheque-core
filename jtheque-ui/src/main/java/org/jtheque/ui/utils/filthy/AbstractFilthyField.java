@@ -1,6 +1,5 @@
 package org.jtheque.ui.utils.filthy;
 
-import org.jtheque.ui.able.Filthy;
 import org.jtheque.ui.utils.components.Borders;
 
 import javax.swing.BorderFactory;
@@ -10,6 +9,8 @@ import javax.swing.text.JTextComponent;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+
+import static org.jtheque.ui.able.FilthyConstants.*;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -32,7 +33,7 @@ import java.awt.Color;
  *
  * @author Baptiste Wicht
  */
-public abstract class AbstractFilthyField extends JPanel implements Filthy {
+public abstract class AbstractFilthyField extends JPanel {
     /**
      * Construct a new AbstractFilthyField.
      */

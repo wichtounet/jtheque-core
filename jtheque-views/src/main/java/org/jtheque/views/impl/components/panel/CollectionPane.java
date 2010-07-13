@@ -19,7 +19,6 @@ package org.jtheque.views.impl.components.panel;
 import org.jtheque.core.able.ICore;
 import org.jtheque.core.utils.SimplePropertiesCache;
 import org.jtheque.i18n.able.ILanguageService;
-import org.jtheque.ui.able.Filthy;
 import org.jtheque.ui.able.IController;
 import org.jtheque.ui.utils.AnimationUtils;
 import org.jtheque.ui.utils.actions.ActionFactory;
@@ -49,10 +48,12 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.Window;
 
+import static org.jtheque.ui.able.FilthyConstants.*;
+
 /**
  * @author Baptiste Wicht
  */
-public final class CollectionPane extends JXPanel implements ICollectionView, Filthy {
+public final class CollectionPane extends JXPanel implements ICollectionView {
     private FilthyTextField textField;
     private FilthyPasswordField passwordField;
     private JLabel labelError;

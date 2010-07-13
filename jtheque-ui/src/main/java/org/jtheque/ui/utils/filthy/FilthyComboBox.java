@@ -1,6 +1,5 @@
 package org.jtheque.ui.utils.filthy;
 
-import org.jtheque.ui.able.Filthy;
 import org.jtheque.ui.utils.components.Borders;
 
 import javax.swing.AbstractButton;
@@ -12,6 +11,8 @@ import javax.swing.UIManager;
 
 import java.awt.Color;
 import java.awt.Component;
+
+import static org.jtheque.ui.able.FilthyConstants.*;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -34,7 +35,7 @@ import java.awt.Component;
  *
  * @author Baptiste Wicht
  */
-public final class FilthyComboBox extends JComboBox implements Filthy {
+public final class FilthyComboBox extends JComboBox {
     /**
      * Construct a new <code>FilthyComboBox</code>.
      *

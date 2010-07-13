@@ -1,6 +1,5 @@
 package org.jtheque.ui.utils.filthy;
 
-import org.jtheque.ui.able.Filthy;
 import org.jtheque.ui.utils.components.Borders;
 
 import javax.swing.DefaultListCellRenderer;
@@ -9,6 +8,8 @@ import javax.swing.border.Border;
 
 import java.awt.Color;
 import java.awt.Component;
+
+import static org.jtheque.ui.able.FilthyConstants.*;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -31,7 +32,7 @@ import java.awt.Component;
  *
  * @author Baptiste Wicht
  */
-public final class FilthyRenderer extends DefaultListCellRenderer implements Filthy {
+public final class FilthyRenderer extends DefaultListCellRenderer {
     private final Color selectionBackground = new Color(170, 170, 170);
     private final Border border;
 

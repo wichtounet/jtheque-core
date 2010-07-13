@@ -3,8 +3,8 @@ package org.jtheque.ui.utils.builders;
 import org.jtheque.ui.utils.components.BorderUpdater;
 import org.jtheque.ui.utils.components.Borders;
 import org.jtheque.ui.utils.components.JThequeI18nLabel;
+import org.jtheque.ui.utils.filthy.Filthy;
 import org.jtheque.ui.utils.filthy.FilthyComboBox;
-import org.jtheque.ui.utils.filthy.FilthyList;
 import org.jtheque.ui.utils.filthy.FilthyPanel;
 
 import org.jdesktop.swingx.JXTree;
@@ -166,7 +166,7 @@ public final class FilthyPanelBuilder extends JThequePanelBuilder {
 
     @Override
     public JList addScrolledList(ListModel model, ListCellRenderer renderer, Object constraints) {
-        JList list = new FilthyList(model);
+        JList list = Filthy.newList(model);
 
         list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         list.setVisibleRowCount(10);
