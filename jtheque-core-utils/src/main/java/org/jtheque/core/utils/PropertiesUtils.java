@@ -46,15 +46,16 @@ public final class PropertiesUtils {
      * Note : The properties of the Object class are not retrieved.
      *
      * @param bean The bean to create the memento from.
+     * @param type The type of bean. 
      * @param <T>  The class of the bean.
      *
      * @return The memento.
      */
-    public static <T> T createMemento(T bean) {
+    public static <T> T createMemento(T bean, Class<T> type) {
         T instance = null;
 
         try {
-            instance = (T) bean.getClass().newInstance();
+            instance = type.newInstance();
 
             for (PropertyDescriptor property : ReflectionUtils.getProperties(bean)) {
                 if (property.getReadMethod() == null || property.getWriteMethod() == null) {

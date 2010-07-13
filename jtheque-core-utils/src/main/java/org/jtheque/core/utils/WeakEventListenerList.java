@@ -97,7 +97,7 @@ public class WeakEventListenerList {
                 getReferences().remove(i);
                 getClasses().remove(i);
             } else {
-                listeners.add(0, (T) listener);
+                listeners.add(0, listener);
             }
         }
 

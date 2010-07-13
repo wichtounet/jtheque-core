@@ -48,11 +48,12 @@ public final class SimplePropertiesCache {
      * Return the value of the given property key.
      *
      * @param key The key of the property to search.
+     * @param type The type of resource. 
      * @param <T> The type of resource.
      *
      * @return The value of the property.
      */
-    public static <T> T get(String key) {
-        return (T) PROPERTIES.get(key);
+    public static <T> T get(String key, Class<T> type) {
+        return type.cast(PROPERTIES.get(key));
     }
 }
