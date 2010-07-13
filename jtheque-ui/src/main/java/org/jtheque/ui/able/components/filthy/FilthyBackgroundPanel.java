@@ -1,4 +1,4 @@
-package org.jtheque.ui.utils.filthy;
+package org.jtheque.ui.able.components.filthy;
 
 /*
  * Copyright JTheque (Baptiste Wicht)

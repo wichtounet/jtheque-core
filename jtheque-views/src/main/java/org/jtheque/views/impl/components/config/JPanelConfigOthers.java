@@ -18,10 +18,11 @@ package org.jtheque.views.impl.components.config;
 
 import org.jtheque.core.able.ICore;
 import org.jtheque.core.able.ICoreConfiguration;
+import org.jtheque.ui.able.components.TextField;
+import org.jtheque.ui.able.components.filthy.Filthy;
+import org.jtheque.ui.able.constraints.Constraint;
 import org.jtheque.ui.utils.builded.OSGIFilthyBuildedPanel;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
-import org.jtheque.ui.able.constraints.Constraint;
-import org.jtheque.ui.utils.filthy.FilthyTextField;
 import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.views.able.components.ConfigTabComponent;
 import org.jtheque.views.able.config.IOthersConfigView;
@@ -40,8 +41,8 @@ import java.util.Map;
 public final class JPanelConfigOthers extends OSGIFilthyBuildedPanel implements IOthersConfigView, ConfigTabComponent {
     private JCheckBox boxDeleteLogs;
     private JCheckBox checkBoxStart;
-    private FilthyTextField fieldEmail;
-    private FilthyTextField fieldSmtpHost;
+    private TextField fieldEmail;
+    private TextField fieldSmtpHost;
 
     @Override
     protected void buildView(I18nPanelBuilder builder) {
@@ -83,10 +84,10 @@ public final class JPanelConfigOthers extends OSGIFilthyBuildedPanel implements 
         builder.setI18nTitleBorder("config.others.mail.title");
 
         builder.addI18nLabel("config.others.mail.userEmail", builder.gbcSet(0, 0, GridBagUtils.NONE, GridBagUtils.BASELINE_TRAILING));
-        fieldEmail = builder.add(new FilthyTextField(10), builder.gbcSet(1, 0, GridBagUtils.HORIZONTAL));
+        fieldEmail = builder.add(Filthy.newTextField(10), builder.gbcSet(1, 0, GridBagUtils.HORIZONTAL));
 
         builder.addI18nLabel("config.others.mail.smtpHost", builder.gbcSet(0, 1, GridBagUtils.NONE, GridBagUtils.BASELINE_TRAILING));
-        fieldSmtpHost = builder.add(new FilthyTextField(10), builder.gbcSet(1, 1, GridBagUtils.HORIZONTAL));
+        fieldSmtpHost = builder.add(Filthy.newTextField(10), builder.gbcSet(1, 1, GridBagUtils.HORIZONTAL));
     }
 
     /**

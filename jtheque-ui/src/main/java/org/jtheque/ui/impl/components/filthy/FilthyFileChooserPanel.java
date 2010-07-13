@@ -1,4 +1,4 @@
-package org.jtheque.ui.utils.filthy;
+package org.jtheque.ui.impl.components.filthy;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -18,6 +18,9 @@ package org.jtheque.ui.utils.filthy;
 
 import org.jtheque.i18n.able.ILanguageService;
 import org.jtheque.i18n.able.Internationalizable;
+import org.jtheque.ui.able.components.FileChooser;
+import org.jtheque.ui.able.components.TextField;
+import org.jtheque.ui.able.components.filthy.Filthy;
 import org.jtheque.ui.utils.builders.JThequePanelBuilder;
 import org.jtheque.ui.utils.builders.PanelBuilder;
 import org.jtheque.ui.utils.components.Borders;
@@ -47,8 +50,8 @@ import java.io.File;
  *
  * @author Baptiste Wicht
  */
-public final class FilthyFileChooserPanel extends JPanel implements Internationalizable {
-    private FilthyTextField fieldFilePath;
+public final class FilthyFileChooserPanel extends FileChooser implements Internationalizable {
+    private TextField fieldFilePath;
     private JLabel label;
     private JButton button;
     private SimpleFilter filter;
@@ -104,7 +107,7 @@ public final class FilthyFileChooserPanel extends JPanel implements Internationa
         panel.setOpaque(false);
         panel.setBorder(BorderFactory.createEtchedBorder(1));
 
-        fieldFilePath = new FilthyTextField(FIELD_COLUMNS);
+        fieldFilePath = Filthy.newTextField(FIELD_COLUMNS);
         Insets insets = fieldFilePath.getField().getMargin();
         fieldFilePath.setBorder(BorderFactory.createEmptyBorder(insets.top, insets.left, insets.bottom, insets.right));
         panel.add(fieldFilePath, BorderLayout.CENTER);
@@ -131,61 +134,37 @@ public final class FilthyFileChooserPanel extends JPanel implements Internationa
         panel.add(button, BorderLayout.EAST);
     }
 
-    /**
-     * Set the text of the label.
-     *
-     * @param text The text of the label.
-     */
-    void setText(String text) {
+    @Override
+    public void setText(String text) {
         label.setText(text);
     }
 
-    /**
-     * Set the text key for the label.
-     *
-     * @param key The internationalization key.
-     */
+    @Override
     public void setTextKey(String key) {
         this.key = key;
     }
 
-    /**
-     * Return the path to the file.
-     *
-     * @return The path to the file.
-     */
+    @Override
     public String getFilePath() {
         return fieldFilePath.getText();
     }
 
-    /**
-     * Set the path to the file.
-     *
-     * @param path The path to the file.
-     */
+    @Override
     public void setFilePath(String path) {
         fieldFilePath.setText(path);
     }
 
-    /**
-     * Set the file filter.
-     *
-     * @param filter The file filter.
-     */
+    @Override
     public void setFileFilter(SimpleFilter filter) {
         this.filter = filter;
     }
 
-    /**
-     * Set if the chooser search only for directories or not.
-     */
+    @Override
     public void setDirectoriesOnly() {
         directoriesOnly = true;
     }
 
-    /**
-     * Set that the chooser search only for files.
-     */
+    @Override
     public void setFilesOnly() {
         directoriesOnly = false;
     }
@@ -233,11 +212,7 @@ public final class FilthyFileChooserPanel extends JPanel implements Internationa
         }
     }
 
-    /**
-     * Return the text field of the file chooser.
-     *
-     * @return The text field of the file chooser.
-     */
+    @Override
     public JTextField getTextField() {
         return fieldFilePath.getField();
     }

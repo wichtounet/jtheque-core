@@ -1,10 +1,11 @@
-package org.jtheque.ui.utils.filthy;
+package org.jtheque.ui.impl.components.filthy;
 
+import org.jtheque.ui.able.components.TextField;
 import org.jtheque.utils.ui.PaintUtils;
 
 import javax.swing.JFormattedTextField;
-import javax.swing.text.MaskFormatter;
-import javax.swing.text.NumberFormatter;
+import javax.swing.JTextField;
+import javax.swing.text.DefaultFormatter;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -30,7 +31,7 @@ import java.awt.Graphics2D;
  *
  * @author Baptiste Wicht
  */
-public final class FilthyFormattedTextField extends AbstractFilthyField {
+public final class FilthyFormattedTextField extends TextField {
     private final JFormattedTextField textField;
 
     /**
@@ -38,20 +39,7 @@ public final class FilthyFormattedTextField extends AbstractFilthyField {
      *
      * @param formatter The formatter for the display of the text field.
      */
-    public FilthyFormattedTextField(MaskFormatter formatter) {
-        super();
-
-        textField = new JFormattedTextField(formatter);
-
-        initComponent();
-    }
-
-    /**
-     * Construct a new FilthyFormattedTextField with a certain formatter.
-     *
-     * @param formatter The number formatter to use to format the field.
-     */
-    public FilthyFormattedTextField(NumberFormatter formatter) {
+    public FilthyFormattedTextField(DefaultFormatter formatter) {
         super();
 
         textField = new JFormattedTextField(formatter);
@@ -60,7 +48,7 @@ public final class FilthyFormattedTextField extends AbstractFilthyField {
     }
 
     @Override
-    void initComponent() {
+    protected void initComponent() {
         if (textField != null) {
             makeFilthy(textField);
 
@@ -75,30 +63,18 @@ public final class FilthyFormattedTextField extends AbstractFilthyField {
         textField.setEnabled(enabled);
     }
 
-    /**
-     * Return the entered text.
-     *
-     * @return The entered text.
-     */
+    @Override
     public String getText() {
         return textField.getText();
     }
 
-    /**
-     * Set the text.
-     *
-     * @param t The text.
-     */
+    @Override
     public void setText(String t) {
         textField.setText(t);
     }
 
-    /**
-     * Return the text field.
-     *
-     * @return The text field.
-     */
-    public JFormattedTextField getField() {
+    @Override
+    public JTextField getField() {
         return textField;
     }
 

@@ -18,11 +18,12 @@ package org.jtheque.views.impl.components.config;
 
 import org.jtheque.core.able.ICore;
 import org.jtheque.core.able.ICoreConfiguration;
+import org.jtheque.ui.able.components.TextField;
+import org.jtheque.ui.able.components.filthy.Filthy;
 import org.jtheque.ui.able.constraints.Constraint;
 import org.jtheque.ui.able.constraints.Constraints;
 import org.jtheque.ui.utils.builded.OSGIFilthyBuildedPanel;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
-import org.jtheque.ui.utils.filthy.FilthyTextField;
 import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.views.able.components.ConfigTabComponent;
 import org.jtheque.views.able.config.INetworkConfigView;
@@ -41,8 +42,8 @@ import java.util.Map;
  */
 public final class JPanelConfigNetwork extends OSGIFilthyBuildedPanel implements INetworkConfigView, ConfigTabComponent {
     private JCheckBox boxProxy;
-    private FilthyTextField fieldAddress;
-    private FilthyTextField fieldPort;
+    private TextField fieldAddress;
+    private TextField fieldPort;
 
     @Override
     protected void buildView(I18nPanelBuilder parent) {
@@ -54,10 +55,10 @@ public final class JPanelConfigNetwork extends OSGIFilthyBuildedPanel implements
         boxProxy.addActionListener(new CheckProxyAction(this));
 
         builder.addI18nLabel("config.network.proxy.address", parent.gbcSet(0, 1));
-        fieldAddress = builder.add(new FilthyTextField(10), parent.gbcSet(1, 1, GridBagUtils.HORIZONTAL));
+        fieldAddress = builder.add(Filthy.newTextField(10), parent.gbcSet(1, 1, GridBagUtils.HORIZONTAL));
 
         builder.addI18nLabel("config.network.proxy.port", parent.gbcSet(0, 2));
-        fieldPort = builder.add(new FilthyTextField(10), parent.gbcSet(1, 2, GridBagUtils.HORIZONTAL));
+        fieldPort = builder.add(Filthy.newTextField(10), parent.gbcSet(1, 2, GridBagUtils.HORIZONTAL));
 
         fillAllFields();
     }

@@ -1,4 +1,4 @@
-package org.jtheque.ui.utils.filthy;
+package org.jtheque.ui.impl.components.filthy;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -16,6 +16,8 @@ package org.jtheque.ui.utils.filthy;
  * limitations under the License.
  */
 
+import org.jtheque.ui.able.components.TextField;
+
 import javax.swing.JPasswordField;
 
 /**
@@ -23,41 +25,29 @@ import javax.swing.JPasswordField;
  *
  * @author Baptiste Wicht
  */
-public final class FilthyPasswordField extends AbstractFilthyField {
+public final class FilthyPasswordField extends TextField {
     private JPasswordField passwordField;
 
     @Override
-    void initComponent() {
+    protected void initComponent() {
         passwordField = new JPasswordField();
 
         makeFilthy(passwordField);
 
         add(passwordField);
     }
-
-    /**
-     * Return the entered password.
-     *
-     * @return The entered password.
-     */
-    public String getPassword() {
+    
+    @Override
+    public String getText() {
         return new String(passwordField.getPassword());
     }
 
-    /**
-     * Set the password of the field.
-     *
-     * @param password The password.
-     */
-    public void setPassword(String password) {
-        passwordField.setText(password);
+    @Override
+    public void setText(String text) {
+        passwordField.setText(text);
     }
 
-    /**
-     * Return the real field of this filty component.
-     *
-     * @return The field of this filthy component.
-     */
+    @Override
     public JPasswordField getField() {
         return passwordField;
     }

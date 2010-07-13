@@ -18,11 +18,11 @@ package org.jtheque.views.impl.components.config;
 
 import org.jtheque.core.able.ICore;
 import org.jtheque.i18n.able.ILanguageService;
+import org.jtheque.ui.able.constraints.Constraint;
 import org.jtheque.ui.able.constraints.Constraints;
 import org.jtheque.ui.utils.builded.OSGIFilthyBuildedPanel;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
-import org.jtheque.ui.able.constraints.Constraint;
-import org.jtheque.ui.utils.filthy.FilthyRenderer;
+import org.jtheque.ui.able.components.filthy.Filthy;
 import org.jtheque.ui.utils.models.SimpleListModel;
 import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.views.able.components.ConfigTabComponent;
@@ -52,7 +52,7 @@ public final class JPanelConfigAppearance extends OSGIFilthyBuildedPanel impleme
 
         modelLanguages = new SimpleListModel<String>(getService(ICore.class).getPossibleLanguages());
 
-        builder.addComboBox(modelLanguages, new FilthyRenderer(), parent.gbcSet(1, 0, GridBagUtils.HORIZONTAL));
+        builder.addComboBox(modelLanguages, Filthy.newListRenderer(), parent.gbcSet(1, 0, GridBagUtils.HORIZONTAL));
 
         boxRetainSizeAndPosition = builder.addI18nCheckBox("config.appearance.size",
                 parent.gbcSet(0, 1, GridBagUtils.HORIZONTAL, GridBagUtils.BASELINE_LEADING, 2, 1));

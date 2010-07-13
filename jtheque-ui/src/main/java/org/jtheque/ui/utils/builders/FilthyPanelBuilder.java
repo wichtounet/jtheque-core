@@ -1,11 +1,9 @@
 package org.jtheque.ui.utils.builders;
 
+import org.jtheque.ui.able.components.filthy.Filthy;
 import org.jtheque.ui.utils.components.BorderUpdater;
 import org.jtheque.ui.utils.components.Borders;
 import org.jtheque.ui.utils.components.JThequeI18nLabel;
-import org.jtheque.ui.utils.filthy.Filthy;
-import org.jtheque.ui.utils.filthy.FilthyComboBox;
-import org.jtheque.ui.utils.filthy.FilthyPanel;
 
 import org.jdesktop.swingx.JXTree;
 
@@ -73,7 +71,7 @@ public final class FilthyPanelBuilder extends JThequePanelBuilder {
      * @param layout The layout to set to the builded panel.
      */
     public FilthyPanelBuilder(LayoutManager layout) {
-        super(new FilthyPanel(layout), false);
+        super(Filthy.newPanel(layout), false);
     }
 
     /**
@@ -197,12 +195,12 @@ public final class FilthyPanelBuilder extends JThequePanelBuilder {
 
     @Override
     public JComboBox addComboBox(ComboBoxModel model, Object constraints) {
-        return add(new FilthyComboBox(model), constraints);
+        return add(Filthy.newComboBox(model), constraints);
     }
 
     @Override
     public JComboBox addComboBox(ComboBoxModel model, ListCellRenderer renderer, Object constraints) {
-        JComboBox combo = add(new FilthyComboBox(model), constraints);
+        JComboBox combo = add(Filthy.newComboBox(model), constraints);
 
         combo.setRenderer(renderer);
 

@@ -18,11 +18,9 @@ package org.jtheque.ui.utils.windows.dialogs;
 
 import org.jtheque.ui.able.IFilthyUtils;
 import org.jtheque.ui.able.IModel;
+import org.jtheque.ui.able.components.filthy.FilthyBackgroundPanel;
 import org.jtheque.ui.utils.builders.FilthyPanelBuilder;
 import org.jtheque.ui.utils.builders.JThequePanelBuilder;
-import org.jtheque.ui.utils.filthy.FilthyBackgroundPanel;
-
-import java.awt.Frame;
 
 /**
  * A swing dialog view.

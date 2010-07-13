@@ -1,5 +1,6 @@
-package org.jtheque.ui.utils.filthy;
+package org.jtheque.ui.impl.components.filthy;
 
+import org.jtheque.ui.able.components.TextField;
 import org.jtheque.utils.ui.PaintUtils;
 
 import javax.swing.JTextField;
@@ -28,7 +29,7 @@ import java.awt.Graphics2D;
  *
  * @author Baptiste Wicht
  */
-public final class FilthyTextField extends AbstractFilthyField {
+public final class FilthyTextField extends TextField {
     private JTextField textField;
 
     /**
@@ -50,7 +51,7 @@ public final class FilthyTextField extends AbstractFilthyField {
     }
 
     @Override
-    void initComponent() {
+    protected void initComponent() {
         textField = new JTextField();
 
         makeFilthy(textField);
@@ -65,29 +66,17 @@ public final class FilthyTextField extends AbstractFilthyField {
         textField.setEnabled(enabled);
     }
 
-    /**
-     * Return the entered text.
-     *
-     * @return The entered text.
-     */
+    @Override
     public String getText() {
         return textField.getText();
     }
 
-    /**
-     * Set the text.
-     *
-     * @param t The text.
-     */
+    @Override
     public void setText(String t) {
         textField.setText(t);
     }
 
-    /**
-     * Return the text field.
-     *
-     * @return The text field.
-     */
+    @Override
     public JTextField getField() {
         return textField;
     }

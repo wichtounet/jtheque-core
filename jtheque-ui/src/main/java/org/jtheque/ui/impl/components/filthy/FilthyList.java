@@ -1,4 +1,4 @@
-package org.jtheque.ui.utils.filthy;
+package org.jtheque.ui.impl.components.filthy;
 
 import org.jtheque.ui.utils.components.Borders;
 

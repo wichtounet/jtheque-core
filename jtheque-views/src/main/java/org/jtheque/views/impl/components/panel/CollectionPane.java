@@ -20,12 +20,12 @@ import org.jtheque.core.able.ICore;
 import org.jtheque.core.utils.SimplePropertiesCache;
 import org.jtheque.i18n.able.ILanguageService;
 import org.jtheque.ui.able.IController;
+import org.jtheque.ui.able.components.TextField;
+import org.jtheque.ui.able.components.filthy.Filthy;
 import org.jtheque.ui.utils.AnimationUtils;
 import org.jtheque.ui.utils.actions.ActionFactory;
 import org.jtheque.ui.utils.actions.JThequeAction;
 import org.jtheque.ui.utils.components.JThequeI18nLabel;
-import org.jtheque.ui.utils.filthy.FilthyPasswordField;
-import org.jtheque.ui.utils.filthy.FilthyTextField;
 import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.utils.ui.SwingUtils;
 import org.jtheque.views.able.panel.ICollectionView;
@@ -54,8 +54,8 @@ import static org.jtheque.ui.able.FilthyConstants.*;
  * @author Baptiste Wicht
  */
 public final class CollectionPane extends JXPanel implements ICollectionView {
-    private FilthyTextField textField;
-    private FilthyPasswordField passwordField;
+    private TextField textField;
+    private TextField passwordField;
     private JLabel labelError;
 
     private static final int LEFT_MARGIN_WIDTH = 200;
@@ -134,7 +134,7 @@ public final class CollectionPane extends JXPanel implements ICollectionView {
 
         gbc.setDefaultInsets(new Insets(0, 0, 0, 0));
 
-        textField = new FilthyTextField();
+        textField = Filthy.newTextField();
         textField.setText(core.getConfiguration().getLastCollection());
 
         SwingUtils.addFieldValidateAction(textField.getField(), chooseAction);
@@ -159,7 +159,7 @@ public final class CollectionPane extends JXPanel implements ICollectionView {
 
         add(labelPassword, gbc.gbcSet(1, 3, GridBagConstraints.NONE, GridBagConstraints.LINE_START));
 
-        passwordField = new FilthyPasswordField();
+        passwordField = Filthy.newPasswordField();
 
         SwingUtils.addFieldValidateAction(passwordField.getField(), chooseAction);
 
@@ -207,7 +207,7 @@ public final class CollectionPane extends JXPanel implements ICollectionView {
 
     @Override
     public String getPassword() {
-        return passwordField.getPassword();
+        return passwordField.getText();
     }
 
     @Override
