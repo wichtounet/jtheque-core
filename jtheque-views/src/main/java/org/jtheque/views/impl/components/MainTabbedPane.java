@@ -1,8 +1,8 @@
 package org.jtheque.views.impl.components;
 
 import org.jtheque.i18n.able.ILanguageService;
-import org.jtheque.ui.utils.components.LayerTabbedPane;
-import org.jtheque.ui.utils.components.TabTitleUpdater;
+import org.jtheque.i18n.able.Internationalizable;
+import org.jtheque.ui.able.components.LayerTabbedPane;
 import org.jtheque.utils.bean.Numbers;
 import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.ui.SwingUtils;
@@ -18,6 +18,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -75,7 +76,7 @@ public final class MainTabbedPane extends LayerTabbedPane {
             cs.put(component.getImpl(), component.getTitleKey());
         }
 
-        languageService.addInternationalizable(new TabTitleUpdater(this, cs));
+        languageService.addInternationalizable(new TabTitleUpdater(cs));
     }
 
     /**
@@ -115,6 +116,39 @@ public final class MainTabbedPane extends LayerTabbedPane {
         @Override
         public int compare(MainComponent component, MainComponent other) {
             return Numbers.compare(component.getPosition(), other.getPosition());
+        }
+    }
+
+    /**
+     * A tab title updater to keep the tab title up to date with the current locale.
+     *
+     * @author Baptiste Wicht
+     */
+    private final class TabTitleUpdater implements Internationalizable {
+        private final Map<JComponent, String> components;
+
+        /**
+         * Construct a new TabTitleUpdater.
+         *
+         * @param components The components of the tabbed pane.
+         */
+        private TabTitleUpdater(Map<JComponent, String> components) {
+            super();
+
+            this.components = new HashMap<JComponent, String>(components);
+        }
+
+        @Override
+        public void refreshText(ILanguageService languageService) {
+            for (Entry<JComponent, String> entry : components.entrySet()) {
+                for (int i = 0; i < getTabCount(); i++) {
+                    if (entry.getKey().equals(getTabComponentAt(i))) {
+                        setTitleAt(i, languageService.getMessage(entry.getValue()));
+
+                        break;
+                    }
+                }
+            }
         }
     }
 }

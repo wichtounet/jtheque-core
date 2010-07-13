@@ -21,7 +21,7 @@ import org.jtheque.modules.able.IModuleDescription;
 import org.jtheque.modules.able.IModuleService;
 import org.jtheque.ui.utils.builders.FilthyPanelBuilder;
 import org.jtheque.ui.utils.builders.PanelBuilder;
-import org.jtheque.ui.utils.components.Borders;
+import org.jtheque.ui.able.components.Borders;
 import org.jtheque.update.able.IUpdateService;
 import org.jtheque.utils.ui.GridBagUtils;
 

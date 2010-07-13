@@ -1,4 +1,4 @@
-package org.jtheque.ui.utils.components;
+package org.jtheque.ui.able.components;
 
 /*
  * Copyright JTheque (Baptiste Wicht)

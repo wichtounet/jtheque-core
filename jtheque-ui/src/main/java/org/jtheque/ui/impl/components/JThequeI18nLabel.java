@@ -1,4 +1,4 @@
-package org.jtheque.ui.utils.components;
+package org.jtheque.ui.impl.components;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -17,11 +17,8 @@ package org.jtheque.ui.utils.components;
  */
 
 import org.jtheque.i18n.able.ILanguageService;
-import org.jtheque.i18n.able.Internationalizable;
-import org.jtheque.ui.able.ViewComponent;
+import org.jtheque.ui.able.components.I18nLabel;
 import org.jtheque.utils.collections.ArrayUtils;
-
-import javax.swing.JLabel;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -34,7 +31,7 @@ import java.awt.RenderingHints;
  *
  * @author Baptiste Wicht
  */
-public final class JThequeI18nLabel extends JLabel implements Internationalizable, ViewComponent {
+public final class JThequeI18nLabel extends I18nLabel {
     private String textKey;
     private Object[] replaces;
 
@@ -76,12 +73,7 @@ public final class JThequeI18nLabel extends JLabel implements Internationalizabl
         setForeground(foreground);
     }
 
-    /**
-     * Set the text key of the label.
-     *
-     * @param textKey  The i18n key of the message to be display in this label.
-     * @param replaces The object to use as replacement for the parameters of the message.
-     */
+    @Override
     public void setTextKey(String textKey, Object... replaces) {
         this.textKey = textKey;
         this.replaces = ArrayUtils.copyOf(replaces);

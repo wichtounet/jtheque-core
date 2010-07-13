@@ -2,10 +2,10 @@ package org.jtheque.ui.utils.builders;
 
 import org.jtheque.i18n.able.Internationalizable;
 import org.jtheque.i18n.able.InternationalizableContainer;
-import org.jtheque.ui.utils.components.BorderUpdater;
-import org.jtheque.ui.utils.components.Borders;
-import org.jtheque.ui.utils.components.JThequeCheckBox;
-import org.jtheque.ui.utils.components.JThequeI18nLabel;
+import org.jtheque.ui.able.components.Borders;
+import org.jtheque.ui.able.components.Components;
+import org.jtheque.ui.able.components.I18nLabel;
+import org.jtheque.ui.able.components.JThequeCheckBox;
 import org.jtheque.utils.ui.ButtonBarBuilder;
 import org.jtheque.utils.ui.GridBagUtils;
 
@@ -13,7 +13,6 @@ import org.jdesktop.swingx.JXTable;
 import org.jdesktop.swingx.JXTree;
 
 import javax.swing.Action;
-import javax.swing.BorderFactory;
 import javax.swing.ComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -23,7 +22,6 @@ import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
-import javax.swing.border.TitledBorder;
 import javax.swing.table.TableModel;
 import javax.swing.tree.TreeCellRenderer;
 import javax.swing.tree.TreeModel;
@@ -121,7 +119,7 @@ public class JThequePanelBuilder extends BasicPanelBuilder implements I18nPanelB
 
     @Override
     public JCheckBox addI18nCheckBox(String key, Object constraints) {
-        JThequeCheckBox checkBox = new JThequeCheckBox(key);
+        JThequeCheckBox checkBox = Components.newCheckBox(key);
 
         addInternationalizable(checkBox);
 
@@ -129,13 +127,13 @@ public class JThequePanelBuilder extends BasicPanelBuilder implements I18nPanelB
     }
 
     @Override
-    public JThequeI18nLabel addI18nLabel(String key, Object constraints) {
+    public I18nLabel addI18nLabel(String key, Object constraints) {
         return addI18nLabel(key, 0, constraints);
     }
 
     @Override
-    public JThequeI18nLabel addI18nLabel(String key, int style, Object constraints) {
-        JThequeI18nLabel label = new JThequeI18nLabel(key);
+    public I18nLabel addI18nLabel(String key, int style, Object constraints) {
+        I18nLabel label = Components.newI18nLabel(key);
 
         addInternationalizable(label);
 
@@ -145,8 +143,8 @@ public class JThequePanelBuilder extends BasicPanelBuilder implements I18nPanelB
     }
 
     @Override
-    public JThequeI18nLabel addI18nLabel(String key, int style, float size, Object constraints) {
-        JThequeI18nLabel label = new JThequeI18nLabel(key);
+    public I18nLabel addI18nLabel(String key, int style, float size, Object constraints) {
+        I18nLabel label = Components.newI18nLabel(key);
 
         addInternationalizable(label);
 
@@ -208,11 +206,7 @@ public class JThequePanelBuilder extends BasicPanelBuilder implements I18nPanelB
 
     @Override
     public void setI18nTitleBorder(String key) {
-        TitledBorder border = BorderFactory.createTitledBorder(key);
-
-        addInternationalizable(new BorderUpdater(border, key));
-
-        setBorder(border);
+        setBorder(Borders.createI18nTitleBorder(key, container));
     }
 
     @Override

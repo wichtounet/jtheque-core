@@ -1,5 +1,6 @@
 package org.jtheque.ui.able.components.filthy;
 
+import org.jtheque.ui.able.components.CardPanel;
 import org.jtheque.ui.able.components.FileChooser;
 import org.jtheque.ui.able.components.TextField;
 import org.jtheque.ui.impl.components.filthy.FilthyCardPanel;
@@ -11,7 +12,6 @@ import org.jtheque.ui.impl.components.filthy.FilthyPanel;
 import org.jtheque.ui.impl.components.filthy.FilthyPasswordField;
 import org.jtheque.ui.impl.components.filthy.FilthyRenderer;
 import org.jtheque.ui.impl.components.filthy.FilthyTextField;
-import org.jtheque.ui.utils.components.CardPanel;
 
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultListCellRenderer;

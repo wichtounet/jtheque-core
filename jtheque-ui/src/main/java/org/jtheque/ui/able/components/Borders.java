@@ -1,7 +1,11 @@
-package org.jtheque.ui.utils.components;
+package org.jtheque.ui.able.components;
+
+import org.jtheque.i18n.able.InternationalizableContainer;
+import org.jtheque.ui.impl.components.BorderUpdater;
 
 import javax.swing.BorderFactory;
 import javax.swing.border.Border;
+import javax.swing.border.TitledBorder;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -59,5 +63,13 @@ public final class Borders {
      */
     public static Border createEmptyBorder(int top, int left, int bottom, int right) {
         return BorderFactory.createEmptyBorder(top, left, bottom, right);
+    }
+
+    public static TitledBorder createI18nTitleBorder(String key, InternationalizableContainer container) {
+        TitledBorder border = BorderFactory.createTitledBorder(key);
+
+        container.addInternationalizable(new BorderUpdater(border, key));
+
+        return border;
     }
 }

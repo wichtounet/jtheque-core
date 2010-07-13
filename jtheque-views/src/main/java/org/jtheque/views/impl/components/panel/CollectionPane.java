@@ -20,12 +20,12 @@ import org.jtheque.core.able.ICore;
 import org.jtheque.core.utils.SimplePropertiesCache;
 import org.jtheque.i18n.able.ILanguageService;
 import org.jtheque.ui.able.IController;
+import org.jtheque.ui.able.components.Components;
 import org.jtheque.ui.able.components.TextField;
 import org.jtheque.ui.able.components.filthy.Filthy;
 import org.jtheque.ui.utils.AnimationUtils;
 import org.jtheque.ui.utils.actions.ActionFactory;
 import org.jtheque.ui.utils.actions.JThequeAction;
-import org.jtheque.ui.utils.components.JThequeI18nLabel;
 import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.utils.ui.SwingUtils;
 import org.jtheque.views.able.panel.ICollectionView;
@@ -48,7 +48,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.Window;
 
-import static org.jtheque.ui.able.FilthyConstants.*;
+import static org.jtheque.ui.able.components.filthy.FilthyConstants.*;
 
 /**
  * @author Baptiste Wicht
@@ -123,7 +123,7 @@ public final class CollectionPane extends JXPanel implements ICollectionView {
      * @param gbc The grid bag utils constraints object.
      */
     private void addCollectionField(GridBagUtils gbc) {
-        Component labelCollection = new JThequeI18nLabel("collections.name");
+        Component labelCollection = Components.newI18nLabel("collections.name");
 
         labelCollection.setForeground(HINT_COLOR);
         labelCollection.setFont(HINT_FONT);
@@ -150,7 +150,7 @@ public final class CollectionPane extends JXPanel implements ICollectionView {
      * @param gbc The grid bag utils constraints object.
      */
     private void addPasswordField(GridBagUtils gbc) {
-        Component labelPassword = new JThequeI18nLabel("collections.password");
+        Component labelPassword = Components.newI18nLabel("collections.password");
 
         labelPassword.setForeground(HINT_COLOR);
         labelPassword.setFont(HINT_FONT);

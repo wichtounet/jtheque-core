@@ -1,6 +1,6 @@
 package org.jtheque.ui.impl.components.filthy;
 
-import org.jtheque.ui.utils.components.Borders;
+import org.jtheque.ui.able.components.Borders;
 
 import javax.swing.JPanel;
 

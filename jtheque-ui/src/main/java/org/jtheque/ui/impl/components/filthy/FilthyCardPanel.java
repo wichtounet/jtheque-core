@@ -16,8 +16,8 @@ package org.jtheque.ui.impl.components.filthy;
  * limitations under the License.
  */
 
-import org.jtheque.ui.utils.components.Borders;
-import org.jtheque.ui.utils.components.CardPanel;
+import org.jtheque.ui.able.components.Borders;
+import org.jtheque.ui.able.components.CardPanel;
 
 import javax.swing.JComponent;
 

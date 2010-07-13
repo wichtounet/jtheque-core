@@ -1,6 +1,6 @@
 package org.jtheque.ui.impl.components.filthy;
 
-import org.jtheque.ui.utils.components.Borders;
+import org.jtheque.ui.able.components.Borders;
 
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JList;
@@ -9,7 +9,7 @@ import javax.swing.border.Border;
 import java.awt.Color;
 import java.awt.Component;
 
-import static org.jtheque.ui.able.FilthyConstants.*;
+import static org.jtheque.ui.able.components.filthy.FilthyConstants.*;
 
 /*
  * Copyright JTheque (Baptiste Wicht)

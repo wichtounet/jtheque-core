@@ -1,7 +1,5 @@
 package org.jtheque.ui.able.components;
 
-import org.jtheque.ui.utils.components.Borders;
-
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -11,7 +9,7 @@ import javax.swing.text.JTextComponent;
 import java.awt.BorderLayout;
 import java.awt.Color;
 
-import static org.jtheque.ui.able.FilthyConstants.*;
+import static org.jtheque.ui.able.components.filthy.FilthyConstants.*;
 
 /*
  * Copyright JTheque (Baptiste Wicht)

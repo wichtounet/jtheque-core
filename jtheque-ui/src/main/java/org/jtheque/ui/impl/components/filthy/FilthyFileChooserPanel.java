@@ -18,12 +18,12 @@ package org.jtheque.ui.impl.components.filthy;
 
 import org.jtheque.i18n.able.ILanguageService;
 import org.jtheque.i18n.able.Internationalizable;
+import org.jtheque.ui.able.components.Borders;
 import org.jtheque.ui.able.components.FileChooser;
 import org.jtheque.ui.able.components.TextField;
 import org.jtheque.ui.able.components.filthy.Filthy;
 import org.jtheque.ui.utils.builders.JThequePanelBuilder;
 import org.jtheque.ui.utils.builders.PanelBuilder;
-import org.jtheque.ui.utils.components.Borders;
 import org.jtheque.utils.io.SimpleFilter;
 import org.jtheque.utils.ui.SwingUtils;
 

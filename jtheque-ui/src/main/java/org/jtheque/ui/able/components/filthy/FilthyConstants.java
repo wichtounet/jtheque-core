@@ -1,4 +1,4 @@
-package org.jtheque.ui.able;
+package org.jtheque.ui.able.components.filthy;
 
 import java.awt.Color;
 import java.awt.Font;
