@@ -9,6 +9,7 @@ import org.jtheque.i18n.utils.I18NResourceFactory;
 import org.jtheque.modules.able.IModuleLoader;
 import org.jtheque.modules.able.Module;
 import org.jtheque.modules.able.Resources;
+import org.jtheque.modules.impl.ModuleContainer.Builder;
 import org.jtheque.modules.utils.I18NResource;
 import org.jtheque.modules.utils.ImageResource;
 import org.jtheque.resources.able.IResource;
@@ -94,30 +95,21 @@ public final class ModuleLoader implements IModuleLoader, BundleContextAware {
 
     @Override
     public Module installModule(File file) {
-        ModuleContainer container = new ModuleContainer();
+        Builder builder = new Builder();
 
         try {
             //Read the config file of the module
-            readConfig(file, container);
-
-            //Install necessary resources before installing the bundle
-            for (IResource resource : container.getResources().getResources()) {
-                if (resource != null) {
-                    resourceService.installResource(resource);
-                }
-            }
+            readConfig(file, builder);
 
             //Install the bundle
             Bundle bundle = bundleContext.installBundle("file:" + file.getAbsolutePath());
-            container.setBundle(bundle);
+            builder.setBundle(bundle);
 
-            container.setLanguageService(OSGiUtils.getService(bundleContext, ILanguageService.class));
+            builder.setLanguageService(OSGiUtils.getService(bundleContext, ILanguageService.class));
 
             //Get informations from manifest
-            readManifestInformations(container, bundle);
+            readManifestInformations(builder, bundle);
 
-            //Add i18n resources
-            loadI18NResources(container);
         } catch (BundleException e) {
             LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
             OSGiUtils.getService(bundleContext, IErrorService.class).addError(Errors.newError(e));
@@ -126,7 +118,12 @@ public final class ModuleLoader implements IModuleLoader, BundleContextAware {
             OSGiUtils.getService(bundleContext, IErrorService.class).addError(Errors.newError(e));
         }
 
-        return container;
+        Module module = builder.build();
+
+        //Add i18n resources
+        loadI18NResources(module);
+
+        return module;
     }
 
     @Override
@@ -146,7 +143,8 @@ public final class ModuleLoader implements IModuleLoader, BundleContextAware {
      * @param container The module.
      * @param bundle    The bundle.
      */
-    private static void readManifestInformations(ModuleContainer container, Bundle bundle) {
+    private static void readManifestInformations(Builder container, Bundle bundle) {
+        @SuppressWarnings("unchecked") //We kwnow that the bundle headers are a String<->String Map
         Dictionary<String, String> headers = bundle.getHeaders();
 
         String id = StringUtils.isNotEmpty(headers.get("Module-Id")) ? headers.get("Module-Id") : headers.get("Bundle-SymbolicName");
@@ -205,15 +203,22 @@ public final class ModuleLoader implements IModuleLoader, BundleContextAware {
      *
      * @throws IOException If an error occurs during Jar File reading.
      */
-    private void readConfig(File file, ModuleContainer module) throws IOException {
+    private void readConfig(File file, Builder module) throws IOException {
         JarFile jarFile = new JarFile(file);
         ZipEntry configEntry = jarFile.getEntry("module.xml");
 
         if (configEntry != null) {
-            module.setResources(importConfig(jarFile.getInputStream(configEntry)));
-        } else {
-            module.setResources(new ModuleResources());
-        }
+            ModuleResources resources = importConfig(jarFile.getInputStream(configEntry));
+
+            //Install necessary resources before installing the bundle
+            for (IResource resource : resources.getResources()) {
+                if (resource != null) {
+                    resourceService.installResource(resource);
+                }
+            }
+
+            module.setResources(resources);
+        } 
 
         jarFile.close();
     }

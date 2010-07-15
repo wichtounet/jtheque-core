@@ -58,7 +58,7 @@ public final class Kernel implements Closeable {
     }
 
     private void startBundles() {
-        Collection<String> bundles = FileUtils.getLinesOf(new File(System.getProperty("user.dir"), "bundles"));
+        Collection<String> bundles = FileUtils.getLinesOf(new File(System.getProperty("user.dir") + "/bundles", "start"));
 
         for(String bundle : bundles){
             startIfNotStarted(bundle);
