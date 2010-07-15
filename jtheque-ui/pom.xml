@@ -79,7 +79,9 @@
                 <configuration>
                     <instructions>
                         <Bundle-SymbolicName>${pom.artifactId}</Bundle-SymbolicName>
-                        <Export-Package>org.jtheque.ui.able, org.jtheque.ui.utils, org.jtheque.ui.utils.*
+                        <Export-Package>
+                            org.jtheque.ui.able, org.jtheque.ui.able.*, 
+                            org.jtheque.ui.utils, org.jtheque.ui.utils.*
                         </Export-Package>
                         <Bundle-Vendor>Baptiste Wicht</Bundle-Vendor>
                         <Bundle-Activator>org.jtheque.ui.impl.DefaultsActivator</Bundle-Activator>

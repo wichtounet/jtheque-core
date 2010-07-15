@@ -151,7 +151,10 @@
                 <configuration>
                     <instructions>
                         <Bundle-SymbolicName>${pom.artifactId}</Bundle-SymbolicName>
-                        <Export-Package>org.jtheque.views, org.jtheque.views.*</Export-Package>
+                        <Export-Package>
+                            org.jtheque.views.able, org.jtheque.views.able.*,
+                            org.jtheque.views.utils, org.jtheque.views.utils.*
+                        </Export-Package>
                         <Bundle-Vendor>Baptiste Wicht</Bundle-Vendor>
                         <Spring-Context>
                             META-INF/spring/jtheque-views.xml;create-asynchronously:=false;publish-context:=false
