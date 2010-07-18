@@ -153,7 +153,7 @@
                         <Bundle-SymbolicName>${pom.artifactId}</Bundle-SymbolicName>
                         <Export-Package>
                             org.jtheque.views.able, org.jtheque.views.able.*,
-                            org.jtheque.views.utils, org.jtheque.views.utils.*
+                            org.jtheque.views.utils
                         </Export-Package>
                         <Bundle-Vendor>Baptiste Wicht</Bundle-Vendor>
                         <Spring-Context>
