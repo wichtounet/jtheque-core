@@ -1,4 +1,4 @@
-package org.jtheque.views.impl;
+package org.jtheque.views.utils;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
