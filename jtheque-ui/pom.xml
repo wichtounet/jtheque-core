@@ -58,7 +58,7 @@
         </dependency>
 
         <dependency>
-            <groupId>org.swinglabs</groupId>
+            <groupId>org.jdesktop</groupId>
             <artifactId>org.jtheque.jxlayer</artifactId>
             <version>3.0.4</version>
         </dependency>
