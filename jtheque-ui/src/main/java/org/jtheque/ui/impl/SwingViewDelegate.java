@@ -84,11 +84,6 @@ public final class SwingViewDelegate implements ViewDelegate {
     }
 
     @Override
-    public void refresh(Object c) {
-        SwingUtils.refresh((Component) c);
-    }
-
-    @Override
     public String askText(String text) {
         Window parent = null;
 

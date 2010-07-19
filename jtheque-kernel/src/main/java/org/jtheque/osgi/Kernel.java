@@ -109,6 +109,14 @@ public final class Kernel implements Closeable {
             System.setProperty("user.dir", args[0]);
         }
 
+        Thread.currentThread().setName("Kernel-MainThread");
+
+        try {
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+
         new Kernel().start();
     }
 }

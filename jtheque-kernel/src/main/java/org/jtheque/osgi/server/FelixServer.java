@@ -53,7 +53,8 @@ public final class FelixServer implements OSGiServer {
 
         configMap.put("felix.cache.bufsize", "8192");
         configMap.put("org.osgi.framework.storage", System.getProperty("user.dir") + "/cache");
-
+        configMap.put("org.osgi.framework.bootdelegation", "org.netbeans.lib.profiler, org.netbeans.lib.profiler.*");
+        
         try {
             felix = new Felix(configMap);
             felix.start();

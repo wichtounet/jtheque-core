@@ -104,7 +104,7 @@ public final class ModuleDescription implements IModuleDescription {
 
     @Override
     public Version getVersion() {
-        return null;  //Todo revoir
+        return new Version("0.0");
     }
 
     @Override

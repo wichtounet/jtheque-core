@@ -28,6 +28,8 @@ import org.jtheque.views.able.IViews;
 import org.jtheque.views.able.components.ConfigTabComponent;
 import org.jtheque.views.able.windows.IConfigView;
 
+import org.slf4j.LoggerFactory;
+
 import java.util.Map;
 
 /**
@@ -75,14 +77,24 @@ public final class ConfigView extends SwingFilthyBuildedDialogView<IModel> imple
 
     @Override
     public void sendMessage(String message, Object value) {
-        if ("remove".equals(message)) {
+        if(value == null){
+            LoggerFactory.getLogger(getClass()).error("Null value was sent as message to config view");
+
+            return;
+        }
+
+        if ("add".equals(message)) {
             ConfigTabComponent component = (ConfigTabComponent) value;
 
             tab.addLayeredTab(getService(ILanguageService.class).getMessage(component.getTitleKey()), component.getComponent());
-        } else if ("add".equals(message)) {
+        } else if ("remove".equals(message)) {
             ConfigTabComponent component = (ConfigTabComponent) value;
 
-            tab.removeTabAt(tab.indexOfTab(getService(ILanguageService.class).getMessage(component.getTitleKey())));
+            int index = tab.indexOfTab(getService(ILanguageService.class).getMessage(component.getTitleKey()));
+
+            if(index >= 0){
+                tab.removeTabAt(index);
+            }
         }
     }
 }

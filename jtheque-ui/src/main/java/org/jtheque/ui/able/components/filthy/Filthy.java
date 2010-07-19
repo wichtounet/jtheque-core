@@ -14,7 +14,6 @@ import org.jtheque.ui.impl.components.filthy.FilthyRenderer;
 import org.jtheque.ui.impl.components.filthy.FilthyTextField;
 
 import javax.swing.ComboBoxModel;
-import javax.swing.DefaultListCellRenderer;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JList;

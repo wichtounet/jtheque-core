@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
 <descriptor>
-    <version name="2.1.0">
+    <version name="2.1.1">
         <bundles>
             <bundle>
                 <name>org.jtheque.substance-6.0.0.jar</name>
