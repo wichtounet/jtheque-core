@@ -52,9 +52,15 @@ import javax.annotation.Resource;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 import static org.jtheque.modules.able.ModuleState.*;
 
@@ -166,11 +172,15 @@ public final class ModuleService implements IModuleService {
     public void startModules() {
         SwingUtils.assertNotEDT("startModules()");
 
+        ModuleStarter starter = new ModuleStarter();
+
         for (Module module : modules) {
             if (canBeLoaded(module) && areAllDependenciesSatisfied(module)) {
-                startModule(module);
+                starter.addModule(module);
             }
         }
+
+        starter.startAll();
     }
 
     /**
@@ -664,6 +674,111 @@ public final class ModuleService implements IModuleService {
         @Override
         public void run() {
             stopModules();
+        }
+    }
+
+    private class ModuleStarter {
+        private final BlockingQueue<Module> ready = new LinkedBlockingQueue<Module>(5);
+        private final Set<Module> delay = Collections.synchronizedSet(new HashSet<Module>(150));
+        private int threads;
+
+        public void addModule(Module module) {
+            if (StringUtils.isEmpty(canBeStarted(module))) {
+                ready.add(module);
+            } else {
+                delay.add(module);
+            }
+        }
+
+        public void startAll(){
+            int size = ready.size() + delay.size();
+
+            if(size == 0){
+                return;
+            }
+
+            threads = Math.min(size, Runtime.getRuntime().availableProcessors());
+
+            LoggerFactory.getLogger(getClass()).info("Start {} threads to start the modules", threads);
+
+            Collection<Thread> starters = new ArrayList<Thread>(threads);
+
+            for(int i = 0; i < threads; i++){
+                Thread thread = new ModuleStarterRunnable(this);
+                thread.setName("ModuleStarter" + i);
+                thread.start();
+
+                starters.add(thread);
+            }
+
+            joinAll(starters);
+        }
+
+        private void joinAll(Iterable<Thread> threads) {
+            for(Thread thread : threads){
+                try {
+                    thread.join();
+                } catch (InterruptedException e) {
+                    LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
+                }
+            }
+        }
+
+        public void fireStarted() {
+            if(!delay.isEmpty()){
+                for (Iterator<Module> iterator = delay.iterator(); iterator.hasNext(); ) {
+                    Module module = iterator.next();
+
+                    if (StringUtils.isEmpty(canBeStarted(module))) {
+                        try {
+                            ready.put(module);
+                            iterator.remove();
+                        } catch (InterruptedException e) {
+                            LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
+                        }
+                    }
+                }
+
+                if(delay.isEmpty()){
+                    for (int i = 0; i < threads; i++) {
+                        ready.add(null);
+                    }
+                }
+            }
+        }
+    }
+
+    private class ModuleStarterRunnable extends Thread {
+        private final ModuleStarter moduleStarter;
+
+        private ModuleStarterRunnable(ModuleStarter moduleStarter) {
+            super();
+
+            this.moduleStarter = moduleStarter;
+        }
+
+        @Override
+        public void run() {
+            while(true){
+                if (moduleStarter.ready.size() + moduleStarter.delay.size() == 0) {
+                    return;
+                }
+
+                try {
+                    Module module = moduleStarter.ready.take();
+
+                    if(module == null){
+                        return;
+                    }
+
+                    startModule(module);
+
+                    moduleStarter.fireStarted();
+                } catch (InterruptedException e) {
+                    LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
+                    return;
+                }
+            }
         }
     }
 }
