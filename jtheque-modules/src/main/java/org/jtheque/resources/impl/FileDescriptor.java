@@ -83,4 +83,13 @@ public class FileDescriptor {
     public Version getVersion() {
         return version;
     }
+
+    @Override
+    public String toString() {
+        return "FileDescriptor{" +
+                "name='" + name + '\'' +
+                ", url='" + url + '\'' +
+                ", version=" + version +
+                '}';
+    }
 }

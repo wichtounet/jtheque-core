@@ -46,6 +46,7 @@ import org.osgi.framework.BundleException;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.UrlResource;
 
+import javax.annotation.PreDestroy;
 import javax.annotation.Resource;
 
 import java.io.File;
@@ -176,6 +177,7 @@ public final class ModuleService implements IModuleService {
      * Unplug the modules.
      */
     @Override
+    @PreDestroy
     public void stopModules() {
         List<Module> modulesToUnplug = CollectionUtils.copyOf(modules);
 
