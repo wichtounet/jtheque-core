@@ -85,6 +85,14 @@ public abstract class AbstractController implements IController {
     }
 
     /**
+     * Invalidate the cache of translations. Doing that, you have the guarantee that the first time you
+     * handle an action, the cache will be repopulated with the translations of the getTranslations method. 
+     */
+    protected void invalidateTranslations(){
+        translations.clear();
+    }
+
+    /**
      * Return the translations of the i18n actions name to the method names.
      *
      * @return A Map containing all the translations of the controller.
