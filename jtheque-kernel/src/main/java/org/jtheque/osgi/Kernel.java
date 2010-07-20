@@ -41,7 +41,7 @@ public final class Kernel implements Closeable {
         super();
 
         server = new FelixServer();
-        applicationManager = new ApplicationManager(this);
+        applicationManager = new ApplicationManager();
     }
 
     /**
@@ -83,11 +83,6 @@ public final class Kernel implements Closeable {
         }
     }
 
-    public void restart() {
-        server.restart();
-        startBundles();
-    }
-
     /**
      * A hook to stop the server.
      */
@@ -105,17 +100,7 @@ public final class Kernel implements Closeable {
      * @param args No args will be read.
      */
     public static void main(String[] args) {
-        if (args.length > 0) {
-            System.setProperty("user.dir", args[0]);
-        }
-
         Thread.currentThread().setName("Kernel-MainThread");
-
-        try {
-            Thread.sleep(10000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
 
         new Kernel().start();
     }
