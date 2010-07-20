@@ -21,6 +21,7 @@ import org.jtheque.utils.StringUtils;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.IdentityHashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -50,7 +51,7 @@ public final class ModuleResourceCache {
     public static <T> void addResource(String id, Class<T> resourceType, T resource) {
         if (StringUtils.isNotEmpty(id)) {
             if (!CACHE.containsKey(id)) {
-                CACHE.put(id, new HashMap<Class<?>, Set<Object>>(8));
+                CACHE.put(id, new IdentityHashMap<Class<?>, Set<Object>>(8));
             }
 
             Map<Class<?>, Set<Object>> resources = CACHE.get(id);
