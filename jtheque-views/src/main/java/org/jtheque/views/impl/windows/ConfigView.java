@@ -21,12 +21,14 @@ import org.jtheque.i18n.able.ILanguageService;
 import org.jtheque.ui.able.IModel;
 import org.jtheque.ui.able.constraints.Constraint;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
-import org.jtheque.ui.utils.components.LayerTabbedPane;
+import org.jtheque.ui.able.components.LayerTabbedPane;
 import org.jtheque.ui.utils.windows.dialogs.SwingFilthyBuildedDialogView;
 import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.views.able.IViews;
 import org.jtheque.views.able.components.ConfigTabComponent;
 import org.jtheque.views.able.windows.IConfigView;
+
+import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 
@@ -61,11 +63,11 @@ public final class ConfigView extends SwingFilthyBuildedDialogView<IModel> imple
         builder.add(tab, builder.gbcSet(0, 0, GridBagUtils.BOTH));
 
         builder.addButtonBar(builder.gbcSet(0, 1, GridBagUtils.HORIZONTAL),
-                getControllerAction("config.actions.ok"),
-                getControllerAction("config.actions.apply"),
-                getControllerAction("config.actions.cancel"));
+                getAction("config.actions.ok"),
+                getAction("config.actions.apply"),
+                getAction("config.actions.cancel"));
 
-        SimplePropertiesCache.put("config-view-loaded", "true");
+        SimplePropertiesCache.put("config-view-loaded", true);
     }
 
     @Override
@@ -75,14 +77,24 @@ public final class ConfigView extends SwingFilthyBuildedDialogView<IModel> imple
 
     @Override
     public void sendMessage(String message, Object value) {
-        if ("remove".equals(message)) {
+        if(value == null){
+            LoggerFactory.getLogger(getClass()).error("Null value was sent as message to config view");
+
+            return;
+        }
+
+        if ("add".equals(message)) {
             ConfigTabComponent component = (ConfigTabComponent) value;
 
             tab.addLayeredTab(getService(ILanguageService.class).getMessage(component.getTitleKey()), component.getComponent());
-        } else if ("add".equals(message)) {
+        } else if ("remove".equals(message)) {
             ConfigTabComponent component = (ConfigTabComponent) value;
 
-            tab.removeTabAt(tab.indexOfTab(getService(ILanguageService.class).getMessage(component.getTitleKey())));
+            int index = tab.indexOfTab(getService(ILanguageService.class).getMessage(component.getTitleKey()));
+
+            if(index >= 0){
+                tab.removeTabAt(index);
+            }
         }
     }
 }

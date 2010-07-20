@@ -59,17 +59,17 @@ public final class ModulesPanel extends OSGIFilthyBuildedPanel implements IModul
         modulesList.setVisibleRowCount(4);
 
         builder.addButtonBar(builder.gbcSet(0, 2, GridBagUtils.HORIZONTAL, GridBagUtils.BASELINE_LEADING, 1.0, 0.0),
-                moduleView.getControllerAction("modules.actions.stop"),
-                moduleView.getControllerAction("modules.actions.start"),
-                moduleView.getControllerAction("modules.actions.activate"),
-                moduleView.getControllerAction("modules.actions.desactivate"));
+                moduleView.getAction("modules.actions.stop"),
+                moduleView.getAction("modules.actions.start"),
+                moduleView.getAction("modules.actions.activate"),
+                moduleView.getAction("modules.actions.desactivate"));
 
         builder.addButtonBar(builder.gbcSet(0, 3, GridBagUtils.HORIZONTAL, GridBagUtils.BASELINE_LEADING, 1.0, 0.0),
-                moduleView.getControllerAction("modules.actions.url.new"),
-                moduleView.getControllerAction("modules.actions.file.new"),
-                moduleView.getControllerAction("modules.actions.uninstall"),
-                moduleView.getControllerAction("modules.actions.update"),
-                moduleView.getControllerAction("modules.actions.repository"));
+                moduleView.getAction("modules.actions.url.new"),
+                moduleView.getAction("modules.actions.file.new"),
+                moduleView.getAction("modules.actions.uninstall"),
+                moduleView.getAction("modules.actions.update"),
+                moduleView.getAction("modules.actions.repository"));
     }
 
     @Override

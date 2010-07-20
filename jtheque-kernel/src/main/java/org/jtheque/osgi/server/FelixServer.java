@@ -1,7 +1,5 @@
 package org.jtheque.osgi.server;
 
-import org.jtheque.utils.io.FileUtils;
-
 import org.apache.felix.framework.Felix;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleException;
@@ -38,6 +36,7 @@ import java.util.Map;
  */
 public final class FelixServer implements OSGiServer {
     private static final File BUNDLES_DIR = new File(System.getProperty("user.dir") + "/bundles");
+    private static final File CACHE_DIR = new File(System.getProperty("user.dir") + "/cache");
 
     private final Map<String, Bundle> bundles = new HashMap<String, Bundle>(50);
 
@@ -52,7 +51,8 @@ public final class FelixServer implements OSGiServer {
         Map<String, Object> configMap = new HashMap<String, Object>(5);
 
         configMap.put("felix.cache.bufsize", "8192");
-        configMap.put("org.osgi.framework.storage", System.getProperty("user.dir") + "/cache");
+        configMap.put("org.osgi.framework.storage", CACHE_DIR.getAbsolutePath());
+        configMap.put("org.osgi.framework.bootdelegation", "org.netbeans.lib.profiler, org.netbeans.lib.profiler.*");
 
         try {
             felix = new Felix(configMap);
@@ -287,16 +287,6 @@ public final class FelixServer implements OSGiServer {
     @Override
     public Bundle getBundle(String bundleName) {
         return bundles.get(bundleName);
-    }
-
-    @Override
-    public void restart() {
-        stop();
-
-        //Clean the cache
-        FileUtils.clearFolder(BUNDLES_DIR);
-
-        start();
     }
 
     /**

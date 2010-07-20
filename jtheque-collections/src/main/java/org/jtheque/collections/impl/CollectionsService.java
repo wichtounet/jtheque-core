@@ -202,6 +202,6 @@ public final class CollectionsService implements ICollectionsService {
 
     @Override
     public boolean isCollectionChosen() {
-        return SimplePropertiesCache.<Boolean>get("collectionChosen");//Does not compile without generic type
+        return SimplePropertiesCache.get("collectionChosen", Boolean.class);
     }
 }

@@ -23,6 +23,7 @@ import org.jtheque.modules.able.ModuleListener;
 import org.jtheque.modules.utils.ModuleResourceCache;
 import org.jtheque.spring.utils.SwingSpringProxy;
 import org.jtheque.utils.collections.CollectionUtils;
+import org.jtheque.utils.ui.SwingUtils;
 import org.jtheque.views.able.IViews;
 import org.jtheque.views.able.components.ConfigTabComponent;
 import org.jtheque.views.able.components.IStateBarComponent;
@@ -185,7 +186,7 @@ public final class Views implements IViews, ApplicationContextAware, ModuleListe
         if (component != null && component.getComponent() != null) {
             stateBarComponents.add(component);
 
-            if ("true".equals(SimplePropertiesCache.get("statebar-loaded"))) {
+            if (SimplePropertiesCache.get("statebar-loaded", Boolean.class)) {
                 getMainView().getStateBar().addComponent(component);
             }
 
@@ -202,7 +203,7 @@ public final class Views implements IViews, ApplicationContextAware, ModuleListe
     public void addConfigTabComponent(String moduleId, ConfigTabComponent component) {
         configPanels.add(component);
 
-        if ("true".equals(SimplePropertiesCache.get("config-view-loaded"))) {
+        if (SimplePropertiesCache.get("config-view-loaded", Boolean.class)) {
             getConfigView().sendMessage("add", component);
         }
 
@@ -216,9 +217,14 @@ public final class Views implements IViews, ApplicationContextAware, ModuleListe
 
     @Override
     public void init() {
-        addConfigTabComponent("", new SwingSpringProxy<JPanelConfigAppearance>(JPanelConfigAppearance.class, applicationContext).get());
-        addConfigTabComponent("", new SwingSpringProxy<JPanelConfigOthers>(JPanelConfigOthers.class, applicationContext).get());
-        addConfigTabComponent("", new SwingSpringProxy<JPanelConfigNetwork>(JPanelConfigNetwork.class, applicationContext).get());
+        SwingUtils.inEdt(new Runnable(){
+            @Override
+            public void run() {
+                addConfigTabComponent("", applicationContext.getBean(JPanelConfigAppearance.class));
+                addConfigTabComponent("", applicationContext.getBean(JPanelConfigOthers.class));
+                addConfigTabComponent("", applicationContext.getBean(JPanelConfigNetwork.class));
+            }
+        });
     }
 
     @Override
@@ -284,7 +290,7 @@ public final class Views implements IViews, ApplicationContextAware, ModuleListe
         for (ConfigTabComponent component : components) {
             configPanels.remove(component);
 
-            if ("true".equals(SimplePropertiesCache.get("config-view-loaded"))) {
+            if (SimplePropertiesCache.get("config-view-loaded", Boolean.class)) {
                 getConfigView().sendMessage("remove", component);
             }
         }

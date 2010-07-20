@@ -46,7 +46,7 @@ public class PropertiesUtilsTest {
 
         instance1.setProperty1(88);
 
-        TestClass memento = PropertiesUtils.createMemento(instance1);
+        TestClass memento = PropertiesUtils.createMemento(instance1, TestClass.class);
 
         assertEquals(instance1.getProperty1(), memento.getProperty1());
 
@@ -59,7 +59,7 @@ public class PropertiesUtilsTest {
     public void testRestoreMemento() {
         TestClass instance1 = new TestClass();
 
-        TestClass memento = PropertiesUtils.createMemento(instance1);
+        TestClass memento = PropertiesUtils.createMemento(instance1, TestClass.class);
 
         instance1.setProperty1(88);
 

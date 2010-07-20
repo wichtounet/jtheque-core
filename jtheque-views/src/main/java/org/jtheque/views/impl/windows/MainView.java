@@ -21,11 +21,12 @@ import org.jtheque.core.able.lifecycle.TitleEvent;
 import org.jtheque.core.able.lifecycle.TitleListener;
 import org.jtheque.core.utils.SimplePropertiesCache;
 import org.jtheque.i18n.able.ILanguageService;
+import org.jtheque.ui.able.IModel;
 import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.ui.utils.builders.JThequePanelBuilder;
 import org.jtheque.ui.utils.builders.PanelBuilder;
-import org.jtheque.ui.utils.components.Borders;
-import org.jtheque.ui.utils.components.LayerTabbedPane;
+import org.jtheque.ui.able.components.Borders;
+import org.jtheque.ui.able.components.LayerTabbedPane;
 import org.jtheque.ui.utils.windows.frames.SwingFrameView;
 import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.ui.GridBagUtils;
@@ -56,7 +57,7 @@ import java.util.Collection;
  *
  * @author Baptiste Wicht
  */
-public final class MainView extends SwingFrameView implements TitleListener, IMainView {
+public final class MainView extends SwingFrameView<IModel> implements TitleListener, IMainView {
     private MainTabbedPane tab;
 
     private MainController controller;
@@ -166,7 +167,7 @@ public final class MainView extends SwingFrameView implements TitleListener, IMa
 
         stateBar = new JThequeStateBar(views);
 
-        SimplePropertiesCache.put("statebar-loaded", "true");
+        SimplePropertiesCache.put("statebar-loaded", true);
 
         builder.add(stateBar, builder.gbcSet(0, 1, GridBagUtils.HORIZONTAL, GridBagUtils.LAST_LINE_START));
 

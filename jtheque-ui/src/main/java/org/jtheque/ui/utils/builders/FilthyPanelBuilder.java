@@ -1,11 +1,8 @@
 package org.jtheque.ui.utils.builders;
 
-import org.jtheque.ui.utils.components.BorderUpdater;
-import org.jtheque.ui.utils.components.Borders;
-import org.jtheque.ui.utils.components.JThequeI18nLabel;
-import org.jtheque.ui.utils.filthy.FilthyComboBox;
-import org.jtheque.ui.utils.filthy.FilthyList;
-import org.jtheque.ui.utils.filthy.FilthyPanel;
+import org.jtheque.ui.able.components.Borders;
+import org.jtheque.ui.able.components.I18nLabel;
+import org.jtheque.ui.able.components.filthy.Filthy;
 
 import org.jdesktop.swingx.JXTree;
 
@@ -73,7 +70,7 @@ public final class FilthyPanelBuilder extends JThequePanelBuilder {
      * @param layout The layout to set to the builded panel.
      */
     public FilthyPanelBuilder(LayoutManager layout) {
-        super(new FilthyPanel(layout), false);
+        super(Filthy.newPanel(layout), false);
     }
 
     /**
@@ -138,8 +135,8 @@ public final class FilthyPanelBuilder extends JThequePanelBuilder {
     }
 
     @Override
-    public JThequeI18nLabel addI18nLabel(String key, Object constraints) {
-        JThequeI18nLabel label = super.addI18nLabel(key, constraints);
+    public I18nLabel addI18nLabel(String key, Object constraints) {
+        I18nLabel label = super.addI18nLabel(key, constraints);
 
         label.setForeground(Color.white);
 
@@ -147,8 +144,8 @@ public final class FilthyPanelBuilder extends JThequePanelBuilder {
     }
 
     @Override
-    public JThequeI18nLabel addI18nLabel(String key, int style, Object constraints) {
-        JThequeI18nLabel label = super.addI18nLabel(key, style, constraints);
+    public I18nLabel addI18nLabel(String key, int style, Object constraints) {
+        I18nLabel label = super.addI18nLabel(key, style, constraints);
 
         label.setForeground(Color.white);
 
@@ -156,8 +153,8 @@ public final class FilthyPanelBuilder extends JThequePanelBuilder {
     }
 
     @Override
-    public JThequeI18nLabel addI18nLabel(String key, int style, float size, Object constraints) {
-        JThequeI18nLabel label = super.addI18nLabel(key, style, size, constraints);
+    public I18nLabel addI18nLabel(String key, int style, float size, Object constraints) {
+        I18nLabel label = super.addI18nLabel(key, style, size, constraints);
 
         label.setForeground(Color.white);
 
@@ -166,7 +163,7 @@ public final class FilthyPanelBuilder extends JThequePanelBuilder {
 
     @Override
     public JList addScrolledList(ListModel model, ListCellRenderer renderer, Object constraints) {
-        JList list = new FilthyList(model);
+        JList list = Filthy.newList(model);
 
         list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         list.setVisibleRowCount(10);
@@ -197,12 +194,12 @@ public final class FilthyPanelBuilder extends JThequePanelBuilder {
 
     @Override
     public JComboBox addComboBox(ComboBoxModel model, Object constraints) {
-        return add(new FilthyComboBox(model), constraints);
+        return add(Filthy.newComboBox(model), constraints);
     }
 
     @Override
     public JComboBox addComboBox(ComboBoxModel model, ListCellRenderer renderer, Object constraints) {
-        JComboBox combo = add(new FilthyComboBox(model), constraints);
+        JComboBox combo = add(Filthy.newComboBox(model), constraints);
 
         combo.setRenderer(renderer);
 
@@ -262,11 +259,9 @@ public final class FilthyPanelBuilder extends JThequePanelBuilder {
 
     @Override
     public void setI18nTitleBorder(String key) {
-        TitledBorder border = BorderFactory.createTitledBorder(key);
+        TitledBorder border = Borders.createI18nTitleBorder(key, getContainer());
 
         border.setTitleColor(Color.white);
-
-        addInternationalizable(new BorderUpdater(border, key));
 
         setBorder(border);
     }

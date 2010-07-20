@@ -45,7 +45,7 @@ public final class OSGiUtils {
         ServiceReference ref = context.getServiceReference(classz.getName());
 
         if (ref != null) {
-            return (T) context.getService(ref);
+            return classz.cast(context.getService(ref));
         }
 
         return null;

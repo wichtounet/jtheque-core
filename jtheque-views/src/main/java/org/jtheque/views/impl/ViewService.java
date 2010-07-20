@@ -64,21 +64,21 @@ public final class ViewService implements IViewService, ApplicationContextAware 
 
     @Override
     public void displayAboutView() {
-        SimplePropertiesCache.<IMainView>get("mainView").setGlassPane(aboutPane.get().getImpl());
+        SimplePropertiesCache.get("mainView", IMainView.class).setGlassPane(aboutPane.get().getImpl());
 
         aboutPane.get().appear();
     }
 
     @Override
     public void displayCollectionView() {
-        SimplePropertiesCache.<IMainView>get("mainView").setGlassPane(collectionPane.get().getImpl());
+        SimplePropertiesCache.get("mainView", IMainView.class).setGlassPane(collectionPane.get().getImpl());
 
         collectionPane.get().appear();
     }
 
     @Override
     public void closeCollectionView() {
-        SimplePropertiesCache.<IMainView>get("mainView").setGlassPane(null);
+        SimplePropertiesCache.get("mainView", IMainView.class).setGlassPane(null);
     }
 
     @Override

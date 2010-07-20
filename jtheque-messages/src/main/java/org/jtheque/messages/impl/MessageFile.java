@@ -60,7 +60,7 @@ public final class MessageFile {
      *
      * @return A List containing all the messages of the file.
      */
-    public Collection<IMessage> getMessages() {
+    public Iterable<IMessage> getMessages() {
         return messages;
     }
 

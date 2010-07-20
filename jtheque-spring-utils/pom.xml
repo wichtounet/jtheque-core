@@ -62,7 +62,6 @@
                     <instructions>
                         <Bundle-SymbolicName>${pom.artifactId}</Bundle-SymbolicName>
                         <Export-Package>org.jtheque.spring.utils, org.jtheque.spring.utils.*</Export-Package>
-                        <Export-Package>org.jtheque.spring.utils, org.jtheque.spring.utils.*</Export-Package>
                         <Bundle-Vendor>Baptiste Wicht</Bundle-Vendor>
                         <Spring-Context>*;create-asynchronously:=false;publish-context:=false</Spring-Context>
                     </instructions>

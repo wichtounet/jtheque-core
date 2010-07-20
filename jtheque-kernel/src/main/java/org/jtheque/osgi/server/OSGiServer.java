@@ -123,9 +123,4 @@ public interface OSGiServer {
      * @return The bundle with the specified name.
      */
     Bundle getBundle(String bundleName);
-
-    /**
-     * Restart the server without the bundle cache.
-     */
-    void restart();
 }

@@ -236,12 +236,12 @@ public class ModuleController extends AbstractController {
      */
     private abstract class ModuleWorker extends SimpleSwingWorker {
         @Override
-        protected void before() {
+        protected final void before() {
             moduleView.getWindowState().startWait();
         }
 
         @Override
-        protected void done() {
+        protected final void done() {
             moduleView.refreshList();
             moduleView.getWindowState().stopWait();
         }
@@ -252,7 +252,7 @@ public class ModuleController extends AbstractController {
      *
      * @author Baptiste Wicht
      */
-    private class StartModuleWorker extends ModuleWorker implements CollectionListener {
+    private final class StartModuleWorker extends ModuleWorker implements CollectionListener {
         private final Module module;
 
         /**
@@ -286,7 +286,7 @@ public class ModuleController extends AbstractController {
      *
      * @author Baptiste Wicht
      */
-    private class StopModuleWorker extends ModuleWorker {
+    private final class StopModuleWorker extends ModuleWorker {
         private final Module module;
 
         /**
@@ -309,7 +309,7 @@ public class ModuleController extends AbstractController {
      *
      * @author Baptiste Wicht
      */
-    private class UpdateCoreWorker extends ModuleWorker {
+    private final class UpdateCoreWorker extends ModuleWorker {
         @Override
         protected void doWork() {
             updateService.updateCore(updateService.getMostRecentCoreVersion());
@@ -321,7 +321,7 @@ public class ModuleController extends AbstractController {
      *
      * @author Baptiste Wicht
      */
-    private class UpdateModuleWorker extends ModuleWorker {
+    private final class UpdateModuleWorker extends ModuleWorker {
         private final Module module;
 
         /**

@@ -19,17 +19,15 @@ package org.jtheque.views.impl.windows;
 import org.jtheque.i18n.able.ILanguageService;
 import org.jtheque.modules.able.Module;
 import org.jtheque.resources.able.IResource;
-import org.jtheque.ui.able.IController;
 import org.jtheque.ui.able.IModel;
+import org.jtheque.ui.able.components.LayerTabbedPane;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
-import org.jtheque.ui.utils.components.LayerTabbedPane;
 import org.jtheque.ui.utils.windows.dialogs.SwingFilthyBuildedDialogView;
 import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.views.able.components.IModulesPanelView;
 import org.jtheque.views.able.components.IResourcePanelView;
 import org.jtheque.views.able.panel.IModuleView;
 
-import javax.annotation.Resource;
 import javax.swing.JComponent;
 
 /**

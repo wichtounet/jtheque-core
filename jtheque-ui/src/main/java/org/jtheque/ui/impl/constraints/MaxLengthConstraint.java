@@ -55,21 +55,6 @@ public final class MaxLengthConstraint implements Constraint {
         this.numerical = numerical;
     }
 
-    /**
-     * Construct a new MaxLengthConstraint.
-     *
-     * @param canBeNull boolean tag indicating if the field can be empty.
-     * @param fieldName The field name to test.
-     */
-    public MaxLengthConstraint(boolean canBeNull, String fieldName) {
-        super();
-
-        this.canBeNull = canBeNull;
-        this.fieldName = fieldName;
-        maxLength = Integer.MAX_VALUE;
-        numerical = false;
-    }
-
     @Override
     public int maxLength() {
         return maxLength;

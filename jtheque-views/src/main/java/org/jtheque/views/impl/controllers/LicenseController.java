@@ -52,21 +52,29 @@ import java.util.Map;
 public class LicenseController extends AbstractController {
     @Resource
     private ILicenseView licenseView;
+    
+    @Override
+    protected Map<String, String> getTranslations() {
+        Map<String, String> translations = new HashMap<String, String>(2);
+
+        translations.put("license.actions.print", "print");
+        translations.put("license.actions.close", "close");
+
+        return translations;
+    }
+
+    /**
+     * Close the view.
+     */
+    private void close() {
+        licenseView.closeDown();
+    }
 
     /**
      * Print the license.
      */
     private void print() {
         new PrintWorker().start();
-    }
-    
-    @Override
-    protected Map<String, String> getTranslations() {
-        Map<String, String> translations = new HashMap<String, String>(1);
-
-        translations.put("license.actions.print", "print");
-
-        return translations;
     }
 
     /**

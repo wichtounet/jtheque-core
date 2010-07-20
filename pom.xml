@@ -117,6 +117,7 @@
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <version>2.7</version>
                 <configuration>
+					<detectOfflineLinks>false</detectOfflineLinks>
                     <bottom>
                         <![CDATA[Copyright © {inceptionYear}-{currentYear} {organizationName}. All Rights Reserved.
                         <script type="text/javascript">

@@ -4,7 +4,7 @@ import org.jtheque.resources.able.IResource;
 import org.jtheque.resources.able.IResourceService;
 import org.jtheque.ui.utils.builded.OSGIFilthyBuildedPanel;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
-import org.jtheque.ui.utils.components.Borders;
+import org.jtheque.ui.able.components.Borders;
 import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.views.able.components.IResourcePanelView;
 import org.jtheque.views.impl.components.renderers.ResourceListRenderer;

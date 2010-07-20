@@ -6,7 +6,7 @@ import org.jtheque.i18n.able.ILanguageService;
 import org.jtheque.ui.able.IModel;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.ui.utils.builders.PanelBuilder;
-import org.jtheque.ui.utils.filthy.FilthyRenderer;
+import org.jtheque.ui.able.components.filthy.Filthy;
 import org.jtheque.ui.utils.models.SimpleListModel;
 import org.jtheque.ui.utils.windows.dialogs.SwingFilthyBuildedDialogView;
 import org.jtheque.utils.ui.GridBagUtils;
@@ -80,7 +80,7 @@ public final class EventView extends SwingFilthyBuildedDialogView<IModel> implem
 
         builder.addI18nLabel("log.view.log", builder.gbcSet(0, 0, GridBagUtils.NONE, GridBagUtils.LINE_END));
 
-        builder.addComboBox(new SimpleListModel<String>(getService(IEventService.class).getEventLogs()), new FilthyRenderer(),
+        builder.addComboBox(new SimpleListModel<String>(getService(IEventService.class).getEventLogs()), Filthy.newListRenderer(),
                 builder.gbcSet(1, 0, GridBagUtils.HORIZONTAL, GridBagUtils.LINE_START, 1.0, 0.0)).addItemListener(this);
 
         eventsModel = new EventsTableModel(getService(IEventService.class), getService(ILanguageService.class));
@@ -97,7 +97,7 @@ public final class EventView extends SwingFilthyBuildedDialogView<IModel> implem
 
         createInfosPanel(builder);
 
-        builder.addButton(getControllerAction("log.view.actions.update"),
+        builder.addButton(getAction("log.view.actions.update"),
                 builder.gbcSet(1, 3, GridBagUtils.NONE, GridBagUtils.LINE_END));
     }
 

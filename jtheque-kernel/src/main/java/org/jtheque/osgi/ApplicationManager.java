@@ -40,21 +40,9 @@ final class ApplicationManager {
     private static final int PORT = 12345;
 
     private final Collection<Application> applications = new ArrayList<Application>(2);
-    private final Kernel kernel;
 
     private ServerSocket serverSocket;
     private Thread thread;
-
-    /**
-     * Construct a new ApplicationManager for the given OSGiServer.
-     *
-     * @param kernel The OSGi server.
-     */
-    ApplicationManager(Kernel kernel) {
-        super();
-
-        this.kernel = kernel;
-    }
 
     /**
      * Launch the application. If an other instance of the application is soon launched, call it and exit the current
@@ -70,7 +58,7 @@ final class ApplicationManager {
 
             wakeUpApplication();
 
-            System.exit(1); //At this moment, nothing need to be released
+            System.exit(0); //At this moment, nothing need to be released
         }
     }
 
@@ -136,7 +124,6 @@ final class ApplicationManager {
      *
      * @author Baptiste Wicht
      */
-    @SuppressWarnings({"SocketOpenedButNotSafelyClosed"})
     private final class ServerThread extends Thread {
         @Override
         public void run() {
@@ -144,7 +131,7 @@ final class ApplicationManager {
                 try {
 
 
-                    Application application = new Application(serverSocket.accept(), kernel);
+                    Application application = new Application(serverSocket.accept());
                     applications.add(application);
 
                     application.start();

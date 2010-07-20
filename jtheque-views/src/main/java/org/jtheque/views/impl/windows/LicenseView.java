@@ -45,8 +45,8 @@ public final class LicenseView extends SwingFilthyBuildedDialogView<IModel> impl
                 builder.gbcSet(0, 0, GridBagUtils.BOTH, GridBagUtils.BELOW_BASELINE_LEADING, 1.0, 1.0));
 
         builder.addButtonBar(builder.gbcSet(0, 1, GridBagUtils.HORIZONTAL),
-                getControllerAction("license.actions.print"),
-                getCloseAction("license.actions.close"));
+                getAction("license.actions.print"),
+                getAction("license.actions.close"));
 
         getService(IViewService.class).configureView(this, "license", DEFAULT_WIDTH, DEFAULT_HEIGHT);
     }

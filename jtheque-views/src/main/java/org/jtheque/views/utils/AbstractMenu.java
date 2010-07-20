@@ -8,7 +8,6 @@ import org.jtheque.features.able.Menu;
 import org.jtheque.i18n.able.ILanguageService;
 import org.jtheque.i18n.able.Internationalizable;
 import org.jtheque.ui.able.IController;
-import org.jtheque.ui.able.IView;
 import org.jtheque.ui.utils.actions.ActionFactory;
 import org.jtheque.ui.utils.actions.JThequeAction;
 import org.jtheque.utils.collections.CollectionUtils;
@@ -282,30 +281,6 @@ public abstract class AbstractMenu implements Menu {
     //Utility action methods
 
     /**
-     * Create an action to close the view.
-     *
-     * @param key  The i18n key.
-     * @param view The view to close.
-     *
-     * @return An action to close the view.
-     */
-    public static JThequeAction createCloseViewAction(String key, IView view) {
-        return ActionFactory.createCloseViewAction(key, view);
-    }
-
-    /**
-     * Create an action to display the view.
-     *
-     * @param key  The i18n key.
-     * @param view The view to close.
-     *
-     * @return An action to close the view.
-     */
-    public static JThequeAction createDisplayViewAction(String key, IView view) {
-        return ActionFactory.createDisplayViewAction(key, view);
-    }
-
-    /**
      * Create an action linked to the controller.
      *
      * @param key        The i18n key of the action.
@@ -314,7 +289,7 @@ public abstract class AbstractMenu implements Menu {
      * @return The JThequeAction for this controller binding.
      */
     public static JThequeAction createControllerAction(String key, IController controller) {
-        return ActionFactory.createControllerAction(key, controller);
+        return ActionFactory.createAction(key, controller);
     }
 
     @Override

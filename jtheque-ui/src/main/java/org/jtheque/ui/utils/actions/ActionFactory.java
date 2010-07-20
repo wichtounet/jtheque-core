@@ -1,7 +1,9 @@
 package org.jtheque.ui.utils.actions;
 
 import org.jtheque.ui.able.IController;
-import org.jtheque.ui.able.IView;
+
+import javax.swing.Action;
+import javax.swing.ImageIcon;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -31,41 +33,30 @@ public final class ActionFactory {
     private ActionFactory() {
         super();
     }
-
+    
     /**
-     * Create an action to close the view.
+     * Create an action linked to the controller.
      *
-     * @param key  The i18n key.
-     * @param view The view to close.
+     * @param key        The i18n key of the action.
+     * @param controller The controller to bind the action to.
      *
-     * @return An action to close the view.
+     * @return The JThequeAction for this controller binding.
      */
-    public static JThequeAction createCloseViewAction(String key, IView view) {
-        return new CloseViewAction(key, view);
-    }
-
-    /**
-     * Create an action to display the view.
-     *
-     * @param key  The i18n key.
-     * @param view The view to close.
-     *
-     * @return An action to close the view.
-     */
-    public static JThequeAction createDisplayViewAction(String key, IView view) {
-        return new DisplayViewAction(key, view);
+    public static JThequeAction createAction(String key, IController controller) {
+        return new ControllerAction(key, controller);
     }
 
 
     /**
      * Create an action linked to the controller.
      *
-     * @param key The i18n key of the action.
+     * @param key        The i18n key of the action.
+     * @param icon       The icon of the action
      * @param controller The controller to bind the action to.
      *
      * @return The JThequeAction for this controller binding.
      */
-    public static JThequeAction createControllerAction(String key, IController controller) {
-        return new ControllerAction(key, controller);
+    public static Action createAction(String key, ImageIcon icon, IController controller) {
+        return new ControllerAction(key, icon, controller);
     }
 }

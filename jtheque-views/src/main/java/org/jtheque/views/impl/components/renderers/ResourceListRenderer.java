@@ -17,10 +17,10 @@ package org.jtheque.views.impl.components.renderers;
  */
 
 import org.jtheque.resources.able.IResource;
+import org.jtheque.ui.able.components.Borders;
 import org.jtheque.ui.utils.builders.FilthyPanelBuilder;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.ui.utils.builders.PanelBuilder;
-import org.jtheque.ui.utils.components.Borders;
 import org.jtheque.utils.ui.GridBagUtils;
 
 import javax.swing.JLabel;

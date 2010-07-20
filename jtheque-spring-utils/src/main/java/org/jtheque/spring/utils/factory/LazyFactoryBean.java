@@ -27,7 +27,7 @@ import java.lang.reflect.Proxy;
  *
  * @author Baptiste Wicht
  */
-public final class LazyFactoryBean extends AbstractFactoryBean {
+public final class LazyFactoryBean extends AbstractFactoryBean<Object> {
     private final String beanName;
     private final boolean swing;
     private final Class<?> beanClass;

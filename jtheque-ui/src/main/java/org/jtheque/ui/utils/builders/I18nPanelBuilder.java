@@ -17,7 +17,7 @@ package org.jtheque.ui.utils.builders;
  */
 
 import org.jtheque.i18n.able.InternationalizableContainer;
-import org.jtheque.ui.utils.components.JThequeI18nLabel;
+import org.jtheque.ui.able.components.I18nLabel;
 
 import javax.swing.JCheckBox;
 
@@ -56,7 +56,7 @@ public interface I18nPanelBuilder extends PanelBuilder {
      *
      * @return The added label.
      */
-    JThequeI18nLabel addI18nLabel(String key, Object constraints);
+    I18nLabel addI18nLabel(String key, Object constraints);
 
     /**
      * Add an internationalized label with a specified style to the panel.
@@ -67,7 +67,7 @@ public interface I18nPanelBuilder extends PanelBuilder {
      *
      * @return The added label.
      */
-    JThequeI18nLabel addI18nLabel(String key, int style, Object constraints);
+    I18nLabel addI18nLabel(String key, int style, Object constraints);
 
     /**
      * Add an internationalized label with a specified style to the panel.
@@ -79,7 +79,7 @@ public interface I18nPanelBuilder extends PanelBuilder {
      *
      * @return The added label.
      */
-    JThequeI18nLabel addI18nLabel(String key, int style, float size, Object constraints);
+    I18nLabel addI18nLabel(String key, int style, float size, Object constraints);
 
     /**
      * Add an internationalized separator.

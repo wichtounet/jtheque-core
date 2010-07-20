@@ -19,14 +19,13 @@ package org.jtheque.views.impl.components.panel;
 import org.jtheque.core.able.ICore;
 import org.jtheque.core.utils.SimplePropertiesCache;
 import org.jtheque.i18n.able.ILanguageService;
-import org.jtheque.ui.able.Filthy;
 import org.jtheque.ui.able.IController;
+import org.jtheque.ui.able.components.Components;
+import org.jtheque.ui.able.components.TextField;
+import org.jtheque.ui.able.components.filthy.Filthy;
 import org.jtheque.ui.utils.AnimationUtils;
 import org.jtheque.ui.utils.actions.ActionFactory;
 import org.jtheque.ui.utils.actions.JThequeAction;
-import org.jtheque.ui.utils.components.JThequeI18nLabel;
-import org.jtheque.ui.utils.filthy.FilthyPasswordField;
-import org.jtheque.ui.utils.filthy.FilthyTextField;
 import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.utils.ui.SwingUtils;
 import org.jtheque.views.able.panel.ICollectionView;
@@ -49,12 +48,14 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.Window;
 
+import static org.jtheque.ui.able.components.filthy.FilthyConstants.*;
+
 /**
  * @author Baptiste Wicht
  */
-public final class CollectionPane extends JXPanel implements ICollectionView, Filthy {
-    private FilthyTextField textField;
-    private FilthyPasswordField passwordField;
+public final class CollectionPane extends JXPanel implements ICollectionView {
+    private TextField textField;
+    private TextField passwordField;
     private JLabel labelError;
 
     private static final int LEFT_MARGIN_WIDTH = 200;
@@ -75,7 +76,7 @@ public final class CollectionPane extends JXPanel implements ICollectionView, Fi
      */
     @PostConstruct
     void build() {
-        chooseAction = ActionFactory.createControllerAction("collections.actions.choose", collectionController);
+        chooseAction = ActionFactory.createAction("collections.actions.choose", collectionController);
 
         setOpaque(true);
         setBackground(BACKGROUND_COLOR);
@@ -86,7 +87,7 @@ public final class CollectionPane extends JXPanel implements ICollectionView, Fi
 
         gbc.setDefaultInsets(new Insets(0, 0, 0, 0));
 
-        add(Box.createVerticalStrut(SimplePropertiesCache.<Window>get("mainView").getHeight() / 3),
+        add(Box.createVerticalStrut(SimplePropertiesCache.get("mainView", Window.class).getHeight() / 3),
                 gbc.gbcSet(0, 0, GridBagConstraints.NONE, GridBagConstraints.CENTER, 4, 1, 1.0, 0.0));
 
         add(Box.createHorizontalStrut(LEFT_MARGIN_WIDTH), gbc.gbcSet(0, 1, GridBagConstraints.HORIZONTAL, GridBagConstraints.CENTER, 1, 4, 0.3, 0.0));
@@ -122,7 +123,7 @@ public final class CollectionPane extends JXPanel implements ICollectionView, Fi
      * @param gbc The grid bag utils constraints object.
      */
     private void addCollectionField(GridBagUtils gbc) {
-        Component labelCollection = new JThequeI18nLabel("collections.name");
+        Component labelCollection = Components.newI18nLabel("collections.name");
 
         labelCollection.setForeground(HINT_COLOR);
         labelCollection.setFont(HINT_FONT);
@@ -133,7 +134,7 @@ public final class CollectionPane extends JXPanel implements ICollectionView, Fi
 
         gbc.setDefaultInsets(new Insets(0, 0, 0, 0));
 
-        textField = new FilthyTextField();
+        textField = Filthy.newTextField();
         textField.setText(core.getConfiguration().getLastCollection());
 
         SwingUtils.addFieldValidateAction(textField.getField(), chooseAction);
@@ -149,7 +150,7 @@ public final class CollectionPane extends JXPanel implements ICollectionView, Fi
      * @param gbc The grid bag utils constraints object.
      */
     private void addPasswordField(GridBagUtils gbc) {
-        Component labelPassword = new JThequeI18nLabel("collections.password");
+        Component labelPassword = Components.newI18nLabel("collections.password");
 
         labelPassword.setForeground(HINT_COLOR);
         labelPassword.setFont(HINT_FONT);
@@ -158,7 +159,7 @@ public final class CollectionPane extends JXPanel implements ICollectionView, Fi
 
         add(labelPassword, gbc.gbcSet(1, 3, GridBagConstraints.NONE, GridBagConstraints.LINE_START));
 
-        passwordField = new FilthyPasswordField();
+        passwordField = Filthy.newPasswordField();
 
         SwingUtils.addFieldValidateAction(passwordField.getField(), chooseAction);
 
@@ -175,8 +176,8 @@ public final class CollectionPane extends JXPanel implements ICollectionView, Fi
     private void addButtonBar(GridBagUtils gbc) {
         Container buttonsPanel = new JPanel();
 
-        JThequeAction createAction = ActionFactory.createControllerAction("collections.actions.create", collectionController);
-        JThequeAction cancelAction = ActionFactory.createControllerAction("collections.actions.cancel", collectionController);
+        JThequeAction createAction = ActionFactory.createAction("collections.actions.create", collectionController);
+        JThequeAction cancelAction = ActionFactory.createAction("collections.actions.cancel", collectionController);
 
         createAction.refreshText(languageService);
         cancelAction.refreshText(languageService);
@@ -206,7 +207,7 @@ public final class CollectionPane extends JXPanel implements ICollectionView, Fi
 
     @Override
     public String getPassword() {
-        return passwordField.getPassword();
+        return passwordField.getText();
     }
 
     @Override

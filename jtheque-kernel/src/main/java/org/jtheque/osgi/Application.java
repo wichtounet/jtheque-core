@@ -35,7 +35,6 @@ import java.net.Socket;
  */
 final class Application extends Thread {
     private final Socket socket;
-    private final Kernel kernel;
 
     private BufferedReader reader;
 
@@ -43,13 +42,11 @@ final class Application extends Thread {
      * Construct a new Application.
      *
      * @param socket The socket to listen the data.
-     * @param kernel The kernel.
      */
-    Application(Socket socket, Kernel kernel) {
+    Application(Socket socket) {
         super();
 
         this.socket = socket;
-        this.kernel = kernel;
 
         try {
             reader = new BufferedReader(new InputStreamReader(new DataInputStream(socket.getInputStream())));
@@ -65,9 +62,7 @@ final class Application extends Thread {
                 String command = reader.readLine();
 
                 if ("open".equals(command)) {
-                    SimplePropertiesCache.<IView>get("mainView").toFirstPlan();
-                } else if ("restart".equals(command)) {
-                    kernel.restart();
+                    SimplePropertiesCache.<IView>get("mainView", IView.class).toFirstPlan();
                 }
 
                 interrupt();

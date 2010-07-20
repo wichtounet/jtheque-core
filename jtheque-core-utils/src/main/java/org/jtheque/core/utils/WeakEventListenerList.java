@@ -86,18 +86,18 @@ public class WeakEventListenerList {
      *
      * @return All the strongly references listeners.
      */
-    @SuppressWarnings("unchecked")
     private <T extends EventListener> List<T> cleanReferences() {
         List<T> listeners = new ArrayList<T>(10);
 
         for (int i = getReferences().size() - 1; i >= 0; i--) {
-            Object listener = getReferences().get(i).get();
+            @SuppressWarnings("unchecked")
+            T listener = (T) getReferences().get(i).get();
 
             if (listener == null) {
                 getReferences().remove(i);
                 getClasses().remove(i);
             } else {
-                listeners.add(0, (T) listener);
+                listeners.add(0, listener);
             }
         }
 
@@ -141,7 +141,6 @@ public class WeakEventListenerList {
      * @throws ClassCastException if the supplied class is not assignable to EventListener
      * @since 1.3
      */
-    @SuppressWarnings("unchecked")
     public <T extends EventListener> T[] getListeners(Class<T> t) {
         List<T> liveListeners = cleanReferences();
         List<T> listeners = new ArrayList<T>(5);
@@ -152,7 +151,9 @@ public class WeakEventListenerList {
             }
         }
 
+        @SuppressWarnings("unchecked")
         T[] result = (T[]) Array.newInstance(t, listeners.size());
+        
         return listeners.toArray(result);
     }
 

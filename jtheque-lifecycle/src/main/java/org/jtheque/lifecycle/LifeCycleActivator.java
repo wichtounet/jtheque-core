@@ -5,6 +5,7 @@ import org.jtheque.collections.able.ICollectionsService;
 import org.jtheque.core.able.ICore;
 import org.jtheque.core.able.application.Application;
 import org.jtheque.core.utils.OSGiUtils;
+import org.jtheque.core.utils.SimplePropertiesCache;
 import org.jtheque.core.utils.SystemProperty;
 import org.jtheque.events.able.EventLevel;
 import org.jtheque.events.able.IEventService;
@@ -19,7 +20,7 @@ import org.jtheque.utils.ui.edt.SimpleTask;
 import org.jtheque.views.able.ISplashService;
 import org.jtheque.views.able.IViewService;
 import org.jtheque.views.able.IViews;
-import org.jtheque.views.impl.MacOSXConfiguration;
+import org.jtheque.views.utils.MacOSXConfiguration;
 
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
@@ -59,6 +60,7 @@ public class LifeCycleActivator implements BundleActivator, CollectionListener {
     public void start(BundleContext context) throws BundleException {
         this.context = context;
 
+        configureDefaultsProperties();
         configureLogging();
 
         Application application = new XMLApplicationReader().readApplication(SystemProperty.USER_DIR.get() + "/application.xml");
@@ -88,6 +90,15 @@ public class LifeCycleActivator implements BundleActivator, CollectionListener {
         } else {
             startSecondPhase();
         }
+    }
+
+    /**
+     * Configure the default properties of the simple properties cache. 
+     */
+    private static void configureDefaultsProperties() {
+        SimplePropertiesCache.put("config-view-loaded", true);
+        SimplePropertiesCache.put("statebar-loaded", true);
+        SimplePropertiesCache.put("collectionChosen", true);
     }
 
     /**

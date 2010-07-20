@@ -6,19 +6,14 @@ import org.jtheque.core.able.lifecycle.FunctionListener;
 import org.jtheque.core.able.lifecycle.ILifeCycle;
 import org.jtheque.core.able.lifecycle.TitleEvent;
 import org.jtheque.core.able.lifecycle.TitleListener;
+import org.jtheque.core.utils.SystemProperty;
 import org.jtheque.core.utils.WeakEventListenerList;
 import org.jtheque.events.able.EventLevel;
 import org.jtheque.events.able.IEventService;
 import org.jtheque.events.utils.Event;
 import org.jtheque.utils.io.FileUtils;
-import org.jtheque.utils.io.SocketUtils;
 
-import org.slf4j.LoggerFactory;
-
-import java.io.IOException;
-import java.io.PrintStream;
-import java.net.Socket;
-import java.net.UnknownHostException;
+import java.io.File;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -77,22 +72,9 @@ public class LifeCycle implements ILifeCycle {
 
     @Override
     public void restart() {
-        Socket clientSocket = null;
-        PrintStream stream = null;
+        FileUtils.clearFolder(new File(SystemProperty.USER_DIR.get() + "cache"));
 
-        try {
-            clientSocket = new Socket("127.0.0.1", 12345);
-            stream = new PrintStream(clientSocket.getOutputStream());
-
-            stream.println("restart");
-        } catch (UnknownHostException e) {
-            LoggerFactory.getLogger(getClass()).error("The host is unknown", e);
-        } catch (IOException e) {
-            LoggerFactory.getLogger(getClass()).error("I/O error", e);
-        } finally {
-            FileUtils.close(stream);
-            SocketUtils.close(clientSocket);
-        }
+        System.exit(666);
     }
 
     @Override

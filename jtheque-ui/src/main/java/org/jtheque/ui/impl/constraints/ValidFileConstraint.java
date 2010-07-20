@@ -2,9 +2,9 @@ package org.jtheque.ui.impl.constraints;
 
 import org.jtheque.errors.able.IError;
 import org.jtheque.errors.utils.Errors;
+import org.jtheque.ui.able.components.FileChooser;
 import org.jtheque.ui.able.constraints.Constraint;
 import org.jtheque.ui.utils.ValidationUtils;
-import org.jtheque.ui.utils.components.FileChooserPanel;
 
 import java.io.File;
 import java.util.Collection;
@@ -59,8 +59,8 @@ public final class ValidFileConstraint implements Constraint {
 
     @Override
     public void validate(Object field, Collection<IError> errors) {
-        if (field instanceof FileChooserPanel) {
-            String filePath = ((FileChooserPanel) field).getFilePath();
+        if (field instanceof FileChooser) {
+            String filePath = ((FileChooser) field).getFilePath();
 
             if (maxLength > 0) {
                 ValidationUtils.rejectIfLongerThan(filePath, fieldName, maxLength, errors);

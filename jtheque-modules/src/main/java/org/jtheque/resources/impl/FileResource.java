@@ -29,8 +29,8 @@ public class FileResource implements SimpleResource {
     /**
      * Construct a new FileResource.
      *
-     * @param id The id of the file.
-     * @param resourceFolder
+     * @param id             The id of the file.
+     * @param resourceFolder The resource folder.
      */
     public FileResource(String id, File resourceFolder) {
         super();

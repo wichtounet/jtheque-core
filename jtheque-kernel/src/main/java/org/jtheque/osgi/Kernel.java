@@ -41,7 +41,7 @@ public final class Kernel implements Closeable {
         super();
 
         server = new FelixServer();
-        applicationManager = new ApplicationManager(this);
+        applicationManager = new ApplicationManager();
     }
 
     /**
@@ -58,7 +58,7 @@ public final class Kernel implements Closeable {
     }
 
     private void startBundles() {
-        Collection<String> bundles = FileUtils.getLinesOf(new File(System.getProperty("user.dir"), "bundles"));
+        Collection<String> bundles = FileUtils.getLinesOf(new File(System.getProperty("user.dir") + "/bundles", "start"));
 
         for(String bundle : bundles){
             startIfNotStarted(bundle);
@@ -83,11 +83,6 @@ public final class Kernel implements Closeable {
         }
     }
 
-    public void restart() {
-        server.restart();
-        startBundles();
-    }
-
     /**
      * A hook to stop the server.
      */
@@ -105,9 +100,7 @@ public final class Kernel implements Closeable {
      * @param args No args will be read.
      */
     public static void main(String[] args) {
-        if (args.length > 0) {
-            System.setProperty("user.dir", args[0]);
-        }
+        Thread.currentThread().setName("Kernel-MainThread");
 
         new Kernel().start();
     }

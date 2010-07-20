@@ -45,13 +45,6 @@ public interface ViewDelegate {
     void run(Runnable runnable);
 
     /**
-     * Refresh the object.
-     *
-     * @param c The object to refresh.
-     */
-    void refresh(Object c);//TODO See if interesting to inline this method
-
-    /**
      * Ask the user for text.
      *
      * @param title The question to ask to the user.
