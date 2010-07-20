@@ -49,7 +49,7 @@ public enum SystemProperty {
             String value = super.get();
 
             if (!value.endsWith("/")) {
-                value += "/";
+                return value + '/';
             }
 
             return value;
