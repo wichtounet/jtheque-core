@@ -71,6 +71,10 @@ public class SwingSpringProxy<T> implements ApplicationContextAware {
         return instance;
     }
 
+    public boolean isCreated(){
+        return instance != null;
+    }
+
     /**
      * Create the instance in the EDT.
      */

@@ -27,7 +27,9 @@ import java.awt.event.ActionEvent;
  *
  * @author Baptiste Wicht
  */
-public class ControllerAction extends JThequeAction {
+public final class ControllerAction extends JThequeAction {
+    private static final long serialVersionUID = -749830303290101705L;
+    
     private final String key;
     private final transient IController controller;
 

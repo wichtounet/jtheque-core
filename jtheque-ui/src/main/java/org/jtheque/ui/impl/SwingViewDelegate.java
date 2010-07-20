@@ -99,7 +99,7 @@ public final class SwingViewDelegate implements ViewDelegate {
      *
      * @author Baptiste Wicht
      */
-    private static class DisplayTextRunnable implements Runnable {
+    private static final class DisplayTextRunnable implements Runnable {
         private final String text;
 
         /**

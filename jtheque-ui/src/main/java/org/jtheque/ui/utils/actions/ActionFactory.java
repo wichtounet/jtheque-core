@@ -2,6 +2,7 @@ package org.jtheque.ui.utils.actions;
 
 import org.jtheque.ui.able.IController;
 
+import javax.swing.Action;
 import javax.swing.ImageIcon;
 
 /*
@@ -55,7 +56,7 @@ public final class ActionFactory {
      *
      * @return The JThequeAction for this controller binding.
      */
-    public static JThequeAction createAction(String key, ImageIcon icon, IController controller) {
+    public static Action createAction(String key, ImageIcon icon, IController controller) {
         return new ControllerAction(key, icon, controller);
     }
 }

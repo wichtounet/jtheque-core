@@ -10,7 +10,11 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.ListCellRenderer;
 
-public class Components {
+public final class Components {
+    private Components() {
+        throw new AssertionError();
+    }
+
     public static JLabel newLabel(String text) {
         return new JThequeLabel(text);
     }

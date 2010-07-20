@@ -1,7 +1,5 @@
 package org.jtheque.osgi.server;
 
-import org.jtheque.utils.io.FileUtils;
-
 import org.apache.felix.framework.Felix;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleException;
@@ -55,7 +53,7 @@ public final class FelixServer implements OSGiServer {
         configMap.put("felix.cache.bufsize", "8192");
         configMap.put("org.osgi.framework.storage", CACHE_DIR.getAbsolutePath());
         configMap.put("org.osgi.framework.bootdelegation", "org.netbeans.lib.profiler, org.netbeans.lib.profiler.*");
-        
+
         try {
             felix = new Felix(configMap);
             felix.start();
