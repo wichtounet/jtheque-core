@@ -109,7 +109,6 @@ public final class ModuleLoader implements IModuleLoader, BundleContextAware {
 
             //Get informations from manifest
             readManifestInformations(builder, bundle);
-
         } catch (BundleException e) {
             LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
             OSGiUtils.getService(bundleContext, IErrorService.class).addError(Errors.newError(e));
