@@ -30,6 +30,7 @@ import org.jtheque.modules.able.ModuleListener;
 import org.jtheque.modules.able.ModuleState;
 import org.jtheque.modules.able.Resources;
 import org.jtheque.modules.able.SwingLoader;
+import org.jtheque.modules.impl.ModuleContainer.Builder;
 import org.jtheque.modules.utils.ImageResource;
 import org.jtheque.modules.utils.ModuleResourceCache;
 import org.jtheque.states.able.IStateService;
@@ -70,6 +71,8 @@ import static org.jtheque.modules.able.ModuleState.*;
  * @author Baptiste Wicht
  */
 public final class ModuleService implements IModuleService {
+    private static final Module DUMMY = new Builder().build();
+
     private final WeakEventListenerList listeners = new WeakEventListenerList();
     private final List<Module> modules = new ArrayList<Module>(10);
     private final Map<String, SwingLoader> loaders = new HashMap<String, SwingLoader>(10);
@@ -741,7 +744,7 @@ public final class ModuleService implements IModuleService {
 
                 if(delay.isEmpty()){
                     for (int i = 0; i < threads; i++) {
-                        ready.add(null);
+                        ready.add(DUMMY);
                     }
                 }
             }
@@ -767,7 +770,7 @@ public final class ModuleService implements IModuleService {
                 try {
                     Module module = moduleStarter.ready.take();
 
-                    if(module == null){
+                    if(module == DUMMY){
                         return;
                     }
 
