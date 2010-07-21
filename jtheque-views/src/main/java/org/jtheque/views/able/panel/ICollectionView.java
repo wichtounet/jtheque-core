@@ -1,5 +1,7 @@
 package org.jtheque.views.able.panel;
 
+import org.jtheque.ui.able.IView;
+
 import java.awt.Component;
 
 /*
@@ -23,7 +25,7 @@ import java.awt.Component;
  *
  * @author Baptiste Wicht
  */
-public interface ICollectionView {
+public interface ICollectionView extends IView {
     /**
      * Set the error message to display on the view.
      *
@@ -49,11 +51,7 @@ public interface ICollectionView {
      * Make the view appear.
      */
     void appear();
-
-    /**
-     * Return the implementation of the view.
-     *
-     * @return The implementation of the view.
-     */
+    
+    @Override
     Component getImpl();
 }

@@ -81,6 +81,7 @@
     <bean id="repositoryController" class="org.jtheque.views.impl.controllers.RepositoryController" lazy-init="true"/>
     <bean id="licenseController" class="org.jtheque.views.impl.controllers.LicenseController" lazy-init="true"/>
     <bean id="collectionController" class="org.jtheque.views.impl.controllers.CollectionController" lazy-init="true" />
+    <bean id="errorController" class="org.jtheque.views.impl.controllers.ErrorController" lazy-init="true"/>
 
     <!-- Config panels -->
 
@@ -118,6 +119,7 @@
     <osgi:reference id="imageService" interface="org.jtheque.images.able.IImageService"/>
     <osgi:reference id="errorsService" interface="org.jtheque.errors.able.IErrorService"/>
     <osgi:reference id="fileService" interface="org.jtheque.file.able.IFileService"/>
+    <osgi:reference id="messageService" interface="org.jtheque.messages.able.IMessageService"/>
     <osgi:reference id="persistenceService" interface="org.jtheque.persistence.able.IPersistenceService"/>
 
     <!-- OSGi Services -->

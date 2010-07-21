@@ -22,11 +22,13 @@ package org.jtheque.ui.able;
  *
  * @author Baptiste Wicht
  */
-public interface IController {
+public interface IController<T extends IView> {
     /**
      * Handle the given action and execute the corresponding method.
      *
      * @param actionName The i18n action name. 
      */
     void handleAction(String actionName);
+
+    T getView();
 }

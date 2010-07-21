@@ -23,14 +23,13 @@ import org.jtheque.ui.able.IController;
 import org.jtheque.ui.able.components.Components;
 import org.jtheque.ui.able.components.TextField;
 import org.jtheque.ui.able.components.filthy.Filthy;
+import org.jtheque.ui.utils.AbstractPanelView;
 import org.jtheque.ui.utils.AnimationUtils;
 import org.jtheque.ui.utils.actions.ActionFactory;
 import org.jtheque.ui.utils.actions.JThequeAction;
 import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.utils.ui.SwingUtils;
 import org.jtheque.views.able.panel.ICollectionView;
-
-import org.jdesktop.swingx.JXPanel;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
@@ -53,7 +52,7 @@ import static org.jtheque.ui.able.components.filthy.FilthyConstants.*;
 /**
  * @author Baptiste Wicht
  */
-public final class CollectionPane extends JXPanel implements ICollectionView {
+public final class CollectionPane extends AbstractPanelView implements ICollectionView {
     private TextField textField;
     private TextField passwordField;
     private JLabel labelError;

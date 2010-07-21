@@ -6,6 +6,7 @@ import org.jtheque.core.able.ICore;
 import org.jtheque.modules.able.IModuleService;
 import org.jtheque.modules.able.Module;
 import org.jtheque.modules.able.ModuleState;
+import org.jtheque.ui.able.IController;
 import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.ui.utils.AbstractController;
 import org.jtheque.update.able.IUpdateService;
@@ -44,13 +45,7 @@ import java.util.Map;
  *
  * @author Baptiste Wicht
  */
-public class ModuleController extends AbstractController {
-    @Resource
-    private IModuleView moduleView;
-
-    @Resource
-    private IRepositoryView repositoryView;
-
+public class ModuleController extends AbstractController<IModuleView> {
     @Resource
     private IUIUtils uiUtils;
 
@@ -65,6 +60,13 @@ public class ModuleController extends AbstractController {
 
     @Resource
     private IUpdateService updateService;
+
+    @Resource
+    private IController<IRepositoryView> repositoryController;
+
+    public ModuleController() {
+        super(IModuleView.class);
+    }
 
     @Override
     protected Map<String, String> getTranslations() {
@@ -88,13 +90,13 @@ public class ModuleController extends AbstractController {
      * Disable the selected module.
      */
     private void disable() {
-        Module module = moduleView.getSelectedModule();
+        Module module = getView().getSelectedModule();
 
         String error = moduleService.canBeDisabled(module);
 
         if (StringUtils.isEmpty(error)) {
             moduleService.disableModule(module);
-            moduleView.refreshList();
+            getView().refreshList();
         } else {
             uiUtils.getDelegate().displayText(error);
         }
@@ -104,14 +106,14 @@ public class ModuleController extends AbstractController {
      * Enable the selected module.
      */
     private void enable() {
-        Module module = moduleView.getSelectedModule();
+        Module module = getView().getSelectedModule();
 
         if (module.getState() == ModuleState.DISABLED) {
             if (module.getCoreVersion().isGreaterThan(ICore.VERSION)) {
                 uiUtils.displayI18nText("modules.message.versionproblem");
             } else {
                 moduleService.enableModule(module);
-                moduleView.refreshList();
+                getView().refreshList();
             }
         } else {
             uiUtils.displayI18nText("error.module.not.disabled");
@@ -144,7 +146,7 @@ public class ModuleController extends AbstractController {
      * Uninstall the given module.
      */
     private void uninstall() {
-        Module module = moduleView.getSelectedModule();
+        Module module = getView().getSelectedModule();
 
         String error = moduleService.canBeUninstalled(module);
 
@@ -155,7 +157,7 @@ public class ModuleController extends AbstractController {
 
             if (confirm) {
                 moduleService.uninstallModule(module);
-                moduleView.refreshList();
+                getView().refreshList();
             }
         } else {
             uiUtils.getDelegate().displayText(error);
@@ -163,10 +165,10 @@ public class ModuleController extends AbstractController {
     }
 
     /**
-     * Stop the selected module. 
+     * Stop the selected module.
      */
     private void stop() {
-        final Module module = moduleView.getSelectedModule();
+        final Module module = getView().getSelectedModule();
 
         String error = moduleService.canBeStopped(module);
 
@@ -181,13 +183,13 @@ public class ModuleController extends AbstractController {
      * Start the selected module.
      */
     private void start() {
-        Module module = moduleView.getSelectedModule();
+        Module module = getView().getSelectedModule();
 
         String error = moduleService.canBeStarted(module);
 
         if (StringUtils.isEmpty(error)) {
             if (moduleService.needTwoPhasesLoading(module)) {
-                moduleView.closeDown();
+                getView().closeDown();
                 viewService.displayCollectionView();
                 collectionsService.addCollectionListener(new StartModuleWorker(module));
             } else {
@@ -202,7 +204,7 @@ public class ModuleController extends AbstractController {
      * Update the selected module.
      */
     private void updateModule() {
-        final Module module = moduleView.getSelectedModule();
+        final Module module = getView().getSelectedModule();
 
         if (updateService.isUpToDate(module)) {
             uiUtils.displayI18nText("message.update.no.version");
@@ -214,7 +216,7 @@ public class ModuleController extends AbstractController {
     /**
      * Update the core.
      */
-    private void updateCore(){
+    private void updateCore() {
         if (updateService.isCurrentVersionUpToDate()) {
             uiUtils.displayI18nText("message.update.no.version");
         } else {
@@ -226,7 +228,7 @@ public class ModuleController extends AbstractController {
      * Display the repository.
      */
     private void repository() {
-        repositoryView.display();
+        repositoryController.getView().display();
     }
 
     /**
@@ -237,13 +239,13 @@ public class ModuleController extends AbstractController {
     private abstract class ModuleWorker extends SimpleSwingWorker {
         @Override
         protected final void before() {
-            moduleView.getWindowState().startWait();
+            getView().getWindowState().startWait();
         }
 
         @Override
         protected final void done() {
-            moduleView.refreshList();
-            moduleView.getWindowState().stopWait();
+            getView().refreshList();
+            getView().getWindowState().stopWait();
         }
     }
 
@@ -277,7 +279,7 @@ public class ModuleController extends AbstractController {
 
             start();
 
-            moduleView.display();
+            getView().display();
         }
     }
 
@@ -317,7 +319,7 @@ public class ModuleController extends AbstractController {
     }
 
     /**
-     * A simple swing worker to update a module. 
+     * A simple swing worker to update a module.
      *
      * @author Baptiste Wicht
      */

@@ -3,8 +3,6 @@ package org.jtheque.views.impl.controllers;
 import org.jtheque.ui.utils.AbstractController;
 import org.jtheque.views.able.windows.IMessageView;
 
-import javax.annotation.Resource;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,26 +27,27 @@ import java.util.Map;
  *
  * @author Baptiste Wicht
  */
-public class MessageController extends AbstractController {
-    @Resource
-    private IMessageView messageView;
+public class MessageController extends AbstractController<IMessageView> {
+    public MessageController() {
+        super(IMessageView.class);
+    }
 
     private void close() {
-        messageView.closeDown();
+        getView().closeDown();
     }
 
     /**
      * Open the next message.
      */
     private void next() {
-        messageView.next();
+        getView().next();
     }
 
     /**
-     * Open the previous message. 
+     * Open the previous message.
      */
     private void previous() {
-        messageView.previous();
+        getView().previous();
     }
 
     @Override

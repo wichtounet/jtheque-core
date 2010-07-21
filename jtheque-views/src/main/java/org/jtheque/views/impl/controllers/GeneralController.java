@@ -3,6 +3,7 @@ package org.jtheque.views.impl.controllers;
 import org.jtheque.core.able.ICore;
 import org.jtheque.file.able.IFileService;
 import org.jtheque.persistence.able.IPersistenceService;
+import org.jtheque.ui.able.IController;
 import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.ui.utils.AbstractController;
 import org.jtheque.utils.DesktopUtils;
@@ -11,7 +12,12 @@ import org.jtheque.utils.ui.SimpleSwingWorker;
 import org.jtheque.utils.ui.SwingUtils;
 import org.jtheque.views.able.IViewService;
 import org.jtheque.views.able.IViews;
+import org.jtheque.views.able.panel.IModuleView;
+import org.jtheque.views.able.windows.IConfigView;
+import org.jtheque.views.able.windows.IErrorView;
+import org.jtheque.views.able.windows.IEventView;
 import org.jtheque.views.able.windows.IMainView;
+import org.jtheque.views.able.windows.IMessageView;
 import org.jtheque.xml.utils.XMLException;
 
 import org.slf4j.LoggerFactory;
@@ -43,7 +49,7 @@ import java.util.Map;
  *
  * @author Baptiste Wicht
  */
-public class GeneralController extends AbstractController {
+public class GeneralController extends AbstractController<IMainView> {
     @Resource
     private IUIUtils uiUtils;
 
@@ -54,9 +60,6 @@ public class GeneralController extends AbstractController {
     private IPersistenceService persistenceService;
 
     @Resource
-    private IMainView mainView;
-
-    @Resource
     private IViews views;
 
     @Resource
@@ -64,6 +67,25 @@ public class GeneralController extends AbstractController {
 
     @Resource
     private ICore core;
+
+    @Resource
+    private IController<IConfigView> configController;
+
+    @Resource
+    private IController<IMessageView> messageController;
+
+    @Resource
+    private IController<IEventView> eventController;
+
+    @Resource
+    private IController<IErrorView> errorController;
+
+    @Resource
+    private IController<IModuleView> moduleController;
+
+    public GeneralController() {
+        super(IMainView.class);
+    }
 
     /**
      * Backup the database.
@@ -82,7 +104,7 @@ public class GeneralController extends AbstractController {
     }
 
     /**
-     * Restore the database. 
+     * Restore the database.
      */
     private void restore() {
         final File file = SwingUtils.chooseFile(new SimpleFilter("XML(*.xml)", ".xml"));
@@ -118,21 +140,21 @@ public class GeneralController extends AbstractController {
      * Display the messages view.
      */
     private void messages() {
-        views.getMessagesView().display();
+        messageController.getView().display();
     }
 
     /**
      * Display the events view.
      */
     private void events() {
-        views.getEventView().display();
+        eventController.getView().display();
     }
 
     /**
      * Display the errors view.
      */
     private void errors() {
-        views.getErrorView().display();
+        errorController.getView().display();
     }
 
     /**
@@ -146,18 +168,18 @@ public class GeneralController extends AbstractController {
      * Display the config view.
      */
     private void config() {
-        views.getConfigView().display();
+        configController.getView().display();
     }
 
     /**
      * Display the modules view.
      */
     private void modules() {
-        views.getModuleView().display();
+        moduleController.getView().display();
     }
 
     /**
-     * Exit from the application. 
+     * Exit from the application.
      */
     private void exit() {
         core.getLifeCycle().exit();
@@ -184,7 +206,7 @@ public class GeneralController extends AbstractController {
     }
 
     /**
-     * A swing worker to restore the database. 
+     * A swing worker to restore the database.
      *
      * @author Baptiste Wicht
      */
@@ -207,7 +229,7 @@ public class GeneralController extends AbstractController {
 
         @Override
         protected void before() {
-            mainView.getWindowState().startWait();
+            getView().getWindowState().startWait();
         }
 
         @Override
@@ -225,7 +247,7 @@ public class GeneralController extends AbstractController {
 
         @Override
         protected void done() {
-            mainView.getWindowState().stopWait();
+            getView().getWindowState().stopWait();
         }
     }
 }

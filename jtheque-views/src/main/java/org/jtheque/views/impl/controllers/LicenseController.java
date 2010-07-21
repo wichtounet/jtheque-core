@@ -6,8 +6,6 @@ import org.jtheque.utils.print.PrintUtils;
 import org.jtheque.utils.ui.SimpleSwingWorker;
 import org.jtheque.views.able.windows.ILicenseView;
 
-import javax.annotation.Resource;
-
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
@@ -49,10 +47,11 @@ import java.util.Map;
  *
  * @author Baptiste Wicht
  */
-public class LicenseController extends AbstractController {
-    @Resource
-    private ILicenseView licenseView;
-    
+public class LicenseController extends AbstractController<ILicenseView> {
+    public LicenseController() {
+        super(ILicenseView.class);
+    }
+
     @Override
     protected Map<String, String> getTranslations() {
         Map<String, String> translations = new HashMap<String, String>(2);
@@ -67,7 +66,7 @@ public class LicenseController extends AbstractController {
      * Close the view.
      */
     private void close() {
-        licenseView.closeDown();
+        getView().closeDown();
     }
 
     /**
@@ -78,15 +77,14 @@ public class LicenseController extends AbstractController {
     }
 
     /**
-     * A simple swing worker to print the license and make the license view waiting during
-     * the print operation.
+     * A simple swing worker to print the license and make the license view waiting during the print operation.
      *
      * @author Baptiste Wicht
      */
     private final class PrintWorker extends SimpleSwingWorker {
         @Override
         protected void before() {
-            licenseView.getWindowState().startWait();
+            getView().getWindowState().startWait();
         }
 
         @Override
@@ -96,7 +94,7 @@ public class LicenseController extends AbstractController {
 
         @Override
         protected void done() {
-            licenseView.getWindowState().stopWait();
+            getView().getWindowState().stopWait();
         }
     }
 }

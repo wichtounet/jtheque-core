@@ -1,7 +1,7 @@
 package org.jtheque.views.impl.controllers;
 
 import org.jtheque.ui.utils.AbstractController;
-import org.jtheque.views.able.windows.IEventView;
+import org.jtheque.views.able.windows.IErrorView;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,28 +23,17 @@ import java.util.Map;
  */
 
 /**
- * The controller of the event view.
+ * A controller for the error view.
  *
  * @author Baptiste Wicht
  */
-public class EventController extends AbstractController<IEventView> {
-    public EventController() {
-        super(IEventView.class);
-    }
-
-    /**
-     * Update the event view.
-     */
-    private void update() {
-        getView().refresh();
+public class ErrorController extends AbstractController<IErrorView> {
+    public ErrorController() {
+        super(IErrorView.class);
     }
 
     @Override
     protected Map<String, String> getTranslations() {
-        Map<String, String> translations = new HashMap<String, String>(1);
-
-        translations.put("log.view.actions.update", "update");
-
-        return translations;
+        return new HashMap<String, String>(0);
     }
 }

@@ -3,8 +3,6 @@ package org.jtheque.views.impl.controllers;
 import org.jtheque.ui.utils.AbstractController;
 import org.jtheque.views.able.windows.IConfigView;
 
-import javax.annotation.Resource;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,35 +27,36 @@ import java.util.Map;
  *
  * @author Baptiste Wicht
  */
-public class ConfigController extends AbstractController {
-    @Resource
-    private IConfigView configView;
+public class ConfigController extends AbstractController<IConfigView> {
+    public ConfigController() {
+        super(IConfigView.class);
+    }
 
     /**
      * Apply the changes.
      */
-    private void apply(){
-        if (configView.validateContent()) {
-            configView.getSelectedPanelConfig().apply();
+    private void apply() {
+        if (getView().validateContent()) {
+            getView().getSelectedPanelConfig().apply();
         }
     }
 
     /**
      * Apply the changes and close the view.
      */
-    private void applyClose(){
-        if (configView.validateContent()) {
-            configView.getSelectedPanelConfig().apply();
-            configView.closeDown();
+    private void applyClose() {
+        if (getView().validateContent()) {
+            getView().getSelectedPanelConfig().apply();
+            getView().closeDown();
         }
     }
 
     /**
-     * Cancel the changes. 
+     * Cancel the changes.
      */
-    private void cancel(){
-        configView.getSelectedPanelConfig().cancel();
-        configView.closeDown();
+    private void cancel() {
+        getView().getSelectedPanelConfig().cancel();
+        getView().closeDown();
     }
 
     @Override

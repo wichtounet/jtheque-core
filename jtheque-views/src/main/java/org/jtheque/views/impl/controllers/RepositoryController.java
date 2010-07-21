@@ -6,6 +6,7 @@ import org.jtheque.modules.able.IModuleService;
 import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.ui.utils.AbstractController;
 import org.jtheque.views.able.IViews;
+import org.jtheque.views.able.panel.ICollectionView;
 import org.jtheque.views.able.panel.IRepositoryView;
 
 import javax.annotation.Resource;
@@ -50,10 +51,7 @@ import java.util.Map;
  *
  * @author Baptiste Wicht
  */
-public class RepositoryController extends AbstractController {
-    @Resource
-    private IRepositoryView repositoryView;
-
+public class RepositoryController extends AbstractController<IRepositoryView> {
     @Resource
     private IViews views;
 
@@ -62,6 +60,10 @@ public class RepositoryController extends AbstractController {
 
     @Resource
     private IModuleService moduleService;
+
+    public RepositoryController() {
+        super(IRepositoryView.class);
+    }
 
     @Override
     protected Map<String, String> getTranslations() {
@@ -77,14 +79,14 @@ public class RepositoryController extends AbstractController {
      * Expand the selected module.
      */
     private void expand() {
-        repositoryView.expandSelectedModule();
+        getView().expandSelectedModule();
     }
 
     /**
      * install the selected module.
      */
     private void install() {
-        IModuleDescription description = views.getRepositoryView().getSelectedModule();
+        IModuleDescription description = getView().getSelectedModule();
 
         if (description.getCoreVersion().isGreaterThan(ICore.VERSION)) {
             uiUtils.displayI18nText("error.module.version.core");

@@ -1,6 +1,11 @@
 package org.jtheque.ui.utils;
 
 import org.jtheque.ui.able.IController;
+import org.jtheque.ui.able.IView;
+import org.jtheque.utils.ui.SwingUtils;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -29,9 +34,18 @@ import java.util.Map;
  *
  * @author Baptiste Wicht
  */
-public abstract class AbstractController implements IController {
+public abstract class AbstractController<T extends IView> implements IController<T>, ApplicationContextAware {
     private final Map<String, Method> methodCache = new HashMap<String, Method>(10);
     private final Map<String, String> translations = new HashMap<String, String>(15);
+    private final Class<? extends T> type;
+
+    private T view;
+    private ApplicationContext applicationContext;
+
+    protected AbstractController(Class<? extends T> type) {
+        super();
+        this.type = type;
+    }
 
     @Override
     public void handleAction(String actionName) {
@@ -90,6 +104,26 @@ public abstract class AbstractController implements IController {
      */
     protected void invalidateTranslations(){
         translations.clear();
+    }
+
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext){
+        this.applicationContext = applicationContext;
+    }
+
+    protected ApplicationContext getContext() {
+        return applicationContext;
+    }
+
+    @Override
+    public T getView() {
+        SwingUtils.assertEDT("Controller.getView()");
+
+        if(view == null){
+            view = applicationContext.getBean(type);
+        }
+
+        return view;
     }
 
     /**

@@ -33,10 +33,7 @@ import java.util.Map;
  *
  * @author Baptiste Wicht
  */
-public class CollectionController extends AbstractController {
-    @Resource
-    private ICollectionView collectionView;
-
+public class CollectionController extends AbstractController<ICollectionView> {
     @Resource
     private ICollectionsService collectionsService;
 
@@ -45,6 +42,10 @@ public class CollectionController extends AbstractController {
 
     @Resource
     private ICore core;
+
+    public CollectionController() {
+        super(ICollectionView.class);
+    }
 
     /**
      * Cancel the current operation.
@@ -57,7 +58,7 @@ public class CollectionController extends AbstractController {
      * Choose the collection.
      */
     private void choose() {
-        Response response = collectionsService.chooseCollection(collectionView.getCollection(), collectionView.getPassword(), false);
+        Response response = collectionsService.chooseCollection(getView().getCollection(), getView().getPassword(), false);
 
         displayResponse(response);
     }
@@ -66,7 +67,7 @@ public class CollectionController extends AbstractController {
      * Create a collection.
      */
     private void create() {
-        Response response = collectionsService.chooseCollection(collectionView.getCollection(), collectionView.getPassword(), true);
+        Response response = collectionsService.chooseCollection(getView().getCollection(), getView().getPassword(), true);
 
         displayResponse(response);
     }
@@ -78,7 +79,7 @@ public class CollectionController extends AbstractController {
      */
     private void displayResponse(Response response) {
         if (!response.isOk()) {
-            collectionView.setErrorMessage(languageService.getMessage(response.getKey(), (Object[]) response.getReplaces()));
+            getView().setErrorMessage(languageService.getMessage(response.getKey(), (Object[]) response.getReplaces()));
         }
     }
 

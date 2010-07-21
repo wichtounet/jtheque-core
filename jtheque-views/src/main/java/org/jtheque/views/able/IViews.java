@@ -19,14 +19,7 @@ package org.jtheque.views.able;
 import org.jtheque.views.able.components.ConfigTabComponent;
 import org.jtheque.views.able.components.IStateBarComponent;
 import org.jtheque.views.able.components.MainComponent;
-import org.jtheque.views.able.panel.IModuleView;
-import org.jtheque.views.able.panel.IRepositoryView;
-import org.jtheque.views.able.windows.IConfigView;
-import org.jtheque.views.able.windows.IErrorView;
-import org.jtheque.views.able.windows.IEventView;
-import org.jtheque.views.able.windows.ILicenseView;
 import org.jtheque.views.able.windows.IMainView;
-import org.jtheque.views.able.windows.IMessageView;
 
 import java.util.Collection;
 
@@ -44,20 +37,6 @@ public interface IViews {
     IMainView getMainView();
 
     /**
-     * Return the license view.
-     *
-     * @return The license view.
-     */
-    ILicenseView getLicenseView();
-
-    /**
-     * Return the config view.
-     *
-     * @return The config view.
-     */
-    IConfigView getConfigView();
-
-    /**
      * Set the selected view.
      *
      * @param component The view to select.
@@ -70,41 +49,6 @@ public interface IViews {
      * @return The selected view.
      */
     MainComponent getSelectedView();
-
-    /**
-     * Return the module view.
-     *
-     * @return the module view.
-     */
-    IModuleView getModuleView();
-
-    /**
-     * Return the messages view.
-     *
-     * @return the messages view.
-     */
-    IMessageView getMessagesView();
-
-    /**
-     * Return the event view.
-     *
-     * @return The event view.
-     */
-    IEventView getEventView();
-
-    /**
-     * Return the repository view.
-     *
-     * @return The repository view.
-     */
-    IRepositoryView getRepositoryView();
-
-    /**
-     * Return the error view.
-     *
-     * @return The error view.
-     */
-    IErrorView getErrorView();
 
     /**
      * Return all the main components.
@@ -162,4 +106,6 @@ public interface IViews {
      * Init the views.
      */
     void init();
+
+    void displayConditionalViews();
 }

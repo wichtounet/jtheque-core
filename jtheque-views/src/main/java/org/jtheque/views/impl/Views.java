@@ -16,12 +16,16 @@ package org.jtheque.views.impl;
  * limitations under the License.
  */
 
+import org.jtheque.core.able.ICore;
 import org.jtheque.core.utils.SimplePropertiesCache;
+import org.jtheque.messages.able.IMessageService;
 import org.jtheque.modules.able.IModuleService;
 import org.jtheque.modules.able.Module;
 import org.jtheque.modules.able.ModuleListener;
 import org.jtheque.modules.utils.ModuleResourceCache;
-import org.jtheque.spring.utils.SwingSpringProxy;
+import org.jtheque.ui.able.IController;
+import org.jtheque.ui.able.IUIUtils;
+import org.jtheque.update.able.IUpdateService;
 import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.ui.SwingUtils;
 import org.jtheque.views.able.IViews;
@@ -29,11 +33,7 @@ import org.jtheque.views.able.components.ConfigTabComponent;
 import org.jtheque.views.able.components.IStateBarComponent;
 import org.jtheque.views.able.components.MainComponent;
 import org.jtheque.views.able.panel.IModuleView;
-import org.jtheque.views.able.panel.IRepositoryView;
 import org.jtheque.views.able.windows.IConfigView;
-import org.jtheque.views.able.windows.IErrorView;
-import org.jtheque.views.able.windows.IEventView;
-import org.jtheque.views.able.windows.ILicenseView;
 import org.jtheque.views.able.windows.IMainView;
 import org.jtheque.views.able.windows.IMessageView;
 import org.jtheque.views.impl.components.config.JPanelConfigAppearance;
@@ -49,6 +49,7 @@ import javax.swing.JComponent;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * A window manager implementation.
@@ -56,15 +57,6 @@ import java.util.Collection;
  * @author Baptiste Wicht
  */
 public final class Views implements IViews, ApplicationContextAware, ModuleListener {
-    private SwingSpringProxy<ILicenseView> licenseView;
-    private SwingSpringProxy<IConfigView> configView;
-    private SwingSpringProxy<IModuleView> moduleView;
-    private SwingSpringProxy<IMessageView> messageView;
-    private SwingSpringProxy<IEventView> eventView;
-    private SwingSpringProxy<IRepositoryView> repositoryView;
-    private SwingSpringProxy<IErrorView> errorView;
-    private SwingSpringProxy<IMainView> mainView;
-
     private final Collection<MainComponent> mainComponents = new ArrayList<MainComponent>(5);
     private final Collection<IStateBarComponent> stateBarComponents = new ArrayList<IStateBarComponent>(5);
     private final Collection<ConfigTabComponent> configPanels = new ArrayList<ConfigTabComponent>(5);
@@ -73,6 +65,30 @@ public final class Views implements IViews, ApplicationContextAware, ModuleListe
 
     @Resource
     private IModuleService moduleService;
+
+    @Resource
+    private IController<IConfigView> configController;
+
+    @Resource
+    private IController<IMessageView> messageController;
+
+    @Resource
+    private IController<IModuleView> moduleController;
+
+    @Resource
+    private IController<IMainView> generalController;
+
+    @Resource
+    private IMessageService messageService;
+
+    @Resource
+    private IUIUtils uiUtils;
+
+    @Resource
+    private ICore core;
+
+    @Resource
+    private IUpdateService updateService;
 
     /**
      * Register a module listener to the module service.
@@ -84,14 +100,14 @@ public final class Views implements IViews, ApplicationContextAware, ModuleListe
 
     @Override
     public void setSelectedView(MainComponent component) {
-        mainView.get().setSelectedComponent(component.getImpl());
+        generalController.getView().setSelectedComponent(component.getImpl());
     }
 
     @Override
     public MainComponent getSelectedView() {
         MainComponent selected = null;
 
-        JComponent component = mainView.get().getSelectedComponent();
+        JComponent component = generalController.getView().getSelectedComponent();
 
         for (MainComponent tab : mainComponents) {
             if (tab.getImpl().equals(component)) {
@@ -105,66 +121,19 @@ public final class Views implements IViews, ApplicationContextAware, ModuleListe
 
     @Override
     public IMainView getMainView() {
-        return mainView.get();
-    }
-
-    @Override
-    public ILicenseView getLicenseView() {
-        return licenseView.get();
-    }
-
-    @Override
-    public IConfigView getConfigView() {
-        return configView.get();
-    }
-
-    @Override
-    public IErrorView getErrorView() {
-        return errorView.get();
-    }
-
-    @Override
-    public IModuleView getModuleView() {
-        return moduleView.get();
-    }
-
-    @Override
-    public IMessageView getMessagesView() {
-        return messageView.get();
-    }
-
-    @Override
-    public IEventView getEventView() {
-        return eventView.get();
-    }
-
-    @Override
-    public IRepositoryView getRepositoryView() {
-        return repositoryView.get();
+        return generalController.getView();
     }
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) {
         this.applicationContext = applicationContext;
-
-        mainView = new SwingSpringProxy<IMainView>(IMainView.class, applicationContext);
-        licenseView = new SwingSpringProxy<ILicenseView>(ILicenseView.class, applicationContext);
-        configView = new SwingSpringProxy<IConfigView>(IConfigView.class, applicationContext);
-        moduleView = new SwingSpringProxy<IModuleView>(IModuleView.class, applicationContext);
-        messageView = new SwingSpringProxy<IMessageView>(IMessageView.class, applicationContext);
-        eventView = new SwingSpringProxy<IEventView>(IEventView.class, applicationContext);
-        repositoryView = new SwingSpringProxy<IRepositoryView>(IRepositoryView.class, applicationContext);
-        errorView = new SwingSpringProxy<IErrorView>(IErrorView.class, applicationContext);
-
-        //Pre init the view
-        errorView.get();
     }
 
     @Override
     public void addMainComponent(String moduleId, MainComponent component) {
         mainComponents.add(component);
 
-        getMainView().sendMessage("add", component);
+        generalController.getView().sendMessage("add", component);
 
         ModuleResourceCache.addResource(moduleId, MainComponent.class, component);
     }
@@ -177,7 +146,7 @@ public final class Views implements IViews, ApplicationContextAware, ModuleListe
     @Override
     public void setSelectedMainComponent(MainComponent component) {
         if (mainComponents.size() > 1) {
-            getMainView().getTabbedPane().setSelectedComponent(component.getImpl());
+            generalController.getView().getTabbedPane().setSelectedComponent(component.getImpl());
         }
     }
 
@@ -187,7 +156,7 @@ public final class Views implements IViews, ApplicationContextAware, ModuleListe
             stateBarComponents.add(component);
 
             if (SimplePropertiesCache.get("statebar-loaded", Boolean.class)) {
-                getMainView().getStateBar().addComponent(component);
+                generalController.getView().getStateBar().addComponent(component);
             }
 
             ModuleResourceCache.addResource(moduleId, IStateBarComponent.class, component);
@@ -204,7 +173,7 @@ public final class Views implements IViews, ApplicationContextAware, ModuleListe
         configPanels.add(component);
 
         if (SimplePropertiesCache.get("config-view-loaded", Boolean.class)) {
-            getConfigView().sendMessage("add", component);
+            configController.getView().sendMessage("add", component);
         }
 
         ModuleResourceCache.addResource(moduleId, ConfigTabComponent.class, component);
@@ -225,6 +194,24 @@ public final class Views implements IViews, ApplicationContextAware, ModuleListe
                 addConfigTabComponent("", applicationContext.getBean(JPanelConfigNetwork.class));
             }
         });
+    }
+
+    @Override
+    public void displayConditionalViews() {
+        if (messageService.isDisplayNeeded()) {
+            messageController.getView().display();
+        }
+
+        if (core.getConfiguration().verifyUpdateOnStartup()) {
+            List<String> messages = updateService.getPossibleUpdates();
+
+            for (String message : messages) {
+                if (uiUtils.askI18nUserForConfirmation(message, message + ".title")) {
+                    moduleController.getView().display();
+                    break;
+                }
+            }
+        }
     }
 
     @Override
@@ -262,7 +249,7 @@ public final class Views implements IViews, ApplicationContextAware, ModuleListe
         for (MainComponent component : components) {
             mainComponents.remove(component);
 
-            getMainView().sendMessage("remove", component);
+            generalController.getView().sendMessage("remove", component);
         }
     }
 
@@ -276,7 +263,7 @@ public final class Views implements IViews, ApplicationContextAware, ModuleListe
             stateBarComponents.remove(component);
 
             if (component != null && component.getComponent() != null) {
-                getMainView().getStateBar().removeComponent(component);
+                generalController.getView().getStateBar().removeComponent(component);
             }
         }
     }
@@ -291,7 +278,7 @@ public final class Views implements IViews, ApplicationContextAware, ModuleListe
             configPanels.remove(component);
 
             if (SimplePropertiesCache.get("config-view-loaded", Boolean.class)) {
-                getConfigView().sendMessage("remove", component);
+                configController.getView().sendMessage("remove", component);
             }
         }
     }
