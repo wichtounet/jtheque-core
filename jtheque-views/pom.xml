@@ -124,12 +124,6 @@
         </dependency>
 
         <dependency>
-            <groupId>com.apple</groupId>
-            <artifactId>org.jtheque.apple-extensions</artifactId>
-            <version>1.0.0</version>
-        </dependency>
-
-        <dependency>
             <groupId>org.swinglabs</groupId>
             <artifactId>org.jtheque.jxlayer</artifactId>
             <version>3.0.4</version>
