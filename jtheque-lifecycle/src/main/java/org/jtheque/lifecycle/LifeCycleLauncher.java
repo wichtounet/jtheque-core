@@ -131,9 +131,18 @@ public class LifeCycleLauncher implements CollectionListener {
     @Override
     public void collectionChosen() {
         viewService.closeCollectionView();
-        startSecondPhase();
-
         collectionsService.removeCollectionListener(this);
+
+        if(SwingUtils.isEDT()){
+            new Thread(){
+                @Override
+                public void run() {
+                    startSecondPhase();
+                }
+            }.start();
+        } else {
+            startSecondPhase();
+        }
     }
 
     /**

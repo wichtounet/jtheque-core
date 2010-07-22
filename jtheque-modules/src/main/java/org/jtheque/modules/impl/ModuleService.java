@@ -53,20 +53,17 @@ import javax.annotation.Resource;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
-import java.util.concurrent.locks.Condition;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 import static org.jtheque.modules.able.ModuleState.*;
 
@@ -125,8 +122,6 @@ public final class ModuleService implements IModuleService {
         super();
 
         this.moduleLoader = moduleLoader;
-
-        Runtime.getRuntime().addShutdownHook(new ModuleStopHook());
     }
 
     @Override
@@ -178,6 +173,8 @@ public final class ModuleService implements IModuleService {
     public void startModules() {
         SwingUtils.assertNotEDT("startModules()");
 
+        LoggerFactory.getLogger(getClass()).debug("Start {} modules", modules.size());
+
         long start = System.currentTimeMillis();
 
         ModuleStarter starter = new ModuleStarter();
@@ -193,11 +190,23 @@ public final class ModuleService implements IModuleService {
         System.out.println("Module Starting takes " + (System.currentTimeMillis() - start) + "ms");
     }
 
+    @PreDestroy
+    private void shutdown(){
+        stopModules();
+
+        for(Module module : modules){
+            try {
+                module.getBundle().uninstall();
+            } catch (BundleException e) {
+                LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
+            }
+        }
+    }
+
     /**
      * Unplug the modules.
      */
     @Override
-    @PreDestroy
     public void stopModules() {
         List<Module> modulesToUnplug = CollectionUtils.copyOf(modules);
 
@@ -675,45 +684,41 @@ public final class ModuleService implements IModuleService {
         return true;
     }
 
-    /**
-     * A Shutdown Hook to stop modules.
-     *
-     * @author Baptiste Wicht
-     */
-    private final class ModuleStopHook extends Thread {
-        @Override
-        public void run() {
-            stopModules();
-        }
-    }
-
     private class ModuleStarter {
-        private final Set<Module> delay = Collections.synchronizedSet(new HashSet<Module>(5));
+        private final Set<Module> startList = new HashSet<Module>(5);
 
         private final ExecutorService startersPool = Executors.newFixedThreadPool(ThreadUtils.processors());
         private Collection<Future<?>> starters;
 
-        private final Lock lock = new ReentrantLock(false);
-        private final Condition condition = lock.newCondition();
-
         public void addModule(Module module) {
-            delay.add(module);
+            startList.add(module);
         }
 
         public void startAll(){
-            if(delay.isEmpty()){
+            if(startList.isEmpty()){
                 return;
             }
 
-            starters = new ArrayList<Future<?>>(delay.size());
+            starters = new ArrayList<Future<?>>(startList.size());
 
-            fireStarted();
+            startReadyModules();
 
-            try {
-                condition.await();
-            } catch (InterruptedException e) {
-                LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
+            while(true){
+                try {
+                    synchronized (this) {
+                        wait();
+                    }
+
+                    startReadyModules();
+
+                    if(startList.isEmpty()){
+                        break;
+                    }
+                } catch (InterruptedException e) {
+                    LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
+                }
             }
+
 
             try {
                 for (Future<?> future : starters) {
@@ -724,25 +729,21 @@ public final class ModuleService implements IModuleService {
             } catch (ExecutionException e) {
                 throw new RuntimeException(e);
             }
-
-            startersPool.shutdown();
         }
 
-        public synchronized void fireStarted() {
-            if(!delay.isEmpty()){
-                for (Iterator<Module> iterator = delay.iterator(); iterator.hasNext(); ) {
-                    Module module = iterator.next();
+        private void startReadyModules() {
+            System.out.println(Thread.currentThread().getName() + " enter start ready ");
 
-                    if (StringUtils.isEmpty(canBeStarted(module))) {
-                        starters.add(startersPool.submit(new ModuleStarterRunnable(this, module)));
-                        iterator.remove();
-                    }
+            for (Iterator<Module> iterator = startList.iterator(); iterator.hasNext();) {
+                Module module = iterator.next();
+
+                if (StringUtils.isEmpty(canBeStarted(module))) {
+                    starters.add(startersPool.submit(new ModuleStarterRunnable(this, module)));
+                    iterator.remove();
                 }
             }
 
-            if(delay.isEmpty()){
-                condition.signal();
-            }
+            System.out.println(Thread.currentThread().getName() + " exit start ready ");
         }
     }
 
@@ -752,16 +753,24 @@ public final class ModuleService implements IModuleService {
 
         private ModuleStarterRunnable(ModuleStarter starter, Module module) {
             super();
-            this.starter = starter;
 
+            this.starter = starter;
             this.module = module;
         }
 
         @Override
         public void run() {
+            System.out.println(Thread.currentThread().getName() + " takes " + module);
+
             startModule(module);
-            
-            starter.fireStarted();
+
+            System.out.println(Thread.currentThread().getName() + " has started " + module);
+
+            synchronized (starter) {
+                starter.notify();
+            }
+
+            System.out.println(Thread.currentThread().getName() + " has fire started " + module);
         }
     }
 }

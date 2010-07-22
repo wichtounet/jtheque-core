@@ -100,6 +100,10 @@ public final class Kernel implements Closeable {
      * @param args No args will be read.
      */
     public static void main(String[] args) {
+        if (args.length > 0) {
+            System.setProperty("user.dir", args[0]);
+        }
+        
         Thread.currentThread().setName("JTheque-MainThread");
 
         new Kernel().start();
