@@ -30,13 +30,13 @@ import org.jtheque.modules.able.ModuleListener;
 import org.jtheque.modules.able.ModuleState;
 import org.jtheque.modules.able.Resources;
 import org.jtheque.modules.able.SwingLoader;
-import org.jtheque.modules.impl.ModuleContainer.Builder;
 import org.jtheque.modules.utils.ImageResource;
 import org.jtheque.modules.utils.ModuleResourceCache;
 import org.jtheque.states.able.IStateService;
 import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.update.able.IUpdateService;
 import org.jtheque.utils.StringUtils;
+import org.jtheque.utils.ThreadUtils;
 import org.jtheque.utils.collections.ArrayUtils;
 import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.io.CopyException;
@@ -60,8 +60,13 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import static org.jtheque.modules.able.ModuleState.*;
 
@@ -71,8 +76,6 @@ import static org.jtheque.modules.able.ModuleState.*;
  * @author Baptiste Wicht
  */
 public final class ModuleService implements IModuleService {
-    private static final Module DUMMY = new Builder().build();
-
     private final WeakEventListenerList listeners = new WeakEventListenerList();
     private final List<Module> modules = new ArrayList<Module>(10);
     private final Map<String, SwingLoader> loaders = new HashMap<String, SwingLoader>(10);
@@ -129,7 +132,7 @@ public final class ModuleService implements IModuleService {
     @Override
     public void load() {
         SwingUtils.assertNotEDT("load()");
-
+        
         //Load all modules
         modules.addAll(moduleLoader.loadModules());
 
@@ -175,6 +178,8 @@ public final class ModuleService implements IModuleService {
     public void startModules() {
         SwingUtils.assertNotEDT("startModules()");
 
+        long start = System.currentTimeMillis();
+
         ModuleStarter starter = new ModuleStarter();
 
         for (Module module : modules) {
@@ -184,6 +189,8 @@ public final class ModuleService implements IModuleService {
         }
 
         starter.startAll();
+
+        System.out.println("Module Starting takes " + (System.currentTimeMillis() - start) + "ms");
     }
 
     /**
@@ -681,107 +688,80 @@ public final class ModuleService implements IModuleService {
     }
 
     private class ModuleStarter {
-        private final BlockingQueue<Module> ready = new LinkedBlockingQueue<Module>(5);
-        private final Set<Module> delay = Collections.synchronizedSet(new HashSet<Module>(150));
-        private int threads;
+        private final Set<Module> delay = Collections.synchronizedSet(new HashSet<Module>(5));
+
+        private final ExecutorService startersPool = Executors.newFixedThreadPool(ThreadUtils.processors());
+        private Collection<Future<?>> starters;
+
+        private final Lock lock = new ReentrantLock(false);
+        private final Condition condition = lock.newCondition();
 
         public void addModule(Module module) {
-            if (StringUtils.isEmpty(canBeStarted(module))) {
-                ready.add(module);
-            } else {
-                delay.add(module);
-            }
+            delay.add(module);
         }
 
         public void startAll(){
-            int size = ready.size() + delay.size();
-
-            if(size == 0){
+            if(delay.isEmpty()){
                 return;
             }
 
-            threads = Math.min(size, Runtime.getRuntime().availableProcessors());
+            starters = new ArrayList<Future<?>>(delay.size());
 
-            LoggerFactory.getLogger(getClass()).info("Start {} threads to start the modules", threads);
+            fireStarted();
 
-            Collection<Thread> starters = new ArrayList<Thread>(threads);
-
-            for(int i = 0; i < threads; i++){
-                Thread thread = new ModuleStarterRunnable(this);
-                thread.setName("ModuleStarter" + (i + 1));
-                thread.start();
-
-                starters.add(thread);
+            try {
+                condition.await();
+            } catch (InterruptedException e) {
+                LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
             }
 
-            joinAll(starters);
-        }
-
-        private void joinAll(Iterable<Thread> threads) {
-            for(Thread thread : threads){
-                try {
-                    thread.join();
-                } catch (InterruptedException e) {
-                    LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
+            try {
+                for (Future<?> future : starters) {
+                    future.get();
                 }
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            } catch (ExecutionException e) {
+                throw new RuntimeException(e);
             }
+
+            startersPool.shutdown();
         }
 
-        public void fireStarted() {
+        public synchronized void fireStarted() {
             if(!delay.isEmpty()){
                 for (Iterator<Module> iterator = delay.iterator(); iterator.hasNext(); ) {
                     Module module = iterator.next();
 
                     if (StringUtils.isEmpty(canBeStarted(module))) {
-                        try {
-                            ready.put(module);
-                            iterator.remove();
-                        } catch (InterruptedException e) {
-                            LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
-                        }
+                        starters.add(startersPool.submit(new ModuleStarterRunnable(this, module)));
+                        iterator.remove();
                     }
                 }
+            }
 
-                if(delay.isEmpty()){
-                    for (int i = 0; i < threads; i++) {
-                        ready.add(DUMMY);
-                    }
-                }
+            if(delay.isEmpty()){
+                condition.signal();
             }
         }
     }
 
-    private class ModuleStarterRunnable extends Thread {
-        private final ModuleStarter moduleStarter;
+    private class ModuleStarterRunnable implements Runnable {
+        private final ModuleStarter starter;
+        private final Module module;
 
-        private ModuleStarterRunnable(ModuleStarter moduleStarter) {
+        private ModuleStarterRunnable(ModuleStarter starter, Module module) {
             super();
+            this.starter = starter;
 
-            this.moduleStarter = moduleStarter;
+            this.module = module;
         }
 
         @Override
         public void run() {
-            while(true){
-                if (moduleStarter.ready.size() + moduleStarter.delay.size() == 0) {
-                    return;
-                }
-
-                try {
-                    Module module = moduleStarter.ready.take();
-
-                    if(module == DUMMY){
-                        return;
-                    }
-
-                    startModule(module);
-
-                    moduleStarter.fireStarted();
-                } catch (InterruptedException e) {
-                    LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
-                    return;
-                }
-            }
+            startModule(module);
+            
+            starter.fireStarted();
         }
     }
 }

@@ -95,4 +95,6 @@ public interface IResourceService {
      * @return true if the resource is installed otherwise false.
      */
     boolean isInstalled(String id, Version version);
+
+    IResource getOrDownloadResource(String id, Version version, String url);
 }

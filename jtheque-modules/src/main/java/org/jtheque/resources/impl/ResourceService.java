@@ -231,6 +231,17 @@ public class ResourceService implements IResourceService, BundleContextAware {
     }
 
     @Override
+    public IResource getOrDownloadResource(String id, Version version, String url) {
+        IResource resource = getResource(id, version);
+
+        if (resource == null) {
+            resource = downloadResource(url, version);
+        }
+
+        return resource;
+    }
+
+    @Override
     public void setBundleContext(BundleContext bundleContext) {
         this.bundleContext = bundleContext;
     }

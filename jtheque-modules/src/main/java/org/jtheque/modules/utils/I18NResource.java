@@ -71,4 +71,8 @@ public class I18NResource {
     public Collection<String> getResources() {
         return resources;
     }
+
+    public void addResource(String resource) {
+        resources.add(resource);
+    }
 }
