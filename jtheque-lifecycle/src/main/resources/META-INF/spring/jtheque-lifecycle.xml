@@ -15,13 +15,13 @@
 
     <bean class="org.jtheque.lifecycle.LifeCycleLauncher" lazy-init="false" />
 
-    <osgi:reference interface="org.jtheque.core.able.ICore" />
-    <osgi:reference interface="org.jtheque.views.able.IViews"/>
-    <osgi:reference interface="org.jtheque.views.able.IViewService"/>
-    <osgi:reference interface="org.jtheque.views.able.ISplashService"/>
-    <osgi:reference interface="org.jtheque.messages.able.IMessageService"/>
-    <osgi:reference interface="org.jtheque.events.able.IEventService"/>
-    <osgi:reference interface="org.jtheque.collections.able.ICollectionsService"/>
-    <osgi:reference interface="org.jtheque.modules.able.IModuleService"/>
+    <osgi:reference id="core" interface="org.jtheque.core.able.ICore" />
+    <osgi:reference id="views" interface="org.jtheque.views.able.IViews"/>
+    <osgi:reference id="viewService" interface="org.jtheque.views.able.IViewService"/>
+    <osgi:reference id="splashService" interface="org.jtheque.views.able.ISplashService"/>
+    <osgi:reference id="messageService" interface="org.jtheque.messages.able.IMessageService"/>
+    <osgi:reference id="eventService" interface="org.jtheque.events.able.IEventService"/>
+    <osgi:reference id="collectionsService" interface="org.jtheque.collections.able.ICollectionsService"/>
+    <osgi:reference id="moduleService" interface="org.jtheque.modules.able.IModuleService"/>
 
 </beans>
