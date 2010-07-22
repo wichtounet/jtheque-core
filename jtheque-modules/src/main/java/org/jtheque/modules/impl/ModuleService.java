@@ -572,7 +572,7 @@ public final class ModuleService implements IModuleService {
      * @param module The module to set the state.
      * @param state  The state.
      */
-    private void setState(Module module, ModuleState state) {
+    private synchronized void setState(Module module, ModuleState state) {
         module.setState(state);
 
         configuration.setState(module.getId(), state);
@@ -708,7 +708,7 @@ public final class ModuleService implements IModuleService {
 
             for(int i = 0; i < threads; i++){
                 Thread thread = new ModuleStarterRunnable(this);
-                thread.setName("ModuleStarter" + i);
+                thread.setName("ModuleStarter" + (i + 1));
                 thread.start();
 
                 starters.add(thread);

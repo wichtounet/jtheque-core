@@ -100,7 +100,7 @@ public final class Kernel implements Closeable {
      * @param args No args will be read.
      */
     public static void main(String[] args) {
-        Thread.currentThread().setName("Kernel-MainThread");
+        Thread.currentThread().setName("JTheque-MainThread");
 
         new Kernel().start();
     }
