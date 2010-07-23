@@ -134,7 +134,7 @@ public class LifeCycleLauncher implements CollectionListener {
         collectionsService.removeCollectionListener(this);
 
         if(SwingUtils.isEDT()){
-            new Thread(){
+            new Thread("SecondPhase-Thread"){
                 @Override
                 public void run() {
                     startSecondPhase();
