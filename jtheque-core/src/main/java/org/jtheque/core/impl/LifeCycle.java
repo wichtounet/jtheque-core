@@ -67,7 +67,14 @@ public class LifeCycle implements ILifeCycle {
 
     @Override
     public void exit() {
-        System.exit(0);
+        Thread shutdownThread = new Thread(new Runnable(){
+            @Override
+            public void run() {
+                System.exit(0);
+            }
+        });
+        shutdownThread.setName("Shutdown-Thread");
+        shutdownThread.start();
     }
 
     @Override
