@@ -718,8 +718,7 @@ public final class ModuleService implements IModuleService {
                     LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
                 }
             }
-
-
+            
             try {
                 for (Future<?> future : starters) {
                     future.get();
@@ -732,8 +731,6 @@ public final class ModuleService implements IModuleService {
         }
 
         private void startReadyModules() {
-            System.out.println(Thread.currentThread().getName() + " enter start ready ");
-
             for (Iterator<Module> iterator = startList.iterator(); iterator.hasNext();) {
                 Module module = iterator.next();
 
@@ -742,8 +739,6 @@ public final class ModuleService implements IModuleService {
                     iterator.remove();
                 }
             }
-
-            System.out.println(Thread.currentThread().getName() + " exit start ready ");
         }
     }
 
@@ -760,17 +755,11 @@ public final class ModuleService implements IModuleService {
 
         @Override
         public void run() {
-            System.out.println(Thread.currentThread().getName() + " takes " + module);
-
             startModule(module);
-
-            System.out.println(Thread.currentThread().getName() + " has started " + module);
 
             synchronized (starter) {
                 starter.notify();
             }
-
-            System.out.println(Thread.currentThread().getName() + " has fire started " + module);
         }
     }
 }
