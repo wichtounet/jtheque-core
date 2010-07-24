@@ -59,10 +59,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.ExecutionException;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
+import java.util.concurrent.Semaphore;
 
 import static org.jtheque.modules.able.ModuleState.*;
 
@@ -681,7 +681,9 @@ public final class ModuleService implements IModuleService {
         private final Set<Module> startList = new HashSet<Module>(5);
 
         private final ExecutorService startersPool = Executors.newFixedThreadPool(ThreadUtils.processors());
-        private Collection<Future<?>> starters;
+
+        private final Semaphore semaphore = new Semaphore(0, true);
+        private CountDownLatch countDown;
 
         public void addModule(Module module) {
             startList.add(module);
@@ -692,15 +694,13 @@ public final class ModuleService implements IModuleService {
                 return;
             }
 
-            starters = new ArrayList<Future<?>>(startList.size());
+            countDown = new CountDownLatch(startList.size());
 
             startReadyModules();
 
             while(true){
                 try {
-                    synchronized (this) {
-                        wait();
-                    }
+                    semaphore.acquire();
 
                     startReadyModules();
 
@@ -711,15 +711,11 @@ public final class ModuleService implements IModuleService {
                     LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
                 }
             }
-            
+
             try {
-                for (Future<?> future : starters) {
-                    future.get();
-                }
+                countDown.await();
             } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            } catch (ExecutionException e) {
-                throw new RuntimeException(e);
+                LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
             }
 
             startersPool.shutdown();
@@ -730,7 +726,7 @@ public final class ModuleService implements IModuleService {
                 Module module = iterator.next();
 
                 if (StringUtils.isEmpty(canBeStarted(module))) {
-                    starters.add(startersPool.submit(new ModuleStarterRunnable(this, module)));
+                    startersPool.submit(new ModuleStarterRunnable(this, module));
                     iterator.remove();
                 }
             }
@@ -752,9 +748,8 @@ public final class ModuleService implements IModuleService {
         public void run() {
             startModule(module);
 
-            synchronized (starter) {
-                starter.notify();
-            }
+            starter.semaphore.release();
+            starter.countDown.countDown();
         }
     }
 }
