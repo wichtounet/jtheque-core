@@ -53,9 +53,6 @@ import java.util.Map;
  */
 public class RepositoryController extends AbstractController<IRepositoryView> {
     @Resource
-    private IViews views;
-
-    @Resource
     private IUIUtils uiUtils;
 
     @Resource

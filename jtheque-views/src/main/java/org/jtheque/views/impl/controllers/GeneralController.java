@@ -60,9 +60,6 @@ public class GeneralController extends AbstractController<IMainView> {
     private IPersistenceService persistenceService;
 
     @Resource
-    private IViews views;
-
-    @Resource
     private IViewService viewService;
 
     @Resource
