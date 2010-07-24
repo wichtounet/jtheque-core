@@ -46,21 +46,12 @@ public class BusyPainterUI extends LockableUI implements ActionListener {
      * @param view The view to create the painter to.
      */
     public BusyPainterUI(Component view) {
-        busyPainter = new BusyPainter() {
-            @Override
-            protected void doPaint(Graphics2D g, Object object, int width, int height) {
-                Rectangle r = getTrajectory().getBounds();
-                int tw = width - r.width - 2 * r.x;
-                int th = height - r.height - 2 * r.y;
-                g.translate(tw / 2, th / 2);
-                super.doPaint(g, object, width, height);
-            }
-        };
-
+        busyPainter = new SimpleBusyPainter();
         busyPainter.setPointShape(new Ellipse2D.Double(0, 0, 20, 20));
         busyPainter.setTrajectory(new Ellipse2D.Double(
                 view.getWidth() / 4, view.getHeight() / 4, 
                 view.getWidth() / 2, view.getHeight() / 2));
+
         timer = new Timer(200, this);
     }
 
@@ -88,5 +79,21 @@ public class BusyPainterUI extends LockableUI implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         busyPainter.setFrame((busyPainter.getFrame() + 1) % 8);
         setDirty(true);
+    }
+
+    /**
+     * A simple busy painter for a Window.
+     *
+     * @author Baptiste Wicht
+     */
+    private static final class SimpleBusyPainter extends BusyPainter {
+        @Override
+        protected void doPaint(Graphics2D g, Object object, int width, int height) {
+            Rectangle r = getTrajectory().getBounds();
+            int tw = width - r.width - 2 * r.x;
+            int th = height - r.height - 2 * r.y;
+            g.translate(tw / 2, th / 2);
+            super.doPaint(g, object, width, height);
+        }
     }
 }
