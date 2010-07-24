@@ -36,6 +36,11 @@ public class Resource implements IResource {
         return id;
     }
 
+    /**
+     * Add a simple resource to the resource.
+     *
+     * @param simpleResource The simple resource to add. 
+     */
     public void addSimpleResource(SimpleResource simpleResource) {
         resources.add(simpleResource);
     }

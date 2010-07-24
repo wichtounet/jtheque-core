@@ -57,6 +57,9 @@ public final class Kernel implements Closeable {
         startBundles();
     }
 
+    /**
+     * Start all the bundles. The bundles are started in the order of the "start" file.
+     */
     private void startBundles() {
         Collection<String> bundles = FileUtils.getLinesOf(new File(System.getProperty("user.dir") + "/bundles", "start"));
 

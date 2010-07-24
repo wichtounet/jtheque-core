@@ -18,6 +18,11 @@ import org.jtheque.ui.able.constraints.Constraint;
  * limitations under the License.
  */
 
+/**
+ * An abstract constraint that don't test the length.
+ *
+ * @author Baptiste Wicht
+ */
 public abstract class NonLengthConstraint implements Constraint {
     private final String fieldName;
 

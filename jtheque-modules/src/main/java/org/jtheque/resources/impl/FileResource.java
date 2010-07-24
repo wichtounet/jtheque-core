@@ -22,6 +22,11 @@ import java.io.File;
  * limitations under the License.
  */
 
+/**
+ * A file resource. This resource represent a simple file. This class is immutable. 
+ *
+ * @author Baptiste Wicht
+ */
 public class FileResource implements SimpleResource {
     private final String id;
     private final File resourceFolder;
@@ -44,6 +49,11 @@ public class FileResource implements SimpleResource {
         return id;
     }
 
+    /**
+     * Return the folder of the resource.
+     *
+     * @return The folder of the resource.
+     */
     public File getResourceFolder() {
         return resourceFolder;
     }

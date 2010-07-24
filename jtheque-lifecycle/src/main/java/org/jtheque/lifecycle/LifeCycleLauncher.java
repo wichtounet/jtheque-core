@@ -75,6 +75,9 @@ public class LifeCycleLauncher implements CollectionListener {
     @Resource
     private IViews views;
 
+    /**
+     * Start the application. Automatically launched by Spring.
+     */
     @PostConstruct
     public void start() {
         configureDefaultsProperties();

@@ -78,6 +78,9 @@ public class GeneralController extends AbstractController<IMainView> {
     @Resource
     private IController<IModuleView> moduleController;
 
+    /**
+     * Construct a new GeneralController. 
+     */
     public GeneralController() {
         super(IMainView.class);
     }

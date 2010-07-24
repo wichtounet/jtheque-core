@@ -47,6 +47,9 @@ import java.io.File;
  * @author Baptiste Wicht
  */
 public class LicenseController extends AbstractController<ILicenseView> {
+    /**
+     * Construct a new LicenseController.
+     */
     public LicenseController() {
         super(ILicenseView.class);
     }

@@ -91,6 +91,11 @@ public final class DescriptorsLoader implements IVersionsLoader {
         return getModuleDescriptor(object.getDescriptorURL()).getVersions();
     }
 
+    /**
+     * Return all the online core versions.
+     *
+     * @return An Iterable on the online core versions.
+     */
     private Iterable<CoreVersion> getOnlineCoreVersions() {
         return getCoreDescriptor().getVersions();
     }
@@ -160,6 +165,12 @@ public final class DescriptorsLoader implements IVersionsLoader {
         return cache.get(url);
     }
 
+    /**
+     * Return the descriptor of the core. If the descriptor of the core has not been previously loaded, this
+     * method will load it.
+     *
+     * @return The core descriptor or null if it cannot be read (not reachable or not valid file). 
+     */
     public CoreDescriptor getCoreDescriptor() {
         if (coreDescriptor == null) {
             coreDescriptor = DescriptorReader.readCoreDescriptor(ICore.DESCRIPTOR_FILE_URL);

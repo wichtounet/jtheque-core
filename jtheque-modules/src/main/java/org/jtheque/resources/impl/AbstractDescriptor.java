@@ -16,9 +16,19 @@ package org.jtheque.resources.impl;
  * limitations under the License.
  */
 
+/**
+ * An abstract descriptor with only an id. This class is immutable.
+ *
+ * @author Baptiste Wicht
+ */
 public class AbstractDescriptor {
     private final String id;
 
+    /**
+     * Construct a new AbstractDescriptor.
+     *
+     * @param id The id of the descriptor.
+     */
     public AbstractDescriptor(String id) {
         super();
 

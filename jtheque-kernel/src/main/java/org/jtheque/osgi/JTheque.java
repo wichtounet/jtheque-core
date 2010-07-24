@@ -25,8 +25,13 @@ import java.io.PrintStream;
  * limitations under the License.
  */
 
+/**
+ * The main launcher of JTheque. Using this launcher enable the feature of hot restart. This class use Ant
+ * to launch a new virtual machine.
+ *
+ * @author Baptiste Wicht
+ */
 public class JTheque {
-
     public static void main(String[] args) {
         if (args.length > 0) {
             System.setProperty("user.dir", args[0]);

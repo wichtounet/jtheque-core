@@ -31,6 +31,11 @@ import static org.jtheque.ui.able.components.filthy.FilthyConstants.*;
  * limitations under the License.
  */
 
+/**
+ * A text field.
+ *
+ * @author Baptiste Wicht
+ */
 public abstract class TextField extends JPanel {
     /**
      * Construct a new AbstractFilthyField.

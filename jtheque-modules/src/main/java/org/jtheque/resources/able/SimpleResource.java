@@ -20,6 +20,5 @@ import org.osgi.framework.BundleContext;
 
 public interface SimpleResource {
     String getId();
-
     void install(BundleContext bundleContext);
 }

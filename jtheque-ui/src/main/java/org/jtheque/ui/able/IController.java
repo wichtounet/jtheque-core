@@ -18,17 +18,24 @@ package org.jtheque.ui.able;
 
 /**
  * A Swing controller. It simply handle an action name and execute the corresponding
- * action.
+ * action. It is associated to a view to manage its creation (normally via Spring Framework), this avoid
+ * EDT violations due to creation of views out of the EDT from the Spring container. 
  *
  * @author Baptiste Wicht
  */
 public interface IController<T extends IView> {
     /**
-     * Handle the given action and execute the corresponding method.
+     * Handle the given action and execute the corresponding method. This method must be called in EDT to
+     * works well.
      *
      * @param actionName The i18n action name. 
      */
     void handleAction(String actionName);
 
+    /**
+     * Return the view associated to the controller. This method must be called in EDT to works well.
+     *
+     * @return The view of the controller.
+     */
     T getView();
 }

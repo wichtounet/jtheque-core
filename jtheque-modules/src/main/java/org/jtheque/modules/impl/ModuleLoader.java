@@ -86,7 +86,7 @@ public final class ModuleLoader implements IModuleLoader, BundleContextAware {
     public void setBundleContext(BundleContext bundleContext) {
         this.bundleContext = bundleContext;
     }
-    
+
     @Override
     public List<Module> loadModules() {
         File moduleDir = core.getFolders().getModulesFolder();
@@ -97,14 +97,14 @@ public final class ModuleLoader implements IModuleLoader, BundleContextAware {
 
         ExecutorService loadersPool = Executors.newFixedThreadPool(2 * ThreadUtils.processors());
 
-        for(File file : files){
+        for (File file : files) {
             futures.add(loadersPool.submit(new ModuleLoaderTask(file)));
         }
 
         List<Module> modules = new ArrayList<Module>(files.length);
 
         try {
-            for(Future<Module> future : futures){
+            for (Future<Module> future : futures) {
                 modules.add(future.get());
             }
         } catch (InterruptedException e) {
@@ -213,7 +213,7 @@ public final class ModuleLoader implements IModuleLoader, BundleContextAware {
      */
     private static void readManifestInformations(Builder container, Bundle bundle) {
         @SuppressWarnings("unchecked") //We kwnow that the bundle headers are a String<->String Map
-        Dictionary<String, String> headers = bundle.getHeaders();
+                Dictionary<String, String> headers = bundle.getHeaders();
 
         container.setId(headers.get("Bundle-SymbolicName"));
         container.setVersion(new Version(headers.get("Bundle-Version")));
@@ -332,12 +332,17 @@ public final class ModuleLoader implements IModuleLoader, BundleContextAware {
     private final class ModuleLoaderTask implements Callable<Module> {
         private final File file;
 
+        /**
+         * Construct a new ModuleLoader task for the given file.
+         *
+         * @param file The file to install.
+         */
         private ModuleLoaderTask(File file) {
             this.file = file;
         }
 
         @Override
-        public Module call(){
+        public Module call() {
             return installModule(file);
         }
     }

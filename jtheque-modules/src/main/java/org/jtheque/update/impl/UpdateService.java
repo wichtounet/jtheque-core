@@ -238,6 +238,11 @@ public final class UpdateService implements IUpdateService {
         }
     }
 
+    /**
+     * Apply the given core version.
+     *
+     * @param coreVersion The core version to apply.
+     */
     private void applyCoreVersion(CoreVersion coreVersion) {
         File bundlesFolder = new File(SystemProperty.USER_DIR.get(), "bundles");
 
@@ -341,6 +346,14 @@ public final class UpdateService implements IUpdateService {
 
     }
 
+    /**
+     * Indicate if the given version is up to date with the available versions.
+     *
+     * @param version  The version to test.
+     * @param versions The available versions.
+     *
+     * @return true if the version is up to date else false.
+     */
     private static boolean isUpToDate(Version version, Iterable<Version> versions) {
         for (Version v : versions) {
             if (v.isGreaterThan(version)) {

@@ -112,6 +112,12 @@ public final class JThequeMenuBar extends JMenuBar implements FeatureListener, I
         add(menu);
     }
 
+    /**
+     * Add the sub features of the feature to the given menu.
+     *
+     * @param feature The feature to get the sub features from.
+     * @param menu    The menu to add the subfeatures to.
+     */
     private void addSubFeatures(IFeature feature, JMenu menu) {
         List<IFeature> subFeatures = new ArrayList<IFeature>(feature.getSubFeatures());
 

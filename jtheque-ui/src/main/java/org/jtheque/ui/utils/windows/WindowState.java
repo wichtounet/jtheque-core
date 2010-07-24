@@ -338,6 +338,11 @@ public class WindowState implements IWindowState {
         }
     }
 
+    /**
+     * A simple runnable to apply a glass pane to the view associated with this state.
+     *
+     * @author Baptiste Wicht
+     */
     private class GlassPaneSetter implements Runnable {
         private final Component glassPane;
 

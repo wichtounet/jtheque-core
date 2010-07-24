@@ -42,6 +42,12 @@ public abstract class AbstractController<T extends IView> implements IController
     private T view;
     private ApplicationContext applicationContext;
 
+    /**
+     * Construct a new AbstractController. We must pass the type of the view for the getView() method working
+     * correctly.
+     *
+     * @param viewType The class of the view. Can be an interface. Will be getter from the application context.
+     */
     protected AbstractController(Class<? extends T> viewType) {
         super();
 
@@ -85,7 +91,10 @@ public abstract class AbstractController<T extends IView> implements IController
         }
     }
 
-    protected void generateCache() {
+    /**
+     * Generate the cache of methods. 
+     */
+    private void generateCache() {
         Method[] methods = getClass().getMethods();
 
         for (Method method : methods) {

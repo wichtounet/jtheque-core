@@ -17,6 +17,11 @@ public interface IResource {
      */
     String getId();
 
+    /**
+     * Return all the resources of the resource.
+     *
+     * @return All the resources of the resource. 
+     */
     List<SimpleResource> getResources();
 
     /**

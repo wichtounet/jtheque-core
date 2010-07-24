@@ -22,6 +22,11 @@ import org.jdesktop.swingx.JXPanel;
  * limitations under the License.
  */
 
+/**
+ * An abstract panel view. This is a panel that can be using as a view in JTheque.
+ *
+ * @author Baptiste Wicht
+ */
 public class AbstractPanelView extends JXPanel implements IView {
     @Override
     public void display() {

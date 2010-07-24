@@ -21,6 +21,11 @@ import org.jtheque.ui.able.ViewComponent;
 
 import javax.swing.JLabel;
 
+/**
+ * An i18n label.
+ *
+ * @author Baptiste Wicht
+ */
 public abstract class I18nLabel extends JLabel implements ViewComponent, Internationalizable {
     /**
      * Set the text key of the label.

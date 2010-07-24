@@ -72,6 +72,11 @@ public class I18NResource {
         return resources;
     }
 
+    /**
+     * Add a resource to the i18n resource.
+     *
+     * @param resource The resource to add. 
+     */
     public void addResource(String resource) {
         resources.add(resource);
     }

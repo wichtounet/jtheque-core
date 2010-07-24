@@ -63,6 +63,9 @@ public class ModuleController extends AbstractController<IModuleView> {
     @Resource
     private IController<IRepositoryView> repositoryController;
 
+    /**
+     * Create a new ModuleController. 
+     */
     public ModuleController() {
         super(IModuleView.class);
     }

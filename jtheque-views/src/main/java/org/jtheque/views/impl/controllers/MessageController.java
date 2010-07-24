@@ -33,6 +33,9 @@ public class MessageController extends AbstractController<IMessageView> {
         super(IMessageView.class);
     }
 
+    /**
+     * Close the messages views.
+     */
     @Action("messages.actions.close")
     public void close() {
         getView().closeDown();

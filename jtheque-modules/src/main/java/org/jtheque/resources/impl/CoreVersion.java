@@ -51,6 +51,10 @@ public class CoreVersion implements Comparable<CoreVersion> {
         return version;
     }
 
+    /**
+     * Return the bundles of the core version. This is the list of the bundles that will be downloaded in update.
+     * @return An Iterable on the descriptors. 
+     */
     public Iterable<FileDescriptor> getBundles() {
         return Collections.unmodifiableList(bundles);
     }

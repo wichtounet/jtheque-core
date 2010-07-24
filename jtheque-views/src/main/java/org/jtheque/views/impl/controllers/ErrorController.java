@@ -28,6 +28,9 @@ import java.util.Map;
  * @author Baptiste Wicht
  */
 public class ErrorController extends AbstractController<IErrorView> {
+    /**
+     * Construct a new ErrorController. 
+     */
     public ErrorController() {
         super(IErrorView.class);
     }

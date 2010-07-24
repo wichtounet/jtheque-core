@@ -19,19 +19,26 @@ public final class Components {
         return new JThequeLabel(text);
     }
 
-    public static I18nLabel newI18nLabel(String key, Object... replaces){
+    public static I18nLabel newI18nLabel(String key, Object... replaces) {
         return new JThequeI18nLabel(key, replaces);
     }
 
+    /**
+     * Create an i18n checkbox.
+     *
+     * @param key The i18n key of the checkbox.
+     *
+     * @return A new JThequeCheckBox
+     */
     public static JThequeCheckBox newCheckBox(String key) {
         return new JThequeCheckBox(key);
     }
 
-    public static FileChooser newFileChooserPanel(){
+    public static FileChooser newFileChooserPanel() {
         return new FileChooserPanel();
     }
 
-    public static ListCellRenderer newIconListRenderer(Icon labelIcon){
+    public static ListCellRenderer newIconListRenderer(Icon labelIcon) {
         return new IconListRenderer(labelIcon);
     }
 

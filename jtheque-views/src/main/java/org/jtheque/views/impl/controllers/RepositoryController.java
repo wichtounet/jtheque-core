@@ -54,6 +54,9 @@ public class RepositoryController extends AbstractController<IRepositoryView> {
     @Resource
     private IModuleService moduleService;
 
+    /**
+     * Construct a new RepositoryController. 
+     */
     public RepositoryController() {
         super(IRepositoryView.class);
     }

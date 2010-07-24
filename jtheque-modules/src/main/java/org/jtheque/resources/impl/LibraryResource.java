@@ -23,6 +23,12 @@ import java.io.File;
  * limitations under the License.
  */
 
+/**
+ * A library resource. Basically it's a simple file that can be installed in a bundle context. This
+ * class is immutable.
+ *
+ * @author Baptiste Wicht
+ */
 public class LibraryResource extends FileResource {
     private Bundle bundle;
 

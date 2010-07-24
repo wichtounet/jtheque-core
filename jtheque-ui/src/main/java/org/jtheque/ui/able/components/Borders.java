@@ -65,7 +65,21 @@ public final class Borders {
         return BorderFactory.createEmptyBorder(top, left, bottom, right);
     }
 
+    /**
+     * Create a title border with an internationalized title.
+     *
+     * @param key       The i18n key of the title.
+     * @param container The internationalization container. Must not be null. 
+     *
+     * @throws NullPointerException If container is null.
+     *
+     * @return A border whose title is guaranteed to be kept up to date.
+     */
     public static TitledBorder createI18nTitleBorder(String key, InternationalizableContainer container) {
+        if(container == null){
+            throw new NullPointerException("container cannot be null");
+        }
+
         TitledBorder border = BorderFactory.createTitledBorder(key);
 
         container.addInternationalizable(new BorderUpdater(border, key));

@@ -107,5 +107,9 @@ public interface IViews {
      */
     void init();
 
+    /**
+     * Display the conditional views. This method display the update view if there is some updates and the
+     * messages view if there is unread messages. 
+     */
     void displayConditionalViews();
 }

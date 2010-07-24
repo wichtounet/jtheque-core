@@ -41,6 +41,9 @@ public class CollectionController extends AbstractController<ICollectionView> {
     @Resource
     private ICore core;
 
+    /**
+     * Construct a new Collection controller. 
+     */
     public CollectionController() {
         super(ICollectionView.class);
     }

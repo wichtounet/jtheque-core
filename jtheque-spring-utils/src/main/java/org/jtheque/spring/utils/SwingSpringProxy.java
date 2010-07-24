@@ -71,6 +71,11 @@ public class SwingSpringProxy<T> implements ApplicationContextAware {
         return instance;
     }
 
+    /**
+     * Indicate if the instance of the proxy has been created or not.
+     *
+     * @return true if the instance has been created else false. 
+     */
     public boolean isCreated(){
         return instance != null;
     }

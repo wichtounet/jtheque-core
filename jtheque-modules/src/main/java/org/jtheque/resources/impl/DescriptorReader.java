@@ -75,11 +75,16 @@ public final class DescriptorReader {
         }
     }
 
+    /**
+     * Read the core descriptor at the specified URL.
+     *
+     * @param url The URL of the core descriptor.
+     *
+     * @return The core descriptor or null if there were an error during the reading.
+     */
     public static CoreDescriptor readCoreDescriptor(String url) {
-        IXMLReader<Node> reader = XML.newJavaFactory().newReader();
-
         try {
-            return readCoreDescriptor(reader, new URL(url));
+            return readCoreDescriptor(new URL(url));
         } catch (MalformedURLException e) {
             return null;
         }
@@ -102,7 +107,16 @@ public final class DescriptorReader {
         }
     }
 
-    private static CoreDescriptor readCoreDescriptor(IXMLReader<Node> reader, URL url) {
+    /**
+     * Read the core descriptor at the given URL.
+     *
+     * @param url The URL to read the core descriptor from.
+     *
+     * @return The core descriptor or null if there were a problem reading the file.
+     */
+    private static CoreDescriptor readCoreDescriptor(URL url) {
+        IXMLReader<Node> reader = XML.newJavaFactory().newReader();
+
         try {
             reader.openURL(url);
 
@@ -182,6 +196,16 @@ public final class DescriptorReader {
         return null;
     }
 
+    /**
+     * Read the CoreVersion from the given node and using the given reader.
+     *
+     * @param currentNode The current node.
+     * @param reader      The reader.
+     *
+     * @return The core version.
+     *
+     * @throws XMLException If an exception occurs during XML processing.
+     */
     private static CoreVersion readCoreVersion(Object currentNode, IXMLReader<Node> reader) throws XMLException {
         CoreVersion resourceVersion = new CoreVersion(new Version(reader.readString("@name", currentNode)));
 
@@ -232,6 +256,16 @@ public final class DescriptorReader {
         return resourceVersion;
     }
 
+    /**
+     * Read the resources from the given node and using the given reader and then fill the core version with the
+     * resources.
+     *
+     * @param currentNode The current node.
+     * @param reader The XML reader.
+     * @param coreVersion The core version to fill.
+     *
+     * @throws XMLException If an exceptions occurs during XML processing. 
+     */
     private static void readResources(Object currentNode, IXMLReader<Node> reader, CoreVersion coreVersion) throws XMLException {
         for (Object libraryNode : reader.getNodes("bundles/bundle", currentNode)) {
             coreVersion.addBundle(readFileDescriptor(libraryNode, reader));
@@ -272,7 +306,7 @@ public final class DescriptorReader {
         String url = reader.readString("url", currentNode);
         String version = reader.readString("version", currentNode);
 
-        if(StringUtils.isNotEmpty(version)){
+        if (StringUtils.isNotEmpty(version)) {
             return new FileDescriptor(name, url, new Version(version));
         } else {
             return new FileDescriptor(name, url);

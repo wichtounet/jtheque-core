@@ -26,6 +26,9 @@ import org.jtheque.views.able.windows.IEventView;
  * @author Baptiste Wicht
  */
 public class EventController extends AbstractController<IEventView> {
+    /**
+     * Construct a new EventController. 
+     */
     public EventController() {
         super(IEventView.class);
     }

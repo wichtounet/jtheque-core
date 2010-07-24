@@ -26,6 +26,9 @@ import org.jtheque.views.able.windows.IConfigView;
  * @author Baptiste Wicht
  */
 public class ConfigController extends AbstractController<IConfigView> {
+    /**
+     * Construct a new ConfigController. 
+     */
     public ConfigController() {
         super(IConfigView.class);
     }

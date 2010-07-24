@@ -47,6 +47,11 @@ public final class ModuleContainer implements Module {
      */
     private final ILanguageService languageService;
 
+    /**
+     * Create a module container using the given builder informations.
+     * 
+     * @param builder The builder to get the informations from.
+     */
     private ModuleContainer(Builder builder) {
         super();
 

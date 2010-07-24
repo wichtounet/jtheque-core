@@ -23,10 +23,10 @@ import org.jtheque.core.utils.SimplePropertiesCache;
 import org.jtheque.i18n.able.ILanguageService;
 import org.jtheque.ui.able.IModel;
 import org.jtheque.ui.able.IUIUtils;
-import org.jtheque.ui.utils.builders.JThequePanelBuilder;
-import org.jtheque.ui.utils.builders.PanelBuilder;
 import org.jtheque.ui.able.components.Borders;
 import org.jtheque.ui.able.components.LayerTabbedPane;
+import org.jtheque.ui.utils.builders.JThequePanelBuilder;
+import org.jtheque.ui.utils.builders.PanelBuilder;
 import org.jtheque.ui.utils.windows.frames.SwingFrameView;
 import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.ui.GridBagUtils;
@@ -235,12 +235,20 @@ public final class MainView extends SwingFrameView<IModel> implements TitleListe
         current--;
     }
 
+    /**
+     * Set the first main component to be the main view.
+     */
     private void setFirstComponentAsView() {
         Collection<MainComponent> components = views.getMainComponents();
 
         setComponentAsView(CollectionUtils.first(components).getImpl());
     }
 
+    /**
+     * Set the given component as the main view.
+     *
+     * @param component The component to be the main view.
+     */
     private void setComponentAsView(Component component) {
         getContentPane().removeAll();
 
