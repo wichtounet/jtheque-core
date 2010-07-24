@@ -59,7 +59,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -728,6 +727,8 @@ public final class ModuleService implements IModuleService {
             } catch (ExecutionException e) {
                 throw new RuntimeException(e);
             }
+
+            startersPool.shutdown();
         }
 
         private void startReadyModules() {
