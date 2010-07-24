@@ -5,8 +5,6 @@ import org.jtheque.modules.able.IModuleDescription;
 import org.jtheque.modules.able.IModuleService;
 import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.ui.utils.AbstractController;
-import org.jtheque.views.able.IViews;
-import org.jtheque.views.able.panel.ICollectionView;
 import org.jtheque.views.able.panel.IRepositoryView;
 
 import javax.annotation.Resource;

@@ -10,8 +10,6 @@ import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.ui.utils.builders.JThequePanelBuilder;
 
 import javax.annotation.PostConstruct;
-import javax.swing.JComponent;
-import javax.swing.JPanel;
 
 import java.util.ArrayList;
 import java.util.Collection;
