@@ -155,28 +155,7 @@ public class WindowState implements IWindowState {
      * @param glassPane The glass pane to set over the view.
      */
     public void setGlassPane(final Component glassPane) {
-        SwingUtils.inEdt(new Runnable() {
-            @Override
-            public void run() {
-                if (glassPane == null) {
-                    JPanel glasspane = content.createGlassPane();
-
-                    glasspane.setVisible(false);
-                    glasspane.setOpaque(false);
-
-                    content.setGlassPane(glasspane);
-                } else {
-                    content.setGlassPane((JPanel) glassPane);
-
-                    glassPane.setVisible(true);
-                    glassPane.repaint();
-
-                    SwingUtilities.updateComponentTreeUI(glassPane);
-                }
-
-                SwingUtilities.updateComponentTreeUI(content);
-            }
-        });
+        SwingUtils.inEdt(new GlassPaneSetter(glassPane));
     }
 
     /**
@@ -356,6 +335,35 @@ public class WindowState implements IWindowState {
     public void validate(Collection<IError> errors) {
         for (Map.Entry<Object, Constraint> constraint : constraintCache.entrySet()) {
             constraint.getValue().validate(constraint.getKey(), errors);
+        }
+    }
+
+    private class GlassPaneSetter implements Runnable {
+        private final Component glassPane;
+
+        private GlassPaneSetter(Component glassPane) {
+            this.glassPane = glassPane;
+        }
+
+        @Override
+        public void run() {
+            if (glassPane == null) {
+                JPanel glasspane = content.createGlassPane();
+
+                glasspane.setVisible(false);
+                glasspane.setOpaque(false);
+
+                content.setGlassPane(glasspane);
+            } else {
+                content.setGlassPane((JPanel) glassPane);
+
+                glassPane.setVisible(true);
+                glassPane.repaint();
+
+                SwingUtilities.updateComponentTreeUI(glassPane);
+            }
+
+            SwingUtilities.updateComponentTreeUI(content);
         }
     }
 }
