@@ -3,6 +3,7 @@ package org.jtheque.views.impl.components.menu;
 import org.jtheque.features.able.IFeature;
 import org.jtheque.ui.able.IController;
 import org.jtheque.undo.able.IUndoRedoService;
+import org.jtheque.views.able.windows.IMainView;
 import org.jtheque.views.impl.ViewsResources;
 import org.jtheque.views.impl.actions.undo.RedoAction;
 import org.jtheque.views.impl.actions.undo.UndoAction;
@@ -35,7 +36,7 @@ import java.util.List;
 public final class CoreMenu extends OSGIMenu {
     @Override
     protected List<IFeature> getFileMenuSubFeatures() {
-        IController controller = getBean("generalController");
+        IController<IMainView> controller = getBean("generalController");
 
         return features(
                 createSeparatedSubFeature(200, createControllerAction("menu.backup", controller), ViewsResources.XML_ICON),
@@ -56,7 +57,7 @@ public final class CoreMenu extends OSGIMenu {
 
     @Override
     protected List<IFeature> getAdvancedMenuSubFeatures() {
-        IController controller = getBean("generalController");
+        IController<IMainView> controller = getBean("generalController");
 
         return features(
                 createSeparatedSubFeature(500, createControllerAction("menu.config", controller), ViewsResources.OPTIONS_ICON),
@@ -66,7 +67,7 @@ public final class CoreMenu extends OSGIMenu {
 
     @Override
     protected List<IFeature> getHelpMenuSubFeatures() {
-        IController controller = getBean("generalController");
+        IController<IMainView> controller = getBean("generalController");
 
         return features(
                 createSeparatedSubFeature(1, createControllerAction("menu.help", controller), ViewsResources.HELP_ICON, KeyEvent.VK_F1),

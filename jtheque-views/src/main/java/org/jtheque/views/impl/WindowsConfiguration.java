@@ -5,13 +5,13 @@ import org.jtheque.states.able.Load;
 import org.jtheque.states.able.Save;
 import org.jtheque.states.able.State;
 import org.jtheque.states.utils.AbstractState;
-import org.jtheque.ui.able.IView;
 import org.jtheque.views.able.IViewService;
 import org.jtheque.views.able.IWindowConfiguration;
 import org.jtheque.views.utils.WindowConfiguration;
 import org.jtheque.xml.utils.Node;
 import org.jtheque.xml.utils.NodeAttribute;
 
+import java.awt.Window;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -137,7 +137,7 @@ public final class WindowsConfiguration extends AbstractState {
      * @param name The name of the view.
      * @param view The view.
      */
-    public void update(String name, IView view) {
+    public void update(String name, Window view) {
         if (core.getConfiguration().retainSizeAndPositionOfWindow()) {
             IWindowConfiguration configuration = get(name);
 
@@ -166,7 +166,7 @@ public final class WindowsConfiguration extends AbstractState {
      * @param defaultWidth  The default width of the view.
      * @param defaultHeight The default height of the view.
      */
-    public void configure(String name, IView view, int defaultWidth, int defaultHeight) {
+    public void configure(String name, Window view, int defaultWidth, int defaultHeight) {
         if (core.getConfiguration().retainSizeAndPositionOfWindow()) {
             IWindowConfiguration configuration = get(name);
 

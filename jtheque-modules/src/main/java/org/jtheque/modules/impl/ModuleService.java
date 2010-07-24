@@ -172,10 +172,6 @@ public final class ModuleService implements IModuleService {
     public void startModules() {
         SwingUtils.assertNotEDT("startModules()");
 
-        LoggerFactory.getLogger(getClass()).debug("Start {} modules", modules.size());
-
-        long start = System.currentTimeMillis();
-
         ModuleStarter starter = new ModuleStarter();
 
         for (Module module : modules) {
@@ -185,8 +181,6 @@ public final class ModuleService implements IModuleService {
         }
 
         starter.startAll();
-
-        System.out.println("Module Starting takes " + (System.currentTimeMillis() - start) + "ms");
     }
 
     @PreDestroy

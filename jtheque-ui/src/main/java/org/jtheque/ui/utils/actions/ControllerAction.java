@@ -31,7 +31,7 @@ public final class ControllerAction extends JThequeAction {
     private static final long serialVersionUID = -749830303290101705L;
     
     private final String key;
-    private final transient IController controller;
+    private final transient IController<?> controller;
 
     /**
      * Construct a new controller action.
@@ -39,7 +39,7 @@ public final class ControllerAction extends JThequeAction {
      * @param key        The i18n key of the action.
      * @param controller The controller to bind the action.
      */
-    public ControllerAction(String key, IController controller) {
+    public ControllerAction(String key, IController<?> controller) {
         super(key);
 
         this.key = key;

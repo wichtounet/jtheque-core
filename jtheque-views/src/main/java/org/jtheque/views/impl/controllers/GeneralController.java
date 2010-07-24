@@ -11,7 +11,6 @@ import org.jtheque.utils.io.SimpleFilter;
 import org.jtheque.utils.ui.SimpleSwingWorker;
 import org.jtheque.utils.ui.SwingUtils;
 import org.jtheque.views.able.IViewService;
-import org.jtheque.views.able.IViews;
 import org.jtheque.views.able.panel.IModuleView;
 import org.jtheque.views.able.windows.IConfigView;
 import org.jtheque.views.able.windows.IErrorView;

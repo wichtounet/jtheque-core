@@ -16,9 +16,6 @@ package org.jtheque.views.able;
  * limitations under the License.
  */
 
-import org.jtheque.ui.able.IView;
-import org.jtheque.views.able.panel.ICollectionView;
-
 import java.awt.Window;
 
 /**
@@ -38,19 +35,12 @@ public interface IViewService {
     void displayCollectionView();
 
     /**
-     * Return the collection view.
-     *
-     * @return The collection view.
-     */
-    ICollectionView getCollectionView();
-
-    /**
      * Save the current state of the window.
      *
      * @param window The window.
      * @param name   The name of the view.
      */
-    void saveState(IView window, String name);
+    void saveState(Window window, String name);
 
     /**
      * Configure a view. It seems sets the size and location of the view.
@@ -60,7 +50,7 @@ public interface IViewService {
      * @param defaultWidth  The default width of the view.
      * @param defaultHeight The default height of the view.
      */
-    void configureView(IView window, String name, int defaultWidth, int defaultHeight);
+    void configureView(Window window, String name, int defaultWidth, int defaultHeight);
 
     /**
      * Set size of the view considering the configuration of the view.
@@ -85,7 +75,7 @@ public interface IViewService {
      * @param configuration The window configuration.
      * @param view          The view to configure.
      */
-    void configure(IWindowConfiguration configuration, IView view);
+    void configure(IWindowConfiguration configuration, Window view);
 
     /**
      * Close the collection view. 

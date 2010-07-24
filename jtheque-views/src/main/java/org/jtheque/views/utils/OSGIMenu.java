@@ -26,7 +26,7 @@ import org.springframework.osgi.context.BundleContextAware;
  */
 
 /**
- * A menu in OSGI spring context.
+ * A menu in OSGi spring context.
  *
  * @author Baptiste Wicht
  */

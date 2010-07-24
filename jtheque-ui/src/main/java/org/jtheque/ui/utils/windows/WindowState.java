@@ -63,7 +63,7 @@ public class WindowState implements IWindowState {
     private final Window window;
     private JXLayer<JComponent> content;
 
-    private IController controller;
+    private IController<?> controller;
     private LockableUI waitUI;
 
     private BundleContext bundleContext;
@@ -154,7 +154,7 @@ public class WindowState implements IWindowState {
      *
      * @param glassPane The glass pane to set over the view.
      */
-    public void setGlassPane(final Component glassPane) {
+    public void setGlassPane(Component glassPane) {
         SwingUtils.inEdt(new GlassPaneSetter(glassPane));
     }
 
@@ -184,7 +184,7 @@ public class WindowState implements IWindowState {
      *
      * @return The controller of the view.
      */
-    public IController getController() {
+    public IController<?> getController() {
         return controller;
     }
 
@@ -193,7 +193,7 @@ public class WindowState implements IWindowState {
      *
      * @param controller The controller of the view.
      */
-    public void setController(IController controller) {
+    public void setController(IController<?> controller) {
         this.controller = controller;
     }
 

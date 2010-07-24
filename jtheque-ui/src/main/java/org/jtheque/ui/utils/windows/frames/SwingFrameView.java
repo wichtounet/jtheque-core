@@ -259,7 +259,7 @@ public abstract class SwingFrameView<T extends IModel> extends JFrame
      *
      * @param controller The controller of the view.
      */
-    public void setController(IController controller) {
+    public void setController(IController<?> controller) {
         state.setController(controller);
     }
 

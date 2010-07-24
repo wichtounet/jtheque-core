@@ -253,7 +253,7 @@ public abstract class SwingDialogView<T extends IModel> extends JDialog
      *
      * @param controller The controller of the view.
      */
-    public void setController(IController controller) {
+    public void setController(IController<?> controller) {
         state.setController(controller);
     }
 

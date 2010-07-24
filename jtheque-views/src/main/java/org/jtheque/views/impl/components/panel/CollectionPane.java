@@ -63,7 +63,7 @@ public final class CollectionPane extends AbstractPanelView implements ICollecti
     private ICore core;
 
     @Resource
-    private IController collectionController;
+    private IController<ICollectionView> collectionController;
 
     @Resource
     private ILanguageService languageService;

@@ -21,7 +21,6 @@ import org.jtheque.core.utils.SimplePropertiesCache;
 import org.jtheque.images.able.IImageService;
 import org.jtheque.spring.utils.SwingSpringProxy;
 import org.jtheque.states.able.IStateService;
-import org.jtheque.ui.able.IView;
 import org.jtheque.utils.ui.SwingUtils;
 import org.jtheque.views.able.IViewService;
 import org.jtheque.views.able.IWindowConfiguration;
@@ -81,14 +80,14 @@ public final class ViewService implements IViewService, ApplicationContextAware 
     }
 
     @Override
-    public void saveState(IView window, String name) {
+    public void saveState(Window window, String name) {
         if (configuration != null) {
             configuration.update(name, window);
         }
     }
 
     @Override
-    public void configureView(IView view, String name, int defaultWidth, int defaultHeight) {
+    public void configureView(Window view, String name, int defaultWidth, int defaultHeight) {
         configuration.configure(name, view, defaultWidth, defaultHeight);
     }
 
@@ -107,26 +106,19 @@ public final class ViewService implements IViewService, ApplicationContextAware 
     }
 
     @Override
-    public void configure(IWindowConfiguration configuration, IView view) {
-        Window window = (Window) view;
-
-        window.setSize(configuration.getWidth(), configuration.getHeight());
+    public void configure(IWindowConfiguration configuration, Window view) {
+        view.setSize(configuration.getWidth(), configuration.getHeight());
 
         if (configuration.getPositionX() == -1 || configuration.getPositionY() == -1) {
-            SwingUtils.centerFrame(window);
+            SwingUtils.centerFrame(view);
         } else {
             if (GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds().contains(
                     configuration.getPositionX(), configuration.getPositionY())) {
-                window.setLocation(configuration.getPositionX(), configuration.getPositionY());
+                view.setLocation(configuration.getPositionX(), configuration.getPositionY());
             } else {
-                SwingUtils.centerFrame(window);
+                SwingUtils.centerFrame(view);
             }
         }
-    }
-
-    @Override
-    public ICollectionView getCollectionView() {
-        return collectionPane.get();
     }
 
     @Override

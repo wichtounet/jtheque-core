@@ -4,7 +4,6 @@ import org.jtheque.i18n.able.ILanguageService;
 import org.jtheque.i18n.able.Internationalizable;
 import org.jtheque.i18n.able.InternationalizableContainer;
 import org.jtheque.ui.able.IModel;
-import org.jtheque.ui.able.IView;
 import org.jtheque.ui.utils.AbstractPanelView;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.ui.utils.builders.JThequePanelBuilder;
@@ -35,7 +34,7 @@ import java.util.Collection;
  *
  * @author Baptiste Wicht
  */
-public abstract class BuildedPanel extends AbstractPanelView implements InternationalizableContainer, IView {
+public abstract class BuildedPanel extends AbstractPanelView implements InternationalizableContainer {
     private final Collection<Internationalizable> internationalizables = new ArrayList<Internationalizable>(15);
 
     private ILanguageService languageService;

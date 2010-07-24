@@ -288,7 +288,7 @@ public abstract class AbstractMenu implements Menu {
      *
      * @return The JThequeAction for this controller binding.
      */
-    public static JThequeAction createControllerAction(String key, IController controller) {
+    public static JThequeAction createControllerAction(String key, IController<?> controller) {
         return ActionFactory.createAction(key, controller);
     }
 
