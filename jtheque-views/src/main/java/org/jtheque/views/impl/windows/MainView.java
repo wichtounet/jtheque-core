@@ -202,27 +202,12 @@ public final class MainView extends SwingFrameView<IModel> implements TitleListe
      */
     private void addComponent() {
         if (current == 0) {
-            getContentPane().removeAll();
-
-            GridBagUtils gbc = new GridBagUtils();
-
-            Collection<MainComponent> components = views.getMainComponents();
-
-            getContentPane().add(CollectionUtils.first(components).getImpl(),
-                    gbc.gbcSet(0, 0, GridBagUtils.BOTH, GridBagUtils.FIRST_LINE_START, 1.0, 1.0));
-
-            getContentPane().add(stateBar, gbc.gbcSet(0, 1, GridBagUtils.HORIZONTAL, GridBagUtils.LAST_LINE_START));
+            setFirstComponentAsView();
         } else if (current == 1) {
-            getContentPane().removeAll();
-
-            GridBagUtils gbc = new GridBagUtils();
-
             tab = new MainTabbedPane(languageService, views);
             tab.addChangeListener(controller);
 
-            getContentPane().add(tab, gbc.gbcSet(0, 0, GridBagUtils.BOTH, GridBagUtils.FIRST_LINE_START, 1.0, 1.0));
-
-            getContentPane().add(stateBar, gbc.gbcSet(0, 1, GridBagUtils.HORIZONTAL, GridBagUtils.LAST_LINE_START));
+            setComponentAsView(tab);
         } else {
             tab.refreshComponents();
         }
@@ -237,31 +222,32 @@ public final class MainView extends SwingFrameView<IModel> implements TitleListe
      */
     private void removeComponent(MainComponent component) {
         if (current == 1) {
-            getContentPane().removeAll();
-
-            GridBagUtils gbc = new GridBagUtils();
-
             Component emptyPanel = new JPanel();
             emptyPanel.setBackground(Color.white);
 
-            getContentPane().add(emptyPanel, gbc.gbcSet(0, 0, GridBagUtils.BOTH, GridBagUtils.FIRST_LINE_START, 1.0, 1.0));
-            getContentPane().add(stateBar, gbc.gbcSet(0, 1, GridBagUtils.HORIZONTAL, GridBagUtils.LAST_LINE_START));
+            setComponentAsView(emptyPanel);
         } else if (current == 2) {
-            getContentPane().removeAll();
-
-            GridBagUtils gbc = new GridBagUtils();
-
-            Collection<MainComponent> components = views.getMainComponents();
-
-            getContentPane().add(CollectionUtils.first(components).getImpl(),
-                    gbc.gbcSet(0, 0, GridBagUtils.BOTH, GridBagUtils.FIRST_LINE_START, 1.0, 1.0));
-
-            getContentPane().add(stateBar, gbc.gbcSet(0, 1, GridBagUtils.HORIZONTAL, GridBagUtils.LAST_LINE_START));
+            setFirstComponentAsView();
         } else {
             tab.removeMainComponent(component);
         }
 
         current--;
+    }
+
+    private void setFirstComponentAsView() {
+        Collection<MainComponent> components = views.getMainComponents();
+
+        setComponentAsView(CollectionUtils.first(components).getImpl());
+    }
+
+    private void setComponentAsView(Component component) {
+        getContentPane().removeAll();
+
+        GridBagUtils gbc = new GridBagUtils();
+
+        getContentPane().add(component, gbc.gbcSet(0, 0, GridBagUtils.BOTH, GridBagUtils.FIRST_LINE_START, 1.0, 1.0));
+        getContentPane().add(stateBar, gbc.gbcSet(0, 1, GridBagUtils.HORIZONTAL, GridBagUtils.LAST_LINE_START));
     }
 
     @Override

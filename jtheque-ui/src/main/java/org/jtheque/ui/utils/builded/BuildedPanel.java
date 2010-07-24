@@ -5,6 +5,7 @@ import org.jtheque.i18n.able.Internationalizable;
 import org.jtheque.i18n.able.InternationalizableContainer;
 import org.jtheque.ui.able.IModel;
 import org.jtheque.ui.able.IView;
+import org.jtheque.ui.utils.AbstractPanelView;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.ui.utils.builders.JThequePanelBuilder;
 
@@ -36,7 +37,7 @@ import java.util.Collection;
  *
  * @author Baptiste Wicht
  */
-public abstract class BuildedPanel extends JPanel implements InternationalizableContainer, IView {
+public abstract class BuildedPanel extends AbstractPanelView implements InternationalizableContainer, IView {
     private final Collection<Internationalizable> internationalizables = new ArrayList<Internationalizable>(15);
 
     private ILanguageService languageService;
@@ -105,43 +106,8 @@ public abstract class BuildedPanel extends JPanel implements Internationalizable
     }
 
     @Override
-    public void display() {
-        //Nothing by default
-    }
-
-    @Override
-    public void closeDown() {
-        //Nothing by default
-    }
-
-    @Override
-    public void toFirstPlan() {
-        //Nothing by default
-    }
-
-    @Override
-    public void sendMessage(String message, Object value) {
-        //Nothing by default
-    }
-
-    @Override
-    public void refresh() {
-        //Nothing by default
-    }
-
-    @Override
-    public JComponent getImpl() {
-        return this;
-    }
-
-    @Override
     public IModel getModel() {
         return model;
-    }
-
-    @Override
-    public boolean validateContent() {
-        return true;
     }
 
     /**

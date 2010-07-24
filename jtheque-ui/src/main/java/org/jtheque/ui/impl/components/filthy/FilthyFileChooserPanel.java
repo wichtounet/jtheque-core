@@ -16,15 +16,12 @@ package org.jtheque.ui.impl.components.filthy;
  * limitations under the License.
  */
 
-import org.jtheque.i18n.able.ILanguageService;
-import org.jtheque.i18n.able.Internationalizable;
 import org.jtheque.ui.able.components.Borders;
 import org.jtheque.ui.able.components.FileChooser;
 import org.jtheque.ui.able.components.TextField;
 import org.jtheque.ui.able.components.filthy.Filthy;
 import org.jtheque.ui.utils.builders.JThequePanelBuilder;
 import org.jtheque.ui.utils.builders.PanelBuilder;
-import org.jtheque.utils.io.SimpleFilter;
 import org.jtheque.utils.ui.SwingUtils;
 
 import javax.swing.AbstractAction;
@@ -50,15 +47,10 @@ import java.io.File;
  *
  * @author Baptiste Wicht
  */
-public final class FilthyFileChooserPanel extends FileChooser implements Internationalizable {
+public final class FilthyFileChooserPanel extends FileChooser {
     private TextField fieldFilePath;
     private JLabel label;
     private JButton button;
-    private SimpleFilter filter;
-
-    private boolean directoriesOnly;
-
-    private String key;
 
     private static final int FIELD_COLUMNS = 15;
 
@@ -140,11 +132,6 @@ public final class FilthyFileChooserPanel extends FileChooser implements Interna
     }
 
     @Override
-    public void setTextKey(String key) {
-        this.key = key;
-    }
-
-    @Override
     public String getFilePath() {
         return fieldFilePath.getText();
     }
@@ -155,33 +142,11 @@ public final class FilthyFileChooserPanel extends FileChooser implements Interna
     }
 
     @Override
-    public void setFileFilter(SimpleFilter filter) {
-        this.filter = filter;
-    }
-
-    @Override
-    public void setDirectoriesOnly() {
-        directoriesOnly = true;
-    }
-
-    @Override
-    public void setFilesOnly() {
-        directoriesOnly = false;
-    }
-
-    @Override
     public void setEnabled(boolean enable) {
         super.setEnabled(enable);
 
         fieldFilePath.setEnabled(enable);
         button.setEnabled(enable);
-    }
-
-    @Override
-    public void refreshText(ILanguageService languageService) {
-        if (key != null) {
-            setText(languageService.getMessage(key));
-        }
     }
 
     /**
@@ -232,7 +197,7 @@ public final class FilthyFileChooserPanel extends FileChooser implements Interna
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            File file = directoriesOnly ? SwingUtils.chooseDirectory() : SwingUtils.chooseFile(filter);
+            File file = isDirectoriesOnly() ? SwingUtils.chooseDirectory() : SwingUtils.chooseFile(getFilter());
 
             if (file != null) {
                 fieldFilePath.setText(file.getAbsolutePath());

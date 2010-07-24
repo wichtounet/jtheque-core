@@ -55,4 +55,13 @@ public final class ImageDescriptor {
     public ImageType getType() {
         return type;
     }
+
+    /**
+     * Compute the complete path of the descriptor.
+     * 
+     * @return The complete path to the image.
+     */
+    public String toPath() {
+        return image + '.' + type.getExtension();
+    }
 }

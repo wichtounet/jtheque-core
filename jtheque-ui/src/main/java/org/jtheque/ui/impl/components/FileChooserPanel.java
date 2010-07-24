@@ -16,12 +16,9 @@ package org.jtheque.ui.impl.components;
  * limitations under the License.
  */
 
-import org.jtheque.i18n.able.ILanguageService;
-import org.jtheque.i18n.able.Internationalizable;
 import org.jtheque.ui.able.components.FileChooser;
 import org.jtheque.ui.utils.builders.JThequePanelBuilder;
 import org.jtheque.ui.utils.builders.PanelBuilder;
-import org.jtheque.utils.io.SimpleFilter;
 import org.jtheque.utils.ui.SwingUtils;
 
 import javax.swing.BorderFactory;
@@ -44,15 +41,10 @@ import java.io.File;
  *
  * @author Baptiste Wicht
  */
-public final class FileChooserPanel extends FileChooser implements Internationalizable {
+public final class FileChooserPanel extends FileChooser  {
     private JTextField fieldFilePath;
     private JLabel label;
     private JButton button;
-    private SimpleFilter filter;
-
-    private boolean directoriesOnly;
-
-    private String key;
 
     /**
      * Construct a new FileChooserPanel.
@@ -112,11 +104,6 @@ public final class FileChooserPanel extends FileChooser implements International
     }
 
     @Override
-    public void setTextKey(String key) {
-        this.key = key;
-    }
-
-    @Override
     public String getFilePath() {
         return fieldFilePath.getText();
     }
@@ -124,21 +111,6 @@ public final class FileChooserPanel extends FileChooser implements International
     @Override
     public void setFilePath(String path) {
         fieldFilePath.setText(path);
-    }
-
-    @Override
-    public void setFileFilter(SimpleFilter filter) {
-        this.filter = filter;
-    }
-
-    @Override
-    public void setDirectoriesOnly() {
-        directoriesOnly = true;
-    }
-
-    @Override
-    public void setFilesOnly() {
-        directoriesOnly = false;
     }
 
     @Override
@@ -154,13 +126,6 @@ public final class FileChooserPanel extends FileChooser implements International
         button.setEnabled(enable);
     }
 
-    @Override
-    public void refreshText(ILanguageService languageService) {
-        if (key != null) {
-            setText(languageService.getMessage(key));
-        }
-    }
-
     /**
      * A Browse action.
      *
@@ -169,7 +134,7 @@ public final class FileChooserPanel extends FileChooser implements International
     private final class BrowseAction implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            File file = directoriesOnly ? SwingUtils.chooseDirectory() : SwingUtils.chooseFile(filter);
+            File file = isDirectoriesOnly() ? SwingUtils.chooseDirectory() : SwingUtils.chooseFile(getFilter());
 
             if (file != null) {
                 fieldFilePath.setText(file.getAbsolutePath());

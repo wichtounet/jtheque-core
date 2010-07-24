@@ -70,7 +70,7 @@ public class ModuleController extends AbstractController<IModuleView> {
 
     @Override
     protected Map<String, String> getTranslations() {
-        Map<String, String> translations = new HashMap<String, String>(8);
+        Map<String, String> translations = new HashMap<String, String>(10);
 
         translations.put("modules.actions.stop", "stop");
         translations.put("modules.actions.start", "start");

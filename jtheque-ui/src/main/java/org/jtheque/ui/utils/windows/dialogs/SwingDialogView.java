@@ -84,6 +84,11 @@ public abstract class SwingDialogView<T extends IModel> extends JDialog
     }
 
     /**
+     * Init the view.
+     */
+    protected abstract void init();
+
+    /**
      * Set the content pane of the dialog.
      *
      * @param contentPane The content pane to set.
@@ -107,11 +112,6 @@ public abstract class SwingDialogView<T extends IModel> extends JDialog
         state.setGlassPane(glassPane);
         refresh();
     }
-
-    /**
-     * Init the view.
-     */
-    protected abstract void init();
 
     @Override
     public Component getGlassPane() {
@@ -187,29 +187,6 @@ public abstract class SwingDialogView<T extends IModel> extends JDialog
         return state.validateContent();
     }
 
-    /**
-     * Return the internationalized message.
-     *
-     * @param key The internationalization key.
-     *
-     * @return The internationalized message.
-     */
-    protected String getMessage(String key) {
-        return getService(ILanguageService.class).getMessage(key);
-    }
-
-    /**
-     * Return the internationalized message.
-     *
-     * @param key      The internationalization key.
-     * @param replaces The replacement objects to use.
-     *
-     * @return the internationalized message.
-     */
-    protected String getMessage(String key, Object... replaces) {
-        return getService(ILanguageService.class).getMessage(key, replaces);
-    }
-
     @Override
     public void validate(Collection<IError> errors) {
         state.validate(errors); //Default validation using constraint
@@ -233,6 +210,18 @@ public abstract class SwingDialogView<T extends IModel> extends JDialog
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) {
         state.setApplicationContext(applicationContext);
+    }
+
+    /**
+     * Return the internationalized message.
+     *
+     * @param key      The internationalization key.
+     * @param replaces The replacement objects to use.
+     *
+     * @return the internationalized message.
+     */
+    protected String getMessage(String key, Object... replaces) {
+        return getService(ILanguageService.class).getMessage(key, replaces);
     }
 
     /**

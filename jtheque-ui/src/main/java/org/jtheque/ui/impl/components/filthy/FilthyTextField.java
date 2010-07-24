@@ -1,12 +1,8 @@
 package org.jtheque.ui.impl.components.filthy;
 
 import org.jtheque.ui.able.components.TextField;
-import org.jtheque.utils.ui.PaintUtils;
 
 import javax.swing.JTextField;
-
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -60,31 +56,7 @@ public final class FilthyTextField extends TextField {
     }
 
     @Override
-    public void setEnabled(boolean enabled) {
-        super.setEnabled(enabled);
-
-        textField.setEnabled(enabled);
-    }
-
-    @Override
-    public String getText() {
-        return textField.getText();
-    }
-
-    @Override
-    public void setText(String t) {
-        textField.setText(t);
-    }
-
-    @Override
     public JTextField getField() {
         return textField;
-    }
-
-    @Override
-    public void paint(Graphics g) {
-        PaintUtils.initHints((Graphics2D) g);
-
-        super.paint(g);
     }
 }

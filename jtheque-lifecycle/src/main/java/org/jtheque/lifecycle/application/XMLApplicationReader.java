@@ -91,7 +91,7 @@ public final class XMLApplicationReader {
         readVersion(application);
         readApplicationValues(application);
         readInternationalization(application);
-        application.setImages(readImageDescriptor("logo"), readImagePath("icon"));
+        application.setImages(readImageDescriptor("logo"), readImageDescriptor("icon").toPath());
         readOptions(application);
         readProperties(application);
     }
@@ -241,65 +241,18 @@ public final class XMLApplicationReader {
                 path.append(reader.readString("image", iconElement));
             }
 
-            ImageType type;
+            String typeStr = "";
 
             if (reader.existsNode("type", iconElement)) {
-                String typeStr = reader.readString("type", iconElement);
-                type = StringUtils.isEmpty(typeStr) ? ImageType.PNG : ImageType.resolve(typeStr);
+                typeStr = reader.readString("type", iconElement);
             } else if (reader.existsValue("@type", iconElement)) {
-                String typeStr = reader.readString("@type", iconElement);
-                type = StringUtils.isEmpty(typeStr) ? ImageType.PNG : ImageType.resolve(typeStr);
-            } else {
-                type = ImageType.PNG;
+                typeStr = reader.readString("@type", iconElement);
             }
 
-            return new ImageDescriptor(path.toString(), type);
+            return new ImageDescriptor(path.toString(), ImageType.resolve(typeStr));
         }
 
         return new ImageDescriptor(node, ImageType.PNG);
-    }
-
-    /**
-     * Read the path to the image from the current node.
-     *
-     * @param node The name of the image node.
-     *
-     * @return The path to the image.
-     *
-     * @throws XMLException If an errors occurs during XML reading.
-     */
-    private String readImagePath(String node) throws XMLException {
-        if (reader.existsNode(node, reader.getRootElement())) {
-            Object iconElement = reader.getNode(node, reader.getRootElement());
-
-            StringBuilder path = new StringBuilder(SystemProperty.USER_DIR.get());
-            path.append("images/");
-            path.append(reader.readString("image", iconElement));
-
-            if (reader.existsValue("@image", iconElement)) {
-                path.append(reader.readString("@image", iconElement));
-            } else {
-                path.append(reader.readString("image", iconElement));
-            }
-
-            ImageType type;
-
-            if (reader.existsNode("type", iconElement)) {
-                String typeStr = reader.readString("type", iconElement);
-                type = StringUtils.isEmpty(typeStr) ? ImageType.PNG : ImageType.resolve(typeStr);
-            } else if (reader.existsValue("@type", iconElement)) {
-                String typeStr = reader.readString("@type", iconElement);
-                type = StringUtils.isEmpty(typeStr) ? ImageType.PNG : ImageType.resolve(typeStr);
-            } else {
-                type = ImageType.PNG;
-            }
-
-            path.append('.').append(type.getExtension());
-
-            return path.toString();
-        }
-
-        return null;
     }
 
     /**

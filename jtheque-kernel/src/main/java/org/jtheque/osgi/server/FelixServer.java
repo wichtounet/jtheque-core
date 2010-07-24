@@ -153,11 +153,11 @@ public final class FelixServer implements OSGiServer {
 
         if (bundle != null) {
             try {
-                getLogger().info("Start bundle {}", bundle.getSymbolicName());
+                getLogger().debug("Start bundle {}", bundle.getSymbolicName());
 
                 bundle.start();
 
-                getLogger().info("Started bundle {}", bundle.getSymbolicName());
+                getLogger().debug("Started bundle {}", bundle.getSymbolicName());
             } catch (BundleException e) {
                 getLogger().error("Unable to start bundle ({}) due to {}", bundleName, e.getMessage());
                 getLogger().error(e.getMessage(), e);
@@ -175,6 +175,8 @@ public final class FelixServer implements OSGiServer {
 
         if (bundle != null) {
             try {
+                getLogger().debug("Stop bundle {}", bundle.getSymbolicName());
+
                 bundle.stop();
 
                 getLogger().info("Stopped bundle {}", bundle.getSymbolicName());
@@ -195,9 +197,11 @@ public final class FelixServer implements OSGiServer {
 
         if (bundle != null) {
             try {
+                getLogger().debug("Uninstall bundle {}", bundle.getSymbolicName());
+
                 bundle.uninstall();
 
-                getLogger().info("Uninstall bundle {}", bundle.getSymbolicName());
+                getLogger().info("Uninstalled bundle {}", bundle.getSymbolicName());
             } catch (BundleException e) {
                 getLogger().error("Unable to uninstall bundle ({}) due to {}", bundleName, e.getMessage());
                 getLogger().error(e.getMessage(), e);

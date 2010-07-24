@@ -76,6 +76,11 @@ public abstract class SwingFrameView<T extends IModel> extends JFrame
     }
 
     /**
+     * Init the view.
+     */
+    protected abstract void init();
+
+    /**
      * Set the content pane of the frame.
      *
      * @param contentPane The content pane of the frame.
@@ -99,11 +104,6 @@ public abstract class SwingFrameView<T extends IModel> extends JFrame
         state.setGlassPane(glassPane);
         refresh();
     }
-
-    /**
-     * Init the view.
-     */
-    protected abstract void init();
 
     @Override
     public Component getGlassPane() {
@@ -240,17 +240,6 @@ public abstract class SwingFrameView<T extends IModel> extends JFrame
      */
     protected <T> T getBean(Class<T> classz) {
         return state.getApplicationContext().getBean(classz);
-    }
-
-    /**
-     * Return the internationalized message.
-     *
-     * @param key The internationalization key.
-     *
-     * @return The internationalized message.
-     */
-    protected String getMessage(String key) {
-        return getService(ILanguageService.class).getMessage(key);
     }
 
     /**

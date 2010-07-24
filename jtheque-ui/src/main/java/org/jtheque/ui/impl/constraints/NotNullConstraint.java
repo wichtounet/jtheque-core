@@ -2,7 +2,6 @@ package org.jtheque.ui.impl.constraints;
 
 import org.jtheque.errors.able.IError;
 import org.jtheque.errors.utils.Errors;
-import org.jtheque.ui.able.constraints.Constraint;
 
 import java.util.Collection;
 
@@ -27,39 +26,20 @@ import java.util.Collection;
  *
  * @author Baptiste Wicht
  */
-public final class NotNullConstraint implements Constraint {
-    private final String fieldName;
-
+public final class NotNullConstraint extends NonLengthConstraint {
     /**
      * Construct a new NotNullConstraint.
      *
      * @param fieldName The field name.
      */
     public NotNullConstraint(String fieldName) {
-        super();
-
-        this.fieldName = fieldName;
-    }
-
-    @Override
-    public int maxLength() {
-        return -1;
-    }
-
-    @Override
-    public boolean mustControlLength() {
-        return false;
+        super(fieldName);
     }
 
     @Override
     public void validate(Object field, Collection<IError> errors) {
         if (field == null) {
-            errors.add(Errors.newI18nError("error.validation.field.empty", new Object[]{fieldName}));
+            errors.add(Errors.newI18nError("error.validation.field.empty", new Object[]{getFieldName()}));
         }
-    }
-
-    @Override
-    public void configure(Object component) {
-        //Nothing to configure here
     }
 }

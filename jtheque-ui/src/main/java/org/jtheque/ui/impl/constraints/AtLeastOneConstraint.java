@@ -2,7 +2,6 @@ package org.jtheque.ui.impl.constraints;
 
 import org.jtheque.errors.able.IError;
 import org.jtheque.errors.utils.Errors;
-import org.jtheque.ui.able.constraints.Constraint;
 
 import javax.swing.ComboBoxModel;
 import javax.swing.JList;
@@ -31,28 +30,14 @@ import java.util.Collection;
  *
  * @author Baptiste Wicht
  */
-public final class AtLeastOneConstraint implements Constraint {
-    private final String fieldName;
-
+public final class AtLeastOneConstraint extends NonLengthConstraint {
     /**
      * Construct a new NotNullConstraint.
      *
      * @param fieldName The field name.
      */
     public AtLeastOneConstraint(String fieldName) {
-        super();
-
-        this.fieldName = fieldName;
-    }
-
-    @Override
-    public int maxLength() {
-        return -1;
-    }
-
-    @Override
-    public boolean mustControlLength() {
-        return false;
+        super(fieldName);
     }
 
     @Override
@@ -68,12 +53,7 @@ public final class AtLeastOneConstraint implements Constraint {
         }
 
         if (count <= 0) {
-            errors.add(Errors.newI18nError("error.validation.field.empty", new Object[]{fieldName}));
+            errors.add(Errors.newI18nError("error.validation.field.empty", new Object[]{getFieldName()}));
         }
-    }
-
-    @Override
-    public void configure(Object component) {
-        //Nothing to configure here
     }
 }

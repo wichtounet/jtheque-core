@@ -1,5 +1,7 @@
 package org.jtheque.ui.able.components;
 
+import org.jtheque.utils.ui.PaintUtils;
+
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -8,6 +10,8 @@ import javax.swing.text.JTextComponent;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 
 import static org.jtheque.ui.able.components.filthy.FilthyConstants.*;
 
@@ -68,23 +72,41 @@ public abstract class TextField extends JPanel {
     }
 
     /**
+     * Return the text field.
+     *
+     * @return The text field.
+     */
+    public abstract JTextField getField();
+
+    @Override
+    public void paint(Graphics g) {
+        PaintUtils.initHints((Graphics2D) g);
+
+        super.paint(g);
+    }
+
+    @Override
+    public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
+
+        getField().setEnabled(enabled);
+    }
+
+    /**
      * Return the entered text.
      *
      * @return The entered text.
      */
-    public abstract String getText();
+    public String getText() {
+        return getField().getText();
+    }
 
     /**
      * Set the text.
      *
      * @param t The text.
      */
-    public abstract void setText(String t);
-
-    /**
-     * Return the text field.
-     *
-     * @return The text field.
-     */
-    public abstract JTextField getField();
+    public void setText(String t) {
+        getField().setText(t);
+    }
 }
