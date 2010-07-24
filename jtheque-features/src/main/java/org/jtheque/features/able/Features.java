@@ -25,7 +25,7 @@ import org.jtheque.ui.utils.actions.JThequeAction;
  *
  * @author Baptiste Wicht
  */
-public class Features {
+public final class Features {
     /**
      * Utility class, not instantiable. 
      */

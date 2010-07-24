@@ -28,7 +28,7 @@ import org.jtheque.utils.collections.ArrayUtils;
  * @author Baptiste Wicht
  * @see org.jtheque.errors.able.IError
  */
-public class Errors {
+public final class Errors {
     public static final Object[] EMPTY_REPLACES = ArrayUtils.EMPTY_ARRAY;
 
     /**

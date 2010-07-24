@@ -40,7 +40,7 @@ import java.awt.LayoutManager;
  * limitations under the License.
  */
 
-public class Filthy {
+public final class Filthy {
     private Filthy() {
         throw new AssertionError();
     }

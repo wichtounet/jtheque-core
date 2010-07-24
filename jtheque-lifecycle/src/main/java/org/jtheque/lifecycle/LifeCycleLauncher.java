@@ -23,6 +23,9 @@ import org.slf4j.LoggerFactory;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.Logger;
 
@@ -134,12 +137,16 @@ public class LifeCycleLauncher implements CollectionListener {
         collectionsService.removeCollectionListener(this);
 
         if(SwingUtils.isEDT()){
-            new Thread("SecondPhase-Thread"){
+            ExecutorService executor = Executors.newSingleThreadExecutor();
+
+            executor.submit(new Runnable(){
                 @Override
                 public void run() {
                     startSecondPhase();
                 }
-            }.start();
+            });
+
+            executor.shutdown();
         } else {
             startSecondPhase();
         }

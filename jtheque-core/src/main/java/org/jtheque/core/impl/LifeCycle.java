@@ -14,6 +14,8 @@ import org.jtheque.events.utils.Event;
 import org.jtheque.utils.io.FileUtils;
 
 import java.io.File;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -67,14 +69,16 @@ public class LifeCycle implements ILifeCycle {
 
     @Override
     public void exit() {
-        Thread shutdownThread = new Thread(new Runnable(){
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+
+        executorService.submit(new Runnable() {
             @Override
             public void run() {
                 System.exit(0);
             }
         });
-        shutdownThread.setName("Shutdown-Thread");
-        shutdownThread.start();
+
+        executorService.shutdown();
     }
 
     @Override

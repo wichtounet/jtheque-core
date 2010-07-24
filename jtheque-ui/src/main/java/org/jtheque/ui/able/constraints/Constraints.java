@@ -26,7 +26,7 @@ import org.jtheque.ui.impl.constraints.ValidFileConstraint;
  *
  * @author Baptiste Wicht
  */
-public class Constraints {
+public final class Constraints {
     /**
      * Utility class, not instantiable.
      */
