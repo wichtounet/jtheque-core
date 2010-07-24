@@ -32,7 +32,6 @@ import org.jtheque.views.able.windows.IMainView;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
-import java.awt.Component;
 import java.awt.GraphicsEnvironment;
 import java.awt.Window;
 
@@ -94,19 +93,17 @@ public final class ViewService implements IViewService, ApplicationContextAware 
     }
 
     @Override
-    public void setSize(IView view, int defaultWidth, int defaultHeight) {
-        ((Component) view).setSize(defaultWidth, defaultHeight);
-        SwingUtils.centerFrame((Window) view);
+    public void setSize(Window view, int defaultWidth, int defaultHeight) {
+        view.setSize(defaultWidth, defaultHeight);
+        SwingUtils.centerFrame(view);
     }
 
     @Override
-    public void fill(IWindowConfiguration configuration, IView view) {
-        Component window = (Component) view;
-
-        configuration.setWidth(window.getWidth());
-        configuration.setHeight(window.getHeight());
-        configuration.setPositionX(window.getLocation().x);
-        configuration.setPositionY(window.getLocation().y);
+    public void fill(IWindowConfiguration configuration, Window view) {
+        configuration.setWidth(view.getWidth());
+        configuration.setHeight(view.getHeight());
+        configuration.setPositionX(view.getLocation().x);
+        configuration.setPositionY(view.getLocation().y);
     }
 
     @Override
