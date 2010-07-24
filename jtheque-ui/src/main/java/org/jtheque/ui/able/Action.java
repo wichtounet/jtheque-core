@@ -1,8 +1,10 @@
-package org.jtheque.views.impl.controllers;
+package org.jtheque.ui.able;
 
-import org.jtheque.ui.able.Action;
-import org.jtheque.ui.utils.AbstractController;
-import org.jtheque.views.able.windows.IEventView;
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -20,21 +22,9 @@ import org.jtheque.views.able.windows.IEventView;
  * limitations under the License.
  */
 
-/**
- * The controller of the event view.
- *
- * @author Baptiste Wicht
- */
-public class EventController extends AbstractController<IEventView> {
-    public EventController() {
-        super(IEventView.class);
-    }
-
-    /**
-     * Update the event view.
-     */
-    @Action("log.view.actions.update")
-    public void update() {
-        getView().refresh();
-    }
+@Documented
+@Retention(value = RetentionPolicy.RUNTIME)
+@Target(value = ElementType.METHOD)
+public @interface Action {
+    String value();
 }

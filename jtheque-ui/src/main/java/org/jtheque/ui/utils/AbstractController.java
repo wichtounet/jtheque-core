@@ -1,5 +1,6 @@
 package org.jtheque.ui.utils;
 
+import org.jtheque.ui.able.Action;
 import org.jtheque.ui.able.IController;
 import org.jtheque.ui.able.IView;
 import org.jtheque.utils.ui.SwingUtils;
@@ -36,23 +37,19 @@ import java.util.Map;
  */
 public abstract class AbstractController<T extends IView> implements IController<T>, ApplicationContextAware {
     private final Map<String, Method> methodCache = new HashMap<String, Method>(10);
-    private final Map<String, String> translations = new HashMap<String, String>(15);
-    private final Class<? extends T> type;
+    private final Class<? extends T> viewType;
 
     private T view;
     private ApplicationContext applicationContext;
 
-    protected AbstractController(Class<? extends T> type) {
+    protected AbstractController(Class<? extends T> viewType) {
         super();
-        this.type = type;
+
+        this.viewType = viewType;
     }
 
     @Override
     public void handleAction(String actionName) {
-        if (translations.isEmpty()) {
-            translations.putAll(getTranslations());
-        }
-
         Method method = getCachedMethod(actionName);
 
         if (method == null) {
@@ -72,38 +69,32 @@ public abstract class AbstractController<T extends IView> implements IController
      * Return the cached method corresponding the i18n action name. The methods are
      * put in cache for later usages. 
      *
-     * @param actionName The i18n action name.
+     * @param action The i18n action name.
      *
      * @return The method corresponding to the i18n action name.
      */
-    private Method getCachedMethod(String actionName) {
-        Method method;
-        String action = translations.get(actionName);
-
-        if (!translations.containsKey(actionName)) {
-            throw new RuntimeException("There is no translation for the action (" + actionName + ')');
+    private Method getCachedMethod(String action) {
+        if(methodCache.isEmpty()){
+            generateCache();
         }
 
         if (methodCache.containsKey(action)) {
-            method = methodCache.get(action);
+            return methodCache.get(action);
         } else {
-            try {
-                method = getClass().getDeclaredMethod(action);
-                method.setAccessible(true);
-                methodCache.put(action, method);
-            } catch (NoSuchMethodException e) {
-                throw new RuntimeException("There is no method for the action (" + actionName + ')');
-            }
+            throw new RuntimeException("There is no method for the action (" + action + ')');
         }
-        return method;
     }
 
-    /**
-     * Invalidate the cache of translations. Doing that, you have the guarantee that the first time you
-     * handle an action, the cache will be repopulated with the translations of the getTranslations method. 
-     */
-    protected void invalidateTranslations(){
-        translations.clear();
+    protected void generateCache() {
+        Method[] methods = getClass().getMethods();
+
+        for (Method method : methods) {
+            if (method.isAnnotationPresent(Action.class)) {
+                Action action = method.getAnnotation(Action.class);
+
+                methodCache.put(action.value(), method);
+            }
+        }
     }
 
     @Override
@@ -120,16 +111,9 @@ public abstract class AbstractController<T extends IView> implements IController
         SwingUtils.assertEDT("Controller.getView()");
 
         if(view == null){
-            view = applicationContext.getBean(type);
+            view = applicationContext.getBean(viewType);
         }
 
         return view;
     }
-
-    /**
-     * Return the translations of the i18n actions name to the method names.
-     *
-     * @return A Map containing all the translations of the controller.
-     */
-    protected abstract Map<String, String> getTranslations();
 }

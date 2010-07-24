@@ -6,6 +6,7 @@ import org.jtheque.core.able.ICore;
 import org.jtheque.modules.able.IModuleService;
 import org.jtheque.modules.able.Module;
 import org.jtheque.modules.able.ModuleState;
+import org.jtheque.ui.able.Action;
 import org.jtheque.ui.able.IController;
 import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.ui.utils.AbstractController;
@@ -21,8 +22,6 @@ import org.jtheque.views.able.panel.IRepositoryView;
 import javax.annotation.Resource;
 
 import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -68,28 +67,11 @@ public class ModuleController extends AbstractController<IModuleView> {
         super(IModuleView.class);
     }
 
-    @Override
-    protected Map<String, String> getTranslations() {
-        Map<String, String> translations = new HashMap<String, String>(10);
-
-        translations.put("modules.actions.stop", "stop");
-        translations.put("modules.actions.start", "start");
-        translations.put("modules.actions.enable", "enable");
-        translations.put("modules.actions.update", "updateModule");
-        translations.put("modules.actions.disable", "disable");
-        translations.put("modules.actions.url.new", "installURL");
-        translations.put("modules.actions.file.new", "installFile");
-        translations.put("modules.actions.uninstall", "uninstall");
-        translations.put("modules.actions.update.kernel", "updateCore");
-        translations.put("modules.actions.repository", "repository");
-
-        return translations;
-    }
-
     /**
      * Disable the selected module.
      */
-    private void disable() {
+    @Action("modules.actions.enable")
+    public void disable() {
         Module module = getView().getSelectedModule();
 
         String error = moduleService.canBeDisabled(module);
@@ -105,7 +87,8 @@ public class ModuleController extends AbstractController<IModuleView> {
     /**
      * Enable the selected module.
      */
-    private void enable() {
+    @Action("modules.actions.disable")
+    public void enable() {
         Module module = getView().getSelectedModule();
 
         if (module.getState() == ModuleState.DISABLED) {
@@ -123,7 +106,8 @@ public class ModuleController extends AbstractController<IModuleView> {
     /**
      * Install a module from a file.
      */
-    private void installFile() {
+    @Action("modules.actions.file.new")
+    public void installFile() {
         File file = SwingUtils.chooseFile(new SimpleFilter("JAR File (*.jar)", "jar"));
 
         if (file != null) {
@@ -134,7 +118,8 @@ public class ModuleController extends AbstractController<IModuleView> {
     /**
      * Install a module from an URL.
      */
-    private void installURL() {
+    @Action("modules.actions.url.new")
+    public void installURL() {
         String url = uiUtils.askI18nText("dialogs.modules.install.url");
 
         if (StringUtils.isNotEmpty(url)) {
@@ -145,7 +130,8 @@ public class ModuleController extends AbstractController<IModuleView> {
     /**
      * Uninstall the given module.
      */
-    private void uninstall() {
+    @Action("modules.actions.uninstall")
+    public void uninstall() {
         Module module = getView().getSelectedModule();
 
         String error = moduleService.canBeUninstalled(module);
@@ -167,7 +153,8 @@ public class ModuleController extends AbstractController<IModuleView> {
     /**
      * Stop the selected module.
      */
-    private void stop() {
+    @Action("modules.actions.stop")
+    public void stop() {
         final Module module = getView().getSelectedModule();
 
         String error = moduleService.canBeStopped(module);
@@ -182,7 +169,8 @@ public class ModuleController extends AbstractController<IModuleView> {
     /**
      * Start the selected module.
      */
-    private void start() {
+    @Action("modules.actions.start")
+    public void start() {
         Module module = getView().getSelectedModule();
 
         String error = moduleService.canBeStarted(module);
@@ -203,7 +191,8 @@ public class ModuleController extends AbstractController<IModuleView> {
     /**
      * Update the selected module.
      */
-    private void updateModule() {
+    @Action("modules.actions.update")
+    public void updateModule() {
         final Module module = getView().getSelectedModule();
 
         if (updateService.isUpToDate(module)) {
@@ -216,7 +205,8 @@ public class ModuleController extends AbstractController<IModuleView> {
     /**
      * Update the core.
      */
-    private void updateCore() {
+    @Action("modules.actions.update.kernel")
+    public void updateCore() {
         if (updateService.isCurrentVersionUpToDate()) {
             uiUtils.displayI18nText("message.update.no.version");
         } else {
@@ -227,7 +217,8 @@ public class ModuleController extends AbstractController<IModuleView> {
     /**
      * Display the repository.
      */
-    private void repository() {
+    @Action("modules.actions.repository")
+    public void repository() {
         repositoryController.getView().display();
     }
 

@@ -3,6 +3,7 @@ package org.jtheque.views.impl.controllers;
 import org.jtheque.core.able.ICore;
 import org.jtheque.file.able.IFileService;
 import org.jtheque.persistence.able.IPersistenceService;
+import org.jtheque.ui.able.Action;
 import org.jtheque.ui.able.IController;
 import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.ui.utils.AbstractController;
@@ -24,8 +25,6 @@ import org.slf4j.LoggerFactory;
 import javax.annotation.Resource;
 
 import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -86,7 +85,8 @@ public class GeneralController extends AbstractController<IMainView> {
     /**
      * Backup the database.
      */
-    private void backup() {
+    @Action("menu.backup")
+    public void backup() {
         final boolean yes = uiUtils.askI18nUserForConfirmation(
                 "dialogs.confirm.backup", "dialogs.confirm.backup.title");
 
@@ -102,7 +102,8 @@ public class GeneralController extends AbstractController<IMainView> {
     /**
      * Restore the database.
      */
-    private void restore() {
+    @Action("menu.restore")
+    public void restore() {
         final File file = SwingUtils.chooseFile(new SimpleFilter("XML(*.xml)", ".xml"));
 
         final boolean yes = uiUtils.askI18nUserForConfirmation(
@@ -114,91 +115,81 @@ public class GeneralController extends AbstractController<IMainView> {
     /**
      * Open the help.
      */
-    private void help() {
+    @Action("menu.help")
+    public void help() {
         DesktopUtils.browse(ICore.HELP_URL);
     }
 
     /**
      * Send a request for a Bug.
      */
-    private void bug() {
+    @Action("menu.bug")
+    public void bug() {
         DesktopUtils.browse(ICore.HELP_URL);
     }
 
     /**
      * Give an improvement proposal.
      */
-    private void improvement() {
+    @Action("menu.improvement")
+    public void improvement() {
         DesktopUtils.browse(ICore.HELP_URL); //TODO REview that
     }
 
     /**
      * Display the messages view.
      */
-    private void messages() {
+    @Action("menu.messages")
+    public void messages() {
         messageController.getView().display();
     }
 
     /**
      * Display the events view.
      */
-    private void events() {
+    @Action("menu.events")
+    public void events() {
         eventController.getView().display();
     }
 
     /**
      * Display the errors view.
      */
-    private void errors() {
+    @Action("menu.errors")
+    public void errors() {
         errorController.getView().display();
     }
 
     /**
      * Display the about view.
      */
-    private void about() {
+    @Action("menu.about")
+    public void about() {
         viewService.displayAboutView();
     }
 
     /**
      * Display the config view.
      */
-    private void config() {
+    @Action("menu.config")
+    public void config() {
         configController.getView().display();
     }
 
     /**
      * Display the modules view.
      */
-    private void modules() {
+    @Action("menu.modules")
+    public void modules() {
         moduleController.getView().display();
     }
 
     /**
      * Exit from the application.
      */
-    private void exit() {
+    @Action("menu.exit")
+    public void exit() {
         core.getLifeCycle().exit();
-    }
-
-    @Override
-    protected Map<String, String> getTranslations() {
-        Map<String, String> translations = new HashMap<String, String>(12);
-
-        translations.put("menu.backup", "backup");
-        translations.put("menu.restore", "restore");
-        translations.put("menu.exit", "exit");
-        translations.put("menu.config", "config");
-        translations.put("menu.modules", "modules");
-        translations.put("menu.help", "help");
-        translations.put("menu.bug", "bug");
-        translations.put("menu.improvement", "improvement");
-        translations.put("menu.events", "events");
-        translations.put("menu.messages", "messages");
-        translations.put("menu.errors", "errors");
-        translations.put("menu.events", "events");
-
-        return translations;
     }
 
     /**

@@ -4,13 +4,11 @@ import org.jtheque.collections.able.ICollectionsService;
 import org.jtheque.core.able.ICore;
 import org.jtheque.core.utils.Response;
 import org.jtheque.i18n.able.ILanguageService;
+import org.jtheque.ui.able.Action;
 import org.jtheque.ui.utils.AbstractController;
 import org.jtheque.views.able.panel.ICollectionView;
 
 import javax.annotation.Resource;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -50,14 +48,16 @@ public class CollectionController extends AbstractController<ICollectionView> {
     /**
      * Cancel the current operation.
      */
-    private void cancel(){
+    @Action("collections.actions.cancel")
+    public void cancel(){
         core.getLifeCycle().exit();
     }
 
     /**
      * Choose the collection.
      */
-    private void choose() {
+    @Action("collections.actions.choose")
+    public void choose() {
         Response response = collectionsService.chooseCollection(getView().getCollection(), getView().getPassword(), false);
 
         displayResponse(response);
@@ -66,7 +66,8 @@ public class CollectionController extends AbstractController<ICollectionView> {
     /**
      * Create a collection.
      */
-    private void create() {
+    @Action("collections.actions.create")
+    public void create() {
         Response response = collectionsService.chooseCollection(getView().getCollection(), getView().getPassword(), true);
 
         displayResponse(response);
@@ -81,16 +82,5 @@ public class CollectionController extends AbstractController<ICollectionView> {
         if (!response.isOk()) {
             getView().setErrorMessage(languageService.getMessage(response.getKey(), (Object[]) response.getReplaces()));
         }
-    }
-
-    @Override
-    protected Map<String, String> getTranslations() {
-        Map<String, String> translations = new HashMap<String, String>(3);
-
-        translations.put("collections.actions.choose", "choose");
-        translations.put("collections.actions.cancel", "cancel");
-        translations.put("collections.actions.create", "create");
-
-        return translations;
     }
 }

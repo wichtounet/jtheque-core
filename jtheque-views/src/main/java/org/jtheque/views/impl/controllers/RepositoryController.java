@@ -3,14 +3,12 @@ package org.jtheque.views.impl.controllers;
 import org.jtheque.core.able.ICore;
 import org.jtheque.modules.able.IModuleDescription;
 import org.jtheque.modules.able.IModuleService;
+import org.jtheque.ui.able.Action;
 import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.ui.utils.AbstractController;
 import org.jtheque.views.able.panel.IRepositoryView;
 
 import javax.annotation.Resource;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -60,27 +58,19 @@ public class RepositoryController extends AbstractController<IRepositoryView> {
         super(IRepositoryView.class);
     }
 
-    @Override
-    protected Map<String, String> getTranslations() {
-        Map<String, String> translations = new HashMap<String, String>(2);
-
-        translations.put("repository.actions.expand", "expand");
-        translations.put("repository.actions.install", "install");
-
-        return translations;
-    }
-
     /**
      * Expand the selected module.
      */
-    private void expand() {
+    @Action("repository.actions.expand")
+    public void expand() {
         getView().expandSelectedModule();
     }
 
     /**
      * install the selected module.
      */
-    private void install() {
+    @Action("repository.actions.install")
+    public void install() {
         IModuleDescription description = getView().getSelectedModule();
 
         if (description.getCoreVersion().isGreaterThan(ICore.VERSION)) {

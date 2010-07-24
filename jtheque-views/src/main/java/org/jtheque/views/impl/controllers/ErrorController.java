@@ -31,9 +31,4 @@ public class ErrorController extends AbstractController<IErrorView> {
     public ErrorController() {
         super(IErrorView.class);
     }
-
-    @Override
-    protected Map<String, String> getTranslations() {
-        return new HashMap<String, String>(0);
-    }
 }

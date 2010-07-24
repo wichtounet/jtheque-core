@@ -1,5 +1,6 @@
 package org.jtheque.views.impl.controllers;
 
+import org.jtheque.ui.able.Action;
 import org.jtheque.ui.utils.AbstractController;
 import org.jtheque.views.able.windows.IMessageView;
 
@@ -32,32 +33,24 @@ public class MessageController extends AbstractController<IMessageView> {
         super(IMessageView.class);
     }
 
-    private void close() {
+    @Action("messages.actions.close")
+    public void close() {
         getView().closeDown();
     }
 
     /**
      * Open the next message.
      */
-    private void next() {
+    @Action("messages.actions.display.next")
+    public void next() {
         getView().next();
     }
 
     /**
      * Open the previous message.
      */
-    private void previous() {
+    @Action("messages.actions.display.previous")
+    public void previous() {
         getView().previous();
-    }
-
-    @Override
-    protected Map<String, String> getTranslations() {
-        Map<String, String> translations = new HashMap<String, String>(2);
-
-        translations.put("messages.actions.display.next", "next");
-        translations.put("messages.actions.display.previous", "previous");
-        translations.put("messages.actions.close", "close");
-
-        return translations;
     }
 }

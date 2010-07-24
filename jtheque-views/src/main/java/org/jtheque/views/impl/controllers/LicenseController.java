@@ -1,14 +1,13 @@
 package org.jtheque.views.impl.controllers;
 
 import org.jtheque.core.utils.SystemProperty;
+import org.jtheque.ui.able.Action;
 import org.jtheque.ui.utils.AbstractController;
 import org.jtheque.utils.print.PrintUtils;
 import org.jtheque.utils.ui.SimpleSwingWorker;
 import org.jtheque.views.able.windows.ILicenseView;
 
 import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -52,27 +51,19 @@ public class LicenseController extends AbstractController<ILicenseView> {
         super(ILicenseView.class);
     }
 
-    @Override
-    protected Map<String, String> getTranslations() {
-        Map<String, String> translations = new HashMap<String, String>(2);
-
-        translations.put("license.actions.print", "print");
-        translations.put("license.actions.close", "close");
-
-        return translations;
-    }
-
     /**
      * Close the view.
      */
-    private void close() {
+    @Action("license.actions.close")
+    public void close() {
         getView().closeDown();
     }
 
     /**
      * Print the license.
      */
-    private void print() {
+    @Action("license.actions.print")
+    public void print() {
         new PrintWorker().start();
     }
 

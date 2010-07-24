@@ -1,10 +1,8 @@
 package org.jtheque.views.impl.controllers;
 
+import org.jtheque.ui.able.Action;
 import org.jtheque.ui.utils.AbstractController;
 import org.jtheque.views.able.windows.IConfigView;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -35,7 +33,8 @@ public class ConfigController extends AbstractController<IConfigView> {
     /**
      * Apply the changes.
      */
-    private void apply() {
+    @Action("config.actions.apply")
+    public void apply() {
         if (getView().validateContent()) {
             getView().getSelectedPanelConfig().apply();
         }
@@ -44,7 +43,8 @@ public class ConfigController extends AbstractController<IConfigView> {
     /**
      * Apply the changes and close the view.
      */
-    private void applyClose() {
+    @Action("config.actions.ok")
+    public void applyClose() {
         if (getView().validateContent()) {
             getView().getSelectedPanelConfig().apply();
             getView().closeDown();
@@ -54,19 +54,9 @@ public class ConfigController extends AbstractController<IConfigView> {
     /**
      * Cancel the changes.
      */
-    private void cancel() {
+    @Action("config.actions.cancel")
+    public void cancel() {
         getView().getSelectedPanelConfig().cancel();
         getView().closeDown();
-    }
-
-    @Override
-    protected Map<String, String> getTranslations() {
-        Map<String, String> translations = new HashMap<String, String>(3);
-
-        translations.put("config.actions.ok", "applyClose");
-        translations.put("config.actions.apply", "apply");
-        translations.put("config.actions.cancel", "cancel");
-
-        return translations;
     }
 }
