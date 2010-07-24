@@ -337,7 +337,7 @@ public final class ModuleLoader implements IModuleLoader, BundleContextAware {
         }
 
         @Override
-        public Module call() throws Exception {
+        public Module call(){
             return installModule(file);
         }
     }
