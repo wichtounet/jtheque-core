@@ -34,6 +34,12 @@ import java.util.Locale;
  * @author Baptiste Wicht
  */
 public final class EventsTableModel extends AbstractTableModel {
+    private static final int LEVEL = 0;
+    private static final int DATE = 1;
+    private static final int TIME = 2;
+    private static final int SOURCE = 3;
+    private static final int TITLE = 4;
+
     private final DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
     private final DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss,SSS", Locale.getDefault());
 
@@ -41,19 +47,6 @@ public final class EventsTableModel extends AbstractTableModel {
 
     private final IEventService eventService;
     private final ILanguageService languageService;
-
-    /**
-     * The different columns of the films to buy table.
-     *
-     * @author Baptiste Wicht
-     */
-    private interface Columns {
-        int LEVEL = 0;
-        int DATE = 1;
-        int TIME = 2;
-        int SOURCE = 3;
-        int TITLE = 4;
-    }
 
     /**
      * Headers of the table.
@@ -118,15 +111,15 @@ public final class EventsTableModel extends AbstractTableModel {
 
         if (event != null) {
             switch (columnIndex) {
-                case Columns.LEVEL:
+                case LEVEL:
                     return languageService.getMessage(event.getLevel().getKey());
-                case Columns.DATE:
+                case DATE:
                     return dateFormat.format(event.getDate());
-                case Columns.TIME:
+                case TIME:
                     return timeFormat.format(event.getDate());
-                case Columns.SOURCE:
+                case SOURCE:
                     return event.getSource();
-                case Columns.TITLE:
+                case TITLE:
                     return languageService.getMessage(event.getTitleKey());
                 default:
                     return "";
