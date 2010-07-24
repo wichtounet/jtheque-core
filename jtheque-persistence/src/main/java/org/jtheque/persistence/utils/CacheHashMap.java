@@ -28,6 +28,8 @@ import java.util.Map;
  * @param <V> The type of the value.
  */
 final class CacheHashMap<K, V> extends HashMap<K, V> {
+    private static final long serialVersionUID = -6295413320634697623L;
+
     /**
      * Create a new CacheHashMap.
      *
