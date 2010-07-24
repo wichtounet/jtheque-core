@@ -18,6 +18,7 @@ package org.jtheque.ui.able.components;
 
 import org.jtheque.i18n.able.ILanguageService;
 import org.jtheque.i18n.able.Internationalizable;
+import org.jtheque.utils.collections.ArrayUtils;
 
 import javax.swing.JCheckBox;
 
@@ -60,7 +61,7 @@ public class JThequeCheckBox extends JCheckBox implements Internationalizable {
         setBackground(Color.white);
 
         textKey = key;
-        textReplaces = replaces;
+        textReplaces = ArrayUtils.copyOf(replaces);
     }
 
     @Override
