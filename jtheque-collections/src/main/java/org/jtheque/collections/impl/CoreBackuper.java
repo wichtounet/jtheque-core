@@ -3,7 +3,9 @@ package org.jtheque.collections.impl;
 import org.jtheque.collections.able.IDaoCollections;
 import org.jtheque.file.able.ModuleBackup;
 import org.jtheque.file.able.ModuleBackuper;
+import org.jtheque.utils.annotations.Immutable;
 import org.jtheque.utils.bean.Version;
+import org.jtheque.utils.collections.ArrayUtils;
 import org.jtheque.xml.utils.Node;
 
 import java.util.ArrayList;
@@ -26,13 +28,13 @@ import java.util.Collection;
  */
 
 /**
- * A backuper for the core.
+ * A backuper for the core. This class is immutable. 
  *
  * @author Baptiste Wicht
  */
+@Immutable
 public class CoreBackuper implements ModuleBackuper {
     private static final String[] DEPENDENCIES = new String[0];
-
     private static final Version BACKUP_VERSION = new Version("1.0");
 
     private final IDaoCollections daoCollections;
@@ -55,7 +57,7 @@ public class CoreBackuper implements ModuleBackuper {
 
     @Override
     public String[] getDependencies() {
-        return DEPENDENCIES;
+        return ArrayUtils.copyOf(DEPENDENCIES);
     }
 
     @Override

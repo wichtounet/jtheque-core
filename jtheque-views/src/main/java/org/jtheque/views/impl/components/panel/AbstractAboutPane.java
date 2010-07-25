@@ -131,7 +131,7 @@ public abstract class AbstractAboutPane extends JXPanel {
      * @return All the informations to display.
      */
     final Info[] getInfos() {
-        return infos;
+        return infos; //Only accessed by child class, so there is no need to return a copy
     }
 
     /**

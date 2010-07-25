@@ -16,6 +16,7 @@ package org.jtheque.schemas.utils;
  * limitations under the License.
  */
 
+import org.jtheque.utils.annotations.Immutable;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.collections.ArrayUtils;
 
@@ -24,10 +25,12 @@ import org.springframework.osgi.context.BundleContextAware;
 
 /**
  * A default schema implementation. This schema implements the basic methods of the Schema interface and get parameters
- * in constructor.
+ * in constructor. This schema is immutable, except for the jdbc template managed by the super class. If you don't
+ * use the setBundleContext method, this class is immutable. 
  *
  * @author Baptiste Wicht
  */
+@Immutable
 public abstract class DefaultSchema extends AbstractSchema implements BundleContextAware {
     private static final String[] EMPTY_DEPENDENCIES = {};
 
@@ -62,7 +65,7 @@ public abstract class DefaultSchema extends AbstractSchema implements BundleCont
 
     @Override
     public String[] getDependencies() {
-        return dependencies;
+        return ArrayUtils.copyOf(dependencies);
     }
 
     @Override

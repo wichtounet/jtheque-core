@@ -1,5 +1,8 @@
 package org.jtheque.core.utils;
 
+import org.jtheque.utils.annotations.Immutable;
+import org.jtheque.utils.collections.ArrayUtils;
+
 /*
  * Copyright JTheque (Baptiste Wicht)
  *
@@ -17,14 +20,17 @@ package org.jtheque.core.utils;
  */
 
 /**
- * A generic response.
+ * A generic response. Instance of this class are immutable. 
  *
  * @author Baptiste Wicht
  */
+@Immutable
 public final class Response {
+    public static final String[] EMPTY_REPLACES = {};
+
     private final boolean ok;
     private final String key;
-    private String[] replaces;
+    private final String[] replaces;
 
     /**
      * Construct a new Response.
@@ -32,10 +38,7 @@ public final class Response {
      * @param ok A boolean tag indicating if the response is ok else false.
      */
     public Response(boolean ok) {
-        super();
-
-        this.ok = ok;
-        key = "";
+        this(ok, "");
     }
 
     /**
@@ -49,6 +52,8 @@ public final class Response {
 
         this.key = key;
         this.ok = ok;
+
+        replaces = EMPTY_REPLACES;
     }
 
     /**
@@ -90,6 +95,6 @@ public final class Response {
      * @return The i18n replaces of the response.
      */
     public String[] getReplaces() {
-        return replaces;
+        return ArrayUtils.copyOf(replaces);
     }
 }

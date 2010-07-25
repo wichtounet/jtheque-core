@@ -46,20 +46,16 @@ import java.util.Set;
  * @author Baptiste Wicht
  */
 public final class LanguageService implements ILanguageService {
-    private final Map<String, Locale> languages;
-    private Locale locale = Locale.getDefault();
-
-    private final Set<Internationalizable> internationalizables;
-
-    private final LanguageState state;
-
     private static final String[] ZERO_LENGTH_ARRAY = new String[0];
-
-    private final JThequeResourceBundle resourceBundle;
-
     private static final Version I18N_VERSION = new Version("1.0");
 
     private final Map<String, String> baseNames = new HashMap<String, String>(10);
+    private final Map<String, Locale> languages;
+    private final Set<Internationalizable> internationalizables;
+    private final JThequeResourceBundle resourceBundle;
+    private final LanguageState state;
+
+    private Locale locale = Locale.getDefault();
 
     /**
      * Construct a new ResourceManager.

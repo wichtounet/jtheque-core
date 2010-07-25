@@ -4,6 +4,7 @@ import org.jtheque.i18n.able.ILanguageService;
 import org.jtheque.modules.able.Module;
 import org.jtheque.modules.able.ModuleState;
 import org.jtheque.modules.able.Resources;
+import org.jtheque.utils.annotations.Immutable;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.collections.ArrayUtils;
 
@@ -25,9 +26,7 @@ import org.osgi.framework.Bundle;
  * limitations under the License.
  */
 
-/**
- * @author Baptiste Wicht
- */
+@Immutable
 public final class ModuleContainer implements Module {
     private final String id;
     private final Bundle bundle;
@@ -145,7 +144,7 @@ public final class ModuleContainer implements Module {
 
     @Override
     public String[] getDependencies() {
-        return dependencies;
+        return ArrayUtils.copyOf(dependencies);
     }
 
     @Override
