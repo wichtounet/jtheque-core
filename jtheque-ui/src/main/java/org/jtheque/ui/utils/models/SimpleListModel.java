@@ -32,9 +32,11 @@ import java.util.List;
  * @author Baptiste Wicht
  */
 public class SimpleListModel<T> extends AbstractListModel implements ComboBoxModel {
-    private final List<T> objects;
+    private static final long serialVersionUID = -178890454612584141L;
 
-    private T selectedObject;
+    private final transient List<T> objects;
+    
+    private transient T selectedObject;
 
     /**
      * Construct a new SimpleListModel.

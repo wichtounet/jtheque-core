@@ -32,10 +32,12 @@ import javax.swing.undo.UndoableEdit;
  * @author Baptiste Wicht
  */
 public final class UndoRedoService extends UndoManager implements IUndoRedoService {
-    private Action undoAction;
-    private Action redoAction;
+    private static final long serialVersionUID = 6050388256567189094L;
+    
+    private transient Action undoAction;
+    private transient Action redoAction;
 
-    private final ILanguageService languageService;
+    private final transient ILanguageService languageService;
 
     /**
      * Create a new UndoRedoService.

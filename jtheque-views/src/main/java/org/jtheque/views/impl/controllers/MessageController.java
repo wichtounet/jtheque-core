@@ -4,9 +4,6 @@ import org.jtheque.ui.able.Action;
 import org.jtheque.ui.utils.AbstractController;
 import org.jtheque.views.able.windows.IMessageView;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /*
  * Copyright JTheque (Baptiste Wicht)
  *

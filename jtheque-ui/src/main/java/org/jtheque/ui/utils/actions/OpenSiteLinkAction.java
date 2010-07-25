@@ -27,6 +27,7 @@ import java.awt.event.ActionEvent;
  */
 public final class OpenSiteLinkAction extends JThequeSimpleAction {
     private final String url;
+    private static final long serialVersionUID = 1597739877090719576L;
 
     /**
      * Construct a new AcOpenSite.

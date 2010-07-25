@@ -28,6 +28,8 @@ import javax.swing.DefaultListModel;
  * @author Baptiste Wicht
  */
 public final class ModuleListModel extends DefaultListModel implements ModuleListener {
+    private static final long serialVersionUID = -5903901224934642441L;
+
     /**
      * Construct a new ModuleListModel.
      *

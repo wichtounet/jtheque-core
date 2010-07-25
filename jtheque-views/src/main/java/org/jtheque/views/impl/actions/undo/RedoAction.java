@@ -27,7 +27,9 @@ import java.awt.event.KeyEvent;
  * @author Baptiste Wicht
  */
 public final class RedoAction extends AbstractAction {
-    private final IUndoRedoService undoRedoService;
+    private static final long serialVersionUID = 3698122235572353522L;
+
+    private final transient IUndoRedoService undoRedoService;
 
     /**
      * Construct a new RedoAction.

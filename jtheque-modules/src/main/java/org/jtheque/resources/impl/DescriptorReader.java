@@ -32,6 +32,7 @@ package org.jtheque.resources.impl;
  * limitations under the License.
  */
 
+import org.jtheque.core.able.ICore;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.io.FileUtils;
@@ -78,13 +79,11 @@ public final class DescriptorReader {
     /**
      * Read the core descriptor at the specified URL.
      *
-     * @param url The URL of the core descriptor.
-     *
      * @return The core descriptor or null if there were an error during the reading.
      */
-    public static CoreDescriptor readCoreDescriptor(String url) {
+    public static CoreDescriptor readCoreDescriptor() {
         try {
-            return readCoreDescriptor(new URL(url));
+            return readCoreDescriptor(new URL(ICore.DESCRIPTOR_FILE_URL));
         } catch (MalformedURLException e) {
             return null;
         }

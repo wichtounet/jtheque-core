@@ -30,15 +30,13 @@ import javax.swing.ImageIcon;
  * @author Baptiste Wicht
  */
 public abstract class JThequeAction extends AbstractAction implements Internationalizable {
-    private final String key;
-    private Object[] replaces;
+    private final transient String key;
+    private final transient Object[] replaces;
 
     private static final Object[] EMPTY_REPLACES = {};
 
     protected JThequeAction() {
-        super();
-
-        key = "";
+        this("", EMPTY_REPLACES);
     }
 
     /**
@@ -60,12 +58,9 @@ public abstract class JThequeAction extends AbstractAction implements Internatio
         super();
 
         this.key = key;
+        this.replaces = ArrayUtils.copyOf(replaces);
 
         setText(key);
-
-        if (!ArrayUtils.isEmpty(replaces)) {
-            this.replaces = ArrayUtils.copyOf(replaces);
-        }
     }
 
     /**

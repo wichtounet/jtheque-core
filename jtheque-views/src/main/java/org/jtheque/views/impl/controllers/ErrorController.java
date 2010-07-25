@@ -3,9 +3,6 @@ package org.jtheque.views.impl.controllers;
 import org.jtheque.ui.utils.AbstractController;
 import org.jtheque.views.able.windows.IErrorView;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /*
  * Copyright JTheque (Baptiste Wicht)
  *

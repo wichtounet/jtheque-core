@@ -226,8 +226,8 @@ public class ResourceService implements IResourceService, BundleContextAware {
     }
 
     @Override
-    public boolean isInstalled(String id, Version version) {
-        return getResource(id, version) != null;
+    public boolean isNotInstalled(String id, Version version) {
+        return getResource(id, version) == null;
     }
 
     @Override

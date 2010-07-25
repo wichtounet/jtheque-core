@@ -45,6 +45,8 @@ import java.util.List;
  * @author Baptiste Wicht
  */
 public final class ErrorsListModel extends SimpleListModel<IError> implements ErrorListener {
+    private static final long serialVersionUID = 3355362999481373712L;
+
     /**
      * Construct a new ErrorsListModel.
      *

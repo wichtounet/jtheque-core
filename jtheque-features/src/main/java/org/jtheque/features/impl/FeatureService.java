@@ -136,7 +136,7 @@ public final class FeatureService implements IFeatureService, ModuleListener {
      * @return The added feature.
      */
     private Feature createAndAddFeature(int position, String key) {
-        Feature feature = new ManagedFeature(IFeature.FeatureType.PACK, key, position);
+        Feature feature = new ManagedFeature(key, position);
 
         features.add(feature);
 
@@ -224,12 +224,11 @@ public final class FeatureService implements IFeatureService, ModuleListener {
         /**
          * Construct a new ManagedFeature.
          *
-         * @param type     The type of feature.
          * @param titleKey The title key.
          * @param position The position of the feature.
          */
-        protected ManagedFeature(FeatureType type, String titleKey, int position) {
-            super(null, position, type, titleKey, null);
+        protected ManagedFeature(String titleKey, int position) {
+            super(null, position, FeatureType.PACK, titleKey, null);
         }
 
         @Override

@@ -150,9 +150,9 @@ public final class StateService implements IStateService {
     private void simpleWrite(IXMLWriter<org.w3c.dom.Node> writer, Map.Entry<String, Object> state, Method saveMethod) {
         writer.add("properties");
 
-        Map<String, String> properties = getObjectsFromSaveMethod(state.getValue(), saveMethod);
+        Map<String, String> saveProperties = getObjectsFromSaveMethod(state.getValue(), saveMethod);
 
-        for (Map.Entry<String, String> property : properties.entrySet()) {
+        for (Map.Entry<String, String> property : saveProperties.entrySet()) {
             writer.add("property");
             writer.addAttribute("key", property.getKey());
             writer.addAttribute("value", property.getValue());
@@ -171,9 +171,9 @@ public final class StateService implements IStateService {
      * @param saveMethod The save method.
      */
     private void delegatedWrite(IXMLWriter<org.w3c.dom.Node> writer, Map.Entry<String, Object> state, Method saveMethod) {
-        Iterable<Node> nodes = getObjectsFromSaveMethod(state.getValue(), saveMethod);
+        Iterable<Node> savedNodes = getObjectsFromSaveMethod(state.getValue(), saveMethod);
 
-        XML.newJavaFactory().newNodeSaver().writeNodes(writer, nodes);
+        XML.newJavaFactory().newNodeSaver().writeNodes(writer, savedNodes);
     }
 
     private <T> T getObjectsFromSaveMethod(Object state, Method saveMethod) {

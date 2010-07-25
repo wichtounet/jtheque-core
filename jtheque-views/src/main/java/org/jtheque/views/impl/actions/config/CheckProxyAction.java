@@ -27,7 +27,9 @@ import java.awt.event.ActionEvent;
  * @author Baptiste Wicht
  */
 public final class CheckProxyAction extends JThequeSimpleAction {
-    private final INetworkConfigView configView;
+    private static final long serialVersionUID = -3130965920708346740L;
+    
+    private final transient INetworkConfigView configView;
 
     /**
      * Construct a new CheckProxyAction.

@@ -66,7 +66,7 @@ public final class ResourceListRenderer extends JPanel implements ListCellRender
             setChildsForeground(Color.white);
         } else {
             setBackground(Color.white);
-            setChildsForeground(Color.white);
+            setChildsForeground(Color.blue);
         }
 
         IResource resource = (IResource) value;

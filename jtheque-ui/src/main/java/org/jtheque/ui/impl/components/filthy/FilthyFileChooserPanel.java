@@ -188,6 +188,8 @@ public final class FilthyFileChooserPanel extends FileChooser {
      * @author Baptiste Wicht
      */
     private final class BrowseAction extends AbstractAction {
+        private static final long serialVersionUID = 2853155866716410319L;
+
         /**
          * Construct a new BrowseAction.
          */

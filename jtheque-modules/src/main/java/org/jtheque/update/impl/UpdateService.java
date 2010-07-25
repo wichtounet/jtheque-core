@@ -276,7 +276,7 @@ public final class UpdateService implements IUpdateService {
      */
     private void downloadResources(Iterable<FileDescriptor> resources) {
         for (FileDescriptor descriptor : resources) {
-            if (!resourceService.isInstalled(descriptor.getName(), descriptor.getVersion())) {
+            if (resourceService.isNotInstalled(descriptor.getName(), descriptor.getVersion())) {
                 resourceService.downloadResource(descriptor.getUrl(), descriptor.getVersion());
             }
         }
@@ -301,7 +301,7 @@ public final class UpdateService implements IUpdateService {
 
         List<String> messages = new ArrayList<String>(2);
 
-        if (!isAModuleNotUpToDate()) {
+        if (isAModuleNotUpToDate()) {
             messages.add("dialogs.propose.module.update");
         }
 

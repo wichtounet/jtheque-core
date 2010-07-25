@@ -26,6 +26,8 @@ import org.jtheque.ui.utils.models.SimpleListModel;
  * @author Baptiste Wicht
  */
 public final class ResourceListModel extends SimpleListModel<IResource> {
+    private static final long serialVersionUID = 7991835157869808160L;
+
     /**
      * Create a new ResourceListModel.
      *

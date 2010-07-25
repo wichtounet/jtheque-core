@@ -43,29 +43,31 @@ import java.awt.image.BufferedImage;
  * @author Baptiste Wicht
  */
 public final class SplashScreenPane extends BufferedLayerUI<JComponent> implements ISplashView {
-    private boolean inited;
+    private static final int LOADING_FONT_SIZE = 20;
+    private static final int TITLE_FONT_SIZE = 24;
 
-    private BufferedImage bImage;
-
-    private Font fontName;
-    private Font fontLoading;
+    private static final int ANIMATION_DURATION = 2000;
 
     private final Point pImage;
     private final Point pTextName;
     private final Point pTextLoading;
 
     private final String[] loadings = {"Loading ", "Loading .", "Loading ..", "Loading ..."};
+
+    private transient Timeline waitingAnimation;
+    private transient Timeline fadeAnimation;
+
+    private transient BufferedImage bImage;
+
+    private final transient ICore core;
+
     private int current;
 
-    private static final int LOADING_FONT_SIZE = 20;
-    private static final int TITLE_FONT_SIZE = 24;
+    private boolean inited;
 
-    private static final int ANIMATION_DURATION = 2000;
-
-    private Timeline waitingAnimation;
-    private Timeline fadeAnimation;
-
-    private final ICore core;
+    private Font fontName;
+    private Font fontLoading;
+    private static final long serialVersionUID = -7911243406060906813L;
 
     /**
      * Construct a new SplashScreenPane.

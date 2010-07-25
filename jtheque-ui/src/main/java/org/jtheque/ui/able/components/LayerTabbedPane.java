@@ -210,7 +210,9 @@ public class LayerTabbedPane extends JTabbedPane implements ViewComponent {
      * @author Baptiste Wicht
      */
     private static final class AnimationLayerUI extends BufferedLayerUI<JComponent> {
-        private BufferedImage componentImage;
+        private static final long serialVersionUID = 4575416080010970635L;
+
+        private transient BufferedImage componentImage;
 
         /**
          * Construct a new <code>AnimationLayerUI</code>.

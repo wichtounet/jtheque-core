@@ -34,6 +34,8 @@ import java.util.Locale;
  * @author Baptiste Wicht
  */
 public final class EventsTableModel extends AbstractTableModel {
+    private static final long serialVersionUID = 737149118018076647L;
+    
     private static final int LEVEL = 0;
     private static final int DATE = 1;
     private static final int TIME = 2;
@@ -43,20 +45,20 @@ public final class EventsTableModel extends AbstractTableModel {
     private final DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
     private final DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss,SSS", Locale.getDefault());
 
-    private String log;
+    private transient String log;
 
-    private final IEventService eventService;
-    private final ILanguageService languageService;
+    private final transient IEventService eventService;
+    private final transient ILanguageService languageService;
 
     /**
      * Headers of the table.
      */
-    private String[] headers;
+    private transient String[] headers;
 
     /**
      * The films to buy to display.
      */
-    private List<IEvent> events;
+    private transient List<IEvent> events;
 
     /**
      * Construct a new <code>FilmsToBuyTableModel</code>.

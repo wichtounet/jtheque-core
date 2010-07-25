@@ -1,6 +1,5 @@
 package org.jtheque.update.impl.versions;
 
-import org.jtheque.core.able.ICore;
 import org.jtheque.core.able.Versionable;
 import org.jtheque.errors.able.IErrorService;
 import org.jtheque.errors.utils.Errors;
@@ -173,7 +172,7 @@ public final class DescriptorsLoader implements IVersionsLoader {
      */
     public CoreDescriptor getCoreDescriptor() {
         if (coreDescriptor == null) {
-            coreDescriptor = DescriptorReader.readCoreDescriptor(ICore.DESCRIPTOR_FILE_URL);
+            coreDescriptor = DescriptorReader.readCoreDescriptor();
 
             if (coreDescriptor == null) {
                 errorService.addError(Errors.newI18nError(

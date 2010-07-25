@@ -22,6 +22,8 @@ package org.jtheque.core.utils;
  * @author Baptiste Wicht
  */
 public final class ReadingException extends Exception {
+    private static final long serialVersionUID = 3300595276745437525L;
+
     /**
      * Construct a new ReadingException.
      *

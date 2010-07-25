@@ -53,11 +53,11 @@ public final class DaoNotes implements IDaoNotes {
         stars = new BufferedImage[7];
 
         for (int i = 0; i < 7; ++i) {
-            imageService.registerResource("Star" + (i + 1), new ClassPathResource("org/jtheque/persistence/" + "Star" + (i + 1) + ".png"));
-        }
+            String starName = "Star" + (i + 1);
+            
+            imageService.registerResource(starName, new ClassPathResource("org/jtheque/persistence/" + starName + ".png"));
 
-        for (int i = 0; i < 7; ++i) {
-            stars[i] = imageService.getImage("Star" + (i + 1));
+            stars[i] = imageService.getImage(starName);
         }
     }
 

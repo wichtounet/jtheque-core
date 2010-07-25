@@ -53,7 +53,7 @@ public final class ControllerAction extends JThequeAction {
      * @param icon       The icon of the action
      * @param controller The controller to bind the action.
      */
-    public ControllerAction(String key, ImageIcon icon, IController controller) {
+    public ControllerAction(String key, ImageIcon icon, IController<?> controller) {
         super();
 
         setIcon(icon);

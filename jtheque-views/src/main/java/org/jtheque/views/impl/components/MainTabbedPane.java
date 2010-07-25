@@ -113,6 +113,8 @@ public final class MainTabbedPane extends LayerTabbedPane {
      * @author Baptiste Wicht
      */
     private static final class PositionComparator implements Comparator<MainComponent>, Serializable {
+        private static final long serialVersionUID = -8093634913175450541L;
+
         @Override
         public int compare(MainComponent component, MainComponent other) {
             return Numbers.compare(component.getPosition(), other.getPosition());
