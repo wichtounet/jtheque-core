@@ -32,6 +32,8 @@ package org.jtheque.resources.impl;
  * limitations under the License.
  */
 
+import org.jtheque.utils.bean.EqualsBuilder;
+import org.jtheque.utils.bean.HashCodeUtils;
 import org.jtheque.utils.bean.Version;
 
 import java.util.ArrayList;
@@ -95,11 +97,6 @@ public class ResourceVersion implements Comparable<ResourceVersion> {
         return Collections.unmodifiableList(libraries);
     }
 
-    @Override
-    public final int compareTo(ResourceVersion o) {
-        return version.compareTo(o.version);
-    }
-
     /**
      * Add the file to the version.
      *
@@ -116,5 +113,30 @@ public class ResourceVersion implements Comparable<ResourceVersion> {
      */
     public void addLibrary(FileDescriptor descriptor) {
         libraries.add(descriptor);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof ResourceVersion) {
+            ResourceVersion other = (ResourceVersion) obj;
+
+            return EqualsBuilder.newBuilder(this, obj).
+                    addField(version, other.version).
+                    addField(files, other.files).
+                    addField(libraries, other.libraries).
+                    areEquals();
+        }
+        
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return HashCodeUtils.hashCodeDirect(version, files, libraries);
+    }
+
+    @Override
+    public final int compareTo(ResourceVersion o) {
+        return version.compareTo(o.version);
     }
 }

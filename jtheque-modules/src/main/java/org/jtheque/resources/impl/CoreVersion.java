@@ -16,6 +16,8 @@ package org.jtheque.resources.impl;
  * limitations under the License.
  */
 
+import org.jtheque.utils.bean.EqualsBuilder;
+import org.jtheque.utils.bean.HashCodeUtils;
 import org.jtheque.utils.bean.Version;
 
 import java.util.ArrayList;
@@ -71,5 +73,24 @@ public class CoreVersion implements Comparable<CoreVersion> {
      */
     public void addBundle(FileDescriptor descriptor) {
         bundles.add(descriptor);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof CoreVersion) {
+            CoreVersion other = (CoreVersion) obj;
+
+            return EqualsBuilder.newBuilder(this, obj).
+                    addField(version, other.version).
+                    addField(bundles, other.bundles).
+                    areEquals();
+        }
+
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return HashCodeUtils.hashCodeDirect(version, bundles);
     }
 }
