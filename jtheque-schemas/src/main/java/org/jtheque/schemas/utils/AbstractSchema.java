@@ -1,7 +1,7 @@
 package org.jtheque.schemas.utils;
 
 import org.jtheque.core.utils.OSGiUtils;
-import org.jtheque.core.utils.PropertiesUtils;
+import org.jtheque.utils.bean.BeanUtils;
 import org.jtheque.schemas.able.Schema;
 import org.jtheque.utils.Constants;
 import org.jtheque.utils.StringUtils;
@@ -161,7 +161,7 @@ public abstract class AbstractSchema implements Schema {
 
     @Override
     public boolean equals(Object obj) {
-        return PropertiesUtils.areEquals(this, obj, "id", "version");
+        return BeanUtils.areEquals(this, obj, "id", "version");
     }
 
     @Override
