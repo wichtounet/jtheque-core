@@ -32,6 +32,13 @@ import java.io.PrintStream;
  * @author Baptiste Wicht
  */
 public class JTheque {
+    /**
+     * Main class, cannot be created. 
+     */
+    private JTheque() {
+        throw new AssertionError();
+    }
+
     public static void main(String[] args) {
         if (args.length > 0) {
             System.setProperty("user.dir", args[0]);
