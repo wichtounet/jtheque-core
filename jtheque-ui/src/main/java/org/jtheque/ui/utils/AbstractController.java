@@ -1,6 +1,7 @@
 package org.jtheque.ui.utils;
 
 import org.jtheque.ui.able.Action;
+import org.jtheque.ui.able.ControllerException;
 import org.jtheque.ui.able.IController;
 import org.jtheque.ui.able.IView;
 import org.jtheque.utils.ui.SwingUtils;
@@ -54,20 +55,29 @@ public abstract class AbstractController<T extends IView> implements IController
         this.viewType = viewType;
     }
 
+    /**
+     * Handle the given action. Use the methods declared with the @Action annotation and execute the corresponding
+     * method.
+     *
+     * @param actionName The i18n action name.
+     *
+     * @throws ControllerException If there is no method associated with the given action or if the action cannot
+     * be accessed. 
+     */
     @Override
     public void handleAction(String actionName) {
         Method method = getCachedMethod(actionName);
 
         if (method == null) {
-            throw new RuntimeException("There is no method for the action (" + actionName + ')');
+            throw new ControllerException("There is no method for the action (" + actionName + ')');
         }
 
         try {
             method.invoke(this);
         } catch (InvocationTargetException e) {
-            throw new RuntimeException("Unable to invoke the method (" + method + ')', e);
+            throw new ControllerException("Unable to invoke the method (" + method + ')', e);
         } catch (IllegalAccessException e) {
-            throw new RuntimeException("Unable to invoke the method (" + method + ')', e);
+            throw new ControllerException("Unable to invoke the method (" + method + ')', e);
         }
     }
 
@@ -87,7 +97,7 @@ public abstract class AbstractController<T extends IView> implements IController
         if (methodCache.containsKey(action)) {
             return methodCache.get(action);
         } else {
-            throw new RuntimeException("There is no method for the action (" + action + ')');
+            throw new ControllerException("There is no method for the action (" + action + ')');
         }
     }
 

@@ -28,7 +28,9 @@ public interface IController<T extends IView> {
      * Handle the given action and execute the corresponding method. This method must be called in EDT to
      * works well.
      *
-     * @param actionName The i18n action name. 
+     * @param actionName The i18n action name.
+     *
+     * @throws ControllerException If the action cannot be executed
      */
     void handleAction(String actionName);
 
