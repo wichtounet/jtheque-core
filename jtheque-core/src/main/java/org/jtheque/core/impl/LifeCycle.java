@@ -47,8 +47,10 @@ public class LifeCycle implements ILifeCycle {
     private final ICore core;
     private final IEventService eventService;
 
+    private final ApplicationShutDownHook hook;
+
     /**
-     * Construct a new lifecycle.
+     * Construct a new LifeCycle.
      *
      * @param eventService The event service.
      * @param core         The core.
@@ -59,7 +61,9 @@ public class LifeCycle implements ILifeCycle {
         this.eventService = eventService;
         this.core = core;
 
-        Runtime.getRuntime().addShutdownHook(new ApplicationShutDownHook());
+        hook = new ApplicationShutDownHook();
+
+        Runtime.getRuntime().addShutdownHook(hook);
     }
 
     @Override
@@ -74,7 +78,7 @@ public class LifeCycle implements ILifeCycle {
         executorService.submit(new Runnable() {
             @Override
             public void run() {
-                System.exit(0);
+                exit(0);
             }
         });
 
@@ -85,7 +89,19 @@ public class LifeCycle implements ILifeCycle {
     public void restart() {
         FileUtils.clearFolder(new File(SystemProperty.USER_DIR.get() + "cache"));
 
-        System.exit(666);
+        exit(666);
+    }
+
+    private void exit(int code) {
+        Runtime.getRuntime().removeShutdownHook(hook);
+
+        addEventClose();
+
+        Runtime.getRuntime().exit(code);
+    }
+
+    private void addEventClose() {
+        eventService.addEvent(IEventService.CORE_EVENT_LOG, Event.newEvent(EventLevel.INFO, "User", "events.close"));
     }
 
     @Override
@@ -205,7 +221,7 @@ public class LifeCycle implements ILifeCycle {
 
         @Override
         public void run() {
-            eventService.addEvent(IEventService.CORE_EVENT_LOG, Event.newEvent(EventLevel.INFO, "User", "events.close"));
+            addEventClose();
         }
     }
 }
