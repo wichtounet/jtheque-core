@@ -7,7 +7,6 @@ import org.jtheque.utils.collections.ArrayUtils;
 import org.jtheque.utils.ui.SwingUtils;
 
 import org.osgi.framework.BundleContext;
-import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.osgi.context.BundleContextAware;
@@ -53,7 +52,7 @@ public class SwingModule implements ApplicationContextAware, SwingLoader, Bundle
     }
 
     @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+    public void setApplicationContext(ApplicationContext applicationContext) {
         this.applicationContext = applicationContext;
     }
 

@@ -4,7 +4,6 @@ import org.jtheque.core.utils.OSGiUtils;
 import org.jtheque.spring.utils.SwingSpringProxy;
 
 import org.osgi.framework.BundleContext;
-import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.osgi.context.BundleContextAware;
@@ -35,7 +34,7 @@ public class OSGIMenu extends AbstractMenu implements BundleContextAware, Applic
     private BundleContext bundleContext;
 
     @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+    public void setApplicationContext(ApplicationContext applicationContext) {
         this.applicationContext = applicationContext;
     }
 
@@ -73,7 +72,7 @@ public class OSGIMenu extends AbstractMenu implements BundleContextAware, Applic
      * Return the bean of the given name using the application context.
      *
      * @param bean The name of the bean to get from application context.
-     * @param <T>    The type of bean to get.
+     * @param <T>  The type of bean to get.
      *
      * @return The bean of the given name or null if it doesn't exist.
      */
