@@ -31,7 +31,6 @@ import java.lang.annotation.Target;
 @Retention(value = RetentionPolicy.RUNTIME)
 @Target(value = ElementType.TYPE)
 public @interface State {
-
     /**
      * Return the id of the state. Must be unique.
      *

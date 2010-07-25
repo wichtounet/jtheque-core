@@ -17,7 +17,8 @@ package org.jtheque.states.able;
  */
 
 /**
- * A state manager. It seems a manager who's responsible for the persistence of the states.
+ * A state manager. It seems a manager who's responsible for the persistence of the states. This class is
+ * unconditionally thread safe. 
  *
  * @author Baptiste Wicht
  */
@@ -29,7 +30,11 @@ public interface IStateService {
      * @param state The state to get.
      * @param <T>   The type of state.
      *
-     * @return The loaded state. The instance is the same but the state has been inited.
+     * @throws IllegalArgumentException If the class is not annotated with @State or doesn't contains an @Save and
+     * an @Load method.
+     * @throws NullPointerException If state is null. 
+     *
+     * @return The loaded state. The instance is the same but the state has been initialized.
      */
     <T> T getState(T state);
 }

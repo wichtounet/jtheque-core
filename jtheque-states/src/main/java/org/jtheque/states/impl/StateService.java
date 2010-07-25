@@ -40,6 +40,7 @@ import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * A state manager implementation.
@@ -47,15 +48,96 @@ import java.util.Map;
  * @author Baptiste Wicht
  */
 public final class StateService implements IStateService {
-    private final Map<String, Object> states = new HashMap<String, Object>(10);
-    private final Map<String, Map<String, String>> properties = new HashMap<String, Map<String, String>>(5);
-    private final Map<String, Collection<Node>> nodes = new HashMap<String, Collection<Node>>(5);
+    private final Map<String, Object> states = new ConcurrentHashMap<String, Object>(10);
+    private final Map<String, Map<String, String>> properties = new ConcurrentHashMap<String, Map<String, String>>(5);
+    private final Map<String, Collection<Node>> nodes = new ConcurrentHashMap<String, Collection<Node>>(5);
+
+    @Override
+    public <T> T getState(T state) {
+        Method loadMethod = checkState(state);
+
+        State stateAnnotation = state.getClass().getAnnotation(State.class);
+        
+        if (stateAnnotation.delegated()) {
+            loadDelegatedState(state, stateAnnotation, loadMethod);
+        } else {
+            loadSimpleState(state, stateAnnotation, loadMethod);
+        }
+
+        states.put(stateAnnotation.id(), state);
+
+        return state;
+    }
+
+    private static Method checkState(Object state) {
+        if(state == null){
+            throw new NullPointerException("The state cannot be null");
+        }
+
+        if(!state.getClass().isAnnotationPresent(State.class)){
+            throw new IllegalArgumentException("The state must be annotated with @State");
+        }
+
+        Method loadMethod = ReflectionUtils.getMethod(Load.class, state.getClass());
+
+        if (loadMethod == null) {
+            throw new IllegalArgumentException("The state must have a method with @Load annotation");
+        }
+
+        Method saveMethod = ReflectionUtils.getMethod(Save.class, state.getClass());
+
+        if (saveMethod == null) {
+            throw new IllegalArgumentException("The state must have a method with @Save annotation");
+        }
+
+        return loadMethod;
+    }
 
     /**
-     * Load the states.
+     * Return the delegated state.
+     *
+     * @param state           The state to load.
+     * @param stateAnnotation The state annotation of the state.
+     * @param loadMethod      The load method.
+     * @param <T>             The type of state.
+     */
+    private <T> void loadDelegatedState(T state, State stateAnnotation, Method loadMethod) {
+        Collection<Node> stateNodes = nodes.remove(stateAnnotation.id());
+
+        invokeLoadMethod(state, stateNodes, loadMethod);
+    }
+
+    /**
+     * Return the simple state.
+     *
+     * @param state           The state to load.
+     * @param stateAnnotation The state annotation of the state.
+     * @param loadMethod      The load method.
+     * @param <T>             The type of state.
+     */
+    private <T> void loadSimpleState(T state, State stateAnnotation, Method loadMethod) {
+        Map<String, String> stateProperties = properties.remove(stateAnnotation.id());
+
+        invokeLoadMethod(state, stateProperties, loadMethod);
+    }
+
+    private static void invokeLoadMethod(Object state, Object parameter, Method loadMethod) {
+        try {
+            if (parameter != null) {
+                loadMethod.invoke(state, parameter);
+            }
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException("Unable to access the @Load method of " + state, e);
+        } catch (InvocationTargetException e) {
+            throw new RuntimeException("Unable to access the @Load method of " + state, e);
+        }
+    }
+
+    /**
+     * Load the states. Must only be called from Spring Framework.
      */
     @PostConstruct
-    public void loadStates() {
+    private void loadStates() {
         IXMLReader<org.w3c.dom.Node> reader = XML.newJavaFactory().newReader();
 
         try {
@@ -97,14 +179,15 @@ public final class StateService implements IStateService {
      */
     private static void initConfigFile(File file) {
         IXMLWriter<org.w3c.dom.Node> writer = XML.newJavaFactory().newWriter("states");
+
         writer.write(file.getAbsolutePath());
     }
 
     /**
-     * Save the states.
+     * Save the states. Must only be called from Spring Framework.
      */
     @PreDestroy
-    public void saveStates() {
+    private void saveStates() {
         IXMLWriter<org.w3c.dom.Node> writer = XML.newJavaFactory().newWriter("states");
 
         writeStates(writer);
@@ -147,7 +230,7 @@ public final class StateService implements IStateService {
      * @param state      The state to write.
      * @param saveMethod The save method.
      */
-    private void simpleWrite(IXMLWriter<org.w3c.dom.Node> writer, Map.Entry<String, Object> state, Method saveMethod) {
+    private static void simpleWrite(IXMLWriter<org.w3c.dom.Node> writer, Map.Entry<String, Object> state, Method saveMethod) {
         writer.add("properties");
 
         Map<String, String> saveProperties = getObjectsFromSaveMethod(state.getValue(), saveMethod);
@@ -170,19 +253,19 @@ public final class StateService implements IStateService {
      * @param state      The state to write.
      * @param saveMethod The save method.
      */
-    private void delegatedWrite(IXMLWriter<org.w3c.dom.Node> writer, Map.Entry<String, Object> state, Method saveMethod) {
+    private static void delegatedWrite(IXMLWriter<org.w3c.dom.Node> writer, Map.Entry<String, Object> state, Method saveMethod) {
         Iterable<Node> savedNodes = getObjectsFromSaveMethod(state.getValue(), saveMethod);
 
         XML.newJavaFactory().newNodeSaver().writeNodes(writer, savedNodes);
     }
 
-    private <T> T getObjectsFromSaveMethod(Object state, Method saveMethod) {
+    private static <T> T getObjectsFromSaveMethod(Object state, Method saveMethod) {
         try {
             return (T) saveMethod.invoke(state);
         } catch (IllegalAccessException e) {
-            LoggerFactory.getLogger(getClass()).error("Unable to access the @Save method of " + state, e);
+            LoggerFactory.getLogger(StateService.class).error("Unable to access the @Save method of " + state, e);
         } catch (InvocationTargetException e) {
-            LoggerFactory.getLogger(getClass()).error("Unable to invoke the @Save method of " + state, e);
+            LoggerFactory.getLogger(StateService.class).error("Unable to invoke the @Save method of " + state, e);
         }
 
         return null;
@@ -249,72 +332,5 @@ public final class StateService implements IStateService {
         }
 
         return configFile;
-    }
-
-    @Override
-    public <T> T getState(T state) {
-        if (state.getClass().isAnnotationPresent(State.class)) {
-            State stateAnnotation = state.getClass().getAnnotation(State.class);
-
-            Method loadMethod = ReflectionUtils.getMethod(Load.class, state.getClass());
-
-            if (loadMethod == null) {
-                throw new IllegalArgumentException("The state must have a method with @Load annotation");
-            }
-
-            if (stateAnnotation.delegated()) {
-                getDelegatedState(state, stateAnnotation, loadMethod);
-            } else {
-                getSimpleState(state, stateAnnotation, loadMethod);
-            }
-
-            states.put(stateAnnotation.id(), state);
-        }
-
-        return state;
-    }
-
-    /**
-     * Return the delegated state.
-     *
-     * @param state           The state to load.
-     * @param stateAnnotation The state annotation of the state.
-     * @param loadMethod      The load method.
-     * @param <T>             The type of state.
-     */
-    private <T> void getDelegatedState(T state, State stateAnnotation, Method loadMethod) {
-        Collection<Node> stateNodes = nodes.get(stateAnnotation.id());
-
-        invokeLoadMethod(state, stateNodes, loadMethod);
-
-        nodes.remove(stateAnnotation.id());
-    }
-
-    /**
-     * Return the simple state.
-     *
-     * @param state           The state to load.
-     * @param stateAnnotation The state annotation of the state.
-     * @param loadMethod      The load method.
-     * @param <T>             The type of state.
-     */
-    private <T> void getSimpleState(T state, State stateAnnotation, Method loadMethod) {
-        Map<String, String> stateProperties = properties.get(stateAnnotation.id());
-
-        invokeLoadMethod(state, stateProperties, loadMethod);
-
-        properties.remove(stateAnnotation.id());
-    }
-
-    private void invokeLoadMethod(Object state, Object parameter, Method loadMethod) {
-        try {
-            if (parameter != null) {
-                loadMethod.invoke(state, parameter);
-            }
-        } catch (IllegalAccessException e) {
-            LoggerFactory.getLogger(getClass()).error("Unable to access the @Load method of " + state, e);
-        } catch (InvocationTargetException e) {
-            LoggerFactory.getLogger(getClass()).error("Unable to invoke the @Load method of " + state, e);
-        }
     }
 }

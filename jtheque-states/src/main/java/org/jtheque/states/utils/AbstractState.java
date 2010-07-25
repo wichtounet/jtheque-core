@@ -24,7 +24,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * An abstract state.
+ * An abstract state. This state is not delegated and manage a simple map of properties. This class is not thread safe. 
  *
  * @author Baptiste Wicht
  */
@@ -86,7 +86,7 @@ public abstract class AbstractState {
      * Set the property value of the state.
      *
      * @param key   The key of the property.
-     * @param value The value of the propery.
+     * @param value The value of the property.
      */
     protected final void setProperty(String key, String value) {
         properties.put(key, value);
