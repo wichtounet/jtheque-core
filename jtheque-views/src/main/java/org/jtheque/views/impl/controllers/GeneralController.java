@@ -128,7 +128,7 @@ public class GeneralController extends AbstractController<IMainView> {
      */
     @Action("menu.bug")
     public void bug() {
-        DesktopUtils.browse(ICore.HELP_URL);
+        DesktopUtils.browse(ICore.BUG_TRACKER_URL);
     }
 
     /**
@@ -136,7 +136,7 @@ public class GeneralController extends AbstractController<IMainView> {
      */
     @Action("menu.improvement")
     public void improvement() {
-        DesktopUtils.browse(ICore.HELP_URL); //TODO REview that
+        DesktopUtils.browse(ICore.BUG_TRACKER_URL);
     }
 
     /**

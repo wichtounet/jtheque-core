@@ -31,8 +31,9 @@ public interface ICore {
     Version VERSION = new Version("2.1.0");
 
     String DESCRIPTOR_FILE_URL = "http://jtheque.baptiste-wicht.com/files/descriptors/jtheque-core.xml";
-    String HELP_URL = "http://jtheque.developpez.com/";
-
+    String HELP_URL = "http://github.com/wichtounet/jtheque-core/";
+    String BUG_TRACKER_URL = "http://github.com/wichtounet/jtheque-core/issues/";
+    
     String WINDOW_ICON = "jtheque-core-window-icon";
 
     /**
