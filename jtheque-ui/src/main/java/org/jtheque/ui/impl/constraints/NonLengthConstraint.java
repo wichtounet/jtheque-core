@@ -37,6 +37,11 @@ public abstract class NonLengthConstraint implements Constraint {
         this.fieldName = fieldName;
     }
 
+    /**
+     * Return the field name.
+     *
+     * @return The field name.
+     */
     protected String getFieldName() {
         return fieldName;
     }

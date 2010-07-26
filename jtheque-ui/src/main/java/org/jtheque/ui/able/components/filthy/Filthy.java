@@ -40,56 +40,140 @@ import java.awt.LayoutManager;
  * limitations under the License.
  */
 
+/**
+ * A simple utility class to create filthy components.
+ *
+ * @author Baptiste Wicht
+ */
 public final class Filthy {
+    private static final FilthyRenderer LIST_RENDERER = new FilthyRenderer();
+
+    /**
+     * Utility class, not instantiable.
+     */
     private Filthy() {
         throw new AssertionError();
     }
 
-    public static JList newList(ListModel model){
+    /**
+     * Construct a new list.
+     *
+     * @param model The model of the list.
+     *
+     * @return The new list.
+     */
+    public static JList newList(ListModel model) {
         return new FilthyList(model);
     }
 
+    /**
+     * Construct a new combo box.
+     *
+     * @param model The model of the combo box.
+     *
+     * @return The new combo box.
+     */
     public static JComboBox newComboBox(ComboBoxModel model) {
         return new FilthyComboBox(model);
     }
 
+    /**
+     * Construct a new Filthy panel. The used layout manager will be a FlowLayout.
+     *
+     * @return A new filthy panel.
+     */
     public static JPanel newPanel() {
         return new FilthyPanel();
     }
 
+    /**
+     * Create a new filthy panel using the given layout manager.
+     *
+     * @param layoutManager The layout manager to apply.
+     *
+     * @return A new filthy panel with the given layout manager.
+     */
     public static JPanel newPanel(LayoutManager layoutManager) {
         return new FilthyPanel(layoutManager);
     }
 
+    /**
+     * Create a new card panel.
+     *
+     * @param <T> The type of component in the card panel.
+     *
+     * @return A new card panel.
+     */
     public static <T extends JComponent> CardPanel<T> newCardPanel() {
         return new FilthyCardPanel<T>();
     }
 
+    /**
+     * Create a new text field.
+     *
+     * @return A new text field.
+     */
     public static TextField newTextField() {
         return new FilthyTextField();
     }
 
+    /**
+     * Create a new text field.
+     *
+     * @param columns The columns of the field.
+     *
+     * @return A new text field with the given number of columns.
+     */
     public static TextField newTextField(int columns) {
         return new FilthyTextField(columns);
     }
 
+    /**
+     * Create a new password field.
+     *
+     * @return A new password field.
+     */
     public static TextField newPasswordField() {
         return new FilthyPasswordField();
     }
 
+    /**
+     * Create a new formatted text field.
+     *
+     * @param formatter The formatter to use.
+     *
+     * @return The formatted text field.
+     */
     public static TextField newFormattedField(DefaultFormatter formatter) {
         return new FilthyFormattedTextField(formatter);
     }
 
+    /**
+     * Create a new list renderer.
+     *
+     * @return A new list renderer.
+     */
     public static ListCellRenderer newListRenderer() {
-        return new FilthyRenderer();
+        return LIST_RENDERER;
     }
 
-    public static FileChooser newFileChooserPanel() {
+    /**
+     * Create a new file chooser.
+     *
+     * @return A new file chooser.
+     */
+    public static FileChooser newFileChooser() {
         return new FilthyFileChooserPanel();
     }
 
-    public static FileChooser newFileChooserPanel(boolean label) {
+    /**
+     * Create a new file chooser.
+     *
+     * @param label Indicate if we must display the label of the file chooser or not.
+     *
+     * @return A new file chooser.
+     */
+    public static FileChooser newFileChooser(boolean label) {
         return new FilthyFileChooserPanel(label);
     }
 }

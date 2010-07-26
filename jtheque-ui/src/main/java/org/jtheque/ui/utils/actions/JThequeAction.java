@@ -35,6 +35,9 @@ public abstract class JThequeAction extends AbstractAction implements Internatio
 
     private static final Object[] EMPTY_REPLACES = {};
 
+    /**
+     * Construct a new JThequeAction. 
+     */
     protected JThequeAction() {
         this("", EMPTY_REPLACES);
     }

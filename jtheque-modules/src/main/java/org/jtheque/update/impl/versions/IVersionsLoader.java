@@ -76,9 +76,26 @@ public interface IVersionsLoader {
      */
     ModuleVersion getMostRecentModuleVersion(String url);
 
-    CoreVersion getCoreVersion(Version versionToDownload);
+    /**
+     * Return the core version corresponding to the given version.
+     *
+     * @param version The version.
+     *
+     * @return The core version of this version if there is one otherwise {@code null}. 
+     */
+    CoreVersion getCoreVersion(Version version);
 
+    /**
+     * Return all the core versions.
+     *
+     * @return A Collection containing all the core versions.
+     */
     Collection<Version> getCoreVersions();
 
+    /**
+     * Return the most recent core version.
+     *
+     * @return The most recent core version. 
+     */
     Version getMostRecentCoreVersion();
 }

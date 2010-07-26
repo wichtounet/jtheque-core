@@ -30,7 +30,7 @@ public interface IResourceService {
     /**
      * Add a resource.
      *
-     * @param resource The resource to add to the service. 
+     * @param resource The resource to add to the service.
      */
     void addResource(Resource resource);
 
@@ -46,7 +46,7 @@ public interface IResourceService {
      *
      * @param resourceName The name of the resource to search the versions for.
      *
-     * @return A List containing all the versions of the given resource. 
+     * @return A List containing all the versions of the given resource.
      */
     List<Version> getVersions(String resourceName);
 
@@ -96,5 +96,15 @@ public interface IResourceService {
      */
     boolean isNotInstalled(String id, Version version);
 
+    /**
+     * Get the resource with the given id and version if already installed otherwise download it using the given
+     * descriptor url and return it.
+     *
+     * @param id      The id of the resource.
+     * @param version The version of the resource.
+     * @param url     The url of the descriptor.
+     *
+     * @return The resource.
+     */
     IResource getOrDownloadResource(String id, Version version, String url);
 }

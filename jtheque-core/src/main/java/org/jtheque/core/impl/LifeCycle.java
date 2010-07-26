@@ -92,6 +92,11 @@ public class LifeCycle implements ILifeCycle {
         exit(666);
     }
 
+    /**
+     * Exit from JTheque with the given exit code.
+     *
+     * @param code The exit code. 
+     */
     private void exit(int code) {
         Runtime.getRuntime().removeShutdownHook(hook);
 
@@ -100,6 +105,9 @@ public class LifeCycle implements ILifeCycle {
         Runtime.getRuntime().exit(code);
     }
 
+    /**
+     * Add the event to indicate the close of JTheque. 
+     */
     private void addEventClose() {
         eventService.addEvent(IEventService.CORE_EVENT_LOG, Event.newEvent(EventLevel.INFO, "User", "events.close"));
     }

@@ -18,7 +18,24 @@ import org.osgi.framework.BundleContext;
  * limitations under the License.
  */
 
+/**
+ * A simple resource.
+ *
+ * @author Baptiste Wicht
+ */
 public interface SimpleResource {
+    /**
+     * Return the id of the resource.
+     *
+     * @return The id of the resource. 
+     */
     String getId();
+
+    /**
+     * Install the resource in the bundle context. Depending on the implementation, this method
+     * can do nothing.
+     *
+     * @param bundleContext The bundle context.
+     */
     void install(BundleContext bundleContext);
 }

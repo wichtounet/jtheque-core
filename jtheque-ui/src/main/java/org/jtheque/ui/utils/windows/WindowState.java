@@ -346,6 +346,10 @@ public class WindowState implements IWindowState {
     private class GlassPaneSetter implements Runnable {
         private final Component glassPane;
 
+        /**
+         * Construct a new GlassPaneSetter for the given glass pane.
+         * @param glassPane The glass pane to set on the view. 
+         */
         private GlassPaneSetter(Component glassPane) {
             this.glassPane = glassPane;
         }

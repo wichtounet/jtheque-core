@@ -36,6 +36,15 @@ public class Feature implements IFeature {
     private final String icon;
     private final int position;
 
+    /**
+     * Construct a new Feature.
+     *
+     * @param action   The action.
+     * @param position The position in the parent menu.
+     * @param type     The type of feature.
+     * @param titleKey The i18n title key.
+     * @param icon     The icon name.
+     */
     public Feature(JThequeAction action, int position, FeatureType type, String titleKey, String icon) {
         super();
 

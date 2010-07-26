@@ -183,6 +183,9 @@ public final class ModuleService implements IModuleService {
         starter.startAll();
     }
 
+    /**
+     * Stop and uninstall all the modules.
+     */
     @PreDestroy
     private void shutdown(){
         stopModules();
@@ -677,6 +680,11 @@ public final class ModuleService implements IModuleService {
         return true;
     }
 
+    /**
+     * A starter for the modules. This started load the modules with several threads.
+     *
+     * @author Baptiste Wicht
+     */
     private class ModuleStarter {
         private final Set<Module> startList = new HashSet<Module>(5);
 
@@ -685,10 +693,18 @@ public final class ModuleService implements IModuleService {
         private final Semaphore semaphore = new Semaphore(0, true);
         private CountDownLatch countDown;
 
+        /**
+         * Add a module to start.
+         *
+         * @param module The module to start.
+         */
         public void addModule(Module module) {
             startList.add(module);
         }
 
+        /**
+         * Start all the modules of the starter.
+         */
         public void startAll(){
             if(startList.isEmpty()){
                 return;
@@ -721,6 +737,9 @@ public final class ModuleService implements IModuleService {
             startersPool.shutdown();
         }
 
+        /**
+         * Start the currently ready modules.
+         */
         private void startReadyModules() {
             for (Iterator<Module> iterator = startList.iterator(); iterator.hasNext();) {
                 Module module = iterator.next();
@@ -733,10 +752,21 @@ public final class ModuleService implements IModuleService {
         }
     }
 
+    /**
+     * A simple runnable to start a module.
+     *
+     * @author Baptiste Wicht
+     */
     private class ModuleStarterRunnable implements Runnable {
         private final ModuleStarter starter;
         private final Module module;
 
+        /**
+         * Construct a ModuleStarterRunnable for the given module.
+         *
+         * @param starter The starter.
+         * @param module The module to start. 
+         */
         private ModuleStarterRunnable(ModuleStarter starter, Module module) {
             super();
 

@@ -329,6 +329,11 @@ public final class ModuleLoader implements IModuleLoader, BundleContextAware {
         }
     }
 
+    /**
+     * A simple task to load a module from a file.
+     *
+     * @author Baptiste Wicht
+     */
     private final class ModuleLoaderTask implements Callable<Module> {
         private final File file;
 

@@ -34,16 +34,7 @@ import static org.jtheque.ui.able.components.filthy.FilthyConstants.*;
  */
 public final class FilthyRenderer extends DefaultListCellRenderer {
     private final Color selectionBackground = new Color(170, 170, 170);
-    private final Border border;
-
-    /**
-     * Construct a new FilthyRenderer.
-     */
-    public FilthyRenderer() {
-        super();
-
-        border = Borders.createEmptyBorder(0, 0, 0, 0);
-    }
+    private final Border border = Borders.createEmptyBorder(0, 0, 0, 0);
 
     @Override
     public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {

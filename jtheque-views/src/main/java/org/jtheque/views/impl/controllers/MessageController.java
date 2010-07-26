@@ -26,6 +26,9 @@ import org.jtheque.views.able.windows.IMessageView;
  * @author Baptiste Wicht
  */
 public class MessageController extends AbstractController<IMessageView> {
+    /**
+     * Construct a new MessageController. 
+     */
     public MessageController() {
         super(IMessageView.class);
     }

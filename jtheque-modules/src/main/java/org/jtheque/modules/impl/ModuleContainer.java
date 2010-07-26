@@ -26,6 +26,11 @@ import org.osgi.framework.Bundle;
  * limitations under the License.
  */
 
+/**
+ * A module implementation.
+ *
+ * @author Baptiste Wicht
+ */
 @Immutable
 public final class ModuleContainer implements Module {
     private final String id;

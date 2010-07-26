@@ -26,19 +26,24 @@ import java.io.PrintStream;
  */
 
 /**
- * The main launcher of JTheque. Using this launcher enable the feature of hot restart. This class use Ant
- * to launch a new virtual machine.
+ * The main launcher of JTheque. Using this launcher enable the feature of hot restart. This class use Ant to launch a
+ * new virtual machine.
  *
  * @author Baptiste Wicht
  */
 public class JTheque {
     /**
-     * Main class, cannot be created. 
+     * Main class, cannot be created.
      */
     private JTheque() {
         throw new AssertionError();
     }
 
+    /**
+     * Main method of the JTheque Launcher.
+     *
+     * @param args The first arg is the user dir.
+     */
     public static void main(String[] args) {
         if (args.length > 0) {
             System.setProperty("user.dir", args[0]);
@@ -47,14 +52,22 @@ public class JTheque {
         launch();
     }
 
+    /**
+     * Launch the application. If the return code if greater than 0, the applicaition will be restarted. 
+     */
     private static void launch() {
         int ret = launchJTheque();
 
-        if(ret > 0){
+        if (ret > 0) {
             launch();
         }
     }
 
+    /**
+     * Launch JTheque.
+     *
+     * @return The return code. 
+     */
     private static int launchJTheque() {
         int returnCode;
 

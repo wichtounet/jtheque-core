@@ -16,13 +16,29 @@ package org.jtheque.ui.able;
  * limitations under the License.
  */
 
+/**
+ * A controller exception. This is a runtime excception that can occurs during handle actions from a controller.
+ *
+ * @author Baptiste Wicht
+ */
 public class ControllerException extends RuntimeException {
     private static final long serialVersionUID = -1359873732036438173L;
 
+    /**
+     * Construct a new ControllerException with the given message.
+     *
+     * @param message The error message.
+     */
     public ControllerException(String message) {
         super(message);
     }
 
+    /**
+     * Construct a new ControllerException with the given message and cause.
+     *
+     * @param message The error message.
+     * @param cause The cause of the error. 
+     */
     public ControllerException(String message, Throwable cause) {
         super(message, cause);
     }

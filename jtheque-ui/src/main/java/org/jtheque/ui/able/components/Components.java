@@ -10,6 +10,11 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.ListCellRenderer;
 
+/**
+ * A simple utility class to create Components.
+ *
+ * @author Baptiste Wicht
+ */
 public final class Components {
     /**
      * Utility class, not instantiable.
@@ -18,10 +23,25 @@ public final class Components {
         throw new AssertionError();
     }
 
-    public static JLabel newLabel(String text) {
-        return new JThequeLabel(text);
+    /**
+     * Create a new label.
+     *
+     * @param key The i18n key.
+     *
+     * @return The label.
+     */
+    public static JLabel newLabel(String key) {
+        return new JThequeLabel(key);
     }
 
+    /**
+     * Create a new internationalized label.
+     *
+     * @param key      The i18n key.
+     * @param replaces The replaces.
+     *
+     * @return A new internationalized label.
+     */
     public static I18nLabel newI18nLabel(String key, Object... replaces) {
         return new JThequeI18nLabel(key, replaces);
     }
@@ -62,7 +82,7 @@ public final class Components {
      *
      * @param <T> The type of components contained in the card panel.
      *
-     * @return A new CardPanel. 
+     * @return A new CardPanel.
      */
     public static <T extends JComponent> CardPanel<T> newCardPanel() {
         return new CardPanel<T>();

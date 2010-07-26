@@ -24,21 +24,26 @@ import java.io.File;
  */
 
 /**
- * A library resource. Basically it's a simple file that can be installed in a bundle context. This
- * class is immutable.
+ * A library resource. Basically it's a simple file that can be installed in a bundle context. This class is immutable.
  *
  * @author Baptiste Wicht
  */
 public class LibraryResource extends FileResource {
     private Bundle bundle;
 
+    /**
+     * Construct a new LibraryResource.
+     *
+     * @param id     The id of the resource.
+     * @param folder The folder in which the resource is.
+     */
     public LibraryResource(String id, File folder) {
         super(id, folder);
     }
 
     @Override
     public void install(BundleContext bundleContext) {
-        if(bundle == null){
+        if (bundle == null) {
             try {
                 bundle = bundleContext.installBundle("file:" + getResourceFolder().getAbsolutePath() + '/' + getId());
             } catch (BundleException e) {

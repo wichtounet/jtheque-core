@@ -57,7 +57,7 @@ public final class StateService implements IStateService {
         Method loadMethod = checkState(state);
 
         State stateAnnotation = state.getClass().getAnnotation(State.class);
-        
+
         if (stateAnnotation.delegated()) {
             loadDelegatedState(state, stateAnnotation, loadMethod);
         } else {
@@ -69,12 +69,19 @@ public final class StateService implements IStateService {
         return state;
     }
 
+    /**
+     * Check the state for validity.
+     *
+     * @param state The state to check.
+     *
+     * @return The load method of the state.
+     */
     private static Method checkState(Object state) {
-        if(state == null){
+        if (state == null) {
             throw new NullPointerException("The state cannot be null");
         }
 
-        if(!state.getClass().isAnnotationPresent(State.class)){
+        if (!state.getClass().isAnnotationPresent(State.class)) {
             throw new IllegalArgumentException("The state must be annotated with @State");
         }
 
@@ -121,6 +128,13 @@ public final class StateService implements IStateService {
         invokeLoadMethod(state, stateProperties, loadMethod);
     }
 
+    /**
+     * Invoke the load method of the state.
+     *
+     * @param state      The state.
+     * @param parameter  The parameter to pass to the load method.
+     * @param loadMethod The load method.
+     */
     private static void invokeLoadMethod(Object state, Object parameter, Method loadMethod) {
         try {
             if (parameter != null) {
@@ -259,6 +273,15 @@ public final class StateService implements IStateService {
         XML.newJavaFactory().newNodeSaver().writeNodes(writer, savedNodes);
     }
 
+    /**
+     * Return the objects from the save method.
+     *
+     * @param state      The state to invoke the method on.
+     * @param saveMethod The save method.
+     * @param <T>        The type of objects to get.
+     *
+     * @return The objects from the save method.
+     */
     private static <T> T getObjectsFromSaveMethod(Object state, Method saveMethod) {
         try {
             return (T) saveMethod.invoke(state);
