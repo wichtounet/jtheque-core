@@ -685,7 +685,7 @@ public final class ModuleService implements IModuleService {
      *
      * @author Baptiste Wicht
      */
-    private class ModuleStarter {
+    private final class ModuleStarter {
         private final Set<Module> startList = new HashSet<Module>(5);
 
         private final ExecutorService startersPool = Executors.newFixedThreadPool(ThreadUtils.processors());
@@ -757,7 +757,7 @@ public final class ModuleService implements IModuleService {
      *
      * @author Baptiste Wicht
      */
-    private class ModuleStarterRunnable implements Runnable {
+    private final class ModuleStarterRunnable implements Runnable {
         private final ModuleStarter starter;
         private final Module module;
 

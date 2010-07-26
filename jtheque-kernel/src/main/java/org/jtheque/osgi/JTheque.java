@@ -31,7 +31,7 @@ import java.io.PrintStream;
  *
  * @author Baptiste Wicht
  */
-public class JTheque {
+public final class JTheque {
     /**
      * Main class, cannot be created.
      */

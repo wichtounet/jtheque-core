@@ -53,7 +53,7 @@ import java.util.Map;
  *
  * @author Baptiste Wicht
  */
-public class WindowState implements IWindowState {
+public final class WindowState implements IWindowState {
     private String titleKey;
     private Object[] titleReplaces;
 
@@ -343,7 +343,7 @@ public class WindowState implements IWindowState {
      *
      * @author Baptiste Wicht
      */
-    private class GlassPaneSetter implements Runnable {
+    private final class GlassPaneSetter implements Runnable {
         private final Component glassPane;
 
         /**

@@ -99,7 +99,7 @@ public final class ModuleListRenderer extends JPanel implements ListCellRenderer
      *
      * @author Baptiste Wicht
      */
-    private class ModuleListPanel extends JPanel {
+    private final class ModuleListPanel extends JPanel {
         private final JLabel labelTitle;
         private final JLabel labelState;
         private final JLabel labelCurrentVersion;
