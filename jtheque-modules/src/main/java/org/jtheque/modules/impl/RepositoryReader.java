@@ -98,7 +98,7 @@ public final class RepositoryReader {
             if (StringUtils.isEmpty(reader.readString("core", currentNode))) {
                 module.setCoreVersion(ICore.VERSION);
             } else {
-                module.setCoreVersion(new Version(reader.readString("core", currentNode)));
+                module.setCoreVersion(Version.get(reader.readString("core", currentNode)));
             }
 
             module.setVersionsFileURL(reader.readString("versions", currentNode));

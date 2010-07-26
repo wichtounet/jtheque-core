@@ -96,7 +96,7 @@ public class ResourceState {
     private static IResource convertToResource(Node node) {
         String id = node.getAttributeValue("id");
         String url = node.getAttributeValue("url");
-        Version version = new Version(node.getAttributeValue("version"));
+        Version version = Version.get(node.getAttributeValue("version"));
 
         Resource resource = new Resource(id);
         resource.setVersion(version);

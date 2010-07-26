@@ -106,7 +106,7 @@ public final class XMLApplicationReader {
     private void readVersion(XMLApplication application) throws XMLException {
         String versionStr = reader.readString("@version", reader.getRootElement());
 
-        application.setVersion(new Version(versionStr));
+        application.setVersion(Version.get(versionStr));
     }
 
     /**

@@ -28,7 +28,7 @@ import java.util.Collection;
  * @author Baptiste Wicht
  */
 public interface ICore {
-    Version VERSION = new Version("2.1.0");
+    Version VERSION = Version.get("2.1.0");
 
     String DESCRIPTOR_FILE_URL = "http://jtheque.baptiste-wicht.com/files/descriptors/jtheque-core.xml";
     String HELP_URL = "http://github.com/wichtounet/jtheque-core/";

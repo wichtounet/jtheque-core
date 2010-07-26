@@ -35,7 +35,7 @@ import java.util.Collection;
 @Immutable
 public class CoreBackuper implements ModuleBackuper {
     private static final String[] DEPENDENCIES = new String[0];
-    private static final Version BACKUP_VERSION = new Version("1.0");
+    private static final Version BACKUP_VERSION = Version.get("1.0");
 
     private final IDaoCollections daoCollections;
 

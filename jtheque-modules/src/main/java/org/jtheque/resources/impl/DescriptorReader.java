@@ -206,7 +206,7 @@ public final class DescriptorReader {
      * @throws XMLException If an exception occurs during XML processing.
      */
     private static CoreVersion readCoreVersion(Object currentNode, IXMLReader<Node> reader) throws XMLException {
-        CoreVersion resourceVersion = new CoreVersion(new Version(reader.readString("@name", currentNode)));
+        CoreVersion resourceVersion = new CoreVersion(Version.get(reader.readString("@name", currentNode)));
 
         readResources(currentNode, reader, resourceVersion);
 
@@ -224,7 +224,7 @@ public final class DescriptorReader {
      * @throws XMLException If an error occurs during XML parsing.
      */
     private static ResourceVersion readResourceVersion(Object currentNode, IXMLReader<Node> reader) throws XMLException {
-        ResourceVersion resourceVersion = new ResourceVersion(new Version(reader.readString("@name", currentNode)));
+        ResourceVersion resourceVersion = new ResourceVersion(Version.get(reader.readString("@name", currentNode)));
 
         readResources(currentNode, reader, resourceVersion);
 
@@ -242,12 +242,12 @@ public final class DescriptorReader {
      * @throws XMLException If an error occurs during XML parsing.
      */
     private static ModuleVersion readModuleVersion(Object currentNode, IXMLReader<Node> reader) throws XMLException {
-        ModuleVersion resourceVersion = new ModuleVersion(new Version(reader.readString("@name", currentNode)));
+        ModuleVersion resourceVersion = new ModuleVersion(Version.get(reader.readString("@name", currentNode)));
 
         readResources(currentNode, reader, resourceVersion);
 
         if (reader.existsNode("module", currentNode)) {
-            resourceVersion.setCoreVersion(new Version(reader.readString("module/@core", currentNode)));
+            resourceVersion.setCoreVersion(Version.get(reader.readString("module/@core", currentNode)));
             resourceVersion.setModuleFile(reader.readString("module/file", currentNode));
             resourceVersion.setModuleURL(reader.readString("module/url", currentNode));
         }
@@ -306,7 +306,7 @@ public final class DescriptorReader {
         String version = reader.readString("version", currentNode);
 
         if (StringUtils.isNotEmpty(version)) {
-            return new FileDescriptor(name, url, new Version(version));
+            return new FileDescriptor(name, url, Version.get(version));
         } else {
             return new FileDescriptor(name, url);
         }

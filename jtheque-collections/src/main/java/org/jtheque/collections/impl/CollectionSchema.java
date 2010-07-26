@@ -30,7 +30,7 @@ public class CollectionSchema extends DefaultSchema {
      * Construct a new CollectionSchema.
      */
     public CollectionSchema() {
-        super(new Version("1.0"), "jtheque-collection-schema");
+        super(Version.get("1.0"), "jtheque-collection-schema");
     }
 
     @Override

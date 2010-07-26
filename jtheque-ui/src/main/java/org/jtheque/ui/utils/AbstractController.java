@@ -61,8 +61,8 @@ public abstract class AbstractController<T extends IView> implements IController
      *
      * @param actionName The i18n action name.
      *
-     * @throws ControllerException If there is no method associated with the given action or if the action cannot
-     * be accessed. 
+     * @throws ControllerException If there is no method associated with the given action or if the action cannot be
+     *                             accessed.
      */
     @Override
     public void handleAction(String actionName) {
@@ -82,15 +82,14 @@ public abstract class AbstractController<T extends IView> implements IController
     }
 
     /**
-     * Return the cached method corresponding the i18n action name. The methods are
-     * put in cache for later usages. 
+     * Return the cached method corresponding the i18n action name. The methods are put in cache for later usages.
      *
      * @param action The i18n action name.
      *
      * @return The method corresponding to the i18n action name.
      */
     private Method getCachedMethod(String action) {
-        if(methodCache.isEmpty()){
+        if (methodCache.isEmpty()) {
             generateCache();
         }
 
@@ -102,7 +101,7 @@ public abstract class AbstractController<T extends IView> implements IController
     }
 
     /**
-     * Generate the cache of methods. 
+     * Generate the cache of methods.
      */
     private void generateCache() {
         Method[] methods = getClass().getMethods();
@@ -117,10 +116,15 @@ public abstract class AbstractController<T extends IView> implements IController
     }
 
     @Override
-    public void setApplicationContext(ApplicationContext applicationContext){
+    public void setApplicationContext(ApplicationContext applicationContext) {
         this.applicationContext = applicationContext;
     }
 
+    /**
+     * Return the application context of the controller.
+     *
+     * @return The application context.
+     */
     protected ApplicationContext getContext() {
         return applicationContext;
     }
@@ -129,7 +133,7 @@ public abstract class AbstractController<T extends IView> implements IController
     public T getView() {
         SwingUtils.assertEDT("Controller.getView()");
 
-        if(view == null){
+        if (view == null) {
             view = applicationContext.getBean(viewType);
         }
 

@@ -216,10 +216,10 @@ public final class ModuleLoader implements IModuleLoader, BundleContextAware {
                 Dictionary<String, String> headers = bundle.getHeaders();
 
         container.setId(headers.get("Bundle-SymbolicName"));
-        container.setVersion(new Version(headers.get("Bundle-Version")));
+        container.setVersion(Version.get(headers.get("Bundle-Version")));
 
         if (StringUtils.isNotEmpty(headers.get("Module-Core"))) {
-            container.setCoreVersion(new Version(headers.get("Module-Core")));
+            container.setCoreVersion(Version.get(headers.get("Module-Core")));
         }
 
         container.setUrl(headers.get("Module-Url"));
@@ -269,7 +269,7 @@ public final class ModuleLoader implements IModuleLoader, BundleContextAware {
     private static void importI18NResources(ModuleResources resources, IXMLOverReader reader) throws XMLException {
         while (reader.next("/config/i18n/i18nResource")) {
             String name = reader.readString("@name");
-            Version version = new Version(reader.readString("@version"));
+            Version version = Version.get(reader.readString("@version"));
 
             I18NResource i18NResource = new I18NResource(name, version);
 
@@ -311,7 +311,7 @@ public final class ModuleLoader implements IModuleLoader, BundleContextAware {
     private void importResources(ModuleResources resources, IXMLOverReader reader) throws XMLException {
         while (reader.next("/config/resources/resource")) {
             String id = reader.readString("@id");
-            Version version = new Version(reader.readString("@version"));
+            Version version = Version.get(reader.readString("@version"));
             String url = reader.readString("@url");
 
             resources.addResource(resourceService.getOrDownloadResource(id, version, url));

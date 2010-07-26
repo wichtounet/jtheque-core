@@ -31,5 +31,10 @@ import java.lang.annotation.Target;
 @Retention(value = RetentionPolicy.RUNTIME)
 @Target(value = ElementType.METHOD)
 public @interface Action {
+    /**
+     * The i18n key corresponding to this action.
+     *
+     * @return The i18n key.
+     */
     String value();
 }

@@ -47,7 +47,7 @@ import java.util.Set;
  */
 public final class LanguageService implements ILanguageService {
     private static final String[] ZERO_LENGTH_ARRAY = new String[0];
-    private static final Version I18N_VERSION = new Version("1.0");
+    private static final Version I18N_VERSION = Version.get("1.0");
 
     private final Map<String, String> baseNames = new HashMap<String, String>(10);
     private final Map<String, Locale> languages;

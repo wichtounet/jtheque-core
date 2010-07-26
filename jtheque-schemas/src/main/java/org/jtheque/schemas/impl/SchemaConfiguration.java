@@ -41,7 +41,7 @@ public final class SchemaConfiguration extends AbstractState {
             return null;
         }
 
-        return new Version(property);
+        return Version.get(property);
     }
 
     /**

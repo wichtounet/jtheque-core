@@ -70,7 +70,7 @@ public final class XMLRestorer {
                 ModuleBackup backup = new ModuleBackup();
 
                 backup.setId(reader.readString("id", backupElement));
-                backup.setVersion(new Version(reader.readString("version", backupElement)));
+                backup.setVersion(Version.get(reader.readString("version", backupElement)));
 
                 backup.setNodes(XML.newJavaFactory().newNodeLoader().resolveNodeStates(reader.getNodes("nodes/*", backupElement)));
             }

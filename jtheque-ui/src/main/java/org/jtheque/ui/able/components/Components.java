@@ -11,6 +11,9 @@ import javax.swing.JLabel;
 import javax.swing.ListCellRenderer;
 
 public final class Components {
+    /**
+     * Utility class, not instantiable.
+     */
     private Components() {
         throw new AssertionError();
     }
@@ -34,14 +37,33 @@ public final class Components {
         return new JThequeCheckBox(key);
     }
 
-    public static FileChooser newFileChooserPanel() {
+    /**
+     * Create a new file chooser.
+     *
+     * @return A new FileChooser.
+     */
+    public static FileChooser newFileChooser() {
         return new FileChooserPanel();
     }
 
+    /**
+     * Create a list renderer that display a simple icon for each element.
+     *
+     * @param labelIcon The icon to display on each element.
+     *
+     * @return The created ListCellRenderer.
+     */
     public static ListCellRenderer newIconListRenderer(Icon labelIcon) {
         return new IconListRenderer(labelIcon);
     }
 
+    /**
+     * Create a card panel.
+     *
+     * @param <T> The type of components contained in the card panel.
+     *
+     * @return A new CardPanel. 
+     */
     public static <T extends JComponent> CardPanel<T> newCardPanel() {
         return new CardPanel<T>();
     }

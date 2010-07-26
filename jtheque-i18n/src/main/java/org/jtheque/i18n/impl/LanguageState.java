@@ -56,7 +56,7 @@ public final class LanguageState extends AbstractState {
     public Version getResourceVersion(String resource) {
         String property = getProperty(resource + "_version");
 
-        return StringUtils.isEmpty(property) ? null : new Version(property);
+        return StringUtils.isEmpty(property) ? null : Version.get(property);
     }
 
     /**
