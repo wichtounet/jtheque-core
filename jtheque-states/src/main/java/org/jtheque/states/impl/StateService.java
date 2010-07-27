@@ -21,6 +21,7 @@ import org.jtheque.states.able.IStateService;
 import org.jtheque.states.able.Load;
 import org.jtheque.states.able.Save;
 import org.jtheque.states.able.State;
+import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.bean.ReflectionUtils;
 import org.jtheque.utils.io.FileUtils;
 import org.jtheque.xml.utils.IXMLReader;
@@ -47,6 +48,7 @@ import java.util.concurrent.ConcurrentHashMap;
  *
  * @author Baptiste Wicht
  */
+@ThreadSafe
 public final class StateService implements IStateService {
     private final Map<String, Object> states = new ConcurrentHashMap<String, Object>(10);
     private final Map<String, Map<String, String>> properties = new ConcurrentHashMap<String, Map<String, String>>(5);

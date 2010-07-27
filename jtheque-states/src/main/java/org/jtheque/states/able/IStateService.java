@@ -1,5 +1,7 @@
 package org.jtheque.states.able;
 
+import org.jtheque.utils.annotations.ThreadSafe;
+
 /*
  * Copyright JTheque (Baptiste Wicht)
  *
@@ -22,6 +24,7 @@ package org.jtheque.states.able;
  *
  * @author Baptiste Wicht
  */
+@ThreadSafe
 public interface IStateService {
     /**
      * Return the state of the given instance. The class must be annotated with @State and must contains and a @Load and
