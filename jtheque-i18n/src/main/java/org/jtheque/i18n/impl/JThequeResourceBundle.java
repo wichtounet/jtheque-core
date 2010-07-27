@@ -6,7 +6,6 @@ import org.jtheque.utils.collections.CollectionUtils;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 
 import java.util.Collection;
-import java.util.HashSet;
 
 /*
  * Copyright JTheque (Baptiste Wicht)

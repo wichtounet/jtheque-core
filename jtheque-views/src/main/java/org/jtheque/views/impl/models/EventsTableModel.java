@@ -9,7 +9,6 @@ import javax.swing.table.AbstractTableModel;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -36,7 +35,7 @@ import java.util.Locale;
  */
 public final class EventsTableModel extends AbstractTableModel {
     private static final long serialVersionUID = 737149118018076647L;
-    
+
     private static final int LEVEL = 0;
     private static final int DATE = 1;
     private static final int TIME = 2;
