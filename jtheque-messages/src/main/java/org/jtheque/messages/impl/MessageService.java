@@ -16,14 +16,16 @@ package org.jtheque.messages.impl;
  * limitations under the License.
  */
 
+import org.jtheque.core.able.ApplicationListener;
 import org.jtheque.core.able.ICore;
+import org.jtheque.core.able.application.Application;
 import org.jtheque.errors.able.IErrorService;
 import org.jtheque.errors.utils.Errors;
 import org.jtheque.events.able.EventLevel;
 import org.jtheque.events.able.IEventService;
 import org.jtheque.events.utils.Event;
-import org.jtheque.messages.able.IMessage;
 import org.jtheque.messages.able.IMessageService;
+import org.jtheque.messages.able.Message;
 import org.jtheque.modules.able.IModuleService;
 import org.jtheque.modules.able.Module;
 import org.jtheque.modules.able.ModuleListener;
@@ -40,10 +42,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
+ * A message service.
+ *
  * @author Baptiste Wicht
  */
-public final class MessageService implements IMessageService, ModuleListener {
-    private final Collection<IMessage> messages = new ArrayList<IMessage>(10);
+public final class MessageService implements IMessageService, ModuleListener, ApplicationListener {
+    private final Collection<Message> messages = new ArrayList<Message>(10);
 
     private final ICore core;
     private final IErrorService errorService;
@@ -65,30 +69,16 @@ public final class MessageService implements IMessageService, ModuleListener {
         this.eventService = eventService;
 
         moduleService.addModuleListener("", this);
-    }
-
-    @Override
-    public void loadMessages() {
-        messages.clear();
+        core.addApplicationListener(this);
 
         loadMessageFile(core.getCoreMessageFileURL(), null);
-        loadApplicationMessages();
-    }
-
-    /**
-     * Load the messages of the application.
-     */
-    private void loadApplicationMessages() {
-        if (!StringUtils.isEmpty(core.getApplication().getMessageFileURL())) {
-            loadMessageFile(core.getApplication().getMessageFileURL(), null);
-        }
     }
 
     @Override
-    public boolean isDisplayNeeded() {
+    public synchronized boolean isDisplayNeeded() {
         IntDate previousDate = core.getConfiguration().getMessagesLastRead();
 
-        for (IMessage message : messages) {
+        for (Message message : messages) {
             if (message.getDate().compareTo(previousDate) > 0) {
                 return true;
             }
@@ -98,25 +88,18 @@ public final class MessageService implements IMessageService, ModuleListener {
     }
 
     @Override
-    public IMessage getEmptyMessage() {
-        IMessage defaultMessage = new Message();
-        defaultMessage.setDate(IntDate.today());
-        defaultMessage.setId(-1);
-        defaultMessage.setSource("");
-        defaultMessage.setMessage("");
-        defaultMessage.setTitle("");
-
-        return defaultMessage;
+    public Message getEmptyMessage() {
+        return Message.newEmptyTodayMessage(-1);
     }
 
     @Override
-    public Collection<IMessage> getMessages() {
-        return messages;
+    public synchronized Collection<Message> getMessages() {
+        return new ArrayList<Message>(messages);
     }
 
     @Override
     public void moduleStopped(Module module) {
-        messages.removeAll(ModuleResourceCache.getResource(module.getId(), IMessage.class));
+        messages.removeAll(ModuleResourceCache.getResource(module.getId(), Message.class));
     }
 
     @Override
@@ -145,29 +128,41 @@ public final class MessageService implements IMessageService, ModuleListener {
     private void loadMessageFile(String url, Module module) {
         if (WebUtils.isURLReachable(core.getCoreMessageFileURL())) {
             try {
-                MessageFile file = MessageFileReader.readMessagesFile(url);
+                Collection<Message> readMessages = MessageFileReader.readMessagesFile(url);
 
-                for (IMessage message : file.getMessages()) {
-                    messages.add(message);
-
-                    ModuleResourceCache.addResource(module.getId(), IMessage.class, message);
-                }
+                messages.addAll(readMessages);
+                ModuleResourceCache.addAllResource(module.getId(), Message.class, readMessages);
             } catch (XMLException e) {
                 LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
             }
         } else {
             if (WebUtils.isInternetReachable()) {
-                errorService.addError(Errors.newI18nError(
-                        "messages.network.resource.title", ArrayUtils.EMPTY_ARRAY,
-                        "messages.network.resource", new Object[]{url}));
+                addNetworkError(url, "messages.network.resource");
             } else {
-                errorService.addError(Errors.newI18nError(
-                        "messages.network.internet.title", ArrayUtils.EMPTY_ARRAY,
-                        "messages.network.internet", new Object[]{url}));
+                addNetworkError(url, "messages.network.internet");
             }
 
             eventService.addEvent(IEventService.CORE_EVENT_LOG,
                     Event.newEvent(EventLevel.ERROR, "System", "events.messages.network"));
+        }
+    }
+
+    /**
+     * Display a network error.
+     *
+     * @param url The url of the file.
+     * @param key The i18n key of the error.
+     */
+    private void addNetworkError(String url, String key) {
+        errorService.addError(Errors.newI18nError(
+                key + ".title", ArrayUtils.EMPTY_ARRAY,
+                key, new Object[]{url}));
+    }
+
+    @Override
+    public void applicationSetted(Application application) {
+        if (!StringUtils.isEmpty(application.getMessageFileURL())) {
+            loadMessageFile(application.getMessageFileURL(), null);
         }
     }
 }

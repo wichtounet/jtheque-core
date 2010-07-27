@@ -16,6 +16,8 @@ package org.jtheque.messages.able;
  * limitations under the License.
  */
 
+import org.jtheque.utils.annotations.ThreadSafe;
+
 import java.util.Collection;
 
 /**
@@ -24,18 +26,14 @@ import java.util.Collection;
  *
  * @author Baptiste Wicht
  */
+@ThreadSafe
 public interface IMessageService {
     /**
      * Return all the messages.
      *
      * @return A List containing all the messages.
      */
-    Collection<IMessage> getMessages();
-
-    /**
-     * Load the messages from the different sources.
-     */
-    void loadMessages();
+    Collection<Message> getMessages();
 
     /**
      * Display the messages if needed.
@@ -49,5 +47,5 @@ public interface IMessageService {
      *
      * @return An empty message.
      */
-    IMessage getEmptyMessage();
+    Message getEmptyMessage();
 }

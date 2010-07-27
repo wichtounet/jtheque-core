@@ -16,7 +16,7 @@ package org.jtheque.messages.impl;
  * limitations under the License.
  */
 
-import org.jtheque.messages.able.IMessage;
+import org.jtheque.messages.able.Message;
 import org.jtheque.utils.bean.IntDate;
 import org.jtheque.utils.io.FileUtils;
 import org.jtheque.xml.utils.IXMLReader;
@@ -28,6 +28,7 @@ import org.w3c.dom.Node;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -39,68 +40,63 @@ final class MessageFileReader {
      * Construct a new MessageFileReader. This constructor is private because all methods are static.
      */
     private MessageFileReader() {
-        super();
+        throw new AssertionError();
     }
 
     /**
-     * Read a messages file and return it.
+     * Read a messages file and return all the messages of the file.
      *
      * @param strUrl The URL of the file.
      *
-     * @return The versions file.
+     * @return The messages.
      *
      * @throws XMLException If there is an error reading the messages file.
      */
-    public static MessageFile readMessagesFile(String strUrl) throws XMLException {
+    public static Collection<Message> readMessagesFile(String strUrl) throws XMLException {
         URL url;
 
         try {
             url = new URL(strUrl);
         } catch (MalformedURLException e) {
-            throw new XMLException("Unable to get the messages. ", e);
+            throw new XMLException("URL Invalid ", e);
         }
 
         return readMessagesFile(url);
     }
 
     /**
-     * Read a messages file and return it.
+     * Read a messages file and return all the messages of the file.
      *
      * @param url The URL of the file.
      *
-     * @return The messages file.
+     * @return The messages.
      *
      * @throws XMLException Thrown when an error occurs during the reading.
      */
-    private static MessageFile readMessagesFile(URL url) throws XMLException {
-        MessageFile messageFile = new MessageFile();
-
+    private static Collection<Message> readMessagesFile(URL url) throws XMLException {
         IXMLReader<Node> reader = XML.newJavaFactory().newReader();
-
-        List<IMessage> messages = new ArrayList<IMessage>(10);
 
         reader.openURL(url);
 
-        messageFile.setSource(reader.readString("source", reader.getRootElement()));
+        String source = reader.readString("source", reader.getRootElement());
+
+        List<Message> messages = new ArrayList<Message>(10);
 
         for (Object currentNode : reader.getNodes("messages/message", reader.getRootElement())) {
-            IMessage message = new Message();
-
-            message.setId(reader.readInt("id", currentNode));
-            message.setDate(new IntDate(reader.readInt("date", currentNode)));
-            message.setTitle(reader.readString("title", currentNode));
-            message.setMessage(reader.readString("message", currentNode));
-            message.setSource(messageFile.getSource());
+            Message message = Message.newMessage(
+                    reader.readInt("id", currentNode),
+                    reader.readString("title", currentNode),
+                    reader.readString("message", currentNode),
+                    new IntDate(reader.readInt("date", currentNode)),
+                    source);
 
             messages.add(message);
         }
 
         Collections.sort(messages);
 
-        messageFile.setMessages(messages);
-
         FileUtils.close(reader);
 
-        return messageFile;
+        return messages;
     }
 }
