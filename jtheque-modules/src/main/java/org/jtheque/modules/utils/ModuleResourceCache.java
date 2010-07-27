@@ -18,6 +18,7 @@ package org.jtheque.modules.utils;
 
 import org.jtheque.utils.StringUtils;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -40,6 +41,14 @@ public final class ModuleResourceCache {
         throw new AssertionError();
     }
 
+    public static <T> void addAllResource(String id, Class<T> resourceType, Collection<T> resources) {
+        if(StringUtils.isNotEmpty(id)){
+            Set<T> resourceCache = check(id, resourceType);
+
+            resourceCache.addAll(resources);
+        }
+    }
+
     /**
      * Add the resources to the cache.
      *
@@ -50,18 +59,24 @@ public final class ModuleResourceCache {
      */
     public static <T> void addResource(String id, Class<T> resourceType, T resource) {
         if (StringUtils.isNotEmpty(id)) {
-            if (!CACHE.containsKey(id)) {
-                CACHE.put(id, new IdentityHashMap<Class<?>, Set<Object>>(8));
-            }
+            Set<T> resourceCache = check(id, resourceType);
 
-            Map<Class<?>, Set<Object>> resources = CACHE.get(id);
-
-            if (!resources.containsKey(resourceType)) {
-                resources.put(resourceType, new HashSet<Object>(5));
-            }
-
-            resources.get(resourceType).add(resource);
+            resourceCache.add(resource);
         }
+    }
+
+    private static <T> Set<T> check(String id, Class<T> resourceType) {
+        if (!CACHE.containsKey(id)) {
+            CACHE.put(id, new IdentityHashMap<Class<?>, Set<Object>>(8));
+        }
+
+        Map<Class<?>, Set<Object>> resourceCache = CACHE.get(id);
+
+        if (!resourceCache.containsKey(resourceType)) {
+            resourceCache.put(resourceType, new HashSet<Object>(5));
+        }
+
+        return (Set<T>) resourceCache.get(resourceType);
     }
 
     /**
