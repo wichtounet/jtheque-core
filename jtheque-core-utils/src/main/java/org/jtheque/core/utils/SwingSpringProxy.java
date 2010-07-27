@@ -1,4 +1,4 @@
-package org.jtheque.spring.utils;
+package org.jtheque.core.utils;
 
 import org.jtheque.utils.ui.SwingUtils;
 

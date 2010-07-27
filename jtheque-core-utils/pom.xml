@@ -32,6 +32,18 @@
             <artifactId>org.jtheque.javamail</artifactId>
             <version>1.4.1</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-beans</artifactId>
+            <version>3.0.3.RELEASE</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>3.0.3.RELEASE</version>
+        </dependency>
     </dependencies>
 
     <build>
