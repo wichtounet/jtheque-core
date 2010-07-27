@@ -3,8 +3,8 @@ package org.jtheque.resources.impl;
 import org.jtheque.resources.able.IResource;
 import org.jtheque.resources.able.SimpleResource;
 import org.jtheque.utils.bean.Version;
+import org.jtheque.utils.collections.CollectionUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class Resource implements IResource {
     private final String id;
-    private final List<SimpleResource> resources = new ArrayList<SimpleResource>(10);
+    private final List<SimpleResource> resources = CollectionUtils.newList(10);
 
     private Version version;
     private String url;

@@ -6,9 +6,9 @@ import org.jtheque.file.able.ModuleBackuper;
 import org.jtheque.utils.annotations.Immutable;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.collections.ArrayUtils;
+import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.xml.utils.Node;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 /*
@@ -67,7 +67,7 @@ public class CoreBackuper implements ModuleBackuper {
         backup.setId(getId());
         backup.setVersion(BACKUP_VERSION);
 
-        Collection<Node> nodes = new ArrayList<Node>(10);
+        Collection<Node> nodes = CollectionUtils.newList(10);
 
         for (org.jtheque.collections.able.Collection collection : daoCollections.getCollections()) {
             Node node = new Node("collection");

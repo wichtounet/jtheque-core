@@ -31,7 +31,6 @@ import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.ui.SwingUtils;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.EnumMap;
 import java.util.Map;
@@ -61,7 +60,7 @@ public final class FeatureService implements IFeatureService, ModuleListener {
 
         moduleService.addModuleListener("", this);
 
-        features = new ArrayList<IFeature>(10);
+        features = CollectionUtils.newList(10);
 
         coreFeatures = new EnumMap<CoreFeature, Feature>(CoreFeature.class);
 

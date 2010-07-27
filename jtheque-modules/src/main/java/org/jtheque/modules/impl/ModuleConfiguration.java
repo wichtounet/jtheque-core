@@ -23,9 +23,9 @@ import org.jtheque.states.able.Save;
 import org.jtheque.states.able.State;
 import org.jtheque.states.utils.AbstractState;
 import org.jtheque.utils.StringUtils;
+import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.xml.utils.Node;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 /**
@@ -35,7 +35,7 @@ import java.util.Collection;
  */
 @State(id = "jtheque-modules-configuration", delegated = true)
 public final class ModuleConfiguration extends AbstractState {
-    private final Collection<ModuleInfo> infos = new ArrayList<ModuleInfo>(20);
+    private final Collection<ModuleInfo> infos = CollectionUtils.newList(20);
 
     /**
      * Load the nodes in the state.
@@ -85,7 +85,7 @@ public final class ModuleConfiguration extends AbstractState {
      */
     @Save
     public Collection<Node> delegateSave() {
-        Collection<Node> states = new ArrayList<Node>(25);
+        Collection<Node> states = CollectionUtils.newList(25);
 
         for (ModuleInfo info : infos) {
             states.add(convertToNodeState(info));

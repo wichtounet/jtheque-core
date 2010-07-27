@@ -18,8 +18,8 @@ package org.jtheque.features.impl;
 
 import org.jtheque.features.able.IFeature;
 import org.jtheque.ui.utils.actions.JThequeAction;
+import org.jtheque.utils.collections.CollectionUtils;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -29,7 +29,7 @@ import java.util.Collections;
  * @author Baptiste Wicht
  */
 public class Feature implements IFeature {
-    private final Collection<IFeature> subFeatures = new ArrayList<IFeature>(15);
+    private final Collection<IFeature> subFeatures = CollectionUtils.newList(15);
     private final JThequeAction action;
     private final FeatureType type;
     private final String titleKey;

@@ -16,6 +16,7 @@ package org.jtheque.osgi;
  * limitations under the License.
  */
 
+import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.io.FileUtils;
 import org.jtheque.utils.io.SocketUtils;
 
@@ -27,7 +28,6 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
 import java.util.Collection;
 
 /**
@@ -39,7 +39,7 @@ final class ApplicationManager {
     private static final String LOCALHOST = "127.0.0.1";
     private static final int PORT = 12345;
 
-    private final Collection<Application> applications = new ArrayList<Application>(2);
+    private final Collection<Application> applications = CollectionUtils.newList(2);
 
     private ServerSocket serverSocket;
     private Thread thread;

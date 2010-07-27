@@ -1,8 +1,8 @@
 package org.jtheque.modules.utils;
 
 import org.jtheque.utils.bean.Version;
+import org.jtheque.utils.collections.CollectionUtils;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -28,9 +28,10 @@ import java.util.List;
  * @author Baptiste Wicht
  */
 public class I18NResource {
+    private final List<String> resources = CollectionUtils.newList(5);
+
     private final String name;
     private final Version version;
-    private final List<String> resources;
 
     /**
      * Construct a new I18NResource.
@@ -43,8 +44,6 @@ public class I18NResource {
 
         this.name = name;
         this.version = version;
-
-        resources = new ArrayList<String>(5);
     }
 
     /**

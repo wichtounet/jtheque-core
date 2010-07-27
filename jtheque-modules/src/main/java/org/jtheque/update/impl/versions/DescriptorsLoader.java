@@ -15,9 +15,7 @@ import org.jtheque.utils.collections.CollectionUtils;
 
 import javax.annotation.Resource;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
 
 /*
@@ -44,7 +42,7 @@ import java.util.Map;
 public final class DescriptorsLoader implements IVersionsLoader {
     private static final int CACHE_INITIAL_SIZE = 12;
 
-    private final Map<String, ModuleDescriptor> cache = new HashMap<String, ModuleDescriptor>(CACHE_INITIAL_SIZE);
+    private final Map<String, ModuleDescriptor> cache = CollectionUtils.newHashMap(CACHE_INITIAL_SIZE);
 
     private CoreDescriptor coreDescriptor;
 
@@ -56,7 +54,7 @@ public final class DescriptorsLoader implements IVersionsLoader {
         ModuleDescriptor descriptor = getModuleDescriptor(object.getDescriptorURL());
 
         if (descriptor != null) {
-            Collection<Version> versions = new ArrayList<Version>(descriptor.getVersions().size());
+            Collection<Version> versions = CollectionUtils.newList(descriptor.getVersions().size());
 
             for (ModuleVersion v : descriptor.getVersions()) {
                 versions.add(v.getVersion());
@@ -73,7 +71,7 @@ public final class DescriptorsLoader implements IVersionsLoader {
         CoreDescriptor descriptor = getCoreDescriptor();
 
         if(descriptor != null){
-            Collection<Version> versions = new ArrayList<Version>(descriptor.getVersions().size());
+            Collection<Version> versions = CollectionUtils.newList(descriptor.getVersions().size());
 
             for (CoreVersion v : descriptor.getVersions()) {
                 versions.add(v.getVersion());

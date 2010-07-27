@@ -47,7 +47,6 @@ import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.swing.JComponent;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -57,9 +56,9 @@ import java.util.List;
  * @author Baptiste Wicht
  */
 public final class Views implements IViews, ApplicationContextAware, ModuleListener {
-    private final Collection<MainComponent> mainComponents = new ArrayList<MainComponent>(5);
-    private final Collection<IStateBarComponent> stateBarComponents = new ArrayList<IStateBarComponent>(5);
-    private final Collection<ConfigTabComponent> configPanels = new ArrayList<ConfigTabComponent>(5);
+    private final Collection<MainComponent> mainComponents = CollectionUtils.newList(5);
+    private final Collection<IStateBarComponent> stateBarComponents = CollectionUtils.newList(5);
+    private final Collection<ConfigTabComponent> configPanels = CollectionUtils.newList(5);
 
     private ApplicationContext applicationContext;
 

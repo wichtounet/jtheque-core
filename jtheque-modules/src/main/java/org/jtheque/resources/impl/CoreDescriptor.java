@@ -16,7 +16,8 @@ package org.jtheque.resources.impl;
  * limitations under the License.
  */
 
-import java.util.ArrayList;
+import org.jtheque.utils.collections.CollectionUtils;
+
 import java.util.Collection;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -27,7 +28,7 @@ import java.util.NoSuchElementException;
  * @author Baptiste Wicht
  */
 public final class CoreDescriptor {
-    private final List<CoreVersion> versions = new ArrayList<CoreVersion>(5);
+    private final List<CoreVersion> versions = CollectionUtils.newList(5);
 
     /**
      * Return all the versions contained in the file.

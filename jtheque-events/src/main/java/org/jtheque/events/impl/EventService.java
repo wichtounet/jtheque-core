@@ -5,6 +5,7 @@ import org.jtheque.events.able.EventLevel;
 import org.jtheque.events.able.IEvent;
 import org.jtheque.events.able.IEventService;
 import org.jtheque.events.utils.Event;
+import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.io.FileUtils;
 import org.jtheque.xml.utils.IXMLReader;
 import org.jtheque.xml.utils.IXMLWriter;
@@ -17,10 +18,8 @@ import org.w3c.dom.Node;
 import javax.annotation.PreDestroy;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -46,7 +45,7 @@ import java.util.Set;
  * @author Baptiste Wicht
  */
 public final class EventService implements IEventService {
-    private final Map<String, Collection<IEvent>> logs = new HashMap<String, Collection<IEvent>>(10);
+    private final Map<String, Collection<IEvent>> logs = CollectionUtils.newHashMap(10);
 
     /**
      * Construct a new EventService.
@@ -70,7 +69,7 @@ public final class EventService implements IEventService {
     @Override
     public void addEvent(String log, IEvent event) {
         if (!logs.containsKey(log)) {
-            logs.put(log, new ArrayList<IEvent>(25));
+            logs.put(log, CollectionUtils.<IEvent>newList(25));
         }
 
         event.setLog(log);
@@ -106,7 +105,7 @@ public final class EventService implements IEventService {
 
                 Collection<Node> elements = reader.getNodes("event", currentNode);
 
-                logs.put(name, new ArrayList<IEvent>(elements.size()));
+                logs.put(name, CollectionUtils.<IEvent>newList(elements.size()));
 
                 for (Node element : elements) {
                     logs.get(name).add(readEvent(reader, name, element));
@@ -177,7 +176,7 @@ public final class EventService implements IEventService {
      * Write the events to the XML file.
      *
      * @param writer The writer to use.
-     * @param events   The logs to write.
+     * @param events The logs to write.
      */
     private static void writeEvents(IXMLWriter<Node> writer, Iterable<IEvent> events) {
         for (IEvent event : events) {

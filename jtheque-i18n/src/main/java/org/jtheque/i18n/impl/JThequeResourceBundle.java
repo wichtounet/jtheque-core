@@ -1,6 +1,7 @@
 package org.jtheque.i18n.impl;
 
 import org.jtheque.i18n.able.EditableResourceBundle;
+import org.jtheque.utils.collections.CollectionUtils;
 
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 
@@ -29,7 +30,7 @@ import java.util.HashSet;
  * @author Baptiste Wicht
  */
 public final class JThequeResourceBundle extends ReloadableResourceBundleMessageSource implements EditableResourceBundle {
-    private final Collection<String> baseNames = new HashSet<String>(10);
+    private final Collection<String> baseNames = CollectionUtils.newSet();
 
     @Override
     public void addBaseName(String baseName) {

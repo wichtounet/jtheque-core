@@ -20,7 +20,6 @@ import org.jtheque.states.able.Load;
 import org.jtheque.states.able.Save;
 import org.jtheque.utils.collections.CollectionUtils;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -29,7 +28,7 @@ import java.util.Map;
  * @author Baptiste Wicht
  */
 public abstract class AbstractState {
-    private final Map<String, String> properties = new HashMap<String, String>(10);
+    private final Map<String, String> properties = CollectionUtils.newHashMap(10);
 
     /**
      * Set the properties of this state. This method is made to be called from the state service. It will be called only

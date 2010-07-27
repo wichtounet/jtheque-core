@@ -6,13 +6,13 @@ import org.jtheque.errors.able.IError;
 import org.jtheque.errors.able.IErrorService;
 import org.jtheque.i18n.able.ILanguageService;
 import org.jtheque.ui.able.IFilthyUtils;
+import org.jtheque.utils.collections.CollectionUtils;
 
 import org.osgi.framework.BundleContext;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.osgi.context.BundleContextAware;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 /*
@@ -119,7 +119,7 @@ public abstract class OSGIFilthyBuildedPanel extends FilthyBuildedPanel implemen
 
     @Override
     public boolean validateContent() {
-        Collection<IError> errors = new ArrayList<IError>(5);
+        Collection<IError> errors = CollectionUtils.newList(5);
 
         validate(errors);
 

@@ -25,6 +25,7 @@ import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.ui.utils.builders.PanelBuilder;
 import org.jtheque.update.able.IUpdateService;
 import org.jtheque.utils.StringUtils;
+import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.ui.GridBagUtils;
 
 import org.jdesktop.swingx.JXHyperlink;
@@ -36,7 +37,6 @@ import javax.swing.ListCellRenderer;
 
 import java.awt.Component;
 import java.awt.Font;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -55,7 +55,7 @@ public final class ModuleListRenderer extends JPanel implements ListCellRenderer
     private final IUpdateService updateService;
     private final ILanguageService languageService;
 
-    private final Map<Module, ModuleListPanel> panels = new HashMap<Module, ModuleListPanel>(10);
+    private final Map<Module, ModuleListPanel> panels = CollectionUtils.newHashMap(10);
 
     /**
      * Construct a new ModuleListRenderer.

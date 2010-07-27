@@ -24,6 +24,7 @@ import org.jtheque.ui.utils.builded.OSGIFilthyBuildedPanel;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.ui.able.components.filthy.Filthy;
 import org.jtheque.ui.utils.models.SimpleListModel;
+import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.views.able.components.ConfigTabComponent;
 import org.jtheque.views.able.config.IAppearanceConfigView;
@@ -31,7 +32,6 @@ import org.jtheque.views.able.config.IAppearanceConfigView;
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -62,7 +62,7 @@ public final class JPanelConfigAppearance extends OSGIFilthyBuildedPanel impleme
 
     @Override
     public Map<Object, Constraint> getConstraints() {
-        Map<Object, Constraint> constraints = new HashMap<Object, Constraint>(1);
+        Map<Object, Constraint> constraints = CollectionUtils.newHashMap(1);
 
         constraints.put(modelLanguages, Constraints.atLeastOne("config.appearance.language"));
 

@@ -19,13 +19,13 @@ package org.jtheque.views.impl.components.renderers;
 import org.jtheque.i18n.able.ILanguageService;
 import org.jtheque.modules.able.IModuleService;
 import org.jtheque.update.able.IUpdateService;
+import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.views.impl.components.panel.ModulePanel;
 
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 
 import java.awt.Component;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -34,7 +34,8 @@ import java.util.Map;
  * @author Baptiste Wicht
  */
 public final class ModuleRepositoryListRenderer implements ListCellRenderer {
-    private final Map<Integer, ModulePanel> panels;
+    private final Map<Integer, ModulePanel> panels = CollectionUtils.newHashMap(10);
+
     private final IModuleService moduleService;
     private final ILanguageService languageService;
     private final IUpdateService updateService;
@@ -53,8 +54,6 @@ public final class ModuleRepositoryListRenderer implements ListCellRenderer {
         this.moduleService = moduleService;
         this.languageService = languageService;
         this.updateService = updateService;
-
-        panels = new HashMap<Integer, ModulePanel>(10);
     }
 
     @Override

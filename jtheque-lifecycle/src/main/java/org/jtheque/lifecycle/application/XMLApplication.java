@@ -6,8 +6,8 @@ import org.jtheque.core.utils.ImageDescriptor;
 import org.jtheque.core.utils.ImageType;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.collections.ArrayUtils;
+import org.jtheque.utils.collections.CollectionUtils;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /*
@@ -43,7 +43,7 @@ public final class XMLApplication implements Application {
 
     private String[] supportedLanguages = {"fr", "en"};
 
-    private final Map<String, String> properties = new HashMap<String, String>(5);
+    private final Map<String, String> properties = CollectionUtils.newHashMap(5);
 
     @Override
     public Version getVersion() {

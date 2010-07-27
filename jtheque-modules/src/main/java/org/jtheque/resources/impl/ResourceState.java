@@ -7,10 +7,10 @@ import org.jtheque.states.able.Load;
 import org.jtheque.states.able.Save;
 import org.jtheque.states.able.State;
 import org.jtheque.utils.bean.Version;
+import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.xml.utils.Node;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Collection;
 
 /*
@@ -36,7 +36,7 @@ import java.util.Collection;
  */
 @State(id = "jtheque-resources", delegated = true)
 public class ResourceState {
-    private final Collection<IResource> resources = new ArrayList<IResource>(10);
+    private final Collection<IResource> resources = CollectionUtils.newList();
 
     /**
      * Delegate the load of the state.
@@ -59,7 +59,7 @@ public class ResourceState {
      */
     @Save
     public Collection<Node> delegateSave() {
-        Collection<Node> states = new ArrayList<Node>(25);
+        Collection<Node> states = CollectionUtils.newList(25);
 
         for (IResource info : resources) {
             states.add(convertToNode(info));

@@ -18,6 +18,7 @@ package org.jtheque.ui.able.components;
 
 import org.jtheque.i18n.able.ILanguageService;
 import org.jtheque.ui.able.ViewComponent;
+import org.jtheque.utils.collections.CollectionUtils;
 
 import org.jdesktop.jxlayer.JXLayer;
 import org.jdesktop.jxlayer.plaf.BufferedLayerUI;
@@ -34,7 +35,6 @@ import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -43,7 +43,7 @@ import java.util.List;
  * @author Baptiste Wicht
  */
 public class LayerTabbedPane extends JTabbedPane implements ViewComponent {
-    private final List<JXLayer<JComponent>> components;
+    private final List<JXLayer<JComponent>> components = CollectionUtils.newList(5);
 
     private final ILanguageService languageService;
 
@@ -56,8 +56,6 @@ public class LayerTabbedPane extends JTabbedPane implements ViewComponent {
         super();
 
         this.languageService = languageService;
-
-        components = new ArrayList<JXLayer<JComponent>>(5);
 
         addChangeListener(new TabbedAnimatingChangeListener());
     }

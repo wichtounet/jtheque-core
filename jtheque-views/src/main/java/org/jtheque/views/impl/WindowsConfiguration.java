@@ -5,6 +5,7 @@ import org.jtheque.states.able.Load;
 import org.jtheque.states.able.Save;
 import org.jtheque.states.able.State;
 import org.jtheque.states.utils.AbstractState;
+import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.views.able.IViewService;
 import org.jtheque.views.able.IWindowConfiguration;
 import org.jtheque.views.utils.WindowConfiguration;
@@ -12,9 +13,7 @@ import org.jtheque.xml.utils.Node;
 import org.jtheque.xml.utils.NodeAttribute;
 
 import java.awt.Window;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -41,7 +40,7 @@ import java.util.Map.Entry;
  */
 @State(id = "jtheque-windows-configuration", delegated = true)
 public final class WindowsConfiguration extends AbstractState {
-    private final Map<String, IWindowConfiguration> configurations = new HashMap<String, IWindowConfiguration>(10);
+    private final Map<String, IWindowConfiguration> configurations = CollectionUtils.newHashMap(10);
 
     private final ICore core;
     private final IViewService viewService;
@@ -104,7 +103,7 @@ public final class WindowsConfiguration extends AbstractState {
      */
     @Save
     public Collection<Node> delegateSave() {
-        Collection<Node> states = new ArrayList<Node>(10);
+        Collection<Node> states = CollectionUtils.newList();
 
         for (Entry<String, IWindowConfiguration> configuration : configurations.entrySet()) {
             Node state = new Node("window");

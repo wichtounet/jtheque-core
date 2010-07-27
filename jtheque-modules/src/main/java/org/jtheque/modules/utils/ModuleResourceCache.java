@@ -17,11 +17,10 @@ package org.jtheque.modules.utils;
  */
 
 import org.jtheque.utils.StringUtils;
+import org.jtheque.utils.collections.CollectionUtils;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.IdentityHashMap;
 import java.util.Map;
 import java.util.Set;
@@ -32,7 +31,7 @@ import java.util.Set;
  * @author Baptiste Wicht
  */
 public final class ModuleResourceCache {
-    private static final Map<String, Map<Class<?>, Set<Object>>> CACHE = new HashMap<String, Map<Class<?>, Set<Object>>>(8);
+    private static final Map<String, Map<Class<?>, Set<Object>>> CACHE = CollectionUtils.newHashMap(8);
 
     /**
      * Utility class, not instantiable.
@@ -42,7 +41,7 @@ public final class ModuleResourceCache {
     }
 
     public static <T> void addAllResource(String id, Class<T> resourceType, Collection<T> resources) {
-        if(StringUtils.isNotEmpty(id)){
+        if (StringUtils.isNotEmpty(id)) {
             Set<T> resourceCache = check(id, resourceType);
 
             resourceCache.addAll(resources);
@@ -73,7 +72,7 @@ public final class ModuleResourceCache {
         Map<Class<?>, Set<Object>> resourceCache = CACHE.get(id);
 
         if (!resourceCache.containsKey(resourceType)) {
-            resourceCache.put(resourceType, new HashSet<Object>(5));
+            resourceCache.put(resourceType, CollectionUtils.newSet(5));
         }
 
         return (Set<T>) resourceCache.get(resourceType);

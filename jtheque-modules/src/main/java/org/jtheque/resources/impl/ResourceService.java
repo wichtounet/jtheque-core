@@ -12,6 +12,7 @@ import org.jtheque.resources.able.SimpleResource;
 import org.jtheque.states.able.IStateService;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.collections.ArrayUtils;
+import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.io.FileException;
 import org.jtheque.utils.io.WebUtils;
 import org.jtheque.utils.ui.SwingUtils;
@@ -21,8 +22,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.osgi.context.BundleContextAware;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -48,8 +47,8 @@ import java.util.Map;
  * @author Baptiste Wicht
  */
 public class ResourceService implements IResourceService, BundleContextAware {
-    private final List<IResource> resources = new ArrayList<IResource>(10);
-    private final Map<String, ResourceDescriptor> descriptorCache = new HashMap<String, ResourceDescriptor>(5);
+    private final List<IResource> resources = CollectionUtils.newList();
+    private final Map<String, ResourceDescriptor> descriptorCache = CollectionUtils.newHashMap(5);
     private final ResourceState resourceState;
 
     private BundleContext bundleContext;
@@ -86,7 +85,7 @@ public class ResourceService implements IResourceService, BundleContextAware {
 
     @Override
     public List<Version> getVersions(String resourceName) {
-        List<Version> versions = new ArrayList<Version>(3);
+        List<Version> versions = CollectionUtils.newList(3);
 
         for (IResource resource : resources) {
             if (resource.getId().equals(resourceName)) {

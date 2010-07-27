@@ -17,7 +17,6 @@ package org.jtheque.modules.impl;
  */
 
 import org.jtheque.core.able.ICore;
-import org.jtheque.utils.SimplePropertiesCache;
 import org.jtheque.core.utils.WeakEventListenerList;
 import org.jtheque.i18n.able.ILanguageService;
 import org.jtheque.images.able.IImageService;
@@ -35,6 +34,7 @@ import org.jtheque.modules.utils.ModuleResourceCache;
 import org.jtheque.states.able.IStateService;
 import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.update.able.IUpdateService;
+import org.jtheque.utils.SimplePropertiesCache;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.ThreadUtils;
 import org.jtheque.utils.collections.ArrayUtils;
@@ -51,10 +51,7 @@ import javax.annotation.PreDestroy;
 import javax.annotation.Resource;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -73,8 +70,8 @@ import static org.jtheque.modules.able.ModuleState.*;
  */
 public final class ModuleService implements IModuleService {
     private final WeakEventListenerList listeners = new WeakEventListenerList();
-    private final List<Module> modules = new ArrayList<Module>(10);
-    private final Map<String, SwingLoader> loaders = new HashMap<String, SwingLoader>(10);
+    private final List<Module> modules = CollectionUtils.newList();
+    private final Map<String, SwingLoader> loaders = CollectionUtils.newHashMap();
 
     private final IModuleLoader moduleLoader;
 
@@ -126,7 +123,7 @@ public final class ModuleService implements IModuleService {
     @Override
     public void load() {
         SwingUtils.assertNotEDT("load()");
-        
+
         //Load all modules
         modules.addAll(moduleLoader.loadModules());
 
@@ -187,10 +184,10 @@ public final class ModuleService implements IModuleService {
      * Stop and uninstall all the modules.
      */
     @PreDestroy
-    private void shutdown(){
+    private void shutdown() {
         stopModules();
 
-        for(Module module : modules){
+        for (Module module : modules) {
             try {
                 module.getBundle().uninstall();
             } catch (BundleException e) {
@@ -686,7 +683,7 @@ public final class ModuleService implements IModuleService {
      * @author Baptiste Wicht
      */
     private final class ModuleStarter {
-        private final Set<Module> startList = new HashSet<Module>(5);
+        private final Set<Module> startList = CollectionUtils.newSet(5);
 
         private final ExecutorService startersPool = Executors.newFixedThreadPool(ThreadUtils.processors());
 
@@ -705,8 +702,8 @@ public final class ModuleService implements IModuleService {
         /**
          * Start all the modules of the starter.
          */
-        public void startAll(){
-            if(startList.isEmpty()){
+        public void startAll() {
+            if (startList.isEmpty()) {
                 return;
             }
 
@@ -714,13 +711,13 @@ public final class ModuleService implements IModuleService {
 
             startReadyModules();
 
-            while(true){
+            while (true) {
                 try {
                     semaphore.acquire();
 
                     startReadyModules();
 
-                    if(startList.isEmpty()){
+                    if (startList.isEmpty()) {
                         break;
                     }
                 } catch (InterruptedException e) {
@@ -765,7 +762,7 @@ public final class ModuleService implements IModuleService {
          * Construct a ModuleStarterRunnable for the given module.
          *
          * @param starter The starter.
-         * @param module The module to start. 
+         * @param module  The module to start.
          */
         private ModuleStarterRunnable(ModuleStarter starter, Module module) {
             super();

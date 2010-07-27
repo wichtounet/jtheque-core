@@ -20,6 +20,7 @@ import org.jtheque.core.utils.WeakEventListenerList;
 import org.jtheque.errors.able.ErrorListener;
 import org.jtheque.errors.able.IError;
 import org.jtheque.errors.able.IErrorService;
+import org.jtheque.utils.collections.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -31,7 +32,7 @@ import java.util.List;
  * @author Baptiste Wicht
  */
 public final class ErrorService implements IErrorService {
-    private final Collection<IError> errors = new ArrayList<IError>(10);
+    private final Collection<IError> errors = CollectionUtils.newList();
     private final WeakEventListenerList eventListenerList = new WeakEventListenerList();
 
     @Override

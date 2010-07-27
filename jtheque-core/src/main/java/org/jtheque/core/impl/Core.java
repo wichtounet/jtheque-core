@@ -28,12 +28,12 @@ import org.jtheque.events.able.IEventService;
 import org.jtheque.images.able.IImageService;
 import org.jtheque.states.able.IStateService;
 import org.jtheque.utils.bean.Version;
+import org.jtheque.utils.collections.CollectionUtils;
 
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.FileSystemResource;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Collection;
 
 /**
@@ -73,7 +73,7 @@ public final class Core implements ICore {
 
         configuration = stateService.getState(new CoreConfiguration());
 
-        creditsMessage = new ArrayList<String>(5);
+        creditsMessage = CollectionUtils.newList(5);
         creditsMessage.add("about.view.copyright");
     }
 
@@ -154,7 +154,7 @@ public final class Core implements ICore {
 
     @Override
     public Collection<String> getPossibleLanguages() {
-        Collection<String> languagesLong = new ArrayList<String>(2);
+        Collection<String> languagesLong = CollectionUtils.newList(2);
 
         for (String supportedLanguage : application.getSupportedLanguages()) {
             if ("fr".equals(supportedLanguage)) {

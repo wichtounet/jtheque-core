@@ -7,10 +7,10 @@ import org.jtheque.ui.able.IModel;
 import org.jtheque.ui.utils.AbstractPanelView;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.ui.utils.builders.JThequePanelBuilder;
+import org.jtheque.utils.collections.CollectionUtils;
 
 import javax.annotation.PostConstruct;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 /*
@@ -35,7 +35,7 @@ import java.util.Collection;
  * @author Baptiste Wicht
  */
 public abstract class BuildedPanel extends AbstractPanelView implements InternationalizableContainer {
-    private final Collection<Internationalizable> internationalizables = new ArrayList<Internationalizable>(15);
+    private final Collection<Internationalizable> internationalizables = CollectionUtils.newList(15);
 
     private ILanguageService languageService;
     private IModel model;

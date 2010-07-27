@@ -4,6 +4,7 @@ import org.jtheque.ui.able.Action;
 import org.jtheque.ui.able.ControllerException;
 import org.jtheque.ui.able.IController;
 import org.jtheque.ui.able.IView;
+import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.ui.SwingUtils;
 
 import org.springframework.context.ApplicationContext;
@@ -11,7 +12,6 @@ import org.springframework.context.ApplicationContextAware;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.HashMap;
 import java.util.Map;
 
 /*
@@ -37,7 +37,7 @@ import java.util.Map;
  * @author Baptiste Wicht
  */
 public abstract class AbstractController<T extends IView> implements IController<T>, ApplicationContextAware {
-    private final Map<String, Method> methodCache = new HashMap<String, Method>(10);
+    private final Map<String, Method> methodCache = CollectionUtils.newHashMap();
     private final Class<? extends T> viewType;
 
     private T view;

@@ -9,11 +9,11 @@ import org.jtheque.ui.able.IView;
 import org.jtheque.ui.able.components.filthy.FilthyBackgroundPanel;
 import org.jtheque.ui.utils.builders.FilthyPanelBuilder;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
+import org.jtheque.utils.collections.CollectionUtils;
 
 import javax.annotation.PostConstruct;
 import javax.swing.JComponent;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 /*
@@ -38,7 +38,7 @@ import java.util.Collection;
  * @author Baptiste Wicht
  */
 public abstract class FilthyBuildedPanel extends FilthyBackgroundPanel implements InternationalizableContainer, IView {
-    private final Collection<Internationalizable> internationalizables = new ArrayList<Internationalizable>(15);
+    private final Collection<Internationalizable> internationalizables = CollectionUtils.newList(15);
 
     private ILanguageService languageService;
 

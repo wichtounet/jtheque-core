@@ -16,10 +16,8 @@ import javax.swing.Action;
 import javax.swing.KeyStroke;
 
 import java.awt.Toolkit;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -47,9 +45,9 @@ import java.util.Map;
  * @author Baptiste Wicht
  */
 public abstract class AbstractMenu implements Menu {
-    private final Map<String, List<IFeature>> cache = new HashMap<String, List<IFeature>>(5);
+    private final Map<String, List<IFeature>> cache = CollectionUtils.newHashMap(5);
 
-    private final Collection<Internationalizable> internationalizables = new ArrayList<Internationalizable>(10);
+    private final Collection<Internationalizable> internationalizables = CollectionUtils.newList();
 
     //Public methods
 

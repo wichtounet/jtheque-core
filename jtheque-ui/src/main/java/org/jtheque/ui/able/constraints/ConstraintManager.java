@@ -1,6 +1,7 @@
 package org.jtheque.ui.able.constraints;
 
 import org.jtheque.errors.able.IError;
+import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.ui.DocumentLengthFilterAvert;
 
 import javax.swing.JTextField;
@@ -9,7 +10,6 @@ import javax.swing.text.Document;
 import javax.swing.text.DocumentFilter;
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
 
 /*
@@ -34,7 +34,7 @@ import java.util.Map;
  * @author Baptiste Wicht
  */
 public final class ConstraintManager {
-    private static final Map<String, Constraint> CONSTRAINTS = new HashMap<String, Constraint>(20);
+    private static final Map<String, Constraint> CONSTRAINTS = CollectionUtils.newHashMap(20);
 
     /**
      * Construct a new ConstraintManager. This class isn't instanciable.

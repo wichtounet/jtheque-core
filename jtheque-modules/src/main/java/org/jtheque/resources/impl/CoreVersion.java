@@ -19,8 +19,8 @@ package org.jtheque.resources.impl;
 import org.jtheque.utils.bean.EqualsBuilder;
 import org.jtheque.utils.bean.HashCodeUtils;
 import org.jtheque.utils.bean.Version;
+import org.jtheque.utils.collections.CollectionUtils;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -31,7 +31,7 @@ import java.util.List;
  */
 public class CoreVersion implements Comparable<CoreVersion> {
     private final Version version;
-    private final List<FileDescriptor> bundles = new ArrayList<FileDescriptor>(5);
+    private final List<FileDescriptor> bundles = CollectionUtils.newList(5);
 
     /**
      * Construct a new CoreVersion.

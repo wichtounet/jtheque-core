@@ -68,7 +68,7 @@ public final class MainTabbedPane extends LayerTabbedPane {
         List<MainComponent> components = CollectionUtils.copyOf(views.getMainComponents());
         Collections.sort(components, new PositionComparator());
 
-        Map<JComponent, String> cs = new HashMap<JComponent, String>(components.size());
+        Map<JComponent, String> cs = CollectionUtils.newHashMap(components.size());
 
         for (MainComponent component : components) {
             addLayeredTab(languageService.getMessage(component.getTitleKey()), component.getImpl());

@@ -19,8 +19,8 @@ package org.jtheque.modules.impl;
 import org.jtheque.modules.able.IModuleDescription;
 import org.jtheque.modules.able.IRepository;
 import org.jtheque.utils.bean.InternationalString;
+import org.jtheque.utils.collections.CollectionUtils;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 /**
@@ -31,7 +31,7 @@ import java.util.Collection;
 public final class Repository implements IRepository {
     private InternationalString title;
     private String application;
-    private final Collection<IModuleDescription> modules = new ArrayList<IModuleDescription>(10);
+    private final Collection<IModuleDescription> modules = CollectionUtils.newList();
 
     /**
      * Set the title of the repository.

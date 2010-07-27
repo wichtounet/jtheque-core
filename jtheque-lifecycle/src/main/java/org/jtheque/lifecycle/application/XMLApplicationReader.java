@@ -7,6 +7,7 @@ import org.jtheque.core.utils.SystemProperty;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.bean.InternationalString;
 import org.jtheque.utils.bean.Version;
+import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.io.FileUtils;
 import org.jtheque.xml.utils.IXMLReader;
 import org.jtheque.xml.utils.XML;
@@ -15,7 +16,6 @@ import org.jtheque.xml.utils.XMLException;
 import org.w3c.dom.Node;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Collection;
 
 /*
@@ -155,7 +155,7 @@ public final class XMLApplicationReader {
         if (reader.existsNode("languages", i18nElement)) {
             Collection<Node> nodes = reader.getNodes("languages/language", i18nElement);
 
-            Collection<String> languages = new ArrayList<String>(nodes.size());
+            Collection<String> languages = CollectionUtils.newList(nodes.size());
 
             for (Node languageElement : nodes) {
                 languages.add(languageElement.getTextContent());

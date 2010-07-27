@@ -16,9 +16,10 @@ package org.jtheque.core.utils;
  * limitations under the License.
  */
 
+import org.jtheque.utils.collections.CollectionUtils;
+
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.EventListener;
 import java.util.List;
 
@@ -87,7 +88,7 @@ public final class WeakEventListenerList {
      * @return All the strongly references listeners.
      */
     private <T extends EventListener> List<T> cleanReferences() {
-        List<T> listeners = new ArrayList<T>(10);
+        List<T> listeners = CollectionUtils.newList();
 
         for (int i = getReferences().size() - 1; i >= 0; i--) {
             @SuppressWarnings("unchecked")
@@ -111,7 +112,7 @@ public final class WeakEventListenerList {
      */
     private List<WeakReference<? extends EventListener>> getReferences() {
         if (weakReferences == null) {
-            weakReferences = new ArrayList<WeakReference<? extends EventListener>>(10);
+            weakReferences = CollectionUtils.newList();
         }
 
         return weakReferences;
@@ -124,7 +125,7 @@ public final class WeakEventListenerList {
      */
     private List<Class<? extends EventListener>> getClasses() {
         if (classes == null) {
-            classes = new ArrayList<Class<? extends EventListener>>(10);
+            classes = CollectionUtils.newList();
         }
 
         return classes;
@@ -143,7 +144,7 @@ public final class WeakEventListenerList {
      */
     public <T extends EventListener> T[] getListeners(Class<T> t) {
         List<T> liveListeners = cleanReferences();
-        List<T> listeners = new ArrayList<T>(5);
+        List<T> listeners = CollectionUtils.newList(5);
 
         for (int i = 0; i < liveListeners.size(); i++) {
             if (getClasses().get(i) == t) {

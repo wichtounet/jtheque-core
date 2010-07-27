@@ -2,11 +2,11 @@ package org.jtheque.views.impl.components.panel;
 
 import org.jtheque.core.able.ICore;
 import org.jtheque.i18n.able.ILanguageService;
+import org.jtheque.utils.collections.CollectionUtils;
 
 import org.jdesktop.swingx.JXPanel;
 import org.pushingpixels.trident.Timeline;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -69,7 +69,7 @@ public abstract class AbstractAboutPane extends JXPanel {
         infos[2] = new Info(getMessage("about.view.site"), core.getApplication().getSite(), true, false);
         infos[3] = new Info(getMessage("about.view.mail"), core.getApplication().getEmail(), false, true);
 
-        credits = new ArrayList<String>(core.getCreditsMessage().size() * 4);
+        credits = CollectionUtils.newList(core.getCreditsMessage().size() * 4);
 
         for (String key : core.getCreditsMessage()) {
             String[] messages = languageService.getLinesMessage(key);

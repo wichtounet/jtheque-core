@@ -18,6 +18,7 @@ package org.jtheque.messages.impl;
 
 import org.jtheque.messages.able.Message;
 import org.jtheque.utils.bean.IntDate;
+import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.io.FileUtils;
 import org.jtheque.xml.utils.IXMLReader;
 import org.jtheque.xml.utils.XML;
@@ -27,7 +28,6 @@ import org.w3c.dom.Node;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -80,7 +80,7 @@ final class MessageFileReader {
 
         String source = reader.readString("source", reader.getRootElement());
 
-        List<Message> messages = new ArrayList<Message>(10);
+        List<Message> messages = CollectionUtils.newList();
 
         for (Object currentNode : reader.getNodes("messages/message", reader.getRootElement())) {
             Message message = Message.newMessage(

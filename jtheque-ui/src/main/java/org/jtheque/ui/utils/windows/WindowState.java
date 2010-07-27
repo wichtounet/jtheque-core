@@ -12,6 +12,7 @@ import org.jtheque.ui.able.IWindowState;
 import org.jtheque.ui.able.constraints.Constraint;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.collections.ArrayUtils;
+import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.ui.SwingUtils;
 
 import org.jdesktop.jxlayer.JXLayer;
@@ -27,9 +28,7 @@ import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Image;
 import java.awt.Window;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
 
 /*
@@ -57,8 +56,8 @@ public final class WindowState implements IWindowState {
     private String titleKey;
     private Object[] titleReplaces;
 
-    private final Collection<Internationalizable> internationalizables = new ArrayList<Internationalizable>(10);
-    private final Map<Object, Constraint> constraintCache = new HashMap<Object, Constraint>(5);
+    private final Collection<Internationalizable> internationalizables = CollectionUtils.newList();
+    private final Map<Object, Constraint> constraintCache = CollectionUtils.newHashMap(5);
 
     private final Window window;
     private JXLayer<JComponent> content;
@@ -314,7 +313,7 @@ public final class WindowState implements IWindowState {
      * @return true if the view content is valid else false.
      */
     public boolean validateContent() {
-        Collection<IError> errors = new ArrayList<IError>(5);
+        Collection<IError> errors = CollectionUtils.newList(5);
 
         ((ManagedWindow) window).validate(errors);
 

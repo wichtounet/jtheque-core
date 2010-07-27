@@ -8,6 +8,7 @@ import org.jtheque.i18n.utils.I18NResourceFactory;
 import org.jtheque.states.able.IStateService;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.bean.Version;
+import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.io.CopyException;
 import org.jtheque.utils.io.FileUtils;
 
@@ -15,9 +16,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Map;
@@ -49,9 +48,9 @@ public final class LanguageService implements ILanguageService {
     private static final String[] ZERO_LENGTH_ARRAY = new String[0];
     private static final Version I18N_VERSION = Version.get("1.0");
 
-    private final Map<String, String> baseNames = new HashMap<String, String>(10);
-    private final Map<String, Locale> languages;
-    private final Set<Internationalizable> internationalizables;
+    private final Map<String, String> baseNames = CollectionUtils.newHashMap();
+    private final Map<String, Locale> languages = CollectionUtils.newHashMap(3);
+    private final Set<Internationalizable> internationalizables = CollectionUtils.newSet(100);
     private final JThequeResourceBundle resourceBundle;
     private final LanguageState state;
 
@@ -65,13 +64,9 @@ public final class LanguageService implements ILanguageService {
     public LanguageService(IStateService stateService) {
         super();
 
-        languages = new HashMap<String, Locale>(3);
-
         languages.put("fr", Locale.FRENCH);
         languages.put("en", Locale.ENGLISH);
         languages.put("de", Locale.GERMAN);
-
-        internationalizables = new HashSet<Internationalizable>(100);
 
         resourceBundle = new JThequeResourceBundle();
         resourceBundle.setCacheSeconds(-1);
@@ -257,7 +252,7 @@ public final class LanguageService implements ILanguageService {
             return ZERO_LENGTH_ARRAY;
         }
 
-        Collection<String> tokens = new ArrayList<String>(5);
+        Collection<String> tokens = CollectionUtils.newList(5);
 
         Scanner scanner = new Scanner(message);
 

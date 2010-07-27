@@ -1,6 +1,7 @@
 package org.jtheque.resources.impl;
 
-import java.util.ArrayList;
+import org.jtheque.utils.collections.CollectionUtils;
+
 import java.util.Collection;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -27,7 +28,7 @@ import java.util.NoSuchElementException;
  * @author Baptiste Wicht
  */
 public class ModuleDescriptor extends AbstractDescriptor {
-    private final List<ModuleVersion> moduleVersions = new ArrayList<ModuleVersion>(5);
+    private final List<ModuleVersion> moduleVersions = CollectionUtils.newList(5);
 
     /**
      * Construct a new ModuleDescriptor.

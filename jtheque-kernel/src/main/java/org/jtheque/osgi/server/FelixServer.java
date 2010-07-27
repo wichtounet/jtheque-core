@@ -1,5 +1,7 @@
 package org.jtheque.osgi.server;
 
+import org.jtheque.utils.collections.CollectionUtils;
+
 import org.apache.felix.framework.Felix;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleException;
@@ -10,7 +12,6 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Map;
 
 /*
@@ -38,7 +39,7 @@ public final class FelixServer implements OSGiServer {
     private static final File BUNDLES_DIR = new File(System.getProperty("user.dir") + "/bundles");
     private static final File CACHE_DIR = new File(System.getProperty("user.dir") + "/cache");
 
-    private final Map<String, Bundle> bundles = new HashMap<String, Bundle>(50);
+    private final Map<String, Bundle> bundles = CollectionUtils.newHashMap(50);
 
     private Felix felix;
 
@@ -48,7 +49,7 @@ public final class FelixServer implements OSGiServer {
 
         long startTime = System.currentTimeMillis();
 
-        Map<String, Object> configMap = new HashMap<String, Object>(5);
+        Map<String, Object> configMap = CollectionUtils.newHashMap(5);
 
         configMap.put("felix.cache.bufsize", "8192");
         configMap.put("org.osgi.framework.storage", CACHE_DIR.getAbsolutePath());

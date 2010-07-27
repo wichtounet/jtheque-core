@@ -7,6 +7,7 @@ import org.jtheque.i18n.able.Internationalizable;
 import org.jtheque.ui.utils.AnimationUtils;
 import org.jtheque.utils.DesktopUtils;
 import org.jtheque.utils.StringUtils;
+import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.ui.ImageUtils;
 import org.jtheque.utils.ui.PaintUtils;
 import org.jtheque.utils.ui.SizeTracker;
@@ -35,7 +36,6 @@ import java.awt.font.TextAttribute;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.Path2D;
 import java.awt.image.BufferedImage;
-import java.util.HashMap;
 import java.util.Map;
 
 /*
@@ -71,8 +71,8 @@ public final class AboutPane extends AbstractAboutPane implements IAboutView, In
     private int xStart = -1;
     private int yStart = -1;
 
-    private final Map<String, Shape> shapes = new HashMap<String, Shape>(3);
-    private final Map<Rectangle, String> urlRectangles = new HashMap<Rectangle, String>(5);
+    private final Map<String, Shape> shapes = CollectionUtils.newHashMap(3);
+    private final Map<Rectangle, String> urlRectangles = CollectionUtils.newHashMap(5);
 
     private BufferedImage logo;
     private BufferedImage infosImage;
@@ -223,7 +223,7 @@ public final class AboutPane extends AbstractAboutPane implements IAboutView, In
             x += info.getLeftWidth() + INFO_MARGIN;
 
             if (info.isUrl() || info.isMail()) {
-                Map<TextAttribute, Object> attributes = new HashMap<TextAttribute, Object>(1);
+                Map<TextAttribute, Object> attributes = CollectionUtils.newHashMap(1);
                 attributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
 
                 PaintUtils.drawString(g, info.getRight(), x, y, fontInfos.deriveFont(attributes));

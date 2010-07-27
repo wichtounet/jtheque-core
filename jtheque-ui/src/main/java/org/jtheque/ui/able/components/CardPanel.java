@@ -1,10 +1,11 @@
 package org.jtheque.ui.able.components;
 
+import org.jtheque.utils.collections.CollectionUtils;
+
 import javax.swing.JPanel;
 
 import java.awt.CardLayout;
 import java.awt.Component;
-import java.util.HashMap;
 import java.util.Map;
 
 /*
@@ -34,7 +35,7 @@ public class CardPanel<T extends Component> extends JPanel {
 
     private T current;
 
-    private final Map<String, T> layers = new HashMap<String, T>(5);
+    private final Map<String, T> layers = CollectionUtils.newHashMap(5);
 
     /**
      * Construct a new <code>CardPanel</code>.

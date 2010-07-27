@@ -23,6 +23,7 @@ import org.jtheque.states.able.Save;
 import org.jtheque.states.able.State;
 import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.bean.ReflectionUtils;
+import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.io.FileUtils;
 import org.jtheque.xml.utils.IXMLReader;
 import org.jtheque.xml.utils.IXMLWriter;
@@ -39,7 +40,6 @@ import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -172,7 +172,7 @@ public final class StateService implements IStateService {
                 } else {
                     Collection<org.w3c.dom.Node> propertyElements = reader.getNodes("properties/property", stateNode);
 
-                    Map<String, String> stateProperties = new HashMap<String, String>(propertyElements.size());
+                    Map<String, String> stateProperties = CollectionUtils.newHashMap(propertyElements.size());
 
                     for (Object propertyNode : propertyElements) {
                         stateProperties.put(reader.readString("@key", propertyNode), reader.readString("@value", propertyNode));

@@ -50,7 +50,6 @@ import javax.annotation.Resource;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
@@ -299,7 +298,7 @@ public final class UpdateService implements IUpdateService {
             return CollectionUtils.emptyList();
         }
 
-        List<String> messages = new ArrayList<String>(2);
+        List<String> messages = CollectionUtils.newList(2);
 
         if (isAModuleNotUpToDate()) {
             messages.add("dialogs.propose.module.update");

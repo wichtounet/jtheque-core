@@ -17,6 +17,7 @@ package org.jtheque.images.impl;
  */
 
 import org.jtheque.images.able.IImageService;
+import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.ui.ImageUtils;
 
 import org.slf4j.LoggerFactory;
@@ -28,7 +29,6 @@ import javax.swing.ImageIcon;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -39,8 +39,8 @@ import java.util.Map;
 public final class ImageService implements IImageService {
     private static final int DEFAULT_CACHE_SIZE = 50;
 
-    private final Map<String, Resource> resources = new HashMap<String, Resource>(DEFAULT_CACHE_SIZE);
-    private final Map<String, JThequeImage> cache = new HashMap<String, JThequeImage>(DEFAULT_CACHE_SIZE);
+    private final Map<String, Resource> resources = CollectionUtils.newHashMap(DEFAULT_CACHE_SIZE);
+    private final Map<String, JThequeImage> cache = CollectionUtils.newHashMap(DEFAULT_CACHE_SIZE);
 
     @Override
     public BufferedImage getFileImage(String path, int width) {

@@ -5,7 +5,6 @@ import org.jtheque.utils.collections.CollectionUtils;
 import javax.swing.AbstractListModel;
 import javax.swing.ComboBoxModel;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -53,7 +52,7 @@ public class SimpleListModel<T> extends AbstractListModel implements ComboBoxMod
     public SimpleListModel(int capacity) {
         super();
 
-        objects = new ArrayList<T>(capacity);
+        objects = CollectionUtils.newList(capacity);
     }
 
     /**

@@ -8,8 +8,8 @@ import org.jtheque.schemas.able.Schema;
 import org.jtheque.states.able.IStateService;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.bean.Version;
+import org.jtheque.utils.collections.CollectionUtils;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -37,7 +37,7 @@ import java.util.Set;
  * @see ISchemaService
  */
 public final class SchemaService implements ISchemaService, ModuleListener {
-    private final List<Schema> schemas = new ArrayList<Schema>(10);
+    private final List<Schema> schemas = CollectionUtils.newList();
 
     private final SchemaConfiguration configuration;
 

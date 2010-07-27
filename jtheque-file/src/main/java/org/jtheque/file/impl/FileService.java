@@ -24,10 +24,10 @@ import org.jtheque.modules.able.ModuleListener;
 import org.jtheque.modules.utils.ModuleResourceCache;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.collections.ArrayUtils;
+import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.xml.utils.XMLException;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -40,11 +40,11 @@ import java.util.Set;
  * @author Baptiste Wicht
  */
 public final class FileService implements IFileService, ModuleListener {
-    private final List<ModuleBackuper> backupers = new ArrayList<ModuleBackuper>(5);
+    private final List<ModuleBackuper> backupers = CollectionUtils.newList(5);
 
     @Override
     public void backup(File file) {
-        Collection<ModuleBackup> backups = new ArrayList<ModuleBackup>(backupers.size());
+        Collection<ModuleBackup> backups = CollectionUtils.newList(backupers.size());
 
         Collections.sort(backupers, new ModuleBackupComparator());
 

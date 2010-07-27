@@ -33,6 +33,7 @@ import org.jtheque.modules.utils.ModuleResourceCache;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.bean.IntDate;
 import org.jtheque.utils.collections.ArrayUtils;
+import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.io.WebUtils;
 import org.jtheque.xml.utils.XMLException;
 
@@ -47,7 +48,7 @@ import java.util.Collection;
  * @author Baptiste Wicht
  */
 public final class MessageService implements IMessageService, ModuleListener, ApplicationListener {
-    private final Collection<Message> messages = new ArrayList<Message>(10);
+    private final Collection<Message> messages = CollectionUtils.newList();
 
     private final ICore core;
     private final IErrorService errorService;

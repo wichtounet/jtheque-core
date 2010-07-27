@@ -18,8 +18,8 @@ package org.jtheque.persistence.utils;
 
 import org.jtheque.persistence.able.DataContainer;
 import org.jtheque.persistence.able.Entity;
+import org.jtheque.utils.collections.CollectionUtils;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 /**
@@ -28,7 +28,7 @@ import java.util.Collection;
  * @author Baptiste Wicht
  */
 public final class DataContainerProvider {
-    private final Collection<DataContainer<? extends Entity>> containers = new ArrayList<DataContainer<? extends Entity>>(10);
+    private final Collection<DataContainer<? extends Entity>> containers = CollectionUtils.newList();
 
     private static final DataContainerProvider INSTANCE = new DataContainerProvider();
 

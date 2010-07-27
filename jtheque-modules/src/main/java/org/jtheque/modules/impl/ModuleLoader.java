@@ -17,6 +17,7 @@ import org.jtheque.resources.able.IResourceService;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.ThreadUtils;
 import org.jtheque.utils.bean.Version;
+import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.io.FileUtils;
 import org.jtheque.xml.utils.IXMLOverReader;
 import org.jtheque.xml.utils.XML;
@@ -33,7 +34,6 @@ import javax.annotation.Resource;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Dictionary;
 import java.util.List;
@@ -93,7 +93,7 @@ public final class ModuleLoader implements IModuleLoader, BundleContextAware {
 
         File[] files = moduleDir.listFiles();
 
-        Collection<Future<Module>> futures = new ArrayList<Future<Module>>(files.length);
+        Collection<Future<Module>> futures = CollectionUtils.newList(files.length);
 
         ExecutorService loadersPool = Executors.newFixedThreadPool(2 * ThreadUtils.processors());
 
@@ -101,7 +101,7 @@ public final class ModuleLoader implements IModuleLoader, BundleContextAware {
             futures.add(loadersPool.submit(new ModuleLoaderTask(file)));
         }
 
-        List<Module> modules = new ArrayList<Module>(files.length);
+        List<Module> modules = CollectionUtils.newList(files.length);
 
         try {
             for (Future<Module> future : futures) {
@@ -244,7 +244,7 @@ public final class ModuleLoader implements IModuleLoader, BundleContextAware {
      */
     private void loadI18NResources(Module module) {
         for (I18NResource i18NResource : module.getResources().getI18NResources()) {
-            List<org.jtheque.i18n.able.I18NResource> i18NResources = new ArrayList<org.jtheque.i18n.able.I18NResource>(i18NResource.getResources().size());
+            List<org.jtheque.i18n.able.I18NResource> i18NResources = CollectionUtils.newList(i18NResource.getResources().size());
 
             for (String resource : i18NResource.getResources()) {
                 if (resource.startsWith("classpath:")) {
