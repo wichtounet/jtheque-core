@@ -1,4 +1,4 @@
-package org.jtheque.messages.able;
+package org.jtheque.messages.impl;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -16,6 +16,7 @@ package org.jtheque.messages.able;
  * limitations under the License.
  */
 
+import org.jtheque.messages.able.IMessage;
 import org.jtheque.utils.annotations.Immutable;
 import org.jtheque.utils.bean.EqualsBuilder;
 import org.jtheque.utils.bean.HashCodeUtils;
@@ -27,7 +28,7 @@ import org.jtheque.utils.bean.IntDate;
  * @author Baptiste Wicht
  */
 @Immutable
-public final class Message implements Comparable<Message> {
+public final class Message implements IMessage {
     /**
      * The Id of the message.
      */
@@ -62,7 +63,7 @@ public final class Message implements Comparable<Message> {
      * @param date    The date of the message.
      * @param source  The source of the message.
      */
-    private Message(int id, String title, String message, IntDate date, String source) {
+    public Message(int id, String title, String message, IntDate date, String source) {
         super();
 
         this.id = id;
@@ -72,73 +73,27 @@ public final class Message implements Comparable<Message> {
         this.source = source;
     }
 
-    /**
-     * Create a new message at the date of today.
-     *
-     * @param id      The id of the message.
-     *
-     * @return A new message with the given properties.
-     */
-    public static Message newEmptyTodayMessage(int id) {
-        return new Message(id, "", "", IntDate.today(), "");
-    }
-
-    /**
-     * Create a new message.
-     *
-     * @param id      The id of the message.
-     * @param title   The title of the message.
-     * @param message The message.
-     * @param date    The date of the message.
-     * @param source  The source of the message.
-     *
-     * @return A new message with the given properties.
-     */
-    public static Message newMessage(int id, String title, String message, IntDate date, String source) {
-        return new Message(id, title, message, date, source);
-    }
-
-    /**
-     * Return the Id of the message.
-     *
-     * @return The id of the message.
-     */
+    @Override
     public int getId() {
         return id;
     }
 
-    /**
-     * Return the title of the message.
-     *
-     * @return The title of the message.
-     */
+    @Override
     public String getTitle() {
         return title;
     }
 
-    /**
-     * Return the text of the message.
-     *
-     * @return The text of the message.
-     */
+    @Override
     public String getMessage() {
         return message;
     }
 
-    /**
-     * Return the date of the message.
-     *
-     * @return The date of the message.
-     */
+    @Override
     public IntDate getDate() {
         return new IntDate(date);
     }
 
-    /**
-     * Return the source of the message.
-     *
-     * @return The source of the message.
-     */
+    @Override
     public String getSource() {
         return source;
     }
@@ -177,7 +132,7 @@ public final class Message implements Comparable<Message> {
     }
 
     @Override
-    public int compareTo(Message o) {
+    public int compareTo(IMessage o) {
         return date.compareTo(o.getDate());
     }
 }

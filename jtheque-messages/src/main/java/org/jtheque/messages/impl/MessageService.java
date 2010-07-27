@@ -24,8 +24,9 @@ import org.jtheque.errors.utils.Errors;
 import org.jtheque.events.able.EventLevel;
 import org.jtheque.events.able.IEventService;
 import org.jtheque.events.utils.Event;
+import org.jtheque.messages.able.IMessage;
 import org.jtheque.messages.able.IMessageService;
-import org.jtheque.messages.able.Message;
+import org.jtheque.messages.able.Messages;
 import org.jtheque.modules.able.IModuleService;
 import org.jtheque.modules.able.Module;
 import org.jtheque.modules.able.ModuleListener;
@@ -47,7 +48,7 @@ import java.util.Collection;
  * @author Baptiste Wicht
  */
 public final class MessageService implements IMessageService, ModuleListener, ApplicationListener {
-    private final Collection<Message> messages = CollectionUtils.newList();
+    private final Collection<IMessage> messages = CollectionUtils.newList();
 
     private final ICore core;
     private final IErrorService errorService;
@@ -78,7 +79,7 @@ public final class MessageService implements IMessageService, ModuleListener, Ap
     public synchronized boolean isDisplayNeeded() {
         IntDate previousDate = core.getConfiguration().getMessagesLastRead();
 
-        for (Message message : messages) {
+        for (IMessage message : messages) {
             if (message.getDate().compareTo(previousDate) > 0) {
                 return true;
             }
@@ -88,12 +89,12 @@ public final class MessageService implements IMessageService, ModuleListener, Ap
     }
 
     @Override
-    public Message getEmptyMessage() {
-        return Message.newEmptyTodayMessage(-1);
+    public IMessage getEmptyMessage() {
+        return Messages.newEmptyTodayMessage(-1);
     }
 
     @Override
-    public synchronized Collection<Message> getMessages() {
+    public synchronized Collection<IMessage> getMessages() {
         return CollectionUtils.protect(messages);
     }
 
@@ -128,10 +129,10 @@ public final class MessageService implements IMessageService, ModuleListener, Ap
     private void loadMessageFile(String url, Module module) {
         if (WebUtils.isURLReachable(core.getCoreMessageFileURL())) {
             try {
-                Collection<Message> readMessages = MessageFileReader.readMessagesFile(url);
+                Collection<IMessage> readMessages = MessageFileReader.readMessagesFile(url);
 
                 messages.addAll(readMessages);
-                ModuleResourceCache.addAllResource(module.getId(), Message.class, readMessages);
+                ModuleResourceCache.addAllResource(module.getId(), IMessage.class, readMessages);
             } catch (XMLException e) {
                 LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
             }
