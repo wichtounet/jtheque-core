@@ -16,12 +16,14 @@ package org.jtheque.core.impl;
  * limitations under the License.
  */
 
+import org.jtheque.core.able.ApplicationListener;
 import org.jtheque.core.able.ICore;
 import org.jtheque.core.able.ICoreConfiguration;
 import org.jtheque.core.able.IFilesContainer;
 import org.jtheque.core.able.IFoldersContainer;
 import org.jtheque.core.able.application.Application;
 import org.jtheque.core.able.lifecycle.ILifeCycle;
+import org.jtheque.core.utils.WeakEventListenerList;
 import org.jtheque.events.able.IEventService;
 import org.jtheque.images.able.IImageService;
 import org.jtheque.states.able.IStateService;
@@ -41,6 +43,8 @@ import java.util.Collection;
  */
 public final class Core implements ICore {
     private static final String CORE_MESSAGES_FILE = "http://jtheque.baptiste-wicht.com/files/messages/jtheque-core-messages.xml";
+
+    private final WeakEventListenerList listeners = new WeakEventListenerList();
 
     private final Collection<String> creditsMessage;
     private final IFoldersContainer foldersContainer;
@@ -77,9 +81,29 @@ public final class Core implements ICore {
     public void setApplication(Application application) {
         this.application = application;
 
+        fireApplicationSetted(application);
+
         LoggerFactory.getLogger(getClass()).debug("Configuring core with application {}", application);
 
         imageService.registerResource(WINDOW_ICON, new FileSystemResource(new File(application.getWindowIcon())));
+    }
+
+    @Override
+    public void addApplicationListener(ApplicationListener listener) {
+        listeners.add(ApplicationListener.class, listener);
+    }
+
+    @Override
+    public void removeApplicationListener(ApplicationListener listener) {
+        listeners.remove(ApplicationListener.class, listener);
+    }
+
+    private void fireApplicationSetted(Application application){
+        ApplicationListener[] applicationListeners = listeners.getListeners(ApplicationListener.class);
+
+        for(ApplicationListener applicationListener : applicationListeners){
+            applicationListener.applicationSetted(application);
+        }
     }
 
     @Override

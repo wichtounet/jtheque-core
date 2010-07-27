@@ -33,7 +33,7 @@ public interface ICore {
     String DESCRIPTOR_FILE_URL = "http://jtheque.baptiste-wicht.com/files/descriptors/jtheque-core.xml";
     String HELP_URL = "http://github.com/wichtounet/jtheque-core/";
     String BUG_TRACKER_URL = "http://github.com/wichtounet/jtheque-core/issues/";
-    
+
     String WINDOW_ICON = "jtheque-core-window-icon";
 
     /**
@@ -114,4 +114,18 @@ public interface ICore {
      * @return A List containing all the supported languages.
      */
     Collection<String> getPossibleLanguages();
+
+    /**
+     * Add application listener.
+     *
+     * @param listener The application listener.
+     */
+    void addApplicationListener(ApplicationListener listener);
+
+    /**
+     * Remove the application title listener.
+     *
+     * @param listener The application listener.
+     */
+    void removeApplicationListener(ApplicationListener listener);
 }
