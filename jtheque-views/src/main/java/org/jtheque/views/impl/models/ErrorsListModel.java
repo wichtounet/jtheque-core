@@ -37,7 +37,7 @@ import org.jtheque.errors.able.IError;
 import org.jtheque.errors.able.IErrorService;
 import org.jtheque.ui.utils.models.SimpleListModel;
 
-import java.util.List;
+import java.util.Collection;
 
 /**
  * A List model to display the modules.
@@ -57,7 +57,7 @@ public final class ErrorsListModel extends SimpleListModel<IError> implements Er
 
         errorService.addErrorListener(this);
 
-        List<IError> errorsList = errorService.getErrors();
+        Collection<IError> errorsList = errorService.getErrors();
 
         for (IError error : errorsList) {
             addElement(error);

@@ -39,7 +39,6 @@ import org.jtheque.xml.utils.XMLException;
 
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 /**
@@ -95,7 +94,7 @@ public final class MessageService implements IMessageService, ModuleListener, Ap
 
     @Override
     public synchronized Collection<Message> getMessages() {
-        return new ArrayList<Message>(messages);
+        return CollectionUtils.protect(messages);
     }
 
     @Override

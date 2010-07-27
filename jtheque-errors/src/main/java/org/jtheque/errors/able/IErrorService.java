@@ -1,6 +1,6 @@
 package org.jtheque.errors.able;
 
-import java.util.List;
+import java.util.Collection;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -36,7 +36,7 @@ public interface IErrorService {
      *
      * @return A List containing all the errors occurred in this session.
      */
-    List<IError> getErrors();
+    Collection<IError> getErrors();
 
     /**
      * Add an error listener to listen to new errors.

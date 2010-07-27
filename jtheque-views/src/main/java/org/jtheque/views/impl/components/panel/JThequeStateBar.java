@@ -16,6 +16,7 @@ package org.jtheque.views.impl.components.panel;
  * limitations under the License.
  */
 
+import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.utils.ui.SwingUtils;
 import org.jtheque.views.able.IViews;
@@ -29,7 +30,6 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -69,7 +69,7 @@ public final class JThequeStateBar extends JPanel {
      * Build the state bar.
      */
     private void build() {
-        List<IStateBarComponent> components = new ArrayList<IStateBarComponent>(viewService.getStateBarComponents());
+        List<IStateBarComponent> components = CollectionUtils.copyOf(viewService.getStateBarComponents());
 
         if (components.isEmpty()) {
             setVisible(false);

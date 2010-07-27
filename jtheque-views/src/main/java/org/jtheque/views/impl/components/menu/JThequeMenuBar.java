@@ -33,7 +33,6 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -84,7 +83,7 @@ public final class JThequeMenuBar extends JMenuBar implements FeatureListener, I
      * Build the menu.
      */
     public void buildMenu() {
-        List<IFeature> features = new ArrayList<IFeature>(featureService.getFeatures());
+        List<IFeature> features = CollectionUtils.copyOf(featureService.getFeatures());
 
         Collections.sort(features, featureComparator);
 
@@ -120,7 +119,7 @@ public final class JThequeMenuBar extends JMenuBar implements FeatureListener, I
      * @param menu    The menu to add the subfeatures to.
      */
     private void addSubFeatures(IFeature feature, JMenu menu) {
-        List<IFeature> subFeatures = new ArrayList<IFeature>(feature.getSubFeatures());
+        List<IFeature> subFeatures = CollectionUtils.copyOf(feature.getSubFeatures());
 
         Collections.sort(subFeatures, featureComparator);
 

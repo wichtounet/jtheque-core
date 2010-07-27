@@ -3,6 +3,7 @@ package org.jtheque.views.impl.models;
 import org.jtheque.events.able.IEvent;
 import org.jtheque.events.able.IEventService;
 import org.jtheque.i18n.able.ILanguageService;
+import org.jtheque.utils.collections.CollectionUtils;
 
 import javax.swing.table.AbstractTableModel;
 
@@ -148,7 +149,7 @@ public final class EventsTableModel extends AbstractTableModel {
      */
     public void setLog(String log) {
         if (this.log == null || !this.log.equals(log)) {
-            events = new ArrayList<IEvent>(eventService.getEvents(log));
+            events = CollectionUtils.copyOf(eventService.getEvents(log));
 
             fireTableDataChanged();
 

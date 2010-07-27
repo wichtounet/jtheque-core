@@ -22,9 +22,7 @@ import org.jtheque.errors.able.IError;
 import org.jtheque.errors.able.IErrorService;
 import org.jtheque.utils.collections.CollectionUtils;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 /**
  * An error service implementation.
@@ -43,8 +41,8 @@ public final class ErrorService implements IErrorService {
     }
 
     @Override
-    public List<IError> getErrors() {
-        return new ArrayList<IError>(errors);
+    public Collection<IError> getErrors() {
+        return CollectionUtils.protect(errors);
     }
 
     @Override
