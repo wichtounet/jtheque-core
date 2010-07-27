@@ -17,7 +17,7 @@ package org.jtheque.modules.impl;
  */
 
 import org.jtheque.core.able.ICore;
-import org.jtheque.core.utils.SimplePropertiesCache;
+import org.jtheque.utils.SimplePropertiesCache;
 import org.jtheque.core.utils.WeakEventListenerList;
 import org.jtheque.i18n.able.ILanguageService;
 import org.jtheque.images.able.IImageService;

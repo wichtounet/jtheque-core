@@ -17,7 +17,7 @@ package org.jtheque.views.impl.components.panel;
  */
 
 import org.jtheque.core.able.ICore;
-import org.jtheque.core.utils.SimplePropertiesCache;
+import org.jtheque.utils.SimplePropertiesCache;
 import org.jtheque.i18n.able.ILanguageService;
 import org.jtheque.ui.able.IController;
 import org.jtheque.ui.able.components.Components;

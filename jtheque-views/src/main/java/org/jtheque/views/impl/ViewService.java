@@ -17,9 +17,9 @@ package org.jtheque.views.impl;
  */
 
 import org.jtheque.core.able.ICore;
-import org.jtheque.core.utils.SimplePropertiesCache;
+import org.jtheque.core.utils.SwingSpringProxy;
+import org.jtheque.utils.SimplePropertiesCache;
 import org.jtheque.images.able.IImageService;
-import org.jtheque.spring.utils.SwingSpringProxy;
 import org.jtheque.states.able.IStateService;
 import org.jtheque.utils.ui.SwingUtils;
 import org.jtheque.views.able.IViewService;

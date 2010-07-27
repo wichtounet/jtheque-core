@@ -19,7 +19,7 @@ package org.jtheque.views.impl.windows;
 import org.jtheque.core.able.ICore;
 import org.jtheque.core.able.lifecycle.TitleEvent;
 import org.jtheque.core.able.lifecycle.TitleListener;
-import org.jtheque.core.utils.SimplePropertiesCache;
+import org.jtheque.utils.SimplePropertiesCache;
 import org.jtheque.i18n.able.ILanguageService;
 import org.jtheque.ui.able.IModel;
 import org.jtheque.ui.able.IUIUtils;

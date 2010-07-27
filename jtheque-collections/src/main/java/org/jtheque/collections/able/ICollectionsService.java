@@ -1,6 +1,6 @@
 package org.jtheque.collections.able;
 
-import org.jtheque.core.utils.Response;
+import org.jtheque.utils.bean.Response;
 import org.jtheque.persistence.able.DataContainer;
 
 /*

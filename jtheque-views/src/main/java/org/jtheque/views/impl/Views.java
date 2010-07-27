@@ -17,7 +17,7 @@ package org.jtheque.views.impl;
  */
 
 import org.jtheque.core.able.ICore;
-import org.jtheque.core.utils.SimplePropertiesCache;
+import org.jtheque.utils.SimplePropertiesCache;
 import org.jtheque.messages.able.IMessageService;
 import org.jtheque.modules.able.IModuleService;
 import org.jtheque.modules.able.Module;

@@ -17,7 +17,7 @@ package org.jtheque.ui.utils.windows.dialogs;
  */
 
 import org.jtheque.core.utils.OSGiUtils;
-import org.jtheque.core.utils.SimplePropertiesCache;
+import org.jtheque.utils.SimplePropertiesCache;
 import org.jtheque.errors.able.IError;
 import org.jtheque.i18n.able.ILanguageService;
 import org.jtheque.i18n.able.Internationalizable;

@@ -1,7 +1,7 @@
 package org.jtheque.views.utils;
 
 import org.jtheque.core.utils.OSGiUtils;
-import org.jtheque.spring.utils.SwingSpringProxy;
+import org.jtheque.core.utils.SwingSpringProxy;
 
 import org.osgi.framework.BundleContext;
 import org.springframework.context.ApplicationContext;

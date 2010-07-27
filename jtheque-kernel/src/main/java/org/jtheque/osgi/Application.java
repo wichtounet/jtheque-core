@@ -16,7 +16,7 @@ package org.jtheque.osgi;
  * limitations under the License.
  */
 
-import org.jtheque.core.utils.SimplePropertiesCache;
+import org.jtheque.utils.SimplePropertiesCache;
 import org.jtheque.ui.able.IView;
 import org.jtheque.utils.io.FileUtils;
 

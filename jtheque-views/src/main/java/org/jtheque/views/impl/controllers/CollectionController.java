@@ -2,7 +2,7 @@ package org.jtheque.views.impl.controllers;
 
 import org.jtheque.collections.able.ICollectionsService;
 import org.jtheque.core.able.ICore;
-import org.jtheque.core.utils.Response;
+import org.jtheque.utils.bean.Response;
 import org.jtheque.i18n.able.ILanguageService;
 import org.jtheque.ui.able.Action;
 import org.jtheque.ui.utils.AbstractController;

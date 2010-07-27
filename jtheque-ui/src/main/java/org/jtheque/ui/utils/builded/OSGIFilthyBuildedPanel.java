@@ -1,10 +1,10 @@
 package org.jtheque.ui.utils.builded;
 
 import org.jtheque.core.utils.OSGiUtils;
+import org.jtheque.core.utils.SwingSpringProxy;
 import org.jtheque.errors.able.IError;
 import org.jtheque.errors.able.IErrorService;
 import org.jtheque.i18n.able.ILanguageService;
-import org.jtheque.spring.utils.SwingSpringProxy;
 import org.jtheque.ui.able.IFilthyUtils;
 
 import org.osgi.framework.BundleContext;

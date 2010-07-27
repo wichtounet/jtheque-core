@@ -1,6 +1,6 @@
 package org.jtheque.ui.impl;
 
-import org.jtheque.core.utils.SimplePropertiesCache;
+import org.jtheque.utils.SimplePropertiesCache;
 import org.jtheque.ui.able.ViewDelegate;
 import org.jtheque.utils.ui.SwingUtils;
 
