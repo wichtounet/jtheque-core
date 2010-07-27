@@ -31,7 +31,6 @@
         <module>jtheque-persistence</module>
         <module>jtheque-schemas</module>
         <module>jtheque-file</module>
-        <module>jtheque-spring-utils</module>
         <module>jtheque-ui</module>
     </modules>
 
