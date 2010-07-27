@@ -37,7 +37,7 @@ import java.util.Date;
 import java.util.Properties;
 
 /**
- * Utility class for send mail.
+ * Utility class for send mail. This class use Javamail to send email. 
  *
  * @author Baptiste Wicht
  */

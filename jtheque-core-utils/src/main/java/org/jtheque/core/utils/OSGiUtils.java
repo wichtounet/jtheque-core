@@ -36,16 +36,16 @@ public final class OSGiUtils {
      * Return the service of the given class in the given bundle context.
      *
      * @param context The bundle context
-     * @param classz  The class to get the service for.
+     * @param type  The class to get the service for.
      * @param <T>     The type of service.
      *
      * @return The service of the given type.
      */
-    public static <T> T getService(BundleContext context, Class<T> classz) {
-        ServiceReference ref = context.getServiceReference(classz.getName());
+    public static <T> T getService(BundleContext context, Class<T> type) {
+        ServiceReference ref = context.getServiceReference(type.getName());
 
         if (ref != null) {
-            return classz.cast(context.getService(ref));
+            return type.cast(context.getService(ref));
         }
 
         return null;

@@ -1,5 +1,7 @@
 package org.jtheque.core.utils;
 
+import org.jtheque.utils.annotations.Immutable;
+
 /*
  * Copyright JTheque (Baptiste Wicht)
  *
@@ -21,6 +23,7 @@ package org.jtheque.core.utils;
  *
  * @author Baptiste Wicht
  */
+@Immutable
 public final class ImageDescriptor {
     private final String image;
     private final ImageType type;

@@ -76,7 +76,7 @@ import java.util.List;
  * @author James Gosling
  * @version 1.37 11/17/05
  */
-public class WeakEventListenerList {
+public final class WeakEventListenerList {
     private List<WeakReference<? extends EventListener>> weakReferences;
     private List<Class<? extends EventListener>> classes;
 
