@@ -4,13 +4,12 @@ import org.jtheque.collections.able.CollectionListener;
 import org.jtheque.collections.able.ICollectionsService;
 import org.jtheque.core.able.ICore;
 import org.jtheque.core.able.application.Application;
-import org.jtheque.core.utils.SimplePropertiesCache;
+import org.jtheque.utils.SimplePropertiesCache;
 import org.jtheque.core.utils.SystemProperty;
 import org.jtheque.events.able.EventLevel;
 import org.jtheque.events.able.IEventService;
 import org.jtheque.events.utils.Event;
 import org.jtheque.lifecycle.application.XMLApplicationReader;
-import org.jtheque.messages.able.IMessageService;
 import org.jtheque.modules.able.IModuleService;
 import org.jtheque.utils.ui.SwingUtils;
 import org.jtheque.utils.ui.edt.SimpleTask;
@@ -56,9 +55,6 @@ public class LifeCycleLauncher implements CollectionListener {
 
     @Resource
     private ISplashService splashService;
-
-    @Resource
-    private IMessageService messageService;
 
     @Resource
     private ICollectionsService collectionsService;
@@ -165,8 +161,6 @@ public class LifeCycleLauncher implements CollectionListener {
         moduleService.startModules();
 
         core.getLifeCycle().initTitle();
-
-        messageService.loadMessages();
 
         views.displayConditionalViews();
     }
