@@ -1,5 +1,6 @@
-package org.jtheque.messages.able;
+package org.jtheque.messages.impl;
 
+import org.jtheque.messages.able.IMessage;
 import org.jtheque.messages.impl.Message;
 import org.jtheque.utils.bean.IntDate;
 

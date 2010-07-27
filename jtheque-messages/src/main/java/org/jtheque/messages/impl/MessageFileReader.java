@@ -17,7 +17,6 @@ package org.jtheque.messages.impl;
  */
 
 import org.jtheque.messages.able.IMessage;
-import org.jtheque.messages.able.Messages;
 import org.jtheque.utils.bean.IntDate;
 import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.io.FileUtils;

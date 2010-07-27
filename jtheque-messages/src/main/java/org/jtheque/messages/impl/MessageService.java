@@ -26,7 +26,6 @@ import org.jtheque.events.able.IEventService;
 import org.jtheque.events.utils.Event;
 import org.jtheque.messages.able.IMessage;
 import org.jtheque.messages.able.IMessageService;
-import org.jtheque.messages.able.Messages;
 import org.jtheque.modules.able.IModuleService;
 import org.jtheque.modules.able.Module;
 import org.jtheque.modules.able.ModuleListener;
