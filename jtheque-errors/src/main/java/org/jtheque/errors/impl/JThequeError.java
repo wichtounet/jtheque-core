@@ -2,6 +2,7 @@ package org.jtheque.errors.impl;
 
 import org.jtheque.errors.able.IError;
 import org.jtheque.i18n.able.ILanguageService;
+import org.jtheque.utils.annotations.Immutable;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -23,8 +24,9 @@ import org.jtheque.i18n.able.ILanguageService;
  * A basic error implementation. This class is immutable. 
  *
  * @author Baptiste Wicht
- * @see org.jtheque.errors.utils.Errors
+ * @see org.jtheque.errors.able.Errors
  */
+@Immutable
 public class JThequeError implements IError {
     private final String title;
     private final Throwable exception;

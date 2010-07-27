@@ -2,7 +2,7 @@ package org.jtheque.update.impl.versions;
 
 import org.jtheque.core.able.Versionable;
 import org.jtheque.errors.able.IErrorService;
-import org.jtheque.errors.utils.Errors;
+import org.jtheque.errors.able.Errors;
 import org.jtheque.modules.able.Module;
 import org.jtheque.resources.impl.CoreDescriptor;
 import org.jtheque.resources.impl.CoreVersion;

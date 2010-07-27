@@ -20,6 +20,7 @@ import org.jtheque.core.utils.WeakEventListenerList;
 import org.jtheque.errors.able.ErrorListener;
 import org.jtheque.errors.able.IError;
 import org.jtheque.errors.able.IErrorService;
+import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.collections.CollectionUtils;
 
 import java.util.Collection;
@@ -29,16 +30,10 @@ import java.util.Collection;
  *
  * @author Baptiste Wicht
  */
+@ThreadSafe
 public final class ErrorService implements IErrorService {
     private final Collection<IError> errors = CollectionUtils.newList();
     private final WeakEventListenerList eventListenerList = new WeakEventListenerList();
-
-    @Override
-    public void addError(IError error) {
-        errors.add(error);
-
-        fireErrorOccurred(error);
-    }
 
     @Override
     public Collection<IError> getErrors() {
@@ -46,12 +41,19 @@ public final class ErrorService implements IErrorService {
     }
 
     @Override
-    public void addErrorListener(ErrorListener listener) {
+    public synchronized void addError(IError error) {
+        errors.add(error);
+
+        fireErrorOccurred(error);
+    }
+
+    @Override
+    public synchronized void addErrorListener(ErrorListener listener) {
         eventListenerList.add(ErrorListener.class, listener);
     }
 
     @Override
-    public void removeErrorListener(ErrorListener listener) {
+    public synchronized void removeErrorListener(ErrorListener listener) {
         eventListenerList.remove(ErrorListener.class, listener);
     }
 

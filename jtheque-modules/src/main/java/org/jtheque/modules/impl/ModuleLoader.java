@@ -3,7 +3,7 @@ package org.jtheque.modules.impl;
 import org.jtheque.core.able.ICore;
 import org.jtheque.core.utils.OSGiUtils;
 import org.jtheque.errors.able.IErrorService;
-import org.jtheque.errors.utils.Errors;
+import org.jtheque.errors.able.Errors;
 import org.jtheque.i18n.able.ILanguageService;
 import org.jtheque.i18n.utils.I18NResourceFactory;
 import org.jtheque.modules.able.IModuleLoader;

@@ -1,6 +1,7 @@
 package org.jtheque.errors.impl;
 
 import org.jtheque.i18n.able.ILanguageService;
+import org.jtheque.utils.annotations.Immutable;
 import org.jtheque.utils.collections.ArrayUtils;
 
 /*
@@ -23,8 +24,9 @@ import org.jtheque.utils.collections.ArrayUtils;
  * An internationalized error implementation. This class is immutable. 
  *
  * @author Baptiste Wicht
- * @see org.jtheque.errors.utils.Errors
+ * @see org.jtheque.errors.able.Errors
  */
+@Immutable
 public final class InternationalizedError extends JThequeError {
     private final Object[] titleReplaces;
     private final Object[] detailsReplaces;

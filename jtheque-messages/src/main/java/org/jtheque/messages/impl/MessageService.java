@@ -20,7 +20,7 @@ import org.jtheque.core.able.ApplicationListener;
 import org.jtheque.core.able.ICore;
 import org.jtheque.core.able.application.Application;
 import org.jtheque.errors.able.IErrorService;
-import org.jtheque.errors.utils.Errors;
+import org.jtheque.errors.able.Errors;
 import org.jtheque.events.able.EventLevel;
 import org.jtheque.events.able.IEventService;
 import org.jtheque.events.utils.Event;

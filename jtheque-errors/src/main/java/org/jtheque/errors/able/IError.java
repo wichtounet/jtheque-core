@@ -17,13 +17,15 @@ package org.jtheque.errors.able;
  */
 
 import org.jtheque.i18n.able.ILanguageService;
+import org.jtheque.utils.annotations.Immutable;
 
 /**
  * An error.
  *
  * @author Baptiste Wicht
- * @see org.jtheque.errors.utils.Errors
+ * @see Errors
  */
+@Immutable
 public interface IError {
     /**
      * The level of the error.

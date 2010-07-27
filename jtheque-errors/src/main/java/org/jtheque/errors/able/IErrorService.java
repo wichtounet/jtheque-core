@@ -1,5 +1,7 @@
 package org.jtheque.errors.able;
 
+import org.jtheque.utils.annotations.ThreadSafe;
+
 import java.util.Collection;
 
 /*
@@ -23,6 +25,7 @@ import java.util.Collection;
  *
  * @author Baptiste Wicht
  */
+@ThreadSafe
 public interface IErrorService {
     /**
      * Add an error.

@@ -1,7 +1,7 @@
 package org.jtheque.ui.impl.constraints;
 
 import org.jtheque.errors.able.IError;
-import org.jtheque.errors.utils.Errors;
+import org.jtheque.errors.able.Errors;
 
 import java.util.Collection;
 

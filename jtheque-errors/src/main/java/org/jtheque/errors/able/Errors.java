@@ -1,6 +1,5 @@
-package org.jtheque.errors.utils;
+package org.jtheque.errors.able;
 
-import org.jtheque.errors.able.IError;
 import org.jtheque.errors.able.IError.Level;
 import org.jtheque.errors.impl.InternationalizedError;
 import org.jtheque.errors.impl.JThequeError;
@@ -23,7 +22,7 @@ import org.jtheque.utils.collections.ArrayUtils;
  */
 
 /**
- * IError builder. 
+ * A builder for IError objects. 
  *
  * @author Baptiste Wicht
  * @see org.jtheque.errors.able.IError
