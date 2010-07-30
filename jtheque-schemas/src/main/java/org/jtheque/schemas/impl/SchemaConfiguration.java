@@ -2,6 +2,7 @@ package org.jtheque.schemas.impl;
 
 import org.jtheque.states.able.State;
 import org.jtheque.states.utils.AbstractState;
+import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.bean.Version;
 
 /*
@@ -25,6 +26,7 @@ import org.jtheque.utils.bean.Version;
  *
  * @author Baptiste Wicht
  */
+@ThreadSafe
 @State(id = "jtheque-schema-configuration")
 public final class SchemaConfiguration extends AbstractState {
     /**
@@ -34,7 +36,7 @@ public final class SchemaConfiguration extends AbstractState {
      *
      * @return The version of the schema.
      */
-    public Version getVersion(String name) {
+    public synchronized Version getVersion(String name) {
         String property = getProperty(name + "-version", "null");
 
         if ("null".equals(property)) {
@@ -50,7 +52,7 @@ public final class SchemaConfiguration extends AbstractState {
      * @param name    The name of the schema.
      * @param version The version of the schema.
      */
-    public void setVersion(String name, Version version) {
+    public synchronized void setVersion(String name, Version version) {
         setProperty(name + "-version", version.getVersion());
     }
 }

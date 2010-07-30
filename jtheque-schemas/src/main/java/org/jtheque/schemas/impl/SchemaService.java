@@ -7,8 +7,11 @@ import org.jtheque.schemas.able.ISchemaService;
 import org.jtheque.schemas.able.Schema;
 import org.jtheque.states.able.IStateService;
 import org.jtheque.utils.StringUtils;
+import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.collections.CollectionUtils;
+
+import org.slf4j.LoggerFactory;
 
 import java.util.Collections;
 import java.util.List;
@@ -34,8 +37,10 @@ import java.util.Set;
  * A Schema manager implementation.
  *
  * @author Baptiste Wicht
+ * 
  * @see ISchemaService
  */
+@ThreadSafe
 public final class SchemaService implements ISchemaService, ModuleListener {
     private final List<Schema> schemas = CollectionUtils.newList();
 
@@ -52,34 +57,61 @@ public final class SchemaService implements ISchemaService, ModuleListener {
         configuration = stateService.getState(new SchemaConfiguration());
     }
 
-    /**
-     * Check for updates of the schemas.
-     */
-    private void checkForUpdates() {
-        Collections.sort(schemas);
-
-        for (Schema schema : schemas) {
-            Version installedVersion = configuration.getVersion(schema.getId());
-
-            if (installedVersion == null) {
-                schema.install();
-
-                configuration.setVersion(schema.getId(), schema.getVersion());
-            } else if (schema.getVersion().isGreaterThan(installedVersion)) {
-                schema.update(installedVersion);
-            }
-        }
-    }
-
     @Override
     public void registerSchema(String moduleId, Schema schema) {
-        schemas.add(schema);
+        synchronized (schemas) {
+            schemas.add(schema);
+        }
 
         if (StringUtils.isNotEmpty(moduleId)) {
             ModuleResourceCache.addResource(moduleId, Schema.class, schema);
         }
 
         checkForUpdates();
+    }
+
+    /**
+     * Check for updates of the schemas.
+     */
+    private void checkForUpdates() {
+        synchronized (schemas) {
+            Collections.sort(schemas);
+
+            for (Schema schema : schemas) {
+                if (canBeInstalled(schema)) {
+                    Version installedVersion = configuration.getVersion(schema.getId());
+
+                    if (installedVersion == null) {
+                        LoggerFactory.getLogger(getClass()).info("Install schema {}:{}", schema.getId(), schema.getVersion());
+
+                        schema.install();
+
+                        configuration.setVersion(schema.getId(), schema.getVersion());
+                    } else if (schema.getVersion().isGreaterThan(installedVersion)) {
+                        schema.update(installedVersion);
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Test if the schema can be installed.
+     *
+     * @param schema The schema to test.
+     *
+     * @return {@code true} if the schema can be installed else {@code false}.
+     */
+    private boolean canBeInstalled(Schema schema) {
+        for (String dependency : schema.getDependencies()) {
+            Version installedVersion = configuration.getVersion(dependency);
+
+            if (installedVersion == null) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     @Override
@@ -91,8 +123,10 @@ public final class SchemaService implements ISchemaService, ModuleListener {
     public void moduleStopped(Module module) {
         Set<Schema> resources = ModuleResourceCache.getResource(module.getId(), Schema.class);
 
-        for (Schema schema : resources) {
-            schemas.remove(schema);
+        synchronized (schemas) {
+            for (Schema schema : resources) {
+                schemas.remove(schema);
+            }
         }
 
         ModuleResourceCache.removeResourceOfType(module.getId(), Schema.class);

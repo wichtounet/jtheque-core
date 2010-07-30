@@ -1,4 +1,4 @@
-package org.jtheque.schemas.utils;
+package org.jtheque.schemas.able;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
