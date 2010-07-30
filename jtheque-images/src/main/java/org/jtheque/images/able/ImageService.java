@@ -16,6 +16,8 @@ package org.jtheque.images.able;
  * limitations under the License.
  */
 
+import org.jtheque.utils.annotations.ThreadSafe;
+
 import org.springframework.core.io.Resource;
 
 import javax.swing.ImageIcon;
@@ -29,8 +31,11 @@ import java.awt.image.BufferedImage;
  * The ratios are kept during scale.
  *
  * @author Baptiste Wicht
+ *
+ * @see org.springframework.core.io.Resource
  */
-public interface IImageService {
+@ThreadSafe
+public interface ImageService {
     /**
      * Register a resource with the specified id.
      *
@@ -40,7 +45,7 @@ public interface IImageService {
     void registerResource(String id, Resource resource);
 
     /**
-     * Release the resource.
+     * Release the resource of the given id.
      *
      * @param id The id of the resource to release.
      */
@@ -53,7 +58,7 @@ public interface IImageService {
      *
      * @return The resource with the specified id or null if there is no resource with this id.
      */
-    Resource getResourceByID(String id);
+    Resource getResource(String id);
 
     /**
      * Return the icon of the given id.
@@ -90,7 +95,7 @@ public interface IImageService {
      *
      * @return The image with the given id or null if there is no resource with this id.
      */
-    BufferedImage getFileImage(String path);
+    BufferedImage getImageFromFile(String path);
 
     /**
      * Return the image from the file at the given path and scaled to the given width. The file resource is also
@@ -101,7 +106,7 @@ public interface IImageService {
      *
      * @return The image with the given id scaled to the specified width or null if there is no resource with this id.
      */
-    BufferedImage getFileImage(String path, int width);
+    BufferedImage getImageFromFile(String path, int width);
 
     /**
      * Invalidate the entire cache.

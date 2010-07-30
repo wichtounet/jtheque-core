@@ -1,5 +1,7 @@
 package org.jtheque.images.impl;
 
+import org.jtheque.utils.annotations.ThreadSafe;
+
 import javax.swing.ImageIcon;
 
 import java.awt.image.BufferedImage;
@@ -27,6 +29,7 @@ import java.lang.ref.SoftReference;
  * @author Baptiste Wicht
  * @see SoftReference
  */
+@ThreadSafe
 final class JThequeImage {
     private final SoftReference<BufferedImage> image;
 

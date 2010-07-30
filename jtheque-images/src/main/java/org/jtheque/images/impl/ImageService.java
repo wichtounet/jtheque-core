@@ -16,7 +16,7 @@ package org.jtheque.images.impl;
  * limitations under the License.
  */
 
-import org.jtheque.images.able.IImageService;
+import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.ui.ImageUtils;
 
@@ -36,19 +36,20 @@ import java.util.Map;
  *
  * @author Baptiste Wicht
  */
-public final class ImageService implements IImageService {
+@ThreadSafe
+public final class ImageService implements org.jtheque.images.able.ImageService {
     private static final int DEFAULT_CACHE_SIZE = 50;
 
-    private final Map<String, Resource> resources = CollectionUtils.newHashMap(DEFAULT_CACHE_SIZE);
-    private final Map<String, JThequeImage> cache = CollectionUtils.newHashMap(DEFAULT_CACHE_SIZE);
+    private final Map<String, Resource> resources = CollectionUtils.newConcurrentMap(DEFAULT_CACHE_SIZE);
+    private final Map<String, JThequeImage> cache = CollectionUtils.newConcurrentMap(DEFAULT_CACHE_SIZE);
 
     @Override
-    public BufferedImage getFileImage(String path, int width) {
-        return getThumbnail(getFileImage(path), width);
+    public BufferedImage getImageFromFile(String path, int width) {
+        return getThumbnail(getImageFromFile(path), width);
     }
 
     @Override
-    public BufferedImage getFileImage(String path) {
+    public BufferedImage getImageFromFile(String path) {
         if (isImageNotCached(path)) {
             if (!resources.containsKey(path)) {
                 registerResource(path, new FileSystemResource(path));
@@ -62,7 +63,7 @@ public final class ImageService implements IImageService {
 
     @Override
     public ImageIcon getIcon(String id) {
-        if (isImageNotCached(id) && resources.containsKey(id)) {
+        if (mustBeLoaded(id)) {
             loadImageInCache(id);
         }
 
@@ -76,26 +77,30 @@ public final class ImageService implements IImageService {
 
     @Override
     public BufferedImage getImage(String id) {
-        if (isImageNotCached(id) && resources.containsKey(id)) {
+        if (mustBeLoaded(id)) {
             loadImageInCache(id);
         }
 
         return cache.get(id) == null ? null : cache.get(id).get();
     }
 
-    @Override
-    public void invalidateCache() {
-        cache.clear();
+    private synchronized boolean mustBeLoaded(String id) {
+        return isImageNotCached(id) && resources.containsKey(id);
     }
 
     @Override
-    public Resource getResourceByID(String id) {
+    public Resource getResource(String id) {
         return resources.get(id);
     }
 
     @Override
     public void registerResource(String id, Resource resource) {
         resources.put(id, resource);
+    }
+
+    @Override
+    public void invalidateCache() {
+        cache.clear();
     }
 
     @Override
@@ -114,34 +119,34 @@ public final class ImageService implements IImageService {
     /**
      * Indicate if an image is not cached.
      *
-     * @param index The index of the image.
+     * @param id The id of the image.
      *
      * @return true if the image is not cached else false.
      */
-    private boolean isImageNotCached(String index) {
-        return cache.get(index) == null;
+    private boolean isImageNotCached(String id) {
+        return !cache.containsKey(id);
     }
 
     /**
      * Load the image and put it in cache.
      *
-     * @param path The path to the image.
+     * @param id The path to the image.
      */
-    private void loadImageInCache(String path) {
-        BufferedImage image = getCompatibleImage(path);
+    private void loadImageInCache(String id) {
+        BufferedImage image = getCompatibleImage(id);
 
-        cache.put(path, new JThequeImage(image));
+        cache.put(id, new JThequeImage(image));
     }
 
     /**
      * Read the image and make it compatible with the environment.
      *
-     * @param path The path to the image.
+     * @param id The id the image.
      *
      * @return The compatible image.
      */
-    private BufferedImage getCompatibleImage(String path) {
-        return ImageUtils.openCompatibleImage(getResourceAsStream(path));
+    private BufferedImage getCompatibleImage(String id) {
+        return ImageUtils.openCompatibleImage(getResourceAsStream(id));
     }
 
     /**
