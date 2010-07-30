@@ -37,7 +37,6 @@ import java.util.Set;
  * A Schema manager implementation.
  *
  * @author Baptiste Wicht
- * 
  * @see ISchemaService
  */
 @ThreadSafe

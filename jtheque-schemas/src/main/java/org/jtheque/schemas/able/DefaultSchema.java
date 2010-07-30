@@ -25,8 +25,8 @@ import org.springframework.osgi.context.BundleContextAware;
 
 /**
  * A default schema implementation. This schema implements the basic methods of the Schema interface and get parameters
- * in constructor. This schema is immutable, except for the jdbc template managed by the super class. If you don't
- * use the setBundleContext method, this class is immutable. 
+ * in constructor. This schema is immutable, except for the jdbc template managed by the super class. If you don't use
+ * the setBundleContext method, this class is immutable.
  *
  * @author Baptiste Wicht
  */
