@@ -4,11 +4,11 @@ import org.jtheque.collections.able.CollectionListener;
 import org.jtheque.collections.able.ICollectionsService;
 import org.jtheque.core.able.ICore;
 import org.jtheque.core.able.application.Application;
+import org.jtheque.events.able.EventService;
+import org.jtheque.events.able.Events;
 import org.jtheque.utils.SimplePropertiesCache;
 import org.jtheque.core.utils.SystemProperty;
 import org.jtheque.events.able.EventLevel;
-import org.jtheque.events.able.IEventService;
-import org.jtheque.events.utils.Event;
 import org.jtheque.lifecycle.application.XMLApplicationReader;
 import org.jtheque.modules.able.IModuleService;
 import org.jtheque.utils.ui.SwingUtils;
@@ -60,7 +60,7 @@ public class LifeCycleLauncher implements CollectionListener {
     private ICollectionsService collectionsService;
 
     @Resource
-    private IEventService eventService;
+    private EventService eventService;
 
     @Resource
     private IModuleService moduleService;
@@ -88,7 +88,7 @@ public class LifeCycleLauncher implements CollectionListener {
 
         views.init();
 
-        eventService.addEvent(IEventService.CORE_EVENT_LOG, Event.newEvent(EventLevel.INFO, "User", "events.start"));
+        eventService.addEvent(Events.newEvent(EventLevel.INFO, "User", "events.start", EventService.CORE_EVENT_LOG));
 
         moduleService.load();
 

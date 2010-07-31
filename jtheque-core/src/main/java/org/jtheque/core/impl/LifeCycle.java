@@ -9,8 +9,8 @@ import org.jtheque.core.able.lifecycle.TitleListener;
 import org.jtheque.core.utils.SystemProperty;
 import org.jtheque.core.utils.WeakEventListenerList;
 import org.jtheque.events.able.EventLevel;
-import org.jtheque.events.able.IEventService;
-import org.jtheque.events.utils.Event;
+import org.jtheque.events.able.EventService;
+import org.jtheque.events.able.Events;
 import org.jtheque.utils.io.FileUtils;
 
 import java.io.File;
@@ -45,7 +45,7 @@ public class LifeCycle implements ILifeCycle {
     private String title = "JTheque";
 
     private final ICore core;
-    private final IEventService eventService;
+    private final EventService eventService;
 
     private final ApplicationShutDownHook hook;
 
@@ -55,7 +55,7 @@ public class LifeCycle implements ILifeCycle {
      * @param eventService The event service.
      * @param core         The core.
      */
-    public LifeCycle(IEventService eventService, ICore core) {
+    public LifeCycle(EventService eventService, ICore core) {
         super();
 
         this.eventService = eventService;
@@ -109,7 +109,7 @@ public class LifeCycle implements ILifeCycle {
      * Add the event to indicate the close of JTheque. 
      */
     private void addEventClose() {
-        eventService.addEvent(IEventService.CORE_EVENT_LOG, Event.newEvent(EventLevel.INFO, "User", "events.close"));
+        eventService.addEvent(Events.newEvent(EventLevel.INFO, "User", "events.close", EventService.CORE_EVENT_LOG));
     }
 
     @Override

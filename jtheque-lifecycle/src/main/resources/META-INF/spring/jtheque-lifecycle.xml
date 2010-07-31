@@ -20,7 +20,7 @@
     <osgi:reference id="viewService" interface="org.jtheque.views.able.IViewService"/>
     <osgi:reference id="splashService" interface="org.jtheque.views.able.ISplashService"/>
     <osgi:reference id="messageService" interface="org.jtheque.messages.able.IMessageService"/>
-    <osgi:reference id="eventService" interface="org.jtheque.events.able.IEventService"/>
+    <osgi:reference id="eventService" interface="org.jtheque.events.able.EventService"/>
     <osgi:reference id="collectionsService" interface="org.jtheque.collections.able.ICollectionsService"/>
     <osgi:reference id="moduleService" interface="org.jtheque.modules.able.IModuleService"/>
 

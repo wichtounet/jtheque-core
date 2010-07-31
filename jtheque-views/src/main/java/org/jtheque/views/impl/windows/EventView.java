@@ -1,7 +1,7 @@
 package org.jtheque.views.impl.windows;
 
-import org.jtheque.events.able.IEvent;
-import org.jtheque.events.able.IEventService;
+import org.jtheque.events.able.Event;
+import org.jtheque.events.able.EventService;
 import org.jtheque.i18n.able.LanguageService;
 import org.jtheque.ui.able.IModel;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
@@ -80,10 +80,10 @@ public final class EventView extends SwingFilthyBuildedDialogView<IModel> implem
 
         builder.addI18nLabel("log.view.log", builder.gbcSet(0, 0, GridBagUtils.NONE, GridBagUtils.LINE_END));
 
-        builder.addComboBox(new SimpleListModel<String>(getService(IEventService.class).getEventLogs()), Filthy.newListRenderer(),
+        builder.addComboBox(new SimpleListModel<String>(getService(EventService.class).getEventLogs()), Filthy.newListRenderer(),
                 builder.gbcSet(1, 0, GridBagUtils.HORIZONTAL, GridBagUtils.LINE_START, 1.0, 0.0)).addItemListener(this);
 
-        eventsModel = new EventsTableModel(getService(IEventService.class), getService(LanguageService.class));
+        eventsModel = new EventsTableModel(getService(EventService.class), getService(LanguageService.class));
         eventsModel.setHeaders(new String[]{
                 getMessage("log.view.level"),
                 getMessage("log.view.date"),
@@ -153,7 +153,7 @@ public final class EventView extends SwingFilthyBuildedDialogView<IModel> implem
     @Override
     public void valueChanged(ListSelectionEvent e) {
         if (tableEvents.getSelectedRowCount() > 0) {
-            IEvent event = eventsModel.getValueAt(tableEvents.getSelectedRow());
+            Event event = eventsModel.getValueAt(tableEvents.getSelectedRow());
 
             labelTitle.setText(getMessage(event.getTitleKey()));
             labelLog.setText(event.getLog());

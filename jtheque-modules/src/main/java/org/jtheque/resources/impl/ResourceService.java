@@ -4,8 +4,8 @@ import org.jtheque.core.utils.SystemProperty;
 import org.jtheque.errors.able.Errors;
 import org.jtheque.errors.able.IErrorService;
 import org.jtheque.events.able.EventLevel;
-import org.jtheque.events.able.IEventService;
-import org.jtheque.events.utils.Event;
+import org.jtheque.events.able.EventService;
+import org.jtheque.events.able.Events;
 import org.jtheque.resources.able.IResource;
 import org.jtheque.resources.able.IResourceService;
 import org.jtheque.resources.able.SimpleResource;
@@ -53,7 +53,7 @@ public class ResourceService implements IResourceService, BundleContextAware {
 
     private BundleContext bundleContext;
     private final IErrorService errorService;
-    private final IEventService eventService;
+    private final EventService eventService;
 
     /**
      * Construct a new Resource Service.
@@ -62,7 +62,7 @@ public class ResourceService implements IResourceService, BundleContextAware {
      * @param errorService The error service.
      * @param eventService The event service.
      */
-    public ResourceService(IStateService stateService, IErrorService errorService, IEventService eventService) {
+    public ResourceService(IStateService stateService, IErrorService errorService, EventService eventService) {
         super();
 
         this.errorService = errorService;
@@ -133,8 +133,8 @@ public class ResourceService implements IResourceService, BundleContextAware {
                         "modules.resources.network.internet", new Object[]{url}));
             }
 
-            eventService.addEvent(IEventService.CORE_EVENT_LOG,
-                    Event.newEvent(EventLevel.ERROR, "System", "events.resources.network"));
+            eventService.addEvent(
+                    Events.newEvent(EventLevel.ERROR, "System", "events.resources.network", EventService.CORE_EVENT_LOG));
 
             return null;
         }

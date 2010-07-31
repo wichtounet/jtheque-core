@@ -16,7 +16,7 @@
             <osgi:reference interface="org.jtheque.images.able.ImageService"/>
         </constructor-arg>
         <constructor-arg>
-            <osgi:reference interface="org.jtheque.events.able.IEventService"/>
+            <osgi:reference interface="org.jtheque.events.able.EventService"/>
         </constructor-arg>
     </bean>
 

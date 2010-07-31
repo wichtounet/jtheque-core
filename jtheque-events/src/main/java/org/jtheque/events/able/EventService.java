@@ -1,5 +1,7 @@
 package org.jtheque.events.able;
 
+import org.jtheque.utils.annotations.ThreadSafe;
+
 import java.util.Collection;
 import java.util.Set;
 
@@ -24,7 +26,8 @@ import java.util.Set;
  *
  * @author Baptiste Wicht
  */
-public interface IEventService {
+@ThreadSafe
+public interface EventService {
     String CORE_EVENT_LOG = "JTheque Core";
 
     /**
@@ -37,17 +40,16 @@ public interface IEventService {
     /**
      * Return all the events from a log.
      *
-     * @param log The log to get the events from.
+     * @param log The event log to get the events from.
      *
      * @return A List containing all the events of the log.
      */
-    Collection<IEvent> getEvents(String log);
+    Collection<Event> getEvents(String log);
 
     /**
-     * Add an event to a log.
+     * Add an event.
      *
-     * @param log   The log to add the event to.
      * @param event The event to add.
      */
-    void addEvent(String log, IEvent event);
+    void addEvent(Event event);
 }

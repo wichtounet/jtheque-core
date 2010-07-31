@@ -16,6 +16,8 @@ package org.jtheque.events.able;
  * limitations under the License.
  */
 
+import org.jtheque.utils.annotations.Immutable;
+
 import java.util.Date;
 
 /**
@@ -23,7 +25,8 @@ import java.util.Date;
  *
  * @author Baptiste Wicht
  */
-public interface IEvent {
+@Immutable
+public interface Event {
     /**
      * Return the log of the event.
      *
@@ -65,11 +68,4 @@ public interface IEvent {
      * @return The title internationalization key.
      */
     String getTitleKey();
-
-    /**
-     * Set the log of the event.
-     *
-     * @param log The log of the event.
-     */
-    void setLog(String log);
 }

@@ -22,8 +22,8 @@ import org.jtheque.core.able.application.Application;
 import org.jtheque.errors.able.IErrorService;
 import org.jtheque.errors.able.Errors;
 import org.jtheque.events.able.EventLevel;
-import org.jtheque.events.able.IEventService;
-import org.jtheque.events.utils.Event;
+import org.jtheque.events.able.EventService;
+import org.jtheque.events.able.Events;
 import org.jtheque.messages.able.IMessage;
 import org.jtheque.messages.able.IMessageService;
 import org.jtheque.modules.able.IModuleService;
@@ -51,7 +51,7 @@ public final class MessageService implements IMessageService, ModuleListener, Ap
 
     private final ICore core;
     private final IErrorService errorService;
-    private final IEventService eventService;
+    private final EventService eventService;
 
     /**
      * Construct a new MessageService.
@@ -61,7 +61,7 @@ public final class MessageService implements IMessageService, ModuleListener, Ap
      * @param errorService  The error service.
      * @param eventService  The event service.
      */
-    public MessageService(ICore core, IModuleService moduleService, IErrorService errorService, IEventService eventService) {
+    public MessageService(ICore core, IModuleService moduleService, IErrorService errorService, EventService eventService) {
         super();
 
         this.core = core;
@@ -142,8 +142,7 @@ public final class MessageService implements IMessageService, ModuleListener, Ap
                 addNetworkError(url, "messages.network.internet");
             }
 
-            eventService.addEvent(IEventService.CORE_EVENT_LOG,
-                    Event.newEvent(EventLevel.ERROR, "System", "events.messages.network"));
+            eventService.addEvent(Events.newEvent(EventLevel.ERROR, "System", "events.messages.network", EventService.CORE_EVENT_LOG));
         }
     }
 

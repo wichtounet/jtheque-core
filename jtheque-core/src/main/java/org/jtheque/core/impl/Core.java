@@ -24,7 +24,7 @@ import org.jtheque.core.able.IFoldersContainer;
 import org.jtheque.core.able.application.Application;
 import org.jtheque.core.able.lifecycle.ILifeCycle;
 import org.jtheque.core.utils.WeakEventListenerList;
-import org.jtheque.events.able.IEventService;
+import org.jtheque.events.able.EventService;
 import org.jtheque.images.able.ImageService;
 import org.jtheque.states.able.IStateService;
 import org.jtheque.utils.bean.Version;
@@ -62,7 +62,7 @@ public final class Core implements ICore {
      * @param imageService The resource service.
      * @param eventService The event service.
      */
-    public Core(IStateService stateService, ImageService imageService, IEventService eventService) {
+    public Core(IStateService stateService, ImageService imageService, EventService eventService) {
         super();
 
         this.imageService = imageService;

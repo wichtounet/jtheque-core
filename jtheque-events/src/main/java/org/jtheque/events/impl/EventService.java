@@ -1,10 +1,10 @@
 package org.jtheque.events.impl;
 
 import org.jtheque.core.utils.SystemProperty;
+import org.jtheque.events.able.Event;
 import org.jtheque.events.able.EventLevel;
-import org.jtheque.events.able.IEvent;
-import org.jtheque.events.able.IEventService;
-import org.jtheque.events.utils.Event;
+import org.jtheque.events.able.Events;
+import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.io.FileUtils;
 import org.jtheque.xml.utils.IXMLReader;
@@ -15,6 +15,7 @@ import org.jtheque.xml.utils.XMLException;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Node;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
 import java.io.File;
@@ -44,17 +45,9 @@ import java.util.Set;
  *
  * @author Baptiste Wicht
  */
-public final class EventService implements IEventService {
-    private final Map<String, Collection<IEvent>> logs = CollectionUtils.newHashMap(10);
-
-    /**
-     * Construct a new EventService.
-     */
-    public EventService() {
-        super();
-
-        importFromXML();
-    }
+@ThreadSafe
+public final class EventService implements org.jtheque.events.able.EventService {
+    private final Map<String, Collection<Event>> logs = CollectionUtils.newConcurrentMap(5);
 
     @Override
     public Set<String> getEventLogs() {
@@ -62,33 +55,26 @@ public final class EventService implements IEventService {
     }
 
     @Override
-    public Collection<IEvent> getEvents(String log) {
+    public Collection<Event> getEvents(String log) {
         return logs.get(log);
     }
 
     @Override
-    public void addEvent(String log, IEvent event) {
-        if (!logs.containsKey(log)) {
-            logs.put(log, CollectionUtils.<IEvent>newList(25));
+    public void addEvent(Event event) {
+        synchronized (this) {
+            if (!logs.containsKey(event.getLog())) {
+                logs.put(event.getLog(), CollectionUtils.<Event>newList(25));
+            }
+
+            logs.get(event.getLog()).add(event);
         }
-
-        event.setLog(log);
-
-        logs.get(log).add(event);
-    }
-
-    /**
-     * Save the XML before stop modules.
-     */
-    @PreDestroy
-    public void release() {
-        saveXML();
     }
 
     /**
      * Import from XML.
      */
-    private void importFromXML() {
+    @PostConstruct
+    public void importFromXML() {
         File f = new File(SystemProperty.USER_DIR.get(), "/logs.xml");
 
         if (!f.exists()) {
@@ -105,7 +91,7 @@ public final class EventService implements IEventService {
 
                 Collection<Node> elements = reader.getNodes("event", currentNode);
 
-                logs.put(name, CollectionUtils.<IEvent>newList(elements.size()));
+                logs.put(name, CollectionUtils.<Event>newList(elements.size()));
 
                 for (Node element : elements) {
                     logs.get(name).add(readEvent(reader, name, element));
@@ -140,26 +126,24 @@ public final class EventService implements IEventService {
      *
      * @throws XMLException If an error occurs during the xml reading.
      */
-    private static IEvent readEvent(IXMLReader<Node> reader, String name, Object element) throws XMLException {
-        IEvent event = Event.newEvent(
+    private static Event readEvent(IXMLReader<Node> reader, String name, Object element) throws XMLException {
+        return Events.newEvent(
                 EventLevel.get(reader.readInt("level", element)),
                 new Date(reader.readLong("date", element)),
                 reader.readString("source", element),
                 reader.readString("title", element),
-                reader.readString("details", element));
-
-        event.setLog(name);
-
-        return event;
+                reader.readString("details", element),
+                name);
     }
 
     /**
      * Save the events to XML.
      */
-    private void saveXML() {
+    @PreDestroy
+    public void saveXML() {
         IXMLWriter<Node> writer = XML.newJavaFactory().newWriter("logs");
 
-        for (Map.Entry<String, Collection<IEvent>> entry : logs.entrySet()) {
+        for (Map.Entry<String, Collection<Event>> entry : logs.entrySet()) {
             writer.add("log");
 
             writer.addAttribute("name", entry.getKey());
@@ -178,8 +162,8 @@ public final class EventService implements IEventService {
      * @param writer The writer to use.
      * @param events The logs to write.
      */
-    private static void writeEvents(IXMLWriter<Node> writer, Iterable<IEvent> events) {
-        for (IEvent event : events) {
+    private static void writeEvents(IXMLWriter<Node> writer, Iterable<Event> events) {
+        for (Event event : events) {
             writer.add("event");
 
             writer.addOnly("level", Integer.toString(event.getLevel().intValue()));

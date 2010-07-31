@@ -22,8 +22,8 @@ import org.jtheque.core.utils.SystemProperty;
 import org.jtheque.errors.able.Errors;
 import org.jtheque.errors.able.IErrorService;
 import org.jtheque.events.able.EventLevel;
-import org.jtheque.events.able.IEventService;
-import org.jtheque.events.utils.Event;
+import org.jtheque.events.able.Events;
+import org.jtheque.events.able.EventService;
 import org.jtheque.modules.able.IModuleService;
 import org.jtheque.modules.able.Module;
 import org.jtheque.modules.able.ModuleState;
@@ -73,7 +73,7 @@ public final class UpdateService implements IUpdateService {
     private IModuleService moduleService;
 
     @Resource
-    private IEventService eventService;
+    private EventService eventService;
 
     @Resource
     private IErrorService errorService;
@@ -130,8 +130,8 @@ public final class UpdateService implements IUpdateService {
         } else {
             addNotReachableError(url);
 
-            eventService.addEvent(IEventService.CORE_EVENT_LOG,
-                    Event.newEvent(EventLevel.ERROR, "System", "events.updates.network"));
+            eventService.addEvent(
+                    Events.newEvent(EventLevel.ERROR, "System", "events.updates.network", EventService.CORE_EVENT_LOG));
 
             result.setInstalled(false);
         }
@@ -212,8 +212,8 @@ public final class UpdateService implements IUpdateService {
 
         addNotReachableError(url);
 
-        eventService.addEvent(IEventService.CORE_EVENT_LOG,
-                Event.newEvent(EventLevel.ERROR, "System", "events.updates.network"));
+        eventService.addEvent(
+                Events.newEvent(EventLevel.ERROR, "System", "events.updates.network", EventService.CORE_EVENT_LOG));
 
         return true;
     }
