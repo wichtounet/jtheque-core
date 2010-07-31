@@ -5,7 +5,7 @@ import org.jtheque.core.utils.OSGiUtils;
 import org.jtheque.errors.able.IErrorService;
 import org.jtheque.errors.able.Errors;
 import org.jtheque.i18n.able.ILanguageService;
-import org.jtheque.i18n.utils.I18NResourceFactory;
+import org.jtheque.i18n.able.I18NResourceFactory;
 import org.jtheque.modules.able.IModuleLoader;
 import org.jtheque.modules.able.Module;
 import org.jtheque.modules.able.Resources;
