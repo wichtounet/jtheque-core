@@ -5,7 +5,7 @@ import org.jtheque.errors.able.IError;
 import org.jtheque.errors.able.IError.Level;
 import org.jtheque.errors.able.IErrorService;
 import org.jtheque.i18n.able.ILanguageService;
-import org.jtheque.images.able.IImageService;
+import org.jtheque.images.able.ImageService;
 import org.jtheque.ui.able.IModel;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.ui.utils.windows.frames.SwingFilthyBuildedFrameView;
@@ -72,7 +72,7 @@ public final class ErrorView extends SwingFilthyBuildedFrameView<IModel> impleme
         languageService = getService(ILanguageService.class);
 
         listEvents = builder.addScrolledList(new ErrorsListModel(getService(IErrorService.class)),
-                new ErrorListRenderer(getService(IImageService.class), languageService),
+                new ErrorListRenderer(getService(ImageService.class), languageService),
                 builder.gbcSet(0, 1, BOTH, LINE_START, 2, 1, 1.0, 0.67));
         listEvents.getSelectionModel().addListSelectionListener(this);
         listEvents.setVisibleRowCount(8);
@@ -81,8 +81,8 @@ public final class ErrorView extends SwingFilthyBuildedFrameView<IModel> impleme
 
         getService(IErrorService.class).addErrorListener(this);
 
-        errorIcon = getService(IImageService.class).getIcon(ViewsResources.ERROR_ICON);
-        warningIcon = getService(IImageService.class).getIcon(ViewsResources.WARNING_ICON);
+        errorIcon = getService(ImageService.class).getIcon(ViewsResources.ERROR_ICON);
+        warningIcon = getService(ImageService.class).getIcon(ViewsResources.WARNING_ICON);
     }
 
     /**

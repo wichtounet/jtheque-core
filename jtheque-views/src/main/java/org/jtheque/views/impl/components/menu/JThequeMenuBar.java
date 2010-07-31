@@ -22,7 +22,7 @@ import org.jtheque.features.able.IFeatureService;
 import org.jtheque.i18n.able.ILanguageService;
 import org.jtheque.i18n.able.Internationalizable;
 import org.jtheque.i18n.able.InternationalizableContainer;
-import org.jtheque.images.able.IImageService;
+import org.jtheque.images.able.ImageService;
 import org.jtheque.utils.bean.Numbers;
 import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.ui.SwingUtils;
@@ -46,7 +46,7 @@ import java.util.List;
 public final class JThequeMenuBar extends JMenuBar implements FeatureListener, InternationalizableContainer {
     private final Collection<Internationalizable> internationalizables = CollectionUtils.newList(25);
     private final Comparator<IFeature> featureComparator = new ByPositionComparator();
-    private final IImageService imageService;
+    private final ImageService imageService;
     private final ILanguageService languageService;
     private final IFeatureService featureService;
 
@@ -57,7 +57,7 @@ public final class JThequeMenuBar extends JMenuBar implements FeatureListener, I
      * @param languageService The language service.
      * @param featureService  The feature service.
      */
-    public JThequeMenuBar(IImageService imageService, ILanguageService languageService, IFeatureService featureService) {
+    public JThequeMenuBar(ImageService imageService, ILanguageService languageService, IFeatureService featureService) {
         super();
 
         this.imageService = imageService;

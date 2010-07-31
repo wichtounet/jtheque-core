@@ -13,7 +13,7 @@
             <osgi:reference interface="org.jtheque.states.able.IStateService"/>
         </constructor-arg>
         <constructor-arg>
-            <osgi:reference interface="org.jtheque.images.able.IImageService"/>
+            <osgi:reference interface="org.jtheque.images.able.ImageService"/>
         </constructor-arg>
         <constructor-arg>
             <osgi:reference interface="org.jtheque.events.able.IEventService"/>

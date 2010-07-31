@@ -16,6 +16,7 @@ package org.jtheque.views.impl.models;
  * limitations under the License.
  */
 
+import org.jtheque.messages.able.IMessage;
 import org.jtheque.messages.able.IMessageService;
 import org.jtheque.utils.collections.CollectionUtils;
 

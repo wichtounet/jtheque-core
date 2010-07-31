@@ -1,5 +1,7 @@
 package org.jtheque.schemas.able;
 
+import org.jtheque.utils.annotations.ThreadSafe;
+
 /*
  * Copyright JTheque (Baptiste Wicht)
  *
@@ -21,6 +23,7 @@ package org.jtheque.schemas.able;
  *
  * @author Baptiste Wicht
  */
+@ThreadSafe
 public interface ISchemaService {
     /**
      * Register a schema.

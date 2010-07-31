@@ -14,11 +14,15 @@ import org.jtheque.utils.ui.SizeTracker;
 import org.jtheque.utils.ui.SwingUtils;
 import org.jtheque.views.able.windows.IAboutView;
 import org.jtheque.views.able.windows.ILicenseView;
+import org.jtheque.views.impl.models.AboutInfo;
+import org.jtheque.views.impl.models.AboutModel;
 
+import org.jdesktop.swingx.JXPanel;
 import org.pushingpixels.trident.Timeline;
 import org.pushingpixels.trident.callback.TimelineCallbackAdapter;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -32,11 +36,12 @@ import java.awt.Shape;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
-import java.awt.font.TextAttribute;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.Path2D;
 import java.awt.image.BufferedImage;
 import java.util.Map;
+
+import static org.jtheque.views.impl.models.AboutModel.*;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -59,17 +64,8 @@ import java.util.Map;
  *
  * @author Baptiste Wicht
  */
-public final class AboutPane extends AbstractAboutPane implements IAboutView, Internationalizable {
-    private static final int CREDITS_HEIGHT = 75;
-    private static final int VIEW_HEIGHT = 400;
-    private static final int INFO_MARGIN = 15;
-    private static final int CREDIT_HEIGHT = 25;
-    private static final int INFO_HEIGHT = 20;
-
+public final class AboutPane extends JXPanel implements IAboutView, Internationalizable {
     private final SizeTracker tracker = new SizeTracker(this);
-
-    private int xStart = -1;
-    private int yStart = -1;
 
     private final Map<String, Shape> shapes = CollectionUtils.newHashMap(3);
     private final Map<Rectangle, String> urlRectangles = CollectionUtils.newHashMap(5);
@@ -78,41 +74,33 @@ public final class AboutPane extends AbstractAboutPane implements IAboutView, In
     private BufferedImage infosImage;
     private BufferedImage creditsImage;
 
+    private int xStart = -1;
+    private int yStart = -1;
+
     private Font fontName;
     private Font fontInfos;
 
     private int max;
+    private int start;
+    private int paintWidth;
 
     private boolean inited;
 
-    private int start;
+    private Timeline timeline;
 
-    private int paintWidth;
+    private final AboutModel model = new AboutModel();
 
-    private final ILicenseView licenseView;
-    private final ICore core;
-    private final ILanguageService languageService;
+    @Resource
+    private ILicenseView licenseView;
 
-    /**
-     * Construct a new AboutPane.
-     *
-     * @param licenseView     The license view.
-     * @param core            The core.
-     * @param languageService The language service.
-     */
-    public AboutPane(ILicenseView licenseView, ICore core, ILanguageService languageService) {
-        super(languageService, core);
+    @Resource
+    private ICore core;
 
-        this.licenseView = licenseView;
-        this.core = core;
-        this.languageService = languageService;
-    }
+    @Resource
+    private ILanguageService languageService;
 
-    @Override
     @PostConstruct
-    void init() {
-        super.init();
-
+    public void create(){
         setOpaque(false);
         setVisible(true);
 
@@ -122,17 +110,23 @@ public final class AboutPane extends AbstractAboutPane implements IAboutView, In
 
         if (!StringUtils.isEmpty(application.getLogo())) {
             //We must use directly that, or we can also add prefix file to use as Spring resource
-            logo = ImageUtils.openCompatibleImageFromFileSystem(application.getLogo() + '.' + application.getLogoType().getExtension());
+            logo = ImageUtils.openCompatibleImageFromFileSystem(application.getLogo() + '.' +
+                    application.getLogoType().getExtension());
         }
-
-        inited = false;
 
         addMouseListener(new MouseController());
         addMouseMotionListener(new MouseMotionController());
 
-        setTimeline(AnimationUtils.createInterpolationAnimation(this, 4 * 1000, "start", 0, getCreditsHeight()));
+        timeline = AnimationUtils.createInterpolationAnimation(this, 4 * 1000, "start", 0, model.getCreditsHeight());
 
         shapes.put("license", new GeneralPath()); //Set a default path to avoid NPE if display license is false
+
+        init();
+    }
+
+    private void init() {
+        model.refresh(core, languageService);
+        inited = false;
     }
 
     @Override
@@ -169,7 +163,7 @@ public final class AboutPane extends AbstractAboutPane implements IAboutView, In
 
         paintCredits(g2, x, y);
 
-        PaintUtils.drawString(g2, getCopyright(), xStart, y + 120, fontInfos, textColor);
+        PaintUtils.drawString(g2, model.getCopyright(), xStart, y + 120, fontInfos, textColor);
 
         paintLicense(g2, textColor, x, y);
 
@@ -204,7 +198,8 @@ public final class AboutPane extends AbstractAboutPane implements IAboutView, In
      * @param startX The x position to start painting.
      */
     private void createBufferInfosImage(int startY, int startX) {
-        infosImage = ImageUtils.createCompatibleImage(paintWidth - 30, getInfos().length * (INFO_HEIGHT + 2), BufferedImage.TRANSLUCENT);
+        infosImage = ImageUtils.createCompatibleImage(paintWidth - 30, model.getInfos().length * (INFO_HEIGHT + 2),
+                BufferedImage.TRANSLUCENT);
 
         Graphics g = infosImage.getGraphics();
 
@@ -212,8 +207,8 @@ public final class AboutPane extends AbstractAboutPane implements IAboutView, In
 
         Path2D urlPath = new GeneralPath();
 
-        for (int i = 0; i < getInfos().length; i++) {
-            Info info = getInfos()[i];
+        for (int i = 0; i < model.getInfos().length; i++) {
+            AboutInfo info = model.getInfos()[i];
 
             int x = max - info.getLeftWidth();
             int y = i * INFO_HEIGHT + INFO_HEIGHT;
@@ -223,10 +218,7 @@ public final class AboutPane extends AbstractAboutPane implements IAboutView, In
             x += info.getLeftWidth() + INFO_MARGIN;
 
             if (info.isUrl() || info.isMail()) {
-                Map<TextAttribute, Object> attributes = CollectionUtils.newHashMap(1);
-                attributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
-
-                PaintUtils.drawString(g, info.getRight(), x, y, fontInfos.deriveFont(attributes));
+                PaintUtils.drawString(g, info.getRight(), x, y, SwingUtils.underline(fontInfos));
 
                 Rectangle rectangle = new Rectangle(startX, startY + y - 10, info.getRightWidth(), CREDIT_HEIGHT);
 
@@ -253,15 +245,12 @@ public final class AboutPane extends AbstractAboutPane implements IAboutView, In
      */
     private void paintLicense(Graphics g2, Color textColor, int x, int y) {
         if (core.getApplication().isDisplayLicense()) {
-            Path2D licensePath = new GeneralPath();
+            int xLicense = x + paintWidth - getFontMetrics(fontInfos).stringWidth(model.getLicense());
 
-            int xLicense = x + paintWidth - getFontMetrics(fontInfos).stringWidth(getLicenseMessage());
+            PaintUtils.drawString(g2, model.getLicense(), xLicense, y + 150, fontInfos, textColor);
 
-            PaintUtils.drawString(g2, getLicenseMessage(), xLicense, y + 150, fontInfos, textColor);
-
-            licensePath.append(new Rectangle(xLicense, y + 140, getFontMetrics(fontInfos).stringWidth(getLicenseMessage()), CREDIT_HEIGHT), false);
-
-            shapes.put("license", licensePath);
+            shapes.put("license", new GeneralPath(
+                    new Rectangle(xLicense, y + 140, getFontMetrics(fontInfos).stringWidth(model.getLicense()), CREDIT_HEIGHT)));
         }
     }
 
@@ -314,9 +303,7 @@ public final class AboutPane extends AbstractAboutPane implements IAboutView, In
      * @param g2 The graphics 2D elements.
      */
     private void paintBackground(Graphics g2) {
-        Color backgroundColor = new Color(0, 0, 0, (int) (getAlpha() * 255));
-
-        PaintUtils.fillRect(g2, 0, 0, getWidth(), getHeight(), backgroundColor);
+        PaintUtils.fillRect(g2, 0, 0, getWidth(), getHeight(), new Color(0, 0, 0, (int) (getAlpha() * 255)));
     }
 
     /**
@@ -361,7 +348,7 @@ public final class AboutPane extends AbstractAboutPane implements IAboutView, In
 
         int maxRight = 0;
 
-        for (Info info : getInfos()) {
+        for (AboutInfo info : model.getInfos()) {
             info.setLeftWidth(metrics.stringWidth(info.getLeft()));
 
             info.setRightWidth(metrics.stringWidth(info.getRight()));
@@ -387,7 +374,7 @@ public final class AboutPane extends AbstractAboutPane implements IAboutView, In
      * @param g2 The graphics 2D elements.
      */
     private void createCreditsImage(Graphics g2) {
-        creditsImage = ImageUtils.createCompatibleImage(paintWidth - 30, getCredits().size() * CREDIT_HEIGHT, BufferedImage.TRANSLUCENT);
+        creditsImage = ImageUtils.createCompatibleImage(paintWidth - 30, model.getCredits().size() * CREDIT_HEIGHT, BufferedImage.TRANSLUCENT);
 
         Graphics2D gImage = (Graphics2D) creditsImage.getGraphics();
 
@@ -398,7 +385,7 @@ public final class AboutPane extends AbstractAboutPane implements IAboutView, In
         gImage.setFont(fontInfos);
 
         int y = CREDIT_HEIGHT;
-        for (String credit : getCredits()) {
+        for (String credit : model.getCredits()) {
             gImage.drawString(credit, (creditsImage.getWidth() - metrics.stringWidth(credit)) / 2, y);
             y += CREDIT_HEIGHT;
         }
@@ -407,7 +394,7 @@ public final class AboutPane extends AbstractAboutPane implements IAboutView, In
     }
 
     /**
-     * Return the start position.
+     * Return the start position. Called from Trident.
      *
      * @return The start position.
      */
@@ -416,7 +403,7 @@ public final class AboutPane extends AbstractAboutPane implements IAboutView, In
     }
 
     /**
-     * Set the start position.
+     * Set the start position. Called from Trident. 
      *
      * @param start The position. +
      */
@@ -426,19 +413,10 @@ public final class AboutPane extends AbstractAboutPane implements IAboutView, In
         repaint();
     }
 
-    /**
-     * Return the credits height.
-     *
-     * @return The credits height.
-     */
-    int getCreditsHeight() {
-        return getCredits().size() * CREDIT_HEIGHT;
-    }
-
     @Override
     public void appear() {
         Timeline fadeAnimation = AnimationUtils.createFadeInAnimation(this);
-        AnimationUtils.startsLoopWhenStop(fadeAnimation, getTimeline());
+        AnimationUtils.startsLoopWhenStop(fadeAnimation, timeline);
         fadeAnimation.play();
     }
 
@@ -446,7 +424,7 @@ public final class AboutPane extends AbstractAboutPane implements IAboutView, In
      * Make disappear the view.
      */
     public void disappear() {
-        getTimeline().suspend();
+        timeline.suspend();
 
         Timeline fadeOut = AnimationUtils.createFadeOutAnimation(this);
         fadeOut.addCallback(new TimelineCallbackAdapter() {
@@ -463,7 +441,6 @@ public final class AboutPane extends AbstractAboutPane implements IAboutView, In
 
     @Override
     public void refreshText(ILanguageService languageService) {
-        super.init();
         init();
         repaint();
     }

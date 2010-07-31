@@ -1,10 +1,9 @@
-package org.jtheque.schemas.utils;
+package org.jtheque.schemas.able;
 
 import org.jtheque.core.utils.OSGiUtils;
-import org.jtheque.utils.bean.BeanUtils;
-import org.jtheque.schemas.able.Schema;
-import org.jtheque.utils.Constants;
 import org.jtheque.utils.StringUtils;
+import org.jtheque.utils.bean.BeanUtils;
+import org.jtheque.utils.bean.HashCodeUtils;
 import org.jtheque.utils.collections.ArrayUtils;
 
 import org.osgi.framework.BundleContext;
@@ -147,16 +146,7 @@ public abstract class AbstractSchema implements Schema {
 
     @Override
     public int hashCode() {
-        int hash = Constants.HASH_CODE_START;
-
-        hash = Constants.HASH_CODE_PRIME * hash + getVersion().hashCode();
-        hash = Constants.HASH_CODE_PRIME * hash + getId().hashCode();
-
-        for (String dependency : getDependencies()) {
-            hash = Constants.HASH_CODE_PRIME * hash + dependency.hashCode();
-        }
-
-        return hash;
+        return HashCodeUtils.hashCodeDirect(getVersion(), getId(), getDependencies());
     }
 
     @Override

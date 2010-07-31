@@ -17,7 +17,7 @@ package org.jtheque.collections.impl;
  */
 
 import org.jtheque.collections.able.IDaoCollections;
-import org.jtheque.schemas.utils.DefaultSchema;
+import org.jtheque.schemas.able.DefaultSchema;
 import org.jtheque.utils.bean.Version;
 
 /**

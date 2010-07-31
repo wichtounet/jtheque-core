@@ -1,6 +1,6 @@
 package org.jtheque.views.impl;
 
-import org.jtheque.images.able.IImageService;
+import org.jtheque.images.able.ImageService;
 
 import org.springframework.core.io.ClassPathResource;
 
@@ -51,7 +51,7 @@ public final class ViewsResources {
      *
      * @param service The resources to register.
      */
-    public static void registerResources(IImageService service) {
+    public static void registerResources(ImageService service) {
         register(service, EXIT_ICON, "org/jtheque/views/images/exit.png");
         register(service, XML_ICON, "org/jtheque/views/images/xml.png");
         register(service, UNDO_ICON, "org/jtheque/views/images/xml.png");
@@ -73,7 +73,7 @@ public final class ViewsResources {
      * @param resourceId   The resource id.
      * @param resourcePath The path to the resource in the ClassPath.
      */
-    private static void register(IImageService service, String resourceId, String resourcePath) {
+    private static void register(ImageService service, String resourceId, String resourcePath) {
         service.registerResource(resourceId, new ClassPathResource(resourcePath));
     }
 }

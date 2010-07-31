@@ -1,6 +1,6 @@
 package org.jtheque.ui.impl;
 
-import org.jtheque.images.able.IImageService;
+import org.jtheque.images.able.ImageService;
 import org.jtheque.ui.able.IFilthyUtils;
 import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.utils.ui.ImageUtils;
@@ -48,7 +48,7 @@ public class FilthyUtils implements IFilthyUtils {
      *
      * @param imageService The resource service, used to get the image of the background.
      */
-    public FilthyUtils(IImageService imageService) {
+    public FilthyUtils(ImageService imageService) {
         super();
 
         backgroundPaint = new LinearGradientPaint(new Point2D.Float(0, 0), new Point2D.Float(0, 584),

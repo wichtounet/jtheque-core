@@ -10,6 +10,6 @@
 
     <bean id="imageService" class="org.jtheque.images.impl.ImageService"/>
 
-    <osgi:service ref="imageService" interface="org.jtheque.images.able.IImageService"/>
+    <osgi:service ref="imageService" interface="org.jtheque.images.able.ImageService"/>
 
 </beans>

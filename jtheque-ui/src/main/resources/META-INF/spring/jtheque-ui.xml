@@ -19,13 +19,13 @@
             <osgi:reference interface="org.jtheque.i18n.able.ILanguageService"/>
         </constructor-arg>
         <constructor-arg>
-            <osgi:reference interface="org.jtheque.images.able.IImageService"/>
+            <osgi:reference interface="org.jtheque.images.able.ImageService"/>
         </constructor-arg>
     </bean>
 
     <bean id="filthyUtils" class="org.jtheque.ui.impl.FilthyUtils">
         <constructor-arg>
-            <osgi:reference interface="org.jtheque.images.able.IImageService"/>
+            <osgi:reference interface="org.jtheque.images.able.ImageService"/>
         </constructor-arg>
     </bean>
 
