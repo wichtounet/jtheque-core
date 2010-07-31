@@ -1,6 +1,6 @@
 package org.jtheque.errors.impl;
 
-import org.jtheque.i18n.able.ILanguageService;
+import org.jtheque.i18n.able.LanguageService;
 import org.jtheque.utils.annotations.Immutable;
 import org.jtheque.utils.collections.ArrayUtils;
 
@@ -47,12 +47,12 @@ public final class InternationalizedError extends JThequeError {
     }
 
     @Override
-    public String getTitle(ILanguageService languageService) {
+    public String getTitle(LanguageService languageService) {
         return languageService.getMessage(getTitle(), titleReplaces);
     }
 
     @Override
-    public String getDetails(ILanguageService languageService) {
+    public String getDetails(LanguageService languageService) {
         if (getException() != null) {
             return languageService.getMessage(getDetails(), detailsReplaces) +
                     '\n' + getException().getMessage() +

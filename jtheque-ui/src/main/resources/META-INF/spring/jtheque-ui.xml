@@ -16,7 +16,7 @@
     <bean id="uiUtils" class="org.jtheque.ui.impl.UIUtils">
         <constructor-arg ref="viewDelegate"/>
         <constructor-arg>
-            <osgi:reference interface="org.jtheque.i18n.able.ILanguageService"/>
+            <osgi:reference interface="org.jtheque.i18n.able.LanguageService"/>
         </constructor-arg>
         <constructor-arg>
             <osgi:reference interface="org.jtheque.images.able.ImageService"/>

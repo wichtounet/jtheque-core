@@ -16,7 +16,7 @@ package org.jtheque.ui.utils.windows.frames;
  * limitations under the License.
  */
 
-import org.jtheque.i18n.able.ILanguageService;
+import org.jtheque.i18n.able.LanguageService;
 import org.jtheque.ui.able.IModel;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.ui.utils.builders.JThequePanelBuilder;
@@ -35,7 +35,7 @@ public abstract class SwingBuildedFrameView<T extends IModel> extends SwingFrame
 
         setContentPane(buildContentPane());
 
-        refreshText(getService(ILanguageService.class));
+        refreshText(getService(LanguageService.class));
 
         pack();
 
@@ -54,7 +54,7 @@ public abstract class SwingBuildedFrameView<T extends IModel> extends SwingFrame
 
         buildView(builder);
 
-        refreshText(getService(ILanguageService.class));
+        refreshText(getService(LanguageService.class));
 
         return builder.getPanel();
     }

@@ -1,7 +1,7 @@
 package org.jtheque.errors.impl;
 
 import org.jtheque.errors.able.IError;
-import org.jtheque.i18n.able.ILanguageService;
+import org.jtheque.i18n.able.LanguageService;
 import org.jtheque.utils.annotations.Immutable;
 
 /*
@@ -56,12 +56,12 @@ public class JThequeError implements IError {
     }
 
     @Override
-    public String getTitle(ILanguageService languageService) {
+    public String getTitle(LanguageService languageService) {
         return title;
     }
 
     @Override
-    public String getDetails(ILanguageService languageService) {
+    public String getDetails(LanguageService languageService) {
         if (exception != null) {
             return details == null ? "" : details +
                     '\n' + exception.getMessage() +

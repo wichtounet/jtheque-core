@@ -4,7 +4,7 @@ import org.jtheque.core.able.ICore;
 import org.jtheque.core.utils.OSGiUtils;
 import org.jtheque.errors.able.IError;
 import org.jtheque.errors.able.IErrorService;
-import org.jtheque.i18n.able.ILanguageService;
+import org.jtheque.i18n.able.LanguageService;
 import org.jtheque.i18n.able.Internationalizable;
 import org.jtheque.images.able.ImageService;
 import org.jtheque.ui.able.IController;
@@ -246,7 +246,7 @@ public final class WindowState implements IWindowState {
      *
      * @param languageService The language service to use for i18n.
      */
-    public void refreshText(ILanguageService languageService) {
+    public void refreshText(LanguageService languageService) {
         if (StringUtils.isNotEmpty(titleKey)) {
             setTitleKey(titleKey, titleReplaces);
         }
@@ -280,7 +280,7 @@ public final class WindowState implements IWindowState {
      * @return The internationalized message.
      */
     protected String getMessage(String key) {
-        return getService(ILanguageService.class).getMessage(key);
+        return getService(LanguageService.class).getMessage(key);
     }
 
     /**
@@ -292,7 +292,7 @@ public final class WindowState implements IWindowState {
      * @return the internationalized message.
      */
     protected String getMessage(String key, Object... replaces) {
-        return getService(ILanguageService.class).getMessage(key, replaces);
+        return getService(LanguageService.class).getMessage(key, replaces);
     }
 
     /**

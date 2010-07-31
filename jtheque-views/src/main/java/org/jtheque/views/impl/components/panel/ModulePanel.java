@@ -16,7 +16,7 @@ package org.jtheque.views.impl.components.panel;
  * limitations under the License.
  */
 
-import org.jtheque.i18n.able.ILanguageService;
+import org.jtheque.i18n.able.LanguageService;
 import org.jtheque.modules.able.IModuleDescription;
 import org.jtheque.modules.able.IModuleService;
 import org.jtheque.ui.utils.builders.FilthyPanelBuilder;
@@ -52,7 +52,7 @@ public final class ModulePanel extends JPanel {
     private static final int TITLE_FONT_SIZE = 16;
 
     private final IModuleService moduleService;
-    private final ILanguageService languageService;
+    private final LanguageService languageService;
     private final IUpdateService updateService;
 
     /**
@@ -64,7 +64,7 @@ public final class ModulePanel extends JPanel {
      * @param languageService The language service.
      * @param updateService   The update service.
      */
-    public ModulePanel(Object value, boolean isSelected, IModuleService moduleService, ILanguageService languageService, IUpdateService updateService) {
+    public ModulePanel(Object value, boolean isSelected, IModuleService moduleService, LanguageService languageService, IUpdateService updateService) {
         super();
 
         this.moduleService = moduleService;

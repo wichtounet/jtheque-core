@@ -4,7 +4,7 @@ import org.jtheque.core.utils.OSGiUtils;
 import org.jtheque.core.utils.SwingSpringProxy;
 import org.jtheque.errors.able.IError;
 import org.jtheque.errors.able.IErrorService;
-import org.jtheque.i18n.able.ILanguageService;
+import org.jtheque.i18n.able.LanguageService;
 import org.jtheque.ui.able.IFilthyUtils;
 import org.jtheque.utils.collections.CollectionUtils;
 
@@ -104,8 +104,8 @@ public abstract class OSGIFilthyBuildedPanel extends FilthyBuildedPanel implemen
     }
 
     @Override
-    protected ILanguageService getLanguageService() {
-        return getService(ILanguageService.class);
+    protected LanguageService getLanguageService() {
+        return getService(LanguageService.class);
     }
 
     @Override

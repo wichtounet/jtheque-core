@@ -1,6 +1,6 @@
 package org.jtheque.views.impl.components;
 
-import org.jtheque.i18n.able.ILanguageService;
+import org.jtheque.i18n.able.LanguageService;
 import org.jtheque.i18n.able.Internationalizable;
 import org.jtheque.ui.able.components.LayerTabbedPane;
 import org.jtheque.utils.bean.Numbers;
@@ -42,7 +42,7 @@ import java.util.Map.Entry;
  * @author Baptiste Wicht
  */
 public final class MainTabbedPane extends LayerTabbedPane {
-    private final ILanguageService languageService;
+    private final LanguageService languageService;
     private final IViews views;
 
     /**
@@ -51,7 +51,7 @@ public final class MainTabbedPane extends LayerTabbedPane {
      * @param languageService The language service.
      * @param views           The views.
      */
-    public MainTabbedPane(ILanguageService languageService, IViews views) {
+    public MainTabbedPane(LanguageService languageService, IViews views) {
         super(languageService);
 
         this.languageService = languageService;
@@ -141,7 +141,7 @@ public final class MainTabbedPane extends LayerTabbedPane {
         }
 
         @Override
-        public void refreshText(ILanguageService languageService) {
+        public void refreshText(LanguageService languageService) {
             for (Entry<JComponent, String> entry : components.entrySet()) {
                 for (int i = 0; i < getTabCount(); i++) {
                     if (entry.getKey().equals(getTabComponentAt(i))) {

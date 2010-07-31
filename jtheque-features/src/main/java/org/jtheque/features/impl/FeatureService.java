@@ -22,7 +22,7 @@ import org.jtheque.features.able.FeatureListener;
 import org.jtheque.features.able.IFeature;
 import org.jtheque.features.able.IFeatureService;
 import org.jtheque.features.able.Menu;
-import org.jtheque.i18n.able.ILanguageService;
+import org.jtheque.i18n.able.LanguageService;
 import org.jtheque.modules.able.IModuleService;
 import org.jtheque.modules.able.Module;
 import org.jtheque.modules.able.ModuleListener;
@@ -45,7 +45,7 @@ public final class FeatureService implements IFeatureService, ModuleListener {
     private final WeakEventListenerList listeners = new WeakEventListenerList();
     private final Collection<IFeature> features;
     private final Map<CoreFeature, Feature> coreFeatures;
-    private final ILanguageService languageService;
+    private final LanguageService languageService;
 
     /**
      * Construct a new FeatureService.
@@ -53,7 +53,7 @@ public final class FeatureService implements IFeatureService, ModuleListener {
      * @param languageService The language service.
      * @param moduleService   The module service.
      */
-    public FeatureService(ILanguageService languageService, IModuleService moduleService) {
+    public FeatureService(LanguageService languageService, IModuleService moduleService) {
         super();
 
         this.languageService = languageService;

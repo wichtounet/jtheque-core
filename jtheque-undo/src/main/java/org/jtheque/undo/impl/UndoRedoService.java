@@ -16,7 +16,7 @@ package org.jtheque.undo.impl;
  * limitations under the License.
  */
 
-import org.jtheque.i18n.able.ILanguageService;
+import org.jtheque.i18n.able.LanguageService;
 import org.jtheque.undo.able.IUndoRedoService;
 
 import org.slf4j.LoggerFactory;
@@ -37,14 +37,14 @@ public final class UndoRedoService extends UndoManager implements IUndoRedoServi
     private transient Action undoAction;
     private transient Action redoAction;
 
-    private final transient ILanguageService languageService;
+    private final transient LanguageService languageService;
 
     /**
      * Create a new UndoRedoService.
      *
      * @param languageService The language service.
      */
-    public UndoRedoService(ILanguageService languageService) {
+    public UndoRedoService(LanguageService languageService) {
         super();
 
         this.languageService = languageService;

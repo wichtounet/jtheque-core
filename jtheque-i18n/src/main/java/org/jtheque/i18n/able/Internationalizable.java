@@ -27,5 +27,5 @@ public interface Internationalizable {
      *
      * @param languageService The language service to use to internationalize the text of the component.
      */
-    void refreshText(ILanguageService languageService);
+    void refreshText(LanguageService languageService);
 }

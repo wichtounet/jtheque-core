@@ -16,7 +16,7 @@ package org.jtheque.ui.able.components;
  * limitations under the License.
  */
 
-import org.jtheque.i18n.able.ILanguageService;
+import org.jtheque.i18n.able.LanguageService;
 import org.jtheque.ui.able.ViewComponent;
 import org.jtheque.utils.collections.CollectionUtils;
 
@@ -45,14 +45,14 @@ import java.util.List;
 public class LayerTabbedPane extends JTabbedPane implements ViewComponent {
     private final List<JXLayer<JComponent>> components = CollectionUtils.newList(5);
 
-    private final ILanguageService languageService;
+    private final LanguageService languageService;
 
     /**
      * Construct a new LayerTabbedPane.
      *
      * @param languageService The language service.
      */
-    public LayerTabbedPane(ILanguageService languageService) {
+    public LayerTabbedPane(LanguageService languageService) {
         super();
 
         this.languageService = languageService;

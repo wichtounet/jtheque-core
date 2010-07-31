@@ -19,7 +19,7 @@ package org.jtheque.views.impl.components.menu;
 import org.jtheque.features.able.FeatureListener;
 import org.jtheque.features.able.IFeature;
 import org.jtheque.features.able.IFeatureService;
-import org.jtheque.i18n.able.ILanguageService;
+import org.jtheque.i18n.able.LanguageService;
 import org.jtheque.i18n.able.Internationalizable;
 import org.jtheque.i18n.able.InternationalizableContainer;
 import org.jtheque.images.able.ImageService;
@@ -47,7 +47,7 @@ public final class JThequeMenuBar extends JMenuBar implements FeatureListener, I
     private final Collection<Internationalizable> internationalizables = CollectionUtils.newList(25);
     private final Comparator<IFeature> featureComparator = new ByPositionComparator();
     private final ImageService imageService;
-    private final ILanguageService languageService;
+    private final LanguageService languageService;
     private final IFeatureService featureService;
 
     /**
@@ -57,7 +57,7 @@ public final class JThequeMenuBar extends JMenuBar implements FeatureListener, I
      * @param languageService The language service.
      * @param featureService  The feature service.
      */
-    public JThequeMenuBar(ImageService imageService, ILanguageService languageService, IFeatureService featureService) {
+    public JThequeMenuBar(ImageService imageService, LanguageService languageService, IFeatureService featureService) {
         super();
 
         this.imageService = imageService;
@@ -325,7 +325,7 @@ public final class JThequeMenuBar extends JMenuBar implements FeatureListener, I
     }
 
     @Override
-    public void refreshText(ILanguageService languageService) {
+    public void refreshText(LanguageService languageService) {
         for (Internationalizable internationalizable : internationalizables) {
             internationalizable.refreshText(languageService);
         }

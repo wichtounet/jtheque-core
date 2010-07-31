@@ -16,7 +16,7 @@ package org.jtheque.ui.able.components;
  * limitations under the License.
  */
 
-import org.jtheque.i18n.able.ILanguageService;
+import org.jtheque.i18n.able.LanguageService;
 import org.jtheque.i18n.able.Internationalizable;
 import org.jtheque.utils.collections.ArrayUtils;
 
@@ -65,7 +65,7 @@ public class JThequeCheckBox extends JCheckBox implements Internationalizable {
     }
 
     @Override
-    public void refreshText(ILanguageService languageService) {
+    public void refreshText(LanguageService languageService) {
         setText(languageService.getMessage(textKey, textReplaces));
     }
 }

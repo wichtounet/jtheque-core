@@ -17,7 +17,7 @@ package org.jtheque.views.impl.components.config;
  */
 
 import org.jtheque.core.able.ICore;
-import org.jtheque.i18n.able.ILanguageService;
+import org.jtheque.i18n.able.LanguageService;
 import org.jtheque.ui.able.constraints.Constraint;
 import org.jtheque.ui.able.constraints.Constraints;
 import org.jtheque.ui.utils.builded.OSGIFilthyBuildedPanel;
@@ -78,13 +78,13 @@ public final class JPanelConfigAppearance extends OSGIFilthyBuildedPanel impleme
      * Fill the all fields with the current configurations.
      */
     private void fillAllFields() {
-        modelLanguages.setSelectedItem(getService(ILanguageService.class).getCurrentLanguage());
+        modelLanguages.setSelectedItem(getService(LanguageService.class).getCurrentLanguage());
         boxRetainSizeAndPosition.setSelected(getService(ICore.class).getConfiguration().retainSizeAndPositionOfWindow());
     }
 
     @Override
     public void apply() {
-        getService(ILanguageService.class).setCurrentLanguage(modelLanguages.getSelectedItem());
+        getService(LanguageService.class).setCurrentLanguage(modelLanguages.getSelectedItem());
         getService(ICore.class).getConfiguration().setRetainSizeAndPositionOfWindow(boxRetainSizeAndPosition.isSelected());
     }
 

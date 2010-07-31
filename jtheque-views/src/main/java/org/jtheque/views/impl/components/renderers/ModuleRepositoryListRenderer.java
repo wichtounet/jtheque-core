@@ -16,7 +16,7 @@ package org.jtheque.views.impl.components.renderers;
  * limitations under the License.
  */
 
-import org.jtheque.i18n.able.ILanguageService;
+import org.jtheque.i18n.able.LanguageService;
 import org.jtheque.modules.able.IModuleService;
 import org.jtheque.update.able.IUpdateService;
 import org.jtheque.utils.collections.CollectionUtils;
@@ -37,7 +37,7 @@ public final class ModuleRepositoryListRenderer implements ListCellRenderer {
     private final Map<Integer, ModulePanel> panels = CollectionUtils.newHashMap(10);
 
     private final IModuleService moduleService;
-    private final ILanguageService languageService;
+    private final LanguageService languageService;
     private final IUpdateService updateService;
 
     /**
@@ -47,7 +47,7 @@ public final class ModuleRepositoryListRenderer implements ListCellRenderer {
      * @param languageService The language service.
      * @param updateService   The update service.
      */
-    public ModuleRepositoryListRenderer(IModuleService moduleService, ILanguageService languageService,
+    public ModuleRepositoryListRenderer(IModuleService moduleService, LanguageService languageService,
                                         IUpdateService updateService) {
         super();
 

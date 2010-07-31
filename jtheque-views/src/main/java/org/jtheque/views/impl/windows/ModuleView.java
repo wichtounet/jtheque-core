@@ -16,7 +16,7 @@ package org.jtheque.views.impl.windows;
  * limitations under the License.
  */
 
-import org.jtheque.i18n.able.ILanguageService;
+import org.jtheque.i18n.able.LanguageService;
 import org.jtheque.modules.able.Module;
 import org.jtheque.resources.able.IResource;
 import org.jtheque.ui.able.IModel;
@@ -46,7 +46,7 @@ public final class ModuleView extends SwingFilthyBuildedDialogView<IModel> imple
 
     @Override
     protected void buildView(I18nPanelBuilder builder) {
-        LayerTabbedPane tabbed = new LayerTabbedPane(getService(ILanguageService.class));
+        LayerTabbedPane tabbed = new LayerTabbedPane(getService(LanguageService.class));
 
         modulesPanel = getBean(IModulesPanelView.class);
         resourcePanel = getBean(IResourcePanelView.class);

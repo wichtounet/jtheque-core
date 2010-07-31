@@ -2,7 +2,7 @@ package org.jtheque.views.impl.models;
 
 import org.jtheque.events.able.IEvent;
 import org.jtheque.events.able.IEventService;
-import org.jtheque.i18n.able.ILanguageService;
+import org.jtheque.i18n.able.LanguageService;
 import org.jtheque.utils.collections.CollectionUtils;
 
 import javax.swing.table.AbstractTableModel;
@@ -48,7 +48,7 @@ public final class EventsTableModel extends AbstractTableModel {
     private transient String log;
 
     private final transient IEventService eventService;
-    private final transient ILanguageService languageService;
+    private final transient LanguageService languageService;
 
     /**
      * Headers of the table.
@@ -66,7 +66,7 @@ public final class EventsTableModel extends AbstractTableModel {
      * @param eventService    The event service.
      * @param languageService The language service.
      */
-    public EventsTableModel(IEventService eventService, ILanguageService languageService) {
+    public EventsTableModel(IEventService eventService, LanguageService languageService) {
         super();
 
         this.eventService = eventService;

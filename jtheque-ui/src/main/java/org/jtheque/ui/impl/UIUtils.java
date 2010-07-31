@@ -1,6 +1,6 @@
 package org.jtheque.ui.impl;
 
-import org.jtheque.i18n.able.ILanguageService;
+import org.jtheque.i18n.able.LanguageService;
 import org.jtheque.images.able.ImageService;
 import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.ui.able.ViewDelegate;
@@ -30,7 +30,7 @@ import org.springframework.core.io.ClassPathResource;
  */
 public class UIUtils implements IUIUtils {
     private final ViewDelegate viewDelegate;
-    private final ILanguageService languageService;
+    private final LanguageService languageService;
 
     /**
      * Create a new UIUtils.
@@ -39,7 +39,7 @@ public class UIUtils implements IUIUtils {
      * @param languageService The language service.
      * @param imageService    The resource service.
      */
-    public UIUtils(ViewDelegate viewDelegate, ILanguageService languageService, ImageService imageService) {
+    public UIUtils(ViewDelegate viewDelegate, LanguageService languageService, ImageService imageService) {
         super();
 
         this.viewDelegate = viewDelegate;

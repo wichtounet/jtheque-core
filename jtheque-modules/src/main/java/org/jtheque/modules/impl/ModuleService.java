@@ -18,7 +18,7 @@ package org.jtheque.modules.impl;
 
 import org.jtheque.core.able.ICore;
 import org.jtheque.core.utils.WeakEventListenerList;
-import org.jtheque.i18n.able.ILanguageService;
+import org.jtheque.i18n.able.LanguageService;
 import org.jtheque.images.able.ImageService;
 import org.jtheque.modules.able.IModuleDescription;
 import org.jtheque.modules.able.IModuleLoader;
@@ -99,7 +99,7 @@ public final class ModuleService implements IModuleService {
     private IUpdateService updateService;
 
     @Resource
-    private ILanguageService languageService;
+    private LanguageService languageService;
 
     @Resource
     private IUIUtils uiUtils;

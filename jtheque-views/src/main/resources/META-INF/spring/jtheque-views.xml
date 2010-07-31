@@ -111,7 +111,7 @@
     <osgi:reference id="filthyUtils" interface="org.jtheque.ui.able.IFilthyUtils"/>
     <osgi:reference id="undoRedoService" interface="org.jtheque.undo.able.IUndoRedoService"/>
     <osgi:reference id="collectionsService" interface="org.jtheque.collections.able.ICollectionsService"/>
-    <osgi:reference id="languageService" interface="org.jtheque.i18n.able.ILanguageService"/>
+    <osgi:reference id="languageService" interface="org.jtheque.i18n.able.LanguageService"/>
     <osgi:reference id="updateService" interface="org.jtheque.update.able.IUpdateService"/>
     <osgi:reference id="featureService" interface="org.jtheque.features.able.IFeatureService"/>
     <osgi:reference id="stateService" interface="org.jtheque.states.able.IStateService"/>

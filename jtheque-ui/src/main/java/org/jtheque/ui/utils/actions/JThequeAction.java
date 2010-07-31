@@ -16,7 +16,7 @@ package org.jtheque.ui.utils.actions;
  * limitations under the License.
  */
 
-import org.jtheque.i18n.able.ILanguageService;
+import org.jtheque.i18n.able.LanguageService;
 import org.jtheque.i18n.able.Internationalizable;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.collections.ArrayUtils;
@@ -85,7 +85,7 @@ public abstract class JThequeAction extends AbstractAction implements Internatio
     }
 
     @Override
-    public final void refreshText(ILanguageService languageService) {
+    public final void refreshText(LanguageService languageService) {
         if(StringUtils.isNotEmpty(key)){
             if (replaces == null) {
                 setText(languageService.getMessage(key));

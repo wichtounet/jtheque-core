@@ -2,7 +2,7 @@ package org.jtheque.views.impl.components.panel;
 
 import org.jtheque.core.able.ICore;
 import org.jtheque.core.able.application.Application;
-import org.jtheque.i18n.able.ILanguageService;
+import org.jtheque.i18n.able.LanguageService;
 import org.jtheque.i18n.able.Internationalizable;
 import org.jtheque.ui.utils.AnimationUtils;
 import org.jtheque.utils.DesktopUtils;
@@ -97,7 +97,7 @@ public final class AboutPane extends JXPanel implements IAboutView, Internationa
     private ICore core;
 
     @Resource
-    private ILanguageService languageService;
+    private LanguageService languageService;
 
     @PostConstruct
     public void create(){
@@ -440,7 +440,7 @@ public final class AboutPane extends JXPanel implements IAboutView, Internationa
     }
 
     @Override
-    public void refreshText(ILanguageService languageService) {
+    public void refreshText(LanguageService languageService) {
         init();
         repaint();
     }

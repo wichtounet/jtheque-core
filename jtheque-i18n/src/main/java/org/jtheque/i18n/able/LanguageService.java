@@ -1,5 +1,6 @@
 package org.jtheque.i18n.able;
 
+import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.bean.Version;
 
 import java.util.Locale;
@@ -21,11 +22,14 @@ import java.util.Locale;
  */
 
 /**
+ * A language specification. 
+ *
  * @author Baptiste Wicht
  */
-public interface ILanguageService {
+@ThreadSafe
+public interface LanguageService {
     /**
-     * Set the current language.
+     * Set the current language. This will refresh all the internationalizables.
      *
      * @param language The language.
      */
@@ -76,14 +80,9 @@ public interface ILanguageService {
      *
      * @param name      The name of the resource.
      * @param version   The version of the resource.
-     * @param resources The resources to the i18n files (.properties) of the basename.
+     * @param resources The resources to the i18n files (.properties) of the base name.
      */
     void registerResource(String name, Version version, I18NResource... resources);
-
-    /**
-     * Refresh all the internationalizables elements.
-     */
-    void refreshAll();
 
     /**
      * Release the specified resource.
@@ -91,4 +90,9 @@ public interface ILanguageService {
      * @param name The name of the resource.
      */
     void releaseResource(String name);
+
+    /**
+     * Refresh all the internationalizables elements.
+     */
+    void refreshAll();
 }

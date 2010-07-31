@@ -3,10 +3,10 @@ package org.jtheque.i18n.impl;
 import org.jtheque.core.utils.SystemProperty;
 import org.jtheque.i18n.able.I18NResource;
 import org.jtheque.i18n.able.I18NResourceFactory;
-import org.jtheque.i18n.able.ILanguageService;
 import org.jtheque.i18n.able.Internationalizable;
 import org.jtheque.states.able.IStateService;
 import org.jtheque.utils.StringUtils;
+import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.io.CopyException;
@@ -16,10 +16,8 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Collection;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Scanner;
 import java.util.Set;
 
 /*
@@ -43,17 +41,19 @@ import java.util.Set;
  *
  * @author Baptiste Wicht
  */
-public final class LanguageService implements ILanguageService {
+@ThreadSafe
+public final class LanguageService implements org.jtheque.i18n.able.LanguageService {
     private static final String[] ZERO_LENGTH_ARRAY = new String[0];
     private static final Version I18N_VERSION = Version.get("1.0");
 
-    private final Map<String, String> baseNames = CollectionUtils.newHashMap();
-    private final Map<String, Locale> languages = CollectionUtils.newHashMap(3);
-    private final Set<Internationalizable> internationalizables = CollectionUtils.newSet(100);
-    private final JThequeResourceBundle resourceBundle;
+    private final Map<String, String> baseNames = CollectionUtils.newConcurrentMap(10);
+    private final Set<Internationalizable> internationalizables = CollectionUtils.newConcurrentSet(100);
+    private final JThequeResourceBundle resourceBundle = new JThequeResourceBundle();
     private final LanguageState state;
 
-    private Locale locale = Locale.getDefault();
+    private volatile Locale locale = Locale.getDefault();
+
+    private final Object lock = new Object();
 
     /**
      * Construct a new ResourceManager.
@@ -62,15 +62,6 @@ public final class LanguageService implements ILanguageService {
      */
     public LanguageService(IStateService stateService) {
         super();
-
-        languages.put("fr", Locale.FRENCH);
-        languages.put("en", Locale.ENGLISH);
-        languages.put("de", Locale.GERMAN);
-
-        resourceBundle = new JThequeResourceBundle();
-        resourceBundle.setCacheSeconds(-1);
-        resourceBundle.setDefaultEncoding("UTF-8");
-        resourceBundle.setUseCodeAsDefaultMessage(true);
 
         state = stateService.getState(new LanguageState());
 
@@ -81,13 +72,7 @@ public final class LanguageService implements ILanguageService {
      * Init the language service.
      */
     private void init() {
-        locale = languages.get(state.getLanguage());
-
-        if (locale == null) {
-            LoggerFactory.getLogger(getClass()).error("Unable to get the locale");
-
-            locale = Locale.FRENCH;
-        }
+        locale = toLocale(state.getLanguage());
 
         Locale.setDefault(locale);
 
@@ -113,7 +98,7 @@ public final class LanguageService implements ILanguageService {
     }
 
     @Override
-    public void registerResource(String name, Version version, I18NResource... resources) {
+    public synchronized void registerResource(String name, Version version, I18NResource... resources) {
         Version previousVersion = state.getResourceVersion(name);
 
         File folder = new File(SystemProperty.USER_DIR.get(), "i18n");
@@ -140,7 +125,7 @@ public final class LanguageService implements ILanguageService {
             }
         }
 
-        String baseName = "file:" + folder + '/' + getI18nResource(resources[0]);
+        String baseName = "file:" + folder + '/' + getBaseName(resources[0]);
 
         resourceBundle.addBaseName(baseName);
 
@@ -148,55 +133,21 @@ public final class LanguageService implements ILanguageService {
     }
 
     @Override
-    public void releaseResource(String name) {
+    public void releaseResource(String name) {//Thread safe
         if (baseNames.containsKey(name)) {
             resourceBundle.removeBaseName(baseNames.get(name));
         }
     }
 
-    /**
-     * Return the base name of the i18n resource.
-     *
-     * @param resource The resource to compute the basename for.
-     *
-     * @return The basename of the i18n resource.
-     */
-    private static String getI18nResource(I18NResource resource) {
-        if (resource.getFileName().contains("_")) {
-            return resource.getFileName().substring(0, resource.getFileName().indexOf('_'));
-        }
-
-        return resource.getFileName().substring(0, resource.getFileName().indexOf('.'));
-    }
-
     @Override
-    public void setCurrentLanguage(String language) {
-        String shortForm = convertToShortForm(language);
+    public void setCurrentLanguage(String language) {//Thread safe
+        String shortForm = toShortForm(language);
 
-        state.setLanguage(shortForm);
+        synchronized (lock){
+            state.setLanguage(shortForm);
 
-        setCurrentLocale(languages.get(shortForm));
-    }
-
-    /**
-     * Convert the language to his short form.
-     *
-     * @param language The language to convert.
-     *
-     * @return The short form of the language.
-     */
-    private static String convertToShortForm(CharSequence language) {
-        if (StringUtils.isEmpty(language)) {
-            return "en";
+            setCurrentLocale(toLocale(shortForm));
         }
-
-        if ("Français".equals(language) || "fr".equals(language)) {
-            return "fr";
-        } else if ("Deutsch".equals(language) || "de".equals(language)) {
-            return "de";
-        }
-
-        return "en";
     }
 
     /**
@@ -204,7 +155,7 @@ public final class LanguageService implements ILanguageService {
      *
      * @param locale The new current locale.
      */
-    private void setCurrentLocale(Locale locale) {
+    private void setCurrentLocale(Locale locale) {//Thread safe
         this.locale = locale;
 
         Locale.setDefault(locale);
@@ -214,60 +165,91 @@ public final class LanguageService implements ILanguageService {
 
     @Override
     public void refreshAll() {
-        for (Internationalizable internationalizable : internationalizables) {
+        for (Internationalizable internationalizable : internationalizables) {//Thread safe
             internationalizable.refreshText(this);
         }
     }
 
     @Override
-    public void addInternationalizable(Internationalizable internationalizable) {
+    public void addInternationalizable(Internationalizable internationalizable) { //Thread safe
         internationalizables.add(internationalizable);
     }
 
     @Override
-    public Locale getCurrentLocale() {
+    public Locale getCurrentLocale() {//Thread safe
         return locale;
     }
 
     @Override
-    public String getCurrentLanguage() {
-        String language = null;
-
-        for (Map.Entry<String, Locale> entry : languages.entrySet()) {
-            if (entry.getValue().equals(locale)) {
-                language = entry.getKey();
-                break;
-            }
-        }
-
-        return language;
+    public String getCurrentLanguage() {//Thread safe
+        return locale.getDisplayLanguage();
     }
 
     @Override
-    public String[] getLinesMessage(String key) {
+    public String[] getLinesMessage(String key) {//Thread safe
         String message = getMessage(key);
 
         if (StringUtils.isEmpty(message)) {
             return ZERO_LENGTH_ARRAY;
         }
 
-        Collection<String> tokens = CollectionUtils.newList(5);
-
-        Scanner scanner = new Scanner(message);
-
-        while (scanner.hasNextLine()) {
-            tokens.add(scanner.nextLine());
-        }
-
-        return tokens.toArray(new String[tokens.size()]);
+        return StringUtils.getLines(message);
     }
 
     @Override
-    public String getMessage(String key, Object... replaces) {
+    public String getMessage(String key, Object... replaces) {//Thread safe
         if (StringUtils.isEmpty(key)) {
             return StringUtils.EMPTY_STRING;
         }
 
         return resourceBundle.getMessage(key, replaces, locale);
+    }
+
+    /**
+     * Return the base name of the i18n resource.
+     *
+     * @param resource The resource to compute the base name for.
+     *
+     * @return The base name of the i18n resource.
+     */
+    private static String getBaseName(I18NResource resource) {
+        String name = resource.getFileName();
+
+        if (name.contains("_")) {
+            return name.substring(0, name.indexOf('_'));
+        }
+
+        return name.substring(0, name.indexOf('.'));
+    }
+
+    /**
+     * Convert the language to his short form.
+     *
+     * @param language The language to convert.
+     *
+     * @return The short form of the language.
+     */
+    private static String toShortForm(CharSequence language) {
+        if ("Français".equals(language) || "fr".equals(language)) {
+            return "fr";
+        } else if ("Deutsch".equals(language) || "de".equals(language)) {
+            return "de";
+        }
+
+        return "en";
+    }
+
+    private static Locale toLocale(String shortForm){
+        if("fr".equals(shortForm)){
+            return Locale.FRENCH;
+        } else if ("de".equals(shortForm)) {
+            return Locale.GERMAN;
+        } else if ("en".equals(shortForm)) {
+            return Locale.ENGLISH;
+        }
+
+        LoggerFactory.getLogger(LanguageService.class).error("Unable to get the locale");
+
+        return Locale.ENGLISH;
     }
 }

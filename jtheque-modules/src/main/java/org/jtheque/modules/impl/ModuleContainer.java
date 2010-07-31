@@ -1,6 +1,6 @@
 package org.jtheque.modules.impl;
 
-import org.jtheque.i18n.able.ILanguageService;
+import org.jtheque.i18n.able.LanguageService;
 import org.jtheque.modules.able.Module;
 import org.jtheque.modules.able.ModuleState;
 import org.jtheque.modules.able.Resources;
@@ -49,7 +49,7 @@ public final class ModuleContainer implements Module {
     /**
      * For internationalization purpose.
      */
-    private final ILanguageService languageService;
+    private final LanguageService languageService;
 
     /**
      * Create a module container using the given builder informations.
@@ -187,7 +187,7 @@ public final class ModuleContainer implements Module {
         private String updateUrl;
         private String messagesUrl;
         private boolean collection;
-        private ILanguageService languageService;
+        private LanguageService languageService;
         private ModuleResources resources = new ModuleResources();
 
         /**
@@ -232,7 +232,7 @@ public final class ModuleContainer implements Module {
          *
          * @param languageService The language service.
          */
-        public void setLanguageService(ILanguageService languageService) {
+        public void setLanguageService(LanguageService languageService) {
             this.languageService = languageService;
         }
 

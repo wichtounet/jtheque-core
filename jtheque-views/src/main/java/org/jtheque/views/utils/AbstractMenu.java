@@ -5,7 +5,7 @@ import org.jtheque.features.able.Features;
 import org.jtheque.features.able.IFeature;
 import org.jtheque.features.able.IFeature.FeatureType;
 import org.jtheque.features.able.Menu;
-import org.jtheque.i18n.able.ILanguageService;
+import org.jtheque.i18n.able.LanguageService;
 import org.jtheque.i18n.able.Internationalizable;
 import org.jtheque.ui.able.IController;
 import org.jtheque.ui.utils.actions.ActionFactory;
@@ -291,7 +291,7 @@ public abstract class AbstractMenu implements Menu {
     }
 
     @Override
-    public void refreshText(ILanguageService languageService) {
+    public void refreshText(LanguageService languageService) {
         for (Internationalizable internationalizable : internationalizables) {
             internationalizable.refreshText(languageService);
         }

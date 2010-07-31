@@ -16,7 +16,7 @@ package org.jtheque.views.impl.windows;
  * limitations under the License.
  */
 
-import org.jtheque.i18n.able.ILanguageService;
+import org.jtheque.i18n.able.LanguageService;
 import org.jtheque.modules.able.IModuleDescription;
 import org.jtheque.modules.able.IModuleService;
 import org.jtheque.ui.able.IModel;
@@ -46,7 +46,7 @@ public final class RepositoryView extends SwingFilthyBuildedDialogView<IModel> i
     private IModuleService moduleService;
 
     @Resource
-    private ILanguageService languageService;
+    private LanguageService languageService;
 
     @Resource
     private IUpdateService updateService;

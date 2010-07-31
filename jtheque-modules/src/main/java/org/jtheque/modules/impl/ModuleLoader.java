@@ -4,7 +4,7 @@ import org.jtheque.core.able.ICore;
 import org.jtheque.core.utils.OSGiUtils;
 import org.jtheque.errors.able.IErrorService;
 import org.jtheque.errors.able.Errors;
-import org.jtheque.i18n.able.ILanguageService;
+import org.jtheque.i18n.able.LanguageService;
 import org.jtheque.i18n.able.I18NResourceFactory;
 import org.jtheque.modules.able.IModuleLoader;
 import org.jtheque.modules.able.Module;
@@ -77,7 +77,7 @@ public final class ModuleLoader implements IModuleLoader, BundleContextAware {
     private IResourceService resourceService;
 
     @Resource
-    private ILanguageService languageService;
+    private LanguageService languageService;
 
     @Resource
     private ICore core;

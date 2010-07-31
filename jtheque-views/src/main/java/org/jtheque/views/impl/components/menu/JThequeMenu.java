@@ -16,7 +16,7 @@ package org.jtheque.views.impl.components.menu;
  * limitations under the License.
  */
 
-import org.jtheque.i18n.able.ILanguageService;
+import org.jtheque.i18n.able.LanguageService;
 import org.jtheque.i18n.able.Internationalizable;
 
 import javax.swing.JMenu;
@@ -44,7 +44,7 @@ public final class JThequeMenu extends JMenu implements Internationalizable {
     }
 
     @Override
-    public void refreshText(ILanguageService languageService) {
+    public void refreshText(LanguageService languageService) {
         setText(languageService.getMessage(key));
     }
 }

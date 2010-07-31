@@ -20,7 +20,7 @@ import org.jtheque.core.able.ICore;
 import org.jtheque.core.able.lifecycle.TitleEvent;
 import org.jtheque.core.able.lifecycle.TitleListener;
 import org.jtheque.utils.SimplePropertiesCache;
-import org.jtheque.i18n.able.ILanguageService;
+import org.jtheque.i18n.able.LanguageService;
 import org.jtheque.ui.able.IModel;
 import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.ui.able.components.Borders;
@@ -72,7 +72,7 @@ public final class MainView extends SwingFrameView<IModel> implements TitleListe
     private JThequeStateBar stateBar;
 
     private final IViewService viewService;
-    private final ILanguageService languageService;
+    private final LanguageService languageService;
     private final IViews views;
     private final IUIUtils uiUtils;
     private final ICore core;
@@ -89,7 +89,7 @@ public final class MainView extends SwingFrameView<IModel> implements TitleListe
      * @param languageService The language service.
      */
     public MainView(ICore core, IViewService viewService, IViews views, IUIUtils uiUtils, JThequeMenuBar menuBar,
-                    ILanguageService languageService) {
+                    LanguageService languageService) {
         super();
 
         this.core = core;

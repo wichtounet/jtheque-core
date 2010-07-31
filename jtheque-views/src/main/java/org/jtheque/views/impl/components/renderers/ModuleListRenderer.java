@@ -16,7 +16,7 @@ package org.jtheque.views.impl.components.renderers;
  * limitations under the License.
  */
 
-import org.jtheque.i18n.able.ILanguageService;
+import org.jtheque.i18n.able.LanguageService;
 import org.jtheque.modules.able.Module;
 import org.jtheque.ui.able.components.Borders;
 import org.jtheque.ui.utils.actions.OpenSiteLinkAction;
@@ -53,7 +53,7 @@ public final class ModuleListRenderer extends JPanel implements ListCellRenderer
     private Font fontLabelBold;
 
     private final IUpdateService updateService;
-    private final ILanguageService languageService;
+    private final LanguageService languageService;
 
     private final Map<Module, ModuleListPanel> panels = CollectionUtils.newHashMap(10);
 
@@ -63,7 +63,7 @@ public final class ModuleListRenderer extends JPanel implements ListCellRenderer
      * @param updateService   The update service.
      * @param languageService The language service.
      */
-    public ModuleListRenderer(IUpdateService updateService, ILanguageService languageService) {
+    public ModuleListRenderer(IUpdateService updateService, LanguageService languageService) {
         super();
 
         this.updateService = updateService;

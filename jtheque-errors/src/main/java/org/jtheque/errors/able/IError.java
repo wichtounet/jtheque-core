@@ -16,7 +16,7 @@ package org.jtheque.errors.able;
  * limitations under the License.
  */
 
-import org.jtheque.i18n.able.ILanguageService;
+import org.jtheque.i18n.able.LanguageService;
 import org.jtheque.utils.annotations.Immutable;
 
 /**
@@ -51,7 +51,7 @@ public interface IError {
      *
      * @return The title, internationalized or not.
      */
-    String getTitle(ILanguageService languageService);
+    String getTitle(LanguageService languageService);
 
     /**
      * Return the details of the error.
@@ -60,5 +60,5 @@ public interface IError {
      *
      * @return The details, internationalized or not.
      */
-    String getDetails(ILanguageService languageService);
+    String getDetails(LanguageService languageService);
 }

@@ -1,6 +1,6 @@
 package org.jtheque.ui.utils.builded;
 
-import org.jtheque.i18n.able.ILanguageService;
+import org.jtheque.i18n.able.LanguageService;
 import org.jtheque.i18n.able.Internationalizable;
 import org.jtheque.i18n.able.InternationalizableContainer;
 import org.jtheque.ui.able.IFilthyUtils;
@@ -40,7 +40,7 @@ import java.util.Collection;
 public abstract class FilthyBuildedPanel extends FilthyBackgroundPanel implements InternationalizableContainer, IView {
     private final Collection<Internationalizable> internationalizables = CollectionUtils.newList(15);
 
-    private ILanguageService languageService;
+    private LanguageService languageService;
 
     private IModel model;
 
@@ -57,7 +57,7 @@ public abstract class FilthyBuildedPanel extends FilthyBackgroundPanel implement
      * @param filthyUtils     The filthyUtils.
      * @param languageService The language service.
      */
-    public FilthyBuildedPanel(IFilthyUtils filthyUtils, ILanguageService languageService) {
+    public FilthyBuildedPanel(IFilthyUtils filthyUtils, LanguageService languageService) {
         super(filthyUtils);
 
         this.languageService = languageService;
@@ -90,7 +90,7 @@ public abstract class FilthyBuildedPanel extends FilthyBackgroundPanel implement
      *
      * @return The language service.
      */
-    protected ILanguageService getLanguageService() {
+    protected LanguageService getLanguageService() {
         return languageService;
     }
 
@@ -100,7 +100,7 @@ public abstract class FilthyBuildedPanel extends FilthyBackgroundPanel implement
     }
 
     @Override
-    public void refreshText(ILanguageService languageService) {
+    public void refreshText(LanguageService languageService) {
         for (Internationalizable internationalizable : internationalizables) {
             internationalizable.refreshText(languageService);
         }

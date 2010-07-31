@@ -2,7 +2,7 @@ package org.jtheque.views.impl.windows;
 
 import org.jtheque.events.able.IEvent;
 import org.jtheque.events.able.IEventService;
-import org.jtheque.i18n.able.ILanguageService;
+import org.jtheque.i18n.able.LanguageService;
 import org.jtheque.ui.able.IModel;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.ui.utils.builders.PanelBuilder;
@@ -83,7 +83,7 @@ public final class EventView extends SwingFilthyBuildedDialogView<IModel> implem
         builder.addComboBox(new SimpleListModel<String>(getService(IEventService.class).getEventLogs()), Filthy.newListRenderer(),
                 builder.gbcSet(1, 0, GridBagUtils.HORIZONTAL, GridBagUtils.LINE_START, 1.0, 0.0)).addItemListener(this);
 
-        eventsModel = new EventsTableModel(getService(IEventService.class), getService(ILanguageService.class));
+        eventsModel = new EventsTableModel(getService(IEventService.class), getService(LanguageService.class));
         eventsModel.setHeaders(new String[]{
                 getMessage("log.view.level"),
                 getMessage("log.view.date"),

@@ -16,7 +16,7 @@ package org.jtheque.ui.impl.components;
  * limitations under the License.
  */
 
-import org.jtheque.i18n.able.ILanguageService;
+import org.jtheque.i18n.able.LanguageService;
 import org.jtheque.i18n.able.Internationalizable;
 
 import javax.swing.border.TitledBorder;
@@ -44,7 +44,7 @@ public final class BorderUpdater implements Internationalizable {
     }
 
     @Override
-    public void refreshText(ILanguageService languageService) {
+    public void refreshText(LanguageService languageService) {
         border.setTitle(languageService.getMessage(key));
     }
 }

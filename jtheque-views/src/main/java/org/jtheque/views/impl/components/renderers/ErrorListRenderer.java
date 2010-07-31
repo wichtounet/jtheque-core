@@ -18,7 +18,7 @@ package org.jtheque.views.impl.components.renderers;
 
 import org.jtheque.errors.able.IError;
 import org.jtheque.errors.able.IError.Level;
-import org.jtheque.i18n.able.ILanguageService;
+import org.jtheque.i18n.able.LanguageService;
 import org.jtheque.images.able.ImageService;
 import org.jtheque.views.impl.ViewsResources;
 
@@ -38,7 +38,7 @@ import java.awt.Component;
 public final class ErrorListRenderer extends JLabel implements ListCellRenderer {
     private final ImageIcon errorIcon;
     private final ImageIcon warningIcon;
-    private final ILanguageService languageService;
+    private final LanguageService languageService;
 
     /**
      * Construct a new ModuleListRenderer.
@@ -46,7 +46,7 @@ public final class ErrorListRenderer extends JLabel implements ListCellRenderer 
      * @param imageService    The resource service.
      * @param languageService The language service.
      */
-    public ErrorListRenderer(ImageService imageService, ILanguageService languageService) {
+    public ErrorListRenderer(ImageService imageService, LanguageService languageService) {
         super();
 
         this.languageService = languageService;

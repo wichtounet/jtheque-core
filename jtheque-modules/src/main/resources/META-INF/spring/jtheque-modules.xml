@@ -35,7 +35,7 @@
     <osgi:reference id="core" interface="org.jtheque.core.able.ICore"/>
     <osgi:reference id="errorService" interface="org.jtheque.errors.able.IErrorService"/>
     <osgi:reference id="iuiUtils" interface="org.jtheque.ui.able.IUIUtils"/>
-    <osgi:reference id="languageService" interface="org.jtheque.i18n.able.ILanguageService"/>
+    <osgi:reference id="languageService" interface="org.jtheque.i18n.able.LanguageService"/>
     <osgi:reference id="imageService" interface="org.jtheque.images.able.ImageService"/>
     <osgi:reference id="eventService" interface="org.jtheque.events.able.IEventService"/>
 

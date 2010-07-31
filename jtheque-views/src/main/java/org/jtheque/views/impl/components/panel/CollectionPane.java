@@ -18,7 +18,7 @@ package org.jtheque.views.impl.components.panel;
 
 import org.jtheque.core.able.ICore;
 import org.jtheque.utils.SimplePropertiesCache;
-import org.jtheque.i18n.able.ILanguageService;
+import org.jtheque.i18n.able.LanguageService;
 import org.jtheque.ui.able.IController;
 import org.jtheque.ui.able.components.Components;
 import org.jtheque.ui.able.components.TextField;
@@ -66,7 +66,7 @@ public final class CollectionPane extends AbstractPanelView implements ICollecti
     private IController<ICollectionView> collectionController;
 
     @Resource
-    private ILanguageService languageService;
+    private LanguageService languageService;
 
     private JThequeAction chooseAction;
 

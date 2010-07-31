@@ -17,7 +17,7 @@ package org.jtheque.views.impl.components.panel;
  */
 
 import org.jtheque.core.able.ICore;
-import org.jtheque.i18n.able.ILanguageService;
+import org.jtheque.i18n.able.LanguageService;
 import org.jtheque.ui.able.IFilthyUtils;
 import org.jtheque.ui.utils.builded.FilthyBuildedPanel;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
@@ -48,7 +48,7 @@ public final class KernelInfoPanel extends FilthyBuildedPanel {
      * @param updateService   The update service.
      * @param moduleView      The module view.
      */
-    public KernelInfoPanel(ILanguageService languageService, IFilthyUtils filthyUtils, IUpdateService updateService,
+    public KernelInfoPanel(LanguageService languageService, IFilthyUtils filthyUtils, IUpdateService updateService,
                            IModuleView moduleView) {
         super(filthyUtils, languageService);
 

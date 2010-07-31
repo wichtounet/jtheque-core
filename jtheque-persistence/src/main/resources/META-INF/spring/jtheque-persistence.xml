@@ -15,7 +15,7 @@
             <osgi:reference interface="org.jtheque.images.able.ImageService"/>
         </constructor-arg>
         <constructor-arg>
-            <osgi:reference interface="org.jtheque.i18n.able.ILanguageService"/>
+            <osgi:reference interface="org.jtheque.i18n.able.LanguageService"/>
         </constructor-arg>
     </bean>
 

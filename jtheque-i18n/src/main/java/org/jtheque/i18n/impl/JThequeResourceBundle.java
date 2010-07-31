@@ -27,17 +27,33 @@ import java.util.Collection;
  *
  * @author Baptiste Wicht
  */
-public final class JThequeResourceBundle extends ReloadableResourceBundleMessageSource implements EditableResourceBundle {
+final class JThequeResourceBundle extends ReloadableResourceBundleMessageSource {
     private final Collection<String> baseNames = CollectionUtils.newSet();
 
-    @Override
+    JThequeResourceBundle() {
+        super();
+
+        setCacheSeconds(-1);
+        setDefaultEncoding("UTF-8");
+        setUseCodeAsDefaultMessage(true);
+    }
+
+    /**
+     * Add base name.
+     *
+     * @param baseName The base name to add.
+     */
     public void addBaseName(String baseName) {
         baseNames.add(baseName);
 
         refresh();
     }
 
-    @Override
+    /**
+     * Remove a base name.
+     *
+     * @param baseName The base name.
+     */
     public void removeBaseName(String baseName) {
         baseNames.remove(baseName);
 

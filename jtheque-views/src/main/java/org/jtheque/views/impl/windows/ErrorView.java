@@ -4,7 +4,7 @@ import org.jtheque.errors.able.ErrorListener;
 import org.jtheque.errors.able.IError;
 import org.jtheque.errors.able.IError.Level;
 import org.jtheque.errors.able.IErrorService;
-import org.jtheque.i18n.able.ILanguageService;
+import org.jtheque.i18n.able.LanguageService;
 import org.jtheque.images.able.ImageService;
 import org.jtheque.ui.able.IModel;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
@@ -57,7 +57,7 @@ public final class ErrorView extends SwingFilthyBuildedFrameView<IModel> impleme
     private JLabel labelTitle;
 
     private JTextArea areaDetails;
-    private ILanguageService languageService;
+    private LanguageService languageService;
 
     @Override
     protected void initView() {
@@ -69,7 +69,7 @@ public final class ErrorView extends SwingFilthyBuildedFrameView<IModel> impleme
     protected void buildView(I18nPanelBuilder builder) {
         builder.setDefaultInsets(new Insets(4, 4, 4, 4));
 
-        languageService = getService(ILanguageService.class);
+        languageService = getService(LanguageService.class);
 
         listEvents = builder.addScrolledList(new ErrorsListModel(getService(IErrorService.class)),
                 new ErrorListRenderer(getService(ImageService.class), languageService),

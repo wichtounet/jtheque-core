@@ -16,7 +16,7 @@ package org.jtheque.ui.impl.components;
  * limitations under the License.
  */
 
-import org.jtheque.i18n.able.ILanguageService;
+import org.jtheque.i18n.able.LanguageService;
 import org.jtheque.ui.able.components.I18nLabel;
 import org.jtheque.utils.collections.ArrayUtils;
 
@@ -80,7 +80,7 @@ public final class JThequeI18nLabel extends I18nLabel {
     }
 
     @Override
-    public void refreshText(ILanguageService languageService) {
+    public void refreshText(LanguageService languageService) {
         if (ArrayUtils.isEmpty(replaces)) {
             setText(languageService.getMessage(textKey));
         } else {

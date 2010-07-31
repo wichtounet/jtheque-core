@@ -1,6 +1,6 @@
 package org.jtheque.views.impl.components.panel;
 
-import org.jtheque.i18n.able.ILanguageService;
+import org.jtheque.i18n.able.LanguageService;
 import org.jtheque.modules.able.IModuleService;
 import org.jtheque.modules.able.Module;
 import org.jtheque.ui.able.IFilthyUtils;
@@ -43,7 +43,7 @@ public final class ModulesPanel extends OSGIFilthyBuildedPanel implements IModul
     @Override
     protected void buildView(I18nPanelBuilder builder) {
         IUpdateService updateService = getService(IUpdateService.class);
-        ILanguageService languageService = getService(ILanguageService.class);
+        LanguageService languageService = getService(LanguageService.class);
         IModuleService moduleService = getService(IModuleService.class);
 
         IModuleView moduleView = getBean(IModuleView.class);

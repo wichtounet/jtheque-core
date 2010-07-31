@@ -2,8 +2,8 @@ package org.jtheque.views.impl.controllers;
 
 import org.jtheque.collections.able.ICollectionsService;
 import org.jtheque.core.able.ICore;
+import org.jtheque.i18n.able.LanguageService;
 import org.jtheque.utils.bean.Response;
-import org.jtheque.i18n.able.ILanguageService;
 import org.jtheque.ui.able.Action;
 import org.jtheque.ui.utils.AbstractController;
 import org.jtheque.views.able.panel.ICollectionView;
@@ -36,7 +36,7 @@ public class CollectionController extends AbstractController<ICollectionView> {
     private ICollectionsService collectionsService;
 
     @Resource
-    private ILanguageService languageService;
+    private LanguageService languageService;
 
     @Resource
     private ICore core;

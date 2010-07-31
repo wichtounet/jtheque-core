@@ -16,8 +16,8 @@ package org.jtheque.views.impl.windows;
  * limitations under the License.
  */
 
+import org.jtheque.i18n.able.LanguageService;
 import org.jtheque.utils.SimplePropertiesCache;
-import org.jtheque.i18n.able.ILanguageService;
 import org.jtheque.ui.able.IModel;
 import org.jtheque.ui.able.constraints.Constraint;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
@@ -48,7 +48,7 @@ public final class ConfigView extends SwingFilthyBuildedDialogView<IModel> imple
 
     @Override
     protected void buildView(I18nPanelBuilder builder) {
-        ILanguageService languageService = getService(ILanguageService.class);
+        LanguageService languageService = getService(LanguageService.class);
 
         tab = new LayerTabbedPane(languageService);
 
@@ -86,11 +86,11 @@ public final class ConfigView extends SwingFilthyBuildedDialogView<IModel> imple
         if ("add".equals(message)) {
             ConfigTabComponent component = (ConfigTabComponent) value;
 
-            tab.addLayeredTab(getService(ILanguageService.class).getMessage(component.getTitleKey()), component.getComponent());
+            tab.addLayeredTab(getService(LanguageService.class).getMessage(component.getTitleKey()), component.getComponent());
         } else if ("remove".equals(message)) {
             ConfigTabComponent component = (ConfigTabComponent) value;
 
-            int index = tab.indexOfTab(getService(ILanguageService.class).getMessage(component.getTitleKey()));
+            int index = tab.indexOfTab(getService(LanguageService.class).getMessage(component.getTitleKey()));
 
             if(index >= 0){
                 tab.removeTabAt(index);

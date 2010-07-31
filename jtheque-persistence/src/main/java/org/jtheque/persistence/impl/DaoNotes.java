@@ -1,6 +1,6 @@
 package org.jtheque.persistence.impl;
 
-import org.jtheque.i18n.able.ILanguageService;
+import org.jtheque.i18n.able.LanguageService;
 import org.jtheque.images.able.ImageService;
 import org.jtheque.persistence.able.IDaoNotes;
 import org.jtheque.persistence.able.Note;
@@ -37,7 +37,7 @@ public final class DaoNotes implements IDaoNotes {
 
     private final BufferedImage[] stars;
 
-    private final ILanguageService languageService;
+    private final LanguageService languageService;
 
     /**
      * Construct a new DaoNotes.
@@ -45,7 +45,7 @@ public final class DaoNotes implements IDaoNotes {
      * @param imageService    The resources.
      * @param languageService The language service.
      */
-    public DaoNotes(ImageService imageService, ILanguageService languageService) {
+    public DaoNotes(ImageService imageService, LanguageService languageService) {
         super();
 
         this.languageService = languageService;

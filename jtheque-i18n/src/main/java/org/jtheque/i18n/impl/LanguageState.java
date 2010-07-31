@@ -1,8 +1,9 @@
 package org.jtheque.i18n.impl;
 
 import org.jtheque.states.able.State;
-import org.jtheque.states.utils.AbstractState;
+import org.jtheque.states.utils.AbstractConcurrentState;
 import org.jtheque.utils.StringUtils;
+import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.bean.Version;
 
 /*
@@ -26,8 +27,9 @@ import org.jtheque.utils.bean.Version;
  *
  * @author Baptiste Wicht
  */
+@ThreadSafe
 @State(id = "jtheque-i18n-configuration")
-public final class LanguageState extends AbstractState {
+final class LanguageState extends AbstractConcurrentState {
     /**
      * Set the language.
      *

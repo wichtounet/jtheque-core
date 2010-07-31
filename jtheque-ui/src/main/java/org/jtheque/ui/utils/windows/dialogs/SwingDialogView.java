@@ -17,9 +17,9 @@ package org.jtheque.ui.utils.windows.dialogs;
  */
 
 import org.jtheque.core.utils.OSGiUtils;
+import org.jtheque.i18n.able.LanguageService;
 import org.jtheque.utils.SimplePropertiesCache;
 import org.jtheque.errors.able.IError;
-import org.jtheque.i18n.able.ILanguageService;
 import org.jtheque.i18n.able.Internationalizable;
 import org.jtheque.i18n.able.InternationalizableContainer;
 import org.jtheque.ui.able.IController;
@@ -76,7 +76,7 @@ public abstract class SwingDialogView<T extends IModel> extends JDialog
         setResizable(true);
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 
-        getService(ILanguageService.class).addInternationalizable(this);
+        getService(LanguageService.class).addInternationalizable(this);
 
         super.setContentPane(state.getContent());
 
@@ -159,7 +159,7 @@ public abstract class SwingDialogView<T extends IModel> extends JDialog
     }
 
     @Override
-    public void refreshText(ILanguageService languageService) {
+    public void refreshText(LanguageService languageService) {
         state.refreshText(languageService);
     }
 
@@ -221,7 +221,7 @@ public abstract class SwingDialogView<T extends IModel> extends JDialog
      * @return the internationalized message.
      */
     protected String getMessage(String key, Object... replaces) {
-        return getService(ILanguageService.class).getMessage(key, replaces);
+        return getService(LanguageService.class).getMessage(key, replaces);
     }
 
     /**
