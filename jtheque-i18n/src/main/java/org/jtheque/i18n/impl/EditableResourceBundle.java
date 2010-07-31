@@ -1,4 +1,4 @@
-package org.jtheque.i18n.able;
+package org.jtheque.i18n.impl;
 
 /*
  * Copyright JTheque (Baptiste Wicht)

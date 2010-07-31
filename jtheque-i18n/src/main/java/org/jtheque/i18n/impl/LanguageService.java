@@ -2,9 +2,9 @@ package org.jtheque.i18n.impl;
 
 import org.jtheque.core.utils.SystemProperty;
 import org.jtheque.i18n.able.I18NResource;
+import org.jtheque.i18n.able.I18NResourceFactory;
 import org.jtheque.i18n.able.ILanguageService;
 import org.jtheque.i18n.able.Internationalizable;
-import org.jtheque.i18n.utils.I18NResourceFactory;
 import org.jtheque.states.able.IStateService;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.bean.Version;
@@ -17,7 +17,6 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Scanner;

@@ -1,7 +1,7 @@
-package org.jtheque.i18n.utils;
+package org.jtheque.i18n.able;
 
-import org.jtheque.i18n.able.I18NResource;
-import org.jtheque.i18n.impl.I18NResourceImpl;
+import org.jtheque.utils.annotations.Immutable;
+import org.jtheque.utils.annotations.ThreadSafe;
 
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.InputStreamResource;
@@ -28,10 +28,11 @@ import java.net.URL;
  */
 
 /**
- * A utility factory for I18NResource.
+ * An utility factory for I18NResource.
  *
  * @author Baptiste Wicht
  */
+@ThreadSafe
 public final class I18NResourceFactory {
     /**
      * Utility class, not instantiable.
@@ -77,5 +78,47 @@ public final class I18NResourceFactory {
      */
     public static I18NResource fromFile(File file) {
         return new I18NResourceImpl(file.getName(), new FileSystemResource(file));
+    }
+
+    /**
+     * An i18n resource implementation.
+     *
+     * @author Baptiste Wicht
+     */
+    @Immutable
+    private static final class I18NResourceImpl implements I18NResource {
+        private final String fileName;
+        private final Resource resource;
+
+        /**
+         * Construct a new I18NResourceImpl.
+         *
+         * @param fileName The file name.
+         * @param resource The spring resource to the file.
+         */
+        private I18NResourceImpl(String fileName, Resource resource) {
+            super();
+
+            this.fileName = fileName;
+            this.resource = resource;
+        }
+
+        @Override
+        public String getFileName() {
+            return fileName;
+        }
+
+        @Override
+        public Resource getResource() {
+            return resource;
+        }
+
+        @Override
+        public String toString() {
+            return "I18NResourceImpl{" +
+                    "fileName='" + fileName + '\'' +
+                    ", resource=" + resource +
+                    '}';
+        }
     }
 }
