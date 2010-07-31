@@ -25,7 +25,7 @@ import org.jtheque.core.able.application.Application;
 import org.jtheque.core.able.lifecycle.ILifeCycle;
 import org.jtheque.core.utils.WeakEventListenerList;
 import org.jtheque.events.able.IEventService;
-import org.jtheque.images.able.IImageService;
+import org.jtheque.images.able.ImageService;
 import org.jtheque.states.able.IStateService;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.collections.CollectionUtils;
@@ -50,7 +50,7 @@ public final class Core implements ICore {
     private final IFoldersContainer foldersContainer;
     private final IFilesContainer filesContainer;
     private final ICoreConfiguration configuration;
-    private final IImageService imageService;
+    private final ImageService imageService;
     private final ILifeCycle lifeCycle;
 
     private Application application;
@@ -62,7 +62,7 @@ public final class Core implements ICore {
      * @param imageService The resource service.
      * @param eventService The event service.
      */
-    public Core(IStateService stateService, IImageService imageService, IEventService eventService) {
+    public Core(IStateService stateService, ImageService imageService, IEventService eventService) {
         super();
 
         this.imageService = imageService;

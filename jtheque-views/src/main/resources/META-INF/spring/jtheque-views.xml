@@ -116,7 +116,7 @@
     <osgi:reference id="featureService" interface="org.jtheque.features.able.IFeatureService"/>
     <osgi:reference id="stateService" interface="org.jtheque.states.able.IStateService"/>
     <osgi:reference id="moduleService" interface="org.jtheque.modules.able.IModuleService"/>
-    <osgi:reference id="imageService" interface="org.jtheque.images.able.IImageService"/>
+    <osgi:reference id="imageService" interface="org.jtheque.images.able.ImageService"/>
     <osgi:reference id="errorsService" interface="org.jtheque.errors.able.IErrorService"/>
     <osgi:reference id="fileService" interface="org.jtheque.file.able.IFileService"/>
     <osgi:reference id="messageService" interface="org.jtheque.messages.able.IMessageService"/>

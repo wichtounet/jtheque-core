@@ -19,7 +19,7 @@ package org.jtheque.modules.impl;
 import org.jtheque.core.able.ICore;
 import org.jtheque.core.utils.WeakEventListenerList;
 import org.jtheque.i18n.able.ILanguageService;
-import org.jtheque.images.able.IImageService;
+import org.jtheque.images.able.ImageService;
 import org.jtheque.modules.able.IModuleDescription;
 import org.jtheque.modules.able.IModuleLoader;
 import org.jtheque.modules.able.IModuleService;
@@ -93,7 +93,7 @@ public final class ModuleService implements IModuleService {
     private IStateService stateService;
 
     @Resource
-    private IImageService imageService;
+    private ImageService imageService;
 
     @Resource
     private IUpdateService updateService;

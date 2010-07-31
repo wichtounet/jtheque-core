@@ -1,7 +1,7 @@
 package org.jtheque.ui.impl;
 
 import org.jtheque.i18n.able.ILanguageService;
-import org.jtheque.images.able.IImageService;
+import org.jtheque.images.able.ImageService;
 import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.ui.able.ViewDelegate;
 
@@ -39,7 +39,7 @@ public class UIUtils implements IUIUtils {
      * @param languageService The language service.
      * @param imageService    The resource service.
      */
-    public UIUtils(ViewDelegate viewDelegate, ILanguageService languageService, IImageService imageService) {
+    public UIUtils(ViewDelegate viewDelegate, ILanguageService languageService, ImageService imageService) {
         super();
 
         this.viewDelegate = viewDelegate;

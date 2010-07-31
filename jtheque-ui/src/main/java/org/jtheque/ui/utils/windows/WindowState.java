@@ -6,7 +6,7 @@ import org.jtheque.errors.able.IError;
 import org.jtheque.errors.able.IErrorService;
 import org.jtheque.i18n.able.ILanguageService;
 import org.jtheque.i18n.able.Internationalizable;
-import org.jtheque.images.able.IImageService;
+import org.jtheque.images.able.ImageService;
 import org.jtheque.ui.able.IController;
 import org.jtheque.ui.able.IWindowState;
 import org.jtheque.ui.able.constraints.Constraint;
@@ -98,7 +98,7 @@ public final class WindowState implements IWindowState {
      * @return The default icon.
      */
     protected Image getDefaultWindowIcon() {
-        return getService(IImageService.class).getImage(ICore.WINDOW_ICON);
+        return getService(ImageService.class).getImage(ICore.WINDOW_ICON);
     }
 
     /**

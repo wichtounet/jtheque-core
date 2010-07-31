@@ -40,14 +40,6 @@ public final class ModuleResourceCache {
         throw new AssertionError();
     }
 
-    public static <T> void addAllResource(String id, Class<T> resourceType, Collection<T> resources) {
-        if (StringUtils.isNotEmpty(id)) {
-            Set<T> resourceCache = check(id, resourceType);
-
-            resourceCache.addAll(resources);
-        }
-    }
-
     /**
      * Add the resources to the cache.
      *
@@ -61,6 +53,14 @@ public final class ModuleResourceCache {
             Set<T> resourceCache = check(id, resourceType);
 
             resourceCache.add(resource);
+        }
+    }
+
+    public static <T> void addAllResource(String id, Class<T> resourceType, Collection<T> resources) {
+        if (StringUtils.isNotEmpty(id)) {
+            Set<T> resourceCache = check(id, resourceType);
+
+            resourceCache.addAll(resources);
         }
     }
 

@@ -19,7 +19,7 @@ package org.jtheque.views.impl.components.renderers;
 import org.jtheque.errors.able.IError;
 import org.jtheque.errors.able.IError.Level;
 import org.jtheque.i18n.able.ILanguageService;
-import org.jtheque.images.able.IImageService;
+import org.jtheque.images.able.ImageService;
 import org.jtheque.views.impl.ViewsResources;
 
 import javax.swing.ImageIcon;
@@ -46,7 +46,7 @@ public final class ErrorListRenderer extends JLabel implements ListCellRenderer 
      * @param imageService    The resource service.
      * @param languageService The language service.
      */
-    public ErrorListRenderer(IImageService imageService, ILanguageService languageService) {
+    public ErrorListRenderer(ImageService imageService, ILanguageService languageService) {
         super();
 
         this.languageService = languageService;
