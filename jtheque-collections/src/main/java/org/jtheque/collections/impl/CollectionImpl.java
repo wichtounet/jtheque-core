@@ -18,7 +18,7 @@ package org.jtheque.collections.impl;
 
 import org.jtheque.collections.able.Collection;
 import org.jtheque.persistence.utils.AbstractEntity;
-import org.jtheque.utils.bean.EqualsUtils;
+import org.jtheque.utils.bean.EqualsBuilder;
 import org.jtheque.utils.bean.HashCodeUtils;
 
 /**
@@ -81,15 +81,18 @@ public final class CollectionImpl extends AbstractEntity implements Collection {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
+    public boolean equals(Object o) {
+        if (o instanceof CollectionImpl) {
+            CollectionImpl other = (CollectionImpl) o;
+
+            return EqualsBuilder.newBuilder(this, other).
+                    addField(getId(), other.getId()).
+                    addField(title, other.title).
+                    addField(protection, other.protection).
+                    addField(password, other.password).
+                    areEquals();
         }
 
-        Collection other = (Collection) obj;
-
-        return EqualsUtils.areEqualsDirect(this, obj,
-                getId(), title, protection, password,
-                other.getId(), other.getTitle(), other.isProtection(), other.getPassword());
+        return false;
     }
 }

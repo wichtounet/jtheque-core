@@ -18,8 +18,8 @@ package org.jtheque.persistence.impl;
 
 import org.jtheque.persistence.able.IDaoNotes;
 import org.jtheque.persistence.able.Note;
-import org.jtheque.utils.Constants;
-import org.jtheque.utils.bean.EqualsUtils;
+import org.jtheque.utils.bean.EqualsBuilder;
+import org.jtheque.utils.bean.HashCodeUtils;
 
 /**
  * A note.
@@ -54,37 +54,27 @@ public final class NoteImpl implements Note {
     }
 
     @Override
-    public int hashCode() {
-        int result = Constants.HASH_CODE_START;
-
-        result = Constants.HASH_CODE_PRIME * result + value.intValue();
-        result = Constants.HASH_CODE_PRIME * result + (key == null ? 0 : key.hashCode());
-
-        return result;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-
-        if (EqualsUtils.areObjectIncompatible(this, obj)) {
-            return false;
-        }
-
-        final NoteImpl other = (NoteImpl) obj;
-
-        if (value != other.value) {
-            return false;
-        }
-
-        return !EqualsUtils.areNotEquals(key, other.key);
-
-    }
-
-    @Override
     public IDaoNotes.NoteType getValue() {
         return value;
+    }
+
+    @Override
+    public int hashCode() {
+        return HashCodeUtils.hashCodeDirect(value, key);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof NoteImpl) {
+            NoteImpl other = (NoteImpl) o;
+
+            return EqualsBuilder.newBuilder(this, other).
+                    addField(value, other.value).
+                    addField(key, other.key).
+                    areEquals();
+        }
+
+        return false;
+
     }
 }
