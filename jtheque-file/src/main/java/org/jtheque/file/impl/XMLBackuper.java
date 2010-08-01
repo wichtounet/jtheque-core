@@ -17,8 +17,9 @@ package org.jtheque.file.impl;
  */
 
 import org.jtheque.core.able.ICore;
-import org.jtheque.file.able.IFileService.XmlBackupVersion;
+import org.jtheque.file.able.FileService.XmlBackupVersion;
 import org.jtheque.file.able.ModuleBackup;
+import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.bean.IntDate;
 import org.jtheque.xml.utils.IXMLWriter;
 import org.jtheque.xml.utils.XML;
@@ -32,7 +33,8 @@ import java.io.File;
  *
  * @author Baptiste Wicht
  */
-public final class XMLBackuper {
+@ThreadSafe
+final class XMLBackuper {
     /**
      * Utility class, not instanciable.
      */
@@ -55,7 +57,9 @@ public final class XMLBackuper {
             writeBackup(writer, backup);
         }
 
-        writer.write(file.getAbsolutePath());
+        synchronized (XMLBackuper.class){
+            writer.write(file.getAbsolutePath());
+        }
     }
 
     /**

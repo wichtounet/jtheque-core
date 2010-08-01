@@ -2,7 +2,7 @@ package org.jtheque.views.utils;
 
 import org.jtheque.features.able.IFeatureService;
 import org.jtheque.features.able.Menu;
-import org.jtheque.file.able.IFileService;
+import org.jtheque.file.able.FileService;
 import org.jtheque.file.able.ModuleBackuper;
 import org.jtheque.schemas.able.ISchemaService;
 import org.jtheque.schemas.able.Schema;
@@ -41,7 +41,7 @@ public class AutoRegistrationPostProcessor implements BeanPostProcessor {
     private IViews views;
     private IFeatureService featureService;
     private ISchemaService schemaService;
-    private IFileService fileService;
+    private FileService fileService;
 
     /**
      * Construct a new AutoRegistrationPostProcessor.
@@ -110,7 +110,7 @@ public class AutoRegistrationPostProcessor implements BeanPostProcessor {
      *
      * @param fileService The file service.
      */
-    public void setFileService(IFileService fileService) {
+    public void setFileService(FileService fileService) {
         this.fileService = fileService;
     }
 }

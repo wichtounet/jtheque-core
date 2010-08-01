@@ -16,6 +16,7 @@ package org.jtheque.file.able;
  * limitations under the License.
  */
 
+import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.io.FileException;
 import org.jtheque.xml.utils.XMLException;
 
@@ -27,7 +28,8 @@ import java.util.Collection;
  *
  * @author Baptiste Wicht
  */
-public interface IFileService {
+@ThreadSafe
+public interface FileService {
     /**
      * XML Backup versions.
      *

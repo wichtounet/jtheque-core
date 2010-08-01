@@ -17,7 +17,6 @@ package org.jtheque.file.impl;
  */
 
 import org.jtheque.file.able.Exporter;
-import org.jtheque.file.able.IFileService;
 import org.jtheque.file.able.Importer;
 import org.jtheque.file.able.ModuleBackup;
 import org.jtheque.file.able.ModuleBackuper;
@@ -25,6 +24,9 @@ import org.jtheque.modules.able.Module;
 import org.jtheque.modules.able.ModuleListener;
 import org.jtheque.modules.utils.ModuleResourceCache;
 import org.jtheque.utils.StringUtils;
+import org.jtheque.utils.annotations.GuardedBy;
+import org.jtheque.utils.annotations.GuardedInternally;
+import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.collections.ArrayUtils;
 import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.io.FileException;
@@ -43,37 +45,49 @@ import java.util.Set;
  *
  * @author Baptiste Wicht
  */
-public final class FileService implements IFileService, ModuleListener {
-    private final List<ModuleBackuper> backupers = CollectionUtils.newList(5);
+@ThreadSafe
+public final class FileService implements org.jtheque.file.able.FileService, ModuleListener {
+    @GuardedInternally
+    private final List<ModuleBackuper> backupers = CollectionUtils.newConcurrentList(5);
+
+    @GuardedBy("exporters")
     private final Map<String, Set<Exporter<?>>> exporters =  CollectionUtils.newHashMap(3);
+
+    @GuardedBy("importers")
     private final Map<String, Set<Importer>> importers = CollectionUtils.newHashMap(3);
 
     @Override
     public void registerExporter(String module, Exporter<?> exporter){
-        if(!exporters.containsKey(module)){
-            exporters.put(module, CollectionUtils.<Exporter<?>>newSet());
-        }
+        synchronized (exporters){
+            if(!exporters.containsKey(module)){
+                exporters.put(module, CollectionUtils.<Exporter<?>>newSet());
+            }
 
-        exporters.get(module).add(exporter);
+            exporters.get(module).add(exporter);
+        }
     }
 
     @Override
     public void registerImporter(String module, Importer importer) {
-        if (!importers.containsKey(module)) {
-            importers.put(module, CollectionUtils.<Importer>newSet());
+        synchronized (importers) {
+            if (!importers.containsKey(module)) {
+                importers.put(module, CollectionUtils.<Importer>newSet());
+            }
+            
+            importers.get(module).add(importer);
         }
-
-        importers.get(module).add(importer);
     }
 
     @Override
     public <T> void exportDatas(String module, String fileType, String file, Collection<T> datas) throws FileException {
-        if(exporters.containsKey(module)){
-            for(Exporter<?> exporter : exporters.get(module)){
-                if(exporter.canExportTo(fileType)){
-                    ((Exporter<T>) exporter).export(file, datas);
+        synchronized (exporters) {
+            if (exporters.containsKey(module)) {
+                for (Exporter<?> exporter : exporters.get(module)) {
+                    if (exporter.canExportTo(fileType)) {
+                        ((Exporter<T>) exporter).export(file, datas);
 
-                    return;
+                        return;
+                    }
                 }
             }
         }
@@ -81,12 +95,14 @@ public final class FileService implements IFileService, ModuleListener {
 
     @Override
     public void importDatas(String module, String fileType, String file) throws FileException {
-        if (exporters.containsKey(module)) {
-            for (Importer importer : importers.get(module)) {
-                if (importer.canImportFrom(fileType)) {
-                    importer.importFrom(file);
+        synchronized (importers) {
+            if (importers.containsKey(module)) {
+                for (Importer importer : importers.get(module)) {
+                    if (importer.canImportFrom(fileType)) {
+                        importer.importFrom(file);
 
-                    return;
+                        return;
+                    }
                 }
             }
         }
@@ -94,11 +110,13 @@ public final class FileService implements IFileService, ModuleListener {
 
     @Override
     public void backup(File file) {
-        Collection<ModuleBackup> backups = CollectionUtils.newList(backupers.size());
+        List<ModuleBackuper> activeBackupers = CollectionUtils.copyOf(backupers);
 
-        Collections.sort(backupers, new ModuleBackupComparator());
+        Collections.sort(activeBackupers, new ModuleBackupComparator());
 
-        for (ModuleBackuper backuper : backupers) {
+        Collection<ModuleBackup> backups = CollectionUtils.newList(activeBackupers.size());
+
+        for (ModuleBackuper backuper : activeBackupers) {
             backups.add(backuper.backup());
         }
 
@@ -107,11 +125,13 @@ public final class FileService implements IFileService, ModuleListener {
 
     @Override
     public void restore(File file) throws XMLException {
+        List<ModuleBackuper> activeBackupers = CollectionUtils.copyOf(backupers);
+
+        Collections.sort(activeBackupers, new ModuleBackupComparator());
+
         List<ModuleBackup> restores = XMLRestorer.restore(file);
 
-        Collections.sort(backupers, new ModuleBackupComparator());
-
-        for (ModuleBackuper backuper : backupers) {
+        for (ModuleBackuper backuper : activeBackupers) {
             for (ModuleBackup backup : restores) {
                 if (backup.getId().equals(backuper.getId())) {
                     backuper.restore(backup);
@@ -161,7 +181,7 @@ public final class FileService implements IFileService, ModuleListener {
      *
      * @author Baptiste Wicht
      */
-    private static class ModuleBackupComparator implements Comparator<ModuleBackuper> {
+    private static final class ModuleBackupComparator implements Comparator<ModuleBackuper> {
         @Override
         public int compare(ModuleBackuper backup1, ModuleBackuper backup2) {
             boolean hasDependency = StringUtils.isNotEmpty(backup1.getDependencies());

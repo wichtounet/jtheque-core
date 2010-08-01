@@ -1,7 +1,7 @@
 package org.jtheque.views.impl.controllers;
 
 import org.jtheque.core.able.ICore;
-import org.jtheque.file.able.IFileService;
+import org.jtheque.file.able.FileService;
 import org.jtheque.persistence.able.IPersistenceService;
 import org.jtheque.ui.able.Action;
 import org.jtheque.ui.able.IController;
@@ -52,7 +52,7 @@ public class GeneralController extends AbstractController<IMainView> {
     private IUIUtils uiUtils;
 
     @Resource
-    private IFileService fileService;
+    private FileService fileService;
 
     @Resource
     private IPersistenceService persistenceService;

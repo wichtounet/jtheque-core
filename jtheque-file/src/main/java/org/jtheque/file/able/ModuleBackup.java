@@ -1,5 +1,6 @@
 package org.jtheque.file.able;
 
+import org.jtheque.utils.annotations.Immutable;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.xml.utils.Node;
@@ -28,10 +29,19 @@ import java.util.List;
  *
  * @author Baptiste Wicht
  */
-public class ModuleBackup {
-    private Version version;
-    private String id;
-    private List<Node> nodes;
+@Immutable
+public final class ModuleBackup {
+    private final Version version;
+    private final String id;
+    private final List<Node> nodes;
+
+    public ModuleBackup(Version version, String id, Collection<Node> nodes) {
+        super();
+
+        this.version = version;
+        this.id = id;
+        this.nodes = CollectionUtils.copyOf(nodes);
+    }
 
     /**
      * Return the id of the module.
@@ -43,30 +53,12 @@ public class ModuleBackup {
     }
 
     /**
-     * Set the id of the module.
-     *
-     * @param id The id of the module.
-     */
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    /**
      * Return all the nodes of the backup.
      *
      * @return All the nodes of the backup.
      */
-    public List<Node> getNodes() {
-        return nodes;
-    }
-
-    /**
-     * Set the nodes of the backup.
-     *
-     * @param nodes The nodes of the backup.
-     */
-    public void setNodes(Collection<Node> nodes) {
-        this.nodes = CollectionUtils.copyOf(nodes);
+    public Collection<Node> getNodes() {
+        return CollectionUtils.protect(nodes);
     }
 
     /**
@@ -76,14 +68,5 @@ public class ModuleBackup {
      */
     public Version getVersion() {
         return version;
-    }
-
-    /**
-     * Set the version of the backuper.
-     *
-     * @param version The version of the backuper.
-     */
-    public void setVersion(Version version) {
-        this.version = version;
     }
 }

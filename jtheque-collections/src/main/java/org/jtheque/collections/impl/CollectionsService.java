@@ -21,10 +21,10 @@ import org.jtheque.collections.able.CollectionListener;
 import org.jtheque.collections.able.ICollectionsService;
 import org.jtheque.collections.able.IDaoCollections;
 import org.jtheque.core.able.ICore;
+import org.jtheque.file.able.FileService;
 import org.jtheque.utils.bean.Response;
 import org.jtheque.utils.SimplePropertiesCache;
 import org.jtheque.core.utils.WeakEventListenerList;
-import org.jtheque.file.able.IFileService;
 import org.jtheque.persistence.able.DataListener;
 import org.jtheque.schemas.able.ISchemaService;
 import org.jtheque.schemas.able.Schema;
@@ -54,7 +54,7 @@ public final class CollectionsService implements ICollectionsService {
      * @param schemaService  The schema service.
      * @param schema         The schema of the collections.
      */
-    public CollectionsService(IDaoCollections daoCollections, IFileService fileService, ICore core,
+    public CollectionsService(IDaoCollections daoCollections, FileService fileService, ICore core,
                               ISchemaService schemaService, Schema schema) {
         super();
 

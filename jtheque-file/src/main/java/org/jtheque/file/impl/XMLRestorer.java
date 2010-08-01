@@ -16,8 +16,9 @@ package org.jtheque.file.impl;
  * limitations under the License.
  */
 
-import org.jtheque.file.able.IFileService.XmlBackupVersion;
+import org.jtheque.file.able.FileService.XmlBackupVersion;
 import org.jtheque.file.able.ModuleBackup;
+import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.io.FileUtils;
@@ -35,7 +36,8 @@ import java.util.List;
  *
  * @author Baptiste Wicht
  */
-public final class XMLRestorer {
+@ThreadSafe
+final class XMLRestorer {
     /**
      * Utility class, not instanciable.
      */
@@ -67,12 +69,10 @@ public final class XMLRestorer {
             }
 
             for (Node backupElement : reader.getNodes("//backup", reader.getRootElement())) {
-                ModuleBackup backup = new ModuleBackup();
-
-                backup.setId(reader.readString("id", backupElement));
-                backup.setVersion(Version.get(reader.readString("version", backupElement)));
-
-                backup.setNodes(XML.newJavaFactory().newNodeLoader().resolveNodeStates(reader.getNodes("nodes/*", backupElement)));
+                backups.add(new ModuleBackup(
+                        Version.get(reader.readString("version", backupElement)),
+                        reader.readString("id", backupElement),
+                        XML.newJavaFactory().newNodeLoader().resolveNodeStates(reader.getNodes("nodes/*", backupElement))));
             }
         } finally {
             FileUtils.close(reader);
