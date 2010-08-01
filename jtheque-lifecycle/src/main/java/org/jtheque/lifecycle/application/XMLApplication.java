@@ -4,6 +4,7 @@ import org.jtheque.core.able.application.Application;
 import org.jtheque.core.able.application.ApplicationProperties;
 import org.jtheque.core.utils.ImageDescriptor;
 import org.jtheque.core.utils.ImageType;
+import org.jtheque.utils.annotations.NotThreadSafe;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.collections.ArrayUtils;
 import org.jtheque.utils.collections.CollectionUtils;
@@ -31,7 +32,8 @@ import java.util.Map;
  *
  * @author Baptiste Wicht
  */
-public final class XMLApplication implements Application {
+@NotThreadSafe
+final class XMLApplication implements Application {
     private Version version;
 
     private ApplicationProperties applicationProperties;

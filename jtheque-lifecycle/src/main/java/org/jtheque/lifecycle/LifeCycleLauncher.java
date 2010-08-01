@@ -4,13 +4,15 @@ import org.jtheque.collections.able.CollectionListener;
 import org.jtheque.collections.able.ICollectionsService;
 import org.jtheque.core.able.ICore;
 import org.jtheque.core.able.application.Application;
-import org.jtheque.events.able.EventService;
-import org.jtheque.events.able.Events;
-import org.jtheque.utils.SimplePropertiesCache;
 import org.jtheque.core.utils.SystemProperty;
 import org.jtheque.events.able.EventLevel;
+import org.jtheque.events.able.EventService;
+import org.jtheque.events.able.Events;
 import org.jtheque.lifecycle.application.XMLApplicationReader;
 import org.jtheque.modules.able.IModuleService;
+import org.jtheque.utils.SimplePropertiesCache;
+import org.jtheque.utils.ThreadUtils;
+import org.jtheque.utils.annotations.NotThreadSafe;
 import org.jtheque.utils.ui.SwingUtils;
 import org.jtheque.utils.ui.edt.SimpleTask;
 import org.jtheque.views.able.ISplashService;
@@ -21,9 +23,6 @@ import org.slf4j.LoggerFactory;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
-
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.Logger;
@@ -45,10 +44,12 @@ import ch.qos.logback.classic.Logger;
  */
 
 /**
- * An activator to launch the life cycle of the application.
+ * The launcher of JTheque. This launcher must only be created (by Spring) after all the other core bundles are
+ * started.
  *
  * @author Baptiste Wicht
  */
+@NotThreadSafe
 public class LifeCycleLauncher implements CollectionListener {
     @Resource
     private IViewService viewService;
@@ -135,17 +136,13 @@ public class LifeCycleLauncher implements CollectionListener {
         viewService.closeCollectionView();
         collectionsService.removeCollectionListener(this);
 
-        if(SwingUtils.isEDT()){
-            ExecutorService executor = Executors.newSingleThreadExecutor();
-
-            executor.submit(new Runnable(){
+        if (SwingUtils.isEDT()) {
+            ThreadUtils.inNewThread(new Runnable() {
                 @Override
                 public void run() {
                     startSecondPhase();
                 }
             });
-
-            executor.shutdown();
         } else {
             startSecondPhase();
         }

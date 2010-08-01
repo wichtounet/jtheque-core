@@ -2,6 +2,7 @@ package org.jtheque.lifecycle.application;
 
 import org.jtheque.core.able.application.ApplicationProperties;
 import org.jtheque.core.utils.SystemProperty;
+import org.jtheque.utils.annotations.Immutable;
 import org.jtheque.utils.collections.ArrayUtils;
 
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
@@ -29,7 +30,8 @@ import java.util.Locale;
  *
  * @author Baptiste Wicht
  */
-public final class I18nAplicationProperties implements ApplicationProperties {
+@Immutable
+final class I18nAplicationProperties implements ApplicationProperties {
     private final ReloadableResourceBundleMessageSource resourceBundle;
 
     /**

@@ -1,6 +1,7 @@
 package org.jtheque.lifecycle.application;
 
 import org.jtheque.core.able.application.ApplicationProperties;
+import org.jtheque.utils.annotations.Immutable;
 import org.jtheque.utils.bean.InternationalString;
 
 /*
@@ -24,55 +25,23 @@ import org.jtheque.utils.bean.InternationalString;
  *
  * @author Baptiste Wicht
  */
-public final class DirectValuesApplicationProperties implements ApplicationProperties {
-    private InternationalString author;
-    private InternationalString name;
-    private InternationalString site;
-    private InternationalString email;
-    private InternationalString copyright;
+@Immutable
+final class DirectValuesApplicationProperties implements ApplicationProperties {
+    private final InternationalString author;
+    private final InternationalString name;
+    private final InternationalString site;
+    private final InternationalString email;
+    private final InternationalString copyright;
 
-    /**
-     * Set the author values.
-     *
-     * @param author The author values.
-     */
-    void setAuthor(InternationalString author) {
+    public DirectValuesApplicationProperties(InternationalString author, InternationalString name,
+                                             InternationalString site, InternationalString email,
+                                             InternationalString copyright) {
+        super();
+
         this.author = author;
-    }
-
-    /**
-     * Set the name values.
-     *
-     * @param name The name values.
-     */
-    void setName(InternationalString name) {
         this.name = name;
-    }
-
-    /**
-     * Set the site values.
-     *
-     * @param site The site values.
-     */
-    void setSite(InternationalString site) {
         this.site = site;
-    }
-
-    /**
-     * Set the email values.
-     *
-     * @param email The email values.
-     */
-    void setEmail(InternationalString email) {
         this.email = email;
-    }
-
-    /**
-     * Set the copyright values.
-     *
-     * @param copyright The copyright values.
-     */
-    void setCopyright(InternationalString copyright) {
         this.copyright = copyright;
     }
 

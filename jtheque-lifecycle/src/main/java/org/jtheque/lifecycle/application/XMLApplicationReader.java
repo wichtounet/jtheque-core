@@ -5,6 +5,7 @@ import org.jtheque.core.utils.ImageDescriptor;
 import org.jtheque.core.utils.ImageType;
 import org.jtheque.core.utils.SystemProperty;
 import org.jtheque.utils.StringUtils;
+import org.jtheque.utils.annotations.NotThreadSafe;
 import org.jtheque.utils.bean.InternationalString;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.collections.CollectionUtils;
@@ -39,6 +40,7 @@ import java.util.Collection;
  *
  * @author Baptiste Wicht
  */
+@NotThreadSafe
 public final class XMLApplicationReader {
     private IXMLReader<Node> reader;
 
@@ -183,15 +185,13 @@ public final class XMLApplicationReader {
         if (reader.getNode("files", i18nElement) != null || reader.getNode("name", i18nElement) == null) {
             application.setApplicationProperties(new I18nAplicationProperties());
         } else {
-            DirectValuesApplicationProperties props = new DirectValuesApplicationProperties();
-
-            props.setName(readInternationalString("name", i18nElement));
-            props.setAuthor(readInternationalString("author", i18nElement));
-            props.setSite(readInternationalString("site", i18nElement));
-            props.setEmail(readInternationalString("email", i18nElement));
-            props.setCopyright(readInternationalString("copyright", i18nElement));
-
-            application.setApplicationProperties(props);
+            application.setApplicationProperties(new DirectValuesApplicationProperties(
+                    readInternationalString("author", i18nElement),
+                    readInternationalString("name", i18nElement),
+                    readInternationalString("site", i18nElement),
+                    readInternationalString("email", i18nElement),
+                    readInternationalString("copyright", i18nElement)
+            ));
         }
     }
 
