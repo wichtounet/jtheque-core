@@ -16,9 +16,11 @@ package org.jtheque.file.able;
  * limitations under the License.
  */
 
+import org.jtheque.utils.io.FileException;
 import org.jtheque.xml.utils.XMLException;
 
 import java.io.File;
+import java.util.Collection;
 
 /**
  * A FileService specification.
@@ -34,6 +36,46 @@ public interface IFileService {
     enum XmlBackupVersion {
         THIRD   //JTheque Core 2.1
     }
+
+    /**
+     * Register a new exporter for the module.
+     *
+     * @param module   The module id.
+     * @param exporter The exporter to register.
+     */
+    void registerExporter(String module, Exporter<?> exporter);
+
+    /**
+     * Register a new importer for the module.
+     *
+     * @param module   The module id.
+     * @param importer The importer to register.
+     */
+    void registerImporter(String module, Importer importer);
+
+    /**
+     * Export datas to the given file.
+     *
+     * @param module   The module id.
+     * @param fileType The type of file.
+     * @param file     The file to export to.
+     * @param datas    The datas to export.
+     * @param <T>      The type of datas to export.
+     *
+     * @throws FileException If an exception occurs during the export using the Exporter<T>
+     */
+    <T> void exportDatas(String module, String fileType, String file, Collection<T> datas) throws FileException;
+
+    /**
+     * Import datas from the given file.
+     *
+     * @param module   The module id.
+     * @param fileType The type of file.
+     * @param file     The file to import from.
+     *
+     * @throws FileException If an exception occurs during the export using the Importer
+     */
+    void importDatas(String module, String fileType, String file) throws FileException;
 
     /**
      * Backup to a File.

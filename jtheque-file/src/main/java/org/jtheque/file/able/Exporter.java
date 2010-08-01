@@ -1,5 +1,9 @@
 package org.jtheque.file.able;
 
+import org.jtheque.utils.io.FileException;
+
+import java.util.Collection;
+
 /*
  * Copyright JTheque (Baptiste Wicht)
  *
@@ -21,7 +25,7 @@ package org.jtheque.file.able;
  *
  * @author Baptiste Wicht
  */
-public interface Exporter {
+public interface Exporter<T> {
     /**
      * Indicate if the exporter can export to a specific fileType.
      *
@@ -29,5 +33,15 @@ public interface Exporter {
      *
      * @return true if the exporter can export to this file type, else false.
      */
-    boolean canExportTo(FileType fileType);
+    boolean canExportTo(String fileType);
+
+    /**
+     * Export to the file path.
+     *
+     * @param path  The file path.
+     * @param datas The datas to export.
+     *
+     * @throws org.jtheque.utils.io.FileException This exception is thrown when the export cannot be correctly made.
+     */
+    void export(String path, Collection<T> datas) throws FileException;
 }

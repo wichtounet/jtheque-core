@@ -16,7 +16,9 @@ package org.jtheque.file.impl;
  * limitations under the License.
  */
 
+import org.jtheque.file.able.Exporter;
 import org.jtheque.file.able.IFileService;
+import org.jtheque.file.able.Importer;
 import org.jtheque.file.able.ModuleBackup;
 import org.jtheque.file.able.ModuleBackuper;
 import org.jtheque.modules.able.Module;
@@ -25,6 +27,7 @@ import org.jtheque.modules.utils.ModuleResourceCache;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.collections.ArrayUtils;
 import org.jtheque.utils.collections.CollectionUtils;
+import org.jtheque.utils.io.FileException;
 import org.jtheque.xml.utils.XMLException;
 
 import java.io.File;
@@ -32,6 +35,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -41,6 +45,52 @@ import java.util.Set;
  */
 public final class FileService implements IFileService, ModuleListener {
     private final List<ModuleBackuper> backupers = CollectionUtils.newList(5);
+    private final Map<String, Set<Exporter<?>>> exporters =  CollectionUtils.newHashMap(3);
+    private final Map<String, Set<Importer>> importers = CollectionUtils.newHashMap(3);
+
+    @Override
+    public void registerExporter(String module, Exporter<?> exporter){
+        if(!exporters.containsKey(module)){
+            exporters.put(module, CollectionUtils.<Exporter<?>>newSet());
+        }
+
+        exporters.get(module).add(exporter);
+    }
+
+    @Override
+    public void registerImporter(String module, Importer importer) {
+        if (!importers.containsKey(module)) {
+            importers.put(module, CollectionUtils.<Importer>newSet());
+        }
+
+        importers.get(module).add(importer);
+    }
+
+    @Override
+    public <T> void exportDatas(String module, String fileType, String file, Collection<T> datas) throws FileException {
+        if(exporters.containsKey(module)){
+            for(Exporter<?> exporter : exporters.get(module)){
+                if(exporter.canExportTo(fileType)){
+                    ((Exporter<T>) exporter).export(file, datas);
+
+                    return;
+                }
+            }
+        }
+    }
+
+    @Override
+    public void importDatas(String module, String fileType, String file) throws FileException {
+        if (exporters.containsKey(module)) {
+            for (Importer importer : importers.get(module)) {
+                if (importer.canImportFrom(fileType)) {
+                    importer.importFrom(file);
+
+                    return;
+                }
+            }
+        }
+    }
 
     @Override
     public void backup(File file) {

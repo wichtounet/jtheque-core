@@ -1,5 +1,7 @@
 package org.jtheque.file.able;
 
+import org.jtheque.utils.io.FileException;
+
 /*
  * Copyright JTheque (Baptiste Wicht)
  *
@@ -29,5 +31,14 @@ public interface Importer {
      *
      * @return true ou false
      */
-    boolean canImportFrom(FileType fileType);
+    boolean canImportFrom(String fileType);
+
+    /**
+     * Import all the data from the file.
+     *
+     * @param filePath The path to the file.
+     *
+     * @throws org.jtheque.utils.io.FileException This exception is thrown when the import cannot be correctly made.
+     */
+    void importFrom(String filePath) throws FileException;
 }
