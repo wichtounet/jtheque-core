@@ -16,12 +16,13 @@ package org.jtheque.undo.impl;
  * limitations under the License.
  */
 
-import org.jtheque.i18n.able.LanguageService;
+import org.jtheque.core.utils.WeakEventListenerList;
 import org.jtheque.undo.able.IUndoRedoService;
+import org.jtheque.undo.able.StateListener;
+import org.jtheque.utils.annotations.ThreadSafe;
 
 import org.slf4j.LoggerFactory;
 
-import javax.swing.Action;
 import javax.swing.undo.CannotUndoException;
 import javax.swing.undo.UndoManager;
 import javax.swing.undo.UndoableEdit;
@@ -31,48 +32,19 @@ import javax.swing.undo.UndoableEdit;
  *
  * @author Baptiste Wicht
  */
+@ThreadSafe
 public final class UndoRedoService extends UndoManager implements IUndoRedoService {
     private static final long serialVersionUID = 6050388256567189094L;
-    
-    private transient Action undoAction;
-    private transient Action redoAction;
 
-    private final transient LanguageService languageService;
-
-    /**
-     * Create a new UndoRedoService.
-     *
-     * @param languageService The language service.
-     */
-    public UndoRedoService(LanguageService languageService) {
-        super();
-
-        this.languageService = languageService;
-
-        stateChanged();
-    }
+    private final WeakEventListenerList eventListenerList = new WeakEventListenerList();
 
     @Override
     public synchronized boolean addEdit(UndoableEdit arg0) {
         boolean add = super.addEdit(arg0);
 
-        stateChanged();
+        fireStateChanged();
 
         return add;
-    }
-
-    @Override
-    public void setUndoAction(Action undoAction) {
-        this.undoAction = undoAction;
-
-        stateChanged();
-    }
-
-    @Override
-    public void setRedoAction(Action redoAction) {
-        this.redoAction = redoAction;
-
-        stateChanged();
     }
 
     @Override
@@ -82,7 +54,7 @@ public final class UndoRedoService extends UndoManager implements IUndoRedoServi
         } catch (CannotUndoException e) {
             LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
         } finally {
-            stateChanged();
+            fireStateChanged();
         }
     }
 
@@ -93,22 +65,30 @@ public final class UndoRedoService extends UndoManager implements IUndoRedoServi
         } catch (CannotUndoException e) {
             LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
         } finally {
-            stateChanged();
+            fireStateChanged();
         }
+    }
+
+    @Override
+    public synchronized void addStateListener(StateListener stateListener) {
+        eventListenerList.add(StateListener.class, stateListener);
+    }
+
+    @Override
+    public synchronized void removeStateListener(StateListener stateListener) {
+        eventListenerList.remove(StateListener.class, stateListener);
     }
 
     /**
      * Update the state of the undo/redo action.
      */
-    private void stateChanged() {
-        if (undoAction != null) {
-            undoAction.putValue(Action.NAME, languageService.getMessage(getUndoPresentationName()));
-            undoAction.setEnabled(canUndo());
-        }
+    private synchronized void fireStateChanged() {
+        StateListener[] listeners = eventListenerList.getListeners(StateListener.class);
 
-        if (redoAction != null) {
-            redoAction.putValue(Action.NAME, languageService.getMessage(getRedoPresentationName()));
-            redoAction.setEnabled(canRedo());
+        for (StateListener stateListener : listeners) {
+            stateListener.stateChanged(
+                    getUndoPresentationName(), canUndo(),
+                    getRedoPresentationName(), canRedo());
         }
     }
 }

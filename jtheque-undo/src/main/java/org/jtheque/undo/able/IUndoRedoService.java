@@ -16,7 +16,8 @@ package org.jtheque.undo.able;
  * limitations under the License.
  */
 
-import javax.swing.Action;
+import org.jtheque.utils.annotations.ThreadSafe;
+
 import javax.swing.undo.UndoableEdit;
 
 /**
@@ -24,6 +25,7 @@ import javax.swing.undo.UndoableEdit;
  *
  * @author Baptiste Wicht
  */
+@ThreadSafe
 public interface IUndoRedoService {
     /**
      * Undo the last action.
@@ -45,16 +47,16 @@ public interface IUndoRedoService {
     boolean addEdit(UndoableEdit edit);
 
     /**
-     * Set the undo action.
+     * Add the state listener.
      *
-     * @param undoAction The undo action.
+     * @param stateListener The state listener.
      */
-    void setUndoAction(Action undoAction);
+    void addStateListener(StateListener stateListener);
 
     /**
-     * Set the redo action.
+     * Remove the state listener.
      *
-     * @param redoAction The redo action.
+     * @param stateListener The state listener to remove.
      */
-    void setRedoAction(Action redoAction);
+    void removeStateListener(StateListener stateListener);
 }

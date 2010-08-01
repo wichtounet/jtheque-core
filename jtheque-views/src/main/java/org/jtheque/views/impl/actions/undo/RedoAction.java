@@ -16,7 +16,11 @@ package org.jtheque.views.impl.actions.undo;
  * limitations under the License.
  */
 
+import org.jtheque.i18n.impl.LanguageService;
 import org.jtheque.undo.able.IUndoRedoService;
+import org.jtheque.undo.able.StateListener;
+
+import javax.annotation.PreDestroy;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -26,28 +30,42 @@ import java.awt.event.KeyEvent;
  *
  * @author Baptiste Wicht
  */
-public final class RedoAction extends AbstractAction {
+public final class RedoAction extends AbstractAction implements StateListener {
     private static final long serialVersionUID = 3698122235572353522L;
 
     private final transient IUndoRedoService undoRedoService;
+    private final transient LanguageService languageService;
 
     /**
      * Construct a new RedoAction.
      *
      * @param undoRedoService The undo redo service.
+     * @param languageService The language service. 
      */
-    public RedoAction(IUndoRedoService undoRedoService) {
+    public RedoAction(IUndoRedoService undoRedoService, LanguageService languageService) {
         super("undo.actions.redo", KeyEvent.VK_Y);
 
         this.undoRedoService = undoRedoService;
+        this.languageService = languageService;
 
-        undoRedoService.setRedoAction(this);
+        undoRedoService.addStateListener(this);
 
         setEnabled(false);
+    }
+
+    @PreDestroy
+    private void removeListener() {
+        undoRedoService.removeStateListener(this);
     }
 
     @Override
     public void actionPerformed(ActionEvent ae) {
         undoRedoService.redo();
+    }
+
+    @Override
+    public void stateChanged(String undoName, boolean canUndo, String redoName, boolean canRedo) {
+        setText(languageService.getMessage(redoName));
+        setEnabled(canRedo);
     }
 }
