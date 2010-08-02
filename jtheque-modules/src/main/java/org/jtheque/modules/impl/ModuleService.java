@@ -17,7 +17,6 @@ package org.jtheque.modules.impl;
  */
 
 import org.jtheque.core.able.ICore;
-import org.jtheque.core.utils.WeakEventListenerList;
 import org.jtheque.i18n.able.LanguageService;
 import org.jtheque.images.able.ImageService;
 import org.jtheque.modules.able.IModuleDescription;
@@ -39,6 +38,7 @@ import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.ThreadUtils;
 import org.jtheque.utils.collections.ArrayUtils;
 import org.jtheque.utils.collections.CollectionUtils;
+import org.jtheque.utils.collections.WeakEventListenerList;
 import org.jtheque.utils.io.CopyException;
 import org.jtheque.utils.io.FileUtils;
 import org.jtheque.utils.ui.SwingUtils;
@@ -69,7 +69,7 @@ import static org.jtheque.modules.able.ModuleState.*;
  * @author Baptiste Wicht
  */
 public final class ModuleService implements IModuleService {
-    private final WeakEventListenerList listeners = new WeakEventListenerList();
+    private final WeakEventListenerList<ModuleListener> listeners = WeakEventListenerList.create();
     private final List<Module> modules = CollectionUtils.newList();
     private final Map<String, SwingLoader> loaders = CollectionUtils.newHashMap();
 
@@ -462,7 +462,7 @@ public final class ModuleService implements IModuleService {
         fireModuleUninstalled(module);
 
         for (ModuleListener listener : ModuleResourceCache.getResource(module.getId(), ModuleListener.class)) {
-            listeners.remove(ModuleListener.class, listener);
+            listeners.remove(listener);
         }
 
         ModuleResourceCache.removeModule(module.getId());
@@ -470,7 +470,7 @@ public final class ModuleService implements IModuleService {
 
     @Override
     public void addModuleListener(String moduleId, ModuleListener listener) {
-        listeners.add(ModuleListener.class, listener);
+        listeners.add(listener);
 
         ModuleResourceCache.addResource(moduleId, ModuleListener.class, listener);
     }
@@ -593,7 +593,7 @@ public final class ModuleService implements IModuleService {
      * @param module The started module.
      */
     private void fireModuleStarted(Module module) {
-        for (ModuleListener listener : listeners.getListeners(ModuleListener.class)) {
+        for (ModuleListener listener : listeners) {
             listener.moduleStarted(module);
         }
     }
@@ -604,7 +604,7 @@ public final class ModuleService implements IModuleService {
      * @param module The stopped module.
      */
     private void fireModuleStopped(Module module) {
-        for (ModuleListener listener : listeners.getListeners(ModuleListener.class)) {
+        for (ModuleListener listener : listeners) {
             listener.moduleStopped(module);
         }
     }
@@ -615,7 +615,7 @@ public final class ModuleService implements IModuleService {
      * @param module The installed module.
      */
     private void fireModuleInstalled(Module module) {
-        for (ModuleListener listener : listeners.getListeners(ModuleListener.class)) {
+        for (ModuleListener listener : listeners) {
             listener.moduleInstalled(module);
         }
     }
@@ -626,7 +626,7 @@ public final class ModuleService implements IModuleService {
      * @param module The uninstalled module.
      */
     private void fireModuleUninstalled(Module module) {
-        for (ModuleListener listener : listeners.getListeners(ModuleListener.class)) {
+        for (ModuleListener listener : listeners) {
             listener.moduleUninstalled(module);
         }
     }

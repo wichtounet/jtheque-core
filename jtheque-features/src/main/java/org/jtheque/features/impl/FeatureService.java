@@ -16,7 +16,6 @@ package org.jtheque.features.impl;
  * limitations under the License.
  */
 
-import org.jtheque.core.utils.WeakEventListenerList;
 import org.jtheque.features.able.CoreFeature;
 import org.jtheque.features.able.FeatureListener;
 import org.jtheque.features.able.IFeature;
@@ -29,6 +28,7 @@ import org.jtheque.modules.able.ModuleListener;
 import org.jtheque.modules.utils.ModuleResourceCache;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.collections.CollectionUtils;
+import org.jtheque.utils.collections.WeakEventListenerList;
 import org.jtheque.utils.ui.SwingUtils;
 
 import java.util.Collection;
@@ -42,7 +42,7 @@ import java.util.Set;
  * @author Baptiste Wicht
  */
 public final class FeatureService implements IFeatureService, ModuleListener {
-    private final WeakEventListenerList listeners = new WeakEventListenerList();
+    private final WeakEventListenerList<FeatureListener> listeners = WeakEventListenerList.create();
     private final Collection<IFeature> features;
     private final Map<CoreFeature, Feature> coreFeatures;
     private final LanguageService languageService;
@@ -149,12 +149,12 @@ public final class FeatureService implements IFeatureService, ModuleListener {
 
     @Override
     public void addFeatureListener(FeatureListener listener) {
-        listeners.add(FeatureListener.class, listener);
+        listeners.add(listener);
     }
 
     @Override
     public void removeFeatureListener(FeatureListener listener) {
-        listeners.add(FeatureListener.class, listener);
+        listeners.add(listener);
     }
 
     /**
@@ -163,9 +163,7 @@ public final class FeatureService implements IFeatureService, ModuleListener {
      * @param feature The feature who's been added.
      */
     private void fireFeatureAdded(IFeature feature) {
-        FeatureListener[] l = listeners.getListeners(FeatureListener.class);
-
-        for (FeatureListener listener : l) {
+        for (FeatureListener listener : listeners) {
             listener.featureAdded(feature);
         }
     }
@@ -176,9 +174,7 @@ public final class FeatureService implements IFeatureService, ModuleListener {
      * @param feature The feature who's been removed.
      */
     private void fireFeatureRemoved(IFeature feature) {
-        FeatureListener[] l = listeners.getListeners(FeatureListener.class);
-
-        for (FeatureListener listener : l) {
+        for (FeatureListener listener : listeners) {
             listener.featureRemoved(feature);
         }
     }
@@ -245,9 +241,7 @@ public final class FeatureService implements IFeatureService, ModuleListener {
          * @param feature    The feature in which the sub feature has been added.
          */
         private void fireFeatureModified(IFeature feature) {
-            FeatureListener[] l = listeners.getListeners(FeatureListener.class);
-
-            for (FeatureListener listener : l) {
+            for (FeatureListener listener : listeners) {
                 listener.featureModified(feature);
             }
         }

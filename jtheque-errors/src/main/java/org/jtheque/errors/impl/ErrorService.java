@@ -16,12 +16,13 @@ package org.jtheque.errors.impl;
  * limitations under the License.
  */
 
-import org.jtheque.core.utils.WeakEventListenerList;
 import org.jtheque.errors.able.ErrorListener;
 import org.jtheque.errors.able.IError;
 import org.jtheque.errors.able.IErrorService;
+import org.jtheque.utils.annotations.GuardedInternally;
 import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.collections.CollectionUtils;
+import org.jtheque.utils.collections.WeakEventListenerList;
 
 import java.util.Collection;
 
@@ -33,7 +34,9 @@ import java.util.Collection;
 @ThreadSafe
 public final class ErrorService implements IErrorService {
     private final Collection<IError> errors = CollectionUtils.newList();
-    private final WeakEventListenerList eventListenerList = new WeakEventListenerList();
+
+    @GuardedInternally
+    private final WeakEventListenerList<ErrorListener> listeners = WeakEventListenerList.create();
 
     @Override
     public Collection<IError> getErrors() {
@@ -49,12 +52,12 @@ public final class ErrorService implements IErrorService {
 
     @Override
     public synchronized void addErrorListener(ErrorListener listener) {
-        eventListenerList.add(ErrorListener.class, listener);
+        listeners.add(listener);
     }
 
     @Override
     public synchronized void removeErrorListener(ErrorListener listener) {
-        eventListenerList.remove(ErrorListener.class, listener);
+        listeners.remove(listener);
     }
 
     /**
@@ -63,7 +66,7 @@ public final class ErrorService implements IErrorService {
      * @param error The new error.
      */
     private void fireErrorOccurred(IError error) {
-        for (ErrorListener listener : eventListenerList.getListeners(ErrorListener.class)) {
+        for (ErrorListener listener : listeners) {
             listener.errorOccurred(error);
         }
     }

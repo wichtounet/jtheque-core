@@ -23,12 +23,13 @@ import org.jtheque.core.able.IFilesContainer;
 import org.jtheque.core.able.IFoldersContainer;
 import org.jtheque.core.able.application.Application;
 import org.jtheque.core.able.lifecycle.ILifeCycle;
-import org.jtheque.core.utils.WeakEventListenerList;
 import org.jtheque.events.able.EventService;
 import org.jtheque.images.able.ImageService;
 import org.jtheque.states.able.IStateService;
+import org.jtheque.utils.annotations.GuardedInternally;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.collections.CollectionUtils;
+import org.jtheque.utils.collections.WeakEventListenerList;
 
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.FileSystemResource;
@@ -44,7 +45,8 @@ import java.util.Collection;
 public final class Core implements ICore {
     private static final String CORE_MESSAGES_FILE = "http://jtheque.baptiste-wicht.com/files/messages/jtheque-core-messages.xml";
 
-    private final WeakEventListenerList listeners = new WeakEventListenerList();
+    @GuardedInternally
+    private final WeakEventListenerList<ApplicationListener> listeners = WeakEventListenerList.create();
 
     private final Collection<String> creditsMessage;
     private final IFoldersContainer foldersContainer;
@@ -90,18 +92,16 @@ public final class Core implements ICore {
 
     @Override
     public void addApplicationListener(ApplicationListener listener) {
-        listeners.add(ApplicationListener.class, listener);
+        listeners.add(listener);
     }
 
     @Override
     public void removeApplicationListener(ApplicationListener listener) {
-        listeners.remove(ApplicationListener.class, listener);
+        listeners.remove(listener);
     }
 
     private void fireApplicationSetted(Application application){
-        ApplicationListener[] applicationListeners = listeners.getListeners(ApplicationListener.class);
-
-        for(ApplicationListener applicationListener : applicationListeners){
+        for(ApplicationListener applicationListener : listeners){
             applicationListener.applicationSetted(application);
         }
     }

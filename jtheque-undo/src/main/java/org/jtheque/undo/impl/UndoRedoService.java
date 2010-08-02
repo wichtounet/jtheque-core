@@ -16,10 +16,10 @@ package org.jtheque.undo.impl;
  * limitations under the License.
  */
 
-import org.jtheque.core.utils.WeakEventListenerList;
 import org.jtheque.undo.able.IUndoRedoService;
 import org.jtheque.undo.able.StateListener;
 import org.jtheque.utils.annotations.ThreadSafe;
+import org.jtheque.utils.collections.WeakEventListenerList;
 
 import org.slf4j.LoggerFactory;
 
@@ -36,7 +36,7 @@ import javax.swing.undo.UndoableEdit;
 public final class UndoRedoService extends UndoManager implements IUndoRedoService {
     private static final long serialVersionUID = 6050388256567189094L;
 
-    private final WeakEventListenerList eventListenerList = new WeakEventListenerList();
+    private final WeakEventListenerList<StateListener> eventListenerList = WeakEventListenerList.create();
 
     @Override
     public synchronized boolean addEdit(UndoableEdit arg0) {
@@ -71,21 +71,19 @@ public final class UndoRedoService extends UndoManager implements IUndoRedoServi
 
     @Override
     public synchronized void addStateListener(StateListener stateListener) {
-        eventListenerList.add(StateListener.class, stateListener);
+        eventListenerList.add(stateListener);
     }
 
     @Override
     public synchronized void removeStateListener(StateListener stateListener) {
-        eventListenerList.remove(StateListener.class, stateListener);
+        eventListenerList.remove(stateListener);
     }
 
     /**
      * Update the state of the undo/redo action.
      */
     private synchronized void fireStateChanged() {
-        StateListener[] listeners = eventListenerList.getListeners(StateListener.class);
-
-        for (StateListener stateListener : listeners) {
+        for (StateListener stateListener : eventListenerList) {
             stateListener.stateChanged(
                     getUndoPresentationName(), canUndo(),
                     getRedoPresentationName(), canRedo());

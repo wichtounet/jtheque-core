@@ -22,15 +22,16 @@ import org.jtheque.collections.able.ICollectionsService;
 import org.jtheque.collections.able.IDaoCollections;
 import org.jtheque.core.able.ICore;
 import org.jtheque.file.able.FileService;
-import org.jtheque.utils.bean.Response;
-import org.jtheque.utils.SimplePropertiesCache;
-import org.jtheque.core.utils.WeakEventListenerList;
 import org.jtheque.persistence.able.DataListener;
 import org.jtheque.schemas.able.ISchemaService;
 import org.jtheque.schemas.able.Schema;
 import org.jtheque.utils.CryptoUtils;
 import org.jtheque.utils.Hasher;
+import org.jtheque.utils.SimplePropertiesCache;
 import org.jtheque.utils.StringUtils;
+import org.jtheque.utils.annotations.GuardedInternally;
+import org.jtheque.utils.bean.Response;
+import org.jtheque.utils.collections.WeakEventListenerList;
 
 import org.springframework.transaction.annotation.Transactional;
 
@@ -43,7 +44,8 @@ public final class CollectionsService implements ICollectionsService {
     private final IDaoCollections daoCollections;
     private final ICore core;
 
-    private final WeakEventListenerList listeners = new WeakEventListenerList();
+    @GuardedInternally
+    private final WeakEventListenerList<CollectionListener> listeners = WeakEventListenerList.create();
 
     /**
      * Construct a new CollectionsService.
@@ -95,19 +97,19 @@ public final class CollectionsService implements ICollectionsService {
      * Fire a collection chosen event.
      */
     private void fireCollectionChosen() {
-        for (CollectionListener listener : listeners.getListeners(CollectionListener.class)) {
+        for (CollectionListener listener : listeners) {
             listener.collectionChosen();
         }
     }
 
     @Override
     public void addCollectionListener(CollectionListener listener) {
-        listeners.add(CollectionListener.class, listener);
+        listeners.add(listener);
     }
 
     @Override
     public void removeCollectionListener(CollectionListener listener) {
-        listeners.remove(CollectionListener.class, listener);
+        listeners.remove(listener);
     }
 
     /**

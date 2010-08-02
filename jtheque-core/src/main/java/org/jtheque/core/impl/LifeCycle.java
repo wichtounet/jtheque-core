@@ -7,10 +7,10 @@ import org.jtheque.core.able.lifecycle.ILifeCycle;
 import org.jtheque.core.able.lifecycle.TitleEvent;
 import org.jtheque.core.able.lifecycle.TitleListener;
 import org.jtheque.core.utils.SystemProperty;
-import org.jtheque.core.utils.WeakEventListenerList;
 import org.jtheque.events.able.EventLevel;
 import org.jtheque.events.able.EventService;
 import org.jtheque.events.able.Events;
+import org.jtheque.utils.collections.WeakEventListenerList;
 import org.jtheque.utils.io.FileUtils;
 
 import java.io.File;
@@ -39,7 +39,8 @@ import java.util.concurrent.Executors;
  * @author Baptiste Wicht
  */
 public class LifeCycle implements ILifeCycle {
-    private final WeakEventListenerList listenerList = new WeakEventListenerList();
+    private final WeakEventListenerList<FunctionListener> functionListeners = WeakEventListenerList.create();
+    private final WeakEventListenerList<TitleListener> titleListeners = WeakEventListenerList.create();
 
     private String currentFunction;
     private String title = "JTheque";
@@ -134,28 +135,28 @@ public class LifeCycle implements ILifeCycle {
     @Override
     public void addTitleListener(TitleListener listener) {
         if (listener != null) {
-            listenerList.add(TitleListener.class, listener);
+            titleListeners.add(listener);
         }
     }
 
     @Override
     public void removeTitleListener(TitleListener listener) {
         if (listener != null) {
-            listenerList.remove(TitleListener.class, listener);
+            titleListeners.remove(listener);
         }
     }
 
     @Override
     public void addFunctionListener(FunctionListener listener) {
         if (listener != null) {
-            listenerList.add(FunctionListener.class, listener);
+            functionListeners.add(listener);
         }
     }
 
     @Override
     public void removeFunctionListener(FunctionListener listener) {
         if (listener != null) {
-            listenerList.remove(FunctionListener.class, listener);
+            functionListeners.remove(listener);
         }
     }
 
@@ -192,9 +193,7 @@ public class LifeCycle implements ILifeCycle {
      * @param event The title event.
      */
     private void fireTitleUpdated(TitleEvent event) {
-        TitleListener[] listeners = listenerList.getListeners(TitleListener.class);
-
-        for (TitleListener listener : listeners) {
+        for (TitleListener listener : titleListeners) {
             listener.titleUpdated(event);
         }
     }
@@ -205,9 +204,7 @@ public class LifeCycle implements ILifeCycle {
      * @param event The function event.
      */
     private void fireFunctionUpdated(FunctionEvent event) {
-        FunctionListener[] listeners = listenerList.getListeners(FunctionListener.class);
-
-        for (FunctionListener listener : listeners) {
+        for (FunctionListener listener : functionListeners) {
             listener.functionUpdated(event);
         }
     }

@@ -226,21 +226,6 @@ public final class JThequeMenuBar extends JMenuBar implements FeatureListener, I
         }
     }
 
-    @Override
-    public void subFeatureAdded(IFeature feature, IFeature subFeature) {
-        for (int i = 0; i < getMenuCount(); i++) {
-            JMenu menu = getMenu(i);
-
-            if (isCorrespondingMenu(feature, menu)) {
-                menu.removeAll();
-
-                addSubFeatures(feature, menu);
-
-                break;
-            }
-        }
-    }
-
     /**
      * Indicate if the menu correspond to the feature
      *
@@ -254,68 +239,17 @@ public final class JThequeMenuBar extends JMenuBar implements FeatureListener, I
     }
 
     @Override
-    public void subFeatureRemoved(IFeature feature, IFeature subFeature) {
+    public void featureModified(IFeature feature) {
         for (int i = 0; i < getMenuCount(); i++) {
             JMenu menu = getMenu(i);
 
             if (isCorrespondingMenu(feature, menu)) {
-                removeMenu(subFeature, menu);
+                menu.removeAll();
+
+                addSubFeatures(feature, menu);
 
                 break;
             }
-        }
-    }
-
-    /**
-     * Remove the feature of the event from the menu.
-     *
-     * @param subFeature The sub feature.
-     * @param menu       The menu to the remove the menu from.
-     */
-    private void removeMenu(IFeature subFeature, JMenu menu) {
-        String subtitle = getSubtitle(subFeature);
-
-        for (int z = 0; z < menu.getItemCount(); z++) {
-            JMenuItem item = menu.getItem(z);
-
-            //Perhaps, it's a separator
-            if (item != null) {
-                if (item.getAction() != null && item.getAction().getValue(Action.NAME).equals(subtitle)) {
-                    menu.remove(item);
-                } else if (item.getText() != null && item.getText().equals(subtitle)) {
-                    menu.remove(item);
-                }
-
-                clearMenu(menu);
-            }
-        }
-    }
-
-    /**
-     * Clear the menu.
-     *
-     * @param menu The menu to clear.
-     */
-    private void clearMenu(JMenu menu) {
-        if (menu.getItemCount() <= 0) {
-            remove(menu);
-        } else if (menu.getItem(0) == null) {
-            menu.remove(0);
-        }
-    }
-
-    /**
-     * Return the title of the given sub feature.
-     *
-     * @param subFeature The sub feature to get the title from.
-     *
-     * @return The title of the given sub feature.
-     */
-    private String getSubtitle(IFeature subFeature) {
-        if (subFeature.getAction() == null) {
-            return languageService.getMessage(subFeature.getTitleKey());
-        } else {
-            return (String) subFeature.getAction().getValue(Action.NAME);
         }
     }
 

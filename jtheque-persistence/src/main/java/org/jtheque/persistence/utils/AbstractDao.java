@@ -16,12 +16,13 @@ package org.jtheque.persistence.utils;
  * limitations under the License.
  */
 
-import org.jtheque.core.utils.WeakEventListenerList;
 import org.jtheque.persistence.able.Dao;
 import org.jtheque.persistence.able.DataListener;
 import org.jtheque.persistence.able.Entity;
 import org.jtheque.persistence.able.IDaoPersistenceContext;
 import org.jtheque.persistence.able.QueryMapper;
+import org.jtheque.utils.annotations.GuardedInternally;
+import org.jtheque.utils.collections.WeakEventListenerList;
 
 import org.springframework.jdbc.core.RowMapper;
 
@@ -39,7 +40,8 @@ public abstract class AbstractDao<T extends Entity> implements Dao<T> {
 
     private final String table;
 
-    private final WeakEventListenerList listenerList = new WeakEventListenerList();
+    @GuardedInternally
+    private final WeakEventListenerList<DataListener> listenerList = WeakEventListenerList.create();
 
     /**
      * Construct a new AbstractDao.
@@ -54,12 +56,12 @@ public abstract class AbstractDao<T extends Entity> implements Dao<T> {
 
     @Override
     public final void addDataListener(DataListener listener) {
-        listenerList.add(DataListener.class, listener);
+        listenerList.add(listener);
     }
 
     @Override
     public final void removeDataListener(DataListener listener) {
-        listenerList.remove(DataListener.class, listener);
+        listenerList.remove(listener);
     }
 
     @Override
@@ -94,9 +96,7 @@ public abstract class AbstractDao<T extends Entity> implements Dao<T> {
      * Avert the listeners that the data have changed.
      */
     protected final void fireDataChanged() {
-        DataListener[] listeners = listenerList.getListeners(DataListener.class);
-
-        for (DataListener listener : listeners) {
+        for (DataListener listener : listenerList) {
             listener.dataChanged();
         }
     }
