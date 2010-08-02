@@ -39,18 +39,9 @@ public interface FeatureListener extends EventListener {
     void featureRemoved(IFeature feature);
 
     /**
-     * A sub feature has been added.
+     * A feature has been modified. This indicate that a sub-feature has been added or removed. 
      *
-     * @param feature    The feature.
-     * @param subFeature The subfeature who was added.
+     * @param feature The feature.
      */
-    void subFeatureAdded(IFeature feature, IFeature subFeature);
-
-    /**
-     * A sub feature has been removed.
-     *
-     * @param feature    The feature.
-     * @param subFeature The sub features who was removed
-     */
-    void subFeatureRemoved(IFeature feature, IFeature subFeature);
+    void featureModified(IFeature feature);
 }

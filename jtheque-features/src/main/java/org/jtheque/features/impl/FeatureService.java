@@ -144,12 +144,7 @@ public final class FeatureService implements IFeatureService, ModuleListener {
 
     @Override
     public Collection<IFeature> getFeatures() {
-        return CollectionUtils.copyOf(features);
-    }
-
-    @Override
-    public IFeature getFeature(CoreFeature feature) {
-        return coreFeatures.get(feature);
+        return CollectionUtils.protect(features);
     }
 
     @Override
@@ -234,41 +229,26 @@ public final class FeatureService implements IFeatureService, ModuleListener {
         public void addSubFeature(IFeature feature) {
             super.addSubFeature(feature);
 
-            fireSubFeatureAdded(this, feature);
+            fireFeatureModified(this);
         }
 
         @Override
         public void removeSubFeature(IFeature feature) {
             super.removeSubFeature(feature);
 
-            fireSubFeatureRemoved(this, feature);
+            fireFeatureModified(this);
         }
 
         /**
          * Avert the listeners thant a sub feature has been added in a specific feature.
          *
          * @param feature    The feature in which the sub feature has been added.
-         * @param subFeature The subFeature who's been added.
          */
-        private void fireSubFeatureAdded(IFeature feature, IFeature subFeature) {
+        private void fireFeatureModified(IFeature feature) {
             FeatureListener[] l = listeners.getListeners(FeatureListener.class);
 
             for (FeatureListener listener : l) {
-                listener.subFeatureAdded(feature, subFeature);
-            }
-        }
-
-        /**
-         * Avert the listeners thant a sub feature has been removed in a specific feature.
-         *
-         * @param feature    The feature in which the sub feature has been removed.
-         * @param subFeature The subFeature who's been removed.
-         */
-        private void fireSubFeatureRemoved(IFeature feature, IFeature subFeature) {
-            FeatureListener[] l = listeners.getListeners(FeatureListener.class);
-
-            for (FeatureListener listener : l) {
-                listener.subFeatureRemoved(feature, subFeature);
+                listener.featureModified(feature);
             }
         }
     }

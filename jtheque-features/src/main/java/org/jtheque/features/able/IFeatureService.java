@@ -25,7 +25,8 @@ import java.util.Collection;
  */
 public interface IFeatureService {
     /**
-     * Add a menu to the application. It's an object who contains some features that will be added to the menu bar.
+     * Add a menu to the application. It's an object who contains some features that will be added to the menu bar. If
+     * the module id is provided, this menu will be automatically removed on the module stop.
      *
      * @param moduleId The id of the module who did the add.
      * @param menu     The menu to add to the application.
@@ -35,18 +36,9 @@ public interface IFeatureService {
     /**
      * Return all the features of the application.
      *
-     * @return A List containing all the features.
+     * @return A Collection containing all the features. This collection is unmodifiable.
      */
     Collection<IFeature> getFeatures();
-
-    /**
-     * Return the core feature.
-     *
-     * @param feature The feature type.
-     *
-     * @return The searched feature.
-     */
-    IFeature getFeature(CoreFeature feature);
 
     /**
      * Add a feature listener.

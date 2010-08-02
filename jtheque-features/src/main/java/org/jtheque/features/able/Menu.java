@@ -2,7 +2,7 @@ package org.jtheque.features.able;
 
 import org.jtheque.i18n.able.Internationalizable;
 
-import java.util.List;
+import java.util.Collection;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -21,8 +21,8 @@ import java.util.List;
  */
 
 /**
- * A menu. It seems a container for features. This container has main features and features for each of the core
- * features.
+ * A menu. Namely, it's a container for features. It represent the menu at the level of a module.
+ * This container has main features and features for each of the core features.
  *
  * @author Baptiste Wicht
  */
@@ -32,14 +32,14 @@ public interface Menu extends Internationalizable {
      *
      * @param feature The core feature.
      *
-     * @return A List containing all the sub features of this core feature.
+     * @return A Collection containing all the sub features of this core feature.
      */
-    List<IFeature> getSubFeatures(CoreFeature feature);
+    Collection<IFeature> getSubFeatures(CoreFeature feature);
 
     /**
      * Return all the main features of this menu.
      *
-     * @return A List containing all the main features of this menu.
+     * @return A Collection containing all the main features of this menu.
      */
-    List<IFeature> getMainFeatures();
+    Collection<IFeature> getMainFeatures();
 }

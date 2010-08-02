@@ -17,7 +17,7 @@ package org.jtheque.features.able;
  */
 
 /**
- * An enumeration of the core features.
+ * An enumeration of the core features. This is the feature of first level that are provided by the core. 
  *
  * @author Baptiste Wicht
  */

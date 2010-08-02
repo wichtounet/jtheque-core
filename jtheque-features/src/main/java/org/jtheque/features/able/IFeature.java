@@ -6,7 +6,7 @@ import java.util.Collection;
 
 /**
  * A feature specification. A Feature is an element of the menu. It can be an action of a group of actions. It can be
- * separated or not.
+ * separated or not. The only thing we can edit on a Feature it's adding new sub feature to it. 
  *
  * @author Baptiste Wicht
  */
