@@ -20,7 +20,7 @@ import org.jtheque.messages.able.Message;
 import org.jtheque.utils.bean.IntDate;
 import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.io.FileUtils;
-import org.jtheque.xml.utils.IXMLReader;
+import org.jtheque.xml.utils.XMLReader;
 import org.jtheque.xml.utils.XML;
 import org.jtheque.xml.utils.XMLException;
 
@@ -74,7 +74,7 @@ final class MessageFileReader {
      * @throws XMLException Thrown when an error occurs during the reading.
      */
     private static Collection<Message> readMessagesFile(URL url) throws XMLException {
-        IXMLReader<Node> reader = XML.newJavaFactory().newReader();
+        XMLReader<Node> reader = XML.newJavaFactory().newReader();
 
         reader.openURL(url);
 

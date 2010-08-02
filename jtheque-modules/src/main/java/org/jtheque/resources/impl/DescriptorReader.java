@@ -36,7 +36,7 @@ import org.jtheque.core.able.Core;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.io.FileUtils;
-import org.jtheque.xml.utils.IXMLReader;
+import org.jtheque.xml.utils.XMLReader;
 import org.jtheque.xml.utils.XML;
 import org.jtheque.xml.utils.XMLException;
 
@@ -67,7 +67,7 @@ public final class DescriptorReader {
      * @return The resource descriptor or null if the URL is invalid.
      */
     public static ResourceDescriptor readResourceDescriptor(String url) {
-        IXMLReader<Node> reader = XML.newJavaFactory().newReader();
+        XMLReader<Node> reader = XML.newJavaFactory().newReader();
 
         try {
             return readResourceDescriptor(reader, new URL(url));
@@ -97,7 +97,7 @@ public final class DescriptorReader {
      * @return The module descriptor.
      */
     public static ModuleDescriptor readModuleDescriptor(String url) {
-        IXMLReader<Node> reader = XML.newJavaFactory().newReader();
+        XMLReader<Node> reader = XML.newJavaFactory().newReader();
 
         try {
             return readModuleDescriptor(reader, new URL(url));
@@ -114,7 +114,7 @@ public final class DescriptorReader {
      * @return The core descriptor or null if there were a problem reading the file.
      */
     private static CoreDescriptor readCoreDescriptor(URL url) {
-        IXMLReader<Node> reader = XML.newJavaFactory().newReader();
+        XMLReader<Node> reader = XML.newJavaFactory().newReader();
 
         try {
             reader.openURL(url);
@@ -143,7 +143,7 @@ public final class DescriptorReader {
      *
      * @return The versions file.
      */
-    private static ResourceDescriptor readResourceDescriptor(IXMLReader<Node> reader, URL url) {
+    private static ResourceDescriptor readResourceDescriptor(XMLReader<Node> reader, URL url) {
         try {
             reader.openURL(url);
 
@@ -173,7 +173,7 @@ public final class DescriptorReader {
      *
      * @return The module descriptor.
      */
-    private static ModuleDescriptor readModuleDescriptor(IXMLReader<Node> reader, URL url) {
+    private static ModuleDescriptor readModuleDescriptor(XMLReader<Node> reader, URL url) {
         try {
             reader.openURL(url);
 
@@ -205,7 +205,7 @@ public final class DescriptorReader {
      *
      * @throws XMLException If an exception occurs during XML processing.
      */
-    private static CoreVersion readCoreVersion(Object currentNode, IXMLReader<Node> reader) throws XMLException {
+    private static CoreVersion readCoreVersion(Object currentNode, XMLReader<Node> reader) throws XMLException {
         CoreVersion resourceVersion = new CoreVersion(Version.get(reader.readString("@name", currentNode)));
 
         readResources(currentNode, reader, resourceVersion);
@@ -223,7 +223,7 @@ public final class DescriptorReader {
      *
      * @throws XMLException If an error occurs during XML parsing.
      */
-    private static ResourceVersion readResourceVersion(Object currentNode, IXMLReader<Node> reader) throws XMLException {
+    private static ResourceVersion readResourceVersion(Object currentNode, XMLReader<Node> reader) throws XMLException {
         ResourceVersion resourceVersion = new ResourceVersion(Version.get(reader.readString("@name", currentNode)));
 
         readResources(currentNode, reader, resourceVersion);
@@ -241,7 +241,7 @@ public final class DescriptorReader {
      *
      * @throws XMLException If an error occurs during XML parsing.
      */
-    private static ModuleVersion readModuleVersion(Object currentNode, IXMLReader<Node> reader) throws XMLException {
+    private static ModuleVersion readModuleVersion(Object currentNode, XMLReader<Node> reader) throws XMLException {
         ModuleVersion resourceVersion = new ModuleVersion(Version.get(reader.readString("@name", currentNode)));
 
         readResources(currentNode, reader, resourceVersion);
@@ -265,7 +265,7 @@ public final class DescriptorReader {
      *
      * @throws XMLException If an exceptions occurs during XML processing. 
      */
-    private static void readResources(Object currentNode, IXMLReader<Node> reader, CoreVersion coreVersion) throws XMLException {
+    private static void readResources(Object currentNode, XMLReader<Node> reader, CoreVersion coreVersion) throws XMLException {
         for (Object libraryNode : reader.getNodes("bundles/bundle", currentNode)) {
             coreVersion.addBundle(readFileDescriptor(libraryNode, reader));
         }
@@ -280,7 +280,7 @@ public final class DescriptorReader {
      *
      * @throws XMLException If an exception occurs during XML parsing.
      */
-    private static void readResources(Object currentNode, IXMLReader<Node> reader, ResourceVersion resourceVersion) throws XMLException {
+    private static void readResources(Object currentNode, XMLReader<Node> reader, ResourceVersion resourceVersion) throws XMLException {
         for (Object libraryNode : reader.getNodes("libraries/library", currentNode)) {
             resourceVersion.addLibrary(readFileDescriptor(libraryNode, reader));
         }
@@ -300,7 +300,7 @@ public final class DescriptorReader {
      *
      * @throws XMLException If an exception occurs during XML parsing.
      */
-    private static FileDescriptor readFileDescriptor(Object currentNode, IXMLReader<Node> reader) throws XMLException {
+    private static FileDescriptor readFileDescriptor(Object currentNode, XMLReader<Node> reader) throws XMLException {
         String name = reader.readString("name", currentNode);
         String url = reader.readString("url", currentNode);
         String version = reader.readString("version", currentNode);

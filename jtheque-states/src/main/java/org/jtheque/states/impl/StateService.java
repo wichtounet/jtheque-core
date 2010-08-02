@@ -24,8 +24,8 @@ import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.bean.ReflectionUtils;
 import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.io.FileUtils;
-import org.jtheque.xml.utils.IXMLReader;
-import org.jtheque.xml.utils.IXMLWriter;
+import org.jtheque.xml.utils.XMLReader;
+import org.jtheque.xml.utils.XMLWriter;
 import org.jtheque.xml.utils.Node;
 import org.jtheque.xml.utils.XML;
 import org.jtheque.xml.utils.XMLException;
@@ -153,7 +153,7 @@ public final class StateService implements org.jtheque.states.able.StateService 
      */
     @PostConstruct
     private void loadStates() {
-        IXMLReader<org.w3c.dom.Node> reader = XML.newJavaFactory().newReader();
+        XMLReader<org.w3c.dom.Node> reader = XML.newJavaFactory().newReader();
 
         try {
             reader.openFile(getConfigFile());
@@ -193,7 +193,7 @@ public final class StateService implements org.jtheque.states.able.StateService 
      * @param file The config file.
      */
     private static void initConfigFile(File file) {
-        IXMLWriter<org.w3c.dom.Node> writer = XML.newJavaFactory().newWriter("states");
+        XMLWriter<org.w3c.dom.Node> writer = XML.newJavaFactory().newWriter("states");
 
         writer.write(file.getAbsolutePath());
     }
@@ -203,7 +203,7 @@ public final class StateService implements org.jtheque.states.able.StateService 
      */
     @PreDestroy
     private void saveStates() {
-        IXMLWriter<org.w3c.dom.Node> writer = XML.newJavaFactory().newWriter("states");
+        XMLWriter<org.w3c.dom.Node> writer = XML.newJavaFactory().newWriter("states");
 
         writeStates(writer);
         writeProperties(writer);
@@ -217,7 +217,7 @@ public final class StateService implements org.jtheque.states.able.StateService 
      *
      * @param writer The write to use to write the states.
      */
-    private void writeStates(IXMLWriter<org.w3c.dom.Node> writer) {
+    private void writeStates(XMLWriter<org.w3c.dom.Node> writer) {
         for (Map.Entry<String, Object> state : states.entrySet()) {
             writer.add("state");
             writer.addAttribute("id", state.getKey());
@@ -245,7 +245,7 @@ public final class StateService implements org.jtheque.states.able.StateService 
      * @param state      The state to write.
      * @param saveMethod The save method.
      */
-    private static void simpleWrite(IXMLWriter<org.w3c.dom.Node> writer, Map.Entry<String, Object> state, Method saveMethod) {
+    private static void simpleWrite(XMLWriter<org.w3c.dom.Node> writer, Map.Entry<String, Object> state, Method saveMethod) {
         writer.add("properties");
 
         Map<String, String> saveProperties = getObjectsFromSaveMethod(state.getValue(), saveMethod);
@@ -268,7 +268,7 @@ public final class StateService implements org.jtheque.states.able.StateService 
      * @param state      The state to write.
      * @param saveMethod The save method.
      */
-    private static void delegatedWrite(IXMLWriter<org.w3c.dom.Node> writer, Map.Entry<String, Object> state, Method saveMethod) {
+    private static void delegatedWrite(XMLWriter<org.w3c.dom.Node> writer, Map.Entry<String, Object> state, Method saveMethod) {
         Iterable<Node> savedNodes = getObjectsFromSaveMethod(state.getValue(), saveMethod);
 
         XML.newJavaFactory().newNodeSaver().writeNodes(writer, savedNodes);
@@ -300,7 +300,7 @@ public final class StateService implements org.jtheque.states.able.StateService 
      *
      * @param writer The XML writer.
      */
-    private void writeProperties(IXMLWriter<org.w3c.dom.Node> writer) {
+    private void writeProperties(XMLWriter<org.w3c.dom.Node> writer) {
         for (Map.Entry<String, Map<String, String>> state : properties.entrySet()) {
             writer.add("state");
 
@@ -328,7 +328,7 @@ public final class StateService implements org.jtheque.states.able.StateService 
      *
      * @param writer The writer.
      */
-    private void writeNodes(IXMLWriter<org.w3c.dom.Node> writer) {
+    private void writeNodes(XMLWriter<org.w3c.dom.Node> writer) {
         for (Map.Entry<String, Collection<Node>> state : nodes.entrySet()) {
             writer.add("state");
 

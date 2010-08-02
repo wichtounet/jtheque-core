@@ -22,7 +22,7 @@ import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.io.FileUtils;
-import org.jtheque.xml.utils.IXMLReader;
+import org.jtheque.xml.utils.XMLReader;
 import org.jtheque.xml.utils.XML;
 import org.jtheque.xml.utils.XMLException;
 
@@ -57,7 +57,7 @@ final class XMLRestorer {
     public static List<ModuleBackup> restore(File file) throws XMLException {
         List<ModuleBackup> backups = CollectionUtils.newList();
 
-        IXMLReader<Node> reader = XML.newJavaFactory().newReader();
+        XMLReader<Node> reader = XML.newJavaFactory().newReader();
 
         try {
             reader.openFile(file);

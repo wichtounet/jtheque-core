@@ -7,8 +7,8 @@ import org.jtheque.events.able.Events;
 import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.io.FileUtils;
-import org.jtheque.xml.utils.IXMLReader;
-import org.jtheque.xml.utils.IXMLWriter;
+import org.jtheque.xml.utils.XMLReader;
+import org.jtheque.xml.utils.XMLWriter;
 import org.jtheque.xml.utils.XML;
 import org.jtheque.xml.utils.XMLException;
 
@@ -81,7 +81,7 @@ public final class EventService implements org.jtheque.events.able.EventService 
             createEmptyEventFile(f);
         }
 
-        IXMLReader<Node> reader = XML.newJavaFactory().newReader();
+        XMLReader<Node> reader = XML.newJavaFactory().newReader();
 
         try {
             reader.openFile(f);
@@ -110,7 +110,7 @@ public final class EventService implements org.jtheque.events.able.EventService 
      * @param f The file.
      */
     private static void createEmptyEventFile(File f) {
-        IXMLWriter<Node> writer = XML.newJavaFactory().newWriter("logs");
+        XMLWriter<Node> writer = XML.newJavaFactory().newWriter("logs");
 
         writer.write(f.getAbsolutePath());
     }
@@ -126,7 +126,7 @@ public final class EventService implements org.jtheque.events.able.EventService 
      *
      * @throws XMLException If an error occurs during the xml reading.
      */
-    private static Event readEvent(IXMLReader<Node> reader, String name, Object element) throws XMLException {
+    private static Event readEvent(XMLReader<Node> reader, String name, Object element) throws XMLException {
         return Events.newEvent(
                 EventLevel.get(reader.readInt("level", element)),
                 new Date(reader.readLong("date", element)),
@@ -141,7 +141,7 @@ public final class EventService implements org.jtheque.events.able.EventService 
      */
     @PreDestroy
     public void saveXML() {
-        IXMLWriter<Node> writer = XML.newJavaFactory().newWriter("logs");
+        XMLWriter<Node> writer = XML.newJavaFactory().newWriter("logs");
 
         for (Map.Entry<String, Collection<Event>> entry : logs.entrySet()) {
             writer.add("log");
@@ -162,7 +162,7 @@ public final class EventService implements org.jtheque.events.able.EventService 
      * @param writer The writer to use.
      * @param events The logs to write.
      */
-    private static void writeEvents(IXMLWriter<Node> writer, Iterable<Event> events) {
+    private static void writeEvents(XMLWriter<Node> writer, Iterable<Event> events) {
         for (Event event : events) {
             writer.add("event");
 

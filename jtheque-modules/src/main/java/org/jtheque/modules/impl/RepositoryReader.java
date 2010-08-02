@@ -21,7 +21,7 @@ import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.bean.InternationalString;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.io.FileUtils;
-import org.jtheque.xml.utils.IXMLReader;
+import org.jtheque.xml.utils.XMLReader;
 import org.jtheque.xml.utils.XML;
 import org.jtheque.xml.utils.XMLException;
 
@@ -35,7 +35,7 @@ import org.w3c.dom.Node;
  */
 public final class RepositoryReader {
     private final org.jtheque.modules.impl.Repository repository = new org.jtheque.modules.impl.Repository();
-    private final IXMLReader<Node> reader = XML.newJavaFactory().newReader();
+    private final XMLReader<Node> reader = XML.newJavaFactory().newReader();
 
     /**
      * Read a repository file.
@@ -76,7 +76,7 @@ public final class RepositoryReader {
      *
      * @throws XMLException If an error occurs during the XML reading process.
      */
-    private void readApplication(IXMLReader<Node> reader) throws XMLException {
+    private void readApplication(XMLReader<Node> reader) throws XMLException {
         repository.setApplication(reader.readString("application", reader.getRootElement()));
     }
 
@@ -87,7 +87,7 @@ public final class RepositoryReader {
      *
      * @throws XMLException If an error occurs during the XML reading process.
      */
-    private void readModules(IXMLReader<Node> reader) throws XMLException {
+    private void readModules(XMLReader<Node> reader) throws XMLException {
         for (Object currentNode : reader.getNodes("modules/module", reader.getRootElement())) {
             ModuleDescription module = new ModuleDescription();
 
@@ -121,7 +121,7 @@ public final class RepositoryReader {
      *
      * @throws XMLException If an error occurs during the XML reading process.
      */
-    private void readTitle(IXMLReader<Node> reader) throws XMLException {
+    private void readTitle(XMLReader<Node> reader) throws XMLException {
         InternationalString title = new InternationalString();
 
         for (Node child : reader.getNodes("title/*", reader.getRootElement())) {

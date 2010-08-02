@@ -10,7 +10,7 @@ import org.jtheque.utils.bean.InternationalString;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.io.FileUtils;
-import org.jtheque.xml.utils.IXMLReader;
+import org.jtheque.xml.utils.XMLReader;
 import org.jtheque.xml.utils.XML;
 import org.jtheque.xml.utils.XMLException;
 
@@ -42,7 +42,7 @@ import java.util.Collection;
  */
 @NotThreadSafe
 public final class XMLApplicationReader {
-    private IXMLReader<Node> reader;
+    private XMLReader<Node> reader;
 
     /**
      * Read the application file.

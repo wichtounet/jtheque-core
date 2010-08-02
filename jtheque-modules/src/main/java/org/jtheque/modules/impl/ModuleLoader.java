@@ -18,7 +18,7 @@ import org.jtheque.utils.ThreadUtils;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.io.FileUtils;
-import org.jtheque.xml.utils.IXMLOverReader;
+import org.jtheque.xml.utils.XMLOverReader;
 import org.jtheque.xml.utils.XML;
 import org.jtheque.xml.utils.XMLException;
 
@@ -187,7 +187,7 @@ public final class ModuleLoader implements org.jtheque.modules.able.ModuleLoader
     private ModuleResources importConfig(InputStream stream) {
         ModuleResources resources = new ModuleResources();
 
-        IXMLOverReader reader = XML.newJavaFactory().newOverReader();
+        XMLOverReader reader = XML.newJavaFactory().newOverReader();
         try {
             reader.openStream(stream);
 
@@ -265,7 +265,7 @@ public final class ModuleLoader implements org.jtheque.modules.able.ModuleLoader
      *
      * @throws XMLException If an error occurs during XML parsing.
      */
-    private static void importI18NResources(ModuleResources resources, IXMLOverReader reader) throws XMLException {
+    private static void importI18NResources(ModuleResources resources, XMLOverReader reader) throws XMLException {
         while (reader.next("/config/i18n/i18nResource")) {
             String name = reader.readString("@name");
             Version version = Version.get(reader.readString("@version"));
@@ -290,7 +290,7 @@ public final class ModuleLoader implements org.jtheque.modules.able.ModuleLoader
      *
      * @throws XMLException If an exception occurs during XML parsing.
      */
-    private static void importImageResources(ModuleResources resources, IXMLOverReader reader) throws XMLException {
+    private static void importImageResources(ModuleResources resources, XMLOverReader reader) throws XMLException {
         while (reader.next("/config/images/resource")) {
             String name = reader.readString("@name");
             String classpath = reader.readString("classpath");
@@ -307,7 +307,7 @@ public final class ModuleLoader implements org.jtheque.modules.able.ModuleLoader
      *
      * @throws XMLException If an exception occurs during XML parsing.
      */
-    private void importResources(ModuleResources resources, IXMLOverReader reader) throws XMLException {
+    private void importResources(ModuleResources resources, XMLOverReader reader) throws XMLException {
         while (reader.next("/config/resources/resource")) {
             String id = reader.readString("@id");
             Version version = Version.get(reader.readString("@version"));
