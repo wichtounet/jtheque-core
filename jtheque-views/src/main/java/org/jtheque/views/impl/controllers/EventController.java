@@ -2,7 +2,7 @@ package org.jtheque.views.impl.controllers;
 
 import org.jtheque.ui.able.Action;
 import org.jtheque.ui.utils.AbstractController;
-import org.jtheque.views.able.windows.IEventView;
+import org.jtheque.views.able.windows.EventView;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -25,12 +25,12 @@ import org.jtheque.views.able.windows.IEventView;
  *
  * @author Baptiste Wicht
  */
-public class EventController extends AbstractController<IEventView> {
+public class EventController extends AbstractController<EventView> {
     /**
      * Construct a new EventController. 
      */
     public EventController() {
-        super(IEventView.class);
+        super(EventView.class);
     }
 
     /**

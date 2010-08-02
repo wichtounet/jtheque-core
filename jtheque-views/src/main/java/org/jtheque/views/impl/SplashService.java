@@ -1,14 +1,12 @@
 package org.jtheque.views.impl;
 
-import org.jtheque.core.able.ICore;
-import org.jtheque.features.able.IFeatureService;
+import org.jtheque.core.able.Core;
+import org.jtheque.features.able.FeatureService;
 import org.jtheque.utils.ui.SwingUtils;
-import org.jtheque.views.able.ISplashService;
-import org.jtheque.views.able.panel.ISplashView;
-import org.jtheque.views.able.windows.IMainView;
+import org.jtheque.views.able.panel.SplashView;
+import org.jtheque.views.able.windows.MainView;
 import org.jtheque.views.impl.components.menu.CoreMenu;
 import org.jtheque.views.impl.components.panel.SplashScreenPane;
-import org.jtheque.views.impl.windows.MainView;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -34,12 +32,12 @@ import org.springframework.context.ApplicationContextAware;
  *
  * @author Baptiste Wicht
  */
-public final class SplashService implements ISplashService, ApplicationContextAware {
-    private ISplashView splashScreenPane;
+public final class SplashService implements org.jtheque.views.able.SplashService, ApplicationContextAware {
+    private SplashView splashScreenPane;
     private boolean mainDisplayed;
 
-    private MainView mainView;
-    private final ICore core;
+    private org.jtheque.views.impl.windows.MainView mainView;
+    private final Core core;
     private ApplicationContext applicationContext;
 
     /**
@@ -47,7 +45,7 @@ public final class SplashService implements ISplashService, ApplicationContextAw
      *
      * @param core The core.
      */
-    public SplashService(ICore core) {
+    public SplashService(Core core) {
         super();
 
         this.core = core;
@@ -58,7 +56,7 @@ public final class SplashService implements ISplashService, ApplicationContextAw
         SwingUtils.inEdt(new Runnable() {
             @Override
             public void run() {
-                mainView = (MainView) applicationContext.getBean(IMainView.class);
+                mainView = (org.jtheque.views.impl.windows.MainView) applicationContext.getBean(MainView.class);
                 
                 splashScreenPane = new SplashScreenPane(core);
             }
@@ -109,7 +107,7 @@ public final class SplashService implements ISplashService, ApplicationContextAw
             public void run() {
                 mainView.fill();
 
-                applicationContext.getBean(IFeatureService.class).addMenu("", applicationContext.getBean(CoreMenu.class));
+                applicationContext.getBean(FeatureService.class).addMenu("", applicationContext.getBean(CoreMenu.class));
 
                 mainView.refresh();
             }

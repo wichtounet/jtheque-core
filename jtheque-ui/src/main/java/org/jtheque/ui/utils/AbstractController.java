@@ -1,9 +1,9 @@
 package org.jtheque.ui.utils;
 
 import org.jtheque.ui.able.Action;
+import org.jtheque.ui.able.Controller;
 import org.jtheque.ui.able.ControllerException;
-import org.jtheque.ui.able.IController;
-import org.jtheque.ui.able.IView;
+import org.jtheque.ui.able.View;
 import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.ui.SwingUtils;
 
@@ -36,7 +36,7 @@ import java.util.Map;
  *
  * @author Baptiste Wicht
  */
-public abstract class AbstractController<T extends IView> implements IController<T>, ApplicationContextAware {
+public abstract class AbstractController<T extends View> implements Controller<T>, ApplicationContextAware {
     private final Map<String, Method> methodCache = CollectionUtils.newHashMap();
     private final Class<? extends T> viewType;
 

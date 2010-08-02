@@ -2,7 +2,6 @@ package org.jtheque.ui.impl;
 
 import org.jtheque.i18n.able.LanguageService;
 import org.jtheque.images.able.ImageService;
-import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.ui.able.ViewDelegate;
 
 import org.springframework.core.io.ClassPathResource;
@@ -28,7 +27,7 @@ import org.springframework.core.io.ClassPathResource;
  *
  * @author Baptiste Wicht
  */
-public class UIUtils implements IUIUtils {
+public class UIUtils implements org.jtheque.ui.able.UIUtils {
     private final ViewDelegate viewDelegate;
     private final LanguageService languageService;
 

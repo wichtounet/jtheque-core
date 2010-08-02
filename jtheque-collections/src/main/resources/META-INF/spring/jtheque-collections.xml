@@ -21,18 +21,18 @@
             <osgi:reference interface="org.jtheque.file.able.FileService"/>
         </constructor-arg>
         <constructor-arg>
-            <osgi:reference interface="org.jtheque.core.able.ICore"/>
+            <osgi:reference interface="org.jtheque.core.able.Core"/>
         </constructor-arg>
         <constructor-arg>
-            <osgi:reference interface="org.jtheque.schemas.able.ISchemaService"/>
+            <osgi:reference interface="org.jtheque.schemas.able.SchemaService"/>
         </constructor-arg>
         <constructor-arg ref="collectionSchema"/>
     </bean>
 
     <bean id="daoCollections" class="org.jtheque.collections.impl.DaoCollections"/>
 
-    <osgi:reference id="daoPersistenceContext" interface="org.jtheque.persistence.able.IDaoPersistenceContext" />
+    <osgi:reference id="daoPersistenceContext" interface="org.jtheque.persistence.able.DaoPersistenceContext" />
 
-    <osgi:service ref="collectionsService" interface="org.jtheque.collections.able.ICollectionsService"/>
-    <osgi:service ref="daoCollections" interface="org.jtheque.collections.able.IDaoCollections"/>
+    <osgi:service ref="collectionsService" interface="org.jtheque.collections.able.CollectionsService"/>
+    <osgi:service ref="daoCollections" interface="org.jtheque.collections.able.DaoCollections"/>
 </beans>

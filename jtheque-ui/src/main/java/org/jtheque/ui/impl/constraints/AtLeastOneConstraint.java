@@ -1,7 +1,6 @@
 package org.jtheque.ui.impl.constraints;
 
-import org.jtheque.errors.able.IError;
-import org.jtheque.errors.able.Errors;
+import org.jtheque.errors.able.*;
 
 import javax.swing.ComboBoxModel;
 import javax.swing.JList;
@@ -41,7 +40,7 @@ public final class AtLeastOneConstraint extends NonLengthConstraint {
     }
 
     @Override
-    public void validate(Object field, Collection<IError> errors) {
+    public void validate(Object field, Collection<org.jtheque.errors.able.Error> errors) {
         int count = 0;
 
         if (field instanceof ItemSelectable) {

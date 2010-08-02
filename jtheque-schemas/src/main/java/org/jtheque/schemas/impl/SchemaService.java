@@ -3,9 +3,8 @@ package org.jtheque.schemas.impl;
 import org.jtheque.modules.able.Module;
 import org.jtheque.modules.able.ModuleListener;
 import org.jtheque.modules.utils.ModuleResourceCache;
-import org.jtheque.schemas.able.ISchemaService;
 import org.jtheque.schemas.able.Schema;
-import org.jtheque.states.able.IStateService;
+import org.jtheque.states.able.StateService;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.bean.Version;
@@ -37,10 +36,10 @@ import java.util.Set;
  * A Schema manager implementation.
  *
  * @author Baptiste Wicht
- * @see ISchemaService
+ * @see org.jtheque.schemas.able.SchemaService
  */
 @ThreadSafe
-public final class SchemaService implements ISchemaService, ModuleListener {
+public final class SchemaService implements org.jtheque.schemas.able.SchemaService, ModuleListener {
     private final List<Schema> schemas = CollectionUtils.newList();
 
     private final SchemaConfiguration configuration;
@@ -50,7 +49,7 @@ public final class SchemaService implements ISchemaService, ModuleListener {
      *
      * @param stateService The state stateService.
      */
-    public SchemaService(IStateService stateService) {
+    public SchemaService(StateService stateService) {
         super();
 
         configuration = stateService.getState(new SchemaConfiguration());

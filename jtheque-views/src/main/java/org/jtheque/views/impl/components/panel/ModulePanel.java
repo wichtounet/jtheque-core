@@ -17,8 +17,8 @@ package org.jtheque.views.impl.components.panel;
  */
 
 import org.jtheque.i18n.able.LanguageService;
-import org.jtheque.modules.able.IModuleDescription;
-import org.jtheque.modules.able.IModuleService;
+import org.jtheque.modules.able.ModuleDescription;
+import org.jtheque.modules.able.ModuleService;
 import org.jtheque.ui.utils.builders.FilthyPanelBuilder;
 import org.jtheque.ui.utils.builders.PanelBuilder;
 import org.jtheque.ui.able.components.Borders;
@@ -41,7 +41,7 @@ public final class ModulePanel extends JPanel {
     private final JLabel onlineLabel;
     private final JLabel currentLabel;
 
-    private final IModuleDescription module;
+    private final ModuleDescription module;
 
     //Keeps fonts to quickly switch them
     private Font fontTitle;
@@ -51,7 +51,7 @@ public final class ModulePanel extends JPanel {
 
     private static final int TITLE_FONT_SIZE = 16;
 
-    private final IModuleService moduleService;
+    private final ModuleService moduleService;
     private final LanguageService languageService;
     private final IUpdateService updateService;
 
@@ -64,7 +64,7 @@ public final class ModulePanel extends JPanel {
      * @param languageService The language service.
      * @param updateService   The update service.
      */
-    public ModulePanel(Object value, boolean isSelected, IModuleService moduleService, LanguageService languageService, IUpdateService updateService) {
+    public ModulePanel(Object value, boolean isSelected, ModuleService moduleService, LanguageService languageService, IUpdateService updateService) {
         super();
 
         this.moduleService = moduleService;
@@ -74,7 +74,7 @@ public final class ModulePanel extends JPanel {
         PanelBuilder builder = new FilthyPanelBuilder(this);
         builder.setBorder(Borders.createEmptyBorder(2, 2, 2, 10));
 
-        module = (IModuleDescription) value;
+        module = (ModuleDescription) value;
 
         labelName = builder.addLabel(module.getName(),
                 PanelBuilder.NORMAL, TITLE_FONT_SIZE, builder.gbcSet(0, 0, GridBagUtils.HORIZONTAL, GridBagUtils.BASELINE_LEADING, 0, 1, 1.0, 1.0));

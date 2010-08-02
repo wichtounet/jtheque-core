@@ -1,6 +1,6 @@
 package org.jtheque.ui.impl.constraints;
 
-import org.jtheque.errors.able.IError;
+import org.jtheque.errors.able.Error;
 import org.jtheque.errors.able.Errors;
 
 import java.util.Collection;
@@ -37,7 +37,7 @@ public final class NotNullConstraint extends NonLengthConstraint {
     }
 
     @Override
-    public void validate(Object field, Collection<IError> errors) {
+    public void validate(Object field, Collection<Error> errors) {
         if (field == null) {
             errors.add(Errors.newI18nError("error.validation.field.empty", new Object[]{getFieldName()}));
         }

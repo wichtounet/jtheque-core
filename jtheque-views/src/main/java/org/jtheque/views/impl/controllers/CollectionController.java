@@ -1,12 +1,12 @@
 package org.jtheque.views.impl.controllers;
 
-import org.jtheque.collections.able.ICollectionsService;
-import org.jtheque.core.able.ICore;
+import org.jtheque.collections.able.CollectionsService;
+import org.jtheque.core.able.Core;
 import org.jtheque.i18n.able.LanguageService;
 import org.jtheque.utils.bean.Response;
 import org.jtheque.ui.able.Action;
 import org.jtheque.ui.utils.AbstractController;
-import org.jtheque.views.able.panel.ICollectionView;
+import org.jtheque.views.able.panel.CollectionView;
 
 import javax.annotation.Resource;
 
@@ -31,21 +31,21 @@ import javax.annotation.Resource;
  *
  * @author Baptiste Wicht
  */
-public class CollectionController extends AbstractController<ICollectionView> {
+public class CollectionController extends AbstractController<CollectionView> {
     @Resource
-    private ICollectionsService collectionsService;
+    private CollectionsService collectionsService;
 
     @Resource
     private LanguageService languageService;
 
     @Resource
-    private ICore core;
+    private Core core;
 
     /**
      * Construct a new Collection controller. 
      */
     public CollectionController() {
-        super(ICollectionView.class);
+        super(CollectionView.class);
     }
 
     /**

@@ -16,16 +16,13 @@ package org.jtheque.core.impl;
  * limitations under the License.
  */
 
-import org.jtheque.core.able.ApplicationListener;
-import org.jtheque.core.able.ICore;
-import org.jtheque.core.able.ICoreConfiguration;
-import org.jtheque.core.able.IFilesContainer;
-import org.jtheque.core.able.IFoldersContainer;
+import org.jtheque.core.able.*;
+import org.jtheque.core.able.CoreConfiguration;
 import org.jtheque.core.able.application.Application;
-import org.jtheque.core.able.lifecycle.ILifeCycle;
+import org.jtheque.core.able.lifecycle.LifeCycle;
 import org.jtheque.events.able.EventService;
 import org.jtheque.images.able.ImageService;
-import org.jtheque.states.able.IStateService;
+import org.jtheque.states.able.StateService;
 import org.jtheque.utils.annotations.GuardedInternally;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.collections.CollectionUtils;
@@ -42,18 +39,18 @@ import java.util.Collection;
  *
  * @author Baptiste Wicht
  */
-public final class Core implements ICore {
+public final class Core implements org.jtheque.core.able.Core {
     private static final String CORE_MESSAGES_FILE = "http://jtheque.baptiste-wicht.com/files/messages/jtheque-core-messages.xml";
 
     @GuardedInternally
     private final WeakEventListenerList<ApplicationListener> listeners = WeakEventListenerList.create();
 
     private final Collection<String> creditsMessage;
-    private final IFoldersContainer foldersContainer;
-    private final IFilesContainer filesContainer;
-    private final ICoreConfiguration configuration;
+    private final FoldersContainer foldersContainer;
+    private final FilesContainer filesContainer;
+    private final org.jtheque.core.able.CoreConfiguration configuration;
     private final ImageService imageService;
-    private final ILifeCycle lifeCycle;
+    private final LifeCycle lifeCycle;
 
     private Application application;
 
@@ -64,16 +61,16 @@ public final class Core implements ICore {
      * @param imageService The resource service.
      * @param eventService The event service.
      */
-    public Core(IStateService stateService, ImageService imageService, EventService eventService) {
+    public Core(StateService stateService, ImageService imageService, EventService eventService) {
         super();
 
         this.imageService = imageService;
-        lifeCycle = new LifeCycle(eventService, this);
+        lifeCycle = new org.jtheque.core.impl.LifeCycle(eventService, this);
 
         foldersContainer = new Folders(this);
         filesContainer = new Files(this);
 
-        configuration = stateService.getState(new CoreConfiguration());
+        configuration = stateService.getState(new org.jtheque.core.impl.CoreConfiguration());
 
         creditsMessage = CollectionUtils.newList(5);
         creditsMessage.add("about.view.copyright");
@@ -133,22 +130,22 @@ public final class Core implements ICore {
     }
 
     @Override
-    public IFoldersContainer getFolders() {
+    public FoldersContainer getFolders() {
         return foldersContainer;
     }
 
     @Override
-    public IFilesContainer getFiles() {
+    public FilesContainer getFiles() {
         return filesContainer;
     }
 
     @Override
-    public ILifeCycle getLifeCycle() {
+    public org.jtheque.core.able.lifecycle.LifeCycle getLifeCycle() {
         return lifeCycle;
     }
 
     @Override
-    public ICoreConfiguration getConfiguration() {
+    public CoreConfiguration getConfiguration() {
         return configuration;
     }
 

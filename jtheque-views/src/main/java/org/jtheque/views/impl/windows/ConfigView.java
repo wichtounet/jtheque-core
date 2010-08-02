@@ -17,16 +17,15 @@ package org.jtheque.views.impl.windows;
  */
 
 import org.jtheque.i18n.able.LanguageService;
+import org.jtheque.ui.able.Model;
 import org.jtheque.utils.SimplePropertiesCache;
-import org.jtheque.ui.able.IModel;
 import org.jtheque.ui.able.constraints.Constraint;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.ui.able.components.LayerTabbedPane;
 import org.jtheque.ui.utils.windows.dialogs.SwingFilthyBuildedDialogView;
 import org.jtheque.utils.ui.GridBagUtils;
-import org.jtheque.views.able.IViews;
+import org.jtheque.views.able.Views;
 import org.jtheque.views.able.components.ConfigTabComponent;
-import org.jtheque.views.able.windows.IConfigView;
 
 import org.slf4j.LoggerFactory;
 
@@ -37,7 +36,7 @@ import java.util.Map;
  *
  * @author Baptiste Wicht
  */
-public final class ConfigView extends SwingFilthyBuildedDialogView<IModel> implements IConfigView {
+public final class ConfigView extends SwingFilthyBuildedDialogView<Model> implements org.jtheque.views.able.windows.ConfigView {
     private LayerTabbedPane tab;
 
     @Override
@@ -52,7 +51,7 @@ public final class ConfigView extends SwingFilthyBuildedDialogView<IModel> imple
 
         tab = new LayerTabbedPane(languageService);
 
-        for (ConfigTabComponent component : getService(IViews.class).getConfigTabComponents()) {
+        for (ConfigTabComponent component : getService(Views.class).getConfigTabComponents()) {
             tab.addLayeredTab(languageService.getMessage(component.getTitleKey()), component.getComponent());
 
             for (Map.Entry<Object, Constraint> constraint : component.getConstraints().entrySet()) {

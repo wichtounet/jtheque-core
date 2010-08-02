@@ -19,5 +19,5 @@
 
     <osgi:service ref="languageService" interface="org.jtheque.i18n.able.LanguageService"/>
 
-    <osgi:reference id="stateService" interface="org.jtheque.states.able.IStateService"/>
+    <osgi:reference id="stateService" interface="org.jtheque.states.able.StateService"/>
 </beans>

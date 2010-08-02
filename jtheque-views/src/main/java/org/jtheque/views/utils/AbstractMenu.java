@@ -1,13 +1,13 @@
 package org.jtheque.views.utils;
 
 import org.jtheque.features.able.CoreFeature;
+import org.jtheque.features.able.Feature;
 import org.jtheque.features.able.Features;
-import org.jtheque.features.able.IFeature;
-import org.jtheque.features.able.IFeature.FeatureType;
+import org.jtheque.features.able.Feature.FeatureType;
 import org.jtheque.features.able.Menu;
 import org.jtheque.i18n.able.LanguageService;
 import org.jtheque.i18n.able.Internationalizable;
-import org.jtheque.ui.able.IController;
+import org.jtheque.ui.able.Controller;
 import org.jtheque.ui.utils.actions.ActionFactory;
 import org.jtheque.ui.utils.actions.JThequeAction;
 import org.jtheque.utils.collections.CollectionUtils;
@@ -45,14 +45,14 @@ import java.util.Map;
  * @author Baptiste Wicht
  */
 public abstract class AbstractMenu implements Menu {
-    private final Map<String, List<IFeature>> cache = CollectionUtils.newHashMap(5);
+    private final Map<String, List<Feature>> cache = CollectionUtils.newHashMap(5);
 
     private final Collection<Internationalizable> internationalizables = CollectionUtils.newList();
 
     //Public methods
 
     @Override
-    public final List<IFeature> getSubFeatures(CoreFeature feature) {
+    public final List<Feature> getSubFeatures(CoreFeature feature) {
         switch (feature) {
             case FILE:
                 loadSubFeatures(CoreFeature.FILE, getFileMenuSubFeatures());
@@ -81,14 +81,14 @@ public abstract class AbstractMenu implements Menu {
      * @param feature     The core feature.
      * @param subFeatures The sub features to add to the given core feature.
      */
-    private void loadSubFeatures(CoreFeature feature, List<IFeature> subFeatures) {
+    private void loadSubFeatures(CoreFeature feature, List<Feature> subFeatures) {
         if (!cache.containsKey(feature.name())) {
             cache.put(feature.name(), subFeatures);
         }
     }
 
     @Override
-    public final List<IFeature> getMainFeatures() {
+    public final List<Feature> getMainFeatures() {
         if (!cache.containsKey("MAIN")) {
             cache.put("MAIN", getMenuMainFeatures());
         }
@@ -103,7 +103,7 @@ public abstract class AbstractMenu implements Menu {
      *
      * @return A List containing all the main features of this menu.
      */
-    protected List<IFeature> getMenuMainFeatures() {
+    protected List<Feature> getMenuMainFeatures() {
         return CollectionUtils.emptyList();
     }
 
@@ -113,7 +113,7 @@ public abstract class AbstractMenu implements Menu {
      *
      * @return A List containing all the sub features of "File" menu.
      */
-    protected List<IFeature> getFileMenuSubFeatures() {
+    protected List<Feature> getFileMenuSubFeatures() {
         return CollectionUtils.emptyList();
     }
 
@@ -123,7 +123,7 @@ public abstract class AbstractMenu implements Menu {
      *
      * @return A List containing all the sub features of "Edit" menu.
      */
-    protected List<IFeature> getEditMenuSubFeatures() {
+    protected List<Feature> getEditMenuSubFeatures() {
         return CollectionUtils.emptyList();
     }
 
@@ -133,7 +133,7 @@ public abstract class AbstractMenu implements Menu {
      *
      * @return A List containing all the sub features of "Advanced" menu.
      */
-    protected List<IFeature> getAdvancedMenuSubFeatures() {
+    protected List<Feature> getAdvancedMenuSubFeatures() {
         return CollectionUtils.emptyList();
     }
 
@@ -143,7 +143,7 @@ public abstract class AbstractMenu implements Menu {
      *
      * @return A List containing all the sub features of "Help" menu.
      */
-    protected List<IFeature> getHelpMenuSubFeatures() {
+    protected List<Feature> getHelpMenuSubFeatures() {
         return CollectionUtils.emptyList();
     }
 
@@ -158,7 +158,7 @@ public abstract class AbstractMenu implements Menu {
      *
      * @return The created main feature.
      */
-    protected static IFeature createMainFeature(int position, String key, IFeature... features) {
+    protected static Feature createMainFeature(int position, String key, Feature... features) {
         return Features.newFeature(FeatureType.PACK, key, position, features);
     }
 
@@ -171,7 +171,7 @@ public abstract class AbstractMenu implements Menu {
      *
      * @return The created separated feature.
      */
-    protected static IFeature createSeparatedSubFeature(int position, String key, IFeature... features) {
+    protected static Feature createSeparatedSubFeature(int position, String key, Feature... features) {
         return Features.newFeature(FeatureType.SEPARATED_ACTIONS, key, position, features);
     }
 
@@ -184,7 +184,7 @@ public abstract class AbstractMenu implements Menu {
      *
      * @return The created feature.
      */
-    protected static IFeature createSubFeature(int position, String key, IFeature... features) {
+    protected static Feature createSubFeature(int position, String key, Feature... features) {
         return Features.newFeature(FeatureType.ACTIONS, key, position, features);
     }
 
@@ -197,7 +197,7 @@ public abstract class AbstractMenu implements Menu {
      *
      * @return The created separated feature.
      */
-    protected IFeature createSeparatedSubFeature(int position, JThequeAction action, String image) {
+    protected Feature createSeparatedSubFeature(int position, JThequeAction action, String image) {
         internationalizables.add(action);
 
         return Features.newFeature(FeatureType.SEPARATED_ACTION, position, action, image);
@@ -213,8 +213,8 @@ public abstract class AbstractMenu implements Menu {
      *
      * @return The created separated feature.
      */
-    protected IFeature createSeparatedSubFeature(int position, JThequeAction action, String image, int accelerator) {
-        IFeature feature = createSeparatedSubFeature(position, action, image);
+    protected Feature createSeparatedSubFeature(int position, JThequeAction action, String image, int accelerator) {
+        Feature feature = createSeparatedSubFeature(position, action, image);
 
         feature.getAction().putValue(Action.ACCELERATOR_KEY,
                 KeyStroke.getKeyStroke(accelerator, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
@@ -230,7 +230,7 @@ public abstract class AbstractMenu implements Menu {
      *
      * @return The created separated feature.
      */
-    protected IFeature createSeparatedSubFeature(int position, JThequeAction action) {
+    protected Feature createSeparatedSubFeature(int position, JThequeAction action) {
         internationalizables.add(action);
 
         return Features.newFeature(FeatureType.SEPARATED_ACTION, position, action);
@@ -245,7 +245,7 @@ public abstract class AbstractMenu implements Menu {
      *
      * @return The created feature.
      */
-    protected IFeature createSubFeature(int position, JThequeAction action, String image) {
+    protected Feature createSubFeature(int position, JThequeAction action, String image) {
         internationalizables.add(action);
 
         return Features.newFeature(FeatureType.ACTION, position, action, image);
@@ -259,7 +259,7 @@ public abstract class AbstractMenu implements Menu {
      *
      * @return The created feature.
      */
-    protected IFeature createSubFeature(int position, JThequeAction action) {
+    protected Feature createSubFeature(int position, JThequeAction action) {
         internationalizables.add(action);
 
         return Features.newFeature(FeatureType.ACTION, position, action);
@@ -272,7 +272,7 @@ public abstract class AbstractMenu implements Menu {
      *
      * @return A List of features containing all the features in parameters.
      */
-    protected static List<IFeature> features(IFeature... features) {
+    protected static List<Feature> features(Feature... features) {
         return Arrays.asList(features);
     }
 
@@ -286,7 +286,7 @@ public abstract class AbstractMenu implements Menu {
      *
      * @return The JThequeAction for this controller binding.
      */
-    public static JThequeAction createControllerAction(String key, IController<?> controller) {
+    public static JThequeAction createControllerAction(String key, Controller<?> controller) {
         return ActionFactory.createAction(key, controller);
     }
 

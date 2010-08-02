@@ -1,14 +1,14 @@
 package org.jtheque.views.utils;
 
-import org.jtheque.features.able.IFeatureService;
+import org.jtheque.features.able.FeatureService;
 import org.jtheque.features.able.Menu;
 import org.jtheque.file.able.FileService;
 import org.jtheque.file.able.ModuleBackuper;
-import org.jtheque.schemas.able.ISchemaService;
+import org.jtheque.schemas.able.SchemaService;
 import org.jtheque.schemas.able.Schema;
-import org.jtheque.views.able.IViews;
+import org.jtheque.views.able.Views;
 import org.jtheque.views.able.components.ConfigTabComponent;
-import org.jtheque.views.able.components.IStateBarComponent;
+import org.jtheque.views.able.components.StateBarComponent;
 import org.jtheque.views.able.components.MainComponent;
 
 import org.springframework.beans.factory.config.BeanPostProcessor;
@@ -38,9 +38,9 @@ import org.springframework.beans.factory.config.BeanPostProcessor;
 public class AutoRegistrationPostProcessor implements BeanPostProcessor {
     private final String module;
 
-    private IViews views;
-    private IFeatureService featureService;
-    private ISchemaService schemaService;
+    private Views views;
+    private FeatureService featureService;
+    private SchemaService schemaService;
     private FileService fileService;
 
     /**
@@ -56,8 +56,8 @@ public class AutoRegistrationPostProcessor implements BeanPostProcessor {
 
     @Override
     public Object postProcessAfterInitialization(Object bean, String beanName) {
-        if (bean instanceof IStateBarComponent) {
-            views.addStateBarComponent(module, (IStateBarComponent) bean);
+        if (bean instanceof StateBarComponent) {
+            views.addStateBarComponent(module, (StateBarComponent) bean);
         } else if (bean instanceof Menu) {
             featureService.addMenu(module, (Menu) bean);
         } else if (bean instanceof ConfigTabComponent) {
@@ -83,7 +83,7 @@ public class AutoRegistrationPostProcessor implements BeanPostProcessor {
      *
      * @param views The views.
      */
-    public void setViews(IViews views) {
+    public void setViews(Views views) {
         this.views = views;
     }
 
@@ -92,7 +92,7 @@ public class AutoRegistrationPostProcessor implements BeanPostProcessor {
      *
      * @param featureService The feature service.
      */
-    public void setFeatureService(IFeatureService featureService) {
+    public void setFeatureService(FeatureService featureService) {
         this.featureService = featureService;
     }
 
@@ -101,7 +101,7 @@ public class AutoRegistrationPostProcessor implements BeanPostProcessor {
      *
      * @param schemaService The schema service.
      */
-    public void setSchemaService(ISchemaService schemaService) {
+    public void setSchemaService(SchemaService schemaService) {
         this.schemaService = schemaService;
     }
 

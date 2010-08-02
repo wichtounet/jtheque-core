@@ -1,15 +1,13 @@
 package org.jtheque.views.impl.windows;
 
-import org.jtheque.errors.able.ErrorListener;
-import org.jtheque.errors.able.IError;
-import org.jtheque.errors.able.IError.Level;
-import org.jtheque.errors.able.IErrorService;
+import org.jtheque.errors.able.*;
+import org.jtheque.errors.able.Error;
+import org.jtheque.errors.able.Error.Level;
 import org.jtheque.i18n.able.LanguageService;
 import org.jtheque.images.able.ImageService;
-import org.jtheque.ui.able.IModel;
+import org.jtheque.ui.able.Model;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.ui.utils.windows.frames.SwingFilthyBuildedFrameView;
-import org.jtheque.views.able.windows.IErrorView;
 import org.jtheque.views.impl.ViewsResources;
 import org.jtheque.views.impl.components.renderers.ErrorListRenderer;
 import org.jtheque.views.impl.models.ErrorsListModel;
@@ -47,8 +45,8 @@ import static org.jtheque.utils.ui.GridBagUtils.*;
  *
  * @author Baptiste Wicht
  */
-public final class ErrorView extends SwingFilthyBuildedFrameView<IModel> implements ListSelectionListener,
-        IErrorView, ErrorListener {
+public final class ErrorView extends SwingFilthyBuildedFrameView<Model> implements ListSelectionListener,
+        org.jtheque.views.able.windows.ErrorView, ErrorListener {
     private ImageIcon errorIcon;
     private ImageIcon warningIcon;
 
@@ -71,7 +69,7 @@ public final class ErrorView extends SwingFilthyBuildedFrameView<IModel> impleme
 
         languageService = getService(LanguageService.class);
 
-        listEvents = builder.addScrolledList(new ErrorsListModel(getService(IErrorService.class)),
+        listEvents = builder.addScrolledList(new ErrorsListModel(getService(ErrorService.class)),
                 new ErrorListRenderer(getService(ImageService.class), languageService),
                 builder.gbcSet(0, 1, BOTH, LINE_START, 2, 1, 1.0, 0.67));
         listEvents.getSelectionModel().addListSelectionListener(this);
@@ -79,7 +77,7 @@ public final class ErrorView extends SwingFilthyBuildedFrameView<IModel> impleme
 
         createInfosPanel(builder);
 
-        getService(IErrorService.class).addErrorListener(this);
+        getService(ErrorService.class).addErrorListener(this);
 
         errorIcon = getService(ImageService.class).getIcon(ViewsResources.ERROR_ICON);
         warningIcon = getService(ImageService.class).getIcon(ViewsResources.WARNING_ICON);
@@ -108,7 +106,7 @@ public final class ErrorView extends SwingFilthyBuildedFrameView<IModel> impleme
     @Override
     public void valueChanged(ListSelectionEvent e) {
         if (listEvents.getSelectedValues().length > 0) {
-            IError error = (IError) listEvents.getSelectedValue();
+            org.jtheque.errors.able.Error error = (Error) listEvents.getSelectedValue();
 
             labelTitle.setText(error.getTitle(languageService));
             labelTitle.setToolTipText(error.getLevel().toString());
@@ -130,7 +128,7 @@ public final class ErrorView extends SwingFilthyBuildedFrameView<IModel> impleme
     }
 
     @Override
-    public void errorOccurred(IError error) {
+    public void errorOccurred(Error error) {
         display();
     }
 }

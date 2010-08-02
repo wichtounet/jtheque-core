@@ -16,8 +16,8 @@ package org.jtheque.ui.utils;
  * limitations under the License.
  */
 
-import org.jtheque.errors.able.Errors;
-import org.jtheque.errors.able.IError;
+import org.jtheque.errors.able.*;
+import org.jtheque.errors.able.Error;
 import org.jtheque.utils.StringUtils;
 
 import javax.swing.ComboBoxModel;
@@ -45,7 +45,7 @@ public final class ValidationUtils {
      * @param name   The name of the field.
      * @param errors The errors list.
      */
-    public static void rejectIfEmpty(CharSequence field, String name, Collection<IError> errors) {
+    public static void rejectIfEmpty(CharSequence field, String name, Collection<Error> errors) {
         if (StringUtils.isEmpty(field)) {
             errors.add(Errors.newI18nError("error.validation.field.empty", new Object[]{name}));
         }
@@ -59,7 +59,7 @@ public final class ValidationUtils {
      * @param max    The max length of the field.
      * @param errors The errors list.
      */
-    public static void rejectIfLongerThan(CharSequence field, String name, int max, Collection<IError> errors) {
+    public static void rejectIfLongerThan(CharSequence field, String name, int max, Collection<Error> errors) {
         if (!StringUtils.isEmpty(field) && field.length() > max) {
             errors.add(Errors.newI18nError("error.validation.field.lenght", new Object[]{name, max}));
         }
@@ -72,7 +72,7 @@ public final class ValidationUtils {
      * @param name   The name of the field.
      * @param errors The errors list.
      */
-    public static void rejectIfNothingSelected(JList list, String name, Collection<IError> errors) {
+    public static void rejectIfNothingSelected(JList list, String name, Collection<Error> errors) {
         if (list.getSelectedIndex() <= -1) {
             errors.add(Errors.newI18nError("error.validation.nothing.selected", new Object[]{name}));
         }
@@ -85,7 +85,7 @@ public final class ValidationUtils {
      * @param name   The name of the field.
      * @param errors The errors list.
      */
-    public static void rejectIfNothingSelected(ComboBoxModel model, String name, Collection<IError> errors) {
+    public static void rejectIfNothingSelected(ComboBoxModel model, String name, Collection<Error> errors) {
         if (model.getSelectedItem() == null) {
             errors.add(Errors.newI18nError("error.validation.nothing.selected", new Object[]{name}));
         }
@@ -98,7 +98,7 @@ public final class ValidationUtils {
      * @param name   The name of the field.
      * @param errors The errors list.
      */
-    public static void rejectIfNotNumerical(String field, String name, Collection<IError> errors) {
+    public static void rejectIfNotNumerical(String field, String name, Collection<Error> errors) {
         try {
             Integer.parseInt(field);
         } catch (NumberFormatException e) {
@@ -113,7 +113,7 @@ public final class ValidationUtils {
      * @param name   The name of the field.
      * @param errors The errors list.
      */
-    public static void rejectIfEmpty(Collection<?> list, String name, Collection<IError> errors) {
+    public static void rejectIfEmpty(Collection<?> list, String name, Collection<Error> errors) {
         if (list != null && list.isEmpty()) {
             errors.add(Errors.newI18nError("error.validation.field.empty", new Object[]{name}));
         }
@@ -126,7 +126,7 @@ public final class ValidationUtils {
      * @param name   The name of the list.
      * @param errors The errors to fill.
      */
-    public static void rejectIfEmpty(JList list, String name, Collection<IError> errors) {
+    public static void rejectIfEmpty(JList list, String name, Collection<org.jtheque.errors.able.Error> errors) {
         if (list != null && list.getModel().getSize() < 1) {
             errors.add(Errors.newI18nError("error.validation.field.empty", new Object[]{name}));
         }

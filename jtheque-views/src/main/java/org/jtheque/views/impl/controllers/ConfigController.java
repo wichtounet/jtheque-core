@@ -2,7 +2,7 @@ package org.jtheque.views.impl.controllers;
 
 import org.jtheque.ui.able.Action;
 import org.jtheque.ui.utils.AbstractController;
-import org.jtheque.views.able.windows.IConfigView;
+import org.jtheque.views.able.windows.ConfigView;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -25,12 +25,12 @@ import org.jtheque.views.able.windows.IConfigView;
  *
  * @author Baptiste Wicht
  */
-public class ConfigController extends AbstractController<IConfigView> {
+public class ConfigController extends AbstractController<ConfigView> {
     /**
      * Construct a new ConfigController. 
      */
     public ConfigController() {
-        super(IConfigView.class);
+        super(ConfigView.class);
     }
 
     /**

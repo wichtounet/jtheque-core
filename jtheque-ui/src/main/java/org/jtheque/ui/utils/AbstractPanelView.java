@@ -1,7 +1,7 @@
 package org.jtheque.ui.utils;
 
-import org.jtheque.ui.able.IModel;
-import org.jtheque.ui.able.IView;
+import org.jtheque.ui.able.Model;
+import org.jtheque.ui.able.View;
 import org.jtheque.utils.ui.SwingUtils;
 
 import org.jdesktop.swingx.JXPanel;
@@ -27,7 +27,7 @@ import org.jdesktop.swingx.JXPanel;
  *
  * @author Baptiste Wicht
  */
-public class AbstractPanelView extends JXPanel implements IView {
+public class AbstractPanelView extends JXPanel implements View {
     @Override
     public void display() {
         throw new UnsupportedOperationException("Not implemented on panels");
@@ -54,7 +54,7 @@ public class AbstractPanelView extends JXPanel implements IView {
     }
 
     @Override
-    public IModel getModel() {
+    public Model getModel() {
         return null;
     }
 

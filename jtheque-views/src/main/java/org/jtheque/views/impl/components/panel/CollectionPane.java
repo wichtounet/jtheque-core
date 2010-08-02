@@ -16,10 +16,10 @@ package org.jtheque.views.impl.components.panel;
  * limitations under the License.
  */
 
-import org.jtheque.core.able.ICore;
+import org.jtheque.core.able.Core;
 import org.jtheque.utils.SimplePropertiesCache;
 import org.jtheque.i18n.able.LanguageService;
-import org.jtheque.ui.able.IController;
+import org.jtheque.ui.able.Controller;
 import org.jtheque.ui.able.components.Components;
 import org.jtheque.ui.able.components.TextField;
 import org.jtheque.ui.able.components.filthy.Filthy;
@@ -29,7 +29,7 @@ import org.jtheque.ui.utils.actions.ActionFactory;
 import org.jtheque.ui.utils.actions.JThequeAction;
 import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.utils.ui.SwingUtils;
-import org.jtheque.views.able.panel.ICollectionView;
+import org.jtheque.views.able.panel.CollectionView;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
@@ -52,7 +52,7 @@ import static org.jtheque.ui.able.components.filthy.FilthyConstants.*;
 /**
  * @author Baptiste Wicht
  */
-public final class CollectionPane extends AbstractPanelView implements ICollectionView {
+public final class CollectionPane extends AbstractPanelView implements CollectionView {
     private TextField textField;
     private TextField passwordField;
     private JLabel labelError;
@@ -60,10 +60,10 @@ public final class CollectionPane extends AbstractPanelView implements ICollecti
     private static final int LEFT_MARGIN_WIDTH = 200;
 
     @Resource
-    private ICore core;
+    private Core core;
 
     @Resource
-    private IController<ICollectionView> collectionController;
+    private Controller<CollectionView> collectionController;
 
     @Resource
     private LanguageService languageService;

@@ -16,8 +16,8 @@ package org.jtheque.core.impl;
  * limitations under the License.
  */
 
-import org.jtheque.core.able.ICore;
-import org.jtheque.core.able.IFilesContainer;
+import org.jtheque.core.able.*;
+import org.jtheque.core.able.Core;
 
 import java.io.File;
 
@@ -26,15 +26,15 @@ import java.io.File;
  *
  * @author Baptiste Wicht
  */
-public final class Files implements IFilesContainer {
-    private final ICore core;
+public final class Files implements FilesContainer {
+    private final Core core;
 
     /**
      * Construct a new Files.
      *
      * @param core The core.
      */
-    public Files(ICore core) {
+    public Files(org.jtheque.core.able.Core core) {
         super();
 
         this.core = core;

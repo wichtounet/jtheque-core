@@ -1,12 +1,12 @@
 package org.jtheque.views.impl.controllers;
 
-import org.jtheque.core.able.ICore;
-import org.jtheque.modules.able.IModuleDescription;
-import org.jtheque.modules.able.IModuleService;
+import org.jtheque.core.able.Core;
+import org.jtheque.modules.able.ModuleDescription;
+import org.jtheque.modules.able.ModuleService;
 import org.jtheque.ui.able.Action;
-import org.jtheque.ui.able.IUIUtils;
+import org.jtheque.ui.able.UIUtils;
 import org.jtheque.ui.utils.AbstractController;
-import org.jtheque.views.able.panel.IRepositoryView;
+import org.jtheque.views.able.panel.RepositoryView;
 
 import javax.annotation.Resource;
 
@@ -47,18 +47,18 @@ import javax.annotation.Resource;
  *
  * @author Baptiste Wicht
  */
-public class RepositoryController extends AbstractController<IRepositoryView> {
+public class RepositoryController extends AbstractController<RepositoryView> {
     @Resource
-    private IUIUtils uiUtils;
+    private UIUtils uiUtils;
 
     @Resource
-    private IModuleService moduleService;
+    private ModuleService moduleService;
 
     /**
      * Construct a new RepositoryController. 
      */
     public RepositoryController() {
-        super(IRepositoryView.class);
+        super(RepositoryView.class);
     }
 
     /**
@@ -74,9 +74,9 @@ public class RepositoryController extends AbstractController<IRepositoryView> {
      */
     @Action("repository.actions.install")
     public void install() {
-        IModuleDescription description = getView().getSelectedModule();
+        ModuleDescription description = getView().getSelectedModule();
 
-        if (description.getCoreVersion().isGreaterThan(ICore.VERSION)) {
+        if (description.getCoreVersion().isGreaterThan(Core.VERSION)) {
             uiUtils.displayI18nText("error.module.version.core");
         } else {
             if (moduleService.isInstalled(description.getId())) {

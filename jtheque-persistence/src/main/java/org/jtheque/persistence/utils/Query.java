@@ -1,7 +1,5 @@
 package org.jtheque.persistence.utils;
 
-import org.jtheque.persistence.able.IQuery;
-
 import java.util.Arrays;
 
 /*
@@ -25,7 +23,7 @@ import java.util.Arrays;
  *
  * @author Baptiste Wicht
  */
-public final class Query implements IQuery {
+public final class Query implements org.jtheque.persistence.able.Query {
     private final String sqlQuery;
     private final Object[] parameters;
 

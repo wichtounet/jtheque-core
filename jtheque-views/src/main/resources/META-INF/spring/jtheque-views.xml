@@ -106,25 +106,25 @@
 
     <!-- OSGi References -->
 
-    <osgi:reference id="core" interface="org.jtheque.core.able.ICore"/>
-    <osgi:reference id="uiUtils" interface="org.jtheque.ui.able.IUIUtils"/>
-    <osgi:reference id="filthyUtils" interface="org.jtheque.ui.able.IFilthyUtils"/>
+    <osgi:reference id="core" interface="org.jtheque.core.able.Core"/>
+    <osgi:reference id="uiUtils" interface="org.jtheque.ui.able.UIUtils"/>
+    <osgi:reference id="filthyUtils" interface="org.jtheque.ui.able.FilthyUtils"/>
     <osgi:reference id="undoRedoService" interface="org.jtheque.undo.able.IUndoRedoService"/>
-    <osgi:reference id="collectionsService" interface="org.jtheque.collections.able.ICollectionsService"/>
+    <osgi:reference id="collectionsService" interface="org.jtheque.collections.able.CollectionsService"/>
     <osgi:reference id="languageService" interface="org.jtheque.i18n.able.LanguageService"/>
     <osgi:reference id="updateService" interface="org.jtheque.update.able.IUpdateService"/>
-    <osgi:reference id="featureService" interface="org.jtheque.features.able.IFeatureService"/>
-    <osgi:reference id="stateService" interface="org.jtheque.states.able.IStateService"/>
-    <osgi:reference id="moduleService" interface="org.jtheque.modules.able.IModuleService"/>
+    <osgi:reference id="featureService" interface="org.jtheque.features.able.FeatureService"/>
+    <osgi:reference id="stateService" interface="org.jtheque.states.able.StateService"/>
+    <osgi:reference id="moduleService" interface="org.jtheque.modules.able.ModuleService"/>
     <osgi:reference id="imageService" interface="org.jtheque.images.able.ImageService"/>
-    <osgi:reference id="errorsService" interface="org.jtheque.errors.able.IErrorService"/>
+    <osgi:reference id="errorsService" interface="org.jtheque.errors.able.ErrorService"/>
     <osgi:reference id="fileService" interface="org.jtheque.file.able.FileService"/>
-    <osgi:reference id="messageService" interface="org.jtheque.messages.able.IMessageService"/>
-    <osgi:reference id="persistenceService" interface="org.jtheque.persistence.able.IPersistenceService"/>
+    <osgi:reference id="messageService" interface="org.jtheque.messages.able.MessageService"/>
+    <osgi:reference id="persistenceService" interface="org.jtheque.persistence.able.PersistenceService"/>
 
     <!-- OSGi Services -->
 
-    <osgi:service ref="viewService" interface="org.jtheque.views.able.IViewService"/>
-    <osgi:service ref="views" interface="org.jtheque.views.able.IViews"/>
-    <osgi:service ref="splashService" interface="org.jtheque.views.able.ISplashService"/>
+    <osgi:service ref="viewService" interface="org.jtheque.views.able.ViewService"/>
+    <osgi:service ref="views" interface="org.jtheque.views.able.Views"/>
+    <osgi:service ref="splashService" interface="org.jtheque.views.able.SplashService"/>
 </beans>

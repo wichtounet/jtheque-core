@@ -1,7 +1,7 @@
 package org.jtheque.modules.utils;
 
 import org.jtheque.core.utils.OSGiUtils;
-import org.jtheque.modules.able.IModuleService;
+import org.jtheque.modules.able.ModuleService;
 import org.jtheque.modules.able.SwingLoader;
 import org.jtheque.utils.collections.ArrayUtils;
 import org.jtheque.utils.ui.SwingUtils;
@@ -58,7 +58,7 @@ public class SwingModule implements ApplicationContextAware, SwingLoader, Bundle
 
     @Override
     public void setBundleContext(BundleContext bundleContext) {
-        OSGiUtils.getService(bundleContext, IModuleService.class).registerSwingLoader(id, this);
+        OSGiUtils.getService(bundleContext, ModuleService.class).registerSwingLoader(id, this);
     }
 
     @Override

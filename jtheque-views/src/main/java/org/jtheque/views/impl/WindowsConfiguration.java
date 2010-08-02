@@ -1,14 +1,13 @@
 package org.jtheque.views.impl;
 
-import org.jtheque.core.able.ICore;
+import org.jtheque.core.able.Core;
 import org.jtheque.states.able.Load;
 import org.jtheque.states.able.Save;
 import org.jtheque.states.able.State;
 import org.jtheque.states.utils.AbstractState;
 import org.jtheque.utils.collections.CollectionUtils;
-import org.jtheque.views.able.IViewService;
-import org.jtheque.views.able.IWindowConfiguration;
-import org.jtheque.views.utils.WindowConfiguration;
+import org.jtheque.views.able.*;
+import org.jtheque.views.able.ViewService;
 import org.jtheque.xml.utils.Node;
 import org.jtheque.xml.utils.NodeAttribute;
 
@@ -40,10 +39,10 @@ import java.util.Map.Entry;
  */
 @State(id = "jtheque-windows-configuration", delegated = true)
 public final class WindowsConfiguration extends AbstractState {
-    private final Map<String, IWindowConfiguration> configurations = CollectionUtils.newHashMap(10);
+    private final Map<String, WindowConfiguration> configurations = CollectionUtils.newHashMap(10);
 
-    private final ICore core;
-    private final IViewService viewService;
+    private final Core core;
+    private final ViewService viewService;
 
     /**
      * Create a new WindowsConfiguration.
@@ -51,7 +50,7 @@ public final class WindowsConfiguration extends AbstractState {
      * @param core        The core.
      * @param viewService The view service.
      */
-    public WindowsConfiguration(ICore core, IViewService viewService) {
+    public WindowsConfiguration(Core core, org.jtheque.views.able.ViewService viewService) {
         super();
 
         this.core = core;
@@ -67,7 +66,7 @@ public final class WindowsConfiguration extends AbstractState {
     public void delegateLoad(Iterable<Node> nodes) {
         for (Node node : nodes) {
             if ("window".equals(node.getName())) {
-                IWindowConfiguration configuration = new WindowConfiguration();
+                WindowConfiguration configuration = new org.jtheque.views.utils.WindowConfiguration();
 
                 for (Node child : node.getChildrens()) {
                     applyValueFromChild(configuration, child);
@@ -84,7 +83,7 @@ public final class WindowsConfiguration extends AbstractState {
      * @param configuration The window configuration.
      * @param child         The child.
      */
-    private static void applyValueFromChild(IWindowConfiguration configuration, Node child) {
+    private static void applyValueFromChild(WindowConfiguration configuration, Node child) {
         if ("width".equals(child.getName())) {
             configuration.setWidth(Integer.parseInt(child.getText()));
         } else if ("height".equals(child.getName())) {
@@ -105,7 +104,7 @@ public final class WindowsConfiguration extends AbstractState {
     public Collection<Node> delegateSave() {
         Collection<Node> states = CollectionUtils.newList();
 
-        for (Entry<String, IWindowConfiguration> configuration : configurations.entrySet()) {
+        for (Entry<String, WindowConfiguration> configuration : configurations.entrySet()) {
             Node state = new Node("window");
 
             state.addAttribute(new NodeAttribute("name", configuration.getKey()));
@@ -126,7 +125,7 @@ public final class WindowsConfiguration extends AbstractState {
      * @param name          The name of the view.
      * @param configuration The configuration to add.
      */
-    private void add(String name, IWindowConfiguration configuration) {
+    private void add(String name, WindowConfiguration configuration) {
         configurations.put(name, configuration);
     }
 
@@ -138,7 +137,7 @@ public final class WindowsConfiguration extends AbstractState {
      */
     public void update(String name, Window view) {
         if (core.getConfiguration().retainSizeAndPositionOfWindow()) {
-            IWindowConfiguration configuration = get(name);
+            WindowConfiguration configuration = get(name);
 
             if (configuration != null) {
                 viewService.fill(configuration, view);
@@ -153,7 +152,7 @@ public final class WindowsConfiguration extends AbstractState {
      *
      * @return The window configuration for the view.
      */
-    private IWindowConfiguration get(String name) {
+    private WindowConfiguration get(String name) {
         return configurations.get(name);
     }
 
@@ -167,10 +166,10 @@ public final class WindowsConfiguration extends AbstractState {
      */
     public void configure(String name, Window view, int defaultWidth, int defaultHeight) {
         if (core.getConfiguration().retainSizeAndPositionOfWindow()) {
-            IWindowConfiguration configuration = get(name);
+            WindowConfiguration configuration = get(name);
 
             if (configuration == null) {
-                configuration = new WindowConfiguration();
+                configuration = new org.jtheque.views.utils.WindowConfiguration();
 
                 configuration.setWidth(defaultWidth);
                 configuration.setHeight(defaultHeight);

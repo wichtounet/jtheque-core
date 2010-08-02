@@ -16,8 +16,7 @@ package org.jtheque.modules.impl;
  * limitations under the License.
  */
 
-import org.jtheque.core.able.ICore;
-import org.jtheque.modules.able.IRepository;
+import org.jtheque.core.able.Core;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.bean.InternationalString;
 import org.jtheque.utils.bean.Version;
@@ -35,7 +34,7 @@ import org.w3c.dom.Node;
  * @author Baptiste Wicht
  */
 public final class RepositoryReader {
-    private final Repository repository = new Repository();
+    private final org.jtheque.modules.impl.Repository repository = new org.jtheque.modules.impl.Repository();
     private final IXMLReader<Node> reader = XML.newJavaFactory().newReader();
 
     /**
@@ -45,7 +44,7 @@ public final class RepositoryReader {
      *
      * @return The repository.
      */
-    public IRepository read(String strUrl) {
+    public org.jtheque.modules.able.Repository read(String strUrl) {
         try {
             reader.openURL(strUrl);
 
@@ -96,7 +95,7 @@ public final class RepositoryReader {
             module.setName(reader.readString("name", currentNode));
 
             if (StringUtils.isEmpty(reader.readString("core", currentNode))) {
-                module.setCoreVersion(ICore.VERSION);
+                module.setCoreVersion(Core.VERSION);
             } else {
                 module.setCoreVersion(Version.get(reader.readString("core", currentNode)));
             }

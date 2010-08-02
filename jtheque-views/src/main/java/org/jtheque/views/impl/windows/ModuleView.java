@@ -19,14 +19,13 @@ package org.jtheque.views.impl.windows;
 import org.jtheque.i18n.able.LanguageService;
 import org.jtheque.modules.able.Module;
 import org.jtheque.resources.able.IResource;
-import org.jtheque.ui.able.IModel;
+import org.jtheque.ui.able.Model;
 import org.jtheque.ui.able.components.LayerTabbedPane;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.ui.utils.windows.dialogs.SwingFilthyBuildedDialogView;
 import org.jtheque.utils.ui.GridBagUtils;
-import org.jtheque.views.able.components.IModulesPanelView;
-import org.jtheque.views.able.components.IResourcePanelView;
-import org.jtheque.views.able.panel.IModuleView;
+import org.jtheque.views.able.components.ModulesPanelView;
+import org.jtheque.views.able.components.ResourcePanelView;
 
 import javax.swing.JComponent;
 
@@ -35,9 +34,9 @@ import javax.swing.JComponent;
  *
  * @author Baptiste Wicht
  */
-public final class ModuleView extends SwingFilthyBuildedDialogView<IModel> implements IModuleView {
-    private IModulesPanelView modulesPanel;
-    private IResourcePanelView resourcePanel;
+public final class ModuleView extends SwingFilthyBuildedDialogView<Model> implements org.jtheque.views.able.panel.ModuleView {
+    private ModulesPanelView modulesPanel;
+    private ResourcePanelView resourcePanel;
 
     @Override
     protected void initView() {
@@ -48,8 +47,8 @@ public final class ModuleView extends SwingFilthyBuildedDialogView<IModel> imple
     protected void buildView(I18nPanelBuilder builder) {
         LayerTabbedPane tabbed = new LayerTabbedPane(getService(LanguageService.class));
 
-        modulesPanel = getBean(IModulesPanelView.class);
-        resourcePanel = getBean(IResourcePanelView.class);
+        modulesPanel = getBean(ModulesPanelView.class);
+        resourcePanel = getBean(ResourcePanelView.class);
 
         tabbed.addInternationalizedTab("modules.view.tab.modules", (JComponent) modulesPanel);
         tabbed.addInternationalizedTab("modules.view.tab.resources", (JComponent) resourcePanel);

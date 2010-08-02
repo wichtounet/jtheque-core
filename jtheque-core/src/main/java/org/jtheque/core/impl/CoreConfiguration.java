@@ -16,7 +16,6 @@ package org.jtheque.core.impl;
  * limitations under the License.
  */
 
-import org.jtheque.core.able.ICoreConfiguration;
 import org.jtheque.states.utils.AbstractState;
 import org.jtheque.utils.bean.IntDate;
 
@@ -25,7 +24,7 @@ import org.jtheque.utils.bean.IntDate;
  *
  * @author Baptiste Wicht
  */
-public final class CoreConfiguration extends AbstractState implements ICoreConfiguration {
+public final class CoreConfiguration extends AbstractState implements org.jtheque.core.able.CoreConfiguration {
     private static final String FALSE = "false";
 
     @Override

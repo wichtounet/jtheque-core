@@ -16,7 +16,7 @@ package org.jtheque.views.impl.models;
  * limitations under the License.
  */
 
-import org.jtheque.modules.able.IModuleService;
+import org.jtheque.modules.able.ModuleService;
 import org.jtheque.modules.able.Module;
 import org.jtheque.modules.able.ModuleListener;
 
@@ -35,7 +35,7 @@ public final class ModuleListModel extends DefaultListModel implements ModuleLis
      *
      * @param moduleService The module service to use.
      */
-    public ModuleListModel(IModuleService moduleService) {
+    public ModuleListModel(ModuleService moduleService) {
         super();
 
         moduleService.addModuleListener("", this);

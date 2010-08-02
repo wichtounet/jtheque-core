@@ -16,7 +16,7 @@ package org.jtheque.persistence.utils;
  * limitations under the License.
  */
 
-import org.jtheque.persistence.able.IDaoNotes;
+import org.jtheque.persistence.able.DaoNotes;
 import org.jtheque.persistence.impl.NoteImpl;
 
 import org.junit.Test;
@@ -34,11 +34,11 @@ public class NoteTest {
      */
     @Test
     public void testHashCode() {
-        Object note1 = new NoteImpl(IDaoNotes.NoteType.PERFECT, "test");
-        Object note2 = new NoteImpl(IDaoNotes.NoteType.PERFECT, "test");
-        Object note3 = new NoteImpl(IDaoNotes.NoteType.GOOD, "test");
-        Object note4 = new NoteImpl(IDaoNotes.NoteType.PERFECT, "test2");
-        Object note5 = new NoteImpl(IDaoNotes.NoteType.GOOD, "test");
+        Object note1 = new NoteImpl(DaoNotes.NoteType.PERFECT, "test");
+        Object note2 = new NoteImpl(DaoNotes.NoteType.PERFECT, "test");
+        Object note3 = new NoteImpl(DaoNotes.NoteType.GOOD, "test");
+        Object note4 = new NoteImpl(DaoNotes.NoteType.PERFECT, "test2");
+        Object note5 = new NoteImpl(DaoNotes.NoteType.GOOD, "test");
 
         assertEquals(note1.hashCode(), note1.hashCode());
         assertEquals(note1.hashCode(), note2.hashCode());
@@ -60,11 +60,11 @@ public class NoteTest {
      */
     @Test
     public void testEquals() {
-        Object note1 = new NoteImpl(IDaoNotes.NoteType.PERFECT, "test");
-        Object note2 = new NoteImpl(IDaoNotes.NoteType.PERFECT, "test");
-        Object note3 = new NoteImpl(IDaoNotes.NoteType.GOOD, "test");
-        Object note4 = new NoteImpl(IDaoNotes.NoteType.PERFECT, "test2");
-        Object note5 = new NoteImpl(IDaoNotes.NoteType.GOOD, "test");
+        Object note1 = new NoteImpl(DaoNotes.NoteType.PERFECT, "test");
+        Object note2 = new NoteImpl(DaoNotes.NoteType.PERFECT, "test");
+        Object note3 = new NoteImpl(DaoNotes.NoteType.GOOD, "test");
+        Object note4 = new NoteImpl(DaoNotes.NoteType.PERFECT, "test2");
+        Object note5 = new NoteImpl(DaoNotes.NoteType.GOOD, "test");
 
         assertEquals(note1, note1);
         assertEquals(note1, note2);

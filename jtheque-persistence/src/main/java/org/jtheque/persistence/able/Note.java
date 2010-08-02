@@ -34,5 +34,5 @@ public interface Note {
      *
      * @return The int value of note.
      */
-    IDaoNotes.NoteType getValue();
+    DaoNotes.NoteType getValue();
 }

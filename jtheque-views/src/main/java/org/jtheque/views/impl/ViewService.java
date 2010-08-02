@@ -16,17 +16,16 @@ package org.jtheque.views.impl;
  * limitations under the License.
  */
 
-import org.jtheque.core.able.ICore;
+import org.jtheque.core.able.Core;
 import org.jtheque.core.utils.SwingSpringProxy;
+import org.jtheque.states.able.StateService;
 import org.jtheque.utils.SimplePropertiesCache;
 import org.jtheque.images.able.ImageService;
-import org.jtheque.states.able.IStateService;
 import org.jtheque.utils.ui.SwingUtils;
-import org.jtheque.views.able.IViewService;
-import org.jtheque.views.able.IWindowConfiguration;
-import org.jtheque.views.able.panel.ICollectionView;
-import org.jtheque.views.able.windows.IAboutView;
-import org.jtheque.views.able.windows.IMainView;
+import org.jtheque.views.able.WindowConfiguration;
+import org.jtheque.views.able.panel.CollectionView;
+import org.jtheque.views.able.windows.AboutView;
+import org.jtheque.views.able.windows.MainView;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -39,11 +38,11 @@ import java.awt.Window;
  *
  * @author Baptiste Wicht
  */
-public final class ViewService implements IViewService, ApplicationContextAware {
+public final class ViewService implements org.jtheque.views.able.ViewService, ApplicationContextAware {
     private final WindowsConfiguration configuration;
 
-    private SwingSpringProxy<ICollectionView> collectionPane;
-    private SwingSpringProxy<IAboutView> aboutPane;
+    private SwingSpringProxy<CollectionView> collectionPane;
+    private SwingSpringProxy<AboutView> aboutPane;
 
     /**
      * Construct a new ViewService.
@@ -52,7 +51,7 @@ public final class ViewService implements IViewService, ApplicationContextAware 
      * @param core         The core.
      * @param imageService The resource service.
      */
-    public ViewService(IStateService stateService, ICore core, ImageService imageService) {
+    public ViewService(StateService stateService, Core core, ImageService imageService) {
         super();
 
         configuration = stateService.getState(new WindowsConfiguration(core, this));
@@ -62,21 +61,21 @@ public final class ViewService implements IViewService, ApplicationContextAware 
 
     @Override
     public void displayAboutView() {
-        SimplePropertiesCache.get("mainView", IMainView.class).setGlassPane(aboutPane.get().getImpl());
+        SimplePropertiesCache.get("mainView", MainView.class).setGlassPane(aboutPane.get().getImpl());
 
         aboutPane.get().appear();
     }
 
     @Override
     public void displayCollectionView() {
-        SimplePropertiesCache.get("mainView", IMainView.class).setGlassPane(collectionPane.get().getImpl());
+        SimplePropertiesCache.get("mainView", MainView.class).setGlassPane(collectionPane.get().getImpl());
 
         collectionPane.get().appear();
     }
 
     @Override
     public void closeCollectionView() {
-        SimplePropertiesCache.get("mainView", IMainView.class).setGlassPane(null);
+        SimplePropertiesCache.get("mainView", MainView.class).setGlassPane(null);
     }
 
     @Override
@@ -98,7 +97,7 @@ public final class ViewService implements IViewService, ApplicationContextAware 
     }
 
     @Override
-    public void fill(IWindowConfiguration configuration, Window view) {
+    public void fill(WindowConfiguration configuration, Window view) {
         configuration.setWidth(view.getWidth());
         configuration.setHeight(view.getHeight());
         configuration.setPositionX(view.getLocation().x);
@@ -106,7 +105,7 @@ public final class ViewService implements IViewService, ApplicationContextAware 
     }
 
     @Override
-    public void configure(IWindowConfiguration configuration, Window view) {
+    public void configure(WindowConfiguration configuration, Window view) {
         view.setSize(configuration.getWidth(), configuration.getHeight());
 
         if (configuration.getPositionX() == -1 || configuration.getPositionY() == -1) {
@@ -123,7 +122,7 @@ public final class ViewService implements IViewService, ApplicationContextAware 
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) {
-        collectionPane = new SwingSpringProxy<ICollectionView>(ICollectionView.class, applicationContext);
-        aboutPane = new SwingSpringProxy<IAboutView>(IAboutView.class, applicationContext);
+        collectionPane = new SwingSpringProxy<CollectionView>(CollectionView.class, applicationContext);
+        aboutPane = new SwingSpringProxy<AboutView>(AboutView.class, applicationContext);
     }
 }

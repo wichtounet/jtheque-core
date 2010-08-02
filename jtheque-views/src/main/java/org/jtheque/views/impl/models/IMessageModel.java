@@ -17,12 +17,12 @@ package org.jtheque.views.impl.models;
  */
 
 import org.jtheque.messages.able.Message;
-import org.jtheque.ui.able.IModel;
+import org.jtheque.ui.able.Model;
 
 /**
  * @author Baptiste Wicht
  */
-public interface IMessageModel extends IModel {
+public interface IMessageModel extends Model {
     /**
      * Return the next message to display.
      *

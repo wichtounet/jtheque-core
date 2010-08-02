@@ -16,7 +16,7 @@ package org.jtheque.persistence.impl;
  * limitations under the License.
  */
 
-import org.jtheque.persistence.able.IDaoNotes;
+import org.jtheque.persistence.able.DaoNotes;
 import org.jtheque.persistence.able.Note;
 import org.jtheque.utils.bean.EqualsBuilder;
 import org.jtheque.utils.bean.HashCodeUtils;
@@ -28,7 +28,7 @@ import org.jtheque.utils.bean.HashCodeUtils;
  */
 public final class NoteImpl implements Note {
     private final String key;
-    private final IDaoNotes.NoteType value;
+    private final DaoNotes.NoteType value;
 
     /**
      * Construct a new NoteImpl with a specific value and a text key.
@@ -36,7 +36,7 @@ public final class NoteImpl implements Note {
      * @param value The value of the note.
      * @param key   The text key.
      */
-    public NoteImpl(IDaoNotes.NoteType value, String key) {
+    public NoteImpl(DaoNotes.NoteType value, String key) {
         super();
 
         this.value = value;
@@ -54,7 +54,7 @@ public final class NoteImpl implements Note {
     }
 
     @Override
-    public IDaoNotes.NoteType getValue() {
+    public DaoNotes.NoteType getValue() {
         return value;
     }
 

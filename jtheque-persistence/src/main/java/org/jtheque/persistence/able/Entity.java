@@ -27,7 +27,7 @@ public interface Entity extends Comparable<Entity> {
      *
      * @return The temporary context of the data.
      */
-    ITemporaryContext getTemporaryContext();
+    TemporaryContext getTemporaryContext();
 
     /**
      * Return the id of this Entity.

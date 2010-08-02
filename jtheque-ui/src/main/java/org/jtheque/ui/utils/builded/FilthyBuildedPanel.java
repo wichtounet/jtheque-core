@@ -3,9 +3,9 @@ package org.jtheque.ui.utils.builded;
 import org.jtheque.i18n.able.LanguageService;
 import org.jtheque.i18n.able.Internationalizable;
 import org.jtheque.i18n.able.InternationalizableContainer;
-import org.jtheque.ui.able.IFilthyUtils;
-import org.jtheque.ui.able.IModel;
-import org.jtheque.ui.able.IView;
+import org.jtheque.ui.able.FilthyUtils;
+import org.jtheque.ui.able.Model;
+import org.jtheque.ui.able.View;
 import org.jtheque.ui.able.components.filthy.FilthyBackgroundPanel;
 import org.jtheque.ui.utils.builders.FilthyPanelBuilder;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
@@ -37,12 +37,12 @@ import java.util.Collection;
  *
  * @author Baptiste Wicht
  */
-public abstract class FilthyBuildedPanel extends FilthyBackgroundPanel implements InternationalizableContainer, IView {
+public abstract class FilthyBuildedPanel extends FilthyBackgroundPanel implements InternationalizableContainer, View {
     private final Collection<Internationalizable> internationalizables = CollectionUtils.newList(15);
 
     private LanguageService languageService;
 
-    private IModel model;
+    private Model model;
 
     /**
      * Construct a FilthyBuildedPanel.
@@ -57,7 +57,7 @@ public abstract class FilthyBuildedPanel extends FilthyBackgroundPanel implement
      * @param filthyUtils     The filthyUtils.
      * @param languageService The language service.
      */
-    public FilthyBuildedPanel(IFilthyUtils filthyUtils, LanguageService languageService) {
+    public FilthyBuildedPanel(FilthyUtils filthyUtils, LanguageService languageService) {
         super(filthyUtils);
 
         this.languageService = languageService;
@@ -137,7 +137,7 @@ public abstract class FilthyBuildedPanel extends FilthyBackgroundPanel implement
     }
 
     @Override
-    public IModel getModel() {
+    public Model getModel() {
         return model;
     }
 
@@ -151,7 +151,7 @@ public abstract class FilthyBuildedPanel extends FilthyBackgroundPanel implement
      *
      * @param model The model of the view.
      */
-    protected void setModel(IModel model) {
+    protected void setModel(Model model) {
         this.model = model;
     }
 }

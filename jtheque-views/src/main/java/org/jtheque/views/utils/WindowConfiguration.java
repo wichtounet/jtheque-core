@@ -1,7 +1,5 @@
 package org.jtheque.views.utils;
 
-import org.jtheque.views.able.IWindowConfiguration;
-
 /*
  * Copyright JTheque (Baptiste Wicht)
  *
@@ -23,7 +21,7 @@ import org.jtheque.views.able.IWindowConfiguration;
  *
  * @author Baptiste Wicht
  */
-public final class WindowConfiguration implements IWindowConfiguration {
+public final class WindowConfiguration implements org.jtheque.views.able.WindowConfiguration {
     private int width;
     private int height;
     private int positionX;

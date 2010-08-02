@@ -3,7 +3,7 @@ package org.jtheque.ui.utils.builded;
 import org.jtheque.i18n.able.LanguageService;
 import org.jtheque.i18n.able.Internationalizable;
 import org.jtheque.i18n.able.InternationalizableContainer;
-import org.jtheque.ui.able.IModel;
+import org.jtheque.ui.able.Model;
 import org.jtheque.ui.utils.AbstractPanelView;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.ui.utils.builders.JThequePanelBuilder;
@@ -38,7 +38,7 @@ public abstract class BuildedPanel extends AbstractPanelView implements Internat
     private final Collection<Internationalizable> internationalizables = CollectionUtils.newList(15);
 
     private LanguageService languageService;
-    private IModel model;
+    private Model model;
 
     /**
      * Construct a new builded panel.
@@ -103,7 +103,7 @@ public abstract class BuildedPanel extends AbstractPanelView implements Internat
     }
 
     @Override
-    public IModel getModel() {
+    public Model getModel() {
         return model;
     }
 
@@ -112,7 +112,7 @@ public abstract class BuildedPanel extends AbstractPanelView implements Internat
      *
      * @param model The model of the view.
      */
-    protected void setModel(IModel model) {
+    protected void setModel(Model model) {
         this.model = model;
     }
 }

@@ -2,7 +2,6 @@ package org.jtheque.persistence.impl;
 
 import org.jtheque.i18n.able.LanguageService;
 import org.jtheque.images.able.ImageService;
-import org.jtheque.persistence.able.IDaoNotes;
 import org.jtheque.persistence.able.Note;
 
 import org.springframework.core.io.ClassPathResource;
@@ -32,7 +31,7 @@ import java.util.Arrays;
  *
  * @author Baptiste Wicht
  */
-public final class DaoNotes implements IDaoNotes {
+public final class DaoNotes implements org.jtheque.persistence.able.DaoNotes {
     private Note[] notes;
 
     private final BufferedImage[] stars;
@@ -99,7 +98,7 @@ public final class DaoNotes implements IDaoNotes {
             return stars[6];
         }
 
-        return note.getValue() == IDaoNotes.NoteType.ERROR ? stars[IDaoNotes.NoteType.UNDEFINED.intValue() - 1] : stars[note.getValue().intValue() - 1];
+        return note.getValue() == org.jtheque.persistence.able.DaoNotes.NoteType.ERROR ? stars[org.jtheque.persistence.able.DaoNotes.NoteType.UNDEFINED.intValue() - 1] : stars[note.getValue().intValue() - 1];
     }
 
     /**

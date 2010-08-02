@@ -32,7 +32,7 @@ public interface Menu extends Internationalizable {
      *
      * @return A Collection containing all the main features of this menu.
      */
-    Collection<IFeature> getMainFeatures();
+    Collection<Feature> getMainFeatures();
 
     /**
      * Return all the sub features of this menu for the specified CoreFeature.
@@ -41,5 +41,5 @@ public interface Menu extends Internationalizable {
      *
      * @return A Collection containing all the sub features of this core feature.
      */
-    Collection<IFeature> getSubFeatures(CoreFeature feature);
+    Collection<Feature> getSubFeatures(CoreFeature feature);
 }

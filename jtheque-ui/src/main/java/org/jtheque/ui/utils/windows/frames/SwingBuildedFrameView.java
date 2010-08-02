@@ -17,7 +17,7 @@ package org.jtheque.ui.utils.windows.frames;
  */
 
 import org.jtheque.i18n.able.LanguageService;
-import org.jtheque.ui.able.IModel;
+import org.jtheque.ui.able.Model;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.ui.utils.builders.JThequePanelBuilder;
 
@@ -28,7 +28,7 @@ import javax.swing.JComponent;
  *
  * @author Baptiste Wicht
  */
-public abstract class SwingBuildedFrameView<T extends IModel> extends SwingFrameView<T> {
+public abstract class SwingBuildedFrameView<T extends Model> extends SwingFrameView<T> {
     @Override
     protected final void init() {
         initView();

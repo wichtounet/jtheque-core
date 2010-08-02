@@ -10,6 +10,6 @@
 
     <bean id="errorService" class="org.jtheque.errors.impl.ErrorService"/>
 
-    <osgi:service ref="errorService" interface="org.jtheque.errors.able.IErrorService"/>
+    <osgi:service ref="errorService" interface="org.jtheque.errors.able.ErrorService"/>
 
 </beans>

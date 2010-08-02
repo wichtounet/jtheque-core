@@ -29,5 +29,5 @@ public interface ErrorListener extends EventListener {
      *
      * @param error The new error.
      */
-    void errorOccurred(IError error);
+    void errorOccurred(Error error);
 }

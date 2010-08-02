@@ -16,8 +16,8 @@ package org.jtheque.core.impl;
  * limitations under the License.
  */
 
-import org.jtheque.core.able.ICore;
-import org.jtheque.core.able.IFoldersContainer;
+import org.jtheque.core.able.*;
+import org.jtheque.core.able.Core;
 import org.jtheque.core.utils.SystemProperty;
 import org.jtheque.utils.io.FileUtils;
 
@@ -28,21 +28,21 @@ import java.io.File;
  *
  * @author Baptiste Wicht
  */
-public final class Folders implements IFoldersContainer {
+public final class Folders implements FoldersContainer {
     private File applicationFolder;
     private File librariesFolder;
     private File modulesFolder;
     private File logsFolder;
     private File cacheFolder;
 
-    private final ICore core;
+    private final Core core;
 
     /**
      * Construct a new Folders.
      *
      * @param core The core.
      */
-    public Folders(ICore core) {
+    public Folders(org.jtheque.core.able.Core core) {
         super();
 
         this.core = core;

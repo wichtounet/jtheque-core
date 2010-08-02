@@ -2,10 +2,10 @@ package org.jtheque.ui.utils.builded;
 
 import org.jtheque.core.utils.OSGiUtils;
 import org.jtheque.core.utils.SwingSpringProxy;
-import org.jtheque.errors.able.IError;
-import org.jtheque.errors.able.IErrorService;
+import org.jtheque.errors.able.*;
+import org.jtheque.errors.able.Error;
 import org.jtheque.i18n.able.LanguageService;
-import org.jtheque.ui.able.IFilthyUtils;
+import org.jtheque.ui.able.FilthyUtils;
 import org.jtheque.utils.collections.CollectionUtils;
 
 import org.osgi.framework.BundleContext;
@@ -41,7 +41,7 @@ public abstract class OSGIFilthyBuildedPanel extends FilthyBuildedPanel implemen
     private BundleContext bundleContext;
     private ApplicationContext applicationContext;
 
-    private IFilthyUtils utils;
+    private FilthyUtils utils;
 
     @Override
     public void setBundleContext(BundleContext bundleContext) {
@@ -109,9 +109,9 @@ public abstract class OSGIFilthyBuildedPanel extends FilthyBuildedPanel implemen
     }
 
     @Override
-    protected IFilthyUtils getFilthyUtils() {
+    protected FilthyUtils getFilthyUtils() {
         if (utils == null) {
-            utils = getService(IFilthyUtils.class);
+            utils = getService(FilthyUtils.class);
         }
 
         return utils;
@@ -119,12 +119,12 @@ public abstract class OSGIFilthyBuildedPanel extends FilthyBuildedPanel implemen
 
     @Override
     public boolean validateContent() {
-        Collection<IError> errors = CollectionUtils.newList(5);
+        Collection<Error> errors = CollectionUtils.newList(5);
 
         validate(errors);
 
-        for (IError error : errors) {
-            getService(IErrorService.class).addError(error);
+        for (Error error : errors) {
+            getService(ErrorService.class).addError(error);
         }
 
         return errors.isEmpty();
@@ -135,7 +135,7 @@ public abstract class OSGIFilthyBuildedPanel extends FilthyBuildedPanel implemen
      *
      * @param errors The errors.
      */
-    public void validate(Collection<IError> errors) {
+    public void validate(Collection<org.jtheque.errors.able.Error> errors) {
         //Default empty implementation
     }
 }

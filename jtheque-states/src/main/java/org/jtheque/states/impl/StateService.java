@@ -17,7 +17,6 @@ package org.jtheque.states.impl;
  */
 
 import org.jtheque.core.utils.SystemProperty;
-import org.jtheque.states.able.IStateService;
 import org.jtheque.states.able.Load;
 import org.jtheque.states.able.Save;
 import org.jtheque.states.able.State;
@@ -49,7 +48,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author Baptiste Wicht
  */
 @ThreadSafe
-public final class StateService implements IStateService {
+public final class StateService implements org.jtheque.states.able.StateService {
     private final Map<String, Object> states = new ConcurrentHashMap<String, Object>(10);
     private final Map<String, Map<String, String>> properties = new ConcurrentHashMap<String, Map<String, String>>(5);
     private final Map<String, Collection<Node>> nodes = new ConcurrentHashMap<String, Collection<Node>>(5);

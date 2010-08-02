@@ -18,18 +18,17 @@ package org.jtheque.ui.utils.windows.dialogs;
 
 import org.jtheque.core.utils.OSGiUtils;
 import org.jtheque.i18n.able.LanguageService;
+import org.jtheque.ui.able.Controller;
 import org.jtheque.utils.SimplePropertiesCache;
-import org.jtheque.errors.able.IError;
+import org.jtheque.errors.able.Error;
 import org.jtheque.i18n.able.Internationalizable;
 import org.jtheque.i18n.able.InternationalizableContainer;
-import org.jtheque.ui.able.IController;
-import org.jtheque.ui.able.IModel;
-import org.jtheque.ui.able.IWindowState;
-import org.jtheque.ui.able.IWindowView;
+import org.jtheque.ui.able.Model;
+import org.jtheque.ui.able.WindowState;
+import org.jtheque.ui.able.WindowView;
 import org.jtheque.ui.utils.actions.ActionFactory;
 import org.jtheque.ui.able.constraints.Constraint;
 import org.jtheque.ui.utils.windows.ManagedWindow;
-import org.jtheque.ui.utils.windows.WindowState;
 import org.jtheque.utils.ui.SwingUtils;
 
 import org.osgi.framework.BundleContext;
@@ -53,11 +52,11 @@ import java.util.Collection;
  *
  * @author Baptiste Wicht
  */
-public abstract class SwingDialogView<T extends IModel> extends JDialog
-        implements ManagedWindow, IWindowView, InternationalizableContainer, BundleContextAware, ApplicationContextAware {
+public abstract class SwingDialogView<T extends Model> extends JDialog
+        implements ManagedWindow, WindowView, InternationalizableContainer, BundleContextAware, ApplicationContextAware {
     private T model;
 
-    private final WindowState state = new WindowState(this);
+    private final org.jtheque.ui.utils.windows.WindowState state = new org.jtheque.ui.utils.windows.WindowState(this);
 
     /**
      * Construct a SwingDialogView modal to the main view.
@@ -188,7 +187,7 @@ public abstract class SwingDialogView<T extends IModel> extends JDialog
     }
 
     @Override
-    public void validate(Collection<IError> errors) {
+    public void validate(Collection<Error> errors) {
         state.validate(errors); //Default validation using constraint
     }
 
@@ -253,7 +252,7 @@ public abstract class SwingDialogView<T extends IModel> extends JDialog
      *
      * @param controller The controller of the view.
      */
-    public void setController(IController<?> controller) {
+    public void setController(Controller<?> controller) {
         state.setController(controller);
     }
 
@@ -263,7 +262,7 @@ public abstract class SwingDialogView<T extends IModel> extends JDialog
     }
 
     @Override
-    public IWindowState getWindowState() {
+    public WindowState getWindowState() {
         return state;
     }
 }

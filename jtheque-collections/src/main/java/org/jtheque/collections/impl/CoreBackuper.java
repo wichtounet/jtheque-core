@@ -1,6 +1,6 @@
 package org.jtheque.collections.impl;
 
-import org.jtheque.collections.able.IDaoCollections;
+import org.jtheque.collections.able.DaoCollections;
 import org.jtheque.file.able.ModuleBackup;
 import org.jtheque.file.able.ModuleBackuper;
 import org.jtheque.utils.annotations.Immutable;
@@ -37,14 +37,14 @@ public class CoreBackuper implements ModuleBackuper {
     private static final String[] DEPENDENCIES = new String[0];
     private static final Version BACKUP_VERSION = Version.get("1.0");
 
-    private final IDaoCollections daoCollections;
+    private final DaoCollections daoCollections;
 
     /**
      * Construct a new CoreBackuper.
      *
      * @param daoCollections The dao collections.
      */
-    public CoreBackuper(IDaoCollections daoCollections) {
+    public CoreBackuper(org.jtheque.collections.able.DaoCollections daoCollections) {
         super();
 
         this.daoCollections = daoCollections;

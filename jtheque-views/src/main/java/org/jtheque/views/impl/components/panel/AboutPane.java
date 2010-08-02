@@ -1,6 +1,6 @@
 package org.jtheque.views.impl.components.panel;
 
-import org.jtheque.core.able.ICore;
+import org.jtheque.core.able.Core;
 import org.jtheque.core.able.application.Application;
 import org.jtheque.i18n.able.LanguageService;
 import org.jtheque.i18n.able.Internationalizable;
@@ -12,8 +12,8 @@ import org.jtheque.utils.ui.ImageUtils;
 import org.jtheque.utils.ui.PaintUtils;
 import org.jtheque.utils.ui.SizeTracker;
 import org.jtheque.utils.ui.SwingUtils;
-import org.jtheque.views.able.windows.IAboutView;
-import org.jtheque.views.able.windows.ILicenseView;
+import org.jtheque.views.able.windows.AboutView;
+import org.jtheque.views.able.windows.LicenseView;
 import org.jtheque.views.impl.models.AboutInfo;
 import org.jtheque.views.impl.models.AboutModel;
 
@@ -64,7 +64,7 @@ import static org.jtheque.views.impl.models.AboutModel.*;
  *
  * @author Baptiste Wicht
  */
-public final class AboutPane extends JXPanel implements IAboutView, Internationalizable {
+public final class AboutPane extends JXPanel implements AboutView, Internationalizable {
     private final SizeTracker tracker = new SizeTracker(this);
 
     private final Map<String, Shape> shapes = CollectionUtils.newHashMap(3);
@@ -91,10 +91,10 @@ public final class AboutPane extends JXPanel implements IAboutView, Internationa
     private final AboutModel model = new AboutModel();
 
     @Resource
-    private ILicenseView licenseView;
+    private LicenseView licenseView;
 
     @Resource
-    private ICore core;
+    private Core core;
 
     @Resource
     private LanguageService languageService;

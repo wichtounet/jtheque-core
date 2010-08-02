@@ -16,9 +16,9 @@ package org.jtheque.views.impl.components.menu;
  * limitations under the License.
  */
 
+import org.jtheque.features.able.Feature;
 import org.jtheque.features.able.FeatureListener;
-import org.jtheque.features.able.IFeature;
-import org.jtheque.features.able.IFeatureService;
+import org.jtheque.features.able.FeatureService;
 import org.jtheque.i18n.able.LanguageService;
 import org.jtheque.i18n.able.Internationalizable;
 import org.jtheque.i18n.able.InternationalizableContainer;
@@ -28,10 +28,8 @@ import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.ui.SwingUtils;
 
 import javax.swing.AbstractButton;
-import javax.swing.Action;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -45,10 +43,10 @@ import java.util.List;
  */
 public final class JThequeMenuBar extends JMenuBar implements FeatureListener, InternationalizableContainer {
     private final Collection<Internationalizable> internationalizables = CollectionUtils.newList(25);
-    private final Comparator<IFeature> featureComparator = new ByPositionComparator();
+    private final Comparator<Feature> featureComparator = new ByPositionComparator();
     private final ImageService imageService;
     private final LanguageService languageService;
-    private final IFeatureService featureService;
+    private final FeatureService featureService;
 
     /**
      * Construct a JThequeMenuBar.
@@ -57,7 +55,7 @@ public final class JThequeMenuBar extends JMenuBar implements FeatureListener, I
      * @param languageService The language service.
      * @param featureService  The feature service.
      */
-    public JThequeMenuBar(ImageService imageService, LanguageService languageService, IFeatureService featureService) {
+    public JThequeMenuBar(ImageService imageService, LanguageService languageService, FeatureService featureService) {
         super();
 
         this.imageService = imageService;
@@ -72,9 +70,9 @@ public final class JThequeMenuBar extends JMenuBar implements FeatureListener, I
      *
      * @author Baptiste Wicht
      */
-    private static final class ByPositionComparator implements Comparator<IFeature> {
+    private static final class ByPositionComparator implements Comparator<Feature> {
         @Override
-        public int compare(IFeature feature, IFeature other) {
+        public int compare(Feature feature, Feature other) {
             return Numbers.compare(feature.getPosition(), other.getPosition());
         }
     }
@@ -83,11 +81,11 @@ public final class JThequeMenuBar extends JMenuBar implements FeatureListener, I
      * Build the menu.
      */
     public void buildMenu() {
-        List<IFeature> features = CollectionUtils.copyOf(featureService.getFeatures());
+        List<Feature> features = CollectionUtils.copyOf(featureService.getFeatures());
 
         Collections.sort(features, featureComparator);
 
-        for (IFeature feature : features) {
+        for (Feature feature : features) {
             addFeature(feature);
         }
 
@@ -100,7 +98,7 @@ public final class JThequeMenuBar extends JMenuBar implements FeatureListener, I
      *
      * @param feature The feature to add.
      */
-    private void addFeature(IFeature feature) {
+    private void addFeature(Feature feature) {
         JThequeMenu menu = new JThequeMenu(feature.getTitleKey());
 
         addInternationalizable(menu);
@@ -118,12 +116,12 @@ public final class JThequeMenuBar extends JMenuBar implements FeatureListener, I
      * @param feature The feature to get the sub features from.
      * @param menu    The menu to add the subfeatures to.
      */
-    private void addSubFeatures(IFeature feature, JMenu menu) {
-        List<IFeature> subFeatures = CollectionUtils.copyOf(feature.getSubFeatures());
+    private void addSubFeatures(Feature feature, JMenu menu) {
+        List<Feature> subFeatures = CollectionUtils.copyOf(feature.getSubFeatures());
 
         Collections.sort(subFeatures, featureComparator);
 
-        for (IFeature subFeature : subFeatures) {
+        for (Feature subFeature : subFeatures) {
             addFeature(menu, subFeature);
         }
     }
@@ -134,7 +132,7 @@ public final class JThequeMenuBar extends JMenuBar implements FeatureListener, I
      * @param menu    The JMenu.
      * @param feature The feature.
      */
-    private void addFeature(JMenu menu, IFeature feature) {
+    private void addFeature(JMenu menu, Feature feature) {
         switch (feature.getType()) {
             case ACTION:
                 addMenuItem(menu, feature);
@@ -163,7 +161,7 @@ public final class JThequeMenuBar extends JMenuBar implements FeatureListener, I
      * @param menu    The menu to add the item to.
      * @param feature The feature to add to the menu.
      */
-    private void addMenuItem(JMenu menu, IFeature feature) {
+    private void addMenuItem(JMenu menu, Feature feature) {
         feature.getAction().refreshText(languageService);
 
         menu.add(new JThequeMenuItem(feature.getAction()));
@@ -175,7 +173,7 @@ public final class JThequeMenuBar extends JMenuBar implements FeatureListener, I
      * @param menu    The menu to add the actions to.
      * @param feature The feature to add to the menu.
      */
-    private void addActions(JMenu menu, IFeature feature) {
+    private void addActions(JMenu menu, Feature feature) {
         JThequeMenu subMenu = new JThequeMenu(feature.getTitleKey());
 
         addInternationalizable(subMenu);
@@ -184,7 +182,7 @@ public final class JThequeMenuBar extends JMenuBar implements FeatureListener, I
             subMenu.setIcon(imageService.getIcon(feature.getIcon()));
         }
 
-        for (IFeature subFeature : feature.getSubFeatures()) {
+        for (Feature subFeature : feature.getSubFeatures()) {
             addFeature(subMenu, subFeature);
         }
 
@@ -205,7 +203,7 @@ public final class JThequeMenuBar extends JMenuBar implements FeatureListener, I
     }
 
     @Override
-    public void featureAdded(IFeature feature) {
+    public void featureAdded(Feature feature) {
         removeAll();
 
         buildMenu();
@@ -214,7 +212,7 @@ public final class JThequeMenuBar extends JMenuBar implements FeatureListener, I
     }
 
     @Override
-    public void featureRemoved(IFeature feature) {
+    public void featureRemoved(Feature feature) {
         for (int i = 0; i < getMenuCount(); i++) {
             JMenu menu = getMenu(i);
 
@@ -234,12 +232,12 @@ public final class JThequeMenuBar extends JMenuBar implements FeatureListener, I
      *
      * @return true if the menu is corresponding to the feature else false.
      */
-    private boolean isCorrespondingMenu(IFeature feature, AbstractButton menu) {
+    private boolean isCorrespondingMenu(Feature feature, AbstractButton menu) {
         return menu != null && menu.getText().equals(languageService.getMessage(feature.getTitleKey()));
     }
 
     @Override
-    public void featureModified(IFeature feature) {
+    public void featureModified(Feature feature) {
         for (int i = 0; i < getMenuCount(); i++) {
             JMenu menu = getMenu(i);
 

@@ -4,7 +4,7 @@ import org.jtheque.core.utils.SystemProperty;
 import org.jtheque.i18n.able.I18NResource;
 import org.jtheque.i18n.able.I18NResourceFactory;
 import org.jtheque.i18n.able.Internationalizable;
-import org.jtheque.states.able.IStateService;
+import org.jtheque.states.able.StateService;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.bean.Version;
@@ -60,7 +60,7 @@ public final class LanguageService implements org.jtheque.i18n.able.LanguageServ
      *
      * @param stateService The state service.
      */
-    public LanguageService(IStateService stateService) {
+    public LanguageService(StateService stateService) {
         super();
 
         state = stateService.getState(new LanguageState());

@@ -16,26 +16,25 @@ package org.jtheque.views.impl;
  * limitations under the License.
  */
 
-import org.jtheque.core.able.ICore;
+import org.jtheque.core.able.Core;
+import org.jtheque.modules.able.ModuleService;
+import org.jtheque.ui.able.Controller;
 import org.jtheque.utils.SimplePropertiesCache;
-import org.jtheque.messages.able.IMessageService;
-import org.jtheque.modules.able.IModuleService;
+import org.jtheque.messages.able.MessageService;
 import org.jtheque.modules.able.Module;
 import org.jtheque.modules.able.ModuleListener;
 import org.jtheque.modules.utils.ModuleResourceCache;
-import org.jtheque.ui.able.IController;
-import org.jtheque.ui.able.IUIUtils;
+import org.jtheque.ui.able.UIUtils;
 import org.jtheque.update.able.IUpdateService;
 import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.ui.SwingUtils;
-import org.jtheque.views.able.IViews;
 import org.jtheque.views.able.components.ConfigTabComponent;
-import org.jtheque.views.able.components.IStateBarComponent;
+import org.jtheque.views.able.components.StateBarComponent;
 import org.jtheque.views.able.components.MainComponent;
-import org.jtheque.views.able.panel.IModuleView;
-import org.jtheque.views.able.windows.IConfigView;
-import org.jtheque.views.able.windows.IMainView;
-import org.jtheque.views.able.windows.IMessageView;
+import org.jtheque.views.able.panel.ModuleView;
+import org.jtheque.views.able.windows.ConfigView;
+import org.jtheque.views.able.windows.MainView;
+import org.jtheque.views.able.windows.MessageView;
 import org.jtheque.views.impl.components.config.JPanelConfigAppearance;
 import org.jtheque.views.impl.components.config.JPanelConfigNetwork;
 import org.jtheque.views.impl.components.config.JPanelConfigOthers;
@@ -55,36 +54,36 @@ import java.util.List;
  *
  * @author Baptiste Wicht
  */
-public final class Views implements IViews, ApplicationContextAware, ModuleListener {
+public final class Views implements org.jtheque.views.able.Views, ApplicationContextAware, ModuleListener {
     private final Collection<MainComponent> mainComponents = CollectionUtils.newList(5);
-    private final Collection<IStateBarComponent> stateBarComponents = CollectionUtils.newList(5);
+    private final Collection<StateBarComponent> stateBarComponents = CollectionUtils.newList(5);
     private final Collection<ConfigTabComponent> configPanels = CollectionUtils.newList(5);
 
     private ApplicationContext applicationContext;
 
     @Resource
-    private IModuleService moduleService;
+    private ModuleService moduleService;
 
     @Resource
-    private IController<IConfigView> configController;
+    private Controller<ConfigView> configController;
 
     @Resource
-    private IController<IMessageView> messageController;
+    private Controller<MessageView> messageController;
 
     @Resource
-    private IController<IModuleView> moduleController;
+    private Controller<ModuleView> moduleController;
 
     @Resource
-    private IController<IMainView> generalController;
+    private Controller<MainView> generalController;
 
     @Resource
-    private IMessageService messageService;
+    private MessageService messageService;
 
     @Resource
-    private IUIUtils uiUtils;
+    private UIUtils uiUtils;
 
     @Resource
-    private ICore core;
+    private Core core;
 
     @Resource
     private IUpdateService updateService;
@@ -119,7 +118,7 @@ public final class Views implements IViews, ApplicationContextAware, ModuleListe
     }
 
     @Override
-    public IMainView getMainView() {
+    public MainView getMainView() {
         return generalController.getView();
     }
 
@@ -150,7 +149,7 @@ public final class Views implements IViews, ApplicationContextAware, ModuleListe
     }
 
     @Override
-    public void addStateBarComponent(String moduleId, IStateBarComponent component) {
+    public void addStateBarComponent(String moduleId, StateBarComponent component) {
         if (component != null && component.getComponent() != null) {
             stateBarComponents.add(component);
 
@@ -158,12 +157,12 @@ public final class Views implements IViews, ApplicationContextAware, ModuleListe
                 generalController.getView().getStateBar().addComponent(component);
             }
 
-            ModuleResourceCache.addResource(moduleId, IStateBarComponent.class, component);
+            ModuleResourceCache.addResource(moduleId, StateBarComponent.class, component);
         }
     }
 
     @Override
-    public Collection<IStateBarComponent> getStateBarComponents() {
+    public Collection<StateBarComponent> getStateBarComponents() {
         return CollectionUtils.copyOf(stateBarComponents);
     }
 
@@ -221,11 +220,11 @@ public final class Views implements IViews, ApplicationContextAware, ModuleListe
     @Override
     public void moduleStopped(Module module) {
         removeMainComponents(ModuleResourceCache.getResource(module.getId(), MainComponent.class));
-        removeStateBarComponents(ModuleResourceCache.getResource(module.getId(), IStateBarComponent.class));
+        removeStateBarComponents(ModuleResourceCache.getResource(module.getId(), StateBarComponent.class));
         removeConfigTabComponents(ModuleResourceCache.getResource(module.getId(), ConfigTabComponent.class));
 
         ModuleResourceCache.removeResourceOfType(module.getId(), MainComponent.class);
-        ModuleResourceCache.removeResourceOfType(module.getId(), IStateBarComponent.class);
+        ModuleResourceCache.removeResourceOfType(module.getId(), StateBarComponent.class);
         ModuleResourceCache.removeResourceOfType(module.getId(), ConfigTabComponent.class);
     }
 
@@ -257,8 +256,8 @@ public final class Views implements IViews, ApplicationContextAware, ModuleListe
      *
      * @param components The state bar components to remove.
      */
-    private void removeStateBarComponents(Iterable<IStateBarComponent> components) {
-        for (IStateBarComponent component : components) {
+    private void removeStateBarComponents(Iterable<StateBarComponent> components) {
+        for (StateBarComponent component : components) {
             stateBarComponents.remove(component);
 
             if (component != null && component.getComponent() != null) {

@@ -17,7 +17,7 @@ package org.jtheque.persistence.utils;
  */
 
 import org.jtheque.persistence.able.Entity;
-import org.jtheque.persistence.able.ITemporaryContext;
+import org.jtheque.persistence.able.TemporaryContext;
 
 /**
  * Represents a persisted object of JTheque.
@@ -27,7 +27,7 @@ import org.jtheque.persistence.able.ITemporaryContext;
 public abstract class AbstractEntity implements Entity {
     private int id;
 
-    private final ITemporaryContext temporaryContext;
+    private final TemporaryContext temporaryContext;
 
     protected static final int HASHCODE_PRIME = 31;
 
@@ -37,11 +37,11 @@ public abstract class AbstractEntity implements Entity {
     public AbstractEntity() {
         super();
 
-        temporaryContext = new TemporaryContext();
+        temporaryContext = new org.jtheque.persistence.utils.TemporaryContext();
     }
 
     @Override
-    public ITemporaryContext getTemporaryContext() {
+    public TemporaryContext getTemporaryContext() {
         return temporaryContext;
     }
 

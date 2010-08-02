@@ -16,8 +16,8 @@ package org.jtheque.views.impl.components.config;
  * limitations under the License.
  */
 
-import org.jtheque.core.able.ICore;
-import org.jtheque.core.able.ICoreConfiguration;
+import org.jtheque.core.able.Core;
+import org.jtheque.core.able.CoreConfiguration;
 import org.jtheque.ui.able.components.TextField;
 import org.jtheque.ui.able.components.filthy.Filthy;
 import org.jtheque.ui.able.constraints.Constraint;
@@ -25,7 +25,7 @@ import org.jtheque.ui.utils.builded.OSGIFilthyBuildedPanel;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.views.able.components.ConfigTabComponent;
-import org.jtheque.views.able.config.IOthersConfigView;
+import org.jtheque.views.able.config.OthersConfigView;
 
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
@@ -38,7 +38,7 @@ import java.util.Map;
  *
  * @author Baptiste Wicht
  */
-public final class JPanelConfigOthers extends OSGIFilthyBuildedPanel implements IOthersConfigView, ConfigTabComponent {
+public final class JPanelConfigOthers extends OSGIFilthyBuildedPanel implements OthersConfigView, ConfigTabComponent {
     private JCheckBox boxDeleteLogs;
     private JCheckBox checkBoxStart;
     private TextField fieldEmail;
@@ -94,7 +94,7 @@ public final class JPanelConfigOthers extends OSGIFilthyBuildedPanel implements 
      * Fill all the fields with the current informations.
      */
     private void fillAllFields() {
-        ICoreConfiguration config = getService(ICore.class).getConfiguration();
+        CoreConfiguration config = getService(Core.class).getConfiguration();
 
         checkBoxStart.setSelected(config.verifyUpdateOnStartup());
         boxDeleteLogs.setSelected(config.mustDeleteLogs());
@@ -104,7 +104,7 @@ public final class JPanelConfigOthers extends OSGIFilthyBuildedPanel implements 
 
     @Override
     public void apply() {
-        ICoreConfiguration config = getService(ICore.class).getConfiguration();
+        CoreConfiguration config = getService(Core.class).getConfiguration();
 
         config.setVerifyUpdateOnStartup(checkBoxStart.isSelected());
         config.setMustDeleteLogs(boxDeleteLogs.isSelected());

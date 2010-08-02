@@ -16,15 +16,15 @@ package org.jtheque.update.impl;
  * limitations under the License.
  */
 
-import org.jtheque.core.able.ICore;
+import org.jtheque.core.able.Core;
 import org.jtheque.core.able.Versionable;
 import org.jtheque.core.utils.SystemProperty;
 import org.jtheque.errors.able.Errors;
-import org.jtheque.errors.able.IErrorService;
+import org.jtheque.errors.able.ErrorService;
 import org.jtheque.events.able.EventLevel;
 import org.jtheque.events.able.Events;
 import org.jtheque.events.able.EventService;
-import org.jtheque.modules.able.IModuleService;
+import org.jtheque.modules.able.ModuleService;
 import org.jtheque.modules.able.Module;
 import org.jtheque.modules.able.ModuleState;
 import org.jtheque.modules.impl.InstallationResult;
@@ -32,7 +32,7 @@ import org.jtheque.resources.able.IResourceService;
 import org.jtheque.resources.impl.CoreVersion;
 import org.jtheque.resources.impl.FileDescriptor;
 import org.jtheque.resources.impl.ModuleVersion;
-import org.jtheque.ui.able.IUIUtils;
+import org.jtheque.ui.able.UIUtils;
 import org.jtheque.update.able.IUpdateService;
 import org.jtheque.update.impl.versions.IVersionsLoader;
 import org.jtheque.utils.StringUtils;
@@ -64,19 +64,19 @@ import java.util.Set;
  */
 public final class UpdateService implements IUpdateService {
     @Resource
-    private ICore core;
+    private Core core;
 
     @Resource
-    private IUIUtils uiUtils;
+    private UIUtils uiUtils;
 
     @Resource
-    private IModuleService moduleService;
+    private ModuleService moduleService;
 
     @Resource
     private EventService eventService;
 
     @Resource
-    private IErrorService errorService;
+    private ErrorService errorService;
 
     @Resource
     private IResourceService resourceService;
@@ -96,7 +96,7 @@ public final class UpdateService implements IUpdateService {
 
     @Override
     public void updateCore(Version versionToDownload) {
-        if (isDescriptorNotReachable(ICore.DESCRIPTOR_FILE_URL)) {
+        if (isDescriptorNotReachable(Core.DESCRIPTOR_FILE_URL)) {
             return;
         }
 
@@ -168,7 +168,7 @@ public final class UpdateService implements IUpdateService {
             return;
         }
 
-        if (onlineVersion.getCoreVersion().isGreaterThan(ICore.VERSION)) {
+        if (onlineVersion.getCoreVersion().isGreaterThan(Core.VERSION)) {
             uiUtils.displayI18nText("modules.message.versionproblem");
         } else {
             applyModuleVersion(onlineVersion);
@@ -283,7 +283,7 @@ public final class UpdateService implements IUpdateService {
 
     @Override
     public Collection<Version> getKernelVersions() {
-        if (isDescriptorNotReachable(ICore.DESCRIPTOR_FILE_URL)) {
+        if (isDescriptorNotReachable(Core.DESCRIPTOR_FILE_URL)) {
             return CollectionUtils.emptyList();
         }
 
@@ -328,11 +328,11 @@ public final class UpdateService implements IUpdateService {
 
     @Override
     public boolean isCurrentVersionUpToDate() {
-        if (isDescriptorNotReachable(ICore.DESCRIPTOR_FILE_URL)) {
+        if (isDescriptorNotReachable(Core.DESCRIPTOR_FILE_URL)) {
             return true;
         }
 
-        return isUpToDate(ICore.VERSION, versionsLoader.getCoreVersions());
+        return isUpToDate(Core.VERSION, versionsLoader.getCoreVersions());
     }
 
     @Override
@@ -382,7 +382,7 @@ public final class UpdateService implements IUpdateService {
 
     @Override
     public Version getMostRecentCoreVersion() {
-        if (isDescriptorNotReachable(ICore.DESCRIPTOR_FILE_URL)) {
+        if (isDescriptorNotReachable(Core.DESCRIPTOR_FILE_URL)) {
             return null;
         }
 

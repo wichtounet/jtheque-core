@@ -1,7 +1,5 @@
 package org.jtheque.ui.utils.windows;
 
-import org.jtheque.errors.able.IError;
-
 import java.util.Collection;
 
 /*
@@ -43,5 +41,5 @@ public interface ManagedWindow {
      *
      * @param errors The error's list.
      */
-    void validate(Collection<IError> errors);
+    void validate(Collection<org.jtheque.errors.able.Error> errors);
 }

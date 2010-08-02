@@ -1,12 +1,11 @@
 package org.jtheque.modules.impl;
 
-import org.jtheque.core.able.ICore;
+import org.jtheque.core.able.Core;
 import org.jtheque.core.utils.OSGiUtils;
-import org.jtheque.errors.able.IErrorService;
+import org.jtheque.errors.able.ErrorService;
 import org.jtheque.errors.able.Errors;
 import org.jtheque.i18n.able.LanguageService;
 import org.jtheque.i18n.able.I18NResourceFactory;
-import org.jtheque.modules.able.IModuleLoader;
 import org.jtheque.modules.able.Module;
 import org.jtheque.modules.able.Resources;
 import org.jtheque.modules.impl.ModuleContainer.Builder;
@@ -67,7 +66,7 @@ import java.util.zip.ZipEntry;
  *
  * @author Baptiste Wicht
  */
-public final class ModuleLoader implements IModuleLoader, BundleContextAware {
+public final class ModuleLoader implements org.jtheque.modules.able.ModuleLoader, BundleContextAware {
     private static final Pattern COMMA_DELIMITER_PATTERN = Pattern.compile(";");
     private static final String[] EMPTY_ARRAY = new String[0];
 
@@ -80,7 +79,7 @@ public final class ModuleLoader implements IModuleLoader, BundleContextAware {
     private LanguageService languageService;
 
     @Resource
-    private ICore core;
+    private Core core;
 
     @Override
     public void setBundleContext(BundleContext bundleContext) {
@@ -136,10 +135,10 @@ public final class ModuleLoader implements IModuleLoader, BundleContextAware {
             readManifestInformations(builder, bundle);
         } catch (BundleException e) {
             LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
-            OSGiUtils.getService(bundleContext, IErrorService.class).addError(Errors.newError(e));
+            OSGiUtils.getService(bundleContext, ErrorService.class).addError(Errors.newError(e));
         } catch (IOException e) {
             LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
-            OSGiUtils.getService(bundleContext, IErrorService.class).addError(Errors.newError(e));
+            OSGiUtils.getService(bundleContext, ErrorService.class).addError(Errors.newError(e));
         }
 
         Module module = builder.build();
@@ -197,7 +196,7 @@ public final class ModuleLoader implements IModuleLoader, BundleContextAware {
             importResources(resources, reader);
         } catch (XMLException e) {
             LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
-            OSGiUtils.getService(bundleContext, IErrorService.class).addError(Errors.newError(e));
+            OSGiUtils.getService(bundleContext, ErrorService.class).addError(Errors.newError(e));
         } finally {
             FileUtils.close(reader);
         }

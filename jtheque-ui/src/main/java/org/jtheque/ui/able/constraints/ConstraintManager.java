@@ -1,6 +1,5 @@
 package org.jtheque.ui.able.constraints;
 
-import org.jtheque.errors.able.IError;
 import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.ui.DocumentLengthFilterAvert;
 
@@ -60,7 +59,7 @@ public final class ConstraintManager {
      * @param field     The field.
      * @param errors    The errors list to fill.
      */
-    public static void validate(String fieldName, Object field, Collection<IError> errors) {
+    public static void validate(String fieldName, Object field, Collection<org.jtheque.errors.able.Error> errors) {
         if (CONSTRAINTS.containsKey(fieldName)) {
             CONSTRAINTS.get(fieldName).validate(field, errors);
         }

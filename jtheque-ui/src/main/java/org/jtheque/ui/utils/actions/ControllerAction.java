@@ -1,6 +1,6 @@
 package org.jtheque.ui.utils.actions;
 
-import org.jtheque.ui.able.IController;
+import org.jtheque.ui.able.Controller;
 
 import javax.swing.ImageIcon;
 
@@ -31,7 +31,7 @@ public final class ControllerAction extends JThequeAction {
     private static final long serialVersionUID = -749830303290101705L;
     
     private final String key;
-    private final transient IController<?> controller;
+    private final transient Controller<?> controller;
 
     /**
      * Construct a new controller action.
@@ -39,7 +39,7 @@ public final class ControllerAction extends JThequeAction {
      * @param key        The i18n key of the action.
      * @param controller The controller to bind the action.
      */
-    public ControllerAction(String key, IController<?> controller) {
+    public ControllerAction(String key, Controller<?> controller) {
         super(key);
 
         this.key = key;
@@ -53,7 +53,7 @@ public final class ControllerAction extends JThequeAction {
      * @param icon       The icon of the action
      * @param controller The controller to bind the action.
      */
-    public ControllerAction(String key, ImageIcon icon, IController<?> controller) {
+    public ControllerAction(String key, ImageIcon icon, Controller<?> controller) {
         super();
 
         setIcon(icon);

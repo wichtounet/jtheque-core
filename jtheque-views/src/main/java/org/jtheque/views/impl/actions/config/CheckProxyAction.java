@@ -17,7 +17,7 @@ package org.jtheque.views.impl.actions.config;
  */
 
 import org.jtheque.ui.utils.actions.JThequeSimpleAction;
-import org.jtheque.views.able.config.INetworkConfigView;
+import org.jtheque.views.able.config.NetworkConfigView;
 
 import java.awt.event.ActionEvent;
 
@@ -29,14 +29,14 @@ import java.awt.event.ActionEvent;
 public final class CheckProxyAction extends JThequeSimpleAction {
     private static final long serialVersionUID = -3130965920708346740L;
     
-    private final transient INetworkConfigView configView;
+    private final transient NetworkConfigView configView;
 
     /**
      * Construct a new CheckProxyAction.
      *
      * @param configView The config view.
      */
-    public CheckProxyAction(INetworkConfigView configView) {
+    public CheckProxyAction(NetworkConfigView configView) {
         super();
 
         this.configView = configView;

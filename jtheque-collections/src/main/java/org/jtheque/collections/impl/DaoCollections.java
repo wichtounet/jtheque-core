@@ -17,7 +17,6 @@ package org.jtheque.collections.impl;
  */
 
 import org.jtheque.collections.able.Collection;
-import org.jtheque.collections.able.IDaoCollections;
 import org.jtheque.persistence.able.Entity;
 import org.jtheque.persistence.able.QueryMapper;
 import org.jtheque.persistence.utils.CachedJDBCDao;
@@ -35,7 +34,7 @@ import java.util.List;
  *
  * @author Baptiste Wicht
  */
-public final class DaoCollections extends CachedJDBCDao<Collection> implements IDaoCollections {
+public final class DaoCollections extends CachedJDBCDao<Collection> implements org.jtheque.collections.able.DaoCollections {
     private final RowMapper<Collection> rowMapper = new CollectionRowMapper();
     private final QueryMapper queryMapper = new CollectionQueryMapper();
 

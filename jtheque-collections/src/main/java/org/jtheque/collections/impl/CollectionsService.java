@@ -16,14 +16,12 @@ package org.jtheque.collections.impl;
  * limitations under the License.
  */
 
-import org.jtheque.collections.able.Collection;
-import org.jtheque.collections.able.CollectionListener;
-import org.jtheque.collections.able.ICollectionsService;
-import org.jtheque.collections.able.IDaoCollections;
-import org.jtheque.core.able.ICore;
+import org.jtheque.collections.able.*;
+import org.jtheque.collections.able.DaoCollections;
+import org.jtheque.core.able.Core;
 import org.jtheque.file.able.FileService;
 import org.jtheque.persistence.able.DataListener;
-import org.jtheque.schemas.able.ISchemaService;
+import org.jtheque.schemas.able.SchemaService;
 import org.jtheque.schemas.able.Schema;
 import org.jtheque.utils.CryptoUtils;
 import org.jtheque.utils.Hasher;
@@ -40,9 +38,9 @@ import org.springframework.transaction.annotation.Transactional;
  *
  * @author Baptiste Wicht
  */
-public final class CollectionsService implements ICollectionsService {
-    private final IDaoCollections daoCollections;
-    private final ICore core;
+public final class CollectionsService implements org.jtheque.collections.able.CollectionsService {
+    private final org.jtheque.collections.able.DaoCollections daoCollections;
+    private final Core core;
 
     @GuardedInternally
     private final WeakEventListenerList<CollectionListener> listeners = WeakEventListenerList.create();
@@ -56,8 +54,8 @@ public final class CollectionsService implements ICollectionsService {
      * @param schemaService  The schema service.
      * @param schema         The schema of the collections.
      */
-    public CollectionsService(IDaoCollections daoCollections, FileService fileService, ICore core,
-                              ISchemaService schemaService, Schema schema) {
+    public CollectionsService(DaoCollections daoCollections, FileService fileService, Core core,
+                              SchemaService schemaService, Schema schema) {
         super();
 
         this.daoCollections = daoCollections;

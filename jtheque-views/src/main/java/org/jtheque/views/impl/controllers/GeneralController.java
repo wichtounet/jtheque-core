@@ -1,23 +1,23 @@
 package org.jtheque.views.impl.controllers;
 
-import org.jtheque.core.able.ICore;
+import org.jtheque.core.able.Core;
 import org.jtheque.file.able.FileService;
-import org.jtheque.persistence.able.IPersistenceService;
+import org.jtheque.persistence.able.PersistenceService;
 import org.jtheque.ui.able.Action;
-import org.jtheque.ui.able.IController;
-import org.jtheque.ui.able.IUIUtils;
+import org.jtheque.ui.able.Controller;
+import org.jtheque.ui.able.UIUtils;
 import org.jtheque.ui.utils.AbstractController;
 import org.jtheque.utils.DesktopUtils;
 import org.jtheque.utils.io.SimpleFilter;
 import org.jtheque.utils.ui.SimpleSwingWorker;
 import org.jtheque.utils.ui.SwingUtils;
-import org.jtheque.views.able.IViewService;
-import org.jtheque.views.able.panel.IModuleView;
-import org.jtheque.views.able.windows.IConfigView;
-import org.jtheque.views.able.windows.IErrorView;
-import org.jtheque.views.able.windows.IEventView;
-import org.jtheque.views.able.windows.IMainView;
-import org.jtheque.views.able.windows.IMessageView;
+import org.jtheque.views.able.ViewService;
+import org.jtheque.views.able.panel.ModuleView;
+import org.jtheque.views.able.windows.ConfigView;
+import org.jtheque.views.able.windows.ErrorView;
+import org.jtheque.views.able.windows.EventView;
+import org.jtheque.views.able.windows.MainView;
+import org.jtheque.views.able.windows.MessageView;
 import org.jtheque.xml.utils.XMLException;
 
 import org.slf4j.LoggerFactory;
@@ -47,42 +47,42 @@ import java.io.File;
  *
  * @author Baptiste Wicht
  */
-public class GeneralController extends AbstractController<IMainView> {
+public class GeneralController extends AbstractController<MainView> {
     @Resource
-    private IUIUtils uiUtils;
+    private UIUtils uiUtils;
 
     @Resource
     private FileService fileService;
 
     @Resource
-    private IPersistenceService persistenceService;
+    private PersistenceService persistenceService;
 
     @Resource
-    private IViewService viewService;
+    private ViewService viewService;
 
     @Resource
-    private ICore core;
+    private Core core;
 
     @Resource
-    private IController<IConfigView> configController;
+    private Controller<ConfigView> configController;
 
     @Resource
-    private IController<IMessageView> messageController;
+    private Controller<MessageView> messageController;
 
     @Resource
-    private IController<IEventView> eventController;
+    private Controller<EventView> eventController;
 
     @Resource
-    private IController<IErrorView> errorController;
+    private Controller<ErrorView> errorController;
 
     @Resource
-    private IController<IModuleView> moduleController;
+    private Controller<ModuleView> moduleController;
 
     /**
      * Construct a new GeneralController. 
      */
     public GeneralController() {
-        super(IMainView.class);
+        super(MainView.class);
     }
 
     /**
@@ -120,7 +120,7 @@ public class GeneralController extends AbstractController<IMainView> {
      */
     @Action("menu.help")
     public void help() {
-        DesktopUtils.browse(ICore.HELP_URL);
+        DesktopUtils.browse(Core.HELP_URL);
     }
 
     /**
@@ -128,7 +128,7 @@ public class GeneralController extends AbstractController<IMainView> {
      */
     @Action("menu.bug")
     public void bug() {
-        DesktopUtils.browse(ICore.BUG_TRACKER_URL);
+        DesktopUtils.browse(Core.BUG_TRACKER_URL);
     }
 
     /**
@@ -136,7 +136,7 @@ public class GeneralController extends AbstractController<IMainView> {
      */
     @Action("menu.improvement")
     public void improvement() {
-        DesktopUtils.browse(ICore.BUG_TRACKER_URL);
+        DesktopUtils.browse(Core.BUG_TRACKER_URL);
     }
 
     /**

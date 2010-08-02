@@ -16,7 +16,7 @@ package org.jtheque.ui.able.components.filthy;
  * limitations under the License.
  */
 
-import org.jtheque.ui.able.IFilthyUtils;
+import org.jtheque.ui.able.FilthyUtils;
 import org.jtheque.utils.ui.SizeTracker;
 
 import javax.swing.JPanel;
@@ -32,7 +32,7 @@ import java.awt.Image;
 public class FilthyBackgroundPanel extends JPanel {
     private final SizeTracker tracker = new SizeTracker(this);
 
-    private IFilthyUtils filthyUtils;
+    private FilthyUtils filthyUtils;
     private Image gradientImage;
 
     /**
@@ -48,7 +48,7 @@ public class FilthyBackgroundPanel extends JPanel {
      *
      * @param filthyUtils The filthy utils.
      */
-    public FilthyBackgroundPanel(IFilthyUtils filthyUtils) {
+    public FilthyBackgroundPanel(FilthyUtils filthyUtils) {
         super();
 
         this.filthyUtils = filthyUtils;
@@ -68,7 +68,7 @@ public class FilthyBackgroundPanel extends JPanel {
      *
      * @return The filthy utils to use.
      */
-    protected IFilthyUtils getFilthyUtils() {
+    protected FilthyUtils getFilthyUtils() {
         return filthyUtils;
     }
 }

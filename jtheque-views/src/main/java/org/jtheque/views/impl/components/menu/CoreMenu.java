@@ -1,10 +1,10 @@
 package org.jtheque.views.impl.components.menu;
 
-import org.jtheque.features.able.IFeature;
+import org.jtheque.features.able.Feature;
 import org.jtheque.i18n.impl.LanguageService;
-import org.jtheque.ui.able.IController;
+import org.jtheque.ui.able.Controller;
 import org.jtheque.undo.able.IUndoRedoService;
-import org.jtheque.views.able.windows.IMainView;
+import org.jtheque.views.able.windows.MainView;
 import org.jtheque.views.impl.ViewsResources;
 import org.jtheque.views.impl.actions.undo.RedoAction;
 import org.jtheque.views.impl.actions.undo.UndoAction;
@@ -36,8 +36,8 @@ import java.util.List;
  */
 public final class CoreMenu extends OSGIMenu {
     @Override
-    protected List<IFeature> getFileMenuSubFeatures() {
-        IController<IMainView> controller = getBean("generalController");
+    protected List<Feature> getFileMenuSubFeatures() {
+        Controller<MainView> controller = getBean("generalController");
 
         return features(
                 createSeparatedSubFeature(200, createControllerAction("menu.backup", controller), ViewsResources.XML_ICON),
@@ -47,7 +47,7 @@ public final class CoreMenu extends OSGIMenu {
     }
 
     @Override
-    protected List<IFeature> getEditMenuSubFeatures() {
+    protected List<Feature> getEditMenuSubFeatures() {
         IUndoRedoService undoRedoService = getService(IUndoRedoService.class);
         LanguageService languageService = getService(LanguageService.class);
 
@@ -58,8 +58,8 @@ public final class CoreMenu extends OSGIMenu {
     }
 
     @Override
-    protected List<IFeature> getAdvancedMenuSubFeatures() {
-        IController<IMainView> controller = getBean("generalController");
+    protected List<Feature> getAdvancedMenuSubFeatures() {
+        Controller<MainView> controller = getBean("generalController");
 
         return features(
                 createSeparatedSubFeature(500, createControllerAction("menu.config", controller), ViewsResources.OPTIONS_ICON),
@@ -68,8 +68,8 @@ public final class CoreMenu extends OSGIMenu {
     }
 
     @Override
-    protected List<IFeature> getHelpMenuSubFeatures() {
-        IController<IMainView> controller = getBean("generalController");
+    protected List<Feature> getHelpMenuSubFeatures() {
+        Controller<MainView> controller = getBean("generalController");
 
         return features(
                 createSeparatedSubFeature(1, createControllerAction("menu.help", controller), ViewsResources.HELP_ICON, KeyEvent.VK_F1),

@@ -45,8 +45,8 @@
 
     <!-- OSGI Services Registrations -->
 
-    <osgi:service ref="persistenceManager" interface="org.jtheque.persistence.able.IPersistenceService"/>
-    <osgi:service ref="daoNotes" interface="org.jtheque.persistence.able.IDaoNotes"/>
-    <osgi:service ref="daoPersistenceContext" interface="org.jtheque.persistence.able.IDaoPersistenceContext"/>
+    <osgi:service ref="persistenceManager" interface="org.jtheque.persistence.able.PersistenceService"/>
+    <osgi:service ref="daoNotes" interface="org.jtheque.persistence.able.DaoNotes"/>
+    <osgi:service ref="daoPersistenceContext" interface="org.jtheque.persistence.able.DaoPersistenceContext"/>
 
 </beans>

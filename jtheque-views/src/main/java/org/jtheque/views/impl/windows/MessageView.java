@@ -17,12 +17,11 @@ package org.jtheque.views.impl.windows;
  */
 
 import org.jtheque.messages.able.Message;
-import org.jtheque.messages.able.IMessageService;
+import org.jtheque.messages.able.MessageService;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.ui.utils.builders.PanelBuilder;
 import org.jtheque.ui.utils.windows.dialogs.SwingFilthyBuildedDialogView;
 import org.jtheque.utils.ui.GridBagUtils;
-import org.jtheque.views.able.windows.IMessageView;
 import org.jtheque.views.impl.models.IMessageModel;
 import org.jtheque.views.impl.models.MessageModel;
 
@@ -34,7 +33,7 @@ import javax.swing.JTextArea;
  *
  * @author Baptiste Wicht
  */
-public final class MessageView extends SwingFilthyBuildedDialogView<IMessageModel> implements IMessageView {
+public final class MessageView extends SwingFilthyBuildedDialogView<IMessageModel> implements org.jtheque.views.able.windows.MessageView {
     private JLabel dateLabel;
     private JLabel sourceLabel;
     private JLabel titleLabel;
@@ -42,7 +41,7 @@ public final class MessageView extends SwingFilthyBuildedDialogView<IMessageMode
 
     @Override
     protected void initView() {
-        setModel(new MessageModel(getService(IMessageService.class)));
+        setModel(new MessageModel(getService(MessageService.class)));
         setTitleKey("messages.view.title");
         setResizable(false);
     }

@@ -1,7 +1,7 @@
 package org.jtheque.views.impl.controllers;
 
 import org.jtheque.ui.utils.AbstractController;
-import org.jtheque.views.able.windows.IErrorView;
+import org.jtheque.views.able.windows.ErrorView;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -24,11 +24,11 @@ import org.jtheque.views.able.windows.IErrorView;
  *
  * @author Baptiste Wicht
  */
-public class ErrorController extends AbstractController<IErrorView> {
+public class ErrorController extends AbstractController<ErrorView> {
     /**
      * Construct a new ErrorController. 
      */
     public ErrorController() {
-        super(IErrorView.class);
+        super(ErrorView.class);
     }
 }

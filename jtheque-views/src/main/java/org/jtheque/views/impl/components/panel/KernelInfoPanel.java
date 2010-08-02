@@ -16,16 +16,16 @@ package org.jtheque.views.impl.components.panel;
  * limitations under the License.
  */
 
-import org.jtheque.core.able.ICore;
+import org.jtheque.core.able.Core;
 import org.jtheque.i18n.able.LanguageService;
-import org.jtheque.ui.able.IFilthyUtils;
+import org.jtheque.ui.able.FilthyUtils;
 import org.jtheque.ui.utils.builded.FilthyBuildedPanel;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.ui.utils.builders.PanelBuilder;
 import org.jtheque.update.able.IUpdateService;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.ui.GridBagUtils;
-import org.jtheque.views.able.panel.IModuleView;
+import org.jtheque.views.able.panel.ModuleView;
 
 import java.awt.Insets;
 
@@ -38,7 +38,7 @@ public final class KernelInfoPanel extends FilthyBuildedPanel {
     private static final int TITLE_FONT_SIZE = 16;
 
     private final IUpdateService updateService;
-    private final IModuleView moduleView;
+    private final ModuleView moduleView;
 
     /**
      * Construct a new KernelInfoPanel.
@@ -48,8 +48,8 @@ public final class KernelInfoPanel extends FilthyBuildedPanel {
      * @param updateService   The update service.
      * @param moduleView      The module view.
      */
-    public KernelInfoPanel(LanguageService languageService, IFilthyUtils filthyUtils, IUpdateService updateService,
-                           IModuleView moduleView) {
+    public KernelInfoPanel(LanguageService languageService, FilthyUtils filthyUtils, IUpdateService updateService,
+                           ModuleView moduleView) {
         super(filthyUtils, languageService);
 
         this.updateService = updateService;
@@ -69,7 +69,7 @@ public final class KernelInfoPanel extends FilthyBuildedPanel {
 
         builder.addI18nLabel("modules.view.core.version.current", builder.gbcSet(1, 0));
 
-        builder.addLabel(ICore.VERSION.getVersion(), builder.gbcSet(1, 1));
+        builder.addLabel(Core.VERSION.getVersion(), builder.gbcSet(1, 1));
 
         builder.addI18nLabel("modules.view.core.version.online", builder.gbcSet(2, 0));
 

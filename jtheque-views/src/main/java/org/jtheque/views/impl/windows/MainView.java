@@ -16,13 +16,13 @@ package org.jtheque.views.impl.windows;
  * limitations under the License.
  */
 
-import org.jtheque.core.able.ICore;
+import org.jtheque.core.able.Core;
 import org.jtheque.core.able.lifecycle.TitleEvent;
 import org.jtheque.core.able.lifecycle.TitleListener;
+import org.jtheque.ui.able.Model;
 import org.jtheque.utils.SimplePropertiesCache;
 import org.jtheque.i18n.able.LanguageService;
-import org.jtheque.ui.able.IModel;
-import org.jtheque.ui.able.IUIUtils;
+import org.jtheque.ui.able.UIUtils;
 import org.jtheque.ui.able.components.Borders;
 import org.jtheque.ui.able.components.LayerTabbedPane;
 import org.jtheque.ui.utils.builders.JThequePanelBuilder;
@@ -31,10 +31,9 @@ import org.jtheque.ui.utils.windows.frames.SwingFrameView;
 import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.utils.ui.SwingUtils;
-import org.jtheque.views.able.IViewService;
-import org.jtheque.views.able.IViews;
+import org.jtheque.views.able.ViewService;
+import org.jtheque.views.able.Views;
 import org.jtheque.views.able.components.MainComponent;
-import org.jtheque.views.able.windows.IMainView;
 import org.jtheque.views.impl.MainController;
 import org.jtheque.views.impl.components.MainTabbedPane;
 import org.jtheque.views.impl.components.menu.JThequeMenuBar;
@@ -57,7 +56,7 @@ import java.util.Collection;
  *
  * @author Baptiste Wicht
  */
-public final class MainView extends SwingFrameView<IModel> implements TitleListener, IMainView {
+public final class MainView extends SwingFrameView<Model> implements TitleListener, org.jtheque.views.able.windows.MainView {
     private MainTabbedPane tab;
 
     private MainController controller;
@@ -71,11 +70,11 @@ public final class MainView extends SwingFrameView<IModel> implements TitleListe
 
     private JThequeStateBar stateBar;
 
-    private final IViewService viewService;
+    private final ViewService viewService;
     private final LanguageService languageService;
-    private final IViews views;
-    private final IUIUtils uiUtils;
-    private final ICore core;
+    private final Views views;
+    private final UIUtils uiUtils;
+    private final Core core;
     private final JThequeMenuBar menuBar;
 
     /**
@@ -88,7 +87,7 @@ public final class MainView extends SwingFrameView<IModel> implements TitleListe
      * @param menuBar         The menu bar.
      * @param languageService The language service.
      */
-    public MainView(ICore core, IViewService viewService, IViews views, IUIUtils uiUtils, JThequeMenuBar menuBar,
+    public MainView(Core core, ViewService viewService, Views views, UIUtils uiUtils, JThequeMenuBar menuBar,
                     LanguageService languageService) {
         super();
 

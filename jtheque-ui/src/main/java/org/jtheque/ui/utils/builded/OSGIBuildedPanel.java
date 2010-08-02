@@ -2,8 +2,8 @@ package org.jtheque.ui.utils.builded;
 
 import org.jtheque.core.utils.OSGiUtils;
 import org.jtheque.core.utils.SwingSpringProxy;
-import org.jtheque.errors.able.IError;
-import org.jtheque.errors.able.IErrorService;
+import org.jtheque.errors.able.*;
+import org.jtheque.errors.able.Error;
 import org.jtheque.i18n.able.LanguageService;
 import org.jtheque.utils.collections.CollectionUtils;
 
@@ -93,12 +93,12 @@ public abstract class OSGIBuildedPanel extends BuildedPanel implements BundleCon
 
     @Override
     public boolean validateContent() {
-        Collection<IError> errors = CollectionUtils.newList(5);
+        Collection<Error> errors = CollectionUtils.newList(5);
 
         validate(errors);
 
-        for (IError error : errors) {
-            getService(IErrorService.class).addError(error);
+        for (Error error : errors) {
+            getService(ErrorService.class).addError(error);
         }
 
         return errors.isEmpty();
@@ -109,7 +109,7 @@ public abstract class OSGIBuildedPanel extends BuildedPanel implements BundleCon
      *
      * @param errors The errors to fill.
      */
-    protected void validate(Collection<IError> errors) {
+    protected void validate(Collection<org.jtheque.errors.able.Error> errors) {
         //Default empty implementation
     }
 }

@@ -30,6 +30,7 @@ import java.util.Set;
  *
  * @author Baptiste Wicht
  */
+//TODO Make ThreadSafe
 public final class ModuleResourceCache {
     private static final Map<String, Map<Class<?>, Set<Object>>> CACHE = CollectionUtils.newHashMap(8);
 

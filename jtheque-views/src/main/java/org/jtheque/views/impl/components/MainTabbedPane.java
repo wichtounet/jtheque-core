@@ -6,7 +6,7 @@ import org.jtheque.ui.able.components.LayerTabbedPane;
 import org.jtheque.utils.bean.Numbers;
 import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.ui.SwingUtils;
-import org.jtheque.views.able.IViews;
+import org.jtheque.views.able.Views;
 import org.jtheque.views.able.components.MainComponent;
 
 import javax.annotation.PostConstruct;
@@ -43,7 +43,7 @@ import java.util.Map.Entry;
  */
 public final class MainTabbedPane extends LayerTabbedPane {
     private final LanguageService languageService;
-    private final IViews views;
+    private final Views views;
 
     /**
      * Construct a new MainTabbedPane.
@@ -51,7 +51,7 @@ public final class MainTabbedPane extends LayerTabbedPane {
      * @param languageService The language service.
      * @param views           The views.
      */
-    public MainTabbedPane(LanguageService languageService, IViews views) {
+    public MainTabbedPane(LanguageService languageService, Views views) {
         super(languageService);
 
         this.languageService = languageService;

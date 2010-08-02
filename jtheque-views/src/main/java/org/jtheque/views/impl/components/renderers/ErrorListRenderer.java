@@ -16,8 +16,8 @@ package org.jtheque.views.impl.components.renderers;
  * limitations under the License.
  */
 
-import org.jtheque.errors.able.IError;
-import org.jtheque.errors.able.IError.Level;
+import org.jtheque.errors.able.Error;
+import org.jtheque.errors.able.Error.Level;
 import org.jtheque.i18n.able.LanguageService;
 import org.jtheque.images.able.ImageService;
 import org.jtheque.views.impl.ViewsResources;
@@ -65,7 +65,7 @@ public final class ErrorListRenderer extends JLabel implements ListCellRenderer 
             setForeground(Color.white);
         }
 
-        IError error = (IError) value;
+        Error error = (org.jtheque.errors.able.Error) value;
 
         setText(error.getTitle(languageService));
 

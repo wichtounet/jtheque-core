@@ -16,7 +16,7 @@ package org.jtheque.collections.impl;
  * limitations under the License.
  */
 
-import org.jtheque.collections.able.IDaoCollections;
+import org.jtheque.collections.able.DaoCollections;
 import org.jtheque.schemas.able.DefaultSchema;
 import org.jtheque.utils.bean.Version;
 
@@ -35,9 +35,9 @@ public class CollectionSchema extends DefaultSchema {
 
     @Override
     public void install() {
-        updateTable(IDaoCollections.TABLE,
+        updateTable(DaoCollections.TABLE,
                 "CREATE TABLE IF NOT EXISTS {} (ID INT IDENTITY PRIMARY KEY, TITLE VARCHAR(150) NOT NULL UNIQUE, PROTECTED BOOLEAN, PASSWORD VARCHAR(150))");
-        updateTable(IDaoCollections.TABLE, "CREATE INDEX IF NOT EXISTS COLLECTIONS_IDX ON {} (ID)");
+        updateTable(DaoCollections.TABLE, "CREATE INDEX IF NOT EXISTS COLLECTIONS_IDX ON {} (ID)");
     }
 
     @Override

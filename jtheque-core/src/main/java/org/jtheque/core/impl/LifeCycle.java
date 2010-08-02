@@ -1,9 +1,8 @@
 package org.jtheque.core.impl;
 
-import org.jtheque.core.able.ICore;
+import org.jtheque.core.able.Core;
 import org.jtheque.core.able.lifecycle.FunctionEvent;
 import org.jtheque.core.able.lifecycle.FunctionListener;
-import org.jtheque.core.able.lifecycle.ILifeCycle;
 import org.jtheque.core.able.lifecycle.TitleEvent;
 import org.jtheque.core.able.lifecycle.TitleListener;
 import org.jtheque.core.utils.SystemProperty;
@@ -38,14 +37,14 @@ import java.util.concurrent.Executors;
  *
  * @author Baptiste Wicht
  */
-public class LifeCycle implements ILifeCycle {
+public class LifeCycle implements org.jtheque.core.able.lifecycle.LifeCycle {
     private final WeakEventListenerList<FunctionListener> functionListeners = WeakEventListenerList.create();
     private final WeakEventListenerList<TitleListener> titleListeners = WeakEventListenerList.create();
 
     private String currentFunction;
     private String title = "JTheque";
 
-    private final ICore core;
+    private final org.jtheque.core.able.Core core;
     private final EventService eventService;
 
     private final ApplicationShutDownHook hook;
@@ -56,7 +55,7 @@ public class LifeCycle implements ILifeCycle {
      * @param eventService The event service.
      * @param core         The core.
      */
-    public LifeCycle(EventService eventService, ICore core) {
+    public LifeCycle(EventService eventService, Core core) {
         super();
 
         this.eventService = eventService;

@@ -13,9 +13,9 @@
             <osgi:reference interface="org.jtheque.i18n.able.LanguageService"/>
         </constructor-arg>
         <constructor-arg>
-            <osgi:reference interface="org.jtheque.modules.able.IModuleService"/>
+            <osgi:reference interface="org.jtheque.modules.able.ModuleService"/>
         </constructor-arg>
     </bean>
 
-    <osgi:service ref="featureService" interface="org.jtheque.features.able.IFeatureService"/>
+    <osgi:service ref="featureService" interface="org.jtheque.features.able.FeatureService"/>
 </beans>

@@ -16,8 +16,7 @@ package org.jtheque.modules.impl;
  * limitations under the License.
  */
 
-import org.jtheque.modules.able.IModuleDescription;
-import org.jtheque.modules.able.IRepository;
+import org.jtheque.modules.able.ModuleDescription;
 import org.jtheque.utils.bean.InternationalString;
 import org.jtheque.utils.collections.CollectionUtils;
 
@@ -28,10 +27,10 @@ import java.util.Collection;
  *
  * @author Baptiste Wicht
  */
-public final class Repository implements IRepository {
+public final class Repository implements org.jtheque.modules.able.Repository {
     private InternationalString title;
     private String application;
-    private final Collection<IModuleDescription> modules = CollectionUtils.newList();
+    private final Collection<ModuleDescription> modules = CollectionUtils.newList();
 
     /**
      * Set the title of the repository.
@@ -57,7 +56,7 @@ public final class Repository implements IRepository {
     }
 
     @Override
-    public Collection<IModuleDescription> getModules() {
+    public Collection<ModuleDescription> getModules() {
         return modules;
     }
 

@@ -1,15 +1,15 @@
 package org.jtheque.resources.impl;
 
 import org.jtheque.core.utils.SystemProperty;
+import org.jtheque.errors.able.ErrorService;
 import org.jtheque.errors.able.Errors;
-import org.jtheque.errors.able.IErrorService;
 import org.jtheque.events.able.EventLevel;
 import org.jtheque.events.able.EventService;
 import org.jtheque.events.able.Events;
 import org.jtheque.resources.able.IResource;
 import org.jtheque.resources.able.IResourceService;
 import org.jtheque.resources.able.SimpleResource;
-import org.jtheque.states.able.IStateService;
+import org.jtheque.states.able.StateService;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.collections.ArrayUtils;
 import org.jtheque.utils.collections.CollectionUtils;
@@ -52,7 +52,7 @@ public class ResourceService implements IResourceService, BundleContextAware {
     private final ResourceState resourceState;
 
     private BundleContext bundleContext;
-    private final IErrorService errorService;
+    private final ErrorService errorService;
     private final EventService eventService;
 
     /**
@@ -62,7 +62,7 @@ public class ResourceService implements IResourceService, BundleContextAware {
      * @param errorService The error service.
      * @param eventService The event service.
      */
-    public ResourceService(IStateService stateService, IErrorService errorService, EventService eventService) {
+    public ResourceService(StateService stateService, ErrorService errorService, EventService eventService) {
         super();
 
         this.errorService = errorService;

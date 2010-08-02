@@ -1,8 +1,6 @@
 package org.jtheque.ui.impl;
 
 import org.jtheque.images.able.ImageService;
-import org.jtheque.ui.able.IFilthyUtils;
-import org.jtheque.ui.able.IUIUtils;
 import org.jtheque.utils.ui.ImageUtils;
 import org.jtheque.utils.ui.SizeTracker;
 
@@ -39,7 +37,7 @@ import java.awt.image.BufferedImage;
  *
  * @author Baptiste Wicht
  */
-public class FilthyUtils implements IFilthyUtils {
+public class FilthyUtils implements org.jtheque.ui.able.FilthyUtils {
     private final BufferedImage lightImage;
     private final LinearGradientPaint backgroundPaint;
 
@@ -54,7 +52,7 @@ public class FilthyUtils implements IFilthyUtils {
         backgroundPaint = new LinearGradientPaint(new Point2D.Float(0, 0), new Point2D.Float(0, 584),
                 new float[]{0.22f, 0.9f}, new Color[]{new Color(32, 39, 55), new Color(133, 144, 165)});
 
-        lightImage = imageService.getImage(IUIUtils.LIGHT_IMAGE);
+        lightImage = imageService.getImage(org.jtheque.ui.able.UIUtils.LIGHT_IMAGE);
     }
 
     /**

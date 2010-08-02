@@ -17,8 +17,7 @@ package org.jtheque.errors.impl;
  */
 
 import org.jtheque.errors.able.ErrorListener;
-import org.jtheque.errors.able.IError;
-import org.jtheque.errors.able.IErrorService;
+import org.jtheque.errors.able.Error;
 import org.jtheque.utils.annotations.GuardedInternally;
 import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.collections.CollectionUtils;
@@ -32,19 +31,19 @@ import java.util.Collection;
  * @author Baptiste Wicht
  */
 @ThreadSafe
-public final class ErrorService implements IErrorService {
-    private final Collection<IError> errors = CollectionUtils.newList();
+public final class ErrorService implements org.jtheque.errors.able.ErrorService {
+    private final Collection<Error> errors = CollectionUtils.newList();
 
     @GuardedInternally
     private final WeakEventListenerList<ErrorListener> listeners = WeakEventListenerList.create();
 
     @Override
-    public Collection<IError> getErrors() {
+    public Collection<Error> getErrors() {
         return CollectionUtils.protect(errors);
     }
 
     @Override
-    public synchronized void addError(IError error) {
+    public synchronized void addError(Error error) {
         errors.add(error);
 
         fireErrorOccurred(error);
@@ -65,7 +64,7 @@ public final class ErrorService implements IErrorService {
      *
      * @param error The new error.
      */
-    private void fireErrorOccurred(IError error) {
+    private void fireErrorOccurred(Error error) {
         for (ErrorListener listener : listeners) {
             listener.errorOccurred(error);
         }

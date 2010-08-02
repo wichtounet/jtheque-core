@@ -17,9 +17,9 @@ package org.jtheque.persistence.utils;
  */
 
 import org.jtheque.persistence.able.Dao;
+import org.jtheque.persistence.able.DaoPersistenceContext;
 import org.jtheque.persistence.able.DataListener;
 import org.jtheque.persistence.able.Entity;
-import org.jtheque.persistence.able.IDaoPersistenceContext;
 import org.jtheque.persistence.able.QueryMapper;
 import org.jtheque.utils.annotations.GuardedInternally;
 import org.jtheque.utils.collections.WeakEventListenerList;
@@ -36,7 +36,7 @@ import javax.annotation.Resource;
  */
 public abstract class AbstractDao<T extends Entity> implements Dao<T> {
     @Resource
-    private IDaoPersistenceContext persistenceContext;
+    private DaoPersistenceContext persistenceContext;
 
     private final String table;
 
@@ -88,7 +88,7 @@ public abstract class AbstractDao<T extends Entity> implements Dao<T> {
      *
      * @return The persistence context for this dao.
      */
-    protected IDaoPersistenceContext getContext() {
+    protected DaoPersistenceContext getContext() {
         return persistenceContext;
     }
 

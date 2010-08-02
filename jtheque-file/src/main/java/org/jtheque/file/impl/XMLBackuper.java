@@ -16,7 +16,7 @@ package org.jtheque.file.impl;
  * limitations under the License.
  */
 
-import org.jtheque.core.able.ICore;
+import org.jtheque.core.able.Core;
 import org.jtheque.file.able.FileService.XmlBackupVersion;
 import org.jtheque.file.able.ModuleBackup;
 import org.jtheque.utils.annotations.ThreadSafe;
@@ -72,7 +72,7 @@ final class XMLBackuper {
 
         writer.addOnly("date", Integer.toString(IntDate.today().intValue()));
         writer.addOnly("file-version", Integer.toString(XmlBackupVersion.THIRD.ordinal()));
-        writer.addOnly("jtheque-version", ICore.VERSION.getVersion());
+        writer.addOnly("jtheque-version", Core.VERSION.getVersion());
 
         writer.switchToParent();
     }

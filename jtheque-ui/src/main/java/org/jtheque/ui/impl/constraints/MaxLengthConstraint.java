@@ -1,6 +1,6 @@
 package org.jtheque.ui.impl.constraints;
 
-import org.jtheque.errors.able.IError;
+import org.jtheque.errors.able.Error;
 import org.jtheque.ui.able.constraints.Constraint;
 import org.jtheque.ui.utils.ValidationUtils;
 import org.jtheque.utils.ui.SwingUtils;
@@ -73,7 +73,7 @@ public final class MaxLengthConstraint implements Constraint {
     }
 
     @Override
-    public void validate(Object field, Collection<IError> errors) {
+    public void validate(Object field, Collection<Error> errors) {
         if (field instanceof Component && !((Component) field).isEnabled()) {
             return;
         }

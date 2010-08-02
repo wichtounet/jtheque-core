@@ -18,7 +18,6 @@ package org.jtheque.persistence.impl;
 
 import org.jtheque.persistence.able.DataContainer;
 import org.jtheque.persistence.able.Entity;
-import org.jtheque.persistence.able.IPersistenceService;
 import org.jtheque.persistence.utils.DataContainerProvider;
 
 /**
@@ -26,7 +25,7 @@ import org.jtheque.persistence.utils.DataContainerProvider;
  *
  * @author Baptiste Wicht
  */
-public final class PersistenceService implements IPersistenceService {
+public final class PersistenceService implements org.jtheque.persistence.able.PersistenceService {
     @Override
     public void clearDatabase() {
         for (DataContainer<? extends Entity> dao : DataContainerProvider.getInstance().getAllContainers()) {

@@ -31,15 +31,15 @@
         </constructor-arg>
     </bean>
 
-    <osgi:reference id="stateService" interface="org.jtheque.states.able.IStateService"/>
-    <osgi:reference id="core" interface="org.jtheque.core.able.ICore"/>
-    <osgi:reference id="errorService" interface="org.jtheque.errors.able.IErrorService"/>
-    <osgi:reference id="iuiUtils" interface="org.jtheque.ui.able.IUIUtils"/>
+    <osgi:reference id="stateService" interface="org.jtheque.states.able.StateService"/>
+    <osgi:reference id="core" interface="org.jtheque.core.able.Core"/>
+    <osgi:reference id="errorService" interface="org.jtheque.errors.able.ErrorService"/>
+    <osgi:reference id="iuiUtils" interface="org.jtheque.ui.able.UIUtils"/>
     <osgi:reference id="languageService" interface="org.jtheque.i18n.able.LanguageService"/>
     <osgi:reference id="imageService" interface="org.jtheque.images.able.ImageService"/>
     <osgi:reference id="eventService" interface="org.jtheque.events.able.EventService"/>
 
-    <osgi:service ref="moduleService" interface="org.jtheque.modules.able.IModuleService"/>
+    <osgi:service ref="moduleService" interface="org.jtheque.modules.able.ModuleService"/>
     <osgi:service ref="updateService" interface="org.jtheque.update.able.IUpdateService"/>
     <osgi:service ref="resourceService" interface="org.jtheque.resources.able.IResourceService"/>
 </beans>

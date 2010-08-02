@@ -16,8 +16,8 @@ package org.jtheque.views.impl;
  * limitations under the License.
  */
 
-import org.jtheque.core.able.ICore;
-import org.jtheque.ui.able.IUIUtils;
+import org.jtheque.core.able.Core;
+import org.jtheque.ui.able.UIUtils;
 
 import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeEvent;
@@ -32,8 +32,8 @@ import java.awt.event.WindowEvent;
  * @author Baptiste Wicht
  */
 public final class MainController extends WindowAdapter implements ChangeListener {
-    private final ICore core;
-    private final IUIUtils uiUtils;
+    private final Core core;
+    private final UIUtils uiUtils;
 
     /**
      * Construct a new MainController.
@@ -41,7 +41,7 @@ public final class MainController extends WindowAdapter implements ChangeListene
      * @param core    The core.
      * @param uiUtils The UI Utils.
      */
-    public MainController(ICore core, IUIUtils uiUtils) {
+    public MainController(Core core, UIUtils uiUtils) {
         super();
 
         this.core = core;

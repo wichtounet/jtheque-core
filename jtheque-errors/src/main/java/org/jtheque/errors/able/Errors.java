@@ -1,6 +1,6 @@
 package org.jtheque.errors.able;
 
-import org.jtheque.errors.able.IError.Level;
+import org.jtheque.errors.able.Error.Level;
 import org.jtheque.i18n.able.LanguageService;
 import org.jtheque.utils.annotations.Immutable;
 import org.jtheque.utils.collections.ArrayUtils;
@@ -22,10 +22,10 @@ import org.jtheque.utils.collections.ArrayUtils;
  */
 
 /**
- * A builder for IError objects. 
+ * A builder for Error objects.
  *
  * @author Baptiste Wicht
- * @see org.jtheque.errors.able.IError
+ * @see Error
  */
 public final class Errors {
     public static final Object[] EMPTY_REPLACES = ArrayUtils.EMPTY_ARRAY;
@@ -38,37 +38,37 @@ public final class Errors {
     }
 
     /**
-     * Construct a new IError with a simple message.
+     * Construct a new Error with a simple message.
      *
      * @param title The message of the error.
      *
      * @return The created error. 
      */
-    public static IError newError(String title) {
+    public static Error newError(String title) {
         return new JThequeError(title, Level.ERROR, null, null);
     }
 
     /**
-     * Construct a new IError with a message and a specific level of error.
+     * Construct a new Error with a message and a specific level of error.
      *
      * @param title The title of the error.
      * @param level The level of error.
      *
      * @return The created error.
      */
-    public static IError newError(String title, Level level) {
+    public static Error newError(String title, Level level) {
         return new JThequeError(title, level, null, null);
     }
 
     /**
-     * Construct a new IError with a message and some details.
+     * Construct a new Error with a message and some details.
      *
      * @param title   The message of the error.
      * @param details Some details about the error.
      *
      * @return The created error.
      */
-    public static IError newError(String title, String details) {
+    public static Error newError(String title, String details) {
         return new JThequeError(title, Level.ERROR, details, null);
     }
 
@@ -79,7 +79,7 @@ public final class Errors {
      *
      * @return The created error.
      */
-    public static IError newError(Throwable exception) {
+    public static Error newError(Throwable exception) {
         return new JThequeError(exception.getMessage(), Level.ERROR, null, exception);
     }
 
@@ -91,35 +91,35 @@ public final class Errors {
      *
      * @return The created error.
      */
-    public static IError newError(String title, Throwable exception) {
+    public static Error newError(String title, Throwable exception) {
         return new JThequeError(title, Level.ERROR, null, exception);
     }
 
     /**
-     * Construct a new i18n IError.
+     * Construct a new i18n Error.
      *
      * @param message The message key.
      *
      * @return The created error.
      */
-    public static IError newI18nError(String message) {
+    public static Error newI18nError(String message) {
         return new InternationalizedError(message, EMPTY_REPLACES, null, EMPTY_REPLACES);
     }
 
     /**
-     * Construct a new i18n IError.
+     * Construct a new i18n Error.
      *
      * @param message  The message key.
      * @param replaces The replaces for the internationalization variable arguments of the message.
      *
      * @return The created error.
      */
-    public static IError newI18nError(String message, Object[] replaces) {
+    public static Error newI18nError(String message, Object[] replaces) {
         return new InternationalizedError(message, replaces, null, EMPTY_REPLACES);
     }
 
     /**
-     * Construct a new i18n IError.
+     * Construct a new i18n Error.
      *
      * @param message  The message key.
      * @param replaces The replaces for the internationalization variable arguments of the message.
@@ -127,12 +127,12 @@ public final class Errors {
      *
      * @return The created error.
      */
-    public static IError newI18nError(String message, Object[] replaces, String details) {
+    public static Error newI18nError(String message, Object[] replaces, String details) {
         return new InternationalizedError(message, replaces, details, EMPTY_REPLACES);
     }
 
     /**
-     * Construct a new i18n IError.
+     * Construct a new i18n Error.
      *
      * @param message         The message key.
      * @param replaces        The replaces for the internationalization variable arguments of the message.
@@ -141,7 +141,7 @@ public final class Errors {
      *
      * @return The created error.
      */
-    public static IError newI18nError(String message, Object[] replaces, String details, Object[] replacesDetails) {
+    public static Error newI18nError(String message, Object[] replaces, String details, Object[] replacesDetails) {
         return new InternationalizedError(message, replaces, details, replacesDetails);
     }
 
@@ -152,7 +152,7 @@ public final class Errors {
      * @see Errors
      */
     @Immutable
-    private static class JThequeError implements IError {
+    private static class JThequeError implements Error {
         private final String title;
         private final Throwable exception;
         private final String details;

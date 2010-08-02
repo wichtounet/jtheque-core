@@ -17,7 +17,7 @@ package org.jtheque.views.impl.models;
  */
 
 import org.jtheque.messages.able.Message;
-import org.jtheque.messages.able.IMessageService;
+import org.jtheque.messages.able.MessageService;
 import org.jtheque.utils.collections.CollectionUtils;
 
 import java.util.ArrayList;
@@ -29,7 +29,7 @@ import java.util.ListIterator;
  * @author Baptiste Wicht
  */
 public final class MessageModel implements IMessageModel {
-    private final IMessageService messageService;
+    private final MessageService messageService;
     private final Message defaultMessage;
 
     private final ListIterator<Message> iterator;
@@ -39,7 +39,7 @@ public final class MessageModel implements IMessageModel {
      *
      * @param messageService The message service.
      */
-    public MessageModel(IMessageService messageService) {
+    public MessageModel(MessageService messageService) {
         super();
 
         this.messageService = messageService;

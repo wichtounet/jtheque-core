@@ -16,9 +16,9 @@ package org.jtheque.modules.impl;
  * limitations under the License.
  */
 
-import org.jtheque.core.able.ICore;
+import org.jtheque.core.able.Core;
 import org.jtheque.modules.able.Module;
-import org.jtheque.ui.able.IUIUtils;
+import org.jtheque.ui.able.UIUtils;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.collections.Filter;
 
@@ -28,8 +28,8 @@ import org.jtheque.utils.collections.Filter;
  * @author Baptiste Wicht
  */
 final class CoreVersionFilter implements Filter<Module> {
-    private final ICore core;
-    private final IUIUtils uiUtils;
+    private final Core core;
+    private final UIUtils uiUtils;
 
     /**
      * Construct a new CoreVersionFilter.
@@ -37,7 +37,7 @@ final class CoreVersionFilter implements Filter<Module> {
      * @param core    The core.
      * @param uiUtils The uiUtils.
      */
-    CoreVersionFilter(ICore core, IUIUtils uiUtils) {
+    CoreVersionFilter(Core core, UIUtils uiUtils) {
         super();
 
         this.core = core;
@@ -47,7 +47,7 @@ final class CoreVersionFilter implements Filter<Module> {
     @Override
     public boolean accept(Module module) {
         Version neededVersion = module.getCoreVersion();
-        Version currentVersion = ICore.VERSION;
+        Version currentVersion = Core.VERSION;
 
         if (neededVersion != null && !currentVersion.equals(neededVersion)) {
             if (neededVersion.isGreaterThan(currentVersion)) {

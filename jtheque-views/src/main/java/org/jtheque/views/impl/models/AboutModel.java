@@ -1,6 +1,6 @@
 package org.jtheque.views.impl.models;
 
-import org.jtheque.core.able.ICore;
+import org.jtheque.core.able.Core;
 import org.jtheque.core.able.application.Application;
 import org.jtheque.i18n.able.LanguageService;
 import org.jtheque.utils.collections.CollectionUtils;
@@ -36,7 +36,7 @@ public final class AboutModel {
     private AboutInfo[] infos;
     private Collection<String> credits;
 
-    public void refresh(ICore core, LanguageService i18n){
+    public void refresh(Core core, LanguageService i18n){
         Application application = core.getApplication();
 
         copyright = application.getCopyright();

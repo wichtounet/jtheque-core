@@ -1,12 +1,12 @@
 package org.jtheque.views.impl.components.panel;
 
-import org.jtheque.core.able.ICore;
+import org.jtheque.core.able.Core;
 import org.jtheque.core.able.application.Application;
 import org.jtheque.ui.utils.AnimationUtils;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.ui.ImageUtils;
 import org.jtheque.utils.ui.PaintUtils;
-import org.jtheque.views.able.panel.ISplashView;
+import org.jtheque.views.able.panel.SplashView;
 
 import org.jdesktop.jxlayer.JXLayer;
 import org.jdesktop.jxlayer.plaf.BufferedLayerUI;
@@ -42,7 +42,7 @@ import java.awt.image.BufferedImage;
 /**
  * @author Baptiste Wicht
  */
-public final class SplashScreenPane extends BufferedLayerUI<JComponent> implements ISplashView {
+public final class SplashScreenPane extends BufferedLayerUI<JComponent> implements SplashView {
     private static final int LOADING_FONT_SIZE = 20;
     private static final int TITLE_FONT_SIZE = 24;
 
@@ -59,7 +59,7 @@ public final class SplashScreenPane extends BufferedLayerUI<JComponent> implemen
 
     private transient BufferedImage bImage;
 
-    private final transient ICore core;
+    private final transient Core core;
 
     private int current;
 
@@ -74,7 +74,7 @@ public final class SplashScreenPane extends BufferedLayerUI<JComponent> implemen
      *
      * @param core The core.
      */
-    public SplashScreenPane(ICore core) {
+    public SplashScreenPane(Core core) {
         super();
 
         this.core = core;

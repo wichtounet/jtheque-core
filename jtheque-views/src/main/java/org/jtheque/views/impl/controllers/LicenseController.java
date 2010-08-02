@@ -5,7 +5,7 @@ import org.jtheque.ui.able.Action;
 import org.jtheque.ui.utils.AbstractController;
 import org.jtheque.utils.print.PrintUtils;
 import org.jtheque.utils.ui.SimpleSwingWorker;
-import org.jtheque.views.able.windows.ILicenseView;
+import org.jtheque.views.able.windows.LicenseView;
 
 import java.io.File;
 
@@ -46,12 +46,12 @@ import java.io.File;
  *
  * @author Baptiste Wicht
  */
-public class LicenseController extends AbstractController<ILicenseView> {
+public class LicenseController extends AbstractController<LicenseView> {
     /**
      * Construct a new LicenseController.
      */
     public LicenseController() {
-        super(ILicenseView.class);
+        super(LicenseView.class);
     }
 
     /**

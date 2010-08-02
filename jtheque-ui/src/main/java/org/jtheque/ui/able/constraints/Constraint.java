@@ -1,6 +1,6 @@
 package org.jtheque.ui.able.constraints;
 
-import org.jtheque.errors.able.IError;
+import org.jtheque.errors.able.Error;
 
 import java.util.Collection;
 
@@ -46,7 +46,7 @@ public interface Constraint {
      * @param field  The field to validate.
      * @param errors The errors list.
      */
-    void validate(Object field, Collection<IError> errors);
+    void validate(Object field, Collection<Error> errors);
 
     /**
      * Configure the given component. The implementation must not assume the type of component passed as argument.

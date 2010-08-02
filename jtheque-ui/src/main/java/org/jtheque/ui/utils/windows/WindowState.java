@@ -1,14 +1,13 @@
 package org.jtheque.ui.utils.windows;
 
-import org.jtheque.core.able.ICore;
+import org.jtheque.core.able.Core;
 import org.jtheque.core.utils.OSGiUtils;
-import org.jtheque.errors.able.IError;
-import org.jtheque.errors.able.IErrorService;
+import org.jtheque.errors.able.*;
+import org.jtheque.errors.able.Error;
 import org.jtheque.i18n.able.LanguageService;
 import org.jtheque.i18n.able.Internationalizable;
 import org.jtheque.images.able.ImageService;
-import org.jtheque.ui.able.IController;
-import org.jtheque.ui.able.IWindowState;
+import org.jtheque.ui.able.Controller;
 import org.jtheque.ui.able.constraints.Constraint;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.collections.ArrayUtils;
@@ -52,7 +51,7 @@ import java.util.Map;
  *
  * @author Baptiste Wicht
  */
-public final class WindowState implements IWindowState {
+public final class WindowState implements org.jtheque.ui.able.WindowState {
     private String titleKey;
     private Object[] titleReplaces;
 
@@ -62,7 +61,7 @@ public final class WindowState implements IWindowState {
     private final Window window;
     private JXLayer<JComponent> content;
 
-    private IController<?> controller;
+    private Controller<?> controller;
     private LockableUI waitUI;
 
     private BundleContext bundleContext;
@@ -98,7 +97,7 @@ public final class WindowState implements IWindowState {
      * @return The default icon.
      */
     protected Image getDefaultWindowIcon() {
-        return getService(ImageService.class).getImage(ICore.WINDOW_ICON);
+        return getService(ImageService.class).getImage(Core.WINDOW_ICON);
     }
 
     /**
@@ -183,7 +182,7 @@ public final class WindowState implements IWindowState {
      *
      * @return The controller of the view.
      */
-    public IController<?> getController() {
+    public Controller<?> getController() {
         return controller;
     }
 
@@ -192,7 +191,7 @@ public final class WindowState implements IWindowState {
      *
      * @param controller The controller of the view.
      */
-    public void setController(IController<?> controller) {
+    public void setController(Controller<?> controller) {
         this.controller = controller;
     }
 
@@ -313,13 +312,13 @@ public final class WindowState implements IWindowState {
      * @return true if the view content is valid else false.
      */
     public boolean validateContent() {
-        Collection<IError> errors = CollectionUtils.newList(5);
+        Collection<org.jtheque.errors.able.Error> errors = CollectionUtils.newList(5);
 
         ((ManagedWindow) window).validate(errors);
 
-        IErrorService errorService = getService(IErrorService.class);
+        ErrorService errorService = getService(ErrorService.class);
 
-        for (IError error : errors) {
+        for (Error error : errors) {
             errorService.addError(error);
         }
 
@@ -331,7 +330,7 @@ public final class WindowState implements IWindowState {
      *
      * @param errors The errors collection to fill.
      */
-    public void validate(Collection<IError> errors) {
+    public void validate(Collection<Error> errors) {
         for (Map.Entry<Object, Constraint> constraint : constraintCache.entrySet()) {
             constraint.getValue().validate(constraint.getKey(), errors);
         }

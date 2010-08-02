@@ -1,6 +1,6 @@
 package org.jtheque.features.able;
 
-import org.jtheque.features.able.IFeature.FeatureType;
+import org.jtheque.features.able.Feature.FeatureType;
 import org.jtheque.ui.utils.actions.JThequeAction;
 import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.collections.CollectionUtils;
@@ -25,7 +25,7 @@ import java.util.Collections;
  */
 
 /**
- * Simple factory class to create IFeature. The features returned by this factory are thread safe.
+ * Simple factory class to create Feature. The features returned by this factory are thread safe.
  *
  * @author Baptiste Wicht
  */
@@ -38,32 +38,32 @@ public final class Features {
     }
 
     /**
-     * Construct a new IFeature for an action.
+     * Construct a new Feature for an action.
      *
      * @param type     The type of feature.
      * @param position The position of the feature in the parent.
      * @param action   The action to execute when the feature is pressed.
      *
-     * @return the created IFeature.
+     * @return the created Feature.
      */
-    public static IFeature newFeature(FeatureType type, int position, JThequeAction action) {
+    public static org.jtheque.features.able.Feature newFeature(FeatureType type, int position, JThequeAction action) {
         return new Feature(action, position, type, null, null);
     }
 
     /**
-     * Construct a new IFeature for a menu.
+     * Construct a new Feature for a menu.
      *
      * @param type     The type of feature.
      * @param titleKey The i18n key of the title of the feature.
      * @param position The position of the feature in the parent.
      * @param features The sub features of the feature.
      *
-     * @return the created IFeature.
+     * @return the created Feature.
      */
-    public static IFeature newFeature(FeatureType type, String titleKey, int position, IFeature... features) {
-        IFeature feature = new Feature(null, position, type, titleKey, null);
+    public static org.jtheque.features.able.Feature newFeature(FeatureType type, String titleKey, int position, org.jtheque.features.able.Feature... features) {
+        org.jtheque.features.able.Feature feature = new Feature(null, position, type, titleKey, null);
 
-        for (IFeature sub : features) {
+        for (org.jtheque.features.able.Feature sub : features) {
             feature.addSubFeature(sub);
         }
 
@@ -72,16 +72,16 @@ public final class Features {
 
 
     /**
-     * Construct a new IFeature for an action.
+     * Construct a new Feature for an action.
      *
      * @param type     The type of feature.
      * @param position The position of the feature in the parent.
      * @param action   The action to execute when the feature is pressed.
      * @param icon     The icon of the feature.
      *
-     * @return the created IFeature.
+     * @return the created Feature.
      */
-    public static IFeature newFeature(FeatureType type, int position, JThequeAction action, String icon) {
+    public static org.jtheque.features.able.Feature newFeature(FeatureType type, int position, JThequeAction action, String icon) {
         return new Feature(action, position, type, null, icon);
     }
 
@@ -91,8 +91,8 @@ public final class Features {
      * @author Baptiste Wicht
      */
     @ThreadSafe
-    private static final class Feature implements IFeature {
-        private final Collection<IFeature> subFeatures = CollectionUtils.newConcurrentList();
+    private static final class Feature implements org.jtheque.features.able.Feature {
+        private final Collection<org.jtheque.features.able.Feature> subFeatures = CollectionUtils.newConcurrentList();
         private final JThequeAction action;
         private final FeatureType type;
         private final String titleKey;
@@ -134,12 +134,12 @@ public final class Features {
         }
 
         @Override
-        public final Collection<IFeature> getSubFeatures() {
+        public final Collection<org.jtheque.features.able.Feature> getSubFeatures() {
             return Collections.unmodifiableCollection(subFeatures);
         }
 
         @Override
-        public void addSubFeature(IFeature feature) {
+        public void addSubFeature(org.jtheque.features.able.Feature feature) {
             if (feature.getType() == FeatureType.PACK) {
                 throw new IllegalArgumentException("Cannot add feature of type Pack to a menu");
             }
@@ -148,14 +148,14 @@ public final class Features {
         }
 
         @Override
-        public void addSubFeatures(Collection<IFeature> subFeatures) {
-            for (IFeature feature : subFeatures) {
+        public void addSubFeatures(Collection<org.jtheque.features.able.Feature> subFeatures) {
+            for (org.jtheque.features.able.Feature feature : subFeatures) {
                 addSubFeature(feature);
             }
         }
 
         @Override
-        public final void removeSubFeatures(Collection<IFeature> features) {
+        public final void removeSubFeatures(Collection<org.jtheque.features.able.Feature> features) {
             subFeatures.removeAll(features);
         }
 

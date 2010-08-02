@@ -16,8 +16,8 @@ package org.jtheque.ui.utils.windows.dialogs;
  * limitations under the License.
  */
 
-import org.jtheque.ui.able.IFilthyUtils;
-import org.jtheque.ui.able.IModel;
+import org.jtheque.ui.able.FilthyUtils;
+import org.jtheque.ui.able.Model;
 import org.jtheque.ui.able.components.filthy.FilthyBackgroundPanel;
 import org.jtheque.ui.utils.builders.FilthyPanelBuilder;
 import org.jtheque.ui.utils.builders.JThequePanelBuilder;
@@ -27,9 +27,9 @@ import org.jtheque.ui.utils.builders.JThequePanelBuilder;
  *
  * @author Baptiste Wicht
  */
-public abstract class SwingFilthyBuildedDialogView<T extends IModel> extends SwingBuildedDialogView<T> {
+public abstract class SwingFilthyBuildedDialogView<T extends Model> extends SwingBuildedDialogView<T> {
     @Override
     JThequePanelBuilder createBuilder() {
-        return new FilthyPanelBuilder(new FilthyBackgroundPanel(getService(IFilthyUtils.class)));
+        return new FilthyPanelBuilder(new FilthyBackgroundPanel(getService(FilthyUtils.class)));
     }
 }

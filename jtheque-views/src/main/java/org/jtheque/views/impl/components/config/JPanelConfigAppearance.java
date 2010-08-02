@@ -16,7 +16,7 @@ package org.jtheque.views.impl.components.config;
  * limitations under the License.
  */
 
-import org.jtheque.core.able.ICore;
+import org.jtheque.core.able.Core;
 import org.jtheque.i18n.able.LanguageService;
 import org.jtheque.ui.able.constraints.Constraint;
 import org.jtheque.ui.able.constraints.Constraints;
@@ -27,7 +27,7 @@ import org.jtheque.ui.utils.models.SimpleListModel;
 import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.views.able.components.ConfigTabComponent;
-import org.jtheque.views.able.config.IAppearanceConfigView;
+import org.jtheque.views.able.config.AppearanceConfigView;
 
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
@@ -39,7 +39,7 @@ import java.util.Map;
  *
  * @author Baptiste Wicht
  */
-public final class JPanelConfigAppearance extends OSGIFilthyBuildedPanel implements ConfigTabComponent, IAppearanceConfigView {
+public final class JPanelConfigAppearance extends OSGIFilthyBuildedPanel implements ConfigTabComponent, AppearanceConfigView {
     private SimpleListModel<String> modelLanguages;
     private JCheckBox boxRetainSizeAndPosition;
 
@@ -50,7 +50,7 @@ public final class JPanelConfigAppearance extends OSGIFilthyBuildedPanel impleme
 
         builder.addI18nLabel("config.appearance.language", parent.gbcSet(0, 0));
 
-        modelLanguages = new SimpleListModel<String>(getService(ICore.class).getPossibleLanguages());
+        modelLanguages = new SimpleListModel<String>(getService(Core.class).getPossibleLanguages());
 
         builder.addComboBox(modelLanguages, Filthy.newListRenderer(), parent.gbcSet(1, 0, GridBagUtils.HORIZONTAL));
 
@@ -79,13 +79,13 @@ public final class JPanelConfigAppearance extends OSGIFilthyBuildedPanel impleme
      */
     private void fillAllFields() {
         modelLanguages.setSelectedItem(getService(LanguageService.class).getCurrentLanguage());
-        boxRetainSizeAndPosition.setSelected(getService(ICore.class).getConfiguration().retainSizeAndPositionOfWindow());
+        boxRetainSizeAndPosition.setSelected(getService(Core.class).getConfiguration().retainSizeAndPositionOfWindow());
     }
 
     @Override
     public void apply() {
         getService(LanguageService.class).setCurrentLanguage(modelLanguages.getSelectedItem());
-        getService(ICore.class).getConfiguration().setRetainSizeAndPositionOfWindow(boxRetainSizeAndPosition.isSelected());
+        getService(Core.class).getConfiguration().setRetainSizeAndPositionOfWindow(boxRetainSizeAndPosition.isSelected());
     }
 
     @Override

@@ -17,14 +17,13 @@ package org.jtheque.features.impl;
  */
 
 import org.jtheque.features.able.CoreFeature;
+import org.jtheque.features.able.Feature;
 import org.jtheque.features.able.FeatureListener;
 import org.jtheque.features.able.Features;
-import org.jtheque.features.able.IFeature;
-import org.jtheque.features.able.IFeature.FeatureType;
-import org.jtheque.features.able.IFeatureService;
+import org.jtheque.features.able.Feature.FeatureType;
 import org.jtheque.features.able.Menu;
 import org.jtheque.i18n.able.LanguageService;
-import org.jtheque.modules.able.IModuleService;
+import org.jtheque.modules.able.ModuleService;
 import org.jtheque.modules.able.Module;
 import org.jtheque.modules.able.ModuleListener;
 import org.jtheque.modules.utils.ModuleResourceCache;
@@ -45,19 +44,19 @@ import java.util.Set;
  * @author Baptiste Wicht
  */
 @ThreadSafe
-public final class FeatureService implements IFeatureService, ModuleListener {
+public final class FeatureService implements org.jtheque.features.able.FeatureService, ModuleListener {
     @GuardedInternally
     private final WeakEventListenerList<FeatureListener> listeners = WeakEventListenerList.create();
 
     @GuardedInternally
     //Because it's never modified after creation
-    private final Map<CoreFeature, IFeature> coreFeatures;
+    private final Map<CoreFeature, Feature> coreFeatures;
 
     @GuardedInternally
     private final LanguageService languageService;
 
     @GuardedInternally
-    private final Collection<IFeature> features = CollectionUtils.newConcurrentList();
+    private final Collection<Feature> features = CollectionUtils.newConcurrentList();
 
     /**
      * Construct a new FeatureService.
@@ -65,14 +64,14 @@ public final class FeatureService implements IFeatureService, ModuleListener {
      * @param languageService The language service.
      * @param moduleService   The module service.
      */
-    public FeatureService(LanguageService languageService, IModuleService moduleService) {
+    public FeatureService(LanguageService languageService, ModuleService moduleService) {
         super();
 
         this.languageService = languageService;
 
         moduleService.addModuleListener("", this);
 
-        coreFeatures = new EnumMap<CoreFeature, IFeature>(CoreFeature.class);
+        coreFeatures = new EnumMap<CoreFeature, Feature>(CoreFeature.class);
 
         coreFeatures.put(CoreFeature.FILE, createAndAddFeature(0, "menu.file"));
         coreFeatures.put(CoreFeature.EDIT, createAndAddFeature(1, "menu.edit"));
@@ -88,8 +87,8 @@ public final class FeatureService implements IFeatureService, ModuleListener {
      *
      * @return The added feature.
      */
-    private IFeature createAndAddFeature(int position, String key) {
-        IFeature feature = Features.newFeature(FeatureType.PACK, key, position);
+    private Feature createAndAddFeature(int position, String key) {
+        Feature feature = Features.newFeature(FeatureType.PACK, key, position);
 
         features.add(feature);
 
@@ -121,8 +120,8 @@ public final class FeatureService implements IFeatureService, ModuleListener {
      *
      * @param newFeatures The features to add to the menu.
      */
-    private void addFeatures(Iterable<IFeature> newFeatures) {
-        for (IFeature feature : newFeatures) {
+    private void addFeatures(Iterable<Feature> newFeatures) {
+        for (Feature feature : newFeatures) {
             if (feature.getType() != FeatureType.PACK) {
                 throw new IllegalArgumentException("Can only add feature of type pack directly. ");
             }
@@ -134,7 +133,7 @@ public final class FeatureService implements IFeatureService, ModuleListener {
     }
 
     @Override
-    public Collection<IFeature> getFeatures() {
+    public Collection<Feature> getFeatures() {
         return CollectionUtils.protect(features);
     }
 
@@ -153,7 +152,7 @@ public final class FeatureService implements IFeatureService, ModuleListener {
      *
      * @param feature The feature who's been added.
      */
-    private void fireFeatureAdded(IFeature feature) {
+    private void fireFeatureAdded(Feature feature) {
         for (FeatureListener listener : listeners) {
             listener.featureAdded(feature);
         }
@@ -164,7 +163,7 @@ public final class FeatureService implements IFeatureService, ModuleListener {
      *
      * @param feature The feature who's been removed.
      */
-    private void fireFeatureRemoved(IFeature feature) {
+    private void fireFeatureRemoved(Feature feature) {
         for (FeatureListener listener : listeners) {
             listener.featureRemoved(feature);
         }
@@ -175,7 +174,7 @@ public final class FeatureService implements IFeatureService, ModuleListener {
      *
      * @param feature The feature in which the sub feature has been added.
      */
-    private void fireFeatureModified(IFeature feature) {
+    private void fireFeatureModified(Feature feature) {
         for (FeatureListener listener : listeners) {
             listener.featureModified(feature);
         }
@@ -204,7 +203,7 @@ public final class FeatureService implements IFeatureService, ModuleListener {
             fireFeatureModified(coreFeatures.get(feature));
         }
 
-        for (IFeature f : menu.getMainFeatures()) {
+        for (Feature f : menu.getMainFeatures()) {
             features.remove(f);
 
             fireFeatureRemoved(f);

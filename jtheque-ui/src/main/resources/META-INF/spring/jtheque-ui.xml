@@ -31,6 +31,6 @@
 
     <bean id="viewDelegate" class="org.jtheque.ui.impl.SwingViewDelegate"/>
 
-    <osgi:service interface="org.jtheque.ui.able.IUIUtils" ref="uiUtils"/>
-    <osgi:service interface="org.jtheque.ui.able.IFilthyUtils" ref="filthyUtils"/>
+    <osgi:service interface="org.jtheque.ui.able.UIUtils" ref="uiUtils"/>
+    <osgi:service interface="org.jtheque.ui.able.FilthyUtils" ref="filthyUtils"/>
 </beans>

@@ -16,38 +16,37 @@ package org.jtheque.views.impl.windows;
  * limitations under the License.
  */
 
-import org.jtheque.core.able.ICore;
-import org.jtheque.ui.able.IModel;
+import org.jtheque.core.able.Core;
+import org.jtheque.ui.able.Model;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.ui.utils.windows.dialogs.SwingFilthyBuildedDialogView;
 import org.jtheque.utils.io.FileUtils;
 import org.jtheque.utils.ui.GridBagUtils;
-import org.jtheque.views.able.IViewService;
-import org.jtheque.views.able.windows.ILicenseView;
+import org.jtheque.views.able.ViewService;
 
 /**
  * A view to display the license.
  *
  * @author Baptiste Wicht
  */
-public final class LicenseView extends SwingFilthyBuildedDialogView<IModel> implements ILicenseView {
+public final class LicenseView extends SwingFilthyBuildedDialogView<Model> implements org.jtheque.views.able.windows.LicenseView {
     private static final int DEFAULT_WIDTH = 800;
     private static final int DEFAULT_HEIGHT = 600;
 
     @Override
     protected void initView() {
-        setTitleKey("license.view.title", getService(ICore.class).getApplication().getName());
+        setTitleKey("license.view.title", getService(Core.class).getApplication().getName());
     }
 
     @Override
     protected void buildView(I18nPanelBuilder builder) {
-        builder.addScrolledTextArea(FileUtils.getTextOf(getService(ICore.class).getApplication().getLicenseFilePath()),
+        builder.addScrolledTextArea(FileUtils.getTextOf(getService(Core.class).getApplication().getLicenseFilePath()),
                 builder.gbcSet(0, 0, GridBagUtils.BOTH, GridBagUtils.BELOW_BASELINE_LEADING, 1.0, 1.0));
 
         builder.addButtonBar(builder.gbcSet(0, 1, GridBagUtils.HORIZONTAL),
                 getAction("license.actions.print"),
                 getAction("license.actions.close"));
 
-        getService(IViewService.class).configureView(this, "license", DEFAULT_WIDTH, DEFAULT_HEIGHT);
+        getService(ViewService.class).configureView(this, "license", DEFAULT_WIDTH, DEFAULT_HEIGHT);
     }
 }

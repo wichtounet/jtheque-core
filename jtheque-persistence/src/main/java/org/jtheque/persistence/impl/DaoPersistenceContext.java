@@ -1,7 +1,6 @@
 package org.jtheque.persistence.impl;
 
 import org.jtheque.persistence.able.Entity;
-import org.jtheque.persistence.able.IDaoPersistenceContext;
 import org.jtheque.persistence.able.QueryMapper;
 import org.jtheque.persistence.utils.Query;
 
@@ -33,7 +32,7 @@ import java.util.List;
  *
  * @author Baptiste Wicht
  */
-public final class DaoPersistenceContext implements IDaoPersistenceContext {
+public final class DaoPersistenceContext implements org.jtheque.persistence.able.DaoPersistenceContext {
     private final SimpleJdbcTemplate jdbcTemplate;
 
     /**

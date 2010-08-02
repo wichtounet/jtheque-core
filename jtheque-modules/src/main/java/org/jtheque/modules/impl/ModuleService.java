@@ -16,22 +16,17 @@ package org.jtheque.modules.impl;
  * limitations under the License.
  */
 
-import org.jtheque.core.able.ICore;
+import org.jtheque.core.able.Core;
 import org.jtheque.i18n.able.LanguageService;
 import org.jtheque.images.able.ImageService;
-import org.jtheque.modules.able.IModuleDescription;
-import org.jtheque.modules.able.IModuleLoader;
-import org.jtheque.modules.able.IModuleService;
-import org.jtheque.modules.able.IRepository;
-import org.jtheque.modules.able.Module;
-import org.jtheque.modules.able.ModuleListener;
-import org.jtheque.modules.able.ModuleState;
-import org.jtheque.modules.able.Resources;
-import org.jtheque.modules.able.SwingLoader;
+import org.jtheque.modules.able.*;
+import org.jtheque.modules.able.ModuleDescription;
+import org.jtheque.modules.able.ModuleLoader;
+import org.jtheque.modules.able.Repository;
 import org.jtheque.modules.utils.ImageResource;
 import org.jtheque.modules.utils.ModuleResourceCache;
-import org.jtheque.states.able.IStateService;
-import org.jtheque.ui.able.IUIUtils;
+import org.jtheque.states.able.StateService;
+import org.jtheque.ui.able.UIUtils;
 import org.jtheque.update.able.IUpdateService;
 import org.jtheque.utils.SimplePropertiesCache;
 import org.jtheque.utils.StringUtils;
@@ -68,17 +63,17 @@ import static org.jtheque.modules.able.ModuleState.*;
  *
  * @author Baptiste Wicht
  */
-public final class ModuleService implements IModuleService {
+public final class ModuleService implements org.jtheque.modules.able.ModuleService {
     private final WeakEventListenerList<ModuleListener> listeners = WeakEventListenerList.create();
     private final List<Module> modules = CollectionUtils.newList();
     private final Map<String, SwingLoader> loaders = CollectionUtils.newHashMap();
 
-    private final IModuleLoader moduleLoader;
+    private final ModuleLoader moduleLoader;
 
     /**
      * The application repository.
      */
-    private IRepository repository;
+    private Repository repository;
 
     /**
      * The configuration of the module manager. It seems the informations about the modules who're installed or
@@ -87,10 +82,10 @@ public final class ModuleService implements IModuleService {
     private ModuleConfiguration configuration;
 
     @Resource
-    private ICore core;
+    private Core core;
 
     @Resource
-    private IStateService stateService;
+    private StateService stateService;
 
     @Resource
     private ImageService imageService;
@@ -102,7 +97,7 @@ public final class ModuleService implements IModuleService {
     private LanguageService languageService;
 
     @Resource
-    private IUIUtils uiUtils;
+    private UIUtils uiUtils;
 
     /**
      * Indicate if there is a collection module.
@@ -114,7 +109,7 @@ public final class ModuleService implements IModuleService {
      *
      * @param moduleLoader The module loader.
      */
-    public ModuleService(IModuleLoader moduleLoader) {
+    public ModuleService(ModuleLoader moduleLoader) {
         super();
 
         this.moduleLoader = moduleLoader;
@@ -218,12 +213,12 @@ public final class ModuleService implements IModuleService {
     }
 
     @Override
-    public Collection<IModuleDescription> getModulesFromRepository() {
+    public Collection<ModuleDescription> getModulesFromRepository() {
         return getRepository().getModules();
     }
 
     @Override
-    public IRepository getRepository() {
+    public org.jtheque.modules.able.Repository getRepository() {
         if (repository == null) {
             repository = new RepositoryReader().read(core.getApplication().getRepository());
         }
@@ -477,7 +472,7 @@ public final class ModuleService implements IModuleService {
 
     @Override
     public String canBeStarted(Module module) {
-        if (module.getCoreVersion() != null && module.getCoreVersion().isGreaterThan(ICore.VERSION)) {
+        if (module.getCoreVersion() != null && module.getCoreVersion().isGreaterThan(Core.VERSION)) {
             return getMessage("modules.message.versionproblem");
         }
 

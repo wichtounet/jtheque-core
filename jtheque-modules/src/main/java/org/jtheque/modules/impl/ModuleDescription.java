@@ -16,7 +16,6 @@ package org.jtheque.modules.impl;
  * limitations under the License.
  */
 
-import org.jtheque.modules.able.IModuleDescription;
 import org.jtheque.utils.bean.InternationalString;
 import org.jtheque.utils.bean.Version;
 
@@ -25,7 +24,7 @@ import org.jtheque.utils.bean.Version;
  *
  * @author Baptiste Wicht
  */
-public final class ModuleDescription implements IModuleDescription {
+public final class ModuleDescription implements org.jtheque.modules.able.ModuleDescription {
     private String id;
     private String name;
     private InternationalString description;

@@ -17,7 +17,7 @@ package org.jtheque.osgi;
  */
 
 import org.jtheque.utils.SimplePropertiesCache;
-import org.jtheque.ui.able.IView;
+import org.jtheque.ui.able.View;
 import org.jtheque.utils.io.FileUtils;
 
 import org.slf4j.LoggerFactory;
@@ -62,7 +62,7 @@ final class Application extends Thread {
                 String command = reader.readLine();
 
                 if ("open".equals(command)) {
-                    SimplePropertiesCache.<IView>get("mainView", IView.class).toFirstPlan();
+                    SimplePropertiesCache.<View>get("mainView", View.class).toFirstPlan();
                 }
 
                 interrupt();

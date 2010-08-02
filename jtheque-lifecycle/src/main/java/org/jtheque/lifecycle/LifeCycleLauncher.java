@@ -1,23 +1,23 @@
 package org.jtheque.lifecycle;
 
 import org.jtheque.collections.able.CollectionListener;
-import org.jtheque.collections.able.ICollectionsService;
-import org.jtheque.core.able.ICore;
+import org.jtheque.collections.able.CollectionsService;
+import org.jtheque.core.able.Core;
 import org.jtheque.core.able.application.Application;
 import org.jtheque.core.utils.SystemProperty;
 import org.jtheque.events.able.EventLevel;
 import org.jtheque.events.able.EventService;
 import org.jtheque.events.able.Events;
 import org.jtheque.lifecycle.application.XMLApplicationReader;
-import org.jtheque.modules.able.IModuleService;
+import org.jtheque.modules.able.ModuleService;
 import org.jtheque.utils.SimplePropertiesCache;
 import org.jtheque.utils.ThreadUtils;
 import org.jtheque.utils.annotations.NotThreadSafe;
 import org.jtheque.utils.ui.SwingUtils;
 import org.jtheque.utils.ui.edt.SimpleTask;
-import org.jtheque.views.able.ISplashService;
-import org.jtheque.views.able.IViewService;
-import org.jtheque.views.able.IViews;
+import org.jtheque.views.able.SplashService;
+import org.jtheque.views.able.ViewService;
+import org.jtheque.views.able.Views;
 
 import org.slf4j.LoggerFactory;
 
@@ -52,25 +52,25 @@ import ch.qos.logback.classic.Logger;
 @NotThreadSafe
 public class LifeCycleLauncher implements CollectionListener {
     @Resource
-    private IViewService viewService;
+    private ViewService viewService;
 
     @Resource
-    private ISplashService splashService;
+    private SplashService splashService;
 
     @Resource
-    private ICollectionsService collectionsService;
+    private CollectionsService collectionsService;
 
     @Resource
     private EventService eventService;
 
     @Resource
-    private IModuleService moduleService;
+    private ModuleService moduleService;
 
     @Resource
-    private ICore core;
+    private Core core;
 
     @Resource
-    private IViews views;
+    private Views views;
 
     /**
      * Start the application. Automatically launched by Spring.

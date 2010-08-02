@@ -1,7 +1,5 @@
 package org.jtheque.persistence.utils;
 
-import org.jtheque.persistence.able.ITemporaryContext;
-
 /*
  * Copyright JTheque (Baptiste Wicht)
  *
@@ -23,7 +21,7 @@ import org.jtheque.persistence.able.ITemporaryContext;
  *
  * @author Baptiste Wicht
  */
-public class TemporaryContext implements ITemporaryContext {
+public class TemporaryContext implements org.jtheque.persistence.able.TemporaryContext {
     private int id;
 
     @Override

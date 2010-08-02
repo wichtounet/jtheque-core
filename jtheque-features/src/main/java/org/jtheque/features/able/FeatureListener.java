@@ -29,19 +29,19 @@ public interface FeatureListener extends EventListener {
      *
      * @param feature The feature.
      */
-    void featureAdded(IFeature feature);
+    void featureAdded(Feature feature);
 
     /**
      * A feature has been removed.
      *
      * @param feature The feature.
      */
-    void featureRemoved(IFeature feature);
+    void featureRemoved(Feature feature);
 
     /**
      * A feature has been modified. This indicate that a sub-feature has been added or removed.
      *
      * @param feature The feature.
      */
-    void featureModified(IFeature feature);
+    void featureModified(Feature feature);
 }

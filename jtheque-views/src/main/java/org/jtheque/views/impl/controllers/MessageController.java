@@ -2,7 +2,7 @@ package org.jtheque.views.impl.controllers;
 
 import org.jtheque.ui.able.Action;
 import org.jtheque.ui.utils.AbstractController;
-import org.jtheque.views.able.windows.IMessageView;
+import org.jtheque.views.able.windows.MessageView;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -25,12 +25,12 @@ import org.jtheque.views.able.windows.IMessageView;
  *
  * @author Baptiste Wicht
  */
-public class MessageController extends AbstractController<IMessageView> {
+public class MessageController extends AbstractController<MessageView> {
     /**
      * Construct a new MessageController. 
      */
     public MessageController() {
-        super(IMessageView.class);
+        super(MessageView.class);
     }
 
     /**

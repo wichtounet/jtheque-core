@@ -17,16 +17,15 @@ package org.jtheque.messages.impl;
  */
 
 import org.jtheque.core.able.ApplicationListener;
-import org.jtheque.core.able.ICore;
+import org.jtheque.core.able.Core;
 import org.jtheque.core.able.application.Application;
-import org.jtheque.errors.able.IErrorService;
+import org.jtheque.errors.able.ErrorService;
 import org.jtheque.errors.able.Errors;
 import org.jtheque.events.able.EventLevel;
 import org.jtheque.events.able.EventService;
 import org.jtheque.events.able.Events;
 import org.jtheque.messages.able.Message;
-import org.jtheque.messages.able.IMessageService;
-import org.jtheque.modules.able.IModuleService;
+import org.jtheque.modules.able.ModuleService;
 import org.jtheque.modules.able.Module;
 import org.jtheque.modules.able.ModuleListener;
 import org.jtheque.modules.utils.ModuleResourceCache;
@@ -46,11 +45,11 @@ import java.util.Collection;
  *
  * @author Baptiste Wicht
  */
-public final class MessageService implements IMessageService, ModuleListener, ApplicationListener {
+public final class MessageService implements org.jtheque.messages.able.MessageService, ModuleListener, ApplicationListener {
     private final Collection<Message> messages = CollectionUtils.newList();
 
-    private final ICore core;
-    private final IErrorService errorService;
+    private final Core core;
+    private final ErrorService errorService;
     private final EventService eventService;
 
     /**
@@ -61,7 +60,7 @@ public final class MessageService implements IMessageService, ModuleListener, Ap
      * @param errorService  The error service.
      * @param eventService  The event service.
      */
-    public MessageService(ICore core, IModuleService moduleService, IErrorService errorService, EventService eventService) {
+    public MessageService(Core core, ModuleService moduleService, ErrorService errorService, EventService eventService) {
         super();
 
         this.core = core;

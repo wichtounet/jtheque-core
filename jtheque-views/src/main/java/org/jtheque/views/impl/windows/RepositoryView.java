@@ -17,9 +17,9 @@ package org.jtheque.views.impl.windows;
  */
 
 import org.jtheque.i18n.able.LanguageService;
-import org.jtheque.modules.able.IModuleDescription;
-import org.jtheque.modules.able.IModuleService;
-import org.jtheque.ui.able.IModel;
+import org.jtheque.modules.able.ModuleDescription;
+import org.jtheque.modules.able.ModuleService;
+import org.jtheque.ui.able.Model;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.ui.utils.builders.PanelBuilder;
 import org.jtheque.ui.utils.models.SimpleListModel;
@@ -27,7 +27,6 @@ import org.jtheque.ui.utils.windows.dialogs.SwingFilthyBuildedDialogView;
 import org.jtheque.update.able.IUpdateService;
 import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.utils.ui.SwingUtils;
-import org.jtheque.views.able.panel.IRepositoryView;
 import org.jtheque.views.impl.components.panel.ModulePanel;
 import org.jtheque.views.impl.components.renderers.ModuleRepositoryListRenderer;
 
@@ -39,11 +38,11 @@ import javax.swing.JList;
  *
  * @author Baptiste Wicht
  */
-public final class RepositoryView extends SwingFilthyBuildedDialogView<IModel> implements IRepositoryView {
+public final class RepositoryView extends SwingFilthyBuildedDialogView<Model> implements org.jtheque.views.able.panel.RepositoryView {
     private JList list;
 
     @Resource
-    private IModuleService moduleService;
+    private ModuleService moduleService;
 
     @Resource
     private LanguageService languageService;
@@ -62,7 +61,7 @@ public final class RepositoryView extends SwingFilthyBuildedDialogView<IModel> i
         builder.addLabel(moduleService.getRepository().getTitle().toString(), PanelBuilder.BOLD, 18.0f,
                 builder.gbcSet(0, 0, GridBagUtils.HORIZONTAL));
 
-        list = builder.addScrolledList(new SimpleListModel<IModuleDescription>(moduleService.getModulesFromRepository()),
+        list = builder.addScrolledList(new SimpleListModel<ModuleDescription>(moduleService.getModulesFromRepository()),
                 new ModuleRepositoryListRenderer(moduleService, languageService, updateService),
                 builder.gbcSet(0, 1, GridBagUtils.BOTH));
 
@@ -72,8 +71,8 @@ public final class RepositoryView extends SwingFilthyBuildedDialogView<IModel> i
     }
 
     @Override
-    public IModuleDescription getSelectedModule() {
-        return (IModuleDescription) list.getSelectedValue();
+    public ModuleDescription getSelectedModule() {
+        return (ModuleDescription) list.getSelectedValue();
     }
 
     @Override

@@ -1,23 +1,23 @@
 package org.jtheque.views.impl.controllers;
 
 import org.jtheque.collections.able.CollectionListener;
-import org.jtheque.collections.able.ICollectionsService;
-import org.jtheque.core.able.ICore;
-import org.jtheque.modules.able.IModuleService;
+import org.jtheque.collections.able.CollectionsService;
+import org.jtheque.core.able.Core;
+import org.jtheque.modules.able.ModuleService;
 import org.jtheque.modules.able.Module;
 import org.jtheque.modules.able.ModuleState;
 import org.jtheque.ui.able.Action;
-import org.jtheque.ui.able.IController;
-import org.jtheque.ui.able.IUIUtils;
+import org.jtheque.ui.able.Controller;
+import org.jtheque.ui.able.UIUtils;
 import org.jtheque.ui.utils.AbstractController;
 import org.jtheque.update.able.IUpdateService;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.io.SimpleFilter;
 import org.jtheque.utils.ui.SimpleSwingWorker;
 import org.jtheque.utils.ui.SwingUtils;
-import org.jtheque.views.able.IViewService;
-import org.jtheque.views.able.panel.IModuleView;
-import org.jtheque.views.able.panel.IRepositoryView;
+import org.jtheque.views.able.ViewService;
+import org.jtheque.views.able.panel.ModuleView;
+import org.jtheque.views.able.panel.RepositoryView;
 
 import javax.annotation.Resource;
 
@@ -44,30 +44,30 @@ import java.io.File;
  *
  * @author Baptiste Wicht
  */
-public class ModuleController extends AbstractController<IModuleView> {
+public class ModuleController extends AbstractController<ModuleView> {
     @Resource
-    private IUIUtils uiUtils;
+    private UIUtils uiUtils;
 
     @Resource
-    private IModuleService moduleService;
+    private ModuleService moduleService;
 
     @Resource
-    private ICollectionsService collectionsService;
+    private CollectionsService collectionsService;
 
     @Resource
-    private IViewService viewService;
+    private ViewService viewService;
 
     @Resource
     private IUpdateService updateService;
 
     @Resource
-    private IController<IRepositoryView> repositoryController;
+    private Controller<RepositoryView> repositoryController;
 
     /**
      * Create a new ModuleController. 
      */
     public ModuleController() {
-        super(IModuleView.class);
+        super(ModuleView.class);
     }
 
     /**
@@ -95,7 +95,7 @@ public class ModuleController extends AbstractController<IModuleView> {
         Module module = getView().getSelectedModule();
 
         if (module.getState() == ModuleState.DISABLED) {
-            if (module.getCoreVersion().isGreaterThan(ICore.VERSION)) {
+            if (module.getCoreVersion().isGreaterThan(Core.VERSION)) {
                 uiUtils.displayI18nText("modules.message.versionproblem");
             } else {
                 moduleService.enableModule(module);

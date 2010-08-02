@@ -33,8 +33,8 @@ package org.jtheque.views.impl.models;
  */
 
 import org.jtheque.errors.able.ErrorListener;
-import org.jtheque.errors.able.IError;
-import org.jtheque.errors.able.IErrorService;
+import org.jtheque.errors.able.Error;
+import org.jtheque.errors.able.ErrorService;
 import org.jtheque.ui.utils.models.SimpleListModel;
 
 import java.util.Collection;
@@ -44,7 +44,7 @@ import java.util.Collection;
  *
  * @author Baptiste Wicht
  */
-public final class ErrorsListModel extends SimpleListModel<IError> implements ErrorListener {
+public final class ErrorsListModel extends SimpleListModel<Error> implements ErrorListener {
     private static final long serialVersionUID = 3355362999481373712L;
 
     /**
@@ -52,20 +52,20 @@ public final class ErrorsListModel extends SimpleListModel<IError> implements Er
      *
      * @param errorService The error service.
      */
-    public ErrorsListModel(IErrorService errorService) {
+    public ErrorsListModel(ErrorService errorService) {
         super();
 
         errorService.addErrorListener(this);
 
-        Collection<IError> errorsList = errorService.getErrors();
+        Collection<Error> errorsList = errorService.getErrors();
 
-        for (IError error : errorsList) {
+        for (Error error : errorsList) {
             addElement(error);
         }
     }
 
     @Override
-    public void errorOccurred(IError error) {
+    public void errorOccurred(Error error) {
         addElement(error);
 
         fireContentsChanged(this, getSize() - 2, getSize());
