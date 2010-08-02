@@ -99,7 +99,7 @@ public final class MessageService implements IMessageService, ModuleListener, Ap
 
     @Override
     public void moduleStopped(Module module) {
-        messages.removeAll(ModuleResourceCache.getResource(module.getId(), Message.class));
+        messages.removeAll(ModuleResourceCache.getResource(module.getId(), IMessage.class));
     }
 
     @Override
