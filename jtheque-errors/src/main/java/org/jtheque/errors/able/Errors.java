@@ -1,8 +1,8 @@
 package org.jtheque.errors.able;
 
 import org.jtheque.errors.able.IError.Level;
-import org.jtheque.errors.impl.InternationalizedError;
-import org.jtheque.errors.impl.JThequeError;
+import org.jtheque.i18n.able.LanguageService;
+import org.jtheque.utils.annotations.Immutable;
 import org.jtheque.utils.collections.ArrayUtils;
 
 /*
@@ -143,5 +143,148 @@ public final class Errors {
      */
     public static IError newI18nError(String message, Object[] replaces, String details, Object[] replacesDetails) {
         return new InternationalizedError(message, replaces, details, replacesDetails);
+    }
+
+    /**
+     * A basic error implementation. This class is immutable.
+     *
+     * @author Baptiste Wicht
+     * @see Errors
+     */
+    @Immutable
+    private static class JThequeError implements IError {
+        private final String title;
+        private final Throwable exception;
+        private final String details;
+        private final Level level;
+
+        /**
+         * Create a new error.
+         *
+         * @param title     The title of the error.
+         * @param level     The level of error.
+         * @param details   The details of the error.
+         * @param exception The exception that caused this error.
+         */
+        private JThequeError(String title, Level level, String details, Throwable exception) {
+            super();
+
+            this.title = title;
+            this.level = level;
+            this.details = details;
+            this.exception = exception;
+        }
+
+        @Override
+        public Level getLevel() {
+            return level;
+        }
+
+        @Override
+        public String getTitle(LanguageService languageService) {
+            return title;
+        }
+
+        @Override
+        public String getDetails(LanguageService languageService) {
+            if (exception != null) {
+                return details == null ? "" : details +
+                        '\n' + exception.getMessage() +
+                        '\n' + getCustomStackTrace(exception);
+            }
+
+            return details;
+        }
+
+        /**
+         * Return the base title of the error.
+         *
+         * @return The base title of the error.
+         */
+        String getTitle() {
+            return title;
+        }
+
+        /**
+         * Return the base details of the error.
+         *
+         * @return The base details of the error.
+         */
+        String getDetails() {
+            return details;
+        }
+
+        /**
+         * Return the base details of the error.
+         *
+         * @return The base details of the error.
+         */
+        Throwable getException() {
+            return exception;
+        }
+
+        /**
+         * Return the stack trace into a String.
+         *
+         * @param throwable The throwable to extract the stack trace from.
+         *
+         * @return A String representing the stack trace.
+         */
+        static String getCustomStackTrace(Throwable throwable) {
+            final StringBuilder result = new StringBuilder(500);
+
+            result.append(throwable.toString());
+            result.append('\n');
+
+            for (StackTraceElement element : throwable.getStackTrace()) {
+                result.append(element);
+                result.append('\n');
+            }
+
+            return result.toString();
+        }
+    }
+
+    /**
+     * An internationalized error implementation. This class is immutable.
+     *
+     * @author Baptiste Wicht
+     * @see Errors
+     */
+    @Immutable
+    private static final class InternationalizedError extends JThequeError {
+        private final Object[] titleReplaces;
+        private final Object[] detailsReplaces;
+
+        /**
+         * Construct a new InternationalizedError.
+         *
+         * @param message         The message key.
+         * @param replaces        The replaces for the internationalization variable arguments of the message.
+         * @param details         The details key.
+         * @param replacesDetails The replaces for the internationalization variable arguments of the details.
+         */
+        private InternationalizedError(String message, Object[] replaces, String details, Object[] replacesDetails) {
+            super(message, Level.ERROR, details, null);
+
+            titleReplaces = ArrayUtils.copyOf(replaces);
+            detailsReplaces = ArrayUtils.copyOf(replacesDetails);
+        }
+
+        @Override
+        public String getTitle(LanguageService languageService) {
+            return languageService.getMessage(getTitle(), titleReplaces);
+        }
+
+        @Override
+        public String getDetails(LanguageService languageService) {
+            if (getException() != null) {
+                return languageService.getMessage(getDetails(), detailsReplaces) +
+                        '\n' + getException().getMessage() +
+                        '\n' + getCustomStackTrace(getException());
+            }
+
+            return languageService.getMessage(getDetails(), detailsReplaces);
+        }
     }
 }
