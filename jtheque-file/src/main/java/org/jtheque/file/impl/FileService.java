@@ -48,7 +48,7 @@ import java.util.Set;
 @ThreadSafe
 public final class FileService implements org.jtheque.file.able.FileService, ModuleListener {
     @GuardedInternally
-    private final List<ModuleBackuper> backupers = CollectionUtils.newConcurrentList(5);
+    private final List<ModuleBackuper> backupers = CollectionUtils.newConcurrentList();
 
     @GuardedBy("exporters")
     private final Map<String, Set<Exporter<?>>> exporters =  CollectionUtils.newHashMap(3);

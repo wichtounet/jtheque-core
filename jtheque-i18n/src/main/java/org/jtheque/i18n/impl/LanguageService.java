@@ -47,7 +47,7 @@ public final class LanguageService implements org.jtheque.i18n.able.LanguageServ
     private static final Version I18N_VERSION = Version.get("1.0");
 
     private final Map<String, String> baseNames = CollectionUtils.newConcurrentMap(10);
-    private final Set<Internationalizable> internationalizables = CollectionUtils.newConcurrentSet(100);
+    private final Set<Internationalizable> internationalizables = CollectionUtils.newConcurrentSet();
     private final JThequeResourceBundle resourceBundle = new JThequeResourceBundle();
     private final LanguageState state;
 
@@ -133,14 +133,14 @@ public final class LanguageService implements org.jtheque.i18n.able.LanguageServ
     }
 
     @Override
-    public void releaseResource(String name) {//Thread safe
+    public void releaseResource(String name) {
         if (baseNames.containsKey(name)) {
             resourceBundle.removeBaseName(baseNames.get(name));
         }
     }
 
     @Override
-    public void setCurrentLanguage(String language) {//Thread safe
+    public void setCurrentLanguage(String language) {
         String shortForm = toShortForm(language);
 
         synchronized (lock){
@@ -155,7 +155,7 @@ public final class LanguageService implements org.jtheque.i18n.able.LanguageServ
      *
      * @param locale The new current locale.
      */
-    private void setCurrentLocale(Locale locale) {//Thread safe
+    private void setCurrentLocale(Locale locale) {
         this.locale = locale;
 
         Locale.setDefault(locale);
@@ -165,28 +165,28 @@ public final class LanguageService implements org.jtheque.i18n.able.LanguageServ
 
     @Override
     public void refreshAll() {
-        for (Internationalizable internationalizable : internationalizables) {//Thread safe
+        for (Internationalizable internationalizable : internationalizables) {
             internationalizable.refreshText(this);
         }
     }
 
     @Override
-    public void addInternationalizable(Internationalizable internationalizable) { //Thread safe
+    public void addInternationalizable(Internationalizable internationalizable) { 
         internationalizables.add(internationalizable);
     }
 
     @Override
-    public Locale getCurrentLocale() {//Thread safe
+    public Locale getCurrentLocale() {
         return locale;
     }
 
     @Override
-    public String getCurrentLanguage() {//Thread safe
+    public String getCurrentLanguage() {
         return locale.getDisplayLanguage();
     }
 
     @Override
-    public String[] getLinesMessage(String key) {//Thread safe
+    public String[] getLinesMessage(String key) {
         String message = getMessage(key);
 
         if (StringUtils.isEmpty(message)) {
@@ -197,7 +197,7 @@ public final class LanguageService implements org.jtheque.i18n.able.LanguageServ
     }
 
     @Override
-    public String getMessage(String key, Object... replaces) {//Thread safe
+    public String getMessage(String key, Object... replaces) {
         if (StringUtils.isEmpty(key)) {
             return StringUtils.EMPTY_STRING;
         }
