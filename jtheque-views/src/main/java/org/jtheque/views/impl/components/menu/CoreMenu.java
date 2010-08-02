@@ -1,6 +1,7 @@
 package org.jtheque.views.impl.components.menu;
 
 import org.jtheque.features.able.IFeature;
+import org.jtheque.i18n.impl.LanguageService;
 import org.jtheque.ui.able.IController;
 import org.jtheque.undo.able.IUndoRedoService;
 import org.jtheque.views.able.windows.IMainView;
@@ -48,10 +49,11 @@ public final class CoreMenu extends OSGIMenu {
     @Override
     protected List<IFeature> getEditMenuSubFeatures() {
         IUndoRedoService undoRedoService = getService(IUndoRedoService.class);
+        LanguageService languageService = getService(LanguageService.class);
 
         return features(
-                createSubFeature(1, new UndoAction(undoRedoService), ViewsResources.UNDO_ICON),
-                createSubFeature(2, new RedoAction(undoRedoService), ViewsResources.REDO_ICON)
+                createSubFeature(1, new UndoAction(undoRedoService, languageService), ViewsResources.UNDO_ICON),
+                createSubFeature(2, new RedoAction(undoRedoService, languageService), ViewsResources.REDO_ICON)
         );
     }
 
