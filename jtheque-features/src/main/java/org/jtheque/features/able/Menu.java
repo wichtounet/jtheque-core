@@ -21,12 +21,19 @@ import java.util.Collection;
  */
 
 /**
- * A menu. Namely, it's a container for features. It represent the menu at the level of a module.
- * This container has main features and features for each of the core features.
+ * A menu. Namely, it's a container for features. It represent the menu at the level of a module. This container has
+ * main features and features for each of the core features.
  *
  * @author Baptiste Wicht
  */
 public interface Menu extends Internationalizable {
+    /**
+     * Return all the main features of this menu.
+     *
+     * @return A Collection containing all the main features of this menu.
+     */
+    Collection<IFeature> getMainFeatures();
+
     /**
      * Return all the sub features of this menu for the specified CoreFeature.
      *
@@ -35,11 +42,4 @@ public interface Menu extends Internationalizable {
      * @return A Collection containing all the sub features of this core feature.
      */
     Collection<IFeature> getSubFeatures(CoreFeature feature);
-
-    /**
-     * Return all the main features of this menu.
-     *
-     * @return A Collection containing all the main features of this menu.
-     */
-    Collection<IFeature> getMainFeatures();
 }

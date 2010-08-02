@@ -16,6 +16,8 @@ package org.jtheque.features.able;
  * limitations under the License.
  */
 
+import org.jtheque.utils.annotations.ThreadSafe;
+
 import java.util.Collection;
 
 /**
@@ -23,6 +25,7 @@ import java.util.Collection;
  *
  * @author Baptiste Wicht
  */
+@ThreadSafe
 public interface IFeatureService {
     /**
      * Add a menu to the application. It's an object who contains some features that will be added to the menu bar. If
@@ -34,7 +37,7 @@ public interface IFeatureService {
     void addMenu(String moduleId, Menu menu);
 
     /**
-     * Return all the features of the application.
+     * Return all the features of the application. This is only the features of first level.
      *
      * @return A Collection containing all the features. This collection is unmodifiable.
      */

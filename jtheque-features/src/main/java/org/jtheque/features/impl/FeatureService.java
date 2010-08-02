@@ -18,7 +18,9 @@ package org.jtheque.features.impl;
 
 import org.jtheque.features.able.CoreFeature;
 import org.jtheque.features.able.FeatureListener;
+import org.jtheque.features.able.Features;
 import org.jtheque.features.able.IFeature;
+import org.jtheque.features.able.IFeature.FeatureType;
 import org.jtheque.features.able.IFeatureService;
 import org.jtheque.features.able.Menu;
 import org.jtheque.i18n.able.LanguageService;
@@ -27,9 +29,10 @@ import org.jtheque.modules.able.Module;
 import org.jtheque.modules.able.ModuleListener;
 import org.jtheque.modules.utils.ModuleResourceCache;
 import org.jtheque.utils.StringUtils;
+import org.jtheque.utils.annotations.GuardedInternally;
+import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.collections.WeakEventListenerList;
-import org.jtheque.utils.ui.SwingUtils;
 
 import java.util.Collection;
 import java.util.EnumMap;
@@ -41,11 +44,20 @@ import java.util.Set;
  *
  * @author Baptiste Wicht
  */
+@ThreadSafe
 public final class FeatureService implements IFeatureService, ModuleListener {
+    @GuardedInternally
     private final WeakEventListenerList<FeatureListener> listeners = WeakEventListenerList.create();
-    private final Collection<IFeature> features;
-    private final Map<CoreFeature, Feature> coreFeatures;
+
+    @GuardedInternally
+    //Because it's never modified after creation
+    private final Map<CoreFeature, IFeature> coreFeatures;
+
+    @GuardedInternally
     private final LanguageService languageService;
+
+    @GuardedInternally
+    private final Collection<IFeature> features = CollectionUtils.newConcurrentList();
 
     /**
      * Construct a new FeatureService.
@@ -60,70 +72,12 @@ public final class FeatureService implements IFeatureService, ModuleListener {
 
         moduleService.addModuleListener("", this);
 
-        features = CollectionUtils.newList(10);
-
-        coreFeatures = new EnumMap<CoreFeature, Feature>(CoreFeature.class);
+        coreFeatures = new EnumMap<CoreFeature, IFeature>(CoreFeature.class);
 
         coreFeatures.put(CoreFeature.FILE, createAndAddFeature(0, "menu.file"));
         coreFeatures.put(CoreFeature.EDIT, createAndAddFeature(1, "menu.edit"));
         coreFeatures.put(CoreFeature.ADVANCED, createAndAddFeature(990, "menu.advanced"));
         coreFeatures.put(CoreFeature.HELP, createAndAddFeature(1000, "menu.help"));
-    }
-
-    @Override
-    public void addMenu(String moduleId, final Menu menu) {
-        languageService.addInternationalizable(menu);
-
-        if (StringUtils.isNotEmpty(moduleId)) {
-            ModuleResourceCache.addResource(moduleId, Menu.class, menu);
-        }
-
-        SwingUtils.inEdt(new Runnable() {
-            @Override
-            public void run() {
-                for (CoreFeature feature : CoreFeature.values()) {
-                    coreFeatures.get(feature).addSubFeatures(menu.getSubFeatures(feature));
-                }
-
-                addFeatures(menu.getMainFeatures());
-
-                menu.refreshText(languageService);
-            }
-        });
-    }
-
-    /**
-     * Add the given features into the menu.
-     *
-     * @param newFeatures The features to add to the menu.
-     */
-    private void addFeatures(Iterable<IFeature> newFeatures) {
-        for (IFeature feature : newFeatures) {
-            if (feature.getType() != IFeature.FeatureType.PACK) {
-                throw new IllegalArgumentException("Can only add feature of type pack directly. ");
-            }
-
-            features.add(feature);
-
-            fireFeatureAdded(feature);
-        }
-    }
-
-    /**
-     * Remove the specified menu.
-     *
-     * @param menu The menu to remove.
-     */
-    private void removeMenu(Menu menu) {
-        for (CoreFeature feature : CoreFeature.values()) {
-            coreFeatures.get(feature).removeSubFeatures(menu.getSubFeatures(feature));
-        }
-
-        for (IFeature f : menu.getMainFeatures()) {
-            features.remove(f);
-
-            fireFeatureRemoved(f);
-        }
     }
 
     /**
@@ -134,12 +88,49 @@ public final class FeatureService implements IFeatureService, ModuleListener {
      *
      * @return The added feature.
      */
-    private Feature createAndAddFeature(int position, String key) {
-        Feature feature = new ManagedFeature(key, position);
+    private IFeature createAndAddFeature(int position, String key) {
+        IFeature feature = Features.newFeature(FeatureType.PACK, key, position);
 
         features.add(feature);
 
         return feature;
+    }
+
+    @Override
+    public void addMenu(String moduleId, Menu menu) {
+        languageService.addInternationalizable(menu);
+
+        if (StringUtils.isNotEmpty(moduleId)) {
+            ModuleResourceCache.addResource(moduleId, Menu.class, menu);
+        }
+
+        for (CoreFeature feature : CoreFeature.values()) {
+            coreFeatures.get(feature).addSubFeatures(menu.getSubFeatures(feature));
+
+            fireFeatureModified(coreFeatures.get(feature));
+        }
+
+        addFeatures(menu.getMainFeatures());
+
+        menu.refreshText(languageService);
+
+    }
+
+    /**
+     * Add the given features into the menu.
+     *
+     * @param newFeatures The features to add to the menu.
+     */
+    private void addFeatures(Iterable<IFeature> newFeatures) {
+        for (IFeature feature : newFeatures) {
+            if (feature.getType() != FeatureType.PACK) {
+                throw new IllegalArgumentException("Can only add feature of type pack directly. ");
+            }
+
+            features.add(feature);
+
+            fireFeatureAdded(feature);
+        }
     }
 
     @Override
@@ -179,6 +170,17 @@ public final class FeatureService implements IFeatureService, ModuleListener {
         }
     }
 
+    /**
+     * Avert the listeners thant a sub feature has been added in a specific feature.
+     *
+     * @param feature The feature in which the sub feature has been added.
+     */
+    private void fireFeatureModified(IFeature feature) {
+        for (FeatureListener listener : listeners) {
+            listener.featureModified(feature);
+        }
+    }
+
     @Override
     public void moduleStopped(Module module) {
         Set<Menu> resources = ModuleResourceCache.getResource(module.getId(), Menu.class);
@@ -188,6 +190,25 @@ public final class FeatureService implements IFeatureService, ModuleListener {
         }
 
         ModuleResourceCache.removeResourceOfType(module.getId(), Menu.class);
+    }
+
+    /**
+     * Remove the specified menu.
+     *
+     * @param menu The menu to remove.
+     */
+    private void removeMenu(Menu menu) {
+        for (CoreFeature feature : CoreFeature.values()) {
+            coreFeatures.get(feature).removeSubFeatures(menu.getSubFeatures(feature));
+
+            fireFeatureModified(coreFeatures.get(feature));
+        }
+
+        for (IFeature f : menu.getMainFeatures()) {
+            features.remove(f);
+
+            fireFeatureRemoved(f);
+        }
     }
 
     @Override
@@ -203,47 +224,5 @@ public final class FeatureService implements IFeatureService, ModuleListener {
     @Override
     public void moduleUninstalled(Module module) {
         //Nothing to do here
-    }
-
-    /**
-     * A managed feature.
-     *
-     * @author Baptiste Wicht
-     */
-    private final class ManagedFeature extends Feature {
-        /**
-         * Construct a new ManagedFeature.
-         *
-         * @param titleKey The title key.
-         * @param position The position of the feature.
-         */
-        protected ManagedFeature(String titleKey, int position) {
-            super(null, position, FeatureType.PACK, titleKey, null);
-        }
-
-        @Override
-        public void addSubFeature(IFeature feature) {
-            super.addSubFeature(feature);
-
-            fireFeatureModified(this);
-        }
-
-        @Override
-        public void removeSubFeature(IFeature feature) {
-            super.removeSubFeature(feature);
-
-            fireFeatureModified(this);
-        }
-
-        /**
-         * Avert the listeners thant a sub feature has been added in a specific feature.
-         *
-         * @param feature    The feature in which the sub feature has been added.
-         */
-        private void fireFeatureModified(IFeature feature) {
-            for (FeatureListener listener : listeners) {
-                listener.featureModified(feature);
-            }
-        }
     }
 }

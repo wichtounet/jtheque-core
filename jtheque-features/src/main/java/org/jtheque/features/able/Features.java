@@ -1,8 +1,12 @@
 package org.jtheque.features.able;
 
 import org.jtheque.features.able.IFeature.FeatureType;
-import org.jtheque.features.impl.Feature;
 import org.jtheque.ui.utils.actions.JThequeAction;
+import org.jtheque.utils.annotations.ThreadSafe;
+import org.jtheque.utils.collections.CollectionUtils;
+
+import java.util.Collection;
+import java.util.Collections;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -21,13 +25,13 @@ import org.jtheque.ui.utils.actions.JThequeAction;
  */
 
 /**
- * Simple factory class to create IFeature.
+ * Simple factory class to create IFeature. The features returned by this factory are thread safe.
  *
  * @author Baptiste Wicht
  */
 public final class Features {
     /**
-     * Utility class, not instantiable. 
+     * Utility class, not instantiable.
      */
     private Features() {
         throw new AssertionError();
@@ -79,5 +83,90 @@ public final class Features {
      */
     public static IFeature newFeature(FeatureType type, int position, JThequeAction action, String icon) {
         return new Feature(action, position, type, null, icon);
+    }
+
+    /**
+     * A Feature of JTheque.
+     *
+     * @author Baptiste Wicht
+     */
+    @ThreadSafe
+    private static final class Feature implements IFeature {
+        private final Collection<IFeature> subFeatures = CollectionUtils.newConcurrentList();
+        private final JThequeAction action;
+        private final FeatureType type;
+        private final String titleKey;
+        private final String icon;
+        private final int position;
+
+        /**
+         * Construct a new Feature.
+         *
+         * @param action   The action.
+         * @param position The position in the parent menu.
+         * @param type     The type of feature.
+         * @param titleKey The i18n title key.
+         * @param icon     The icon name.
+         */
+        private Feature(JThequeAction action, int position, FeatureType type, String titleKey, String icon) {
+            super();
+
+            this.action = action;
+            this.position = position;
+            this.type = type;
+            this.titleKey = titleKey;
+            this.icon = icon;
+        }
+
+        @Override
+        public final FeatureType getType() {
+            return type;
+        }
+
+        @Override
+        public final String getTitleKey() {
+            return titleKey;
+        }
+
+        @Override
+        public final JThequeAction getAction() {
+            return action;
+        }
+
+        @Override
+        public final Collection<IFeature> getSubFeatures() {
+            return Collections.unmodifiableCollection(subFeatures);
+        }
+
+        @Override
+        public void addSubFeature(IFeature feature) {
+            if (feature.getType() == FeatureType.PACK) {
+                throw new IllegalArgumentException("Cannot add feature of type Pack to a menu");
+            }
+
+            subFeatures.add(feature);
+        }
+
+        @Override
+        public void addSubFeatures(Collection<IFeature> subFeatures) {
+            for (IFeature feature : subFeatures) {
+                addSubFeature(feature);
+            }
+        }
+
+        @Override
+        public final void removeSubFeatures(Collection<IFeature> features) {
+            subFeatures.removeAll(features);
+        }
+
+        @Override
+        public final int getPosition() {
+            return position;
+        }
+
+        @Override
+        public final String getIcon() {
+            return icon;
+        }
     }
 }

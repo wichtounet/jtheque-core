@@ -1,15 +1,19 @@
 package org.jtheque.features.able;
 
 import org.jtheque.ui.utils.actions.JThequeAction;
+import org.jtheque.utils.annotations.ThreadSafe;
 
 import java.util.Collection;
 
 /**
  * A feature specification. A Feature is an element of the menu. It can be an action of a group of actions. It can be
- * separated or not. The only thing we can edit on a Feature it's adding new sub feature to it. 
+ * separated or not. The only thing we can edit on a Feature it's adding new sub feature to it.
+ * <p/>
+ * The implementations of this class must be thread safe.
  *
  * @author Baptiste Wicht
  */
+@ThreadSafe
 public interface IFeature {
     /**
      * Return the type of the feature.
@@ -59,6 +63,20 @@ public interface IFeature {
      * @param feature The feature to add.
      */
     void addSubFeature(IFeature feature);
+
+    /**
+     * Add a collection of sub-features to the feature.
+     *
+     * @param subFeatures The sub-features to add.
+     */
+    void addSubFeatures(Collection<IFeature> subFeatures);
+
+    /**
+     * Remove a collection of sub-features from the feature.
+     *
+     * @param subFeatures The sub-features to remove.
+     */
+    void removeSubFeatures(Collection<IFeature> subFeatures);
 
     /**
      * The Feature Type.
