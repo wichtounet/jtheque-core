@@ -16,7 +16,7 @@ package org.jtheque.messages.impl;
  * limitations under the License.
  */
 
-import org.jtheque.messages.able.IMessage;
+import org.jtheque.messages.able.Message;
 import org.jtheque.utils.bean.IntDate;
 import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.io.FileUtils;
@@ -52,7 +52,7 @@ final class MessageFileReader {
      *
      * @throws XMLException If there is an error reading the messages file.
      */
-    public static Collection<IMessage> readMessagesFile(String strUrl) throws XMLException {
+    public static Collection<Message> readMessagesFile(String strUrl) throws XMLException {
         URL url;
 
         try {
@@ -73,24 +73,22 @@ final class MessageFileReader {
      *
      * @throws XMLException Thrown when an error occurs during the reading.
      */
-    private static Collection<IMessage> readMessagesFile(URL url) throws XMLException {
+    private static Collection<Message> readMessagesFile(URL url) throws XMLException {
         IXMLReader<Node> reader = XML.newJavaFactory().newReader();
 
         reader.openURL(url);
 
         String source = reader.readString("source", reader.getRootElement());
 
-        List<IMessage> messages = CollectionUtils.newList();
+        List<Message> messages = CollectionUtils.newList();
 
         for (Object currentNode : reader.getNodes("messages/message", reader.getRootElement())) {
-            Message message = Messages.newMessage(
+            messages.add(Messages.newMessage(
                     reader.readInt("id", currentNode),
                     reader.readString("title", currentNode),
                     reader.readString("message", currentNode),
                     new IntDate(reader.readInt("date", currentNode)),
-                    source);
-
-            messages.add(message);
+                    source));
         }
 
         Collections.sort(messages);

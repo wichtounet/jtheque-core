@@ -23,7 +23,7 @@ import org.jtheque.utils.bean.IntDate;
  * A message specification. A message must be immutable. 
  */
 @Immutable
-public interface IMessage extends Comparable<IMessage> {
+public interface Message extends Comparable<Message> {
     /**
      * Return the Id of the message.
      *

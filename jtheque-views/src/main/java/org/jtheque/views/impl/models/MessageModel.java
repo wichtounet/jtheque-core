@@ -16,7 +16,7 @@ package org.jtheque.views.impl.models;
  * limitations under the License.
  */
 
-import org.jtheque.messages.able.IMessage;
+import org.jtheque.messages.able.Message;
 import org.jtheque.messages.able.IMessageService;
 import org.jtheque.utils.collections.CollectionUtils;
 
@@ -30,9 +30,9 @@ import java.util.ListIterator;
  */
 public final class MessageModel implements IMessageModel {
     private final IMessageService messageService;
-    private final IMessage defaultMessage;
+    private final Message defaultMessage;
 
-    private final ListIterator<IMessage> iterator;
+    private final ListIterator<Message> iterator;
 
     /**
      * Construct a new MessageModel.
@@ -44,13 +44,13 @@ public final class MessageModel implements IMessageModel {
 
         this.messageService = messageService;
 
-        iterator = new ArrayList<IMessage>(messageService.getMessages()).listIterator();
+        iterator = new ArrayList<Message>(messageService.getMessages()).listIterator();
 
         defaultMessage = messageService.getEmptyMessage();
     }
 
     @Override
-    public IMessage getNextMessage() {
+    public Message getNextMessage() {
         if (!iterator.hasNext()) {
             CollectionUtils.goToFirst(iterator);
         }
@@ -59,7 +59,7 @@ public final class MessageModel implements IMessageModel {
     }
 
     @Override
-    public IMessage getCurrentMessage() {
+    public Message getCurrentMessage() {
         if (!iterator.hasPrevious()) {
             CollectionUtils.goToLast(iterator);
         }
@@ -68,7 +68,7 @@ public final class MessageModel implements IMessageModel {
     }
 
     @Override
-    public IMessage getPreviousMessage() {
+    public Message getPreviousMessage() {
         if (!iterator.hasNext()) {
             CollectionUtils.goToFirst(iterator);
         }

@@ -33,7 +33,7 @@ public interface IMessageService {
      *
      * @return A List containing all the messages.
      */
-    Collection<IMessage> getMessages();
+    Collection<Message> getMessages();
 
     /**
      * Display the messages if needed.
@@ -47,5 +47,5 @@ public interface IMessageService {
      *
      * @return An empty message.
      */
-    IMessage getEmptyMessage();
+    Message getEmptyMessage();
 }

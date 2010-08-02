@@ -16,7 +16,7 @@ package org.jtheque.views.impl.models;
  * limitations under the License.
  */
 
-import org.jtheque.messages.able.IMessage;
+import org.jtheque.messages.able.Message;
 import org.jtheque.ui.able.IModel;
 
 /**
@@ -28,21 +28,21 @@ public interface IMessageModel extends IModel {
      *
      * @return The next message to display.
      */
-    IMessage getNextMessage();
+    Message getNextMessage();
 
     /**
      * Return the current message.
      *
      * @return The current message.
      */
-    IMessage getCurrentMessage();
+    Message getCurrentMessage();
 
     /**
      * Return the previous message.
      *
      * @return The previous message.
      */
-    IMessage getPreviousMessage();
+    Message getPreviousMessage();
 
     /**
      * Indicate if the model is currently displaying the default message or a real message.

@@ -24,7 +24,7 @@ import org.jtheque.errors.able.Errors;
 import org.jtheque.events.able.EventLevel;
 import org.jtheque.events.able.EventService;
 import org.jtheque.events.able.Events;
-import org.jtheque.messages.able.IMessage;
+import org.jtheque.messages.able.Message;
 import org.jtheque.messages.able.IMessageService;
 import org.jtheque.modules.able.IModuleService;
 import org.jtheque.modules.able.Module;
@@ -47,7 +47,7 @@ import java.util.Collection;
  * @author Baptiste Wicht
  */
 public final class MessageService implements IMessageService, ModuleListener, ApplicationListener {
-    private final Collection<IMessage> messages = CollectionUtils.newList();
+    private final Collection<Message> messages = CollectionUtils.newList();
 
     private final ICore core;
     private final IErrorService errorService;
@@ -78,7 +78,7 @@ public final class MessageService implements IMessageService, ModuleListener, Ap
     public synchronized boolean isDisplayNeeded() {
         IntDate previousDate = core.getConfiguration().getMessagesLastRead();
 
-        for (IMessage message : messages) {
+        for (Message message : messages) {
             if (message.getDate().compareTo(previousDate) > 0) {
                 return true;
             }
@@ -88,18 +88,18 @@ public final class MessageService implements IMessageService, ModuleListener, Ap
     }
 
     @Override
-    public IMessage getEmptyMessage() {
+    public Message getEmptyMessage() {
         return Messages.newEmptyTodayMessage(-1);
     }
 
     @Override
-    public synchronized Collection<IMessage> getMessages() {
+    public synchronized Collection<Message> getMessages() {
         return CollectionUtils.protect(messages);
     }
 
     @Override
     public void moduleStopped(Module module) {
-        messages.removeAll(ModuleResourceCache.getResource(module.getId(), IMessage.class));
+        messages.removeAll(ModuleResourceCache.getResource(module.getId(), Message.class));
     }
 
     @Override
@@ -128,10 +128,10 @@ public final class MessageService implements IMessageService, ModuleListener, Ap
     private void loadMessageFile(String url, Module module) {
         if (WebUtils.isURLReachable(core.getCoreMessageFileURL())) {
             try {
-                Collection<IMessage> readMessages = MessageFileReader.readMessagesFile(url);
+                Collection<Message> readMessages = MessageFileReader.readMessagesFile(url);
 
                 messages.addAll(readMessages);
-                ModuleResourceCache.addAllResource(module.getId(), IMessage.class, readMessages);
+                ModuleResourceCache.addAllResource(module.getId(), Message.class, readMessages);
             } catch (XMLException e) {
                 LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
             }

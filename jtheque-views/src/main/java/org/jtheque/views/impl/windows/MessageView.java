@@ -16,7 +16,7 @@ package org.jtheque.views.impl.windows;
  * limitations under the License.
  */
 
-import org.jtheque.messages.able.IMessage;
+import org.jtheque.messages.able.Message;
 import org.jtheque.messages.able.IMessageService;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.ui.utils.builders.PanelBuilder;
@@ -100,7 +100,7 @@ public final class MessageView extends SwingFilthyBuildedDialogView<IMessageMode
      *
      * @param message The message to display.
      */
-    private void setMessage(IMessage message) {
+    private void setMessage(Message message) {
         if (getModel().isDefaultMessage()) {
             dateLabel.setText(message.getDate().getStrDate());
             sourceLabel.setText(message.getSource());
