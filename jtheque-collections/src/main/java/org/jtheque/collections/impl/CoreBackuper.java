@@ -62,10 +62,6 @@ public class CoreBackuper implements ModuleBackuper {
 
     @Override
     public ModuleBackup backup() {
-        ModuleBackup backup = new ModuleBackup();
-
-        backup.setId(getId());
-        backup.setVersion(BACKUP_VERSION);
 
         Collection<Node> nodes = CollectionUtils.newList(10);
 
@@ -79,9 +75,7 @@ public class CoreBackuper implements ModuleBackuper {
             nodes.add(node);
         }
 
-        backup.setNodes(nodes);
-
-        return backup;
+        return new ModuleBackup(BACKUP_VERSION, getId(), nodes);
     }
 
     @Override
