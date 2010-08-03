@@ -29,7 +29,7 @@
         <constructor-arg ref="collectionSchema"/>
     </bean>
 
-    <bean id="daoCollections" class="org.jtheque.collections.impl.DaoCollections"/>
+    <bean id="daoCollections" class="org.jtheque.collections.impl.DaoCollectionsImpl"/>
 
     <osgi:reference id="daoPersistenceContext" interface="org.jtheque.persistence.able.DaoPersistenceContext" />
 

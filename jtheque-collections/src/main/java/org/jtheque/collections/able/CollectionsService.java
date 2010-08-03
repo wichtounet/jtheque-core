@@ -53,11 +53,4 @@ public interface CollectionsService extends DataContainer<Collection> {
      * @param listener The listener to remove.
      */
     void removeCollectionListener(CollectionListener listener);
-
-    /**
-     * Indicate if a collection has already been chosen or not.
-     * 
-     * @return true if a collection has already been chosen or not.
-     */
-    boolean isCollectionChosen();
 }

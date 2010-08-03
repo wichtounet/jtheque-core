@@ -199,9 +199,4 @@ public final class CollectionsService implements org.jtheque.collections.able.Co
     public String getDataType() {
         return DATA_TYPE;
     }
-
-    @Override
-    public boolean isCollectionChosen() {
-        return SimplePropertiesCache.get("collectionChosen", Boolean.class);
-    }
 }

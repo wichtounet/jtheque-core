@@ -44,7 +44,7 @@ public class CoreBackuper implements ModuleBackuper {
      *
      * @param daoCollections The dao collections.
      */
-    public CoreBackuper(org.jtheque.collections.able.DaoCollections daoCollections) {
+    public CoreBackuper(DaoCollections daoCollections) {
         super();
 
         this.daoCollections = daoCollections;
@@ -62,8 +62,7 @@ public class CoreBackuper implements ModuleBackuper {
 
     @Override
     public ModuleBackup backup() {
-
-        Collection<Node> nodes = CollectionUtils.newList(10);
+        Collection<Node> nodes = CollectionUtils.newList();
 
         for (org.jtheque.collections.able.Collection collection : daoCollections.getCollections()) {
             Node node = new Node("collection");
