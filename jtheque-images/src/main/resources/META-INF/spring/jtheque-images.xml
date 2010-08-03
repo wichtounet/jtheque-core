@@ -8,7 +8,7 @@
             http://www.springframework.org/schema/osgi
             http://www.springframework.org/schema/osgi/spring-osgi.xsd">
 
-    <bean id="imageService" class="org.jtheque.images.impl.ImageService"/>
+    <bean id="imageService" class="org.jtheque.images.impl.ImageServiceImpl"/>
 
     <osgi:service ref="imageService" interface="org.jtheque.images.able.ImageService"/>
 

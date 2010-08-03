@@ -109,11 +109,6 @@ public interface ImageService {
     BufferedImage getImageFromFile(String path, int width);
 
     /**
-     * Invalidate the entire cache.
-     */
-    void invalidateCache();
-
-    /**
      * Invalidate the cached version of the specified image.
      *
      * @param id The image id to invalidate the cache for.
