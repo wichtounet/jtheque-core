@@ -128,7 +128,7 @@ public final class SplashScreenPane extends BufferedLayerUI<JComponent> implemen
      * @param layer The component to compute the sizes.
      */
     private void computeSizes(Component layer) {
-        int nameWidth = layer.getFontMetrics(fontName).stringWidth(core.getApplication().getName());
+        int nameWidth = layer.getFontMetrics(fontName).stringWidth(core.getApplication().getI18nProperties().getName());
         int loadingWidth = layer.getFontMetrics(fontLoading).stringWidth("Loading ...");
 
         int height = layer.getFontMetrics(fontName).getHeight() + 10 + bImage.getHeight() + layer.getFontMetrics(fontLoading).getHeight();
@@ -186,7 +186,7 @@ public final class SplashScreenPane extends BufferedLayerUI<JComponent> implemen
     private void paintName(Graphics g2, Color color) {
         g2.translate(pTextName.x, pTextName.y);
 
-        PaintUtils.drawString(g2, core.getApplication().getName(), 0, 0, fontName, color);
+        PaintUtils.drawString(g2, core.getApplication().getI18nProperties().getName(), 0, 0, fontName, color);
 
         g2.translate(-pTextName.x, -pTextName.y);
     }

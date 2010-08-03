@@ -35,7 +35,7 @@ public final class LicenseView extends SwingFilthyBuildedDialogView<Model> imple
 
     @Override
     protected void initView() {
-        setTitleKey("license.view.title", getService(Core.class).getApplication().getName());
+        setTitleKey("license.view.title", getService(Core.class).getApplication().getI18nProperties().getName());
     }
 
     @Override

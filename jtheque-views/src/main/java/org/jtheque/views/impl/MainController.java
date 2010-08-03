@@ -63,7 +63,7 @@ public final class MainController extends WindowAdapter implements ChangeListene
 
     @Override
     public void windowClosing(WindowEvent e) {
-        Object[] applicationName = {core.getApplication().getName()};
+        Object[] applicationName = {core.getApplication().getI18nProperties().getName()};
 
         boolean yes = uiUtils.askI18nUserForConfirmation(
                 "dialogs.confirm.exit", applicationName,

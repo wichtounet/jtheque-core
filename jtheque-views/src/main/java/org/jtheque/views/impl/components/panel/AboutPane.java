@@ -292,7 +292,7 @@ public final class AboutPane extends JXPanel implements AboutView, International
      * @param textColor The text color.
      */
     private void paintTitle(Graphics g2, int xStart, int yStart, Color textColor) {
-        PaintUtils.drawString(g2, core.getApplication().getName(), xStart, yStart, fontName, textColor);
+        PaintUtils.drawString(g2, core.getApplication().getI18nProperties().getName(), xStart, yStart, fontName, textColor);
 
         PaintUtils.fillRect(g2, xStart, yStart + 20, paintWidth, 3, textColor);
     }
@@ -365,7 +365,7 @@ public final class AboutPane extends JXPanel implements AboutView, International
 
         int logoWidth = logo == null ? 0 : logo.getWidth();
 
-        paintWidth = Math.max(metrics.stringWidth(core.getApplication().getName()), logoWidth + 30 + max + 20 + maxRight);
+        paintWidth = Math.max(metrics.stringWidth(core.getApplication().getI18nProperties().getName()), logoWidth + 30 + max + 20 + maxRight);
     }
 
     /**

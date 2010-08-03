@@ -53,28 +53,8 @@ final class XMLApplication implements Application {
     }
 
     @Override
-    public String getAuthor() {
-        return applicationProperties.getAuthor();
-    }
-
-    @Override
-    public String getName() {
-        return applicationProperties.getName();
-    }
-
-    @Override
-    public String getSite() {
-        return applicationProperties.getSite();
-    }
-
-    @Override
-    public String getEmail() {
-        return applicationProperties.getEmail();
-    }
-
-    @Override
-    public String getCopyright() {
-        return applicationProperties.getCopyright();
+    public ApplicationProperties getI18nProperties() {
+        return applicationProperties;
     }
 
     @Override

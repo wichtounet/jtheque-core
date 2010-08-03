@@ -158,7 +158,7 @@ public final class MessageService implements org.jtheque.messages.able.MessageSe
     }
 
     @Override
-    public void applicationSetted(Application application) {
+    public void applicationLaunched(Application application) {
         if (!StringUtils.isEmpty(application.getMessageFileURL())) {
             loadMessageFile(application.getMessageFileURL(), null);
         }

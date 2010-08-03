@@ -39,14 +39,14 @@ public final class AboutModel {
     public void refresh(Core core, LanguageService i18n){
         Application application = core.getApplication();
 
-        copyright = application.getCopyright();
+        copyright = application.getI18nProperties().getCopyright();
         license = i18n.getMessage("about.actions.read");
 
         infos = new AboutInfo[]{
                 new AboutInfo(i18n.getMessage("about.view.version"), application.getVersion().getVersion(), false, false),
-                new AboutInfo(i18n.getMessage("about.view.author"), application.getAuthor(), false, false),
-                new AboutInfo(i18n.getMessage("about.view.site"), application.getSite(), true, false),
-                new AboutInfo(i18n.getMessage("about.view.mail"), application.getEmail(), false, true)
+                new AboutInfo(i18n.getMessage("about.view.author"), application.getI18nProperties().getAuthor(), false, false),
+                new AboutInfo(i18n.getMessage("about.view.site"), application.getI18nProperties().getSite(), true, false),
+                new AboutInfo(i18n.getMessage("about.view.mail"), application.getI18nProperties().getEmail(), false, true)
         };
 
         credits = CollectionUtils.newList(core.getCreditsMessage().size() * 4);

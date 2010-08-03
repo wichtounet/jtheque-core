@@ -82,7 +82,7 @@ public class LifeCycleLauncher implements CollectionListener {
 
         Application application = new XMLApplicationReader().readApplication(SystemProperty.USER_DIR.get() + "/application.xml");
 
-        core.setApplication(application);
+        core.launchApplication(application);
 
         splashService.initViews();
         splashService.displaySplashScreen();
@@ -157,7 +157,7 @@ public class LifeCycleLauncher implements CollectionListener {
 
         moduleService.startModules();
 
-        core.getLifeCycle().initTitle();
+        core.getLifeCycle().refreshTitle();
 
         views.displayConditionalViews();
     }
