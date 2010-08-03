@@ -16,7 +16,8 @@ package org.jtheque.core.impl;
  * limitations under the License.
  */
 
-import org.jtheque.states.utils.AbstractState;
+import org.jtheque.states.utils.AbstractConcurrentState;
+import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.bean.IntDate;
 
 /**
@@ -24,7 +25,8 @@ import org.jtheque.utils.bean.IntDate;
  *
  * @author Baptiste Wicht
  */
-public final class CoreConfiguration extends AbstractState implements org.jtheque.core.able.CoreConfiguration {
+@ThreadSafe
+public final class CoreConfiguration extends AbstractConcurrentState implements org.jtheque.core.able.CoreConfiguration {
     private static final String FALSE = "false";
 
     @Override
@@ -117,19 +119,10 @@ public final class CoreConfiguration extends AbstractState implements org.jthequ
         return getProperty("last-collection");
     }
 
-    /**
-     * Set the date of the last reading of the messages.
-     *
-     * @param value The date of the last reading of the messages.
-     */
-    void setMessagesLastRead(String value) {
-        setProperty("messagesLastRead", value);
-    }
-
     @Override
     public IntDate getMessagesLastRead() {
         if (getProperty("messagesLastRead") == null) {
-            setMessagesLastRead("20000101");
+            setProperty("messagesLastRead", "20000101");
         }
 
         return new IntDate(Integer.parseInt(getProperty("messagesLastRead")));

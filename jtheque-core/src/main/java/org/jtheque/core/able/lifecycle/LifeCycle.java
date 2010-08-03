@@ -86,7 +86,7 @@ public interface LifeCycle {
     void setCurrentFunction(String function);
 
     /**
-     * Init the title.
+     * Force a refresh of the title. 
      */
-    void initTitle();
+    void refreshTitle();
 }

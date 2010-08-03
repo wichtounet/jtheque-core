@@ -19,16 +19,11 @@ package org.jtheque.core.able;
 import java.io.File;
 
 /**
+ * A container for the files of the core. 
+ *
  * @author Baptiste Wicht
  */
 public interface FilesContainer {
-    /**
-     * Return the launcher file of the application.
-     *
-     * @return The launcher file.
-     */
-    File getLauncherFile();
-
     /**
      * Return the log file of the application.
      *

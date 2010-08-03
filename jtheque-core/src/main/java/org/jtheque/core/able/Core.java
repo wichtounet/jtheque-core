@@ -41,7 +41,7 @@ public interface Core {
      *
      * @param application The application to launch.
      */
-    void setApplication(Application application);
+    void launchApplication(Application application);
 
     /**
      * Return the messages file url for the core.

@@ -1,20 +1,17 @@
 package org.jtheque.core.impl;
 
 import org.jtheque.core.able.Core;
-import org.jtheque.core.able.lifecycle.FunctionEvent;
 import org.jtheque.core.able.lifecycle.FunctionListener;
-import org.jtheque.core.able.lifecycle.TitleEvent;
 import org.jtheque.core.able.lifecycle.TitleListener;
 import org.jtheque.core.utils.SystemProperty;
 import org.jtheque.events.able.EventLevel;
 import org.jtheque.events.able.EventService;
 import org.jtheque.events.able.Events;
+import org.jtheque.utils.ThreadUtils;
 import org.jtheque.utils.collections.WeakEventListenerList;
 import org.jtheque.utils.io.FileUtils;
 
 import java.io.File;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -37,25 +34,25 @@ import java.util.concurrent.Executors;
  *
  * @author Baptiste Wicht
  */
-public class LifeCycle implements org.jtheque.core.able.lifecycle.LifeCycle {
+public class LifeCycleImpl implements org.jtheque.core.able.lifecycle.LifeCycle {
     private final WeakEventListenerList<FunctionListener> functionListeners = WeakEventListenerList.create();
     private final WeakEventListenerList<TitleListener> titleListeners = WeakEventListenerList.create();
 
     private String currentFunction;
     private String title = "JTheque";
 
-    private final org.jtheque.core.able.Core core;
+    private final Core core;
     private final EventService eventService;
 
     private final ApplicationShutDownHook hook;
 
     /**
-     * Construct a new LifeCycle.
+     * Construct a new LifeCycleImpl.
      *
      * @param eventService The event service.
      * @param core         The core.
      */
-    public LifeCycle(EventService eventService, Core core) {
+    public LifeCycleImpl(EventService eventService, Core core) {
         super();
 
         this.eventService = eventService;
@@ -67,22 +64,13 @@ public class LifeCycle implements org.jtheque.core.able.lifecycle.LifeCycle {
     }
 
     @Override
-    public void initTitle() {
-        refreshTitle();
-    }
-
-    @Override
     public void exit() {
-        ExecutorService executorService = Executors.newSingleThreadExecutor();
-
-        executorService.submit(new Runnable() {
+        ThreadUtils.inNewThread(new Runnable() {
             @Override
             public void run() {
                 exit(0);
             }
         });
-
-        executorService.shutdown();
     }
 
     @Override
@@ -95,7 +83,7 @@ public class LifeCycle implements org.jtheque.core.able.lifecycle.LifeCycle {
     /**
      * Exit from JTheque with the given exit code.
      *
-     * @param code The exit code. 
+     * @param code The exit code.
      */
     private void exit(int code) {
         Runtime.getRuntime().removeShutdownHook(hook);
@@ -106,7 +94,7 @@ public class LifeCycle implements org.jtheque.core.able.lifecycle.LifeCycle {
     }
 
     /**
-     * Add the event to indicate the close of JTheque. 
+     * Add the event to indicate the close of JTheque.
      */
     private void addEventClose() {
         eventService.addEvent(Events.newEvent(EventLevel.INFO, "User", "events.close", EventService.CORE_EVENT_LOG));
@@ -116,7 +104,7 @@ public class LifeCycle implements org.jtheque.core.able.lifecycle.LifeCycle {
     public void setCurrentFunction(String function) {
         currentFunction = function;
 
-        fireFunctionUpdated(new FunctionEvent(this, function));
+        fireFunctionUpdated(function);
 
         refreshTitle();
     }
@@ -158,14 +146,12 @@ public class LifeCycle implements org.jtheque.core.able.lifecycle.LifeCycle {
             functionListeners.remove(listener);
         }
     }
-
-    /**
-     * Refresh the title of the application. Call this method when the title is subject to change.
-     */
-    private void refreshTitle() {
+    
+    @Override
+    public void refreshTitle() {
         updateTitle();
 
-        fireTitleUpdated(new TitleEvent(this, title));
+        fireTitleUpdated(title);
     }
 
     /**
@@ -179,7 +165,7 @@ public class LifeCycle implements org.jtheque.core.able.lifecycle.LifeCycle {
             builder.append(" - ");
         }
 
-        builder.append(core.getApplication().getName());
+        builder.append(core.getApplication().getI18nProperties().getName());
         builder.append(' ');
         builder.append(core.getApplication().getVersion());
 
@@ -189,22 +175,22 @@ public class LifeCycle implements org.jtheque.core.able.lifecycle.LifeCycle {
     /**
      * Fire a titleUpdated event. This method avert the listeners that the title of the application has changed.
      *
-     * @param event The title event.
+     * @param title The new title.
      */
-    private void fireTitleUpdated(TitleEvent event) {
+    private void fireTitleUpdated(String title) {
         for (TitleListener listener : titleListeners) {
-            listener.titleUpdated(event);
+            listener.titleUpdated(title);
         }
     }
 
     /**
      * Fire a functionUpdated event. This method avert the listeners that the current function has changed.
      *
-     * @param event The function event.
+     * @param function The new function.
      */
-    private void fireFunctionUpdated(FunctionEvent event) {
+    private void fireFunctionUpdated(String function) {
         for (FunctionListener listener : functionListeners) {
-            listener.functionUpdated(event);
+            listener.functionUpdated(function);
         }
     }
 

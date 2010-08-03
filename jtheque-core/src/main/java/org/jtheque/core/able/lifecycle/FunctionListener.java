@@ -27,7 +27,7 @@ public interface FunctionListener extends EventListener {
     /**
      * Call when the function has been updated.
      *
-     * @param event The function event.
+     * @param function The new function.
      */
-    void functionUpdated(FunctionEvent event);
+    void functionUpdated(String function);
 }

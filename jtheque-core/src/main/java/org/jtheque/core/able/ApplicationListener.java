@@ -21,5 +21,5 @@ import java.util.EventListener;
  */
 
 public interface ApplicationListener extends EventListener {
-    void applicationSetted(Application application);
+    void applicationLaunched(Application application);
 }

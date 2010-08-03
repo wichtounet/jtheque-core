@@ -16,9 +16,8 @@ package org.jtheque.core.impl;
  * limitations under the License.
  */
 
-import org.jtheque.core.able.*;
 import org.jtheque.core.able.Core;
-import org.jtheque.core.utils.SystemProperty;
+import org.jtheque.core.able.FoldersContainer;
 import org.jtheque.utils.io.FileUtils;
 
 import java.io.File;
@@ -30,10 +29,8 @@ import java.io.File;
  */
 public final class Folders implements FoldersContainer {
     private File applicationFolder;
-    private File librariesFolder;
     private File modulesFolder;
     private File logsFolder;
-    private File cacheFolder;
 
     private final Core core;
 
@@ -42,7 +39,7 @@ public final class Folders implements FoldersContainer {
      *
      * @param core The core.
      */
-    public Folders(org.jtheque.core.able.Core core) {
+    public Folders(Core core) {
         super();
 
         this.core = core;
@@ -71,17 +68,6 @@ public final class Folders implements FoldersContainer {
     }
 
     @Override
-    public File getLibrariesFolder() {
-        if (librariesFolder == null) {
-            librariesFolder = new File(getApplicationFolder(), "lib");
-
-            FileUtils.createIfNotExists(librariesFolder);
-        }
-
-        return librariesFolder;
-    }
-
-    @Override
     public File getModulesFolder() {
         if (modulesFolder == null) {
             modulesFolder = new File(getApplicationFolder(), "modules");
@@ -90,21 +76,5 @@ public final class Folders implements FoldersContainer {
         }
 
         return modulesFolder;
-    }
-
-    @Override
-    public File getCacheFolder() {
-        if (cacheFolder == null) {
-            cacheFolder = new File(getApplicationFolder(), "cache");
-
-            FileUtils.createIfNotExists(cacheFolder);
-        }
-
-        return cacheFolder;
-    }
-
-    @Override
-    public String getTempFolderPath() {
-        return SystemProperty.JAVA_IO_TMP_DIR.get();
     }
 }

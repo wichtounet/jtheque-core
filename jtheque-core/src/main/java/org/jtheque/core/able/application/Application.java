@@ -47,13 +47,6 @@ public interface Application {
     String getWindowIcon();
 
     /**
-     * Return the path to the license.
-     *
-     * @return The path to the license of the application.
-     */
-    String getLicenseFilePath();
-
-    /**
      * Return the application version.
      *
      * @return The version of the application.
@@ -75,6 +68,13 @@ public interface Application {
     boolean isDisplayLicense();
 
     /**
+     * Return the path to the license.
+     *
+     * @return The path to the license of the application.
+     */
+    String getLicenseFilePath();
+
+    /**
      * Return the url of the application repository.
      *
      * @return The URL to the application repository.
@@ -89,39 +89,11 @@ public interface Application {
     String getMessageFileURL();
 
     /**
-     * Return the name of the application.
+     * Return the properties of the application.
      *
-     * @return The name of the application.
+     * @return The application properties of the application.
      */
-    String getName();
-
-    /**
-     * Return the author of the application.
-     *
-     * @return The author of the application.
-     */
-    String getAuthor();
-
-    /**
-     * Return the email of the author of the application.
-     *
-     * @return The email of the author of the application.
-     */
-    String getEmail();
-
-    /**
-     * Return the site of the application.
-     *
-     * @return The site of the application.
-     */
-    String getSite();
-
-    /**
-     * Return the copyright of the application.
-     *
-     * @return The copyright of the application.
-     */
-    String getCopyright();
+    ApplicationProperties getI18nProperties();
 
     /**
      * Return all the supported languages of the application.

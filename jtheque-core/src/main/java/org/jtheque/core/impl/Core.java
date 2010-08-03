@@ -16,8 +16,10 @@ package org.jtheque.core.impl;
  * limitations under the License.
  */
 
-import org.jtheque.core.able.*;
+import org.jtheque.core.able.ApplicationListener;
 import org.jtheque.core.able.CoreConfiguration;
+import org.jtheque.core.able.FilesContainer;
+import org.jtheque.core.able.FoldersContainer;
 import org.jtheque.core.able.application.Application;
 import org.jtheque.core.able.lifecycle.LifeCycle;
 import org.jtheque.events.able.EventService;
@@ -28,7 +30,6 @@ import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.collections.WeakEventListenerList;
 
-import org.slf4j.LoggerFactory;
 import org.springframework.core.io.FileSystemResource;
 
 import java.io.File;
@@ -45,10 +46,15 @@ public final class Core implements org.jtheque.core.able.Core {
     @GuardedInternally
     private final WeakEventListenerList<ApplicationListener> listeners = WeakEventListenerList.create();
 
-    private final Collection<String> creditsMessage;
+    @GuardedInternally
+    private final Collection<String> creditsMessage = CollectionUtils.newConcurrentList();
+
+    @GuardedInternally //Because cannot be modified
+    private Collection<String> languages;
+
     private final FoldersContainer foldersContainer;
     private final FilesContainer filesContainer;
-    private final org.jtheque.core.able.CoreConfiguration configuration;
+    private final CoreConfiguration configuration;
     private final ImageService imageService;
     private final LifeCycle lifeCycle;
 
@@ -65,24 +71,39 @@ public final class Core implements org.jtheque.core.able.Core {
         super();
 
         this.imageService = imageService;
-        lifeCycle = new org.jtheque.core.impl.LifeCycle(eventService, this);
+        lifeCycle = new LifeCycleImpl(eventService, this);
 
         foldersContainer = new Folders(this);
         filesContainer = new Files(this);
 
         configuration = stateService.getState(new org.jtheque.core.impl.CoreConfiguration());
 
-        creditsMessage = CollectionUtils.newList(5);
         creditsMessage.add("about.view.copyright");
     }
 
     @Override
-    public void setApplication(Application application) {
+    public void launchApplication(Application application) {
+        if (this.application != null) {
+            throw new IllegalStateException("The application is already launched");
+        }
+
         this.application = application;
 
-        fireApplicationSetted(application);
+        Collection<String> languagesLong = CollectionUtils.newList(3);
 
-        LoggerFactory.getLogger(getClass()).debug("Configuring core with application {}", application);
+        for (String supportedLanguage : application.getSupportedLanguages()) {
+            if ("fr".equals(supportedLanguage)) {
+                languagesLong.add("Français");
+            } else if ("en".equals(supportedLanguage)) {
+                languagesLong.add("English");
+            } else if ("de".equals(supportedLanguage)) {
+                languagesLong.add("Deutsch");
+            }
+        }
+
+        languages = CollectionUtils.protect(languagesLong);
+
+        fireApplicationLaunched(application);
 
         imageService.registerResource(WINDOW_ICON, new FileSystemResource(new File(application.getWindowIcon())));
     }
@@ -97,9 +118,9 @@ public final class Core implements org.jtheque.core.able.Core {
         listeners.remove(listener);
     }
 
-    private void fireApplicationSetted(Application application){
-        for(ApplicationListener applicationListener : listeners){
-            applicationListener.applicationSetted(application);
+    private void fireApplicationLaunched(Application application) {
+        for (ApplicationListener applicationListener : listeners) {
+            applicationListener.applicationLaunched(application);
         }
     }
 
@@ -115,7 +136,7 @@ public final class Core implements org.jtheque.core.able.Core {
 
     @Override
     public Collection<String> getCreditsMessage() {
-        return creditsMessage;
+        return CollectionUtils.protect(creditsMessage);
     }
 
     @Override
@@ -140,7 +161,7 @@ public final class Core implements org.jtheque.core.able.Core {
     }
 
     @Override
-    public org.jtheque.core.able.lifecycle.LifeCycle getLifeCycle() {
+    public LifeCycle getLifeCycle() {
         return lifeCycle;
     }
 
@@ -151,18 +172,10 @@ public final class Core implements org.jtheque.core.able.Core {
 
     @Override
     public Collection<String> getPossibleLanguages() {
-        Collection<String> languagesLong = CollectionUtils.newList(2);
-
-        for (String supportedLanguage : application.getSupportedLanguages()) {
-            if ("fr".equals(supportedLanguage)) {
-                languagesLong.add("Français");
-            } else if ("en".equals(supportedLanguage)) {
-                languagesLong.add("English");
-            } else if ("de".equals(supportedLanguage)) {
-                languagesLong.add("Deutsch");
-            }
+        if(languages == null){
+            throw new IllegalStateException("The application has not been launched");
         }
 
-        return languagesLong;
+        return languages;
     }
 }

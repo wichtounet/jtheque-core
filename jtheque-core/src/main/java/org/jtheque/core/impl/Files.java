@@ -16,8 +16,8 @@ package org.jtheque.core.impl;
  * limitations under the License.
  */
 
-import org.jtheque.core.able.*;
 import org.jtheque.core.able.Core;
+import org.jtheque.core.able.FilesContainer;
 
 import java.io.File;
 
@@ -34,24 +34,10 @@ public final class Files implements FilesContainer {
      *
      * @param core The core.
      */
-    public Files(org.jtheque.core.able.Core core) {
+    public Files(Core core) {
         super();
 
         this.core = core;
-    }
-
-    @Override
-    public File getLauncherFile() {
-        return new File(getLauncherPath());
-    }
-
-    /**
-     * Return the path to the launcher.
-     *
-     * @return The path to the launcher.
-     */
-    private String getLauncherPath() {
-        return core.getFolders().getApplicationFolder() + File.separator + "JTheque-Launcher.jar";
     }
 
     @Override

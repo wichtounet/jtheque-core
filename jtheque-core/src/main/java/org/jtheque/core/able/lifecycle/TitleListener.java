@@ -27,7 +27,7 @@ public interface TitleListener extends EventListener {
     /**
      * Call when the title has been updated.
      *
-     * @param event The new current object.
+     * @param title The new title.
      */
-    void titleUpdated(TitleEvent event);
+    void titleUpdated(String title);
 }

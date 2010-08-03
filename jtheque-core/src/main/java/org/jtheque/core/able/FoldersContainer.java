@@ -37,31 +37,9 @@ public interface FoldersContainer {
     File getLogsFolder();
 
     /**
-     * Return the libraries folder. It seems the folder where the libraries are located. This folder is only for the
-     * librairies of the modules.
-     *
-     * @return The File object who denotes the libraries folder.
-     */
-    File getLibrariesFolder();
-
-    /**
      * Return the modules folder. It seems the folder where the modules are located.
      *
      * @return The File object who denotes the modules folder.
      */
     File getModulesFolder();
-
-    /**
-     * Return the cache folder. It seems the folder where the cache are located.
-     *
-     * @return The File object who denotes the cache folder.
-     */
-    File getCacheFolder();
-
-    /**
-     * Return the path to the temporary folder.
-     *
-     * @return The path to the temporary folder.
-     */
-    String getTempFolderPath();
 }

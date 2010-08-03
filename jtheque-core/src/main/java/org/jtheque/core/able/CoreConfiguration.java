@@ -16,6 +16,7 @@ package org.jtheque.core.able;
  * limitations under the License.
  */
 
+import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.bean.IntDate;
 
 /**
@@ -23,6 +24,7 @@ import org.jtheque.utils.bean.IntDate;
  *
  * @author Baptiste Wicht
  */
+@ThreadSafe
 public interface CoreConfiguration {
     /**
      * Indicate if we verify the updates at the application startup.
