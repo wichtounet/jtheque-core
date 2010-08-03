@@ -40,9 +40,9 @@ public final class MainController extends WindowAdapter implements ChangeListene
     /**
      * Construct a new MainController.
      *
-     * @param core    The core.
-     * @param uiUtils The UI Utils.
-     * @param lifeCycle
+     * @param core      The core.
+     * @param uiUtils   The UI Utils.
+     * @param lifeCycle The lifeCycle
      */
     public MainController(Core core, UIUtils uiUtils, LifeCycle lifeCycle) {
         super();

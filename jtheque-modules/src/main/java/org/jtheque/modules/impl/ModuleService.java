@@ -19,10 +19,14 @@ package org.jtheque.modules.impl;
 import org.jtheque.core.able.Core;
 import org.jtheque.i18n.able.LanguageService;
 import org.jtheque.images.able.ImageService;
-import org.jtheque.modules.able.*;
+import org.jtheque.modules.able.Module;
 import org.jtheque.modules.able.ModuleDescription;
+import org.jtheque.modules.able.ModuleListener;
 import org.jtheque.modules.able.ModuleLoader;
+import org.jtheque.modules.able.ModuleState;
 import org.jtheque.modules.able.Repository;
+import org.jtheque.modules.able.Resources;
+import org.jtheque.modules.able.SwingLoader;
 import org.jtheque.modules.utils.ImageResource;
 import org.jtheque.modules.utils.ModuleResourceCache;
 import org.jtheque.states.able.StateService;
@@ -218,7 +222,7 @@ public final class ModuleService implements org.jtheque.modules.able.ModuleServi
     }
 
     @Override
-    public org.jtheque.modules.able.Repository getRepository() {
+    public Repository getRepository() {
         if (repository == null) {
             repository = new RepositoryReader().read(core.getApplication().getRepository());
         }

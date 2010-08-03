@@ -2,8 +2,8 @@ package org.jtheque.ui.utils.builded;
 
 import org.jtheque.core.utils.OSGiUtils;
 import org.jtheque.core.utils.SwingSpringProxy;
-import org.jtheque.errors.able.*;
 import org.jtheque.errors.able.Error;
+import org.jtheque.errors.able.ErrorService;
 import org.jtheque.i18n.able.LanguageService;
 import org.jtheque.utils.collections.CollectionUtils;
 

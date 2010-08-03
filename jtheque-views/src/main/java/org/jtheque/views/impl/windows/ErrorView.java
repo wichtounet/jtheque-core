@@ -1,8 +1,9 @@
 package org.jtheque.views.impl.windows;
 
-import org.jtheque.errors.able.*;
 import org.jtheque.errors.able.Error;
 import org.jtheque.errors.able.Error.Level;
+import org.jtheque.errors.able.ErrorListener;
+import org.jtheque.errors.able.ErrorService;
 import org.jtheque.i18n.able.LanguageService;
 import org.jtheque.images.able.ImageService;
 import org.jtheque.ui.able.Model;

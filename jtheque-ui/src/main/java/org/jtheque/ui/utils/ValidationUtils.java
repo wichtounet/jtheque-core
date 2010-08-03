@@ -16,8 +16,8 @@ package org.jtheque.ui.utils;
  * limitations under the License.
  */
 
-import org.jtheque.errors.able.*;
 import org.jtheque.errors.able.Error;
+import org.jtheque.errors.able.Errors;
 import org.jtheque.utils.StringUtils;
 
 import javax.swing.ComboBoxModel;

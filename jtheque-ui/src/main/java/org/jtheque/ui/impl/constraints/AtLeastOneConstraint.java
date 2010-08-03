@@ -1,6 +1,6 @@
 package org.jtheque.ui.impl.constraints;
 
-import org.jtheque.errors.able.*;
+import org.jtheque.errors.able.Errors;
 
 import javax.swing.ComboBoxModel;
 import javax.swing.JList;

@@ -34,7 +34,7 @@ import org.w3c.dom.Node;
  * @author Baptiste Wicht
  */
 public final class RepositoryReader {
-    private final org.jtheque.modules.impl.Repository repository = new org.jtheque.modules.impl.Repository();
+    private final Repository repository = new Repository();
     private final XMLReader<Node> reader = XML.newJavaFactory().newReader();
 
     /**

@@ -6,8 +6,8 @@ import org.jtheque.states.able.Save;
 import org.jtheque.states.able.State;
 import org.jtheque.states.utils.AbstractState;
 import org.jtheque.utils.collections.CollectionUtils;
-import org.jtheque.views.able.*;
 import org.jtheque.views.able.ViewService;
+import org.jtheque.views.able.WindowConfiguration;
 import org.jtheque.xml.utils.Node;
 import org.jtheque.xml.utils.NodeAttribute;
 
@@ -50,7 +50,7 @@ public final class WindowsConfiguration extends AbstractState {
      * @param core        The core.
      * @param viewService The view service.
      */
-    public WindowsConfiguration(Core core, org.jtheque.views.able.ViewService viewService) {
+    public WindowsConfiguration(Core core, ViewService viewService) {
         super();
 
         this.core = core;

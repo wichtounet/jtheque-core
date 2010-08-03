@@ -2,10 +2,10 @@ package org.jtheque.ui.utils.windows;
 
 import org.jtheque.core.able.Core;
 import org.jtheque.core.utils.OSGiUtils;
-import org.jtheque.errors.able.*;
 import org.jtheque.errors.able.Error;
-import org.jtheque.i18n.able.LanguageService;
+import org.jtheque.errors.able.ErrorService;
 import org.jtheque.i18n.able.Internationalizable;
+import org.jtheque.i18n.able.LanguageService;
 import org.jtheque.images.able.ImageService;
 import org.jtheque.ui.able.Controller;
 import org.jtheque.ui.able.constraints.Constraint;
@@ -346,7 +346,8 @@ public final class WindowState implements org.jtheque.ui.able.WindowState {
 
         /**
          * Construct a new GlassPaneSetter for the given glass pane.
-         * @param glassPane The glass pane to set on the view. 
+         *
+         * @param glassPane The glass pane to set on the view.
          */
         private GlassPaneSetter(Component glassPane) {
             this.glassPane = glassPane;

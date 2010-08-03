@@ -16,7 +16,8 @@ package org.jtheque.collections.impl;
  * limitations under the License.
  */
 
-import org.jtheque.collections.able.*;
+import org.jtheque.collections.able.Collection;
+import org.jtheque.collections.able.CollectionListener;
 import org.jtheque.collections.able.DaoCollections;
 import org.jtheque.core.able.Core;
 import org.jtheque.file.able.FileService;
@@ -39,7 +40,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @author Baptiste Wicht
  */
 public final class CollectionsService implements org.jtheque.collections.able.CollectionsService {
-    private final org.jtheque.collections.able.DaoCollections daoCollections;
+    private final DaoCollections daoCollections;
     private final Core core;
 
     @GuardedInternally

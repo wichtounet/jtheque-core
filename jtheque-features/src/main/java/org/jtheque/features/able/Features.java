@@ -119,22 +119,22 @@ public final class Features {
         }
 
         @Override
-        public final FeatureType getType() {
+        public FeatureType getType() {
             return type;
         }
 
         @Override
-        public final String getTitleKey() {
+        public String getTitleKey() {
             return titleKey;
         }
 
         @Override
-        public final JThequeAction getAction() {
+        public JThequeAction getAction() {
             return action;
         }
 
         @Override
-        public final Collection<org.jtheque.features.able.Feature> getSubFeatures() {
+        public Collection<org.jtheque.features.able.Feature> getSubFeatures() {
             return Collections.unmodifiableCollection(subFeatures);
         }
 
@@ -155,17 +155,17 @@ public final class Features {
         }
 
         @Override
-        public final void removeSubFeatures(Collection<org.jtheque.features.able.Feature> features) {
+        public void removeSubFeatures(Collection<org.jtheque.features.able.Feature> features) {
             subFeatures.removeAll(features);
         }
 
         @Override
-        public final int getPosition() {
+        public int getPosition() {
             return position;
         }
 
         @Override
-        public final String getIcon() {
+        public String getIcon() {
             return icon;
         }
     }
