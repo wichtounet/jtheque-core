@@ -17,7 +17,6 @@ package org.jtheque.core.able;
  */
 
 import org.jtheque.core.able.application.Application;
-import org.jtheque.core.able.lifecycle.LifeCycle;
 import org.jtheque.utils.bean.Version;
 
 import java.util.Collection;
@@ -100,13 +99,6 @@ public interface Core {
      * @return The configuration of the core.
      */
     CoreConfiguration getConfiguration();
-
-    /**
-     * The lifecycle of the core.
-     *
-     * @return The lifecycle of the core.
-     */
-    LifeCycle getLifeCycle();
 
     /**
      * Return all the supported languages.

@@ -17,17 +17,17 @@ package org.jtheque.views.impl.windows;
  */
 
 import org.jtheque.core.able.Core;
-import org.jtheque.core.able.lifecycle.TitleEvent;
+import org.jtheque.core.able.lifecycle.LifeCycle;
 import org.jtheque.core.able.lifecycle.TitleListener;
-import org.jtheque.ui.able.Model;
-import org.jtheque.utils.SimplePropertiesCache;
 import org.jtheque.i18n.able.LanguageService;
+import org.jtheque.ui.able.Model;
 import org.jtheque.ui.able.UIUtils;
 import org.jtheque.ui.able.components.Borders;
 import org.jtheque.ui.able.components.LayerTabbedPane;
 import org.jtheque.ui.utils.builders.JThequePanelBuilder;
 import org.jtheque.ui.utils.builders.PanelBuilder;
 import org.jtheque.ui.utils.windows.frames.SwingFrameView;
+import org.jtheque.utils.SimplePropertiesCache;
 import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.utils.ui.SwingUtils;
@@ -75,6 +75,7 @@ public final class MainView extends SwingFrameView<Model> implements TitleListen
     private final Views views;
     private final UIUtils uiUtils;
     private final Core core;
+    private final LifeCycle lifeCycle;
     private final JThequeMenuBar menuBar;
 
     /**
@@ -86,9 +87,10 @@ public final class MainView extends SwingFrameView<Model> implements TitleListen
      * @param uiUtils         The ui utils.
      * @param menuBar         The menu bar.
      * @param languageService The language service.
+     * @param lifeCycle       The lifecycle.
      */
     public MainView(Core core, ViewService viewService, Views views, UIUtils uiUtils, JThequeMenuBar menuBar,
-                    LanguageService languageService) {
+                    LanguageService languageService, LifeCycle lifeCycle) {
         super();
 
         this.core = core;
@@ -97,6 +99,7 @@ public final class MainView extends SwingFrameView<Model> implements TitleListen
         this.uiUtils = uiUtils;
         this.menuBar = menuBar;
         this.languageService = languageService;
+        this.lifeCycle = lifeCycle;
 
         SimplePropertiesCache.put("mainView", this);
     }
@@ -106,7 +109,7 @@ public final class MainView extends SwingFrameView<Model> implements TitleListen
      */
     @Override
     public void init() {
-        setTitle(core.getLifeCycle().getTitle());
+        setTitle(lifeCycle.getTitle());
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
         tempListener = new TempWindowAdapter();
@@ -121,7 +124,7 @@ public final class MainView extends SwingFrameView<Model> implements TitleListen
         setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
         setMinimumSize(new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT));
 
-        core.getLifeCycle().addTitleListener(this);
+        lifeCycle.addTitleListener(this);
     }
 
     /**
@@ -130,7 +133,7 @@ public final class MainView extends SwingFrameView<Model> implements TitleListen
     public void fill() {
         //setIconImage(getDefaultWindowIcon());
 
-        controller = new MainController(core, uiUtils);
+        controller = new MainController(core, uiUtils, lifeCycle);
 
         SwingUtils.inEdt(new Runnable() {
             @Override
@@ -263,8 +266,8 @@ public final class MainView extends SwingFrameView<Model> implements TitleListen
     }
 
     @Override
-    public void titleUpdated(TitleEvent event) {
-        setTitle(event.getTitle());
+    public void titleUpdated(String title) {
+        setTitle(title);
     }
 
     @Override
@@ -299,7 +302,7 @@ public final class MainView extends SwingFrameView<Model> implements TitleListen
     private final class TempWindowAdapter extends WindowAdapter {
         @Override
         public void windowClosing(WindowEvent e) {
-            core.getLifeCycle().exit();
+            lifeCycle.exit();
         }
     }
 }

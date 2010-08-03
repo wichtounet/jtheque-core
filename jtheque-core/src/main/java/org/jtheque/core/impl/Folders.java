@@ -18,6 +18,7 @@ package org.jtheque.core.impl;
 
 import org.jtheque.core.able.Core;
 import org.jtheque.core.able.FoldersContainer;
+import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.io.FileUtils;
 
 import java.io.File;
@@ -27,12 +28,11 @@ import java.io.File;
  *
  * @author Baptiste Wicht
  */
+@ThreadSafe
 public final class Folders implements FoldersContainer {
-    private File applicationFolder;
-    private File modulesFolder;
-    private File logsFolder;
-
-    private final Core core;
+    private final File applicationFolder;
+    private final File modulesFolder;
+    private final File logsFolder;
 
     /**
      * Construct a new Folders.
@@ -42,39 +42,28 @@ public final class Folders implements FoldersContainer {
     public Folders(Core core) {
         super();
 
-        this.core = core;
+        applicationFolder = new File(core.getApplication().getFolderPath());
+        FileUtils.createIfNotExists(applicationFolder);
+
+        logsFolder = new File(applicationFolder, "logs");
+        FileUtils.createIfNotExists(logsFolder);
+
+        modulesFolder = new File(applicationFolder, "modules");
+        FileUtils.createIfNotExists(modulesFolder);
     }
 
     @Override
     public File getApplicationFolder() {
-        if (applicationFolder == null) {
-            applicationFolder = new File(core.getApplication().getFolderPath());
-
-            FileUtils.createIfNotExists(applicationFolder);
-        }
-
         return applicationFolder;
     }
 
     @Override
     public File getLogsFolder() {
-        if (logsFolder == null) {
-            logsFolder = new File(getApplicationFolder(), "logs");
-
-            FileUtils.createIfNotExists(logsFolder);
-        }
-
         return logsFolder;
     }
 
     @Override
     public File getModulesFolder() {
-        if (modulesFolder == null) {
-            modulesFolder = new File(getApplicationFolder(), "modules");
-
-            FileUtils.createIfNotExists(modulesFolder);
-        }
-
         return modulesFolder;
     }
 }

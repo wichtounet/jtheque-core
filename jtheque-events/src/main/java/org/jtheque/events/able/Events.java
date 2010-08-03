@@ -36,6 +36,19 @@ public final class Events {
     }
 
     /**
+     * Construct a new Event of level INFO. 
+     *
+     * @param source   The source of the event.
+     * @param titleKey The internationalization key of the title.
+     * @param log      The event log
+     *
+     * @return The created event.
+     */
+    public static Event newInfoEvent(String source, String titleKey, String log) {
+        return newEvent(EventLevel.INFO, new Date(), source, titleKey, null, log);
+    }
+
+    /**
      * Construct a new Event.
      *
      * @param level    The level of the event.

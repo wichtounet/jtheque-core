@@ -1,6 +1,7 @@
 package org.jtheque.views.impl.controllers;
 
 import org.jtheque.core.able.Core;
+import org.jtheque.core.able.lifecycle.LifeCycle;
 import org.jtheque.file.able.FileService;
 import org.jtheque.persistence.able.PersistenceService;
 import org.jtheque.ui.able.Action;
@@ -62,6 +63,9 @@ public class GeneralController extends AbstractController<MainView> {
 
     @Resource
     private Core core;
+
+    @Resource
+    private LifeCycle lifeCycle;
 
     @Resource
     private Controller<ConfigView> configController;
@@ -192,7 +196,7 @@ public class GeneralController extends AbstractController<MainView> {
      */
     @Action("menu.exit")
     public void exit() {
-        core.getLifeCycle().exit();
+        lifeCycle.exit();
     }
 
     /**

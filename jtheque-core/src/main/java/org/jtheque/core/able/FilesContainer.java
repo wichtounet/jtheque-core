@@ -16,13 +16,16 @@ package org.jtheque.core.able;
  * limitations under the License.
  */
 
+import org.jtheque.utils.annotations.ThreadSafe;
+
 import java.io.File;
 
 /**
- * A container for the files of the core. 
+ * The files of the core. 
  *
  * @author Baptiste Wicht
  */
+@ThreadSafe
 public interface FilesContainer {
     /**
      * Return the log file of the application.

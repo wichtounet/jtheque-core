@@ -20,6 +20,16 @@ import java.util.EventListener;
  * limitations under the License.
  */
 
+/**
+ * An application listener. Indicates when an application is launched.
+ *
+ * @author Baptiste Wicht
+ */
 public interface ApplicationListener extends EventListener {
+    /**
+     * An application has been launched.
+     *
+     * @param application The launched application. 
+     */
     void applicationLaunched(Application application);
 }

@@ -17,6 +17,7 @@ package org.jtheque.views.impl;
  */
 
 import org.jtheque.core.able.Core;
+import org.jtheque.core.able.lifecycle.LifeCycle;
 import org.jtheque.ui.able.UIUtils;
 
 import javax.swing.JTabbedPane;
@@ -34,18 +35,21 @@ import java.awt.event.WindowEvent;
 public final class MainController extends WindowAdapter implements ChangeListener {
     private final Core core;
     private final UIUtils uiUtils;
+    private final LifeCycle lifeCycle;
 
     /**
      * Construct a new MainController.
      *
      * @param core    The core.
      * @param uiUtils The UI Utils.
+     * @param lifeCycle
      */
-    public MainController(Core core, UIUtils uiUtils) {
+    public MainController(Core core, UIUtils uiUtils, LifeCycle lifeCycle) {
         super();
 
         this.core = core;
         this.uiUtils = uiUtils;
+        this.lifeCycle = lifeCycle;
     }
 
     @Override
@@ -55,9 +59,9 @@ public final class MainController extends WindowAdapter implements ChangeListene
         int index = tabbedPane.getSelectedIndex();
 
         if (index == -1) {
-            core.getLifeCycle().setCurrentFunction("");
+            lifeCycle.setCurrentFunction("");
         } else {
-            core.getLifeCycle().setCurrentFunction(tabbedPane.getTitleAt(index));
+            lifeCycle.setCurrentFunction(tabbedPane.getTitleAt(index));
         }
     }
 
@@ -70,7 +74,7 @@ public final class MainController extends WindowAdapter implements ChangeListene
                 "dialogs.confirm.exit.title", applicationName);
 
         if (yes) {
-            core.getLifeCycle().exit();
+            lifeCycle.exit();
         }
     }
 }

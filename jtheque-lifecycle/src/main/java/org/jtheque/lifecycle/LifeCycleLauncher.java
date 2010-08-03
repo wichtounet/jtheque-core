@@ -4,6 +4,7 @@ import org.jtheque.collections.able.CollectionListener;
 import org.jtheque.collections.able.CollectionsService;
 import org.jtheque.core.able.Core;
 import org.jtheque.core.able.application.Application;
+import org.jtheque.core.able.lifecycle.LifeCycle;
 import org.jtheque.core.utils.SystemProperty;
 import org.jtheque.events.able.EventLevel;
 import org.jtheque.events.able.EventService;
@@ -68,6 +69,9 @@ public class LifeCycleLauncher implements CollectionListener {
 
     @Resource
     private Core core;
+
+    @Resource
+    private LifeCycle lifeCycle;
 
     @Resource
     private Views views;
@@ -157,7 +161,7 @@ public class LifeCycleLauncher implements CollectionListener {
 
         moduleService.startModules();
 
-        core.getLifeCycle().refreshTitle();
+        lifeCycle.refreshTitle();
 
         views.displayConditionalViews();
     }

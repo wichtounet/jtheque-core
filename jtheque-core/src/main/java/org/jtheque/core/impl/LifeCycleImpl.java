@@ -2,14 +2,19 @@ package org.jtheque.core.impl;
 
 import org.jtheque.core.able.Core;
 import org.jtheque.core.able.lifecycle.FunctionListener;
+import org.jtheque.core.able.lifecycle.LifeCycle;
 import org.jtheque.core.able.lifecycle.TitleListener;
 import org.jtheque.core.utils.SystemProperty;
-import org.jtheque.events.able.EventLevel;
 import org.jtheque.events.able.EventService;
 import org.jtheque.events.able.Events;
+import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.ThreadUtils;
+import org.jtheque.utils.annotations.GuardedInternally;
+import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.collections.WeakEventListenerList;
 import org.jtheque.utils.io.FileUtils;
+
+import javax.annotation.Resource;
 
 import java.io.File;
 
@@ -34,34 +39,24 @@ import java.io.File;
  *
  * @author Baptiste Wicht
  */
-public class LifeCycleImpl implements org.jtheque.core.able.lifecycle.LifeCycle {
+@ThreadSafe
+public final class LifeCycleImpl implements LifeCycle {
+    private static final int RESTART_EXIT_CODE = 666;
+    
+    @GuardedInternally
     private final WeakEventListenerList<FunctionListener> functionListeners = WeakEventListenerList.create();
+
+    @GuardedInternally
     private final WeakEventListenerList<TitleListener> titleListeners = WeakEventListenerList.create();
 
-    private String currentFunction;
-    private String title = "JTheque";
+    @Resource
+    private Core core;
 
-    private final Core core;
-    private final EventService eventService;
+    @Resource
+    private EventService eventService;
 
-    private final ApplicationShutDownHook hook;
-
-    /**
-     * Construct a new LifeCycleImpl.
-     *
-     * @param eventService The event service.
-     * @param core         The core.
-     */
-    public LifeCycleImpl(EventService eventService, Core core) {
-        super();
-
-        this.eventService = eventService;
-        this.core = core;
-
-        hook = new ApplicationShutDownHook();
-
-        Runtime.getRuntime().addShutdownHook(hook);
-    }
+    private volatile String currentFunction;
+    private volatile String title = "JTheque";
 
     @Override
     public void exit() {
@@ -77,7 +72,7 @@ public class LifeCycleImpl implements org.jtheque.core.able.lifecycle.LifeCycle 
     public void restart() {
         FileUtils.clearFolder(new File(SystemProperty.USER_DIR.get() + "cache"));
 
-        exit(666);
+        exit(RESTART_EXIT_CODE);
     }
 
     /**
@@ -86,18 +81,9 @@ public class LifeCycleImpl implements org.jtheque.core.able.lifecycle.LifeCycle 
      * @param code The exit code.
      */
     private void exit(int code) {
-        Runtime.getRuntime().removeShutdownHook(hook);
-
-        addEventClose();
+        eventService.addEvent(Events.newInfoEvent("User", "events.close", EventService.CORE_EVENT_LOG));
 
         Runtime.getRuntime().exit(code);
-    }
-
-    /**
-     * Add the event to indicate the close of JTheque.
-     */
-    private void addEventClose() {
-        eventService.addEvent(Events.newEvent(EventLevel.INFO, "User", "events.close", EventService.CORE_EVENT_LOG));
     }
 
     @Override
@@ -121,32 +107,24 @@ public class LifeCycleImpl implements org.jtheque.core.able.lifecycle.LifeCycle 
 
     @Override
     public void addTitleListener(TitleListener listener) {
-        if (listener != null) {
-            titleListeners.add(listener);
-        }
+        titleListeners.add(listener);
     }
 
     @Override
     public void removeTitleListener(TitleListener listener) {
-        if (listener != null) {
-            titleListeners.remove(listener);
-        }
+        titleListeners.remove(listener);
     }
 
     @Override
     public void addFunctionListener(FunctionListener listener) {
-        if (listener != null) {
-            functionListeners.add(listener);
-        }
+        functionListeners.add(listener);
     }
 
     @Override
     public void removeFunctionListener(FunctionListener listener) {
-        if (listener != null) {
-            functionListeners.remove(listener);
-        }
+        functionListeners.remove(listener);
     }
-    
+
     @Override
     public void refreshTitle() {
         updateTitle();
@@ -160,7 +138,7 @@ public class LifeCycleImpl implements org.jtheque.core.able.lifecycle.LifeCycle 
     private void updateTitle() {
         StringBuilder builder = new StringBuilder(50);
 
-        if (currentFunction != null && !currentFunction.isEmpty()) {
+        if (StringUtils.isNotEmpty(currentFunction)) {
             builder.append(currentFunction);
             builder.append(" - ");
         }
@@ -191,27 +169,6 @@ public class LifeCycleImpl implements org.jtheque.core.able.lifecycle.LifeCycle 
     private void fireFunctionUpdated(String function) {
         for (FunctionListener listener : functionListeners) {
             listener.functionUpdated(function);
-        }
-    }
-
-    /**
-     * This class is a hook on the shutdown of JTheque. When a shutdown is detected, the thread detect it and if this
-     * isn't JTheque who has executed the close, we properly close the resources. This is for prevent accident kill of
-     * JTheque.
-     *
-     * @author Baptiste Wicht
-     */
-    private final class ApplicationShutDownHook extends Thread {
-        /**
-         * Construct a new <code>ApplicationShutDownHook</code>.
-         */
-        ApplicationShutDownHook() {
-            super();
-        }
-
-        @Override
-        public void run() {
-            addEventClose();
         }
     }
 }

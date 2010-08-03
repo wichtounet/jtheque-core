@@ -16,11 +16,16 @@ package org.jtheque.core.able;
  * limitations under the License.
  */
 
+import org.jtheque.utils.annotations.ThreadSafe;
+
 import java.io.File;
 
 /**
+ * The folders of the core. 
+ *
  * @author Baptiste Wicht
  */
+@ThreadSafe
 public interface FoldersContainer {
     /**
      * Return the application folder. It seems the root folder where the application is launched.

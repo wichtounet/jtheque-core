@@ -1,5 +1,7 @@
 package org.jtheque.core.able.lifecycle;
 
+import org.jtheque.utils.annotations.ThreadSafe;
+
 /*
  * Copyright JTheque (Baptiste Wicht)
  *
@@ -17,10 +19,11 @@ package org.jtheque.core.able.lifecycle;
  */
 
 /**
- * A lifecyle specification. This class is responsible of the lifecyle of the core.
+ * A lifecycle specification. This class is responsible of the lifecycle of the core.
  *
  * @author Baptiste Wicht
  */
+@ThreadSafe
 public interface LifeCycle {
     /**
      * Exit the application.

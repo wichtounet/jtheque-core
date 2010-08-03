@@ -18,14 +18,15 @@ package org.jtheque.update.impl;
 
 import org.jtheque.core.able.Core;
 import org.jtheque.core.able.Versionable;
+import org.jtheque.core.able.lifecycle.LifeCycle;
 import org.jtheque.core.utils.SystemProperty;
-import org.jtheque.errors.able.Errors;
 import org.jtheque.errors.able.ErrorService;
+import org.jtheque.errors.able.Errors;
 import org.jtheque.events.able.EventLevel;
-import org.jtheque.events.able.Events;
 import org.jtheque.events.able.EventService;
-import org.jtheque.modules.able.ModuleService;
+import org.jtheque.events.able.Events;
 import org.jtheque.modules.able.Module;
+import org.jtheque.modules.able.ModuleService;
 import org.jtheque.modules.able.ModuleState;
 import org.jtheque.modules.impl.InstallationResult;
 import org.jtheque.resources.able.IResourceService;
@@ -65,6 +66,9 @@ import java.util.Set;
 public final class UpdateService implements IUpdateService {
     @Resource
     private Core core;
+
+    @Resource
+    private LifeCycle lifecycle;
 
     @Resource
     private UIUtils uiUtils;
@@ -108,7 +112,7 @@ public final class UpdateService implements IUpdateService {
 
         applyCoreVersion(onlineVersion);
 
-        core.getLifeCycle().restart();
+        lifecycle.restart();
     }
 
     @Override

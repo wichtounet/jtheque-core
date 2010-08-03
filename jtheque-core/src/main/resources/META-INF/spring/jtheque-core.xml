@@ -8,17 +8,19 @@
             http://www.springframework.org/schema/osgi
             http://www.springframework.org/schema/osgi/spring-osgi.xsd">
 
-    <bean id="core" class="org.jtheque.core.impl.Core">
+    <bean id="lifecycle" class="org.jtheque.core.impl.LifeCycleImpl" />
+
+    <bean id="core" class="org.jtheque.core.impl.CoreImpl">
         <constructor-arg>
             <osgi:reference interface="org.jtheque.states.able.StateService"/>
         </constructor-arg>
         <constructor-arg>
             <osgi:reference interface="org.jtheque.images.able.ImageService"/>
         </constructor-arg>
-        <constructor-arg>
-            <osgi:reference interface="org.jtheque.events.able.EventService"/>
-        </constructor-arg>
     </bean>
 
     <osgi:service ref="core" interface="org.jtheque.core.able.Core"/>
+    <osgi:service ref="lifecycle" interface="org.jtheque.core.able.lifecycle.LifeCycle"/>
+
+    <osgi:reference id="eventService" interface="org.jtheque.events.able.EventService"/>
 </beans>

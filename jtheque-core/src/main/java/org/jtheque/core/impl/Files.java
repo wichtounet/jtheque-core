@@ -18,6 +18,7 @@ package org.jtheque.core.impl;
 
 import org.jtheque.core.able.Core;
 import org.jtheque.core.able.FilesContainer;
+import org.jtheque.utils.annotations.ThreadSafe;
 
 import java.io.File;
 
@@ -26,6 +27,7 @@ import java.io.File;
  *
  * @author Baptiste Wicht
  */
+@ThreadSafe
 public final class Files implements FilesContainer {
     private final Core core;
 

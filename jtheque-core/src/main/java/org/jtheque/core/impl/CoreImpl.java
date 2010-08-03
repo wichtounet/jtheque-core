@@ -16,13 +16,28 @@ package org.jtheque.core.impl;
  * limitations under the License.
  */
 
+/*
+ * Copyright JTheque (Baptiste Wicht)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 import org.jtheque.core.able.ApplicationListener;
+import org.jtheque.core.able.Core;
 import org.jtheque.core.able.CoreConfiguration;
 import org.jtheque.core.able.FilesContainer;
 import org.jtheque.core.able.FoldersContainer;
 import org.jtheque.core.able.application.Application;
-import org.jtheque.core.able.lifecycle.LifeCycle;
-import org.jtheque.events.able.EventService;
 import org.jtheque.images.able.ImageService;
 import org.jtheque.states.able.StateService;
 import org.jtheque.utils.annotations.GuardedInternally;
@@ -36,11 +51,11 @@ import java.io.File;
 import java.util.Collection;
 
 /**
- * The core.
+ * The core implementation.
  *
  * @author Baptiste Wicht
  */
-public final class Core implements org.jtheque.core.able.Core {
+public final class CoreImpl implements Core {
     private static final String CORE_MESSAGES_FILE = "http://jtheque.baptiste-wicht.com/files/messages/jtheque-core-messages.xml";
 
     @GuardedInternally
@@ -49,34 +64,38 @@ public final class Core implements org.jtheque.core.able.Core {
     @GuardedInternally
     private final Collection<String> creditsMessage = CollectionUtils.newConcurrentList();
 
-    @GuardedInternally //Because cannot be modified
+    @GuardedInternally
+    //Because cannot be modified
     private Collection<String> languages;
 
+    @GuardedInternally
     private final FoldersContainer foldersContainer;
-    private final FilesContainer filesContainer;
-    private final CoreConfiguration configuration;
-    private final ImageService imageService;
-    private final LifeCycle lifeCycle;
 
-    private Application application;
+    @GuardedInternally
+    private final FilesContainer filesContainer;
+
+    @GuardedInternally
+    private final CoreConfiguration configuration;
+
+    private final ImageService imageService;
+
+    private volatile Application application;
 
     /**
      * Construct a new Core.
      *
      * @param stateService The state service.
      * @param imageService The resource service.
-     * @param eventService The event service.
      */
-    public Core(StateService stateService, ImageService imageService, EventService eventService) {
+    public CoreImpl(StateService stateService, ImageService imageService) {
         super();
 
         this.imageService = imageService;
-        lifeCycle = new LifeCycleImpl(eventService, this);
 
         foldersContainer = new Folders(this);
         filesContainer = new Files(this);
 
-        configuration = stateService.getState(new org.jtheque.core.impl.CoreConfiguration());
+        configuration = stateService.getState(new CoreConfigurationImpl());
 
         creditsMessage.add("about.view.copyright");
     }
@@ -118,6 +137,11 @@ public final class Core implements org.jtheque.core.able.Core {
         listeners.remove(listener);
     }
 
+    /**
+     * Fire an application launched event.
+     *
+     * @param application The new application. 
+     */
     private void fireApplicationLaunched(Application application) {
         for (ApplicationListener applicationListener : listeners) {
             applicationListener.applicationLaunched(application);
@@ -161,18 +185,13 @@ public final class Core implements org.jtheque.core.able.Core {
     }
 
     @Override
-    public LifeCycle getLifeCycle() {
-        return lifeCycle;
-    }
-
-    @Override
     public CoreConfiguration getConfiguration() {
         return configuration;
     }
 
     @Override
     public Collection<String> getPossibleLanguages() {
-        if(languages == null){
+        if (languages == null) {
             throw new IllegalStateException("The application has not been launched");
         }
 
