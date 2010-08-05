@@ -17,15 +17,17 @@ package org.jtheque.persistence.utils;
  */
 
 import org.jtheque.persistence.able.Entity;
+import org.jtheque.utils.annotations.ThreadSafe;
 
 import java.util.Collection;
 
 /**
- * A generic data access object.
+ * A generic data access object. All the operations are directly made in database with no cache.
  *
  * @author Baptiste Wicht
  * @param <T> The class managed by the dao.
  */
+@ThreadSafe
 public abstract class SimpleJDBCDao<T extends Entity> extends AbstractDao<T> {
     /**
      * Construct a new CachedJDBCDao.
@@ -47,10 +49,13 @@ public abstract class SimpleJDBCDao<T extends Entity> extends AbstractDao<T> {
     }
 
     @Override
-    public void create(T entity) {
-        getContext().saveOrUpdate(entity, getQueryMapper());
+    public boolean exists(int id) {
+        return get(id) != null;
+    }
 
-        fireDataChanged();
+    @Override
+    public boolean exists(T entity) {
+        return exists(entity.getId());
     }
 
     @Override

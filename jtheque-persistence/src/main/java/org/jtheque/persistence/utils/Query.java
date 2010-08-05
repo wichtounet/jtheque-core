@@ -1,6 +1,7 @@
 package org.jtheque.persistence.utils;
 
-import java.util.Arrays;
+import org.jtheque.utils.annotations.Immutable;
+import org.jtheque.utils.collections.ArrayUtils;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -23,6 +24,7 @@ import java.util.Arrays;
  *
  * @author Baptiste Wicht
  */
+@Immutable
 public final class Query implements org.jtheque.persistence.able.Query {
     private final String sqlQuery;
     private final Object[] parameters;
@@ -37,16 +39,16 @@ public final class Query implements org.jtheque.persistence.able.Query {
         super();
 
         this.sqlQuery = sqlQuery;
-        this.parameters = Arrays.copyOf(parameters, parameters.length);
+        this.parameters = ArrayUtils.copyOf(parameters);
     }
 
     @Override
-    public String getSqlQuery() {
+    public String getSQLQuery() {
         return sqlQuery;
     }
 
     @Override
     public Object[] getParameters() {
-        return Arrays.copyOf(parameters, parameters.length);
+        return ArrayUtils.copyOf(parameters);
     }
 }

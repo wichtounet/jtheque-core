@@ -60,11 +60,15 @@ public interface Entity extends Comparable<Entity> {
 
     /**
      * Save the state of the data object to a memento. By default this method isn't supported by Entity.
+     *
+     * @throws UnsupportedOperationException If the operation is not supported by the sub class.
      */
     void saveToMemento();
 
     /**
      * Restore the state of the data object from the memento. By default this method isn't supported by Entity.
+     *
+     * @throws UnsupportedOperationException If the operation is not supported by the sub class.
      */
     void restoreMemento();
 }

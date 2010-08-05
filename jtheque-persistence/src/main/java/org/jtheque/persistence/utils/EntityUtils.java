@@ -48,4 +48,23 @@ public final class EntityUtils {
 
         return false;
     }
+
+    /**
+     * Search the Iterable for an Entity with the given temporary id.
+     *
+     * @param list The Iterable to search on.
+     * @param id   The temporary id to search for.
+     * @param <T>  The type of entity.
+     *
+     * @return The entity with the given temporary id if there is one otherwise {@code null}
+     */
+    public static <T extends Entity> T getByTemporaryId(Iterable<T> list, int id) {
+        for (T d : list) {
+            if (d.getTemporaryContext().getId() == id) {
+                return d;
+            }
+        }
+
+        return null;
+    }
 }

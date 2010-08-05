@@ -21,6 +21,7 @@ import org.jtheque.collections.able.DaoCollections;
 import org.jtheque.persistence.able.Entity;
 import org.jtheque.persistence.able.QueryMapper;
 import org.jtheque.persistence.utils.CachedJDBCDao;
+import org.jtheque.persistence.utils.EntityUtils;
 import org.jtheque.persistence.utils.Query;
 
 import org.springframework.jdbc.core.RowMapper;
@@ -28,7 +29,6 @@ import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 
 /**
  * A Data Access Object implementation for collections.
@@ -63,13 +63,7 @@ public final class DaoCollectionsImpl extends CachedJDBCDao<Collection> implemen
 
     @Override
     public Collection getCollectionByTemporaryId(int id) {
-        for (Collection collection : getAll()) {
-            if (collection.getTemporaryContext().getId() == id) {
-                return collection;
-            }
-        }
-
-        return null;
+        return EntityUtils.getByTemporaryId(getAll(), id);
     }
 
     @Override
@@ -84,20 +78,15 @@ public final class DaoCollectionsImpl extends CachedJDBCDao<Collection> implemen
 
     @Override
     public Collection getCollection(String name) {
-        List<Collection> collections = getContext().getTemplate().query(
-                "SELECT * FROM " + TABLE + " WHERE TITLE = ?", rowMapper, name);
+        load();
 
-        if (collections.isEmpty()) {
-            return null;
+        for (Collection collection : getAll()) {
+            if (name.equals(collection.getTitle())) {
+                return collection;
+            }
         }
 
-        Collection collection = collections.get(0);
-
-        if (isNotInCache(collection.getId())) {
-            getCache().put(collection.getId(), collection);
-        }
-
-        return getCache().get(collection.getId());
+        return null;
     }
 
     @Override
@@ -117,15 +106,6 @@ public final class DaoCollectionsImpl extends CachedJDBCDao<Collection> implemen
         for (Collection collection : collections) {
             getCache().put(collection.getId(), collection);
         }
-
-        setCacheEntirelyLoaded();
-    }
-
-    @Override
-    protected void load(int i) {
-        Collection collection = getContext().getDataByID(TABLE, i, rowMapper);
-
-        getCache().put(i, collection);
     }
 
     @Override

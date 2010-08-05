@@ -91,7 +91,7 @@ public class CoreBackuper implements ModuleBackuper {
                 //Temporary link to restore for others backupers
                 collection.getTemporaryContext().setId(node.getChildIntValue("id"));
 
-                daoCollections.create(collection);
+                daoCollections.save(collection);
             }
         }
     }

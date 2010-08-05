@@ -22,7 +22,7 @@ import java.util.Collection;
  * A data container. It seems a class who can give access to a list of Entity.
  *
  * @author Baptiste Wicht
- * @param <T> The class of data this container can provide.
+ * @param <T> The type of data this container can provide.
  */
 public interface DataContainer<T extends Entity> {
     /**

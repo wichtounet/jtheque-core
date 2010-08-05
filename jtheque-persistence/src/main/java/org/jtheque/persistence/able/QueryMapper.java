@@ -1,7 +1,5 @@
 package org.jtheque.persistence.able;
 
-import org.jtheque.persistence.utils.Query;
-
 /*
  * Copyright JTheque (Baptiste Wicht)
  *
@@ -19,9 +17,11 @@ import org.jtheque.persistence.utils.Query;
  */
 
 /**
- * A query mapper. It seems a constructors of SQL Queries.
+ * A query mapper. Namely, a query mapper create SQL queries from Entity to insert them on database or update them.
  *
  * @author Baptiste Wicht
+ * @see org.jtheque.persistence.able.Query
+ * @see org.jtheque.persistence.able.Entity
  */
 public interface QueryMapper {
     /**

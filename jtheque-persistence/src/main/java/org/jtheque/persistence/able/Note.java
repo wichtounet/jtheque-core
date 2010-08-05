@@ -17,22 +17,68 @@ package org.jtheque.persistence.able;
  */
 
 /**
- * A note specification.
+ * A properties class for notes.
  *
  * @author Baptiste Wicht
  */
-public interface Note {
-    /**
-     * Return the i18n key of the note.
-     *
-     * @return The i18n key of the note.
-     */
-    String getI18nKey();
+public enum Note {
+    NULL(1, "data.notes.null"),
+    BAD(2, "data.notes.bad"),
+    MIDDLE(3, "data.notes.middle"),
+    GOOD(4, "data.notes.good"),
+    VERYGOOD(5, "data.notes.verygood"),
+    PERFECT(6, "data.notes.perfect"),
+    UNDEFINED(7, "data.notes.undefined");
+
+    private final int note;
+    private final String key;
 
     /**
-     * Return the value of the note.
+     * Construct a new NoteType.
      *
-     * @return The int value of note.
+     * @param note The note value.
+     * @param key  The i18n key of the Note.
      */
-    DaoNotes.NoteType getValue();
+    Note(int note, String key) {
+        this.note = note;
+        this.key = key;
+    }
+
+    /**
+     * Return the int value of the NoteType.
+     *
+     * @return The int value of the enum.
+     */
+    public int intValue() {
+        return note;
+    }
+
+    /**
+     * Return the i18n key of the Note.
+     *
+     * @return The i18n key of the Note.
+     */
+    public String getKey() {
+        return key;
+    }
+
+    /**
+     * Return the enum with the enum int value.
+     *
+     * @param e The int value to search.
+     *
+     * @return The NoteType corresponding to the int value to search.
+     */
+    public static Note fromIntValue(int e) {
+        Note note = MIDDLE;
+
+        for (Note n : values()) {
+            if (n.ordinal() == e) {
+                note = n;
+                break;
+            }
+        }
+
+        return note;
+    }
 }

@@ -39,7 +39,7 @@
         <constructor-arg ref="dataSource"/>
     </bean>
 
-    <bean id="daoPersistenceContext" class="org.jtheque.persistence.impl.DaoPersistenceContext">
+    <bean id="daoPersistenceContext" class="org.jtheque.persistence.impl.SpringDaoPersistenceContext">
         <constructor-arg ref="jdbcTemplate"/>
     </bean>
 

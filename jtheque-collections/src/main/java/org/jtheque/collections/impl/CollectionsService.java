@@ -131,7 +131,7 @@ public final class CollectionsService implements org.jtheque.collections.able.Co
             collection.setPassword(CryptoUtils.hashMessage(password, Hasher.SHA256));
         }
 
-        daoCollections.create(collection);
+        daoCollections.save(collection);
     }
 
     /**

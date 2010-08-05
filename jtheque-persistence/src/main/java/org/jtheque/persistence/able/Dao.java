@@ -60,21 +60,14 @@ public interface Dao<T extends Entity> {
     T get(int id);
 
     /**
-     * Create an empty instance of the entity.
+     * Create an empty instance of the entity. The entity is just created, not persisted.
      *
      * @return An empty instance of the entity.
      */
     T create();
 
     /**
-     * Create the entity.
-     *
-     * @param entity The entity to create.
-     */
-    void create(T entity);
-
-    /**
-     * Save the entity.
+     * Save the entity. If the entity has not been created, the entity will be created in database.
      *
      * @param entity The entity to save.
      */
@@ -94,7 +87,7 @@ public interface Dao<T extends Entity> {
      *
      * @param id The id of the entity to delete.
      *
-     * @return true if the entity has been deleted else false.
+     * @return {@code true} if the entity has been deleted otherwise {@code false}.
      */
     boolean delete(int id);
 
@@ -106,11 +99,20 @@ public interface Dao<T extends Entity> {
     String getTable();
 
     /**
-     * Indicate if the simple entity exists or not.
+     * Indicate if the entity exists or not.
      *
      * @param entity The entity to test for exists or not.
      *
-     * @return <code>true</code> if the entity exists else <code>false</code>.
+     * @return {@code true} if the entity exists otherwise {@code false}.
      */
     boolean exists(T entity);
+
+    /**
+     * Indicate if an entity exists with the given id.
+     *
+     * @param id The id to test.
+     *
+     * @return {@code true} if there is an entity with this id otherwise {@code false}.
+     */
+    boolean exists(int id);
 }

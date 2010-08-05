@@ -17,10 +17,13 @@ package org.jtheque.persistence.utils;
  */
 
 import org.jtheque.persistence.able.Entity;
+import org.jtheque.utils.annotations.GuardedBy;
+import org.jtheque.utils.annotations.GuardedInternally;
+import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.collections.CollectionUtils;
 
 import java.util.Collection;
-import java.util.Map;
+import java.util.concurrent.ConcurrentMap;
 
 /**
  * A generic data access object.
@@ -28,10 +31,17 @@ import java.util.Map;
  * @author Baptiste Wicht
  * @param <T> The class managed by the dao.
  */
+@ThreadSafe
 public abstract class CachedJDBCDao<T extends Entity> extends AbstractDao<T> {
-    private final Map<Integer, T> cache;
+    @GuardedInternally
+    private final ConcurrentMap<Integer, T> cache = CollectionUtils.newConcurrentMap(50);
 
-    private boolean cacheEntirelyLoaded;
+    @GuardedBy("this")
+    private volatile boolean cacheEntirelyLoaded;
+
+    private final Object clearAtomicityLock = new Object();
+    private final Object deleteAtomicityLock = new Object();
+    private final Object saveAtomicityLock = new Object();
 
     /**
      * Construct a new CachedJDBCDao.
@@ -40,15 +50,13 @@ public abstract class CachedJDBCDao<T extends Entity> extends AbstractDao<T> {
      */
     protected CachedJDBCDao(String table) {
         super(table);
-
-        cache = new CacheHashMap<Integer, T>(50);
     }
 
     @Override
     public final Collection<T> getAll() {
         load();
 
-        return CollectionUtils.copyOf(cache.values());
+        return CollectionUtils.protect(cache.values());
     }
 
     /**
@@ -56,16 +64,26 @@ public abstract class CachedJDBCDao<T extends Entity> extends AbstractDao<T> {
      *
      * @return The cache of the DAO.
      */
-    protected final Map<Integer, T> getCache() {
+    protected final ConcurrentMap<Integer, T> getCache() {
         return cache;
     }
 
     /**
-     * Load the DAO.
+     * Load the DAO. Use the double-check locking idiom to load the cache if necessary only.
      */
     protected final void load() {
-        if (!cacheEntirelyLoaded) {
-            loadCache();
+        boolean loaded = cacheEntirelyLoaded;
+
+        if (!loaded) {
+            synchronized (this) {
+                loaded = cacheEntirelyLoaded;
+
+                if (!loaded) {
+                    loadCache();
+
+                    cacheEntirelyLoaded = true;
+                }
+            }
         }
     }
 
@@ -74,59 +92,55 @@ public abstract class CachedJDBCDao<T extends Entity> extends AbstractDao<T> {
      */
     protected abstract void loadCache();
 
-    /**
-     * Load the entity.
-     *
-     * @param i The ID of the entity.
-     */
-    protected abstract void load(int i);
-
     @Override
     public final T get(int id) {
-        if (isNotInCache(id)) {
-            load(id);
-        }
+        load();
 
         return cache.get(id);
     }
 
     @Override
-    public void create(T entity) {
-        getContext().saveOrUpdate(entity, getQueryMapper());
+    public boolean exists(int id) {
+        load();
 
-        cache.put(entity.getId(), entity);
+        return cache.containsKey(id);
+    }
 
-        fireDataChanged();
+    @Override
+    public boolean exists(T entity) {
+        return exists(entity.getId());
     }
 
     @Override
     public void save(T entity) {
-        getContext().saveOrUpdate(entity, getQueryMapper());
+        synchronized (saveAtomicityLock) {
+            getContext().saveOrUpdate(entity, getQueryMapper());
+
+            cache.putIfAbsent(entity.getId(), entity);
+        }
 
         fireDataChanged();
     }
 
     @Override
     public boolean delete(T entity) {
-        boolean deleted = getContext().delete(getTable(), entity);
-
-        if (deleted) {
-            cache.remove(entity.getId());
-
-            fireDataChanged();
-        }
-
-        return deleted;
+        return delete(entity.getId());
     }
 
     @Override
     public boolean delete(int id) {
-        boolean deleted = getContext().delete(getTable(), id);
+        boolean deleted;
+
+        synchronized (deleteAtomicityLock) {
+            deleted = getContext().delete(getTable(), id);
+
+            if (deleted) {
+                cache.remove(id);
+            }
+        }
 
         if (deleted) {
             fireDataChanged();
-
-            cache.remove(id);
         }
 
         return deleted;
@@ -137,9 +151,13 @@ public abstract class CachedJDBCDao<T extends Entity> extends AbstractDao<T> {
      */
     @Override
     public final void clearAll() {
-        getContext().deleteAll(getTable());
+        synchronized (clearAtomicityLock) {
+            getContext().deleteAll(getTable());
 
-        cache.clear();
+            cache.clear();
+        }
+
+        fireDataChanged();
     }
 
     /**
@@ -161,12 +179,4 @@ public abstract class CachedJDBCDao<T extends Entity> extends AbstractDao<T> {
     protected final boolean isCacheEntirelyLoaded() {
         return cacheEntirelyLoaded;
     }
-
-    /**
-     * Set if the cache has been entirely loaded or not.
-     */
-    protected final void setCacheEntirelyLoaded() {
-        cacheEntirelyLoaded = true;
-    }
-
 }

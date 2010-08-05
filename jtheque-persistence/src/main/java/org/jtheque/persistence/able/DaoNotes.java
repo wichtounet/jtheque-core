@@ -16,13 +16,17 @@ package org.jtheque.persistence.able;
  * limitations under the License.
  */
 
+import org.jtheque.utils.annotations.ThreadSafe;
+
 import java.awt.Image;
 
 /**
- * A dao notes specification.
+ * A DAO to manage notes. You cannot delete or create new notes, there are automatically persisted in the Note.
  *
  * @author Baptiste Wicht
+ * @see org.jtheque.persistence.able.Note
  */
+@ThreadSafe
 public interface DaoNotes {
     /**
      * Return all the notes of the dao.
@@ -30,15 +34,6 @@ public interface DaoNotes {
      * @return An array containing all the notes.
      */
     Note[] getNotes();
-
-    /**
-     * Return the note with the specific value.
-     *
-     * @param value The value of the note we want
-     *
-     * @return The note with this value or <code>null</code> if we doesn't it.
-     */
-    Note getNote(NoteType value);
 
     /**
      * Return the default note.
@@ -53,6 +48,8 @@ public interface DaoNotes {
      * @param note The note to get the image for.
      *
      * @return The image for the note.
+     *
+     * @throws NullPointerException If the note is null
      */
     Image getImage(Note note);
 
@@ -62,62 +59,8 @@ public interface DaoNotes {
      * @param note The note.
      *
      * @return The internationalized text of the note.
+     *
+     * @throws NullPointerException If the note is null
      */
     String getInternationalizedText(Note note);
-
-    /**
-     * A properties class for notes.
-     *
-     * @author Baptiste Wicht
-     */
-    enum NoteType {
-        ERROR(0),
-        NULL(1),
-        BAD(2),
-        MIDDLE(3),
-        GOOD(4),
-        VERYGOOD(5),
-        PERFECT(6),
-        UNDEFINED(7);
-
-        private final int note;
-
-        /**
-         * Construct a new NoteType.
-         *
-         * @param note The note value.
-         */
-        NoteType(int note) {
-            this.note = note;
-        }
-
-        /**
-         * Return the int value of the NoteType.
-         *
-         * @return The int value of the enum.
-         */
-        public int intValue() {
-            return note;
-        }
-
-        /**
-         * Return the enum with the enum int value.
-         *
-         * @param e The int value to search.
-         *
-         * @return The NoteType corresponding to the int value to search.
-         */
-        public static NoteType getEnum(int e) {
-            NoteType note = MIDDLE;
-
-            for (NoteType n : values()) {
-                if (n.ordinal() == e) {
-                    note = n;
-                    break;
-                }
-            }
-
-            return note;
-        }
-    }
 }

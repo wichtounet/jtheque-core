@@ -1,5 +1,7 @@
 package org.jtheque.persistence.able;
 
+import org.jtheque.utils.annotations.ThreadSafe;
+
 /*
  * Copyright JTheque (Baptiste Wicht)
  *
@@ -17,14 +19,15 @@ package org.jtheque.persistence.able;
  */
 
 /**
- * A persistence manager. It seems the manager who's responsible for the persistence of the work entities. This manager
- * provide methods to manage entities and to open secondary connection.
+ * A persistence service. This service is very simple, the only operation it provide is a method to clear the entire
+ * database.
  *
  * @author Baptiste Wicht
  */
+@ThreadSafe
 public interface PersistenceService {
     /**
-     * Clear the database.
+     * Clear the database. Only the data are deleted, not the database, the tables and the indexes.
      */
     void clearDatabase();
 }

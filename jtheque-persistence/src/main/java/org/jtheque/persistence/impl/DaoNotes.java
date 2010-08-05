@@ -3,12 +3,12 @@ package org.jtheque.persistence.impl;
 import org.jtheque.i18n.able.LanguageService;
 import org.jtheque.images.able.ImageService;
 import org.jtheque.persistence.able.Note;
+import org.jtheque.utils.annotations.ThreadSafe;
 
 import org.springframework.core.io.ClassPathResource;
 
 import java.awt.Image;
 import java.awt.image.BufferedImage;
-import java.util.Arrays;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -31,11 +31,9 @@ import java.util.Arrays;
  *
  * @author Baptiste Wicht
  */
+@ThreadSafe
 public final class DaoNotes implements org.jtheque.persistence.able.DaoNotes {
-    private Note[] notes;
-
     private final BufferedImage[] stars;
-
     private final LanguageService languageService;
 
     /**
@@ -53,7 +51,7 @@ public final class DaoNotes implements org.jtheque.persistence.able.DaoNotes {
 
         for (int i = 0; i < 7; ++i) {
             String starName = "Star" + (i + 1);
-            
+
             imageService.registerResource(starName, new ClassPathResource("org/jtheque/persistence/" + starName + ".png"));
 
             stars[i] = imageService.getImage(starName);
@@ -62,64 +60,29 @@ public final class DaoNotes implements org.jtheque.persistence.able.DaoNotes {
 
     @Override
     public Note[] getNotes() {
-        if (notes == null) {
-            loadNotes();
-        }
-
-        return Arrays.copyOf(notes, notes.length);
-    }
-
-    @Override
-    public Note getNote(NoteType value) {
-        if (notes == null) {
-            loadNotes();
-        }
-
-        Note note = null;
-
-        for (Note n : notes) {
-            if (n.getValue() == value) {
-                note = n;
-                break;
-            }
-        }
-
-        return note;
+        return Note.values();
     }
 
     @Override
     public String getInternationalizedText(Note note) {
-        return languageService.getMessage(note.getI18nKey());
+        if (note == null) {
+            throw new NullPointerException("The note cannot be null");
+        }
+
+        return languageService.getMessage(note.getKey());
     }
 
     @Override
     public Image getImage(Note note) {
         if (note == null) {
-            return stars[6];
+            throw new NullPointerException("The note cannot be null");
         }
 
-        return note.getValue() == org.jtheque.persistence.able.DaoNotes.NoteType.ERROR ? stars[org.jtheque.persistence.able.DaoNotes.NoteType.UNDEFINED.intValue() - 1] : stars[note.getValue().intValue() - 1];
-    }
-
-    /**
-     * Load all the notes.
-     */
-    private void loadNotes() {
-        if (notes == null) {
-            notes = new NoteImpl[7];
-
-            notes[0] = new NoteImpl(NoteType.NULL, "data.notes.null");
-            notes[1] = new NoteImpl(NoteType.BAD, "data.notes.bad");
-            notes[2] = new NoteImpl(NoteType.MIDDLE, "data.notes.middle");
-            notes[3] = new NoteImpl(NoteType.GOOD, "data.notes.good");
-            notes[4] = new NoteImpl(NoteType.VERYGOOD, "data.notes.verygood");
-            notes[5] = new NoteImpl(NoteType.PERFECT, "data.notes.perfect");
-            notes[6] = new NoteImpl(NoteType.UNDEFINED, "data.notes.undefined");
-        }
+        return stars[note.intValue() - 1];
     }
 
     @Override
     public Note getDefaultNote() {
-        return notes[6];
+        return Note.UNDEFINED;
     }
 }

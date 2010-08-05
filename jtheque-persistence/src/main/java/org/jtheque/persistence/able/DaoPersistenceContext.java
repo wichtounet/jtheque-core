@@ -22,7 +22,7 @@ import java.util.Collection;
  */
 
 /**
- * A dao persistence context specification.
+ * A simple persistence context for the DAO. This class is an helper providing generic database operations.
  *
  * @author Baptiste Wicht
  */
@@ -71,9 +71,9 @@ public interface DaoPersistenceContext {
     boolean delete(String table, Entity d);
 
     /**
-     * Save or org.jtheque.update an entity.
+     * Save or update an entity.
      *
-     * @param entity The entity to save or org.jtheque.update.
+     * @param entity The entity to save or update.
      * @param mapper The query mapper.
      *
      * @return true if the object is saved else false.

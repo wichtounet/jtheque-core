@@ -1,8 +1,10 @@
 package org.jtheque.persistence.impl;
 
+import org.jtheque.persistence.able.DaoPersistenceContext;
 import org.jtheque.persistence.able.Entity;
+import org.jtheque.persistence.able.Query;
 import org.jtheque.persistence.able.QueryMapper;
-import org.jtheque.persistence.utils.Query;
+import org.jtheque.utils.annotations.ThreadSafe;
 
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
@@ -28,19 +30,23 @@ import java.util.List;
  */
 
 /**
- * The persistence context for DAOs.
+ * The persistence context for DAOs. This persistence context use a JDBC Template from Spring to perform operations on
+ * the database.
  *
  * @author Baptiste Wicht
  */
-public final class DaoPersistenceContext implements org.jtheque.persistence.able.DaoPersistenceContext {
+@ThreadSafe
+public final class SpringDaoPersistenceContext implements DaoPersistenceContext {
     private final SimpleJdbcTemplate jdbcTemplate;
 
+    private final Object idCoherencyLock = new Object();
+
     /**
-     * Construct a new DaoPersistenceContext.
+     * Construct a new SpringDaoPersistenceContext.
      *
      * @param jdbcTemplate The JDBC template to use.
      */
-    public DaoPersistenceContext(SimpleJdbcTemplate jdbcTemplate) {
+    public SpringDaoPersistenceContext(SimpleJdbcTemplate jdbcTemplate) {
         super();
 
         this.jdbcTemplate = jdbcTemplate;
@@ -85,15 +91,18 @@ public final class DaoPersistenceContext implements org.jtheque.persistence.able
         if (entity.isSaved()) {
             Query query = mapper.constructUpdateQuery(entity);
 
-            return jdbcTemplate.update(query.getSqlQuery(), query.getParameters()) > 0;
+            return jdbcTemplate.update(query.getSQLQuery(), query.getParameters()) > 0;
         } else {
             Query query = mapper.constructInsertQuery(entity);
 
-            int inserts = jdbcTemplate.update(query.getSqlQuery(), query.getParameters());
+            //Must be atomic to have the good ID
+            synchronized (idCoherencyLock) {
+                int inserts = jdbcTemplate.update(query.getSQLQuery(), query.getParameters());
 
-            entity.setId(jdbcTemplate.queryForInt("SELECT IDENTITY()"));
+                entity.setId(jdbcTemplate.queryForInt("SELECT IDENTITY()"));
 
-            return inserts > 0;
+                return inserts > 0;
+            }
         }
     }
 

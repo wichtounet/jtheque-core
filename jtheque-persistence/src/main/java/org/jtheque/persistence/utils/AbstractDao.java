@@ -22,6 +22,7 @@ import org.jtheque.persistence.able.DataListener;
 import org.jtheque.persistence.able.Entity;
 import org.jtheque.persistence.able.QueryMapper;
 import org.jtheque.utils.annotations.GuardedInternally;
+import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.collections.WeakEventListenerList;
 
 import org.springframework.jdbc.core.RowMapper;
@@ -34,21 +35,22 @@ import javax.annotation.Resource;
  * @author Baptiste Wicht
  * @param <T> The type of data contained in this DAO.
  */
+@ThreadSafe
 public abstract class AbstractDao<T extends Entity> implements Dao<T> {
     @Resource
     private DaoPersistenceContext persistenceContext;
 
-    private final String table;
-
     @GuardedInternally
     private final WeakEventListenerList<DataListener> listenerList = WeakEventListenerList.create();
+
+    private final String table;
 
     /**
      * Construct a new AbstractDao.
      *
      * @param table The table of this dao.
      */
-    public AbstractDao(String table) {
+    protected AbstractDao(String table) {
         super();
 
         this.table = table;

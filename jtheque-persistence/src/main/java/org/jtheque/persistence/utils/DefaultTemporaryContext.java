@@ -1,5 +1,8 @@
 package org.jtheque.persistence.utils;
 
+import org.jtheque.persistence.able.TemporaryContext;
+import org.jtheque.utils.annotations.ThreadSafe;
+
 /*
  * Copyright JTheque (Baptiste Wicht)
  *
@@ -21,8 +24,9 @@ package org.jtheque.persistence.utils;
  *
  * @author Baptiste Wicht
  */
-public class TemporaryContext implements org.jtheque.persistence.able.TemporaryContext {
-    private int id;
+@ThreadSafe
+public class DefaultTemporaryContext implements TemporaryContext {
+    private volatile int id;
 
     @Override
     public final int getId() {

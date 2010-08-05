@@ -18,6 +18,8 @@ package org.jtheque.persistence.utils;
 
 import org.jtheque.persistence.able.DataContainer;
 import org.jtheque.persistence.able.Entity;
+import org.jtheque.utils.annotations.GuardedInternally;
+import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.collections.CollectionUtils;
 
 import java.util.Collection;
@@ -27,8 +29,10 @@ import java.util.Collection;
  *
  * @author Baptiste Wicht
  */
+@ThreadSafe
 public final class DataContainerProvider {
-    private final Collection<DataContainer<? extends Entity>> containers = CollectionUtils.newList();
+    @GuardedInternally
+    private final Collection<DataContainer<? extends Entity>> containers = CollectionUtils.newConcurrentList();
 
     private static final DataContainerProvider INSTANCE = new DataContainerProvider();
 

@@ -19,17 +19,21 @@ package org.jtheque.persistence.impl;
 import org.jtheque.persistence.able.DataContainer;
 import org.jtheque.persistence.able.Entity;
 import org.jtheque.persistence.utils.DataContainerProvider;
+import org.jtheque.utils.annotations.ThreadSafe;
 
 /**
  * A persistence manager implementation.
  *
  * @author Baptiste Wicht
  */
+@ThreadSafe
 public final class PersistenceService implements org.jtheque.persistence.able.PersistenceService {
     @Override
     public void clearDatabase() {
-        for (DataContainer<? extends Entity> dao : DataContainerProvider.getInstance().getAllContainers()) {
-            dao.clearAll();
+        synchronized (this) {
+            for (DataContainer<? extends Entity> dao : DataContainerProvider.getInstance().getAllContainers()) {
+                dao.clearAll();
+            }
         }
     }
 }

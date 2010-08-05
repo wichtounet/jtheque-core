@@ -1,6 +1,7 @@
 package org.jtheque.persistence.utils;
 
 import org.jtheque.persistence.able.DaoNotes;
+import org.jtheque.persistence.able.Note;
 
 import org.junit.Test;
 
@@ -48,42 +49,26 @@ public class DaoNotesTest {
      */
     @Test
     public void testIntValue() {
-        assertEquals(0, DaoNotes.NoteType.ERROR.intValue());
-        assertEquals(1, DaoNotes.NoteType.NULL.intValue());
-        assertEquals(2, DaoNotes.NoteType.BAD.intValue());
-        assertEquals(3, DaoNotes.NoteType.MIDDLE.intValue());
-        assertEquals(4, DaoNotes.NoteType.GOOD.intValue());
-        assertEquals(5, DaoNotes.NoteType.VERYGOOD.intValue());
-        assertEquals(6, DaoNotes.NoteType.PERFECT.intValue());
-        assertEquals(7, DaoNotes.NoteType.UNDEFINED.intValue());
+        assertEquals(1, Note.NULL.intValue());
+        assertEquals(2, Note.BAD.intValue());
+        assertEquals(3, Note.MIDDLE.intValue());
+        assertEquals(4, Note.GOOD.intValue());
+        assertEquals(5, Note.VERYGOOD.intValue());
+        assertEquals(6, Note.PERFECT.intValue());
+        assertEquals(7, Note.UNDEFINED.intValue());
     }
 
     /**
-     * Test the getEnum method.
+     * Test the fromIntValue method.
      */
     @Test
     public void testGetEnum() {
-        assertEquals(DaoNotes.NoteType.ERROR, DaoNotes.NoteType.getEnum(0));
-        assertEquals(DaoNotes.NoteType.NULL, DaoNotes.NoteType.getEnum(1));
-        assertEquals(DaoNotes.NoteType.BAD, DaoNotes.NoteType.getEnum(2));
-        assertEquals(DaoNotes.NoteType.MIDDLE, DaoNotes.NoteType.getEnum(3));
-        assertEquals(DaoNotes.NoteType.GOOD, DaoNotes.NoteType.getEnum(4));
-        assertEquals(DaoNotes.NoteType.VERYGOOD, DaoNotes.NoteType.getEnum(5));
-        assertEquals(DaoNotes.NoteType.PERFECT, DaoNotes.NoteType.getEnum(6));
-        assertEquals(DaoNotes.NoteType.UNDEFINED, DaoNotes.NoteType.getEnum(7));
-    }
-
-    /**
-     * Test the getNote method.
-     */
-    @Test
-    public void testGetNote() {
-        assertEquals(DaoNotes.NoteType.NULL, daoNotes.getNote(DaoNotes.NoteType.NULL).getValue());
-        assertEquals(DaoNotes.NoteType.BAD, daoNotes.getNote(DaoNotes.NoteType.BAD).getValue());
-        assertEquals(DaoNotes.NoteType.MIDDLE, daoNotes.getNote(DaoNotes.NoteType.MIDDLE).getValue());
-        assertEquals(DaoNotes.NoteType.GOOD, daoNotes.getNote(DaoNotes.NoteType.GOOD).getValue());
-        assertEquals(DaoNotes.NoteType.VERYGOOD, daoNotes.getNote(DaoNotes.NoteType.VERYGOOD).getValue());
-        assertEquals(DaoNotes.NoteType.PERFECT, daoNotes.getNote(DaoNotes.NoteType.PERFECT).getValue());
-        assertEquals(DaoNotes.NoteType.UNDEFINED, daoNotes.getNote(DaoNotes.NoteType.UNDEFINED).getValue());
+        assertEquals(Note.NULL, Note.fromIntValue(1));
+        assertEquals(Note.BAD, Note.fromIntValue(2));
+        assertEquals(Note.MIDDLE, Note.fromIntValue(3));
+        assertEquals(Note.GOOD, Note.fromIntValue(4));
+        assertEquals(Note.VERYGOOD, Note.fromIntValue(5));
+        assertEquals(Note.PERFECT, Note.fromIntValue(6));
+        assertEquals(Note.UNDEFINED, Note.fromIntValue(7));
     }
 }

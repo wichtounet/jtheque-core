@@ -18,27 +18,18 @@ package org.jtheque.persistence.utils;
 
 import org.jtheque.persistence.able.Entity;
 import org.jtheque.persistence.able.TemporaryContext;
+import org.jtheque.utils.annotations.ThreadSafe;
 
 /**
  * Represents a persisted object of JTheque.
  *
  * @author Baptiste Wicht
  */
+@ThreadSafe
 public abstract class AbstractEntity implements Entity {
-    private int id;
+    private volatile int id;
 
-    private final TemporaryContext temporaryContext;
-
-    protected static final int HASHCODE_PRIME = 31;
-
-    /**
-     * Construct a new Entity.
-     */
-    public AbstractEntity() {
-        super();
-
-        temporaryContext = new org.jtheque.persistence.utils.TemporaryContext();
-    }
+    private final TemporaryContext temporaryContext = new DefaultTemporaryContext();
 
     @Override
     public TemporaryContext getTemporaryContext() {
@@ -61,12 +52,6 @@ public abstract class AbstractEntity implements Entity {
     }
 
     @Override
-    public abstract boolean equals(Object object);
-
-    @Override
-    public abstract int hashCode();
-
-    @Override
     public final boolean isSaved() {
         return id != 0;
     }
@@ -80,4 +65,10 @@ public abstract class AbstractEntity implements Entity {
     public void restoreMemento() {
         throw new UnsupportedOperationException();
     }
+
+    @Override
+    public abstract boolean equals(Object object);
+
+    @Override
+    public abstract int hashCode();
 }
