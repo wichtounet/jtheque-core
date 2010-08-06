@@ -44,7 +44,6 @@ import java.util.Set;
 @ThreadSafe
 public final class LanguageService implements org.jtheque.i18n.able.LanguageService {
     private static final String[] ZERO_LENGTH_ARRAY = new String[0];
-    private static final Version I18N_VERSION = Version.get("1.0");
 
     private final Map<String, String> baseNames = CollectionUtils.newConcurrentMap(10);
     private final Set<Internationalizable> internationalizables = CollectionUtils.newConcurrentSet();
@@ -76,22 +75,22 @@ public final class LanguageService implements org.jtheque.i18n.able.LanguageServ
 
         Locale.setDefault(locale);
 
-        registerResource("core_messages", I18N_VERSION,
+        registerResource("core_messages", Version.get("1.0"),
                 I18NResourceFactory.fromResource(getClass(), "org/jtheque/i18n/messages_de.properties"),
                 I18NResourceFactory.fromResource(getClass(), "org/jtheque/i18n/messages_en.properties"),
                 I18NResourceFactory.fromResource(getClass(), "org/jtheque/i18n/messages_fr.properties"));
 
-        registerResource("core_dialogs", I18N_VERSION,
+        registerResource("core_dialogs", Version.get("1.0"),
                 I18NResourceFactory.fromResource(getClass(), "org/jtheque/i18n/dialogs_de.properties"),
                 I18NResourceFactory.fromResource(getClass(), "org/jtheque/i18n/dialogs_en.properties"),
                 I18NResourceFactory.fromResource(getClass(), "org/jtheque/i18n/dialogs_fr.properties"));
 
-        registerResource("core_i18n", I18N_VERSION,
+        registerResource("core_i18n", Version.get("1.0"),
                 I18NResourceFactory.fromResource(getClass(), "org/jtheque/i18n/core_de.properties"),
                 I18NResourceFactory.fromResource(getClass(), "org/jtheque/i18n/core_en.properties"),
                 I18NResourceFactory.fromResource(getClass(), "org/jtheque/i18n/core_fr.properties"));
 
-        registerResource("core_errors", I18N_VERSION,
+        registerResource("core_errors", Version.get("1.0"),
                 I18NResourceFactory.fromResource(getClass(), "org/jtheque/i18n/errors_de.properties"),
                 I18NResourceFactory.fromResource(getClass(), "org/jtheque/i18n/errors_en.properties"),
                 I18NResourceFactory.fromResource(getClass(), "org/jtheque/i18n/errors_fr.properties"));
