@@ -1,6 +1,9 @@
 package org.jtheque.collections.able;
 
 import org.jtheque.persistence.able.Dao;
+import org.jtheque.utils.annotations.ThreadSafe;
+
+import java.util.Collection;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -23,7 +26,8 @@ import org.jtheque.persistence.able.Dao;
  *
  * @author Baptiste Wicht
  */
-public interface DaoCollections extends Dao<Collection> {
+@ThreadSafe
+public interface DaoCollections extends Dao<DataCollection> {
     String TABLE = "T_COLLECTIONS";
 
     /**
@@ -31,7 +35,7 @@ public interface DaoCollections extends Dao<Collection> {
      *
      * @return All the collections.
      */
-    java.util.Collection<Collection> getCollections();
+    Collection<DataCollection> getCollections();
 
     /**
      * Return the collection with the specific ID.
@@ -40,7 +44,7 @@ public interface DaoCollections extends Dao<Collection> {
      *
      * @return The corresponding collection.
      */
-    Collection getCollection(int id);
+    DataCollection getCollection(int id);
 
     /**
      * Return the collection of the specified name.
@@ -50,21 +54,21 @@ public interface DaoCollections extends Dao<Collection> {
      * @return The <code>Collection</code> with the specified name or <code>null</code> if there is no collection with
      *         this name.
      */
-    Collection getCollection(String name);
+    DataCollection getCollection(String name);
 
     /**
      * Return the current collection.
      *
      * @return The current collection.
      */
-    Collection getCurrentCollection();
+    DataCollection getCurrentCollection();
 
     /**
      * Set the current collection.
      *
      * @param collection The current collection to set.
      */
-    void setCurrentCollection(Collection collection);
+    void setCurrentCollection(DataCollection collection);
 
     /**
      * Return the collection with the given temporary id.
@@ -74,7 +78,7 @@ public interface DaoCollections extends Dao<Collection> {
      * @return The collection with the given temporary id or null if there is no collection with the specified temporary
      *         id.
      */
-    Collection getCollectionByTemporaryId(int id);
+    DataCollection getCollectionByTemporaryId(int id);
 
     /**
      * Test if a collection exists or not.

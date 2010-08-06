@@ -16,7 +16,7 @@ package org.jtheque.collections.impl;
  * limitations under the License.
  */
 
-import org.jtheque.collections.able.Collection;
+import org.jtheque.collections.able.DataCollection;
 import org.jtheque.persistence.utils.AbstractEntity;
 import org.jtheque.utils.bean.EqualsBuilder;
 import org.jtheque.utils.bean.HashCodeUtils;
@@ -26,12 +26,10 @@ import org.jtheque.utils.bean.HashCodeUtils;
  *
  * @author Baptiste Wicht
  */
-public final class CollectionImpl extends AbstractEntity implements Collection {
+public final class DataCollectionImpl extends AbstractEntity implements DataCollection {
     private String title;
     private boolean protection;
     private String password;
-
-    //Data methods
 
     @Override
     public void setTitle(String title) {
@@ -77,13 +75,13 @@ public final class CollectionImpl extends AbstractEntity implements Collection {
 
     @Override
     public int hashCode() {
-        return HashCodeUtils.hashCodeDirect(title, protection, password);
+        return HashCodeUtils.hashCodeDirect(getId(), title, protection, password);
     }
 
     @Override
     public boolean equals(Object o) {
-        if (o instanceof CollectionImpl) {
-            CollectionImpl other = (CollectionImpl) o;
+        if (o instanceof DataCollectionImpl) {
+            DataCollectionImpl other = (DataCollectionImpl) o;
 
             return EqualsBuilder.newBuilder(this, other).
                     addField(getId(), other.getId()).

@@ -1,7 +1,8 @@
 package org.jtheque.collections.able;
 
-import org.jtheque.utils.bean.Response;
 import org.jtheque.persistence.able.DataContainer;
+import org.jtheque.utils.annotations.ThreadSafe;
+import org.jtheque.utils.bean.Response;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -24,7 +25,8 @@ import org.jtheque.persistence.able.DataContainer;
  *
  * @author Baptiste Wicht
  */
-public interface CollectionsService extends DataContainer<Collection> {
+@ThreadSafe
+public interface CollectionsService extends DataContainer<DataCollection> {
     String DATA_TYPE = "Collections";
 
     /**

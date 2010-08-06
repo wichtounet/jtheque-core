@@ -15,7 +15,7 @@
 
     <bean id="collectionSchema" class="org.jtheque.collections.impl.CollectionSchema" lazy-init="false"/>
 
-    <bean id="collectionsService" class="org.jtheque.collections.impl.CollectionsService" lazy-init="false">
+    <bean id="collectionsService" class="org.jtheque.collections.impl.CollectionsServiceImpl" lazy-init="false">
         <constructor-arg ref="daoCollections"/>
         <constructor-arg>
             <osgi:reference interface="org.jtheque.file.able.FileService"/>
@@ -31,7 +31,7 @@
 
     <bean id="daoCollections" class="org.jtheque.collections.impl.DaoCollectionsImpl"/>
 
-    <osgi:reference id="daoPersistenceContext" interface="org.jtheque.persistence.able.DaoPersistenceContext" />
+    <osgi:reference id="daoPersistenceContext" interface="org.jtheque.persistence.able.DaoPersistenceContext"/>
 
     <osgi:service ref="collectionsService" interface="org.jtheque.collections.able.CollectionsService"/>
     <osgi:service ref="daoCollections" interface="org.jtheque.collections.able.DaoCollections"/>

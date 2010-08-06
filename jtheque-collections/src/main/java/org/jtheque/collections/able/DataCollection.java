@@ -23,7 +23,7 @@ import org.jtheque.persistence.able.Entity;
  *
  * @author Baptiste Wicht
  */
-public interface Collection extends Entity {
+public interface DataCollection extends Entity {
     /**
      * Set the title of the collection
      *

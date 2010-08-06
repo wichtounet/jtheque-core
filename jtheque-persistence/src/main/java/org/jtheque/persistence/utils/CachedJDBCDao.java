@@ -56,7 +56,7 @@ public abstract class CachedJDBCDao<T extends Entity> extends AbstractDao<T> {
     public final Collection<T> getAll() {
         load();
 
-        return CollectionUtils.protect(cache.values());
+        return CollectionUtils.copyOf(cache.values());
     }
 
     /**
@@ -91,6 +91,17 @@ public abstract class CachedJDBCDao<T extends Entity> extends AbstractDao<T> {
      * Load the cache.
      */
     protected abstract void loadCache();
+
+    /**
+     * Fill the cache using the row mapper and the table name.
+     */
+    protected void defaultFillCache() {
+        Collection<T> collections = getContext().getSortedList(getTable(), getRowMapper());
+
+        for (T entity : collections) {
+            cache.put(entity.getId(), entity);
+        }
+    }
 
     @Override
     public final T get(int id) {

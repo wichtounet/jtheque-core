@@ -16,38 +16,47 @@ package org.jtheque.collections.impl;
  * limitations under the License.
  */
 
-import org.jtheque.collections.able.Collection;
 import org.jtheque.collections.able.CollectionListener;
+import org.jtheque.collections.able.CollectionsService;
 import org.jtheque.collections.able.DaoCollections;
+import org.jtheque.collections.able.DataCollection;
 import org.jtheque.core.able.Core;
 import org.jtheque.file.able.FileService;
 import org.jtheque.persistence.able.DataListener;
-import org.jtheque.schemas.able.SchemaService;
 import org.jtheque.schemas.able.Schema;
+import org.jtheque.schemas.able.SchemaService;
 import org.jtheque.utils.CryptoUtils;
 import org.jtheque.utils.Hasher;
 import org.jtheque.utils.SimplePropertiesCache;
 import org.jtheque.utils.StringUtils;
+import org.jtheque.utils.annotations.GuardedBy;
 import org.jtheque.utils.annotations.GuardedInternally;
+import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.bean.Response;
 import org.jtheque.utils.collections.WeakEventListenerList;
 
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Collection;
 
 /**
  * The implementation of the collections service.
  *
  * @author Baptiste Wicht
  */
-public final class CollectionsService implements org.jtheque.collections.able.CollectionsService {
+@ThreadSafe
+public final class CollectionsServiceImpl implements CollectionsService {
     private final DaoCollections daoCollections;
     private final Core core;
 
     @GuardedInternally
     private final WeakEventListenerList<CollectionListener> listeners = WeakEventListenerList.create();
 
+    @GuardedBy("this")
+    private boolean collectionChosen;
+
     /**
-     * Construct a new CollectionsService.
+     * Construct a new CollectionsServiceImpl.
      *
      * @param daoCollections The dao collections.
      * @param fileService    The file service.
@@ -55,14 +64,14 @@ public final class CollectionsService implements org.jtheque.collections.able.Co
      * @param schemaService  The schema service.
      * @param schema         The schema of the collections.
      */
-    public CollectionsService(DaoCollections daoCollections, FileService fileService, Core core,
-                              SchemaService schemaService, Schema schema) {
+    public CollectionsServiceImpl(DaoCollections daoCollections, FileService fileService, Core core,
+                                  SchemaService schemaService, Schema schema) {
         super();
 
         this.daoCollections = daoCollections;
         this.core = core;
 
-        fileService.registerBackuper("jtheque-collections", new CoreBackuper(daoCollections));
+        fileService.registerBackuper("jtheque-collections", new CollectionsBackuper(daoCollections));
 
         schemaService.registerSchema("", schema);
 
@@ -71,25 +80,79 @@ public final class CollectionsService implements org.jtheque.collections.able.Co
 
     @Override
     public Response chooseCollection(String collection, String password, boolean create) {
-        if (create) {
-            if (daoCollections.exists(collection)) {
-                return new Response(false, "error.module.collection.exists");
-            } else {
-                createCollection(collection, password);
-
-                daoCollections.setCurrentCollection(daoCollections.getCollection(collection));
-
-                core.getConfiguration().setLastCollection(collection);
+        synchronized (this) {
+            if (collectionChosen) {
+                return new Response(false);
             }
-        } else if (!login(collection, password)) {
-            return new Response(false, "error.module.collection");
+
+            if (create) {
+                if (daoCollections.exists(collection)) {
+                    return new Response(false, "error.module.collection.exists");
+                } else {
+                    createCollection(collection, password);
+
+                    daoCollections.setCurrentCollection(daoCollections.getCollection(collection));
+
+                    core.getConfiguration().setLastCollection(collection);
+                }
+            } else if (!login(collection, password)) {
+                return new Response(false, "error.module.collection");
+            }
+
+            SimplePropertiesCache.put("collectionChosen", true);
+
+            fireCollectionChosen();
+
+            collectionChosen = true;
+
+            return new Response(true);
+        }
+    }
+
+    /**
+     * Login using the specified collection and password.
+     *
+     * @param title    The collection title.
+     * @param password The password.
+     *
+     * @return <code>true</code> if the login is correct else <code>false</code>.
+     */
+    private boolean login(String title, String password) {
+        if (isLoginIncorrect(title, password)) {
+            return false;
         }
 
-        SimplePropertiesCache.put("collectionChosen", true);
+        daoCollections.setCurrentCollection(daoCollections.getCollection(title));
 
-        fireCollectionChosen();
+        core.getConfiguration().setLastCollection(title);
 
-        return new Response(true);
+        return true;
+    }
+
+    /**
+     * Indicate if a login is correct or not
+     *
+     * @param title    The title of the collection.
+     * @param password The password to login to the collection.
+     *
+     * @return true if the login is correct else false.
+     */
+    private boolean isLoginIncorrect(String title, String password) {
+        DataCollection collection = daoCollections.getCollection(title);
+
+        if (collection == null) {
+            return true;
+        }
+
+        if (collection.isProtection()) {
+            String encrypted = CryptoUtils.hashMessage(password, Hasher.SHA256);
+
+            if (!encrypted.equals(collection.getPassword())) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -119,7 +182,7 @@ public final class CollectionsService implements org.jtheque.collections.able.Co
      */
     @Transactional
     private void createCollection(String title, String password) {
-        Collection collection = daoCollections.create();
+        DataCollection collection = daoCollections.create();
 
         collection.setTitle(title);
 
@@ -134,54 +197,8 @@ public final class CollectionsService implements org.jtheque.collections.able.Co
         daoCollections.save(collection);
     }
 
-    /**
-     * Login using the specified collection and password.
-     *
-     * @param title    The collection title.
-     * @param password The password.
-     *
-     * @return <code>true</code> if the login is correct else <code>false</code>.
-     */
-    public boolean login(String title, String password) {
-        if (isLoginIncorrect(title, password)) {
-            return false;
-        }
-
-        daoCollections.setCurrentCollection(daoCollections.getCollection(title));
-
-        core.getConfiguration().setLastCollection(title);
-
-        return true;
-    }
-
-    /**
-     * Indicate if a login is correct or not
-     *
-     * @param title    The title of the collection.
-     * @param password The password to login to the collection.
-     *
-     * @return true if the login is correct else false.
-     */
-    private boolean isLoginIncorrect(String title, String password) {
-        Collection collection = daoCollections.getCollection(title);
-
-        if (collection == null) {
-            return true;
-        }
-
-        if (collection.isProtection()) {
-            String encrypted = CryptoUtils.hashMessage(password, Hasher.SHA256);
-
-            if (!encrypted.equals(collection.getPassword())) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
     @Override
-    public java.util.Collection<Collection> getDatas() {
+    public Collection<DataCollection> getDatas() {
         return daoCollections.getCollections();
     }
 

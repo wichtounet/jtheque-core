@@ -16,33 +16,36 @@ package org.jtheque.collections.impl;
  * limitations under the License.
  */
 
-import org.jtheque.collections.able.Collection;
 import org.jtheque.collections.able.DaoCollections;
+import org.jtheque.collections.able.DataCollection;
 import org.jtheque.persistence.able.Entity;
 import org.jtheque.persistence.able.QueryMapper;
 import org.jtheque.persistence.utils.CachedJDBCDao;
 import org.jtheque.persistence.utils.EntityUtils;
 import org.jtheque.persistence.utils.Query;
+import org.jtheque.utils.annotations.ThreadSafe;
 
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Collection;
 
 /**
  * A Data Access Object implementation for collections.
  *
  * @author Baptiste Wicht
  */
-public final class DaoCollectionsImpl extends CachedJDBCDao<Collection> implements DaoCollections {
-    private final RowMapper<Collection> rowMapper = new CollectionRowMapper();
+@ThreadSafe
+public final class DaoCollectionsImpl extends CachedJDBCDao<DataCollection> implements DaoCollections {
+    private final RowMapper<DataCollection> rowMapper = new CollectionRowMapper();
     private final QueryMapper queryMapper = new CollectionQueryMapper();
 
     /**
      * The current collection.
      */
-    private Collection currentCollection;
+    private volatile DataCollection currentCollection;
 
     /**
      * Construct a new DaoCollectionsImpl.
@@ -52,17 +55,17 @@ public final class DaoCollectionsImpl extends CachedJDBCDao<Collection> implemen
     }
 
     @Override
-    public java.util.Collection<Collection> getCollections() {
+    public Collection<DataCollection> getCollections() {
         return getAll();
     }
 
     @Override
-    public Collection getCollection(int id) {
+    public DataCollection getCollection(int id) {
         return get(id);
     }
 
     @Override
-    public Collection getCollectionByTemporaryId(int id) {
+    public DataCollection getCollectionByTemporaryId(int id) {
         return EntityUtils.getByTemporaryId(getAll(), id);
     }
 
@@ -72,15 +75,13 @@ public final class DaoCollectionsImpl extends CachedJDBCDao<Collection> implemen
     }
 
     @Override
-    public boolean exists(Collection collection) {
+    public boolean exists(DataCollection collection) {
         return exists(collection.getTitle());
     }
 
     @Override
-    public Collection getCollection(String name) {
-        load();
-
-        for (Collection collection : getAll()) {
+    public DataCollection getCollection(String name) {
+        for (DataCollection collection : getAll()) {
             if (name.equals(collection.getTitle())) {
                 return collection;
             }
@@ -90,7 +91,7 @@ public final class DaoCollectionsImpl extends CachedJDBCDao<Collection> implemen
     }
 
     @Override
-    protected RowMapper<Collection> getRowMapper() {
+    protected RowMapper<DataCollection> getRowMapper() {
         return rowMapper;
     }
 
@@ -101,26 +102,22 @@ public final class DaoCollectionsImpl extends CachedJDBCDao<Collection> implemen
 
     @Override
     protected void loadCache() {
-        java.util.Collection<Collection> collections = getContext().getSortedList(TABLE, rowMapper);
-
-        for (Collection collection : collections) {
-            getCache().put(collection.getId(), collection);
-        }
+        defaultFillCache();
     }
 
     @Override
-    public Collection getCurrentCollection() {
+    public DataCollection getCurrentCollection() {
         return currentCollection;
     }
 
     @Override
-    public void setCurrentCollection(Collection collection) {
+    public void setCurrentCollection(DataCollection collection) {
         currentCollection = collection;
     }
 
     @Override
-    public Collection create() {
-        return new CollectionImpl();
+    public DataCollection create() {
+        return new DataCollectionImpl();
     }
 
     /**
@@ -128,10 +125,10 @@ public final class DaoCollectionsImpl extends CachedJDBCDao<Collection> implemen
      *
      * @author Baptiste Wicht
      */
-    private final class CollectionRowMapper implements ParameterizedRowMapper<Collection> {
+    private final class CollectionRowMapper implements ParameterizedRowMapper<DataCollection> {
         @Override
-        public Collection mapRow(ResultSet rs, int i) throws SQLException {
-            Collection collection = create();
+        public DataCollection mapRow(ResultSet rs, int i) throws SQLException {
+            DataCollection collection = create();
 
             collection.setId(rs.getInt("ID"));
             collection.setTitle(rs.getString("TITLE"));
@@ -152,14 +149,14 @@ public final class DaoCollectionsImpl extends CachedJDBCDao<Collection> implemen
         public Query constructInsertQuery(Entity entity) {
             String query = "INSERT INTO " + TABLE + " (TITLE, PASSWORD, PROTECTED) VALUES(?, ?, ?)";
 
-            return new Query(query, fillArray((Collection) entity, false));
+            return new Query(query, fillArray((DataCollection) entity, false));
         }
 
         @Override
         public Query constructUpdateQuery(Entity entity) {
             String query = "UPDATE " + TABLE + " SET TITLE = ?, PASSWORD = ?, PROTECTED = ? WHERE ID = ?";
 
-            return new Query(query, fillArray((Collection) entity, true));
+            return new Query(query, fillArray((DataCollection) entity, true));
         }
 
         /**
@@ -170,7 +167,7 @@ public final class DaoCollectionsImpl extends CachedJDBCDao<Collection> implemen
          *
          * @return The filled array.
          */
-        private static Object[] fillArray(Collection collection, boolean id) {
+        private static Object[] fillArray(DataCollection collection, boolean id) {
             Object[] values = new Object[3 + (id ? 1 : 0)];
 
             values[0] = collection.getTitle();

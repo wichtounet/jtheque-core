@@ -1,6 +1,7 @@
 package org.jtheque.collections.impl;
 
 import org.jtheque.collections.able.DaoCollections;
+import org.jtheque.collections.able.DataCollection;
 import org.jtheque.file.able.ModuleBackup;
 import org.jtheque.file.able.ModuleBackuper;
 import org.jtheque.utils.annotations.Immutable;
@@ -28,23 +29,22 @@ import java.util.Collection;
  */
 
 /**
- * A backuper for the core. This class is immutable. 
+ * A backuper for the core. This class is immutable.
  *
  * @author Baptiste Wicht
  */
 @Immutable
-public class CoreBackuper implements ModuleBackuper {
+final class CollectionsBackuper implements ModuleBackuper {
     private static final String[] DEPENDENCIES = new String[0];
-    private static final Version BACKUP_VERSION = Version.get("1.0");
 
     private final DaoCollections daoCollections;
 
     /**
-     * Construct a new CoreBackuper.
+     * Construct a new CollectionsBackuper.
      *
      * @param daoCollections The dao collections.
      */
-    public CoreBackuper(DaoCollections daoCollections) {
+    CollectionsBackuper(DaoCollections daoCollections) {
         super();
 
         this.daoCollections = daoCollections;
@@ -62,9 +62,11 @@ public class CoreBackuper implements ModuleBackuper {
 
     @Override
     public ModuleBackup backup() {
-        Collection<Node> nodes = CollectionUtils.newList();
+        Collection<DataCollection> dataCollections = daoCollections.getCollections();
 
-        for (org.jtheque.collections.able.Collection collection : daoCollections.getCollections()) {
+        Collection<Node> nodes = CollectionUtils.newList(dataCollections.size());
+
+        for (DataCollection collection : dataCollections) {
             Node node = new Node("collection");
 
             node.addSimpleChildValue("id", collection.getId());
@@ -74,7 +76,7 @@ public class CoreBackuper implements ModuleBackuper {
             nodes.add(node);
         }
 
-        return new ModuleBackup(BACKUP_VERSION, getId(), nodes);
+        return new ModuleBackup(Version.get("1.0"), getId(), nodes);
     }
 
     @Override
@@ -83,7 +85,7 @@ public class CoreBackuper implements ModuleBackuper {
 
         for (Node node : backup.getNodes()) {
             if ("collection".equals(node.getName())) {
-                org.jtheque.collections.able.Collection collection = daoCollections.create();
+                DataCollection collection = daoCollections.create();
 
                 collection.setTitle(node.getChildValue("title"));
                 collection.setPassword(node.getChildValue("password"));
