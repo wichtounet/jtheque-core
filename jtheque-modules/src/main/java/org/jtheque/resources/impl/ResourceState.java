@@ -1,8 +1,6 @@
 package org.jtheque.resources.impl;
 
-import org.jtheque.core.utils.SystemProperty;
-import org.jtheque.resources.able.IResource;
-import org.jtheque.resources.able.SimpleResource;
+import org.jtheque.resources.able.Resource;
 import org.jtheque.states.able.Load;
 import org.jtheque.states.able.Save;
 import org.jtheque.states.able.State;
@@ -10,8 +8,8 @@ import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.xml.utils.Node;
 
-import java.io.File;
 import java.util.Collection;
+import java.util.Set;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -36,7 +34,7 @@ import java.util.Collection;
  */
 @State(id = "jtheque-resources", delegated = true)
 public class ResourceState {
-    private final Collection<IResource> resources = CollectionUtils.newList();
+    private final Collection<Resource> resources = CollectionUtils.newList();
 
     /**
      * Delegate the load of the state.
@@ -46,8 +44,8 @@ public class ResourceState {
     @Load
     public void delegateLoad(Iterable<Node> nodes) {
         for (Node node : nodes) {
-            if ("resource".equals(node.getName())) {
-                resources.add(convertToResource(node));
+            if ("set".equals(node.getName())) {
+                resources.add(convertToResourceSet(node));
             }
         }
     }
@@ -59,10 +57,10 @@ public class ResourceState {
      */
     @Save
     public Collection<Node> delegateSave() {
-        Collection<Node> states = CollectionUtils.newList(25);
+        Collection<Node> states = CollectionUtils.newList();
 
-        for (IResource info : resources) {
-            states.add(convertToNode(info));
+        for (Resource resource : resources) {
+            states.add(convertToNode(resource));
         }
 
         return states;
@@ -73,7 +71,7 @@ public class ResourceState {
      *
      * @param resource The resource to add to the state.
      */
-    public void addResource(IResource resource) {
+    public void addResource(Resource resource) {
         resources.add(resource);
     }
 
@@ -82,71 +80,52 @@ public class ResourceState {
      *
      * @return All the resources of the state.
      */
-    public Collection<IResource> getResources() {
+    public Collection<Resource> getResourceSets() {
         return resources;
     }
 
     /**
-     * Convert the given node to the IResource.
+     * Convert the given node to the Resource.
      *
      * @param node The node to convert.
      *
-     * @return The corresponding IResource.
+     * @return The corresponding Resource.
      */
-    private static IResource convertToResource(Node node) {
-        String id = node.getAttributeValue("id");
-        String url = node.getAttributeValue("url");
-        Version version = Version.get(node.getAttributeValue("version"));
-
-        Resource resource = new Resource(id);
-        resource.setVersion(version);
-        resource.setUrl(url);
-
-        File resourceFolder = getResourceFolder(resource);
-
+    private static Resource convertToResourceSet(Node node) {
+        Set<String> files = CollectionUtils.newSet();
+        Set<String> libraries = CollectionUtils.newSet();
+        
         for (Node child : node.getChildrens()) {
             if ("file".equals(child.getName())) {
-                resource.addSimpleResource(new FileResource(child.getText(), resourceFolder));
+                files.add(child.getText());
             } else if ("library".equals(child.getName())) {
-                resource.addSimpleResource(new LibraryResource(child.getText(), resourceFolder));
+                libraries.add(child.getText());
             }
         }
 
-        return resource;
+        return new ResourceImpl(
+                node.getAttributeValue("id"),
+                Version.get(node.getAttributeValue("version")),
+                node.getAttributeValue("url"),
+                node.getAttributeValue("file"),
+                Boolean.valueOf(node.getAttributeValue("url")));
     }
 
     /**
-     * Return the resource folder for the given resource.
+     * Convert the resource set to a XML node.
      *
-     * @param resource The resource to get the folder for.
-     *
-     * @return The folder.
-     */
-    private static File getResourceFolder(IResource resource) {
-        return new File(SystemProperty.USER_DIR.get(), "resources/" + resource.getId() + '/' + resource.getVersion());
-    }
-
-    /**
-     * Convert the resource to a XML node.
-     *
-     * @param resource The resource to convert.
+     * @param resourceSet The resource set to convert.
      *
      * @return The Node corresponding to the resource.
      */
-    private static Node convertToNode(IResource resource) {
-        Node node = new Node("resource");
+    private static Node convertToNode(Resource resourceSet) {
+        Node node = new Node("set");
 
-        node.setAttribute("id", resource.getId());
-        node.setAttribute("url", resource.getUrl());
-        node.setAttribute("version", resource.getVersion().getVersion());
-
-        for (SimpleResource r : resource.getResources()) {
-            if(r instanceof LibraryResource){
-                node.addSimpleChildValue("library", r.getId());
-            } else {
-                node.addSimpleChildValue("file", r.getId());
-            }
-        }
+        node.setAttribute("id", resourceSet.getId());
+        node.setAttribute("url", resourceSet.getUrl());
+        node.setAttribute("version", resourceSet.getVersion().getVersion());
+        node.setAttribute("file", resourceSet.getFile());
+        node.setAttribute("library", Boolean.toString(resourceSet.isLibrary()));
 
         return node;
     }

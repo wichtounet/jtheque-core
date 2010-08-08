@@ -35,30 +35,33 @@ package org.jtheque.resources.impl;
 import org.jtheque.utils.bean.EqualsBuilder;
 import org.jtheque.utils.bean.HashCodeUtils;
 import org.jtheque.utils.bean.Version;
-import org.jtheque.utils.collections.CollectionUtils;
-
-import java.util.Collections;
-import java.util.List;
 
 /**
  * A resource version.
  *
  * @author Baptiste Wicht
  */
-public class ResourceVersion implements Comparable<ResourceVersion> {
+public final class ResourceVersion implements Comparable<ResourceVersion> {
     private final Version version;
-    private final List<FileDescriptor> files = CollectionUtils.newList(5);
-    private final List<FileDescriptor> libraries = CollectionUtils.newList(5);
+    private final String file;
+    private final String url;
+    private final boolean library;
 
     /**
      * Construct a new ResourceVersion.
      *
      * @param version The version of the resource.
+     * @param file    The file of the resource.
+     * @param url     The url to download the file.
+     * @param library A boolean tag indicating if the resource is a library.
      */
-    public ResourceVersion(Version version) {
+    public ResourceVersion(Version version, String file, String url, boolean library) {
         super();
 
         this.version = version;
+        this.file = file;
+        this.url = url;
+        this.library = library;
     }
 
     /**
@@ -70,49 +73,16 @@ public class ResourceVersion implements Comparable<ResourceVersion> {
         return version;
     }
 
-    /**
-     * Return the version transformed to string.
-     *
-     * @return The string version.
-     */
-    public final String getStringVersion() {
-        return version.getVersion();
+    public String getFile() {
+        return file;
     }
 
-    /**
-     * Return all the files of the resource.
-     *
-     * @return An Iterable on all the files of the resource.
-     */
-    public Iterable<FileDescriptor> getFiles() {
-        return Collections.unmodifiableList(files);
+    public boolean isLibrary() {
+        return library;
     }
 
-    /**
-     * Return all the libraries of the resource.
-     *
-     * @return An Iterable on all the libraries of the resource. 
-     */
-    public Iterable<FileDescriptor> getLibraries() {
-        return Collections.unmodifiableList(libraries);
-    }
-
-    /**
-     * Add the file to the version.
-     *
-     * @param descriptor The descriptor.
-     */
-    public void addFile(FileDescriptor descriptor) {
-        files.add(descriptor);
-    }
-
-    /**
-     * Add the library to the version.
-     *
-     * @param descriptor The descriptor.
-     */
-    public void addLibrary(FileDescriptor descriptor) {
-        libraries.add(descriptor);
+    public String getUrl() {
+        return url;
     }
 
     @Override
@@ -122,17 +92,18 @@ public class ResourceVersion implements Comparable<ResourceVersion> {
 
             return EqualsBuilder.newBuilder(this, obj).
                     addField(version, other.version).
-                    addField(files, other.files).
-                    addField(libraries, other.libraries).
+                    addField(file, other.file).
+                    addField(url, other.url).
+                    addField(library, other.library).
                     areEquals();
         }
-        
+
         return false;
     }
 
     @Override
     public int hashCode() {
-        return HashCodeUtils.hashCodeDirect(version, files, libraries);
+        return HashCodeUtils.hashCodeDirect(version, file, url, library);
     }
 
     @Override

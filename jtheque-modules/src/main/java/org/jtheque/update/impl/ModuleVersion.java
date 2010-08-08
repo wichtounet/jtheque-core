@@ -1,4 +1,4 @@
-package org.jtheque.resources.impl;
+package org.jtheque.update.impl;
 
 import org.jtheque.utils.bean.Version;
 
@@ -62,7 +62,7 @@ public final class ModuleVersion {
     /**
      * Return the module file name.
      *
-     * @return The module file name. 
+     * @return The module file name.
      */
     public String getModuleFile() {
         return moduleFile;

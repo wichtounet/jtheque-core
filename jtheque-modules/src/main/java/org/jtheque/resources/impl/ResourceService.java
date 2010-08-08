@@ -6,9 +6,7 @@ import org.jtheque.errors.able.Errors;
 import org.jtheque.events.able.EventLevel;
 import org.jtheque.events.able.EventService;
 import org.jtheque.events.able.Events;
-import org.jtheque.resources.able.IResource;
-import org.jtheque.resources.able.IResourceService;
-import org.jtheque.resources.able.SimpleResource;
+import org.jtheque.resources.able.Resource;
 import org.jtheque.states.able.StateService;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.collections.ArrayUtils;
@@ -17,11 +15,14 @@ import org.jtheque.utils.io.FileException;
 import org.jtheque.utils.io.WebUtils;
 import org.jtheque.utils.ui.SwingUtils;
 
+import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.BundleException;
 import org.slf4j.LoggerFactory;
 import org.springframework.osgi.context.BundleContextAware;
 
 import java.io.File;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -46,49 +47,46 @@ import java.util.Map;
  *
  * @author Baptiste Wicht
  */
-public class ResourceService implements IResourceService, BundleContextAware {
-    private final List<IResource> resources = CollectionUtils.newList();
+public class ResourceService implements org.jtheque.resources.able.ResourceService, BundleContextAware {
     private final Map<String, ResourceDescriptor> descriptorCache = CollectionUtils.newHashMap(5);
+    private final Map<String, Bundle> installedBundles = CollectionUtils.newHashMap(20);
     private final ResourceState resourceState;
 
+    @javax.annotation.Resource
+    private ErrorService errorService;
+
+    @javax.annotation.Resource
+    private EventService eventService;
+
     private BundleContext bundleContext;
-    private final ErrorService errorService;
-    private final EventService eventService;
 
     /**
      * Construct a new Resource Service.
      *
      * @param stateService The state service.
-     * @param errorService The error service.
-     * @param eventService The event service.
      */
-    public ResourceService(StateService stateService, ErrorService errorService, EventService eventService) {
+    public ResourceService(StateService stateService) {
         super();
 
-        this.errorService = errorService;
-        this.eventService = eventService;
-
         resourceState = stateService.getState(new ResourceState());
-
-        resources.addAll(resourceState.getResources());
     }
 
     @Override
     public void addResource(Resource resource) {
-        resources.add(resource);
+        resourceState.addResource(resource);
     }
 
     @Override
-    public List<IResource> getResources() {
-        return resources;
+    public Collection<Resource> getResources() {
+        return resourceState.getResourceSets();
     }
 
     @Override
-    public List<Version> getVersions(String resourceName) {
+    public List<Version> getVersions(String id) {
         List<Version> versions = CollectionUtils.newList(3);
 
-        for (IResource resource : resources) {
-            if (resource.getId().equals(resourceName)) {
+        for (Resource resource : resourceState.getResourceSets()) {
+            if (resource.getId().equals(id)) {
                 versions.add(resource.getVersion());
             }
         }
@@ -97,9 +95,9 @@ public class ResourceService implements IResourceService, BundleContextAware {
     }
 
     @Override
-    public boolean exists(String resourceName) {
-        for (IResource resource : resources) {
-            if (resource.getId().equals(resourceName)) {
+    public boolean exists(String id) {
+        for (Resource resource : resourceState.getResourceSets()) {
+            if (resource.getId().equals(id)) {
                 return true;
             }
         }
@@ -108,8 +106,8 @@ public class ResourceService implements IResourceService, BundleContextAware {
     }
 
     @Override
-    public IResource getResource(String id, Version version) {
-        for (IResource resource : resources) {
+    public Resource getResource(String id, Version version) {
+        for (Resource resource : resourceState.getResourceSets()) {
             if (resource.getId().equals(id) && resource.getVersion().equals(version)) {
                 return resource;
             }
@@ -119,9 +117,58 @@ public class ResourceService implements IResourceService, BundleContextAware {
     }
 
     @Override
-    public IResource downloadResource(String url, Version version) {
+    public Resource getOrDownloadResource(String id, Version version, String url) {
+        Resource resource = getResource(id, version);
+
+        if (resource == null) {
+            resource = downloadResource(url, version);
+            
+            resourceState.addResource(resource);
+        }
+
+        return resource;
+    }
+
+    private Resource downloadResource(String url, Version version) {
         SwingUtils.assertNotEDT("downloadResource(String, Version)");
 
+        if (notReachable(url)) {
+            return null;
+        }
+
+        if (!descriptorCache.containsKey(url)) {
+            descriptorCache.put(url, ResourceDescriptorReader.readResourceDescriptor(url));
+        }
+
+        ResourceDescriptor descriptor = descriptorCache.get(url);
+
+        if (descriptor == null) {
+            return null;
+        }
+
+        Resource cachedResource = getResource(descriptor.getId(), version);
+
+        if (cachedResource != null) {
+            return cachedResource;
+        }
+
+        for (ResourceVersion resourceVersion : descriptor.getVersions()) {
+            if (resourceVersion.getVersion().equals(version)) {
+                return downloadResource(descriptor, resourceVersion);
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Verify that the URL is reachable.
+     *
+     * @param url The URL to test for reachability.
+     *
+     * @return {@code true} if the URL is not reachable otherwise {@code false}
+     */
+    private boolean notReachable(String url) {
         if (!WebUtils.isURLReachable(url)) {
             if (WebUtils.isInternetReachable()) {
                 errorService.addError(Errors.newI18nError(
@@ -136,91 +183,59 @@ public class ResourceService implements IResourceService, BundleContextAware {
             eventService.addEvent(
                     Events.newEvent(EventLevel.ERROR, "System", "events.resources.network", EventService.CORE_EVENT_LOG));
 
-            return null;
+            return true;
         }
 
-        if (!descriptorCache.containsKey(url)) {
-            descriptorCache.put(url, DescriptorReader.readResourceDescriptor(url));
-        }
-
-        ResourceDescriptor descriptor = descriptorCache.get(url);
-
-        if (descriptor == null) {
-            return null;
-        }
-
-        IResource cachedResource = getResource(descriptor.getId(), version);
-        if (cachedResource != null) {
-            return cachedResource;
-        }
-
-        for (ResourceVersion resourceVersion : descriptor.getVersions()) {
-            if (resourceVersion.getVersion().equals(version)) {
-                return downloadResource(url, descriptor, resourceVersion);
-            }
-        }
-
-        return null;
+        return false;
     }
 
     /**
      * Download the given resource.
      *
-     * @param url The url of the resource.
-     * @param descriptor The descriptor of the resource.
+     * @param descriptor      The descriptor of the resource.
      * @param resourceVersion The version to download from.
      *
      * @return The downloaded resource.
      */
-    private IResource downloadResource(String url, AbstractDescriptor descriptor, ResourceVersion resourceVersion) {
-        Resource resource = new Resource(descriptor.getId());
+    private static Resource downloadResource(AbstractDescriptor descriptor, ResourceVersion resourceVersion) {
+        File resourceFolder = getResourceFolder(descriptor.getId(), resourceVersion.getVersion());
 
-        resource.setVersion(resourceVersion.getVersion());
-        resource.setUrl(url);
+        downloadFile(resourceFolder, resourceVersion.getFile(), resourceVersion.getUrl());
 
-        File resourceFolder = getResourceFolder(resource);
-        resourceFolder.mkdirs();
-
-        for (FileDescriptor file : resourceVersion.getFiles()) {
-            downloadFile(resourceFolder, file);
-
-            resource.getResources().add(new FileResource(file.getName(), resourceFolder));
-        }
-
-        for (FileDescriptor library : resourceVersion.getLibraries()) {
-            downloadFile(resourceFolder, library);
-
-            resource.getResources().add(new LibraryResource(library.getName(), resourceFolder));
-        }
-
-        resources.add(resource);
-        resourceState.addResource(resource);
-
-        return resource;
+        return new ResourceImpl(
+                descriptor.getId(),
+                resourceVersion.getVersion(),
+                resourceVersion.getUrl(),
+                resourceVersion.getFile(),
+                resourceVersion.isLibrary());
     }
 
-    /**
-     * Download the file descriptor.
-     *
-     * @param resourceFolder The folder to put the resource into.
-     * @param fileDescriptor The file descriptor of the resource.
-     */
-    private void downloadFile(File resourceFolder, FileDescriptor fileDescriptor) {
-        File filePath = new File(resourceFolder, fileDescriptor.getName());
+    private static void downloadFile(File resourceFolder, String fileName, String url) {
+        File filePath = new File(resourceFolder, fileName);
 
         try {
-            WebUtils.downloadFile(fileDescriptor.getUrl(), filePath.getAbsolutePath());
+            WebUtils.downloadFile(url, filePath.getAbsolutePath());
         } catch (FileException e) {
-            LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
+            LoggerFactory.getLogger(ResourceService.class).error(e.getMessage(), e);
         }
     }
 
     @Override
-    public void installResource(IResource resource) {
-        SwingUtils.assertNotEDT("installResource(IResource)");
+    public void installResource(Resource resource) {
+        SwingUtils.assertNotEDT("installResource(Resource)");
 
-        for (SimpleResource r : resource.getResources()) {
-            r.install(bundleContext);
+        if (resource.isLibrary()) {
+            if (!installedBundles.containsKey(resource.getId())) {
+                try {
+                    Bundle bundle = bundleContext.installBundle("file:" +
+                            getResourceFolder(resource.getId(), resource.getVersion()).getAbsolutePath() +
+                            '/' + resource.getFile());
+
+                    installedBundles.put(resource.getId(), bundle);
+                } catch (BundleException e) {
+                    LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
+                }
+            }
         }
     }
 
@@ -229,30 +244,26 @@ public class ResourceService implements IResourceService, BundleContextAware {
         return getResource(id, version) == null;
     }
 
-    @Override
-    public IResource getOrDownloadResource(String id, Version version, String url) {
-        IResource resource = getResource(id, version);
+    /**
+     * Return the resource folder for the given resource.
+     *
+     * @param id      The id of the resource.
+     * @param version The version of the resource.
+     *
+     * @return The folder of the resource.
+     */
+    private static File getResourceFolder(String id, Version version) {
+        File file = new File(SystemProperty.USER_DIR.get(), "resources/" + id + '/' + version);
 
-        if (resource == null) {
-            resource = downloadResource(url, version);
+        if (!file.mkdirs()) {
+            LoggerFactory.getLogger(ResourceService.class).error("Unable to create the resource folder {}", file.getAbsolutePath());
         }
 
-        return resource;
+        return file;
     }
 
     @Override
     public void setBundleContext(BundleContext bundleContext) {
         this.bundleContext = bundleContext;
-    }
-
-    /**
-     * Return the resource folder for the given resource.
-     *
-     * @param resource The resource to get the folder for.
-     *
-     * @return The folder. 
-     */
-    private static File getResourceFolder(IResource resource) {
-        return new File(SystemProperty.USER_DIR.get(), "resources/" + resource.getId() + '/' + resource.getVersion());
     }
 }

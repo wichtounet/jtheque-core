@@ -11,8 +11,8 @@ import org.jtheque.modules.able.Resources;
 import org.jtheque.modules.impl.ModuleContainer.Builder;
 import org.jtheque.modules.utils.I18NResource;
 import org.jtheque.modules.utils.ImageResource;
-import org.jtheque.resources.able.IResource;
-import org.jtheque.resources.able.IResourceService;
+import org.jtheque.resources.able.Resource;
+import org.jtheque.resources.able.ResourceService;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.ThreadUtils;
 import org.jtheque.utils.bean.Version;
@@ -27,8 +27,6 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleException;
 import org.slf4j.LoggerFactory;
 import org.springframework.osgi.context.BundleContextAware;
-
-import javax.annotation.Resource;
 
 import java.io.File;
 import java.io.IOException;
@@ -72,13 +70,13 @@ public final class ModuleLoader implements org.jtheque.modules.able.ModuleLoader
 
     private BundleContext bundleContext;
 
-    @Resource
-    private IResourceService resourceService;
+    @javax.annotation.Resource
+    private ResourceService resourceService;
 
-    @Resource
+    @javax.annotation.Resource
     private LanguageService languageService;
 
-    @Resource
+    @javax.annotation.Resource
     private Core core;
 
     @Override
@@ -165,7 +163,7 @@ public final class ModuleLoader implements org.jtheque.modules.able.ModuleLoader
             ModuleResources resources = importConfig(jarFile.getInputStream(configEntry));
 
             //Install necessary resources before installing the bundle
-            for (IResource resource : resources.getResources()) {
+            for (Resource resource : resources.getResources()) {
                 if (resource != null) {
                     resourceService.installResource(resource);
                 }

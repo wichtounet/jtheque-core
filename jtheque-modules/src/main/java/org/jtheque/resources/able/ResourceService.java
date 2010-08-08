@@ -16,9 +16,9 @@ package org.jtheque.resources.able;
  * limitations under the License.
  */
 
-import org.jtheque.resources.impl.Resource;
 import org.jtheque.utils.bean.Version;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -26,7 +26,7 @@ import java.util.List;
  *
  * @author Baptiste Wicht
  */
-public interface IResourceService {
+public interface ResourceService {
     /**
      * Add a resource.
      *
@@ -39,16 +39,7 @@ public interface IResourceService {
      *
      * @return A List containing all the resources.
      */
-    List<IResource> getResources();
-
-    /**
-     * Return all the versions of the resource with the given name.
-     *
-     * @param resourceName The name of the resource to search the versions for.
-     *
-     * @return A List containing all the versions of the given resource.
-     */
-    List<Version> getVersions(String resourceName);
+    Collection<Resource> getResources();
 
     /**
      * Indicate if a resource with the given name already exists or not.
@@ -67,34 +58,7 @@ public interface IResourceService {
      *
      * @return The resource if found otherwise null.
      */
-    IResource getResource(String id, Version version);
-
-    /**
-     * Download the resource at the given URL and with the given version.
-     *
-     * @param url     The URL of the descriptor.
-     * @param version The version to download.
-     *
-     * @return The downloaded resource.
-     */
-    IResource downloadResource(String url, Version version);
-
-    /**
-     * Install the given resource.
-     *
-     * @param resource The resource to install.
-     */
-    void installResource(IResource resource);
-
-    /**
-     * Indicate if a re
-     *
-     * @param id      The id of the resource to get.
-     * @param version The version of the resource to get.
-     *
-     * @return true if the resource is installed otherwise false.
-     */
-    boolean isNotInstalled(String id, Version version);
+    Resource getResource(String id, Version version);
 
     /**
      * Get the resource with the given id and version if already installed otherwise download it using the given
@@ -106,5 +70,31 @@ public interface IResourceService {
      *
      * @return The resource.
      */
-    IResource getOrDownloadResource(String id, Version version, String url);
+    Resource getOrDownloadResource(String id, Version version, String url);
+
+    /**
+     * Return all the versions of the resource with the given name.
+     *
+     * @param resourceName The name of the resource to search the versions for.
+     *
+     * @return A List containing all the versions of the given resource.
+     */
+    List<Version> getVersions(String resourceName);
+
+    /**
+     * Install the given resource.
+     *
+     * @param resource The resource to install.
+     */
+    void installResource(Resource resource);
+
+    /**
+     * Indicate if a re
+     *
+     * @param id      The id of the resource to get.
+     * @param version The version of the resource to get.
+     *
+     * @return true if the resource is installed otherwise false.
+     */
+    boolean isNotInstalled(String id, Version version);
 }

@@ -19,7 +19,7 @@ package org.jtheque.modules.impl;
 import org.jtheque.modules.able.Resources;
 import org.jtheque.modules.utils.I18NResource;
 import org.jtheque.modules.utils.ImageResource;
-import org.jtheque.resources.able.IResource;
+import org.jtheque.resources.able.Resource;
 import org.jtheque.utils.collections.CollectionUtils;
 
 import java.util.List;
@@ -32,7 +32,7 @@ import java.util.List;
 public class ModuleResources implements Resources {
     private final List<ImageResource> imageResources = CollectionUtils.newList(5);
     private final List<I18NResource> i18nResources = CollectionUtils.newList(5);
-    private final List<IResource> resources = CollectionUtils.newList(5);
+    private final List<Resource> resources = CollectionUtils.newList(5);
 
     /**
      * Add a resource.
@@ -57,7 +57,7 @@ public class ModuleResources implements Resources {
      *
      * @param resource The resource to add. 
      */
-    void addResource(IResource resource) {
+    void addResource(Resource resource) {
         resources.add(resource);
     }
 
@@ -72,7 +72,7 @@ public class ModuleResources implements Resources {
     }
 
     @Override
-    public List<IResource> getResources() {
+    public List<Resource> getResources() {
         return resources;
     }
 }

@@ -1,4 +1,4 @@
-package org.jtheque.update.impl.versions;
+package org.jtheque.update.impl;
 
 import org.jtheque.core.able.Versionable;
 import org.jtheque.errors.able.ErrorService;
@@ -6,7 +6,6 @@ import org.jtheque.errors.able.Errors;
 import org.jtheque.modules.able.Module;
 import org.jtheque.resources.impl.CoreDescriptor;
 import org.jtheque.resources.impl.CoreVersion;
-import org.jtheque.resources.impl.DescriptorReader;
 import org.jtheque.resources.impl.ModuleDescriptor;
 import org.jtheque.resources.impl.ModuleVersion;
 import org.jtheque.utils.bean.Version;
@@ -70,7 +69,7 @@ public final class DescriptorsLoader implements IVersionsLoader {
     public Collection<Version> getCoreVersions() {
         CoreDescriptor descriptor = getCoreDescriptor();
 
-        if(descriptor != null){
+        if (descriptor != null) {
             Collection<Version> versions = CollectionUtils.newList(descriptor.getVersions().size());
 
             for (CoreVersion v : descriptor.getVersions()) {
@@ -150,7 +149,7 @@ public final class DescriptorsLoader implements IVersionsLoader {
      */
     private ModuleDescriptor getModuleDescriptor(String url) {
         if (!cache.containsKey(url)) {
-            cache.put(url, DescriptorReader.readModuleDescriptor(url));
+            cache.put(url, ModuleDescriptorReader.readModuleDescriptor(url));
 
             if (!cache.containsKey(url)) {
                 errorService.addError(Errors.newI18nError(
@@ -163,14 +162,14 @@ public final class DescriptorsLoader implements IVersionsLoader {
     }
 
     /**
-     * Return the descriptor of the core. If the descriptor of the core has not been previously loaded, this
-     * method will load it.
+     * Return the descriptor of the core. If the descriptor of the core has not been previously loaded, this method will
+     * load it.
      *
-     * @return The core descriptor or null if it cannot be read (not reachable or not valid file). 
+     * @return The core descriptor or null if it cannot be read (not reachable or not valid file).
      */
     public CoreDescriptor getCoreDescriptor() {
         if (coreDescriptor == null) {
-            coreDescriptor = DescriptorReader.readCoreDescriptor();
+            coreDescriptor = CoreDescriptorReader.readCoreDescriptor();
 
             if (coreDescriptor == null) {
                 errorService.addError(Errors.newI18nError(

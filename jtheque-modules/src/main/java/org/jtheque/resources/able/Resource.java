@@ -1,6 +1,6 @@
 package org.jtheque.resources.able;
 
-import org.osgi.framework.BundleContext;
+import org.jtheque.utils.bean.Version;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -19,23 +19,43 @@ import org.osgi.framework.BundleContext;
  */
 
 /**
- * A simple resource.
+ * A resource of a module. That kind of resource can be installed.
  *
  * @author Baptiste Wicht
  */
-public interface SimpleResource {
+public interface Resource {
     /**
      * Return the id of the resource.
      *
-     * @return The id of the resource. 
+     * @return The id of the resource.
      */
     String getId();
 
     /**
-     * Install the resource in the bundle context. Depending on the implementation, this method
-     * can do nothing.
+     * Return the version of the resource.
      *
-     * @param bundleContext The bundle context.
+     * @return The version of the resource.
      */
-    void install(BundleContext bundleContext);
+    Version getVersion();
+
+    /**
+     * Return the URL of the resource.
+     *
+     * @return The URL of the resource.
+     */
+    String getUrl();
+
+    /**
+     * Return the file of the resource. This is only the file name not the path.
+     *
+     * @return The file of the resource.
+     */
+    String getFile();
+
+    /**
+     * Indicate if the resource is a library or not.
+     *
+     * @return {@code true} if the resource is a library else {@code false}.
+     */
+    boolean isLibrary();
 }

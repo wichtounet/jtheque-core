@@ -1,4 +1,4 @@
-package org.jtheque.resources.impl;
+package org.jtheque.update.impl;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -16,6 +16,7 @@ package org.jtheque.resources.impl;
  * limitations under the License.
  */
 
+import org.jtheque.resources.impl.FileDescriptor;
 import org.jtheque.utils.bean.EqualsBuilder;
 import org.jtheque.utils.bean.HashCodeUtils;
 import org.jtheque.utils.bean.Version;
@@ -55,7 +56,7 @@ public final class CoreVersion implements Comparable<CoreVersion> {
 
     /**
      * Return the bundles of the core version. This is the list of the bundles that will be downloaded in update.
-     * @return An Iterable on the descriptors. 
+     * @return An Iterable on the descriptors.
      */
     public Iterable<FileDescriptor> getBundles() {
         return Collections.unmodifiableList(bundles);

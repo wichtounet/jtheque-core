@@ -32,27 +32,30 @@ package org.jtheque.resources.impl;
  * limitations under the License.
  */
 
+import org.jtheque.utils.annotations.Immutable;
 import org.jtheque.utils.collections.CollectionUtils;
 
-import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.Collection;
 
 /**
  * A resource descriptor.
  *
  * @author Baptiste Wicht
  */
+@Immutable
 public final class ResourceDescriptor extends AbstractDescriptor {
-    private final List<ResourceVersion> versions = CollectionUtils.newList(5);
+    private final Collection<ResourceVersion> versions;
 
     /**
      * Construct a new ImageDescriptor with the given ID.
      *
-     * @param id The id of the resource.
+     * @param id       The id of the resource.
+     * @param versions The versions of the descriptor.
      */
-    public ResourceDescriptor(String id) {
+    public ResourceDescriptor(String id, Collection<ResourceVersion> versions) {
         super(id);
 
+        this.versions = CollectionUtils.copyOf(versions);
     }
 
     /**
@@ -61,30 +64,6 @@ public final class ResourceDescriptor extends AbstractDescriptor {
      * @return A list containing all the versions of the file.
      */
     public Iterable<ResourceVersion> getVersions() {
-        return versions;
-    }
-
-    /**
-     * Add a version to the resource descriptor.
-     *
-     * @param version The new version to add to the descriptor. 
-     */
-    public void addVersion(ResourceVersion version) {
-        versions.add(version);
-    }
-
-    /**
-     * Return the most recent version of the VersionsFile.
-     *
-     * @return The most recent version.
-     *
-     * @throws NoSuchElementException If the version's file contains no version.
-     */
-    public ResourceVersion getMostRecentVersion() {
-        if (versions.isEmpty()) {
-            throw new NoSuchElementException("The version's file contains no versions. ");
-        }
-
-        return versions.get(versions.size() - 1);
+        return CollectionUtils.protect(versions);
     }
 }

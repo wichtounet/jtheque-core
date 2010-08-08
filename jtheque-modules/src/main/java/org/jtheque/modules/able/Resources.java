@@ -2,7 +2,7 @@ package org.jtheque.modules.able;
 
 import org.jtheque.modules.utils.I18NResource;
 import org.jtheque.modules.utils.ImageResource;
-import org.jtheque.resources.able.IResource;
+import org.jtheque.resources.able.Resource;
 
 import java.util.List;
 
@@ -47,5 +47,5 @@ public interface Resources {
      *
      * @return A List containing all the resources. 
      */
-    List<IResource> getResources();
+    List<Resource> getResources();
 }

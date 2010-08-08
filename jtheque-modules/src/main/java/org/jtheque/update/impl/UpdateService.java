@@ -29,13 +29,12 @@ import org.jtheque.modules.able.Module;
 import org.jtheque.modules.able.ModuleService;
 import org.jtheque.modules.able.ModuleState;
 import org.jtheque.modules.impl.InstallationResult;
-import org.jtheque.resources.able.IResourceService;
+import org.jtheque.resources.able.ResourceService;
 import org.jtheque.resources.impl.CoreVersion;
 import org.jtheque.resources.impl.FileDescriptor;
 import org.jtheque.resources.impl.ModuleVersion;
 import org.jtheque.ui.able.UIUtils;
 import org.jtheque.update.able.IUpdateService;
-import org.jtheque.update.impl.versions.IVersionsLoader;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.collections.ArrayUtils;
@@ -83,7 +82,7 @@ public final class UpdateService implements IUpdateService {
     private ErrorService errorService;
 
     @Resource
-    private IResourceService resourceService;
+    private ResourceService resourceService;
 
     private final IVersionsLoader versionsLoader;
 

@@ -27,7 +27,7 @@
 
     <bean id="updateService" class="org.jtheque.update.impl.UpdateService">
         <constructor-arg>
-            <bean id="versionsLoader" class="org.jtheque.update.impl.versions.DescriptorsLoader"/>
+            <bean id="versionsLoader" class="org.jtheque.update.impl.DescriptorsLoader"/>
         </constructor-arg>
     </bean>
 
@@ -41,5 +41,5 @@
 
     <osgi:service ref="moduleService" interface="org.jtheque.modules.able.ModuleService"/>
     <osgi:service ref="updateService" interface="org.jtheque.update.able.IUpdateService"/>
-    <osgi:service ref="resourceService" interface="org.jtheque.resources.able.IResourceService"/>
+    <osgi:service ref="resourceService" interface="org.jtheque.resources.able.ResourceService"/>
 </beans>

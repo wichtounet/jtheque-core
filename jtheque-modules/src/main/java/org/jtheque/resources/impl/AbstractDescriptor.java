@@ -1,5 +1,7 @@
 package org.jtheque.resources.impl;
 
+import org.jtheque.utils.annotations.Immutable;
+
 /*
  * Copyright JTheque (Baptiste Wicht)
  *
@@ -21,6 +23,7 @@ package org.jtheque.resources.impl;
  *
  * @author Baptiste Wicht
  */
+@Immutable
 public class AbstractDescriptor {
     private final String id;
 
@@ -40,7 +43,7 @@ public class AbstractDescriptor {
      *
      * @return The id of the resource.
      */
-    public String getId() {
+    public final String getId() {
         return id;
     }
 }
