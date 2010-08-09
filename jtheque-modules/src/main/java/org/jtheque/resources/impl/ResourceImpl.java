@@ -26,7 +26,7 @@ import org.jtheque.utils.bean.Version;
  * @author Baptiste Wicht
  */
 @Immutable
-public class ResourceImpl implements Resource {
+public final class ResourceImpl implements Resource {
     private final String id;
     private final Version version;
     private final String url;

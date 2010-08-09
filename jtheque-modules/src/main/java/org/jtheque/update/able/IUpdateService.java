@@ -21,7 +21,6 @@ import org.jtheque.modules.able.Module;
 import org.jtheque.modules.impl.InstallationResult;
 import org.jtheque.utils.bean.Version;
 
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -31,27 +30,17 @@ import java.util.List;
  */
 public interface IUpdateService {
     /**
-     * Update JTheque. This method search on internet the datas of the version we want to download and download all the
+     * Update JTheque Core to the most recent version. This method search on internet the datas of the version we want to download and download all the
      * files useful and org.jtheque.update the local files. Last, we reboot the program.
-     *
-     * @param versionToDownload The version we want to download
      */
-    void updateCore(Version versionToDownload);
+    void updateCore();
 
     /**
-     * Update the module.
+     * Update the module to the most recent available version.
      *
-     * @param object  The object to update.
-     * @param version The current version.
+     * @param module The module to update.
      */
-    void update(Module object, Version version);
-
-    /**
-     * Return the list of available versions on internet.
-     *
-     * @return The available versions
-     */
-    Collection<Version> getKernelVersions();
+    void update(Module module);
 
     /**
      * Verify if there is a new update available and if the user want to org.jtheque.update the application.
@@ -62,9 +51,9 @@ public interface IUpdateService {
     List<String> getPossibleUpdates();
 
     /**
-     * Indicate if the current version is the last version.
+     * Indicate if the current version of the core is the last version.
      *
-     * @return true if we've the last version, else false
+     * @return {@code true} if we've the last version, else {@code false}
      */
     boolean isCurrentVersionUpToDate();
 
@@ -73,18 +62,9 @@ public interface IUpdateService {
      *
      * @param object The object to test.
      *
-     * @return true if the module is up to date else false.
+     * @return {@code true} if the module is up to date else {@code false}.
      */
     boolean isUpToDate(Module object);
-
-    /**
-     * Return all the versions of the object.
-     *
-     * @param object The object to get the versions for.
-     *
-     * @return A List containing all the versions of the updatable.
-     */
-    Collection<Version> getVersions(Module object);
 
     /**
      * Install a module from a versions file.
@@ -93,14 +73,7 @@ public interface IUpdateService {
      *
      * @return The result of the installation.
      */
-    InstallationResult install(String versionFileURL);
-
-    /**
-     * Update the module to the most recent available version.
-     *
-     * @param module The module to org.jtheque.update.
-     */
-    void updateToMostRecentVersion(Module module);
+    InstallationResult installModule(String versionFileURL);
 
     /**
      * Return the most recent version of the object.

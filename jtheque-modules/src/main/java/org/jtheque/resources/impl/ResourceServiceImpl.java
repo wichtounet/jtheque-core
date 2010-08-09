@@ -7,7 +7,9 @@ import org.jtheque.events.able.EventLevel;
 import org.jtheque.events.able.EventService;
 import org.jtheque.events.able.Events;
 import org.jtheque.resources.able.Resource;
+import org.jtheque.resources.able.ResourceService;
 import org.jtheque.states.able.StateService;
+import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.collections.ArrayUtils;
 import org.jtheque.utils.collections.CollectionUtils;
@@ -47,9 +49,11 @@ import java.util.Map;
  *
  * @author Baptiste Wicht
  */
-public class ResourceService implements org.jtheque.resources.able.ResourceService, BundleContextAware {
+@ThreadSafe
+public final class ResourceServiceImpl implements ResourceService, BundleContextAware {
     private final Map<String, ResourceDescriptor> descriptorCache = CollectionUtils.newHashMap(5);
     private final Map<String, Bundle> installedBundles = CollectionUtils.newHashMap(20);
+
     private final ResourceState resourceState;
 
     @javax.annotation.Resource
@@ -65,7 +69,7 @@ public class ResourceService implements org.jtheque.resources.able.ResourceServi
      *
      * @param stateService The state service.
      */
-    public ResourceService(StateService stateService) {
+    public ResourceServiceImpl(StateService stateService) {
         super();
 
         resourceState = stateService.getState(new ResourceState());
@@ -78,7 +82,7 @@ public class ResourceService implements org.jtheque.resources.able.ResourceServi
 
     @Override
     public Collection<Resource> getResources() {
-        return resourceState.getResourceSets();
+        return CollectionUtils.protect(resourceState.getResourceSets());
     }
 
     @Override
@@ -216,7 +220,7 @@ public class ResourceService implements org.jtheque.resources.able.ResourceServi
         try {
             WebUtils.downloadFile(url, filePath.getAbsolutePath());
         } catch (FileException e) {
-            LoggerFactory.getLogger(ResourceService.class).error(e.getMessage(), e);
+            LoggerFactory.getLogger(ResourceServiceImpl.class).error(e.getMessage(), e);
         }
     }
 
@@ -256,7 +260,7 @@ public class ResourceService implements org.jtheque.resources.able.ResourceServi
         File file = new File(SystemProperty.USER_DIR.get(), "resources/" + id + '/' + version);
 
         if (!file.mkdirs()) {
-            LoggerFactory.getLogger(ResourceService.class).error("Unable to create the resource folder {}", file.getAbsolutePath());
+            LoggerFactory.getLogger(ResourceServiceImpl.class).error("Unable to create the resource folder {}", file.getAbsolutePath());
         }
 
         return file;

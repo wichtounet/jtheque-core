@@ -1,5 +1,6 @@
-package org.jtheque.resources.impl;
+package org.jtheque.update.impl;
 
+import org.jtheque.utils.annotations.Immutable;
 import org.jtheque.utils.collections.CollectionUtils;
 
 import java.util.Collection;
@@ -27,16 +28,31 @@ import java.util.NoSuchElementException;
  *
  * @author Baptiste Wicht
  */
-public class ModuleDescriptor extends AbstractDescriptor {
-    private final List<ModuleVersion> moduleVersions = CollectionUtils.newList(5);
+@Immutable
+public final class ModuleDescriptor {
+    private final String id;
+    private final List<ModuleVersion> moduleVersions;
 
     /**
      * Construct a new ModuleDescriptor.
      *
-     * @param id The id of the module.
+     * @param id             The id of the module.
+     * @param moduleVersions The module versions contained in the descriptions.
      */
-    public ModuleDescriptor(String id) {
-        super(id);
+    public ModuleDescriptor(String id, Collection<ModuleVersion> moduleVersions) {
+        super();
+
+        this.id = id;
+        this.moduleVersions = CollectionUtils.copyOf(moduleVersions);
+    }
+
+    /**
+     * Return the id of the resource.
+     *
+     * @return The id of the resource.
+     */
+    public String getId() {
+        return id;
     }
 
     /**
@@ -45,16 +61,7 @@ public class ModuleDescriptor extends AbstractDescriptor {
      * @return A Collection containing all the versions of the descriptor.
      */
     public Collection<ModuleVersion> getVersions() {
-        return moduleVersions;
-    }
-
-    /**
-     * Add a version to the descriptor.
-     *
-     * @param version The version to add.
-     */
-    public void addVersion(ModuleVersion version) {
-        moduleVersions.add(version);
+        return CollectionUtils.protect(moduleVersions);
     }
 
     /**

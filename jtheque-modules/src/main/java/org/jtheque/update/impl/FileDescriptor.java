@@ -1,5 +1,6 @@
-package org.jtheque.resources.impl;
+package org.jtheque.update.impl;
 
+import org.jtheque.utils.annotations.Immutable;
 import org.jtheque.utils.bean.Version;
 
 /*
@@ -23,24 +24,11 @@ import org.jtheque.utils.bean.Version;
  *
  * @author Baptiste Wicht
  */
-public class FileDescriptor {
+@Immutable
+public final class FileDescriptor {
     private final String name;
     private final String url;
-
-    private Version version;
-
-    /**
-     * Create a new FileDescriptor.
-     *
-     * @param name    The name of the file.
-     * @param url     The url to the file.
-     */
-    public FileDescriptor(String name, String url) {
-        super();
-
-        this.name = name;
-        this.url = url;
-    }
+    private final Version version;
 
     /**
      * Create a new FileDescriptor.
@@ -62,7 +50,7 @@ public class FileDescriptor {
      *
      * @return The name of the file descriptor. 
      */
-    public String getName() {
+    public String getId() {
         return name;
     }
 

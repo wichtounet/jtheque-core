@@ -1,6 +1,10 @@
 package org.jtheque.update.impl;
 
+import org.jtheque.utils.annotations.Immutable;
 import org.jtheque.utils.bean.Version;
+import org.jtheque.utils.collections.CollectionUtils;
+
+import java.util.Collection;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -23,27 +27,31 @@ import org.jtheque.utils.bean.Version;
  *
  * @author Baptiste Wicht
  */
+@Immutable
 public final class ModuleVersion {
     private final Version version;
     private final Version coreVersion;
     private final String moduleFile;
     private final String moduleURL;
+    private final Collection<FileDescriptor> resources;
 
     /**
      * Create a new ModuleVersion.
      *
-     * @param version The version.
+     * @param version     The version.
      * @param coreVersion
      * @param moduleFile
      * @param moduleURL
+     * @param resources
      */
-    public ModuleVersion(Version version, Version coreVersion, String moduleFile, String moduleURL) {
+    public ModuleVersion(Version version, Version coreVersion, String moduleFile, String moduleURL, Collection<FileDescriptor> resources) {
         super();
 
         this.version = version;
         this.coreVersion = coreVersion;
         this.moduleFile = moduleFile;
         this.moduleURL = moduleURL;
+        this.resources = CollectionUtils.copyOf(resources);
     }
 
     public Version getVersion() {
@@ -75,5 +83,9 @@ public final class ModuleVersion {
      */
     public String getModuleURL() {
         return moduleURL;
+    }
+
+    public Collection<FileDescriptor> getResources() {
+        return CollectionUtils.protect(resources);
     }
 }

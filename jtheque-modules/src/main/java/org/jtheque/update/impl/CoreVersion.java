@@ -16,33 +16,35 @@ package org.jtheque.update.impl;
  * limitations under the License.
  */
 
-import org.jtheque.resources.impl.FileDescriptor;
+import org.jtheque.utils.annotations.Immutable;
 import org.jtheque.utils.bean.EqualsBuilder;
 import org.jtheque.utils.bean.HashCodeUtils;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.collections.CollectionUtils;
 
-import java.util.Collections;
-import java.util.List;
+import java.util.Collection;
 
 /**
  * A core version.
  *
  * @author Baptiste Wicht
  */
+@Immutable
 public final class CoreVersion implements Comparable<CoreVersion> {
     private final Version version;
-    private final List<FileDescriptor> bundles = CollectionUtils.newList(5);
+    private final Collection<FileDescriptor> bundles;
 
     /**
      * Construct a new CoreVersion.
      *
      * @param version The version of the resource.
+     * @param bundles The bundles of the version.
      */
-    public CoreVersion(Version version) {
+    public CoreVersion(Version version, Collection<FileDescriptor> bundles) {
         super();
 
         this.version = version;
+        this.bundles = CollectionUtils.copyOf(bundles);
     }
 
     /**
@@ -50,30 +52,22 @@ public final class CoreVersion implements Comparable<CoreVersion> {
      *
      * @return The JTheque's version.
      */
-    public final Version getVersion() {
+    public Version getVersion() {
         return version;
     }
 
     /**
      * Return the bundles of the core version. This is the list of the bundles that will be downloaded in update.
+     *
      * @return An Iterable on the descriptors.
      */
     public Iterable<FileDescriptor> getBundles() {
-        return Collections.unmodifiableList(bundles);
+        return CollectionUtils.protect(bundles);
     }
 
     @Override
-    public final int compareTo(CoreVersion o) {
+    public int compareTo(CoreVersion o) {
         return version.compareTo(o.version);
-    }
-
-    /**
-     * Add the bundle to the version.
-     *
-     * @param descriptor The descriptor.
-     */
-    public void addBundle(FileDescriptor descriptor) {
-        bundles.add(descriptor);
     }
 
     @Override

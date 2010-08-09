@@ -30,9 +30,6 @@ import org.jtheque.modules.able.ModuleService;
 import org.jtheque.modules.able.ModuleState;
 import org.jtheque.modules.impl.InstallationResult;
 import org.jtheque.resources.able.ResourceService;
-import org.jtheque.resources.impl.CoreVersion;
-import org.jtheque.resources.impl.FileDescriptor;
-import org.jtheque.resources.impl.ModuleVersion;
 import org.jtheque.ui.able.UIUtils;
 import org.jtheque.update.able.IUpdateService;
 import org.jtheque.utils.StringUtils;
@@ -50,15 +47,12 @@ import javax.annotation.Resource;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
 /**
- * Manage the update of the application. This class can go on internet to verify if a more recent version of JTheque is
- * available and download one new version if there is one.
- * <p/>
- * This service manage also the updates of the modules.
+ * Manage the update of the application and its module. This class can go on internet to verify if a more recent version
+ * of something is available and download one new version if there is one. 
  *
  * @author Baptiste Wicht
  */
@@ -84,28 +78,17 @@ public final class UpdateService implements IUpdateService {
     @Resource
     private ResourceService resourceService;
 
-    private final IVersionsLoader versionsLoader;
-
-    /**
-     * Create a new UpdateService.
-     *
-     * @param versionsLoader The versions loader.
-     */
-    public UpdateService(IVersionsLoader versionsLoader) {
-        super();
-
-        this.versionsLoader = versionsLoader;
-    }
+    private final DescriptorsLoader versionsLoader = new DescriptorsLoader();
 
     @Override
-    public void updateCore(Version versionToDownload) {
+    public void updateCore() {
         if (isDescriptorNotReachable(Core.DESCRIPTOR_FILE_URL)) {
             return;
         }
 
-        CoreVersion onlineVersion = versionsLoader.getCoreVersion(versionToDownload);
+        CoreVersion onlineVersion = versionsLoader.getCoreVersion(getMostRecentCoreVersion());
 
-        if (onlineVersion == null) {
+        if (onlineVersion == null || onlineVersion.getVersion().equals(Core.VERSION)){
             return;
         }
 
@@ -115,7 +98,7 @@ public final class UpdateService implements IUpdateService {
     }
 
     @Override
-    public InstallationResult install(String url) {
+    public InstallationResult installModule(String url) {
         InstallationResult result = new InstallationResult();
 
         if (WebUtils.isURLReachable(url)) {
@@ -159,8 +142,13 @@ public final class UpdateService implements IUpdateService {
         }
     }
 
-    @Override
-    public void update(Module module, Version version) {
+    /**
+     * Update the module.
+     *
+     * @param module  The module to update.
+     * @param version The current version.
+     */
+    private void update(Module module, Version version) {
         if (isDescriptorNotReachable(module.getDescriptorURL())) {
             return;
         }
@@ -233,8 +221,9 @@ public final class UpdateService implements IUpdateService {
                         new File(core.getFolders().getModulesFolder(), moduleVersion.getModuleFile()).getAbsolutePath());
             }
 
-            downloadResources(moduleVersion.getFiles());
-            downloadResources(moduleVersion.getLibraries());
+            for(FileDescriptor resource : moduleVersion.getResources()){
+                resourceService.getOrDownloadResource(resource.getId(), resource.getVersion(), resource.getUrl());
+            }
         } catch (FileException e) {
             LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
         }
@@ -252,7 +241,7 @@ public final class UpdateService implements IUpdateService {
 
         //Make the diffs and download the new bundles
         for (FileDescriptor newBundle : coreVersion.getBundles()) {
-            File f = new File(bundlesFolder, newBundle.getName());
+            File f = new File(bundlesFolder, newBundle.getId());
 
             if (currentBundles.contains(f)) {
                 currentBundles.remove(f);
@@ -269,28 +258,6 @@ public final class UpdateService implements IUpdateService {
         for (File f : currentBundles) {
             FileUtils.delete(f);
         }
-    }
-
-    /**
-     * Download the resources.
-     *
-     * @param resources The resources to download.
-     */
-    private void downloadResources(Iterable<FileDescriptor> resources) {
-        for (FileDescriptor descriptor : resources) {
-            if (resourceService.isNotInstalled(descriptor.getName(), descriptor.getVersion())) {
-                resourceService.downloadResource(descriptor.getUrl(), descriptor.getVersion());
-            }
-        }
-    }
-
-    @Override
-    public Collection<Version> getKernelVersions() {
-        if (isDescriptorNotReachable(Core.DESCRIPTOR_FILE_URL)) {
-            return CollectionUtils.emptyList();
-        }
-
-        return versionsLoader.getCoreVersions();
     }
 
     @Override
@@ -367,20 +334,12 @@ public final class UpdateService implements IUpdateService {
     }
 
     @Override
-    public void updateToMostRecentVersion(Module module) {
+    public void update(Module module) {
         if (isDescriptorNotReachable(module.getDescriptorURL())) {
             return;
         }
 
-        Version maxVersion = null;
-
-        for (Version version : versionsLoader.getVersions(module)) {
-            if (maxVersion == null || version.isGreaterThan(maxVersion)) {
-                maxVersion = version;
-            }
-        }
-
-        update(module, maxVersion);
+        update(module, getMostRecentVersion(module));
     }
 
     @Override
@@ -399,14 +358,5 @@ public final class UpdateService implements IUpdateService {
         }
 
         return versionsLoader.getMostRecentVersion(object);
-    }
-
-    @Override
-    public Collection<Version> getVersions(Module object) {
-        if (isDescriptorNotReachable(object.getDescriptorURL())) {
-            return null;
-        }
-
-        return versionsLoader.getVersions(object);
     }
 }

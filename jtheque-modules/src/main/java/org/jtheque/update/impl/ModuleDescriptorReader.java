@@ -1,8 +1,7 @@
 package org.jtheque.update.impl;
 
-import org.jtheque.resources.impl.ModuleDescriptor;
-import org.jtheque.resources.impl.ModuleVersion;
 import org.jtheque.utils.bean.Version;
+import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.io.FileUtils;
 import org.jtheque.xml.utils.XML;
 import org.jtheque.xml.utils.XMLException;
@@ -13,6 +12,7 @@ import org.w3c.dom.Node;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.List;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -30,7 +30,11 @@ import java.net.URL;
  * limitations under the License.
  */
 
-public class ModuleDescriptorReader {
+final class ModuleDescriptorReader {
+    private ModuleDescriptorReader() {
+        throw new AssertionError();
+    }
+
     /**
      * Read the module from the given URL.
      *
@@ -38,7 +42,7 @@ public class ModuleDescriptorReader {
      *
      * @return The module descriptor.
      */
-    public static ModuleDescriptor readModuleDescriptor(String url) {
+    static ModuleDescriptor readModuleDescriptor(String url) {
         XMLReader<Node> reader = XML.newJavaFactory().newReader();
 
         try {
@@ -62,13 +66,13 @@ public class ModuleDescriptorReader {
 
             String id = reader.readString("id", reader.getRootElement());
 
-            ModuleDescriptor descriptor = new ModuleDescriptor(id);
+            List<ModuleVersion> versions = CollectionUtils.newList();
 
             for (Object currentNode : reader.getNodes("version", reader.getRootElement())) {
-                descriptor.addVersion(readModuleVersion(currentNode, reader));
+                versions.add(readModuleVersion(currentNode, reader));
             }
 
-            return descriptor;
+            return new ModuleDescriptor(id, versions);
         } catch (XMLException e) {
             LoggerFactory.getLogger(ModuleDescriptorReader.class).error("Unable to read versions file", e);
         } finally {
@@ -89,16 +93,34 @@ public class ModuleDescriptorReader {
      * @throws XMLException If an error occurs during XML parsing.
      */
     private static ModuleVersion readModuleVersion(Object currentNode, XMLReader<Node> reader) throws XMLException {
-        ModuleVersion resourceVersion = new ModuleVersion(Version.get(reader.readString("@name", currentNode)));
+        List<FileDescriptor> resources = CollectionUtils.newList(10);
 
-        //TODO readResources(currentNode, reader, resourceVersion);
-
-        if (reader.existsNode("module", currentNode)) {
-            resourceVersion.setCoreVersion(Version.get(reader.readString("module/@core", currentNode)));
-            resourceVersion.setModuleFile(reader.readString("module/file", currentNode));
-            resourceVersion.setModuleURL(reader.readString("module/url", currentNode));
+        for(Object node : reader.getNodes("module/resource", currentNode)){
+            resources.add(readFileDescriptor(node, reader));
         }
 
-        return resourceVersion;
+        return new ModuleVersion(
+                Version.get(reader.readString("@name", currentNode)),
+                Version.get(reader.readString("module/@core", currentNode)),
+                reader.readString("module/file", currentNode),
+                reader.readString("module/url", currentNode), resources);
+    }
+
+    /**
+     * Read the file descriptor.
+     *
+     * @param currentNode The current node.
+     * @param reader      The XML reader.
+     *
+     * @return The FileDescriptor of the current node.
+     *
+     * @throws XMLException If an exception occurs during XML parsing.
+     */
+    private static FileDescriptor readFileDescriptor(Object currentNode, XMLReader<Node> reader) throws XMLException {
+        String name = reader.readString("name", currentNode);
+        String url = reader.readString("url", currentNode);
+        String version = reader.readString("version", currentNode);
+
+        return new FileDescriptor(name, url, Version.get(version));
     }
 }

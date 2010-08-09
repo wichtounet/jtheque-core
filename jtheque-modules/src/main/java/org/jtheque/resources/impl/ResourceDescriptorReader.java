@@ -51,7 +51,7 @@ import java.util.List;
  *
  * @author Baptiste Wicht
  */
-public final class ResourceDescriptorReader {
+final class ResourceDescriptorReader {
     /**
      * A Descriptor XML reader.
      */
@@ -66,7 +66,7 @@ public final class ResourceDescriptorReader {
      *
      * @return The resource descriptor or null if the URL is invalid.
      */
-    public static ResourceDescriptor readResourceDescriptor(String url) {
+    static ResourceDescriptor readResourceDescriptor(String url) {
         XMLReader<Node> reader = XML.newJavaFactory().newReader();
 
         try {

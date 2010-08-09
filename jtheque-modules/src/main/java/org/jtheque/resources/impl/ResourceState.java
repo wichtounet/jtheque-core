@@ -4,6 +4,7 @@ import org.jtheque.resources.able.Resource;
 import org.jtheque.states.able.Load;
 import org.jtheque.states.able.Save;
 import org.jtheque.states.able.State;
+import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.xml.utils.Node;
@@ -32,9 +33,10 @@ import java.util.Set;
  *
  * @author Baptiste Wicht
  */
+@ThreadSafe
 @State(id = "jtheque-resources", delegated = true)
-public class ResourceState {
-    private final Collection<Resource> resources = CollectionUtils.newList();
+public final class ResourceState {
+    private final Collection<Resource> resources = CollectionUtils.newConcurrentList();
 
     /**
      * Delegate the load of the state.

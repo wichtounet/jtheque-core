@@ -1,11 +1,8 @@
 package org.jtheque.update.impl;
 
 import org.jtheque.core.able.Core;
-import org.jtheque.resources.impl.CoreDescriptor;
-import org.jtheque.resources.impl.CoreVersion;
-import org.jtheque.resources.impl.FileDescriptor;
-import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.bean.Version;
+import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.io.FileUtils;
 import org.jtheque.xml.utils.XML;
 import org.jtheque.xml.utils.XMLException;
@@ -16,6 +13,7 @@ import org.w3c.dom.Node;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.List;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -33,11 +31,10 @@ import java.net.URL;
  * limitations under the License.
  */
 
-/**
- * Created by IntelliJ IDEA. User: wichtounet Date: Aug 8, 2010 Time: 8:12:42 PM To change this template use File |
- * Settings | File Templates.
- */
 public class CoreDescriptorReader {
+    private CoreDescriptorReader() {
+        throw new AssertionError();
+    }
 
     /**
      * Read the core descriptor at the specified URL.
@@ -65,13 +62,13 @@ public class CoreDescriptorReader {
         try {
             reader.openURL(url);
 
-            CoreDescriptor descriptor = new CoreDescriptor();
+            List<CoreVersion> versions = CollectionUtils.newList(5);
 
             for (Object currentNode : reader.getNodes("version", reader.getRootElement())) {
-                descriptor.addVersion(readCoreVersion(currentNode, reader));
+                versions.add(readCoreVersion(currentNode, reader));
             }
 
-            return descriptor;
+            return new CoreDescriptor(versions);
         } catch (XMLException e) {
             LoggerFactory.getLogger(CoreDescriptorReader.class).error("Unable to read versions file", e);
         } finally {
@@ -92,27 +89,13 @@ public class CoreDescriptorReader {
      * @throws XMLException If an exception occurs during XML processing.
      */
     private static CoreVersion readCoreVersion(Object currentNode, XMLReader<Node> reader) throws XMLException {
-        CoreVersion resourceVersion = new CoreVersion(Version.get(reader.readString("@name", currentNode)));
+        List<FileDescriptor> descriptors = CollectionUtils.newList(25);
 
-        readResources(currentNode, reader, resourceVersion);
-
-        return resourceVersion;
-    }
-
-    /**
-     * Read the resources from the given node and using the given reader and then fill the core version with the
-     * resources.
-     *
-     * @param currentNode The current node.
-     * @param reader      The XML reader.
-     * @param coreVersion The core version to fill.
-     *
-     * @throws XMLException If an exceptions occurs during XML processing.
-     */
-    private static void readResources(Object currentNode, XMLReader<Node> reader, CoreVersion coreVersion) throws XMLException {
         for (Object libraryNode : reader.getNodes("bundles/bundle", currentNode)) {
-            coreVersion.addBundle(readFileDescriptor(libraryNode, reader));
+            descriptors.add(readFileDescriptor(libraryNode, reader));
         }
+
+        return new CoreVersion(Version.get(reader.readString("@name", currentNode)), descriptors);
     }
 
     /**
@@ -130,10 +113,6 @@ public class CoreDescriptorReader {
         String url = reader.readString("url", currentNode);
         String version = reader.readString("version", currentNode);
 
-        if (StringUtils.isNotEmpty(version)) {
-            return new FileDescriptor(name, url, Version.get(version));
-        } else {
-            return new FileDescriptor(name, url);
-        }
+        return new FileDescriptor(name, url, Version.get(version));
     }
 }

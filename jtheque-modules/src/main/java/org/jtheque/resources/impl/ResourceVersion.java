@@ -32,6 +32,7 @@ package org.jtheque.resources.impl;
  * limitations under the License.
  */
 
+import org.jtheque.utils.annotations.Immutable;
 import org.jtheque.utils.bean.EqualsBuilder;
 import org.jtheque.utils.bean.HashCodeUtils;
 import org.jtheque.utils.bean.Version;
@@ -41,6 +42,7 @@ import org.jtheque.utils.bean.Version;
  *
  * @author Baptiste Wicht
  */
+@Immutable
 public final class ResourceVersion implements Comparable<ResourceVersion> {
     private final Version version;
     private final String file;
@@ -69,7 +71,7 @@ public final class ResourceVersion implements Comparable<ResourceVersion> {
      *
      * @return The JTheque's version.
      */
-    public final Version getVersion() {
+    public Version getVersion() {
         return version;
     }
 
@@ -83,6 +85,11 @@ public final class ResourceVersion implements Comparable<ResourceVersion> {
 
     public String getUrl() {
         return url;
+    }
+
+    @Override
+    public int hashCode() {
+        return HashCodeUtils.hashCodeDirect(version, file, url, library);
     }
 
     @Override
@@ -102,12 +109,7 @@ public final class ResourceVersion implements Comparable<ResourceVersion> {
     }
 
     @Override
-    public int hashCode() {
-        return HashCodeUtils.hashCodeDirect(version, file, url, library);
-    }
-
-    @Override
-    public final int compareTo(ResourceVersion o) {
+    public int compareTo(ResourceVersion o) {
         return version.compareTo(o.version);
     }
 }

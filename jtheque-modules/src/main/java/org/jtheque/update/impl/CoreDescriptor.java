@@ -1,4 +1,4 @@
-package org.jtheque.resources.impl;
+package org.jtheque.update.impl;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -16,6 +16,7 @@ package org.jtheque.resources.impl;
  * limitations under the License.
  */
 
+import org.jtheque.utils.annotations.Immutable;
 import org.jtheque.utils.collections.CollectionUtils;
 
 import java.util.Collection;
@@ -27,8 +28,15 @@ import java.util.NoSuchElementException;
  *
  * @author Baptiste Wicht
  */
+@Immutable
 public final class CoreDescriptor {
-    private final List<CoreVersion> versions = CollectionUtils.newList(5);
+    private final List<CoreVersion> versions;
+
+    public CoreDescriptor(Collection<CoreVersion> versions) {
+        super();
+
+        this.versions = CollectionUtils.copyOf(versions);
+    }
 
     /**
      * Return all the versions contained in the file.
@@ -36,16 +44,7 @@ public final class CoreDescriptor {
      * @return A list containing all the versions of the file.
      */
     public Collection<CoreVersion> getVersions() {
-        return versions;
-    }
-
-    /**
-     * Add a version to the resource descriptor.
-     *
-     * @param version The new version to add to the descriptor.
-     */
-    public void addVersion(CoreVersion version) {
-        versions.add(version);
+        return CollectionUtils.protect(versions);
     }
 
     /**
