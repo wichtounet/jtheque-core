@@ -22,7 +22,7 @@ import org.jtheque.file.able.ModuleBackup;
 import org.jtheque.file.able.ModuleBackuper;
 import org.jtheque.modules.able.Module;
 import org.jtheque.modules.able.ModuleListener;
-import org.jtheque.modules.utils.ModuleResourceCache;
+import org.jtheque.modules.able.ModuleResourceCache;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.annotations.GuardedBy;
 import org.jtheque.utils.annotations.GuardedInternally;

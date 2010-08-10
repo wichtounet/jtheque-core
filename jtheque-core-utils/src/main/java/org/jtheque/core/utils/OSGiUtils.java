@@ -1,7 +1,14 @@
 package org.jtheque.core.utils;
 
+import org.jtheque.utils.io.FileUtils;
+
+import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.BundleException;
 import org.osgi.framework.ServiceReference;
+
+import java.io.File;
+import java.io.FileNotFoundException;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -49,5 +56,15 @@ public final class OSGiUtils {
         }
 
         return null;
+    }
+
+    public static void update(Bundle bundle, File file) {
+        try {
+            bundle.update(FileUtils.asInputStream(file));
+        } catch (BundleException e) {
+            throw new RuntimeException(e);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

@@ -17,13 +17,13 @@ package org.jtheque.views.impl;
  */
 
 import org.jtheque.core.able.Core;
+import org.jtheque.modules.able.ModuleResourceCache;
 import org.jtheque.modules.able.ModuleService;
 import org.jtheque.ui.able.Controller;
 import org.jtheque.utils.SimplePropertiesCache;
 import org.jtheque.messages.able.MessageService;
 import org.jtheque.modules.able.Module;
 import org.jtheque.modules.able.ModuleListener;
-import org.jtheque.modules.utils.ModuleResourceCache;
 import org.jtheque.ui.able.UIUtils;
 import org.jtheque.update.able.IUpdateService;
 import org.jtheque.utils.collections.CollectionUtils;

@@ -18,7 +18,7 @@ package org.jtheque.update.impl;
 
 import org.jtheque.core.able.Core;
 import org.jtheque.core.able.Versionable;
-import org.jtheque.core.able.lifecycle.LifeCycle;
+import org.jtheque.core.utils.OSGiUtils;
 import org.jtheque.core.utils.SystemProperty;
 import org.jtheque.errors.able.ErrorService;
 import org.jtheque.errors.able.Errors;
@@ -40,13 +40,11 @@ import org.jtheque.utils.io.FileException;
 import org.jtheque.utils.io.FileUtils;
 import org.jtheque.utils.io.WebUtils;
 
-import org.osgi.framework.BundleException;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.Resource;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Set;
 
@@ -59,9 +57,6 @@ import java.util.Set;
 public final class UpdateService implements IUpdateService {
     @Resource
     private Core core;
-
-    @Resource
-    private LifeCycle lifecycle;
 
     @Resource
     private UIUtils uiUtils;
@@ -93,8 +88,6 @@ public final class UpdateService implements IUpdateService {
         }
 
         applyCoreVersion(onlineVersion);
-
-        lifecycle.restart();
     }
 
     @Override
@@ -160,25 +153,19 @@ public final class UpdateService implements IUpdateService {
         } else {
             applyModuleVersion(onlineVersion);
 
-            try {
-                boolean restart = false;
+            boolean restart = false;
 
-                if (module.getState() == ModuleState.STARTED) {
-                    moduleService.stopModule(module);
+            if (module.getState() == ModuleState.STARTED) {
+                moduleService.stopModule(module);
 
-                    restart = true;
-                }
+                restart = true;
+            }
 
-                module.getBundle().update(FileUtils.asInputStream(
-                        new File(core.getFolders().getModulesFolder(), onlineVersion.getModuleFile())));
+            OSGiUtils.update(module.getBundle(),
+                    new File(core.getFolders().getModulesFolder(), onlineVersion.getModuleFile()));
 
-                if (restart) {
-                    moduleService.startModule(module);
-                }
-            } catch (BundleException e) {
-                LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
-            } catch (FileNotFoundException e) {
-                LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
+            if (restart) {
+                moduleService.startModule(module);
             }
 
             uiUtils.displayI18nText("message.application.updated");

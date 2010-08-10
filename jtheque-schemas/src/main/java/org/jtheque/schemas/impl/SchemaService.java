@@ -2,7 +2,7 @@ package org.jtheque.schemas.impl;
 
 import org.jtheque.modules.able.Module;
 import org.jtheque.modules.able.ModuleListener;
-import org.jtheque.modules.utils.ModuleResourceCache;
+import org.jtheque.modules.able.ModuleResourceCache;
 import org.jtheque.schemas.able.Schema;
 import org.jtheque.states.able.StateService;
 import org.jtheque.utils.StringUtils;

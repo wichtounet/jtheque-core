@@ -3,6 +3,7 @@ package org.jtheque.views.impl.controllers;
 import org.jtheque.collections.able.CollectionListener;
 import org.jtheque.collections.able.CollectionsService;
 import org.jtheque.core.able.Core;
+import org.jtheque.core.able.lifecycle.LifeCycle;
 import org.jtheque.modules.able.ModuleService;
 import org.jtheque.modules.able.Module;
 import org.jtheque.modules.able.ModuleState;
@@ -51,6 +52,9 @@ public class ModuleController extends AbstractController<ModuleView> {
 
     @Resource
     private ModuleService moduleService;
+
+    @Resource
+    private LifeCycle lifeCycle;
 
     @Resource
     private CollectionsService collectionsService;
@@ -312,6 +316,7 @@ public class ModuleController extends AbstractController<ModuleView> {
         @Override
         protected void doWork() {
             updateService.updateCore();
+            lifeCycle.restart();
         }
     }
 
