@@ -11,6 +11,7 @@ import org.jtheque.ui.able.Controller;
 import org.jtheque.ui.able.UIUtils;
 import org.jtheque.ui.utils.AbstractController;
 import org.jtheque.update.able.IUpdateService;
+import org.jtheque.update.able.InstallationResult;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.io.SimpleFilter;
 import org.jtheque.utils.ui.SimpleSwingWorker;
@@ -83,7 +84,7 @@ public class ModuleController extends AbstractController<ModuleView> {
             moduleService.disableModule(module);
             getView().refreshList();
         } else {
-            uiUtils.getDelegate().displayText(error);
+            uiUtils.displayI18nText(error);
         }
     }
 
@@ -126,7 +127,9 @@ public class ModuleController extends AbstractController<ModuleView> {
         String url = uiUtils.askI18nText("dialogs.modules.install.url");
 
         if (StringUtils.isNotEmpty(url)) {
-            moduleService.install(url);
+            InstallationResult result = updateService.installModule(url);
+
+            moduleService.install(result);
         }
     }
 
@@ -149,7 +152,7 @@ public class ModuleController extends AbstractController<ModuleView> {
                 getView().refreshList();
             }
         } else {
-            uiUtils.getDelegate().displayText(error);
+            uiUtils.displayI18nText(error);
         }
     }
 
@@ -165,7 +168,7 @@ public class ModuleController extends AbstractController<ModuleView> {
         if (StringUtils.isEmpty(error)) {
             new StopModuleWorker(module).start();
         } else {
-            uiUtils.getDelegate().displayText(error);
+            uiUtils.displayI18nText(error);
         }
     }
 
@@ -187,7 +190,7 @@ public class ModuleController extends AbstractController<ModuleView> {
                 new StartModuleWorker(module).start();
             }
         } else {
-            uiUtils.getDelegate().displayText(error);
+            uiUtils.displayI18nText(error);
         }
     }
 

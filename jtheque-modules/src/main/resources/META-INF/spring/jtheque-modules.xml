@@ -17,9 +17,13 @@
         <constructor-arg ref="stateService"/>
     </bean>
 
-    <bean id="moduleService" class="org.jtheque.modules.impl.ModuleService" />
+    <bean id="moduleService" class="org.jtheque.modules.impl.ModuleServiceImpl" >
+        <constructor-arg ref="stateService"/>
+    </bean>
 
-    <bean id="moduleLoader" class="org.jtheque.modules.impl.ModuleLoader"/>
+    <bean id="moduleLoader" class="org.jtheque.modules.impl.ModuleLoader">
+        <constructor-arg ref="moduleService"/>
+    </bean>
 
     <bean id="updateService" class="org.jtheque.update.impl.UpdateService" />
     

@@ -21,21 +21,24 @@ import org.jtheque.modules.able.ModuleState;
 import org.jtheque.states.able.Load;
 import org.jtheque.states.able.Save;
 import org.jtheque.states.able.State;
-import org.jtheque.states.utils.AbstractState;
 import org.jtheque.utils.StringUtils;
+import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.xml.utils.Node;
 
 import java.util.Collection;
+import java.util.Map;
+import java.util.Map.Entry;
 
 /**
  * A module configuration.
  *
  * @author Baptiste Wicht
  */
+@ThreadSafe
 @State(id = "jtheque-modules-configuration", delegated = true)
-public final class ModuleConfiguration extends AbstractState {
-    private final Collection<ModuleInfo> infos = CollectionUtils.newList(20);
+public final class ModuleConfiguration {
+    private final Map<String, ModuleState> states = CollectionUtils.newConcurrentMap(20);
 
     /**
      * Load the nodes in the state.
@@ -46,7 +49,7 @@ public final class ModuleConfiguration extends AbstractState {
     public void delegateLoad(Iterable<Node> nodes) {
         for (Node node : nodes) {
             if ("module".equals(node.getName())) {
-                infos.add(convertToModuleInfo(node));
+                loadModuleInfo(node);
             }
         }
     }
@@ -55,27 +58,15 @@ public final class ModuleConfiguration extends AbstractState {
      * Convert the node state to a ModuleInfo.
      *
      * @param node The node state to convert to ModuleInfo.
-     *
-     * @return The ModuleInfo.
      */
-    private static ModuleInfo convertToModuleInfo(Node node) {
-        ModuleInfo info = new ModuleInfo(node.getAttributeValue("id"));
+    private void loadModuleInfo(Node node) {
+        String id = node.getAttributeValue("id");
 
         if (StringUtils.isNotEmpty(node.getAttributeValue("state"))) {
-            info.setState(ModuleState.valueOf(node.getIntAttributeValue("state")));
+            states.put(id, ModuleState.valueOf(node.getIntAttributeValue("state")));
         } else {
-            for (Node child : node.getChildrens()) {
-                if ("state".equals(child.getName())) {
-                    info.setState(ModuleState.valueOf(Integer.parseInt(child.getText())));
-                }
-            }
+            states.put(id, ModuleState.INSTALLED);
         }
-
-        if (info.getState() == null) {
-            info.setState(ModuleState.INSTALLED);
-        }
-
-        return info;
     }
 
     /**
@@ -85,77 +76,43 @@ public final class ModuleConfiguration extends AbstractState {
      */
     @Save
     public Collection<Node> delegateSave() {
-        Collection<Node> states = CollectionUtils.newList(25);
+        Collection<Node> nodes = CollectionUtils.newList(25);
 
-        for (ModuleInfo info : infos) {
-            states.add(convertToNodeState(info));
+        for (Entry<String, ModuleState> state : states.entrySet()) {
+            nodes.add(convertToNode(state));
         }
 
-        return states;
+        return nodes;
     }
 
-    /**
-     * Convert the module info the node state.
-     *
-     * @param info The module info.
-     *
-     * @return The node state.
-     */
-    private static Node convertToNodeState(ModuleInfo info) {
-        Node state = new Node("module");
+    private static Node convertToNode(Entry<String, ModuleState> state) {
+        Node node = new Node("module");
 
-        state.setAttribute("id", info.getModuleId());
-        state.setAttribute("state", Integer.toString(info.getState().ordinal()));
+        node.setAttribute("id", state.getKey());
+        node.setAttribute("state", Integer.toString(state.getValue().ordinal()));
 
-        return state;
-    }
-
-    /**
-     * Return the module information of a module.
-     *
-     * @param moduleName The name of the module.
-     *
-     * @return The module information.
-     */
-    ModuleInfo getModuleInfo(String moduleName) {
-        for (ModuleInfo i : infos) {
-            if (i.getModuleId().equals(moduleName)) {
-                return i;
-            }
-        }
-
-        return null;
+        return node;
     }
 
     /**
      * Return the state of the module.
      *
-     * @param moduleName The name of the module.
+     * @param id The id of the module.
      *
      * @return The state of the module.
      */
-    public ModuleState getState(String moduleName) {
-        ModuleInfo info = getModuleInfo(moduleName);
-
-        if (info != null) {
-            return info.getState();
-        }
-
-        return null;
+    public ModuleState getState(String id) {
+        return states.get(id);
     }
 
     /**
      * Set the state of the module.
      *
-     * @param moduleName The name of the module.
-     * @param state      The state.
+     * @param id    The id of the module.
+     * @param state The state.
      */
-    public void setState(String moduleName, ModuleState state) {
-        ModuleInfo info = getModuleInfo(moduleName);
-
-        if (info != null) {
-            info.setState(state);
-        }
+    public void setState(String id, ModuleState state) {
+        states.put(id, state);
     }
 
     /**
@@ -165,14 +122,8 @@ public final class ModuleConfiguration extends AbstractState {
      *
      * @return true if the manager contains the module.
      */
-    public boolean containsModule(Module module) {
-        for (ModuleInfo i : infos) {
-            if (i.getModuleId().equals(module.getId())) {
-                return true;
-            }
-        }
-
-        return false;
+    boolean containsModule(Module module) {
+        return states.containsKey(module.getId());
     }
 
     /**
@@ -181,9 +132,7 @@ public final class ModuleConfiguration extends AbstractState {
      * @param module The module to remove.
      */
     public void remove(Module module) {
-        ModuleInfo info = getModuleInfo(module.getId());
-
-        infos.remove(info);
+        states.remove(module.getId());
     }
 
     /**
@@ -192,7 +141,7 @@ public final class ModuleConfiguration extends AbstractState {
      * @param module The module container to add.
      */
     public void add(Module module) {
-        add(module.getId(), module.getState());
+        states.put(module.getId(), module.getState());
     }
 
     /**
@@ -202,7 +151,7 @@ public final class ModuleConfiguration extends AbstractState {
      * @param state  The state of the module.
      */
     public void add(Module module, ModuleState state) {
-        add(module.getId(), state);
+        states.put(module.getId(), state);
     }
 
     /**
@@ -212,10 +161,6 @@ public final class ModuleConfiguration extends AbstractState {
      * @param state The module state.
      */
     private void add(String id, ModuleState state) {
-        ModuleInfo info = new ModuleInfo(id);
-
-        info.setState(state);
-
-        infos.add(info);
+        states.put(id, state);
     }
 }

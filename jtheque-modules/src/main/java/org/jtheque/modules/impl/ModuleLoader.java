@@ -4,23 +4,22 @@ import org.jtheque.core.able.Core;
 import org.jtheque.core.utils.OSGiUtils;
 import org.jtheque.errors.able.ErrorService;
 import org.jtheque.errors.able.Errors;
-import org.jtheque.i18n.able.LanguageService;
 import org.jtheque.i18n.able.I18NResourceFactory;
+import org.jtheque.i18n.able.LanguageService;
 import org.jtheque.modules.able.Module;
-import org.jtheque.modules.able.Resources;
-import org.jtheque.modules.impl.ModuleContainer.Builder;
-import org.jtheque.modules.utils.I18NResource;
-import org.jtheque.modules.utils.ImageResource;
+import org.jtheque.modules.able.ModuleState;
 import org.jtheque.resources.able.Resource;
 import org.jtheque.resources.able.ResourceService;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.ThreadUtils;
+import org.jtheque.utils.annotations.Immutable;
 import org.jtheque.utils.bean.Version;
+import org.jtheque.utils.collections.ArrayUtils;
 import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.io.FileUtils;
-import org.jtheque.xml.utils.XMLOverReader;
 import org.jtheque.xml.utils.XML;
 import org.jtheque.xml.utils.XMLException;
+import org.jtheque.xml.utils.XMLOverReader;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -31,14 +30,14 @@ import org.springframework.osgi.context.BundleContextAware;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Collection;
 import java.util.Dictionary;
 import java.util.List;
 import java.util.concurrent.Callable;
+import java.util.concurrent.CompletionService;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorCompletionService;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 import java.util.jar.JarFile;
 import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
@@ -79,6 +78,14 @@ public final class ModuleLoader implements BundleContextAware {
     @javax.annotation.Resource
     private Core core;
 
+    private final ModuleServiceImpl moduleService;
+
+    public ModuleLoader(ModuleServiceImpl moduleService) {
+        super();
+
+        this.moduleService = moduleService;
+    }
+
     @Override
     public void setBundleContext(BundleContext bundleContext) {
         this.bundleContext = bundleContext;
@@ -94,21 +101,22 @@ public final class ModuleLoader implements BundleContextAware {
 
         File[] files = moduleDir.listFiles();
 
-        Collection<Future<Module>> futures = CollectionUtils.newList(files.length);
-
         ExecutorService loadersPool = Executors.newFixedThreadPool(2 * ThreadUtils.processors());
 
+        CompletionService<Module> completionService = new ExecutorCompletionService<Module>(loadersPool);
+
         for (File file : files) {
-            futures.add(loadersPool.submit(new ModuleLoaderTask(file)));
+            completionService.submit(new ModuleLoaderTask(file));
         }
 
         List<Module> modules = CollectionUtils.newList(files.length);
 
         try {
-            for (Future<Module> future : futures) {
-                modules.add(future.get());
+            for (int i = 0; i < files.length; i++) {
+                modules.add(completionService.take().get());
             }
         } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
             throw new RuntimeException(e);
         } catch (ExecutionException e) {
             throw new RuntimeException(e);
@@ -129,15 +137,15 @@ public final class ModuleLoader implements BundleContextAware {
     public Module installModule(File file) {
         Builder builder = new Builder();
 
+        ModuleResources resources = null;
+
         try {
             //Read the config file of the module
-            readConfig(file, builder);
+            resources = readConfig(file);
 
             //Install the bundle
             Bundle bundle = bundleContext.installBundle("file:" + file.getAbsolutePath());
             builder.setBundle(bundle);
-
-            builder.setLanguageService(languageService);
 
             //Get informations from manifest
             readManifestInformations(builder, bundle);
@@ -151,9 +159,15 @@ public final class ModuleLoader implements BundleContextAware {
 
         Module module = builder.build();
 
-        //Add i18n resources
+        //Load i18n resources
         loadI18NResources(module);
 
+        if(resources == null){
+            moduleService.setResources(module, new ModuleResources());
+        } else {
+            moduleService.setResources(module, resources);
+        }
+        
         return module;
     }
 
@@ -161,16 +175,16 @@ public final class ModuleLoader implements BundleContextAware {
      * Read the config of the module.
      *
      * @param file   The file of the module.
-     * @param module The module
-     *
      * @throws IOException If an error occurs during Jar File reading.
      */
-    private void readConfig(File file, Builder module) throws IOException {
+    private ModuleResources readConfig(File file) throws IOException {
         JarFile jarFile = new JarFile(file);
         ZipEntry configEntry = jarFile.getEntry("module.xml");
 
+        ModuleResources resources = null;
+
         if (configEntry != null) {
-            ModuleResources resources = importConfig(jarFile.getInputStream(configEntry));
+            resources = importConfig(jarFile.getInputStream(configEntry));
 
             //Install necessary resources before installing the bundle
             for (Resource resource : resources.getResources()) {
@@ -178,11 +192,11 @@ public final class ModuleLoader implements BundleContextAware {
                     resourceService.installResource(resource);
                 }
             }
-
-            module.setResources(resources);
         }
 
         jarFile.close();
+
+        return resources;
     }
 
     /**
@@ -250,7 +264,7 @@ public final class ModuleLoader implements BundleContextAware {
      * @param module The module to load i18n resources for.
      */
     private void loadI18NResources(Module module) {
-        for (I18NResource i18NResource : module.getResources().getI18NResources()) {
+        for (I18NResource i18NResource : moduleService.getResources(module).getI18NResources()) {
             List<org.jtheque.i18n.able.I18NResource> i18NResources = CollectionUtils.newList(i18NResource.getResources().size());
 
             for (String resource : i18NResource.getResources()) {
@@ -331,7 +345,7 @@ public final class ModuleLoader implements BundleContextAware {
      * @param module The module to uninstall.
      */
     public void uninstallModule(Module module) {
-        Resources resources = module.getResources();
+        ModuleResources resources = moduleService.getResources(module);
 
         if (resources != null) {
             for (I18NResource i18NResource : resources.getI18NResources()) {
@@ -360,6 +374,243 @@ public final class ModuleLoader implements BundleContextAware {
         @Override
         public Module call() {
             return installModule(file);
+        }
+    }
+
+    /**
+     * A Builder for the ModuleContainer instance.
+     *
+     * @author Baptiste Wicht
+     */
+    private final class Builder {
+        private String id;
+        private Bundle bundle;
+        private Version version;
+        private Version coreVersion;
+        private String[] dependencies;
+        private String url;
+        private String updateUrl;
+        private String messagesUrl;
+        private boolean collection;
+
+        /**
+         * Set the id of the module.
+         *
+         * @param id The id of the module.
+         */
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        /**
+         * Set the version of the module.
+         *
+         * @param version The version of the module.
+         */
+        public void setVersion(Version version) {
+            this.version = version;
+        }
+
+        /**
+         * Set the core version needed by the module.
+         *
+         * @param coreVersion The core version needed by the module.
+         */
+        public void setCoreVersion(Version coreVersion) {
+            this.coreVersion = coreVersion;
+        }
+
+        /**
+         * Set the bundle of the module.
+         *
+         * @param bundle The bundle.
+         */
+        public void setBundle(Bundle bundle) {
+            this.bundle = bundle;
+        }
+
+        /**
+         * Set the URL of the site of the module.
+         *
+         * @param url THe URL of the site of the module.
+         */
+        public void setUrl(String url) {
+            this.url = url;
+        }
+
+        /**
+         * Set the the URL to the update file of the module.
+         *
+         * @param updateUrl The URL to the update file of the module.
+         */
+        public void setUpdateUrl(String updateUrl) {
+            this.updateUrl = updateUrl;
+        }
+
+        /**
+         * Set the dependencies of the module.
+         *
+         * @param dependencies The dependencies of the module.
+         */
+        public void setDependencies(String[] dependencies) {
+            this.dependencies = ArrayUtils.copyOf(dependencies);
+        }
+
+        /**
+         * Set the messages URL.
+         *
+         * @param messagesUrl The messages URL of the module.
+         */
+        public void setMessagesUrl(String messagesUrl) {
+            this.messagesUrl = messagesUrl;
+        }
+
+        /**
+         * Set the boolean tag indicating if the module is collection-based or not.
+         *
+         * @param collection boolean tag indicating if the module is collection-based (true) or not (false).
+         */
+        public void setCollection(boolean collection) {
+            this.collection = collection;
+        }
+
+        /**
+         * Build the module.
+         *
+         * @return The module to build.
+         */
+        public Module build() {
+            return new ModuleContainer(this);
+        }
+    }
+
+    /**
+     * A module implementation.
+     *
+     * @author Baptiste Wicht
+     */
+    @Immutable
+    private final class ModuleContainer implements Module {
+        private final String id;
+        private final Bundle bundle;
+        private final Version version;
+        private final Version coreVersion;
+        private final String[] dependencies;
+        private final String url;
+        private final String updateUrl;
+        private final String messagesUrl;
+        private final boolean collection;
+
+        private ModuleState state;
+
+        /**
+         * Create a module container using the given builder informations.
+         *
+         * @param builder The builder to get the informations from.
+         */
+        private ModuleContainer(Builder builder) {
+            super();
+
+            id = builder.id;
+            version = builder.version;
+            coreVersion = builder.coreVersion;
+            bundle = builder.bundle;
+            dependencies = builder.dependencies;
+            url = builder.url;
+            updateUrl = builder.updateUrl;
+            messagesUrl = builder.messagesUrl;
+            collection = builder.collection;
+        }
+
+        @Override
+        public Bundle getBundle() {
+            return bundle;
+        }
+
+        @Override
+        public ModuleState getState() {
+            return state;
+        }
+
+        @Override
+        public void setState(ModuleState state) {
+            this.state = state;
+        }
+
+        @Override
+        public String getId() {
+            return id;
+        }
+
+        @Override
+        public String getName() {
+            return internationalize(id + ".name");
+        }
+
+        @Override
+        public String getAuthor() {
+            return internationalize(id + ".author");
+        }
+
+        @Override
+        public String getDescription() {
+            return internationalize(id + ".description");
+        }
+
+        @Override
+        public String getDisplayState() {
+            return internationalize(state.getKey());
+        }
+
+        /**
+         * Internationalize the given key.
+         *
+         * @param key The i18n key.
+         *
+         * @return The internationalized message.
+         */
+        private String internationalize(String key) {
+            return languageService.getMessage(key);
+        }
+
+        @Override
+        public Version getVersion() {
+            return version;
+        }
+
+        @Override
+        public Version getCoreVersion() {
+            return coreVersion;
+        }
+
+        @Override
+        public String getUrl() {
+            return url;
+        }
+
+        @Override
+        public String getDescriptorURL() {
+            return updateUrl;
+        }
+
+        @Override
+        public String[] getDependencies() {
+            return ArrayUtils.copyOf(dependencies);
+        }
+
+        @Override
+        public String getMessagesUrl() {
+            return messagesUrl;
+        }
+
+        @Override
+        public String toString() {
+            return getName();
+        }
+
+        @Override
+        public boolean isCollection() {
+            return collection;
         }
     }
 }

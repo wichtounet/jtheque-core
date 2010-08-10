@@ -6,6 +6,8 @@ import org.jtheque.modules.able.ModuleService;
 import org.jtheque.ui.able.Action;
 import org.jtheque.ui.able.UIUtils;
 import org.jtheque.ui.utils.AbstractController;
+import org.jtheque.update.able.InstallationResult;
+import org.jtheque.update.impl.UpdateService;
 import org.jtheque.views.able.panel.RepositoryView;
 
 import javax.annotation.Resource;
@@ -54,6 +56,9 @@ public class RepositoryController extends AbstractController<RepositoryView> {
     @Resource
     private ModuleService moduleService;
 
+    @Resource
+    private UpdateService updateService;
+
     /**
      * Construct a new RepositoryController. 
      */
@@ -82,7 +87,9 @@ public class RepositoryController extends AbstractController<RepositoryView> {
             if (moduleService.isInstalled(description.getId())) {
                 uiUtils.displayI18nText("message.repository.module.installed");
             } else {
-                moduleService.install(description.getDescriptorURL());
+                InstallationResult result = updateService.installModule(description.getDescriptorURL());
+
+                moduleService.install(result);
             }
         }
     }

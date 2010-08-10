@@ -16,9 +16,6 @@ package org.jtheque.modules.impl;
  * limitations under the License.
  */
 
-import org.jtheque.modules.able.Resources;
-import org.jtheque.modules.utils.I18NResource;
-import org.jtheque.modules.utils.ImageResource;
 import org.jtheque.resources.able.Resource;
 import org.jtheque.utils.collections.CollectionUtils;
 
@@ -29,7 +26,7 @@ import java.util.List;
  *
  * @author Baptiste Wicht
  */
-public class ModuleResources implements Resources {
+public class ModuleResources {
     private final List<ImageResource> imageResources = CollectionUtils.newList(5);
     private final List<I18NResource> i18nResources = CollectionUtils.newList(5);
     private final List<Resource> resources = CollectionUtils.newList(5);
@@ -61,17 +58,14 @@ public class ModuleResources implements Resources {
         resources.add(resource);
     }
 
-    @Override
     public List<ImageResource> getImageResources() {
         return imageResources;
     }
 
-    @Override
     public List<I18NResource> getI18NResources() {
         return i18nResources;
     }
 
-    @Override
     public List<Resource> getResources() {
         return resources;
     }

@@ -1,5 +1,6 @@
 package org.jtheque.update.impl;
 
+import org.jtheque.update.able.InstallationResult;
 import org.jtheque.utils.annotations.Immutable;
 
 /*
@@ -24,7 +25,7 @@ import org.jtheque.utils.annotations.Immutable;
  * @author Baptiste Wicht
  */
 @Immutable
-public final class SimpleInstallationResult implements org.jtheque.update.able.InstallationResult {
+public final class SimpleInstallationResult implements InstallationResult {
     private final boolean installed;
     private final String jarFile;
 

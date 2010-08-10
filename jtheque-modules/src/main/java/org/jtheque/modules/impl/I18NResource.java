@@ -1,4 +1,4 @@
-package org.jtheque.modules.utils;
+package org.jtheque.modules.impl;
 
 import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.collections.CollectionUtils;

@@ -42,6 +42,13 @@ public interface Module extends Versionable {
     ModuleState getState();
 
     /**
+     * Set the state of the module.
+     *
+     * @param state The state of the module.
+     */
+    void setState(ModuleState state);
+
+    /**
      * Return the id of the module.
      *
      * @return The id of the module.
@@ -92,13 +99,6 @@ public interface Module extends Versionable {
     String[] getDependencies();
 
     /**
-     * Return the resources of the module.
-     *
-     * @return The resources of the module.
-     */
-    Resources getResources();
-
-    /**
      * Return the URL of the messages file of the module.
      *
      * @return The URL of the messages file of the module.
@@ -111,13 +111,6 @@ public interface Module extends Versionable {
      * @return true if the module needs a collection otherwise false.
      */
     boolean isCollection();
-
-    /**
-     * Set the state of the module.
-     *
-     * @param state The state of the module.
-     */
-    void setState(ModuleState state);
 
     /**
      * Return the internationalized state.

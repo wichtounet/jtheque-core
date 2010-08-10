@@ -16,6 +16,8 @@ package org.jtheque.modules.able;
  * limitations under the License.
  */
 
+import org.jtheque.update.able.InstallationResult;
+
 import java.io.File;
 import java.util.Collection;
 
@@ -31,7 +33,7 @@ public interface ModuleService {
      *
      * @return All the modules.
      */
-    Collection<Module> getModules();
+    Collection<? extends Module> getModules();
 
     /**
      * Add a module listener.
@@ -74,12 +76,7 @@ public interface ModuleService {
      */
     Module getModuleById(String name);
 
-    /**
-     * Install the module from the versions file.
-     *
-     * @param versionsFileURL The URL of the versions file.
-     */
-    void install(String versionsFileURL);
+    void install(InstallationResult result);
 
     /**
      * Unplug the modules.

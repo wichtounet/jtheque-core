@@ -72,7 +72,7 @@ public interface IUpdateService {
      *
      * @return The result of the installation.
      */
-    org.jtheque.update.able.InstallationResult installModule(String versionFileURL);
+    InstallationResult installModule(String versionFileURL);
 
     /**
      * Return the most recent version of the object.

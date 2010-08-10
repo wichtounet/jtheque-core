@@ -17,18 +17,21 @@ package org.jtheque.modules.impl;
  */
 
 import org.jtheque.core.able.Core;
+import org.jtheque.modules.able.ModuleDescription;
+import org.jtheque.modules.able.Repository;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.bean.InternationalString;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.io.FileUtils;
-import org.jtheque.xml.utils.XMLReader;
 import org.jtheque.xml.utils.XML;
 import org.jtheque.xml.utils.XMLException;
+import org.jtheque.xml.utils.XMLReader;
 
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Node;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -37,8 +40,19 @@ import java.util.Map;
  * @author Baptiste Wicht
  */
 public final class RepositoryReader {
-    private final Repository repository = new Repository();
-    private final XMLReader<Node> reader = XML.newJavaFactory().newReader();
+    private static Repository repository;
+
+    private RepositoryReader() {
+        throw new AssertionError();
+    }
+
+    public static Repository getCachedRepository(String strUrl) {
+        if (repository == null) {
+            repository = read(strUrl);
+        }
+
+        return repository;
+    }
 
     /**
      * Read a repository file.
@@ -47,52 +61,42 @@ public final class RepositoryReader {
      *
      * @return The repository.
      */
-    public org.jtheque.modules.able.Repository read(String strUrl) {
+    public static Repository read(String strUrl) {
+        XMLReader<Node> reader = XML.newJavaFactory().newReader();
+
         try {
             reader.openURL(strUrl);
 
-            read();
+            return new RepositoryImpl(readTitle(reader), readApplication(reader), readModules(reader));
         } catch (XMLException e) {
-            LoggerFactory.getLogger(getClass()).error("Unable to get information from repository", e);
+            LoggerFactory.getLogger(RepositoryReader.class).error("Unable to get information from repository", e);
         } finally {
             FileUtils.close(reader);
         }
 
-        return repository;
-    }
-
-    /**
-     * Read all the informations from the reader.
-     *
-     * @throws XMLException If an error occurs during the XML reading process.
-     */
-    private void read() throws XMLException {
-        readTitle(reader);
-        readApplication(reader);
-        readModules(reader);
+        return null;
     }
 
     /**
      * Read the application informations from the reader.
      *
-     * @param reader The reader to use.
-     *
+     * @param reader     The reader to use.
      * @throws XMLException If an error occurs during the XML reading process.
      */
-    private void readApplication(XMLReader<Node> reader) throws XMLException {
-        repository.setApplication(reader.readString("application", reader.getRootElement()));
+    private static String readApplication(XMLReader<Node> reader) throws XMLException {
+        return reader.readString("application", reader.getRootElement());
     }
 
     /**
      * Read the modules informations from the reader.
      *
-     * @param reader The reader to use.
-     *
+     * @param reader     The reader to use.
      * @throws XMLException If an error occurs during the XML reading process.
      */
-    private void readModules(XMLReader<Node> reader) throws XMLException {
-        for (Object currentNode : reader.getNodes("modules/module", reader.getRootElement())) {
+    private static List<ModuleDescription> readModules(XMLReader<Node> reader) throws XMLException {
+        List<ModuleDescription> descriptions = CollectionUtils.newList();
 
+        for (Object currentNode : reader.getNodes("modules/module", reader.getRootElement())) {
             Version coreVersion =
                     StringUtils.isEmpty(reader.readString("core", currentNode)) ?
                             Core.VERSION :
@@ -104,29 +108,30 @@ public final class RepositoryReader {
                 resources.put(child.getNodeName(), child.getTextContent());
             }
 
-            repository.getModules().add(new ModuleDescriptionImpl(
+            descriptions.add(new ModuleDescriptionImpl(
                     reader.readString("id", currentNode),
                     reader.readString("name", currentNode),
                     new InternationalString(resources),
                     reader.readString("versions", currentNode),
                     coreVersion));
         }
+
+        return descriptions;
     }
 
     /**
      * Read the title of the repository from the reader.
      *
-     * @param reader The reader to use.
-     *
+     * @param reader     The reader to use.
      * @throws XMLException If an error occurs during the XML reading process.
      */
-    private void readTitle(XMLReader<Node> reader) throws XMLException {
+    private static InternationalString readTitle(XMLReader<Node> reader) throws XMLException {
         Map<String, String> resources = CollectionUtils.newHashMap(5);
 
         for (Node child : reader.getNodes("title/*", reader.getRootElement())) {
             resources.put(child.getNodeName(), child.getTextContent());
         }
 
-        repository.setTitle(new InternationalString(resources));
+        return new InternationalString(resources);
     }
 }

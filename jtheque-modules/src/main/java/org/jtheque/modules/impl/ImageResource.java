@@ -1,4 +1,6 @@
-package org.jtheque.modules.utils;
+package org.jtheque.modules.impl;
+
+import org.jtheque.utils.annotations.Immutable;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -21,6 +23,7 @@ package org.jtheque.modules.utils;
  *
  * @author Baptiste Wicht
  */
+@Immutable
 public class ImageResource {
     private final String name;
     private final String resource;

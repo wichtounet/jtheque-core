@@ -17,6 +17,8 @@ package org.jtheque.modules.impl;
  */
 
 import org.jtheque.modules.able.ModuleDescription;
+import org.jtheque.modules.able.Repository;
+import org.jtheque.utils.annotations.Immutable;
 import org.jtheque.utils.bean.InternationalString;
 import org.jtheque.utils.collections.CollectionUtils;
 
@@ -27,27 +29,18 @@ import java.util.Collection;
  *
  * @author Baptiste Wicht
  */
-public final class Repository implements org.jtheque.modules.able.Repository {
-    private InternationalString title;
-    private String application;
-    private final Collection<ModuleDescription> modules = CollectionUtils.newList();
+@Immutable
+public final class RepositoryImpl implements Repository {
+    private final InternationalString title;
+    private final String application;
+    private final Collection<ModuleDescription> modules;
 
-    /**
-     * Set the title of the repository.
-     *
-     * @param title The title of the repository.
-     */
-    public void setTitle(InternationalString title) {
+    public RepositoryImpl(InternationalString title, String application, Collection<ModuleDescription> modules) {
+        super();
+
         this.title = title;
-    }
-
-    /**
-     * Set the application name.
-     *
-     * @param application The application name.
-     */
-    public void setApplication(String application) {
         this.application = application;
+        this.modules = CollectionUtils.protectedCopy(modules);
     }
 
     @Override

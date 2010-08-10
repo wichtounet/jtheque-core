@@ -17,20 +17,17 @@ package org.jtheque.modules.impl;
  */
 
 import org.jtheque.core.able.Core;
-import org.jtheque.i18n.able.LanguageService;
 import org.jtheque.images.able.ImageService;
 import org.jtheque.modules.able.Module;
 import org.jtheque.modules.able.ModuleDescription;
 import org.jtheque.modules.able.ModuleListener;
+import org.jtheque.modules.able.ModuleService;
 import org.jtheque.modules.able.ModuleState;
 import org.jtheque.modules.able.Repository;
-import org.jtheque.modules.able.Resources;
 import org.jtheque.modules.able.SwingLoader;
-import org.jtheque.modules.utils.ImageResource;
 import org.jtheque.modules.utils.ModuleResourceCache;
 import org.jtheque.states.able.StateService;
 import org.jtheque.ui.able.UIUtils;
-import org.jtheque.update.able.IUpdateService;
 import org.jtheque.update.able.InstallationResult;
 import org.jtheque.utils.SimplePropertiesCache;
 import org.jtheque.utils.StringUtils;
@@ -67,36 +64,23 @@ import static org.jtheque.modules.able.ModuleState.*;
  *
  * @author Baptiste Wicht
  */
-public final class ModuleService implements org.jtheque.modules.able.ModuleService {
+public final class ModuleServiceImpl implements ModuleService {
     private final WeakEventListenerList<ModuleListener> listeners = WeakEventListenerList.create();
     private final List<Module> modules = CollectionUtils.newList();
     private final Map<String, SwingLoader> loaders = CollectionUtils.newHashMap();
-
-    /**
-     * The application repository.
-     */
-    private Repository repository;
+    private final Map<Module, ModuleResources> resources = CollectionUtils.newHashMap();
 
     /**
      * The configuration of the module manager. It seems the informations about the modules who're installed or
      * disabled.
      */
-    private ModuleConfiguration configuration;
+    private final ModuleConfiguration configuration;
 
     @Resource
     private Core core;
 
     @Resource
-    private StateService stateService;
-
-    @Resource
     private ImageService imageService;
-
-    @Resource
-    private IUpdateService updateService;
-
-    @Resource
-    private LanguageService languageService;
 
     @Resource
     private UIUtils uiUtils;
@@ -109,14 +93,18 @@ public final class ModuleService implements org.jtheque.modules.able.ModuleServi
      */
     private boolean collectionModule;
 
+    public ModuleServiceImpl(StateService stateService) {
+        super();
+
+        configuration = stateService.getState(new ModuleConfiguration());
+    }
+
     @Override
     public void load() {
         SwingUtils.assertNotEDT("load()");
 
         //Load all modules
         modules.addAll(moduleLoader.loadModules());
-
-        configuration = stateService.getState(new ModuleConfiguration());
 
         CollectionUtils.filter(modules, new CoreVersionFilter(core, uiUtils));
         CollectionUtils.sort(modules, new ModuleComparator());
@@ -213,11 +201,7 @@ public final class ModuleService implements org.jtheque.modules.able.ModuleServi
 
     @Override
     public Repository getRepository() {
-        if (repository == null) {
-            repository = new RepositoryReader().read(core.getApplication().getRepository());
-        }
-
-        return repository;
+        return RepositoryReader.getCachedRepository(core.getApplication().getRepository());
     }
 
     @Override
@@ -254,8 +238,7 @@ public final class ModuleService implements org.jtheque.modules.able.ModuleServi
         }
 
         if (loaders.containsKey(module.getId())) {
-            loaders.get(module.getId()).afterAll();
-            loaders.remove(module.getId());
+            loaders.remove(module.getId()).afterAll();
         }
 
         setState(module, STARTED);
@@ -271,7 +254,7 @@ public final class ModuleService implements org.jtheque.modules.able.ModuleServi
      * @param module The module to load the image resources for.
      */
     private void loadImageResources(Module module) {
-        for (ImageResource imageResource : module.getResources().getImageResources()) {
+        for (ImageResource imageResource : resources.get(module).getImageResources()) {
             String resource = imageResource.getResource();
 
             if (resource.startsWith("classpath:")) {
@@ -295,12 +278,8 @@ public final class ModuleService implements org.jtheque.modules.able.ModuleServi
 
         fireModuleStopped(module);
 
-        Resources resources = module.getResources();
-
-        if (resources != null) {
-            for (ImageResource imageResource : resources.getImageResources()) {
-                imageService.releaseResource(imageResource.getName());
-            }
+        for (ImageResource imageResource : resources.get(module).getImageResources()) {
+            imageService.releaseResource(imageResource.getName());
         }
 
         ModuleResourceCache.removeModule(module.getId());
@@ -344,16 +323,20 @@ public final class ModuleService implements org.jtheque.modules.able.ModuleServi
             } else if (exists(module.getId())) {
                 uiUtils.displayI18nText("errors.module.install.already.exists");
             } else {
-                module.setState(INSTALLED);
-
-                modules.add(module);
-                configuration.add(module);
-
-                fireModuleInstalled(module);
+                installModule(module);
 
                 uiUtils.displayI18nText("message.module.installed");
             }
         }
+    }
+
+    private void installModule(Module module) {
+        module.setState(INSTALLED);
+
+        modules.add(module);
+        configuration.add(module);
+
+        fireModuleInstalled(module);
     }
 
     /**
@@ -408,19 +391,11 @@ public final class ModuleService implements org.jtheque.modules.able.ModuleServi
     }
 
     @Override
-    public void install(String url) {
-        InstallationResult result = updateService.installModule(url);
-
+    public void install(InstallationResult result) {
         if (result.isInstalled()) {
             Module module = moduleLoader.installModule(new File(core.getFolders().getModulesFolder(), result.getJarFile()));
 
-            module.setState(INSTALLED);
-
-            modules.add(module);
-
-            configuration.add(module);
-
-            fireModuleInstalled(module);
+            installModule(module);
 
             uiUtils.displayI18nText("message.module.repository.installed");
         } else {
@@ -467,11 +442,11 @@ public final class ModuleService implements org.jtheque.modules.able.ModuleServi
     @Override
     public String canBeStarted(Module module) {
         if (module.getCoreVersion() != null && module.getCoreVersion().isGreaterThan(Core.VERSION)) {
-            return getMessage("modules.message.versionproblem");
+            return "modules.message.versionproblem";
         }
 
         if (!areAllDependenciesSatisfiedAndActive(module)) {
-            return getMessage("error.module.not.loaded.dependency");
+            return "error.module.not.loaded.dependency";
         }
 
         return "";
@@ -480,11 +455,11 @@ public final class ModuleService implements org.jtheque.modules.able.ModuleServi
     @Override
     public String canBeStopped(Module module) {
         if (module.getState() != STARTED) {
-            return getMessage("error.module.not.started");
+            return "error.module.not.started";
         }
 
         if (isThereIsActiveDependenciesOn(module)) {
-            return getMessage("error.module.dependencies");
+            return "error.module.dependencies";
         }
 
         return "";
@@ -493,7 +468,7 @@ public final class ModuleService implements org.jtheque.modules.able.ModuleServi
     @Override
     public String canBeUninstalled(Module module) {
         if (module.getState() == STARTED && isThereIsActiveDependenciesOn(module)) {
-            return getMessage("error.module.dependencies");
+            return "error.module.dependencies";
         }
 
         return "";
@@ -502,9 +477,11 @@ public final class ModuleService implements org.jtheque.modules.able.ModuleServi
     @Override
     public String canBeDisabled(Module module) {
         if (module.getState() == DISABLED) {
-            return getMessage("error.module.not.enabled");
-        } else if (module.getState() == STARTED && isThereIsActiveDependenciesOn(module)) {
-            return getMessage("error.module.dependencies");
+            return "error.module.not.enabled";
+        }
+
+        if (module.getState() == STARTED && isThereIsActiveDependenciesOn(module)) {
+            return "error.module.dependencies";
         }
 
         return "";
@@ -528,30 +505,15 @@ public final class ModuleService implements org.jtheque.modules.able.ModuleServi
         return false;
     }
 
-    /**
-     * Return the internationalized message with the given key.
-     *
-     * @param key      The i18n key.
-     * @param replaces The i18n replaces.
-     *
-     * @return The internationalized message.
-     */
-    private String getMessage(String key, String... replaces) {
-        return languageService.getMessage(key, replaces);
-    }
-
     @Override
     public Module getModuleById(String id) {
-        Module module = null;
-
-        for (Module m : modules) {
-            if (id.equals(m.getId())) {
-                module = m;
-                break;
+        for (Module module : modules) {
+            if (id.equals(module.getId())) {
+                return module;
             }
         }
 
-        return module;
+        return null;
     }
 
     @Override
@@ -664,6 +626,14 @@ public final class ModuleService implements org.jtheque.modules.able.ModuleServi
         }
 
         return true;
+    }
+
+    ModuleResources getResources(Module module) {
+        return resources.get(module);
+    }
+
+    void setResources(Module module, ModuleResources resources) {
+        this.resources.put(module, resources);
     }
 
     /**
