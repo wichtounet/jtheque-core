@@ -1,8 +1,6 @@
-package org.jtheque.modules.utils;
+package org.jtheque.modules.able;
 
 import org.jtheque.core.utils.OSGiUtils;
-import org.jtheque.modules.able.ModuleService;
-import org.jtheque.modules.able.SwingLoader;
 import org.jtheque.utils.collections.ArrayUtils;
 import org.jtheque.utils.ui.SwingUtils;
 

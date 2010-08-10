@@ -39,14 +39,14 @@ import java.util.Map;
  *
  * @author Baptiste Wicht
  */
-public final class RepositoryReader {
+final class RepositoryReader {
     private static Repository repository;
 
     private RepositoryReader() {
         throw new AssertionError();
     }
 
-    public static Repository getCachedRepository(String strUrl) {
+    static Repository getCachedRepository(String strUrl) {
         if (repository == null) {
             repository = read(strUrl);
         }
@@ -61,7 +61,7 @@ public final class RepositoryReader {
      *
      * @return The repository.
      */
-    public static Repository read(String strUrl) {
+    private static Repository read(String strUrl) {
         XMLReader<Node> reader = XML.newJavaFactory().newReader();
 
         try {

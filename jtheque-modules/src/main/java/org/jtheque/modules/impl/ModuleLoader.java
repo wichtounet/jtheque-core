@@ -28,10 +28,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.osgi.context.BundleContextAware;
 
 import java.io.File;
+import java.io.FileFilter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Collection;
 import java.util.Dictionary;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CompletionService;
 import java.util.concurrent.ExecutionException;
@@ -96,10 +99,10 @@ public final class ModuleLoader implements BundleContextAware {
      *
      * @return All the loaded modules.
      */
-    public List<Module> loadModules() {
+    public Collection<Module> loadModules() {
         File moduleDir = core.getFolders().getModulesFolder();
 
-        File[] files = moduleDir.listFiles();
+        File[] files = moduleDir.listFiles(new ModuleFilter());
 
         ExecutorService loadersPool = Executors.newFixedThreadPool(2 * ThreadUtils.processors());
 
@@ -162,19 +165,26 @@ public final class ModuleLoader implements BundleContextAware {
         //Load i18n resources
         loadI18NResources(module);
 
-        if(resources == null){
-            moduleService.setResources(module, new ModuleResources());
+        if (resources == null) {
+            moduleService.setResources(module, new ModuleResources(
+                    CollectionUtils.<ImageResource>newList(),
+                    CollectionUtils.<I18NResource>newList(),
+                    CollectionUtils.<Resource>newList()
+            ));
         } else {
             moduleService.setResources(module, resources);
         }
-        
+
         return module;
     }
 
     /**
      * Read the config of the module.
      *
-     * @param file   The file of the module.
+     * @param file The file of the module.
+     *
+     * @return The module resources.
+     *
      * @throws IOException If an error occurs during Jar File reading.
      */
     private ModuleResources readConfig(File file) throws IOException {
@@ -207,15 +217,15 @@ public final class ModuleLoader implements BundleContextAware {
      * @return The ModuleResources of the module.
      */
     private ModuleResources importConfig(InputStream stream) {
-        ModuleResources resources = new ModuleResources();
-
         XMLOverReader reader = XML.newJavaFactory().newOverReader();
+        
         try {
             reader.openStream(stream);
 
-            importI18NResources(resources, reader);
-            importImageResources(resources, reader);
-            importResources(resources, reader);
+            return new ModuleResources(
+                    importImageResources(reader),
+                    importI18NResources(reader),
+                    importResources(reader));
         } catch (XMLException e) {
             LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
             OSGiUtils.getService(bundleContext, ErrorService.class).addError(Errors.newError(e));
@@ -223,7 +233,7 @@ public final class ModuleLoader implements BundleContextAware {
             FileUtils.close(reader);
         }
 
-        return resources;
+        return null;
     }
 
     /**
@@ -282,12 +292,13 @@ public final class ModuleLoader implements BundleContextAware {
     /**
      * Import the i18n resources.
      *
-     * @param resources The resources of the module.
      * @param reader    The XML reader.
      *
      * @throws XMLException If an error occurs during XML parsing.
      */
-    private static void importI18NResources(ModuleResources resources, XMLOverReader reader) throws XMLException {
+    private static List<I18NResource> importI18NResources(XMLOverReader reader) throws XMLException {
+        List<I18NResource> i18NResources = CollectionUtils.newList();
+
         while (reader.next("/config/i18n/i18nResource")) {
             String name = reader.readString("@name");
             Version version = Version.get(reader.readString("@version"));
@@ -300,43 +311,53 @@ public final class ModuleLoader implements BundleContextAware {
                 i18NResource.addResource("classpath:" + classpath);
             }
 
-            resources.addI18NResource(i18NResource);
+            i18NResources.add(i18NResource);
         }
+
+        return i18NResources;
     }
 
     /**
      * Import the image resources.
      *
-     * @param resources The resources to fill.
      * @param reader    The XML reader.
      *
      * @throws XMLException If an exception occurs during XML parsing.
+     * @return
      */
-    private static void importImageResources(ModuleResources resources, XMLOverReader reader) throws XMLException {
+    private static List<ImageResource> importImageResources(XMLOverReader reader) throws XMLException {
+        List<ImageResource> imageResources = CollectionUtils.newList(5);
+
         while (reader.next("/config/images/resource")) {
             String name = reader.readString("@name");
             String classpath = reader.readString("classpath");
 
-            resources.addImageResource(new ImageResource(name, "classpath:" + classpath));
+            imageResources.add(new ImageResource(name, "classpath:" + classpath));
         }
+
+        return imageResources;
     }
 
     /**
      * Import the resources.
      *
-     * @param resources The resources to fill.
      * @param reader    The XML reader.
      *
      * @throws XMLException If an exception occurs during XML parsing.
+     * @return
      */
-    private void importResources(ModuleResources resources, XMLOverReader reader) throws XMLException {
+    private List<Resource> importResources(XMLOverReader reader) throws XMLException {
+        List<Resource> resources = CollectionUtils.newList(5);
+
         while (reader.next("/config/resources/resource")) {
             String id = reader.readString("@id");
             Version version = Version.get(reader.readString("@version"));
             String url = reader.readString("@url");
 
-            resources.addResource(resourceService.getOrDownloadResource(id, version, url));
+            resources.add(resourceService.getOrDownloadResource(id, version, url));
         }
+
+        return resources;
     }
 
     /**
@@ -520,6 +541,8 @@ public final class ModuleLoader implements BundleContextAware {
             updateUrl = builder.updateUrl;
             messagesUrl = builder.messagesUrl;
             collection = builder.collection;
+
+            state = ModuleState.INSTALLED;
         }
 
         @Override
@@ -611,6 +634,18 @@ public final class ModuleLoader implements BundleContextAware {
         @Override
         public boolean isCollection() {
             return collection;
+        }
+    }
+
+    /**
+     * A module file filter. This filter accept only the JAR files.
+     *
+     * @author Baptiste Wicht
+     */
+    static final class ModuleFilter implements FileFilter {
+        @Override
+        public boolean accept(File file) {
+            return file.isFile() && file.getName().toLowerCase(Locale.getDefault()).endsWith(".jar");
         }
     }
 }

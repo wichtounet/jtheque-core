@@ -17,56 +17,39 @@ package org.jtheque.modules.impl;
  */
 
 import org.jtheque.resources.able.Resource;
+import org.jtheque.utils.annotations.Immutable;
 import org.jtheque.utils.collections.CollectionUtils;
 
-import java.util.List;
+import java.util.Collection;
 
 /**
  * The module resources.
  *
  * @author Baptiste Wicht
  */
-public class ModuleResources {
-    private final List<ImageResource> imageResources = CollectionUtils.newList(5);
-    private final List<I18NResource> i18nResources = CollectionUtils.newList(5);
-    private final List<Resource> resources = CollectionUtils.newList(5);
+@Immutable
+final class ModuleResources {
+    private final Collection<ImageResource> imageResources;
+    private final Collection<I18NResource> i18nResources;
+    private final Collection<Resource> resources;
 
-    /**
-     * Add a resource.
-     *
-     * @param name The name of the resource.
-     */
-    void addImageResource(ImageResource name) {
-        imageResources.add(name);
+    ModuleResources(Collection<ImageResource> imageResources, Collection<I18NResource> i18nResources, Collection<Resource> resources) {
+        super();
+
+        this.imageResources = CollectionUtils.protectedCopy(imageResources);
+        this.i18nResources = CollectionUtils.protectedCopy(i18nResources);
+        this.resources = CollectionUtils.protectedCopy(resources);
     }
 
-    /**
-     * Add an i18n resource.
-     *
-     * @param name The name of the i18n resource.
-     */
-    void addI18NResource(I18NResource name) {
-        i18nResources.add(name);
-    }
-
-    /**
-     * Add a new resource.
-     *
-     * @param resource The resource to add. 
-     */
-    void addResource(Resource resource) {
-        resources.add(resource);
-    }
-
-    public List<ImageResource> getImageResources() {
+    public Iterable<ImageResource> getImageResources() {
         return imageResources;
     }
 
-    public List<I18NResource> getI18NResources() {
+    public Iterable<I18NResource> getI18NResources() {
         return i18nResources;
     }
 
-    public List<Resource> getResources() {
+    public Iterable<Resource> getResources() {
         return resources;
     }
 }

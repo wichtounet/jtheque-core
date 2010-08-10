@@ -37,7 +37,7 @@ import java.util.Map.Entry;
  */
 @ThreadSafe
 @State(id = "jtheque-modules-configuration", delegated = true)
-public final class ModuleConfiguration {
+final class ModuleConfiguration {
     private final Map<String, ModuleState> states = CollectionUtils.newConcurrentMap(20);
 
     /**
@@ -141,17 +141,7 @@ public final class ModuleConfiguration {
      * @param module The module container to add.
      */
     public void add(Module module) {
-        states.put(module.getId(), module.getState());
-    }
-
-    /**
-     * Add a module to the configuration.
-     *
-     * @param module The module to add.
-     * @param state  The state of the module.
-     */
-    public void add(Module module, ModuleState state) {
-        states.put(module.getId(), state);
+        add(module.getId(), module.getState());
     }
 
     /**

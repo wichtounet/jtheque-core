@@ -25,21 +25,15 @@ import org.jtheque.modules.able.ModuleService;
 import org.jtheque.modules.able.ModuleState;
 import org.jtheque.modules.able.Repository;
 import org.jtheque.modules.able.SwingLoader;
-import org.jtheque.modules.utils.ModuleResourceCache;
+import org.jtheque.modules.able.ModuleResourceCache;
 import org.jtheque.states.able.StateService;
 import org.jtheque.ui.able.UIUtils;
 import org.jtheque.update.able.InstallationResult;
 import org.jtheque.utils.SimplePropertiesCache;
-import org.jtheque.utils.StringUtils;
-import org.jtheque.utils.ThreadUtils;
-import org.jtheque.utils.collections.ArrayUtils;
 import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.collections.WeakEventListenerList;
-import org.jtheque.utils.io.CopyException;
-import org.jtheque.utils.io.FileUtils;
 import org.jtheque.utils.ui.SwingUtils;
 
-import org.osgi.framework.BundleException;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.UrlResource;
 
@@ -48,14 +42,8 @@ import javax.annotation.Resource;
 
 import java.io.File;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Semaphore;
 
 import static org.jtheque.modules.able.ModuleState.*;
 
@@ -66,7 +54,6 @@ import static org.jtheque.modules.able.ModuleState.*;
  */
 public final class ModuleServiceImpl implements ModuleService {
     private final WeakEventListenerList<ModuleListener> listeners = WeakEventListenerList.create();
-    private final List<Module> modules = CollectionUtils.newList();
     private final Map<String, SwingLoader> loaders = CollectionUtils.newHashMap();
     private final Map<Module, ModuleResources> resources = CollectionUtils.newHashMap();
 
@@ -86,7 +73,7 @@ public final class ModuleServiceImpl implements ModuleService {
     private UIUtils uiUtils;
 
     @Resource
-    private ModuleLoader moduleLoader;
+    private ModuleManager moduleManager;
 
     /**
      * Indicate if there is a collection module.
@@ -103,13 +90,9 @@ public final class ModuleServiceImpl implements ModuleService {
     public void load() {
         SwingUtils.assertNotEDT("load()");
 
-        //Load all modules
-        modules.addAll(moduleLoader.loadModules());
+        moduleManager.loadModules();
 
-        CollectionUtils.filter(modules, new CoreVersionFilter(core, uiUtils));
-        CollectionUtils.sort(modules, new ModuleComparator());
-
-        for (Module module : modules) {
+        for (Module module : moduleManager.getModules()) {
             //Configuration
             if (configuration.containsModule(module)) {
                 module.setState(configuration.getState(module.getId()));
@@ -119,7 +102,7 @@ public final class ModuleServiceImpl implements ModuleService {
             }
 
             //If a collection module must be launched
-            if (canBeLoaded(module) && module.isCollection()) {
+            if (ModuleManager.canBeLoaded(module) && module.isCollection()) {
                 collectionModule = true;
             }
 
@@ -129,32 +112,13 @@ public final class ModuleServiceImpl implements ModuleService {
     }
 
     /**
-     * Test if the module can be loaded.
-     *
-     * @param module The module to test.
-     *
-     * @return true if the module can be loaded else false.
-     */
-    private static boolean canBeLoaded(Module module) {
-        return module.getState() != DISABLED;
-    }
-
-    /**
      * Plug the modules.
      */
     @Override
     public void startModules() {
         SwingUtils.assertNotEDT("startModules()");
 
-        ModuleStarter starter = new ModuleStarter();
-
-        for (Module module : modules) {
-            if (canBeLoaded(module) && areAllDependenciesSatisfied(module)) {
-                starter.addModule(module);
-            }
-        }
-
-        starter.startAll();
+        moduleManager.startAll();
     }
 
     /**
@@ -163,22 +127,15 @@ public final class ModuleServiceImpl implements ModuleService {
     @PreDestroy
     private void shutdown() {
         stopModules();
-
-        for (Module module : modules) {
-            try {
-                module.getBundle().uninstall();
-            } catch (BundleException e) {
-                LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
-            }
-        }
+        
+        moduleManager.uninstallModules();
     }
 
     /**
-     * Unplug the modules.
+     * Stop all the modules
      */
-    @Override
-    public void stopModules() {
-        List<Module> modulesToUnplug = CollectionUtils.copyOf(modules);
+    private void stopModules() {
+        List<Module> modulesToUnplug = CollectionUtils.copyOf(moduleManager.getModules());
 
         CollectionUtils.reverse(modulesToUnplug);
 
@@ -191,7 +148,7 @@ public final class ModuleServiceImpl implements ModuleService {
 
     @Override
     public Collection<Module> getModules() {
-        return modules;
+        return moduleManager.getModules();
     }
 
     @Override
@@ -231,11 +188,7 @@ public final class ModuleServiceImpl implements ModuleService {
         //Add images resources
         loadImageResources(module);
 
-        try {
-            module.getBundle().start();
-        } catch (BundleException e) {
-            LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
-        }
+        moduleManager.startModule(module);
 
         if (loaders.containsKey(module.getId())) {
             loaders.remove(module.getId()).afterAll();
@@ -284,11 +237,7 @@ public final class ModuleServiceImpl implements ModuleService {
 
         ModuleResourceCache.removeModule(module.getId());
 
-        try {
-            module.getBundle().stop();
-        } catch (BundleException e) {
-            LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
-        }
+        moduleManager.stopModule(module);
 
         LoggerFactory.getLogger(getClass()).debug("Module {} stopped", module.getBundle().getSymbolicName());
     }
@@ -304,100 +253,30 @@ public final class ModuleServiceImpl implements ModuleService {
     public void disableModule(Module module) {
         if (module.getState() == STARTED) {
             stopModule(module);
-        }
 
-        setState(module, DISABLED);
+            setState(module, DISABLED);
+        }
     }
 
     @Override
     public void installModule(File file) {
-        File moduleFile = installModuleFile(file);
+        Module module = moduleManager.installModule(file);
 
-        if (moduleFile != null) {
-            Module module = moduleLoader.installModule(moduleFile);
-
-            if (module == null) {
-                FileUtils.delete(moduleFile);
-
-                uiUtils.displayI18nText("error.module.not.installed");
-            } else if (exists(module.getId())) {
-                uiUtils.displayI18nText("errors.module.install.already.exists");
-            } else {
-                installModule(module);
-
-                uiUtils.displayI18nText("message.module.installed");
-            }
+        if(module != null){
+            installModule(module);
         }
     }
 
     private void installModule(Module module) {
-        module.setState(INSTALLED);
-
-        modules.add(module);
         configuration.add(module);
 
         fireModuleInstalled(module);
     }
 
-    /**
-     * Install the module file. It seems copy it into the application directory and make verifications for the existance
-     * of the file.
-     *
-     * @param file The file of the module.
-     *
-     * @return The file were the module has been installed.
-     */
-    private File installModuleFile(File file) {
-        File target = file;
-
-        if (!FileUtils.isFileInDirectory(file, core.getFolders().getModulesFolder())) {
-            target = new File(core.getFolders().getModulesFolder(), file.getName());
-
-            if (target.exists()) {
-                uiUtils.displayI18nText("errors.module.install.already.exists");
-
-                return null;
-            } else {
-                try {
-                    FileUtils.copy(file, target);
-                } catch (CopyException e) {
-                    LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
-
-                    uiUtils.displayI18nText("errors.module.install.copy");
-
-                    return null;
-                }
-            }
-        }
-
-        return target;
-    }
-
-    /**
-     * Indicate if a module with the given id exists or not.
-     *
-     * @param id The id to search for.
-     *
-     * @return true if a module exists with this id otherwise false.
-     */
-    private boolean exists(String id) {
-        for (Module module : modules) {
-            if (id.equals(module.getId())) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
     @Override
     public void install(InstallationResult result) {
         if (result.isInstalled()) {
-            Module module = moduleLoader.installModule(new File(core.getFolders().getModulesFolder(), result.getJarFile()));
-
-            installModule(module);
-
-            uiUtils.displayI18nText("message.module.repository.installed");
+            installModule(moduleManager.installModule(result));
         } else {
             uiUtils.displayI18nText("error.repository.module.not.installed");
         }
@@ -409,19 +288,9 @@ public final class ModuleServiceImpl implements ModuleService {
             stopModule(module);
         }
 
-        moduleLoader.uninstallModule(module);
-
         configuration.remove(module);
-        modules.remove(module);
 
-        try {
-            module.getBundle().uninstall();
-        } catch (BundleException e) {
-            LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
-        }
-
-        //Delete the bundle file
-        FileUtils.delete(StringUtils.delete(module.getBundle().getLocation(), "file:"));
+        moduleManager.uninstallModule(module);
 
         fireModuleUninstalled(module);
 
@@ -445,7 +314,7 @@ public final class ModuleServiceImpl implements ModuleService {
             return "modules.message.versionproblem";
         }
 
-        if (!areAllDependenciesSatisfiedAndActive(module)) {
+        if (!moduleManager.areAllDependenciesSatisfiedAndActive(module)) {
             return "error.module.not.loaded.dependency";
         }
 
@@ -458,7 +327,7 @@ public final class ModuleServiceImpl implements ModuleService {
             return "error.module.not.started";
         }
 
-        if (isThereIsActiveDependenciesOn(module)) {
+        if (moduleManager.isThereIsActiveDependenciesOn(module)) {
             return "error.module.dependencies";
         }
 
@@ -467,7 +336,7 @@ public final class ModuleServiceImpl implements ModuleService {
 
     @Override
     public String canBeUninstalled(Module module) {
-        if (module.getState() == STARTED && isThereIsActiveDependenciesOn(module)) {
+        if (module.getState() == STARTED && moduleManager.isThereIsActiveDependenciesOn(module)) {
             return "error.module.dependencies";
         }
 
@@ -480,45 +349,21 @@ public final class ModuleServiceImpl implements ModuleService {
             return "error.module.not.enabled";
         }
 
-        if (module.getState() == STARTED && isThereIsActiveDependenciesOn(module)) {
+        if (module.getState() == STARTED && moduleManager.isThereIsActiveDependenciesOn(module)) {
             return "error.module.dependencies";
         }
 
         return "";
     }
 
-    /**
-     * Test if there is a dependency on the given module.
-     *
-     * @param module The module to test for dependencies.
-     *
-     * @return true if there is a dependency on the given module.
-     */
-    private boolean isThereIsActiveDependenciesOn(Module module) {
-        for (Module other : modules) {
-            if (other != module && other.getState() == STARTED &&
-                    ArrayUtils.contains(other.getDependencies(), module.getId())) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
     @Override
     public Module getModuleById(String id) {
-        for (Module module : modules) {
-            if (id.equals(module.getId())) {
-                return module;
-            }
-        }
-
-        return null;
+        return moduleManager.getModuleById(id);
     }
 
     @Override
-    public boolean isInstalled(String module) {
-        return getModuleById(module) != null;
+    public boolean isInstalled(String id) {
+        return moduleManager.exists(id);
     }
 
     @Override
@@ -582,160 +427,11 @@ public final class ModuleServiceImpl implements ModuleService {
         }
     }
 
-    /**
-     * Indicate if all the dependencies of the module are satisfied.
-     *
-     * @param module The module to test.
-     *
-     * @return <code>true</code> if all the dependencies are satisfied else <code>false</code>.
-     */
-    private boolean areAllDependenciesSatisfied(Module module) {
-        if (StringUtils.isEmpty(module.getDependencies())) {
-            return true;
-        }
-
-        for (String dependency : module.getDependencies()) {
-            Module resolvedDependency = getModuleById(dependency);
-
-            if (resolvedDependency == null || !canBeLoaded(resolvedDependency)) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    /**
-     * Indicate if all the dependencies of the given module are satisfied.
-     *
-     * @param module The module to test.
-     *
-     * @return true if the all the dependencies of the module are satisfied else false.
-     */
-    private boolean areAllDependenciesSatisfiedAndActive(Module module) {
-        if (StringUtils.isEmpty(module.getDependencies())) {
-            return true;
-        }
-
-        for (String dependencyId : module.getDependencies()) {
-            Module dependency = getModuleById(dependencyId);
-
-            if (dependency == null || dependency.getState() != STARTED) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
     ModuleResources getResources(Module module) {
         return resources.get(module);
     }
 
     void setResources(Module module, ModuleResources resources) {
         this.resources.put(module, resources);
-    }
-
-    /**
-     * A starter for the modules. This started load the modules with several threads.
-     *
-     * @author Baptiste Wicht
-     */
-    private final class ModuleStarter {
-        private final Set<Module> startList = CollectionUtils.newSet(5);
-
-        private final ExecutorService startersPool = Executors.newFixedThreadPool(ThreadUtils.processors());
-
-        private final Semaphore semaphore = new Semaphore(0, true);
-        private CountDownLatch countDown;
-
-        /**
-         * Add a module to start.
-         *
-         * @param module The module to start.
-         */
-        public void addModule(Module module) {
-            startList.add(module);
-        }
-
-        /**
-         * Start all the modules of the starter.
-         */
-        public void startAll() {
-            if (startList.isEmpty()) {
-                return;
-            }
-
-            countDown = new CountDownLatch(startList.size());
-
-            startReadyModules();
-
-            while (true) {
-                try {
-                    semaphore.acquire();
-
-                    startReadyModules();
-
-                    if (startList.isEmpty()) {
-                        break;
-                    }
-                } catch (InterruptedException e) {
-                    LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
-                }
-            }
-
-            try {
-                countDown.await();
-            } catch (InterruptedException e) {
-                LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
-            }
-
-            startersPool.shutdown();
-        }
-
-        /**
-         * Start the currently ready modules.
-         */
-        private void startReadyModules() {
-            for (Iterator<Module> iterator = startList.iterator(); iterator.hasNext();) {
-                Module module = iterator.next();
-
-                if (StringUtils.isEmpty(canBeStarted(module))) {
-                    startersPool.submit(new ModuleStarterRunnable(this, module));
-                    iterator.remove();
-                }
-            }
-        }
-    }
-
-    /**
-     * A simple runnable to start a module.
-     *
-     * @author Baptiste Wicht
-     */
-    private final class ModuleStarterRunnable implements Runnable {
-        private final ModuleStarter starter;
-        private final Module module;
-
-        /**
-         * Construct a ModuleStarterRunnable for the given module.
-         *
-         * @param starter The starter.
-         * @param module  The module to start.
-         */
-        private ModuleStarterRunnable(ModuleStarter starter, Module module) {
-            super();
-
-            this.starter = starter;
-            this.module = module;
-        }
-
-        @Override
-        public void run() {
-            startModule(module);
-
-            starter.semaphore.release();
-            starter.countDown.countDown();
-        }
     }
 }

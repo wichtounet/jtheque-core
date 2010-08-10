@@ -1,4 +1,4 @@
-package org.jtheque.modules.utils;
+package org.jtheque.modules.able;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -17,6 +17,7 @@ package org.jtheque.modules.utils;
  */
 
 import org.jtheque.utils.StringUtils;
+import org.jtheque.utils.annotations.GuardedBy;
 import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.collections.CollectionUtils;
 
@@ -34,9 +35,9 @@ import java.util.Set;
 public final class ModuleResourceCache {
     private static final Object COHERENCY_LOCK = new Object();
 
+    @GuardedBy("COHERENCY_LOCK")
     private static final Map<String, Map<Class<?>, Set<Object>>> CACHE = CollectionUtils.newHashMap(8);
-
-
+    
     /**
      * Utility class, not instantiable.
      */

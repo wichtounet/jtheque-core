@@ -79,11 +79,6 @@ public interface ModuleService {
     void install(InstallationResult result);
 
     /**
-     * Unplug the modules.
-     */
-    void stopModules();
-
-    /**
      * Enable a module.
      *
      * @param module The module to enable.
