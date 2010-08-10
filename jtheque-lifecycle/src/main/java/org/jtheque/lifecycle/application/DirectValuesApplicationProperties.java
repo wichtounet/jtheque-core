@@ -33,7 +33,7 @@ final class DirectValuesApplicationProperties implements ApplicationProperties {
     private final InternationalString email;
     private final InternationalString copyright;
 
-    public DirectValuesApplicationProperties(InternationalString author, InternationalString name,
+    DirectValuesApplicationProperties(InternationalString author, InternationalString name,
                                              InternationalString site, InternationalString email,
                                              InternationalString copyright) {
         super();

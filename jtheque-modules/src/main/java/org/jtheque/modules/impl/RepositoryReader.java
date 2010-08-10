@@ -20,6 +20,7 @@ import org.jtheque.core.able.Core;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.bean.InternationalString;
 import org.jtheque.utils.bean.Version;
+import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.io.FileUtils;
 import org.jtheque.xml.utils.XMLReader;
 import org.jtheque.xml.utils.XML;
@@ -27,6 +28,8 @@ import org.jtheque.xml.utils.XMLException;
 
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Node;
+
+import java.util.Map;
 
 /**
  * A reader for repository XML file.
@@ -95,16 +98,16 @@ public final class RepositoryReader {
                             Core.VERSION :
                             Version.get(reader.readString("core", currentNode));
 
-            InternationalString description = new InternationalString();
+            Map<String, String> resources = CollectionUtils.newHashMap(5);
 
             for (Node child : reader.getNodes("description/*", currentNode)) {
-                description.put(child.getNodeName(), child.getTextContent());
+                resources.put(child.getNodeName(), child.getTextContent());
             }
 
             repository.getModules().add(new ModuleDescriptionImpl(
                     reader.readString("id", currentNode),
                     reader.readString("name", currentNode),
-                    description,
+                    new InternationalString(resources),
                     reader.readString("versions", currentNode),
                     coreVersion));
         }
@@ -118,12 +121,12 @@ public final class RepositoryReader {
      * @throws XMLException If an error occurs during the XML reading process.
      */
     private void readTitle(XMLReader<Node> reader) throws XMLException {
-        InternationalString title = new InternationalString();
+        Map<String, String> resources = CollectionUtils.newHashMap(5);
 
         for (Node child : reader.getNodes("title/*", reader.getRootElement())) {
-            title.put(child.getNodeName(), child.getTextContent());
+            resources.put(child.getNodeName(), child.getTextContent());
         }
 
-        repository.setTitle(title);
+        repository.setTitle(new InternationalString(resources));
     }
 }

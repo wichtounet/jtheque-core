@@ -10,14 +10,15 @@ import org.jtheque.utils.bean.InternationalString;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.io.FileUtils;
-import org.jtheque.xml.utils.XMLReader;
 import org.jtheque.xml.utils.XML;
 import org.jtheque.xml.utils.XMLException;
+import org.jtheque.xml.utils.XMLReader;
 
 import org.w3c.dom.Node;
 
 import java.io.File;
 import java.util.Collection;
+import java.util.Map;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -206,15 +207,15 @@ public final class XMLApplicationReader {
      * @throws XMLException if an error occurs during the XML processing.
      */
     private InternationalString readInternationalString(String path, Object parentElement) throws XMLException {
-        InternationalString internationalString = new InternationalString();
-
         Collection<Node> elements = reader.getNodes(path + "/*", parentElement);
 
+        Map<String, String> resources = CollectionUtils.newHashMap(5);
+        
         for (Node child : elements) {
-            internationalString.put(child.getNodeName(), child.getTextContent());
+            resources.put(child.getNodeName(), child.getTextContent());
         }
 
-        return internationalString;
+        return new InternationalString(resources);
     }
 
     /**
