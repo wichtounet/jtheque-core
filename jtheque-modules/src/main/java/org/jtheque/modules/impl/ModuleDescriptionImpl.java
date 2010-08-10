@@ -16,6 +16,8 @@ package org.jtheque.modules.impl;
  * limitations under the License.
  */
 
+import org.jtheque.modules.able.ModuleDescription;
+import org.jtheque.utils.annotations.Immutable;
 import org.jtheque.utils.bean.InternationalString;
 import org.jtheque.utils.bean.Version;
 
@@ -24,25 +26,27 @@ import org.jtheque.utils.bean.Version;
  *
  * @author Baptiste Wicht
  */
-public final class ModuleDescription implements org.jtheque.modules.able.ModuleDescription {
-    private String id;
-    private String name;
-    private InternationalString description;
-    private String versionsFileURL;
-    private Version coreVersion;
+@Immutable
+public final class ModuleDescriptionImpl implements ModuleDescription {
+    private final String id;
+    private final String name;
+    private final InternationalString description;
+    private final String url;
+    private final Version coreVersion;
+
+    public ModuleDescriptionImpl(String id, String name, InternationalString description, String url, Version coreVersion) {
+        super();
+
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.url = url;
+        this.coreVersion = coreVersion;
+    }
 
     @Override
     public String getName() {
         return name;
-    }
-
-    /**
-     * Set the name of the module.
-     *
-     * @param name The name of the module.
-     */
-    public void setName(String name) {
-        this.name = name;
     }
 
     @Override
@@ -50,27 +54,9 @@ public final class ModuleDescription implements org.jtheque.modules.able.ModuleD
         return description;
     }
 
-    /**
-     * Set the description of the module.
-     *
-     * @param description The description of the module.
-     */
-    public void setDescription(InternationalString description) {
-        this.description = description;
-    }
-
     @Override
     public String getDescriptorURL() {
-        return versionsFileURL;
-    }
-
-    /**
-     * Set the versions file URL.
-     *
-     * @param versionsFileURL The URL of the versions file.
-     */
-    public void setVersionsFileURL(String versionsFileURL) {
-        this.versionsFileURL = versionsFileURL;
+        return url;
     }
 
     @Override
@@ -78,27 +64,9 @@ public final class ModuleDescription implements org.jtheque.modules.able.ModuleD
         return coreVersion;
     }
 
-    /**
-     * Set the version of the core.
-     *
-     * @param coreVersion The version of the core.
-     */
-    public void setCoreVersion(Version coreVersion) {
-        this.coreVersion = coreVersion;
-    }
-
     @Override
     public String getId() {
         return id;
-    }
-
-    /**
-     * Set the id of the module.
-     *
-     * @param id The id of the module.
-     */
-    public void setId(String id) {
-        this.id = id;
     }
 
     @Override
@@ -111,7 +79,7 @@ public final class ModuleDescription implements org.jtheque.modules.able.ModuleD
         return "ModuleDescription{" +
                 "name='" + name + '\'' +
                 ", description=" + description +
-                ", versionsFileURL='" + versionsFileURL + '\'' +
+                ", url='" + url + '\'' +
                 ", core=" + coreVersion +
                 '}';
     }

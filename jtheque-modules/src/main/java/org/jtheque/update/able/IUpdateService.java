@@ -18,7 +18,6 @@ package org.jtheque.update.able;
 
 import org.jtheque.core.able.Versionable;
 import org.jtheque.modules.able.Module;
-import org.jtheque.modules.impl.InstallationResult;
 import org.jtheque.utils.bean.Version;
 
 import java.util.List;
@@ -73,7 +72,7 @@ public interface IUpdateService {
      *
      * @return The result of the installation.
      */
-    InstallationResult installModule(String versionFileURL);
+    org.jtheque.update.able.InstallationResult installModule(String versionFileURL);
 
     /**
      * Return the most recent version of the object.

@@ -13,28 +13,21 @@
 
     <context:annotation-config/>
 
-    <bean id="resourceService" class="org.jtheque.resources.impl.ResourceService">
+    <bean id="resourceService" class="org.jtheque.resources.impl.ResourceServiceImpl">
         <constructor-arg ref="stateService"/>
-        <constructor-arg ref="errorService"/>
-        <constructor-arg ref="eventService"/>
     </bean>
 
-    <bean id="moduleService" class="org.jtheque.modules.impl.ModuleService">
-        <constructor-arg>
-            <bean class="org.jtheque.modules.impl.ModuleLoader"/>
-        </constructor-arg>
-    </bean>
+    <bean id="moduleService" class="org.jtheque.modules.impl.ModuleService" />
 
-    <bean id="updateService" class="org.jtheque.update.impl.UpdateService">
-        <constructor-arg>
-            <bean id="versionsLoader" class="org.jtheque.update.impl.DescriptorsLoader"/>
-        </constructor-arg>
-    </bean>
+    <bean id="moduleLoader" class="org.jtheque.modules.impl.ModuleLoader"/>
 
+    <bean id="updateService" class="org.jtheque.update.impl.UpdateService" />
+    
     <osgi:reference id="stateService" interface="org.jtheque.states.able.StateService"/>
     <osgi:reference id="core" interface="org.jtheque.core.able.Core"/>
     <osgi:reference id="errorService" interface="org.jtheque.errors.able.ErrorService"/>
     <osgi:reference id="iuiUtils" interface="org.jtheque.ui.able.UIUtils"/>
+    <osgi:reference id="lifecycle" interface="org.jtheque.core.able.lifecycle.LifeCycle"/>
     <osgi:reference id="languageService" interface="org.jtheque.i18n.able.LanguageService"/>
     <osgi:reference id="imageService" interface="org.jtheque.images.able.ImageService"/>
     <osgi:reference id="eventService" interface="org.jtheque.events.able.EventService"/>

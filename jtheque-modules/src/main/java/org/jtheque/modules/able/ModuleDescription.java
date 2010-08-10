@@ -11,6 +11,13 @@ import org.jtheque.utils.bean.Version;
  */
 public interface ModuleDescription extends Versionable {
     /**
+     * Return the id of the module.
+     *
+     * @return The id of the module.
+     */
+    String getId();
+
+    /**
      * Return the name of the module.
      *
      * @return The name of the module.
@@ -30,11 +37,4 @@ public interface ModuleDescription extends Versionable {
      * @return The version of the core.
      */
     Version getCoreVersion();
-
-    /**
-     * Return the id of the module.
-     *
-     * @return The id of the module.
-     */
-    String getId();
 }

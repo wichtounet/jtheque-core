@@ -89,18 +89,11 @@ public final class RepositoryReader {
      */
     private void readModules(XMLReader<Node> reader) throws XMLException {
         for (Object currentNode : reader.getNodes("modules/module", reader.getRootElement())) {
-            ModuleDescription module = new ModuleDescription();
 
-            module.setId(reader.readString("id", currentNode));
-            module.setName(reader.readString("name", currentNode));
-
-            if (StringUtils.isEmpty(reader.readString("core", currentNode))) {
-                module.setCoreVersion(Core.VERSION);
-            } else {
-                module.setCoreVersion(Version.get(reader.readString("core", currentNode)));
-            }
-
-            module.setVersionsFileURL(reader.readString("versions", currentNode));
+            Version coreVersion =
+                    StringUtils.isEmpty(reader.readString("core", currentNode)) ?
+                            Core.VERSION :
+                            Version.get(reader.readString("core", currentNode));
 
             InternationalString description = new InternationalString();
 
@@ -108,9 +101,12 @@ public final class RepositoryReader {
                 description.put(child.getNodeName(), child.getTextContent());
             }
 
-            module.setDescription(description);
-
-            repository.getModules().add(module);
+            repository.getModules().add(new ModuleDescriptionImpl(
+                    reader.readString("id", currentNode),
+                    reader.readString("name", currentNode),
+                    description,
+                    reader.readString("versions", currentNode),
+                    coreVersion));
         }
     }
 

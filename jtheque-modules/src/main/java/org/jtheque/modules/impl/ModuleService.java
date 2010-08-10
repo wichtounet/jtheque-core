@@ -22,7 +22,6 @@ import org.jtheque.images.able.ImageService;
 import org.jtheque.modules.able.Module;
 import org.jtheque.modules.able.ModuleDescription;
 import org.jtheque.modules.able.ModuleListener;
-import org.jtheque.modules.able.ModuleLoader;
 import org.jtheque.modules.able.ModuleState;
 import org.jtheque.modules.able.Repository;
 import org.jtheque.modules.able.Resources;
@@ -32,6 +31,7 @@ import org.jtheque.modules.utils.ModuleResourceCache;
 import org.jtheque.states.able.StateService;
 import org.jtheque.ui.able.UIUtils;
 import org.jtheque.update.able.IUpdateService;
+import org.jtheque.update.able.InstallationResult;
 import org.jtheque.utils.SimplePropertiesCache;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.ThreadUtils;
@@ -72,8 +72,6 @@ public final class ModuleService implements org.jtheque.modules.able.ModuleServi
     private final List<Module> modules = CollectionUtils.newList();
     private final Map<String, SwingLoader> loaders = CollectionUtils.newHashMap();
 
-    private final ModuleLoader moduleLoader;
-
     /**
      * The application repository.
      */
@@ -103,21 +101,13 @@ public final class ModuleService implements org.jtheque.modules.able.ModuleServi
     @Resource
     private UIUtils uiUtils;
 
+    @Resource
+    private ModuleLoader moduleLoader;
+
     /**
      * Indicate if there is a collection module.
      */
     private boolean collectionModule;
-
-    /**
-     * Construct a new ModuleService.
-     *
-     * @param moduleLoader The module loader.
-     */
-    public ModuleService(ModuleLoader moduleLoader) {
-        super();
-
-        this.moduleLoader = moduleLoader;
-    }
 
     @Override
     public void load() {
@@ -419,7 +409,7 @@ public final class ModuleService implements org.jtheque.modules.able.ModuleServi
 
     @Override
     public void install(String url) {
-        InstallationResult result = updateService.install(url);
+        InstallationResult result = updateService.installModule(url);
 
         if (result.isInstalled()) {
             Module module = moduleLoader.installModule(new File(core.getFolders().getModulesFolder(), result.getJarFile()));

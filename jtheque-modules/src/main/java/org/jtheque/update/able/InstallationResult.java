@@ -1,7 +1,4 @@
-package org.jtheque.modules.able;
-
-import java.io.File;
-import java.util.List;
+package org.jtheque.update.able;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -19,32 +16,18 @@ import java.util.List;
  * limitations under the License.
  */
 
-/**
- * A Module Loader specification.
- *
- * @author Baptiste Wicht
- */
-public interface ModuleLoader {
+public interface InstallationResult {
     /**
-     * Load the modules.
+     * Indicate if the module has been installed.
      *
-     * @return All the loaded modules.
+     * @return true if the module has been installed else false.
      */
-    List<Module> loadModules();
+    boolean isInstalled();
 
     /**
-     * Install the module.
+     * Return the jar-file name.
      *
-     * @param file The file to the module to install.
-     *
-     * @return The installed module.
+     * @return The name of the jar file.
      */
-    Module installModule(File file);
-
-    /**
-     * Uninstall the given module.
-     *
-     * @param module The module to uninstall.
-     */
-    void uninstallModule(Module module);
+    String getJarFile();
 }

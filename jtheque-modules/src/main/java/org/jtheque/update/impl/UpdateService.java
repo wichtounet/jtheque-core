@@ -28,10 +28,9 @@ import org.jtheque.events.able.Events;
 import org.jtheque.modules.able.Module;
 import org.jtheque.modules.able.ModuleService;
 import org.jtheque.modules.able.ModuleState;
-import org.jtheque.modules.impl.InstallationResult;
 import org.jtheque.resources.able.ResourceService;
 import org.jtheque.ui.able.UIUtils;
-import org.jtheque.update.able.IUpdateService;
+import org.jtheque.update.able.*;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.collections.ArrayUtils;
@@ -99,30 +98,26 @@ public final class UpdateService implements IUpdateService {
 
     @Override
     public InstallationResult installModule(String url) {
-        InstallationResult result = new InstallationResult();
-
-        if (WebUtils.isURLReachable(url)) {
-            try {
-                ModuleVersion moduleVersion = versionsLoader.getMostRecentModuleVersion(url);
-
-                applyModuleVersion(moduleVersion);
-
-                result.setJarFile(moduleVersion.getModuleFile());
-                result.setInstalled(true);
-            } catch (Exception e) {
-                LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
-                result.setInstalled(false);
-            }
-        } else {
+        if (!WebUtils.isURLReachable(url)) {
             addNotReachableError(url);
 
             eventService.addEvent(
                     Events.newEvent(EventLevel.ERROR, "System", "events.updates.network", EventService.CORE_EVENT_LOG));
 
-            result.setInstalled(false);
+            return new SimpleInstallationResult(false, "");
         }
+        
+        try {
+            ModuleVersion moduleVersion = versionsLoader.getMostRecentModuleVersion(url);
 
-        return result;
+            applyModuleVersion(moduleVersion);
+
+            return new SimpleInstallationResult(true, moduleVersion.getModuleFile());
+        } catch (Exception e) {
+            LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
+
+            return new SimpleInstallationResult(false, "");
+        }
     }
 
     /**

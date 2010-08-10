@@ -38,6 +38,15 @@ public enum ModuleState {
     }
 
     /**
+     * Return the i18n key.
+     *
+     * @return the i18n key.
+     */
+    public String getKey() {
+        return key;
+    }
+
+    /**
      * Return the enum value from the ordinal value.
      *
      * @param ordinal The ordinal value.
@@ -55,14 +64,5 @@ public enum ModuleState {
         }
 
         return state;
-    }
-
-    /**
-     * Return the i18n key.
-     *
-     * @return the i18n key.
-     */
-    public String getKey() {
-        return key;
     }
 }

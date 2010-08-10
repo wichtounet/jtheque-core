@@ -64,7 +64,7 @@ import java.util.zip.ZipEntry;
  *
  * @author Baptiste Wicht
  */
-public final class ModuleLoader implements org.jtheque.modules.able.ModuleLoader, BundleContextAware {
+public final class ModuleLoader implements BundleContextAware {
     private static final Pattern COMMA_DELIMITER_PATTERN = Pattern.compile(";");
     private static final String[] EMPTY_ARRAY = new String[0];
 
@@ -84,7 +84,11 @@ public final class ModuleLoader implements org.jtheque.modules.able.ModuleLoader
         this.bundleContext = bundleContext;
     }
 
-    @Override
+    /**
+     * Load the modules.
+     *
+     * @return All the loaded modules.
+     */
     public List<Module> loadModules() {
         File moduleDir = core.getFolders().getModulesFolder();
 
@@ -115,7 +119,13 @@ public final class ModuleLoader implements org.jtheque.modules.able.ModuleLoader
         return modules;
     }
 
-    @Override
+    /**
+     * Install the module.
+     *
+     * @param file The file to the module to install.
+     *
+     * @return The installed module.
+     */
     public Module installModule(File file) {
         Builder builder = new Builder();
 
@@ -315,7 +325,11 @@ public final class ModuleLoader implements org.jtheque.modules.able.ModuleLoader
         }
     }
 
-    @Override
+    /**
+     * Uninstall the given module.
+     *
+     * @param module The module to uninstall.
+     */
     public void uninstallModule(Module module) {
         Resources resources = module.getResources();
 
