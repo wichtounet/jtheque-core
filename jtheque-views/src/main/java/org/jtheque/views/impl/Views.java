@@ -219,9 +219,9 @@ public final class Views implements org.jtheque.views.able.Views, ApplicationCon
 
     @Override
     public void moduleStopped(Module module) {
-        removeMainComponents(ModuleResourceCache.getResource(module.getId(), MainComponent.class));
-        removeStateBarComponents(ModuleResourceCache.getResource(module.getId(), StateBarComponent.class));
-        removeConfigTabComponents(ModuleResourceCache.getResource(module.getId(), ConfigTabComponent.class));
+        removeMainComponents(ModuleResourceCache.getResources(module.getId(), MainComponent.class));
+        removeStateBarComponents(ModuleResourceCache.getResources(module.getId(), StateBarComponent.class));
+        removeConfigTabComponents(ModuleResourceCache.getResources(module.getId(), ConfigTabComponent.class));
 
         ModuleResourceCache.removeResourceOfType(module.getId(), MainComponent.class);
         ModuleResourceCache.removeResourceOfType(module.getId(), StateBarComponent.class);

@@ -119,7 +119,7 @@ public final class SchemaService implements org.jtheque.schemas.able.SchemaServi
 
     @Override
     public void moduleStopped(Module module) {
-        Set<Schema> resources = ModuleResourceCache.getResource(module.getId(), Schema.class);
+        Set<Schema> resources = ModuleResourceCache.getResources(module.getId(), Schema.class);
 
         synchronized (schemas) {
             for (Schema schema : resources) {

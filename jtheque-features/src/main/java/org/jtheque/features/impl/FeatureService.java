@@ -182,7 +182,7 @@ public final class FeatureService implements org.jtheque.features.able.FeatureSe
 
     @Override
     public void moduleStopped(Module module) {
-        Set<Menu> resources = ModuleResourceCache.getResource(module.getId(), Menu.class);
+        Set<Menu> resources = ModuleResourceCache.getResources(module.getId(), Menu.class);
 
         for (Menu menu : resources) {
             removeMenu(menu);

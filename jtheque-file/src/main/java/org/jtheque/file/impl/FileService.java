@@ -152,7 +152,7 @@ public final class FileService implements org.jtheque.file.able.FileService, Mod
 
     @Override
     public void moduleStopped(Module module) {
-        Set<ModuleBackuper> resources = ModuleResourceCache.getResource(module.getId(), ModuleBackuper.class);
+        Set<ModuleBackuper> resources = ModuleResourceCache.getResources(module.getId(), ModuleBackuper.class);
 
         for (ModuleBackuper backuper : resources) {
             backupers.remove(backuper);

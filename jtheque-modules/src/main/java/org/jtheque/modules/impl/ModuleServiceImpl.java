@@ -425,7 +425,7 @@ public final class ModuleServiceImpl implements ModuleService {
 
         fireModuleUninstalled(module);
 
-        for (ModuleListener listener : ModuleResourceCache.getResource(module.getId(), ModuleListener.class)) {
+        for (ModuleListener listener : ModuleResourceCache.getResources(module.getId(), ModuleListener.class)) {
             listeners.remove(listener);
         }
 

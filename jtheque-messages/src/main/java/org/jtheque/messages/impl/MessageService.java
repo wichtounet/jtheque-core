@@ -98,7 +98,7 @@ public final class MessageService implements org.jtheque.messages.able.MessageSe
 
     @Override
     public void moduleStopped(Module module) {
-        messages.removeAll(ModuleResourceCache.getResource(module.getId(), Message.class));
+        messages.removeAll(ModuleResourceCache.getResources(module.getId(), Message.class));
     }
 
     @Override
