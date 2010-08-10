@@ -4,7 +4,6 @@ import org.jtheque.utils.annotations.Immutable;
 import org.jtheque.utils.collections.CollectionUtils;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.NoSuchElementException;
 
 /*
@@ -31,7 +30,8 @@ import java.util.NoSuchElementException;
 @Immutable
 public final class ModuleDescriptor {
     private final String id;
-    private final List<ModuleVersion> moduleVersions;
+    private final Collection<ModuleVersion> moduleVersions;
+    private final ModuleVersion mostRecent;
 
     /**
      * Construct a new ModuleDescriptor.
@@ -43,7 +43,9 @@ public final class ModuleDescriptor {
         super();
 
         this.id = id;
-        this.moduleVersions = CollectionUtils.copyOf(moduleVersions);
+        this.moduleVersions = CollectionUtils.protectedCopy(moduleVersions);
+
+        mostRecent = CollectionUtils.last(moduleVersions);
     }
 
     /**
@@ -61,7 +63,7 @@ public final class ModuleDescriptor {
      * @return A Collection containing all the versions of the descriptor.
      */
     public Collection<ModuleVersion> getVersions() {
-        return CollectionUtils.protect(moduleVersions);
+        return moduleVersions;
     }
 
     /**
@@ -76,6 +78,6 @@ public final class ModuleDescriptor {
             throw new NoSuchElementException("The descriptor contains no versions. ");
         }
 
-        return moduleVersions.get(moduleVersions.size() - 1);
+        return mostRecent;
     }
 }

@@ -55,7 +55,7 @@ public final class ResourceDescriptor extends AbstractDescriptor {
     public ResourceDescriptor(String id, Collection<ResourceVersion> versions) {
         super(id);
 
-        this.versions = CollectionUtils.copyOf(versions);
+        this.versions = CollectionUtils.protectedCopy(versions);
     }
 
     /**
@@ -64,6 +64,6 @@ public final class ResourceDescriptor extends AbstractDescriptor {
      * @return A list containing all the versions of the file.
      */
     public Iterable<ResourceVersion> getVersions() {
-        return CollectionUtils.protect(versions);
+        return versions;
     }
 }

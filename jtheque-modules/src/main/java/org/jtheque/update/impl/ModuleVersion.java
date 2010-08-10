@@ -51,7 +51,7 @@ public final class ModuleVersion {
         this.coreVersion = coreVersion;
         this.moduleFile = moduleFile;
         this.moduleURL = moduleURL;
-        this.resources = CollectionUtils.copyOf(resources);
+        this.resources = CollectionUtils.protectedCopy(resources);
     }
 
     public Version getVersion() {
@@ -86,6 +86,6 @@ public final class ModuleVersion {
     }
 
     public Collection<FileDescriptor> getResources() {
-        return CollectionUtils.protect(resources);
+        return resources;
     }
 }

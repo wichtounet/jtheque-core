@@ -6,7 +6,6 @@ import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.xml.utils.Node;
 
 import java.util.Collection;
-import java.util.List;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -33,14 +32,14 @@ import java.util.List;
 public final class ModuleBackup {
     private final Version version;
     private final String id;
-    private final List<Node> nodes;
+    private final Collection<Node> nodes;
 
     public ModuleBackup(Version version, String id, Collection<Node> nodes) {
         super();
 
         this.version = version;
         this.id = id;
-        this.nodes = CollectionUtils.copyOf(nodes);
+        this.nodes = CollectionUtils.protectedCopy(nodes);
     }
 
     /**
@@ -58,7 +57,7 @@ public final class ModuleBackup {
      * @return All the nodes of the backup.
      */
     public Collection<Node> getNodes() {
-        return CollectionUtils.protect(nodes);
+        return nodes;
     }
 
     /**

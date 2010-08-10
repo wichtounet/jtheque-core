@@ -37,7 +37,7 @@ final class I18nAplicationProperties implements ApplicationProperties {
     /**
      * Construct a new I18nAplicationProperties.
      */
-    public I18nAplicationProperties() {
+    I18nAplicationProperties() {
         super();
 
         resourceBundle = new ReloadableResourceBundleMessageSource();

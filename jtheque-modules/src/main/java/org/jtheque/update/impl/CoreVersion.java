@@ -44,7 +44,7 @@ public final class CoreVersion implements Comparable<CoreVersion> {
         super();
 
         this.version = version;
-        this.bundles = CollectionUtils.copyOf(bundles);
+        this.bundles = CollectionUtils.protectedCopy(bundles);
     }
 
     /**
@@ -62,7 +62,7 @@ public final class CoreVersion implements Comparable<CoreVersion> {
      * @return An Iterable on the descriptors.
      */
     public Iterable<FileDescriptor> getBundles() {
-        return CollectionUtils.protect(bundles);
+        return bundles;
     }
 
     @Override

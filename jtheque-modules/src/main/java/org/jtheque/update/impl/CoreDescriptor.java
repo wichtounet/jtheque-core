@@ -20,7 +20,6 @@ import org.jtheque.utils.annotations.Immutable;
 import org.jtheque.utils.collections.CollectionUtils;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.NoSuchElementException;
 
 /**
@@ -30,12 +29,15 @@ import java.util.NoSuchElementException;
  */
 @Immutable
 public final class CoreDescriptor {
-    private final List<CoreVersion> versions;
+    private final Collection<CoreVersion> versions;
+    private final CoreVersion mostRecent;
 
     public CoreDescriptor(Collection<CoreVersion> versions) {
         super();
 
-        this.versions = CollectionUtils.copyOf(versions);
+        this.versions = CollectionUtils.protectedCopy(versions);
+        
+        mostRecent = CollectionUtils.last(versions);
     }
 
     /**
@@ -44,7 +46,7 @@ public final class CoreDescriptor {
      * @return A list containing all the versions of the file.
      */
     public Collection<CoreVersion> getVersions() {
-        return CollectionUtils.protect(versions);
+        return versions;
     }
 
     /**
@@ -59,6 +61,6 @@ public final class CoreDescriptor {
             throw new NoSuchElementException("The version's file contains no versions. ");
         }
 
-        return versions.get(versions.size() - 1);
+        return mostRecent;
     }
 }
