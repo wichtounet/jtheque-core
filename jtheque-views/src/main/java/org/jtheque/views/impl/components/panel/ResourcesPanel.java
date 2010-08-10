@@ -1,7 +1,7 @@
 package org.jtheque.views.impl.components.panel;
 
-import org.jtheque.resources.able.IResource;
-import org.jtheque.resources.able.IResourceService;
+import org.jtheque.resources.able.Resource;
+import org.jtheque.resources.able.ResourceService;
 import org.jtheque.ui.utils.builded.OSGIFilthyBuildedPanel;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.ui.able.components.Borders;
@@ -38,7 +38,7 @@ public final class ResourcesPanel extends OSGIFilthyBuildedPanel implements Reso
 
     @Override
     protected void buildView(I18nPanelBuilder builder) {
-        IResourceService resourceService = getService(IResourceService.class);
+        ResourceService resourceService = getService(ResourceService.class);
 
         resourcesList = builder.addScrolledList(new ResourceListModel(resourceService), new ResourceListRenderer(),
                 builder.gbcSet(0, 0, GridBagUtils.BOTH, GridBagUtils.FIRST_LINE_START, 1.0, 1.0));
@@ -48,7 +48,7 @@ public final class ResourcesPanel extends OSGIFilthyBuildedPanel implements Reso
     }
 
     @Override
-    public IResource getSelectedResource() {
-        return (IResource) resourcesList.getSelectedValue();
+    public Resource getSelectedResource() {
+        return (Resource) resourcesList.getSelectedValue();
     }
 }

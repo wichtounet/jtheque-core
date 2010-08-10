@@ -16,8 +16,8 @@ package org.jtheque.views.impl.models;
  * limitations under the License.
  */
 
-import org.jtheque.resources.able.IResource;
-import org.jtheque.resources.able.IResourceService;
+import org.jtheque.resources.able.Resource;
+import org.jtheque.resources.able.ResourceService;
 import org.jtheque.ui.utils.models.SimpleListModel;
 
 /**
@@ -25,7 +25,7 @@ import org.jtheque.ui.utils.models.SimpleListModel;
  *
  * @author Baptiste Wicht
  */
-public final class ResourceListModel extends SimpleListModel<IResource> {
+public final class ResourceListModel extends SimpleListModel<Resource> {
     private static final long serialVersionUID = 7991835157869808160L;
 
     /**
@@ -33,7 +33,7 @@ public final class ResourceListModel extends SimpleListModel<IResource> {
      *
      * @param resourceService The resource service.
      */
-    public ResourceListModel(IResourceService resourceService) {
+    public ResourceListModel(ResourceService resourceService) {
         super();
 
         setElements(resourceService.getResources());

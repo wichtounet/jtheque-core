@@ -16,7 +16,7 @@ package org.jtheque.views.impl.components.renderers;
  * limitations under the License.
  */
 
-import org.jtheque.resources.able.IResource;
+import org.jtheque.resources.able.Resource;
 import org.jtheque.ui.able.components.Borders;
 import org.jtheque.ui.utils.builders.FilthyPanelBuilder;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
@@ -69,7 +69,7 @@ public final class ResourceListRenderer extends JPanel implements ListCellRender
             setChildsForeground(Color.blue);
         }
 
-        IResource resource = (IResource) value;
+        Resource resource = (Resource) value;
 
         labelName.setText(resource.getId());
         labelCurrentVersion.setText(resource.getVersion().getVersion());

@@ -1,6 +1,6 @@
 package org.jtheque.views.able.components;
 
-import org.jtheque.resources.able.IResource;
+import org.jtheque.resources.able.Resource;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -29,5 +29,5 @@ public interface ResourcePanelView {
      *
      * @return The selected resource.
      */
-    IResource getSelectedResource();
+    Resource getSelectedResource();
 }

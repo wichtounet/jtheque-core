@@ -1,7 +1,7 @@
 package org.jtheque.views.able.panel;
 
 import org.jtheque.modules.able.Module;
-import org.jtheque.resources.able.IResource;
+import org.jtheque.resources.able.Resource;
 import org.jtheque.ui.able.WindowView;
 
 /*
@@ -36,7 +36,7 @@ public interface ModuleView extends WindowView {
      *
      * @return The selected updatable.
      */
-    IResource getSelectedResource();
+    Resource getSelectedResource();
 
     /**
      * Refresh the list.

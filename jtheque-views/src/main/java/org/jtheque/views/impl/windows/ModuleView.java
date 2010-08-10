@@ -18,7 +18,7 @@ package org.jtheque.views.impl.windows;
 
 import org.jtheque.i18n.able.LanguageService;
 import org.jtheque.modules.able.Module;
-import org.jtheque.resources.able.IResource;
+import org.jtheque.resources.able.Resource;
 import org.jtheque.ui.able.Model;
 import org.jtheque.ui.able.components.LayerTabbedPane;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
@@ -62,7 +62,7 @@ public final class ModuleView extends SwingFilthyBuildedDialogView<Model> implem
     }
 
     @Override
-    public IResource getSelectedResource() {
+    public Resource getSelectedResource() {
         return resourcePanel.getSelectedResource();
     }
 

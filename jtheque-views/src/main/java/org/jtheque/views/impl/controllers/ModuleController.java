@@ -308,7 +308,7 @@ public class ModuleController extends AbstractController<ModuleView> {
     private final class UpdateCoreWorker extends ModuleWorker {
         @Override
         protected void doWork() {
-            updateService.updateCore(updateService.getMostRecentCoreVersion());
+            updateService.updateCore();
         }
     }
 
@@ -331,7 +331,7 @@ public class ModuleController extends AbstractController<ModuleView> {
 
         @Override
         protected void doWork() {
-            updateService.updateToMostRecentVersion(module);
+            updateService.update(module);
         }
     }
 }
