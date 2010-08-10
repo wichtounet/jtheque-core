@@ -20,6 +20,7 @@ import org.jtheque.core.able.Core;
 import org.jtheque.modules.able.ModuleDescription;
 import org.jtheque.modules.able.Repository;
 import org.jtheque.utils.StringUtils;
+import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.bean.InternationalString;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.collections.CollectionUtils;
@@ -39,6 +40,7 @@ import java.util.Map;
  *
  * @author Baptiste Wicht
  */
+@ThreadSafe
 final class RepositoryReader {
     private static Repository repository;
 
@@ -47,11 +49,13 @@ final class RepositoryReader {
     }
 
     static Repository getCachedRepository(String strUrl) {
-        if (repository == null) {
-            repository = read(strUrl);
-        }
+        synchronized (RepositoryReader.class){
+            if (repository == null) {
+                repository = read(strUrl);
+            }
 
-        return repository;
+            return repository;
+        }
     }
 
     /**

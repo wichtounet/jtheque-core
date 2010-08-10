@@ -6,6 +6,7 @@ import org.jtheque.ui.able.UIUtils;
 import org.jtheque.update.able.InstallationResult;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.ThreadUtils;
+import org.jtheque.utils.annotations.NotThreadSafe;
 import org.jtheque.utils.collections.ArrayUtils;
 import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.io.CopyException;
@@ -17,6 +18,7 @@ import org.slf4j.LoggerFactory;
 import javax.annotation.Resource;
 
 import java.io.File;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -44,7 +46,8 @@ import static org.jtheque.modules.able.ModuleState.STARTED;
  * limitations under the License.
  */
 
-public class ModuleManager {
+@NotThreadSafe
+public final class ModuleManager {
     private final List<Module> modules = CollectionUtils.newConcurrentList();
 
     @Resource
@@ -56,7 +59,7 @@ public class ModuleManager {
     @Resource
     private ModuleLoader moduleLoader;
 
-    List<Module> getModules() {
+    Collection<Module> getModules() {
         return modules;
     }
 

@@ -22,9 +22,6 @@ import org.jtheque.utils.collections.ArrayUtils;
 
 import java.util.Comparator;
 
-/**
- * @author Baptiste Wicht
- */
 final class ModuleComparator implements Comparator<Module> {
     @Override
     public int compare(Module o1, Module o2) {

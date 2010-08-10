@@ -1,10 +1,10 @@
 package org.jtheque.modules.impl;
 
+import org.jtheque.utils.annotations.Immutable;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.collections.CollectionUtils;
 
 import java.util.Collection;
-import java.util.List;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -27,23 +27,25 @@ import java.util.List;
  *
  * @author Baptiste Wicht
  */
-public class I18NResource {
-    private final List<String> resources = CollectionUtils.newList(5);
-
+@Immutable
+final class I18NResource {
+    private final Collection<String> resources;
     private final String name;
     private final Version version;
 
     /**
      * Construct a new I18NResource.
      *
-     * @param name    The name of the resource.
-     * @param version The version of the resource.
+     * @param name      The name of the resource.
+     * @param version   The version of the resource.
+     * @param resources The resources.
      */
-    public I18NResource(String name, Version version) {
+    I18NResource(String name, Version version, Collection<String> resources) {
         super();
 
         this.name = name;
         this.version = version;
+        this.resources = CollectionUtils.protectedCopy(resources);
     }
 
     /**
@@ -57,6 +59,7 @@ public class I18NResource {
 
     /**
      * Return the version of the i18n resource.
+     *
      * @return The version of the i18n resource.
      */
     public Version getVersion() {
@@ -65,18 +68,10 @@ public class I18NResource {
 
     /**
      * Return the resources.
-     * @return A Collection containing all the resources. 
+     *
+     * @return A Collection containing all the resources.
      */
     public Collection<String> getResources() {
         return resources;
-    }
-
-    /**
-     * Add a resource to the i18n resource.
-     *
-     * @param resource The resource to add. 
-     */
-    public void addResource(String resource) {
-        resources.add(resource);
     }
 }

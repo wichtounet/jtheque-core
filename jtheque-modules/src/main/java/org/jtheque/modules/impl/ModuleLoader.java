@@ -13,6 +13,7 @@ import org.jtheque.resources.able.ResourceService;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.ThreadUtils;
 import org.jtheque.utils.annotations.Immutable;
+import org.jtheque.utils.annotations.NotThreadSafe;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.collections.ArrayUtils;
 import org.jtheque.utils.collections.CollectionUtils;
@@ -66,6 +67,7 @@ import java.util.zip.ZipEntry;
  *
  * @author Baptiste Wicht
  */
+@NotThreadSafe
 public final class ModuleLoader implements BundleContextAware {
     private static final Pattern COMMA_DELIMITER_PATTERN = Pattern.compile(";");
     private static final String[] EMPTY_ARRAY = new String[0];
@@ -218,7 +220,7 @@ public final class ModuleLoader implements BundleContextAware {
      */
     private ModuleResources importConfig(InputStream stream) {
         XMLOverReader reader = XML.newJavaFactory().newOverReader();
-        
+
         try {
             reader.openStream(stream);
 
@@ -292,7 +294,9 @@ public final class ModuleLoader implements BundleContextAware {
     /**
      * Import the i18n resources.
      *
-     * @param reader    The XML reader.
+     * @param reader The XML reader.
+     *
+     * @return A List containing all the I18NResource of the module.
      *
      * @throws XMLException If an error occurs during XML parsing.
      */
@@ -300,18 +304,16 @@ public final class ModuleLoader implements BundleContextAware {
         List<I18NResource> i18NResources = CollectionUtils.newList();
 
         while (reader.next("/config/i18n/i18nResource")) {
-            String name = reader.readString("@name");
-            Version version = Version.get(reader.readString("@version"));
-
-            I18NResource i18NResource = new I18NResource(name, version);
+            List<String> resources = CollectionUtils.newList(5);
 
             while (reader.next("classpath")) {
-                String classpath = reader.readString("text()");
-
-                i18NResource.addResource("classpath:" + classpath);
+                resources.add("classpath:" + reader.readString("text()"));
             }
 
-            i18NResources.add(i18NResource);
+            i18NResources.add(new I18NResource(
+                    reader.readString("@name"),
+                    Version.get(reader.readString("@version")),
+                    resources));
         }
 
         return i18NResources;
@@ -320,10 +322,11 @@ public final class ModuleLoader implements BundleContextAware {
     /**
      * Import the image resources.
      *
-     * @param reader    The XML reader.
+     * @param reader The XML reader.
+     *
+     * @return A List containing all the ImageResource of the module.
      *
      * @throws XMLException If an exception occurs during XML parsing.
-     * @return
      */
     private static List<ImageResource> importImageResources(XMLOverReader reader) throws XMLException {
         List<ImageResource> imageResources = CollectionUtils.newList(5);
@@ -341,10 +344,11 @@ public final class ModuleLoader implements BundleContextAware {
     /**
      * Import the resources.
      *
-     * @param reader    The XML reader.
+     * @param reader The XML reader.
+     *
+     * @return A List containing all the Resource of the module.
      *
      * @throws XMLException If an exception occurs during XML parsing.
-     * @return
      */
     private List<Resource> importResources(XMLOverReader reader) throws XMLException {
         List<Resource> resources = CollectionUtils.newList(5);
@@ -642,7 +646,7 @@ public final class ModuleLoader implements BundleContextAware {
      *
      * @author Baptiste Wicht
      */
-    static final class ModuleFilter implements FileFilter {
+    private static final class ModuleFilter implements FileFilter {
         @Override
         public boolean accept(File file) {
             return file.isFile() && file.getName().toLowerCase(Locale.getDefault()).endsWith(".jar");

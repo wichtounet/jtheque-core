@@ -148,7 +148,7 @@ public final class ModuleServiceImpl implements ModuleService {
 
     @Override
     public Collection<Module> getModules() {
-        return moduleManager.getModules();
+        return CollectionUtils.protect(moduleManager.getModules());
     }
 
     @Override

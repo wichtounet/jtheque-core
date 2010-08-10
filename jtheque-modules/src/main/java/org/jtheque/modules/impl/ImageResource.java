@@ -24,7 +24,7 @@ import org.jtheque.utils.annotations.Immutable;
  * @author Baptiste Wicht
  */
 @Immutable
-public class ImageResource {
+final class ImageResource {
     private final String name;
     private final String resource;
 
@@ -34,7 +34,7 @@ public class ImageResource {
      * @param name     The name of the description.
      * @param resource The image resource.
      */
-    public ImageResource(String name, String resource) {
+    ImageResource(String name, String resource) {
         super();
 
         this.name = name;

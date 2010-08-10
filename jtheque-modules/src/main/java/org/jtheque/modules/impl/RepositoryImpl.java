@@ -30,12 +30,12 @@ import java.util.Collection;
  * @author Baptiste Wicht
  */
 @Immutable
-public final class RepositoryImpl implements Repository {
+final class RepositoryImpl implements Repository {
     private final InternationalString title;
     private final String application;
     private final Collection<ModuleDescription> modules;
 
-    public RepositoryImpl(InternationalString title, String application, Collection<ModuleDescription> modules) {
+    RepositoryImpl(InternationalString title, String application, Collection<ModuleDescription> modules) {
         super();
 
         this.title = title;
