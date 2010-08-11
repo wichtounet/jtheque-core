@@ -28,7 +28,7 @@ import java.util.NoSuchElementException;
  * @author Baptiste Wicht
  */
 @Immutable
-public final class ModuleDescriptor {
+final class ModuleDescriptor {
     private final String id;
     private final Collection<ModuleVersion> moduleVersions;
     private final ModuleVersion mostRecent;
@@ -39,7 +39,7 @@ public final class ModuleDescriptor {
      * @param id             The id of the module.
      * @param moduleVersions The module versions contained in the descriptions.
      */
-    public ModuleDescriptor(String id, Collection<ModuleVersion> moduleVersions) {
+    ModuleDescriptor(String id, Collection<ModuleVersion> moduleVersions) {
         super();
 
         this.id = id;
@@ -53,7 +53,7 @@ public final class ModuleDescriptor {
      *
      * @return The id of the resource.
      */
-    public String getId() {
+    String getId() {
         return id;
     }
 
@@ -62,7 +62,7 @@ public final class ModuleDescriptor {
      *
      * @return A Collection containing all the versions of the descriptor.
      */
-    public Collection<ModuleVersion> getVersions() {
+    Collection<ModuleVersion> getVersions() {
         return moduleVersions;
     }
 
@@ -73,7 +73,7 @@ public final class ModuleDescriptor {
      *
      * @throws NoSuchElementException If the version's file contains no version.
      */
-    public ModuleVersion getMostRecentVersion() {
+    ModuleVersion getMostRecentVersion() {
         if (moduleVersions.isEmpty()) {
             throw new NoSuchElementException("The descriptor contains no versions. ");
         }

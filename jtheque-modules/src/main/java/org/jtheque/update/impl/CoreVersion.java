@@ -30,7 +30,7 @@ import java.util.Collection;
  * @author Baptiste Wicht
  */
 @Immutable
-public final class CoreVersion implements Comparable<CoreVersion> {
+final class CoreVersion implements Comparable<CoreVersion> {
     private final Version version;
     private final Collection<FileDescriptor> bundles;
 
@@ -40,7 +40,7 @@ public final class CoreVersion implements Comparable<CoreVersion> {
      * @param version The version of the resource.
      * @param bundles The bundles of the version.
      */
-    public CoreVersion(Version version, Collection<FileDescriptor> bundles) {
+    CoreVersion(Version version, Collection<FileDescriptor> bundles) {
         super();
 
         this.version = version;
@@ -52,7 +52,7 @@ public final class CoreVersion implements Comparable<CoreVersion> {
      *
      * @return The JTheque's version.
      */
-    public Version getVersion() {
+    Version getVersion() {
         return version;
     }
 
@@ -61,7 +61,7 @@ public final class CoreVersion implements Comparable<CoreVersion> {
      *
      * @return An Iterable on the descriptors.
      */
-    public Iterable<FileDescriptor> getBundles() {
+    Iterable<FileDescriptor> getBundles() {
         return bundles;
     }
 

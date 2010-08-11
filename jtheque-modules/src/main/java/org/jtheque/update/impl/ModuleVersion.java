@@ -28,7 +28,7 @@ import java.util.Collection;
  * @author Baptiste Wicht
  */
 @Immutable
-public final class ModuleVersion {
+final class ModuleVersion {
     private final Version version;
     private final Version coreVersion;
     private final String moduleFile;
@@ -44,7 +44,7 @@ public final class ModuleVersion {
      * @param moduleURL
      * @param resources
      */
-    public ModuleVersion(Version version, Version coreVersion, String moduleFile, String moduleURL, Collection<FileDescriptor> resources) {
+    ModuleVersion(Version version, Version coreVersion, String moduleFile, String moduleURL, Collection<FileDescriptor> resources) {
         super();
 
         this.version = version;
@@ -54,7 +54,7 @@ public final class ModuleVersion {
         this.resources = CollectionUtils.protectedCopy(resources);
     }
 
-    public Version getVersion() {
+    Version getVersion() {
         return version;
     }
 
@@ -63,7 +63,7 @@ public final class ModuleVersion {
      *
      * @return The Version of the core needed to run this module version.
      */
-    public Version getCoreVersion() {
+    Version getCoreVersion() {
         return coreVersion;
     }
 
@@ -72,7 +72,7 @@ public final class ModuleVersion {
      *
      * @return The module file name.
      */
-    public String getModuleFile() {
+    String getModuleFile() {
         return moduleFile;
     }
 
@@ -81,11 +81,11 @@ public final class ModuleVersion {
      *
      * @return The URL to the module file.
      */
-    public String getModuleURL() {
+    String getModuleURL() {
         return moduleURL;
     }
 
-    public Collection<FileDescriptor> getResources() {
+    Collection<FileDescriptor> getResources() {
         return resources;
     }
 }

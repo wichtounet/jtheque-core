@@ -18,6 +18,7 @@ package org.jtheque.update.able;
 
 import org.jtheque.core.able.Versionable;
 import org.jtheque.modules.able.Module;
+import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.bean.Version;
 
 import java.util.List;
@@ -27,7 +28,8 @@ import java.util.List;
  *
  * @author Baptiste Wicht
  */
-public interface IUpdateService {
+@ThreadSafe
+public interface UpdateService {
     /**
      * Update JTheque Core to the most recent version. This method search on internet the datas of the version we want to download and download all the
      * files useful and org.jtheque.update the local files. Last, we reboot the program.

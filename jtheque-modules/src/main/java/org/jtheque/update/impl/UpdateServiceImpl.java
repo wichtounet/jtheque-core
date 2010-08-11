@@ -29,9 +29,11 @@ import org.jtheque.modules.able.Module;
 import org.jtheque.modules.able.ModuleState;
 import org.jtheque.resources.able.ResourceService;
 import org.jtheque.ui.able.UIUtils;
-import org.jtheque.update.able.IUpdateService;
 import org.jtheque.update.able.InstallationResult;
+import org.jtheque.update.able.UpdateService;
 import org.jtheque.utils.StringUtils;
+import org.jtheque.utils.annotations.GuardedBy;
+import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.collections.ArrayUtils;
 import org.jtheque.utils.collections.CollectionUtils;
@@ -44,6 +46,7 @@ import org.slf4j.LoggerFactory;
 import javax.annotation.Resource;
 
 import java.io.File;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -53,7 +56,8 @@ import java.util.Set;
  *
  * @author Baptiste Wicht
  */
-public final class UpdateService implements IUpdateService {
+@ThreadSafe
+public final class UpdateServiceImpl implements UpdateService {
     @Resource
     private Core core;
 
@@ -69,7 +73,8 @@ public final class UpdateService implements IUpdateService {
     @Resource
     private ResourceService resourceService;
 
-    private final DescriptorsLoader versionsLoader = new DescriptorsLoader();
+    @GuardedBy("this")
+    private final DescriptorsLoader descriptorsLoader = new DescriptorsLoader();
 
     @Override
     public void updateCore() {
@@ -77,13 +82,15 @@ public final class UpdateService implements IUpdateService {
             return;
         }
 
-        CoreVersion onlineVersion = versionsLoader.getCoreVersion(getMostRecentCoreVersion());
+        synchronized (this) {
+            CoreVersion onlineVersion = descriptorsLoader.getCoreVersion(getMostRecentCoreVersion());
 
-        if (onlineVersion == null || onlineVersion.getVersion().equals(Core.VERSION)) {
-            return;
+            if (onlineVersion == null || onlineVersion.getVersion().equals(Core.VERSION)) {
+                return;
+            }
+
+            applyCoreVersion(onlineVersion);
         }
-
-        applyCoreVersion(onlineVersion);
     }
 
     @Override
@@ -98,15 +105,54 @@ public final class UpdateService implements IUpdateService {
         }
 
         try {
-            ModuleVersion moduleVersion = versionsLoader.getMostRecentModuleVersion(url);
+            synchronized (this) {
+                ModuleVersion moduleVersion = descriptorsLoader.getMostRecentModuleVersion(url);
 
-            applyModuleVersion(moduleVersion);
+                applyModuleVersion(moduleVersion);
 
-            return new SimpleInstallationResult(true, moduleVersion.getModuleFile());
+                return new SimpleInstallationResult(true, moduleVersion.getModuleFile());
+            }
         } catch (Exception e) {
             LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
 
             return new SimpleInstallationResult(false, "");
+        }
+    }
+
+    @Override
+    public void update(Module module) {
+        if (isDescriptorNotReachable(module.getDescriptorURL())) {
+            return;
+        }
+
+        if (module.getState() == ModuleState.STARTED) {
+            throw new IllegalArgumentException("The module must be stopped");
+        }
+
+        synchronized (this) {
+            update(module, getMostRecentVersion(module));
+        }
+    }
+
+    @Override
+    public Version getMostRecentCoreVersion() {
+        if (isDescriptorNotReachable(Core.DESCRIPTOR_FILE_URL)) {
+            return null;
+        }
+
+        synchronized (this) {
+            return descriptorsLoader.getMostRecentCoreVersion();
+        }
+    }
+
+    @Override
+    public Version getMostRecentVersion(Versionable object) {
+        if (isDescriptorNotReachable(object.getDescriptorURL())) {
+            return null;
+        }
+
+        synchronized (this) {
+            return descriptorsLoader.getMostRecentVersion(object);
         }
     }
 
@@ -138,7 +184,7 @@ public final class UpdateService implements IUpdateService {
             return;
         }
 
-        ModuleVersion onlineVersion = versionsLoader.getModuleVersion(version, module);
+        ModuleVersion onlineVersion = descriptorsLoader.getModuleVersion(version, module);
 
         if (onlineVersion == null) {
             return;
@@ -271,7 +317,13 @@ public final class UpdateService implements IUpdateService {
             return true;
         }
 
-        return isUpToDate(Core.VERSION, versionsLoader.getCoreVersions());
+        Collection<Version> versions;
+
+        synchronized (this) {
+            versions = descriptorsLoader.getCoreVersions();
+        }
+
+        return isUpToDate(Core.VERSION, versions);
     }
 
     @Override
@@ -280,7 +332,13 @@ public final class UpdateService implements IUpdateService {
             return true;
         }
 
-        return isUpToDate(object.getVersion(), versionsLoader.getVersions(object));
+        Collection<Version> versions;
+        
+        synchronized (this) {
+            versions = descriptorsLoader.getVersions(object);
+        }
+
+        return isUpToDate(object.getVersion(), versions);
     }
 
     /**
@@ -299,36 +357,5 @@ public final class UpdateService implements IUpdateService {
         }
 
         return true;
-    }
-
-    @Override
-    public void update(Module module) {
-        if (isDescriptorNotReachable(module.getDescriptorURL())) {
-            return;
-        }
-
-        if (module.getState() == ModuleState.STARTED) {
-            throw new IllegalArgumentException("The module must be stopped");
-        }
-
-        update(module, getMostRecentVersion(module));
-    }
-
-    @Override
-    public Version getMostRecentCoreVersion() {
-        if (isDescriptorNotReachable(Core.DESCRIPTOR_FILE_URL)) {
-            return null;
-        }
-
-        return versionsLoader.getMostRecentCoreVersion();
-    }
-
-    @Override
-    public Version getMostRecentVersion(Versionable object) {
-        if (isDescriptorNotReachable(object.getDescriptorURL())) {
-            return null;
-        }
-
-        return versionsLoader.getMostRecentVersion(object);
     }
 }

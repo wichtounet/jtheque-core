@@ -25,7 +25,7 @@ import org.jtheque.utils.bean.Version;
  * @author Baptiste Wicht
  */
 @Immutable
-public final class FileDescriptor {
+final class FileDescriptor {
     private final String name;
     private final String url;
     private final Version version;
@@ -37,7 +37,7 @@ public final class FileDescriptor {
      * @param url     The url to the file.
      * @param version The version of the file.
      */
-    public FileDescriptor(String name, String url, Version version) {
+    FileDescriptor(String name, String url, Version version) {
         super();
 
         this.name = name;
@@ -50,7 +50,7 @@ public final class FileDescriptor {
      *
      * @return The name of the file descriptor. 
      */
-    public String getId() {
+    String getId() {
         return name;
     }
 
@@ -59,7 +59,7 @@ public final class FileDescriptor {
      *
      * @return The URL.
      */
-    public String getUrl() {
+    String getUrl() {
         return url;
     }
 
@@ -68,7 +68,7 @@ public final class FileDescriptor {
      *
      * @return The version of the file descriptor.
      */
-    public Version getVersion() {
+    Version getVersion() {
         return version;
     }
 

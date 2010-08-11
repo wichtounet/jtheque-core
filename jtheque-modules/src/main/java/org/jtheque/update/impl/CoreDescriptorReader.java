@@ -31,7 +31,7 @@ import java.util.List;
  * limitations under the License.
  */
 
-public class CoreDescriptorReader {
+class CoreDescriptorReader {
     private CoreDescriptorReader() {
         throw new AssertionError();
     }
@@ -41,7 +41,7 @@ public class CoreDescriptorReader {
      *
      * @return The core descriptor or null if there were an error during the reading.
      */
-    public static CoreDescriptor readCoreDescriptor() {
+    static CoreDescriptor readCoreDescriptor() {
         try {
             return readCoreDescriptor(new URL(Core.DESCRIPTOR_FILE_URL));
         } catch (MalformedURLException e) {

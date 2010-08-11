@@ -28,11 +28,11 @@ import java.util.NoSuchElementException;
  * @author Baptiste Wicht
  */
 @Immutable
-public final class CoreDescriptor {
+final class CoreDescriptor {
     private final Collection<CoreVersion> versions;
     private final CoreVersion mostRecent;
 
-    public CoreDescriptor(Collection<CoreVersion> versions) {
+    CoreDescriptor(Collection<CoreVersion> versions) {
         super();
 
         this.versions = CollectionUtils.protectedCopy(versions);
@@ -45,7 +45,7 @@ public final class CoreDescriptor {
      *
      * @return A list containing all the versions of the file.
      */
-    public Collection<CoreVersion> getVersions() {
+    Collection<CoreVersion> getVersions() {
         return versions;
     }
 
@@ -56,7 +56,7 @@ public final class CoreDescriptor {
      *
      * @throws NoSuchElementException If the version's file contains no version.
      */
-    public CoreVersion getMostRecentVersion() {
+    CoreVersion getMostRecentVersion() {
         if (versions.isEmpty()) {
             throw new NoSuchElementException("The version's file contains no versions. ");
         }

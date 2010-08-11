@@ -25,11 +25,11 @@ import org.jtheque.utils.annotations.Immutable;
  * @author Baptiste Wicht
  */
 @Immutable
-public final class SimpleInstallationResult implements InstallationResult {
+final class SimpleInstallationResult implements InstallationResult {
     private final boolean installed;
     private final String jarFile;
 
-    public SimpleInstallationResult(boolean installed, String jarFile) {
+    SimpleInstallationResult(boolean installed, String jarFile) {
         super();
 
         this.installed = installed;

@@ -4,6 +4,7 @@ import org.jtheque.core.able.Versionable;
 import org.jtheque.errors.able.ErrorService;
 import org.jtheque.errors.able.Errors;
 import org.jtheque.modules.able.Module;
+import org.jtheque.utils.annotations.NotThreadSafe;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.collections.ArrayUtils;
 import org.jtheque.utils.collections.CollectionUtils;
@@ -34,6 +35,7 @@ import java.util.Map;
  *
  * @author Baptiste Wicht
  */
+@NotThreadSafe
 final class DescriptorsLoader {
     private static final int CACHE_INITIAL_SIZE = 12;
 
