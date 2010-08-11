@@ -22,7 +22,7 @@ import org.jtheque.modules.able.ModuleService;
 import org.jtheque.ui.utils.builders.FilthyPanelBuilder;
 import org.jtheque.ui.utils.builders.PanelBuilder;
 import org.jtheque.ui.able.components.Borders;
-import org.jtheque.update.able.IUpdateService;
+import org.jtheque.update.able.UpdateService;
 import org.jtheque.utils.ui.GridBagUtils;
 
 import javax.swing.JLabel;
@@ -53,7 +53,7 @@ public final class ModulePanel extends JPanel {
 
     private final ModuleService moduleService;
     private final LanguageService languageService;
-    private final IUpdateService updateService;
+    private final UpdateService updateService;
 
     /**
      * Construct a new ModulePanel.
@@ -64,7 +64,7 @@ public final class ModulePanel extends JPanel {
      * @param languageService The language service.
      * @param updateService   The update service.
      */
-    public ModulePanel(Object value, boolean isSelected, ModuleService moduleService, LanguageService languageService, IUpdateService updateService) {
+    public ModulePanel(Object value, boolean isSelected, ModuleService moduleService, LanguageService languageService, UpdateService updateService) {
         super();
 
         this.moduleService = moduleService;

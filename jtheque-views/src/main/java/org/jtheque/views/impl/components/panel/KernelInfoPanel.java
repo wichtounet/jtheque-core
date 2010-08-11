@@ -22,7 +22,7 @@ import org.jtheque.ui.able.FilthyUtils;
 import org.jtheque.ui.utils.builded.FilthyBuildedPanel;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.ui.utils.builders.PanelBuilder;
-import org.jtheque.update.able.IUpdateService;
+import org.jtheque.update.able.UpdateService;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.views.able.panel.ModuleView;
@@ -37,7 +37,7 @@ import java.awt.Insets;
 public final class KernelInfoPanel extends FilthyBuildedPanel {
     private static final int TITLE_FONT_SIZE = 16;
 
-    private final IUpdateService updateService;
+    private final UpdateService updateService;
     private final ModuleView moduleView;
 
     /**
@@ -48,7 +48,7 @@ public final class KernelInfoPanel extends FilthyBuildedPanel {
      * @param updateService   The update service.
      * @param moduleView      The module view.
      */
-    public KernelInfoPanel(LanguageService languageService, FilthyUtils filthyUtils, IUpdateService updateService,
+    public KernelInfoPanel(LanguageService languageService, FilthyUtils filthyUtils, UpdateService updateService,
                            ModuleView moduleView) {
         super(filthyUtils, languageService);
 

@@ -25,7 +25,7 @@ import org.jtheque.messages.able.MessageService;
 import org.jtheque.modules.able.Module;
 import org.jtheque.modules.able.ModuleListener;
 import org.jtheque.ui.able.UIUtils;
-import org.jtheque.update.able.IUpdateService;
+import org.jtheque.update.able.UpdateService;
 import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.ui.SwingUtils;
 import org.jtheque.views.able.components.ConfigTabComponent;
@@ -86,7 +86,7 @@ public final class Views implements org.jtheque.views.able.Views, ApplicationCon
     private Core core;
 
     @Resource
-    private IUpdateService updateService;
+    private UpdateService updateService;
 
     /**
      * Register a module listener to the module service.

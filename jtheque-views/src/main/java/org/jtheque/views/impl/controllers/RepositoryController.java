@@ -7,7 +7,7 @@ import org.jtheque.ui.able.Action;
 import org.jtheque.ui.able.UIUtils;
 import org.jtheque.ui.utils.AbstractController;
 import org.jtheque.update.able.InstallationResult;
-import org.jtheque.update.impl.UpdateService;
+import org.jtheque.update.able.UpdateService;
 import org.jtheque.views.able.panel.RepositoryView;
 
 import javax.annotation.Resource;

@@ -24,7 +24,7 @@ import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.ui.utils.builders.PanelBuilder;
 import org.jtheque.ui.utils.models.SimpleListModel;
 import org.jtheque.ui.utils.windows.dialogs.SwingFilthyBuildedDialogView;
-import org.jtheque.update.able.IUpdateService;
+import org.jtheque.update.able.UpdateService;
 import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.utils.ui.SwingUtils;
 import org.jtheque.views.impl.components.panel.ModulePanel;
@@ -48,7 +48,7 @@ public final class RepositoryView extends SwingFilthyBuildedDialogView<Model> im
     private LanguageService languageService;
 
     @Resource
-    private IUpdateService updateService;
+    private UpdateService updateService;
 
     @Override
     protected void initView() {

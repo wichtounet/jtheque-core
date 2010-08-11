@@ -18,7 +18,7 @@ package org.jtheque.views.impl.components.renderers;
 
 import org.jtheque.i18n.able.LanguageService;
 import org.jtheque.modules.able.ModuleService;
-import org.jtheque.update.able.IUpdateService;
+import org.jtheque.update.able.UpdateService;
 import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.views.impl.components.panel.ModulePanel;
 
@@ -38,7 +38,7 @@ public final class ModuleRepositoryListRenderer implements ListCellRenderer {
 
     private final ModuleService moduleService;
     private final LanguageService languageService;
-    private final IUpdateService updateService;
+    private final UpdateService updateService;
 
     /**
      * Construct a new ModuleListRenderer.
@@ -48,7 +48,7 @@ public final class ModuleRepositoryListRenderer implements ListCellRenderer {
      * @param updateService   The update service.
      */
     public ModuleRepositoryListRenderer(ModuleService moduleService, LanguageService languageService,
-                                        IUpdateService updateService) {
+                                        UpdateService updateService) {
         super();
 
         this.moduleService = moduleService;

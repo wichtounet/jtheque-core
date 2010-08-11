@@ -23,7 +23,7 @@ import org.jtheque.ui.utils.actions.OpenSiteLinkAction;
 import org.jtheque.ui.utils.builders.FilthyPanelBuilder;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.ui.utils.builders.PanelBuilder;
-import org.jtheque.update.able.IUpdateService;
+import org.jtheque.update.able.UpdateService;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.ui.GridBagUtils;
@@ -52,7 +52,7 @@ public final class ModuleListRenderer extends JPanel implements ListCellRenderer
     private Font fontLabel;
     private Font fontLabelBold;
 
-    private final IUpdateService updateService;
+    private final UpdateService updateService;
     private final LanguageService languageService;
 
     private final Map<Module, ModuleListPanel> panels = CollectionUtils.newHashMap(10);
@@ -63,7 +63,7 @@ public final class ModuleListRenderer extends JPanel implements ListCellRenderer
      * @param updateService   The update service.
      * @param languageService The language service.
      */
-    public ModuleListRenderer(IUpdateService updateService, LanguageService languageService) {
+    public ModuleListRenderer(UpdateService updateService, LanguageService languageService) {
         super();
 
         this.updateService = updateService;

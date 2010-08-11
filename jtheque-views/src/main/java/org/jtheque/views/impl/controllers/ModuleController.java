@@ -11,7 +11,7 @@ import org.jtheque.ui.able.Action;
 import org.jtheque.ui.able.Controller;
 import org.jtheque.ui.able.UIUtils;
 import org.jtheque.ui.utils.AbstractController;
-import org.jtheque.update.able.IUpdateService;
+import org.jtheque.update.able.UpdateService;
 import org.jtheque.update.able.InstallationResult;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.io.SimpleFilter;
@@ -63,7 +63,7 @@ public class ModuleController extends AbstractController<ModuleView> {
     private ViewService viewService;
 
     @Resource
-    private IUpdateService updateService;
+    private UpdateService updateService;
 
     @Resource
     private Controller<RepositoryView> repositoryController;
@@ -339,7 +339,19 @@ public class ModuleController extends AbstractController<ModuleView> {
 
         @Override
         protected void doWork() {
+            boolean restart = false;
+
+            if (module.getState() == ModuleState.STARTED) {
+                moduleService.stopModule(module);
+
+                restart = true;
+            }
+
             updateService.update(module);
+
+            if (restart) {
+                moduleService.startModule(module);
+            }
         }
     }
 }
