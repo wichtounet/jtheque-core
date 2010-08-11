@@ -13,24 +13,13 @@
 
     <context:annotation-config/>
 
-    <bean id="moduleService" class="org.jtheque.modules.impl.ModuleServiceImpl" >
-        <constructor-arg ref="stateService"/>
-    </bean>
-
-    <bean id="moduleLoader" class="org.jtheque.modules.impl.ModuleLoader">
-        <constructor-arg ref="moduleService"/>
-    </bean>
-
-    <bean id="moduleManager" class="org.jtheque.modules.impl.ModuleManager" />
+    <bean id="updateService" class="org.jtheque.updates.impl.UpdateServiceImpl" />
     
     <osgi:reference id="stateService" interface="org.jtheque.states.StateService"/>
     <osgi:reference id="core" interface="org.jtheque.core.Core"/>
-    <osgi:reference id="errorService" interface="org.jtheque.errors.ErrorService"/>
     <osgi:reference id="iuiUtils" interface="org.jtheque.ui.UIUtils"/>
     <osgi:reference id="lifecycle" interface="org.jtheque.core.lifecycle.LifeCycle"/>
     <osgi:reference id="languageService" interface="org.jtheque.i18n.LanguageService"/>
-    <osgi:reference id="imageService" interface="org.jtheque.images.ImageService"/>
-    <osgi:reference id="eventService" interface="org.jtheque.events.EventService"/>
 
-    <osgi:service ref="moduleService" interface="org.jtheque.modules.ModuleService"/>
+    <osgi:service ref="updateService" interface="org.jtheque.updates.UpdateService"/>
 </beans>
