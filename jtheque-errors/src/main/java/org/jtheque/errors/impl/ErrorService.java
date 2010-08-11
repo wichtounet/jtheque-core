@@ -32,7 +32,7 @@ import java.util.Collection;
  */
 @ThreadSafe
 public final class ErrorService implements org.jtheque.errors.ErrorService {
-    private final Collection<Error> errors = CollectionUtils.newList();
+    private final Collection<Error> errors = CollectionUtils.newConcurrentList();
 
     @GuardedInternally
     private final WeakEventListenerList<ErrorListener> listeners = WeakEventListenerList.create();
@@ -43,19 +43,19 @@ public final class ErrorService implements org.jtheque.errors.ErrorService {
     }
 
     @Override
-    public synchronized void addError(org.jtheque.errors.Error error) {
+    public void addError(org.jtheque.errors.Error error) {
         errors.add(error);
 
         fireErrorOccurred(error);
     }
 
     @Override
-    public synchronized void addErrorListener(ErrorListener listener) {
+    public void addErrorListener(ErrorListener listener) {
         listeners.add(listener);
     }
 
     @Override
-    public synchronized void removeErrorListener(ErrorListener listener) {
+    public void removeErrorListener(ErrorListener listener) {
         listeners.remove(listener);
     }
 
