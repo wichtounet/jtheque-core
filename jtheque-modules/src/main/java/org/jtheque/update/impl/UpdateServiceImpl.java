@@ -274,7 +274,7 @@ public final class UpdateServiceImpl implements UpdateService {
     }
 
     @Override
-    public List<String> getPossibleUpdates(Iterable<Module> modules) {
+    public List<String> getPossibleUpdates(Iterable<? extends Module> modules) {
         if (!WebUtils.isInternetReachable()) {
             errorService.addError(Errors.newI18nError("internet.necessary"));
 
@@ -301,7 +301,7 @@ public final class UpdateServiceImpl implements UpdateService {
      *
      * @return true if all modules are up to date else false.
      */
-    private boolean isAModuleNotUpToDate(Iterable<Module> modules) {
+    private boolean isAModuleNotUpToDate(Iterable<? extends Module> modules) {
         for (Module module : modules) {
             if (!isUpToDate(module)) {
                 return true;

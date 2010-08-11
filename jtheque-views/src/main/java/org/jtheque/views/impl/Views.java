@@ -201,7 +201,7 @@ public final class Views implements org.jtheque.views.able.Views, ApplicationCon
         }
 
         if (core.getConfiguration().verifyUpdateOnStartup()) {
-            List<String> messages = updateService.getPossibleUpdates();
+            List<String> messages = updateService.getPossibleUpdates(moduleService.getModules());
 
             for (String message : messages) {
                 if (uiUtils.askI18nUserForConfirmation(message, message + ".title")) {
