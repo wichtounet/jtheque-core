@@ -16,27 +16,23 @@ package org.jtheque.messages.impl;
  * limitations under the License.
  */
 
-import org.jtheque.core.Core;
 import org.jtheque.core.ApplicationListener;
+import org.jtheque.core.Core;
 import org.jtheque.core.application.Application;
-import org.jtheque.errors.ErrorService;
-import org.jtheque.errors.Errors;
-import org.jtheque.events.EventLevel;
-import org.jtheque.events.EventService;
-import org.jtheque.events.Events;
+import org.jtheque.core.utils.WebHelper;
 import org.jtheque.messages.Message;
-import org.jtheque.modules.ModuleResourceCache;
-import org.jtheque.modules.ModuleService;
 import org.jtheque.modules.Module;
 import org.jtheque.modules.ModuleListener;
+import org.jtheque.modules.ModuleResourceCache;
+import org.jtheque.modules.ModuleService;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.bean.IntDate;
-import org.jtheque.utils.collections.ArrayUtils;
 import org.jtheque.utils.collections.CollectionUtils;
-import org.jtheque.utils.io.WebUtils;
 import org.jtheque.xml.utils.XMLException;
 
 import org.slf4j.LoggerFactory;
+
+import javax.annotation.Resource;
 
 import java.util.Collection;
 
@@ -48,24 +44,21 @@ import java.util.Collection;
 public final class MessageService implements org.jtheque.messages.MessageService, ModuleListener, ApplicationListener {
     private final Collection<Message> messages = CollectionUtils.newConcurrentList();
 
+    @Resource
+    private WebHelper webHelper;
+
     private final Core core;
-    private final ErrorService errorService;
-    private final EventService eventService;
 
     /**
      * Construct a new MessageService.
      *
      * @param core          The core.
      * @param moduleService The module service.
-     * @param errorService  The error service.
-     * @param eventService  The event service.
      */
-    public MessageService(Core core, ModuleService moduleService, ErrorService errorService, EventService eventService) {
+    public MessageService(Core core, ModuleService moduleService) {
         super();
 
         this.core = core;
-        this.errorService = errorService;
-        this.eventService = eventService;
 
         moduleService.addModuleListener("", this);
         core.addApplicationListener(this);
@@ -125,36 +118,18 @@ public final class MessageService implements org.jtheque.messages.MessageService
      * @param module The module to load the message file from.
      */
     private void loadMessageFile(String url, Module module) {
-        if (WebUtils.isURLReachable(core.getCoreMessageFileURL())) {
-            try {
-                Collection<Message> readMessages = MessageFileReader.readMessagesFile(url);
-
-                messages.addAll(readMessages);
-                ModuleResourceCache.addAllResource(module.getId(), Message.class, readMessages);
-            } catch (XMLException e) {
-                LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
-            }
-        } else {
-            if (WebUtils.isInternetReachable()) {
-                addNetworkError(url, "messages.network.resource");
-            } else {
-                addNetworkError(url, "messages.network.internet");
-            }
-
-            eventService.addEvent(Events.newEvent(EventLevel.ERROR, "System", "events.messages.network", EventService.CORE_EVENT_LOG));
+        if (webHelper.isNotReachable(url)) {
+            return;
         }
-    }
 
-    /**
-     * Display a network error.
-     *
-     * @param url The url of the file.
-     * @param key The i18n key of the error.
-     */
-    private void addNetworkError(String url, String key) {
-        errorService.addError(Errors.newI18nError(
-                key + ".title", ArrayUtils.EMPTY_ARRAY,
-                key, new Object[]{url}));
+        try {
+            Collection<Message> readMessages = MessageFileReader.readMessagesFile(url);
+
+            messages.addAll(readMessages);
+            ModuleResourceCache.addAllResource(module.getId(), Message.class, readMessages);
+        } catch (XMLException e) {
+            LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
+        }
     }
 
     @Override

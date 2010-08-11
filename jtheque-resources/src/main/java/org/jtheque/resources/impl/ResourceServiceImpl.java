@@ -1,17 +1,12 @@
 package org.jtheque.resources.impl;
 
-import org.jtheque.errors.ErrorService;
-import org.jtheque.errors.Errors;
-import org.jtheque.events.EventLevel;
-import org.jtheque.events.EventService;
-import org.jtheque.events.Events;
+import org.jtheque.core.utils.WebHelper;
 import org.jtheque.resources.Resource;
 import org.jtheque.resources.ResourceService;
 import org.jtheque.states.StateService;
 import org.jtheque.utils.SystemProperty;
 import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.bean.Version;
-import org.jtheque.utils.collections.ArrayUtils;
 import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.io.FileException;
 import org.jtheque.utils.io.WebUtils;
@@ -57,10 +52,7 @@ public final class ResourceServiceImpl implements ResourceService, BundleContext
     private final ResourceState resourceState;
 
     @javax.annotation.Resource
-    private ErrorService errorService;
-
-    @javax.annotation.Resource
-    private EventService eventService;
+    private WebHelper webHelper;
 
     private BundleContext bundleContext;
 
@@ -126,7 +118,7 @@ public final class ResourceServiceImpl implements ResourceService, BundleContext
 
         if (resource == null) {
             resource = downloadResource(url, version);
-            
+
             resourceState.addResource(resource);
         }
 
@@ -136,7 +128,7 @@ public final class ResourceServiceImpl implements ResourceService, BundleContext
     private Resource downloadResource(String url, Version version) {
         SwingUtils.assertNotEDT("downloadResource(String, Version)");
 
-        if (notReachable(url)) {
+        if (webHelper.isNotReachable(url)) {
             return null;
         }
 
@@ -163,34 +155,6 @@ public final class ResourceServiceImpl implements ResourceService, BundleContext
         }
 
         return null;
-    }
-
-    /**
-     * Verify that the URL is reachable.
-     *
-     * @param url The URL to test for reachability.
-     *
-     * @return {@code true} if the URL is not reachable otherwise {@code false}
-     */
-    private boolean notReachable(String url) {
-        if (!WebUtils.isURLReachable(url)) {
-            if (WebUtils.isInternetReachable()) {
-                errorService.addError(Errors.newI18nError(
-                        "modules.resources.network.resource.title", ArrayUtils.EMPTY_ARRAY,
-                        "modules.resources.network.resource", new Object[]{url}));
-            } else {
-                errorService.addError(Errors.newI18nError(
-                        "modules.resources.network.internet.title", ArrayUtils.EMPTY_ARRAY,
-                        "modules.resources.network.internet", new Object[]{url}));
-            }
-
-            eventService.addEvent(
-                    Events.newEvent(EventLevel.ERROR, "System", "events.resources.network", EventService.CORE_EVENT_LOG));
-
-            return true;
-        }
-
-        return false;
     }
 
     /**

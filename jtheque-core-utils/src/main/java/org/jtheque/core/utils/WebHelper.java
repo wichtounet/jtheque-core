@@ -1,4 +1,4 @@
-package org.jtheque.views.impl;
+package org.jtheque.core.utils;
 
 import org.jtheque.errors.ErrorService;
 import org.jtheque.errors.Errors;

@@ -19,6 +19,7 @@ package org.jtheque.updates.impl;
 import org.jtheque.core.Core;
 import org.jtheque.core.Versionable;
 import org.jtheque.core.utils.OSGiUtils;
+import org.jtheque.core.utils.WebHelper;
 import org.jtheque.modules.Module;
 import org.jtheque.modules.ModuleState;
 import org.jtheque.resources.ResourceService;
@@ -62,13 +63,16 @@ public final class UpdateServiceImpl implements UpdateService {
     @Resource
     private ResourceService resourceService;
 
+    @Resource
+    private WebHelper webHelper;
+
     @GuardedBy("this")
     private final DescriptorsLoader descriptorsLoader = new DescriptorsLoader();
 
     @Override
     public void updateCore() {
-        if (WebUtils.isURLNotReachable(Core.DESCRIPTOR_FILE_URL)) {
-            throw new IllegalStateException("The URL is not reachable");
+        if (webHelper.isNotReachable(Core.DESCRIPTOR_FILE_URL)) {
+            return;
         }
 
         synchronized (this) {
@@ -84,7 +88,7 @@ public final class UpdateServiceImpl implements UpdateService {
 
     @Override
     public InstallationResult installModule(String url) {
-        if (WebUtils.isURLNotReachable(url)) {
+        if (webHelper.isNotReachable(url)) {
             return new SimpleInstallationResult(false, "");
         }
 
@@ -99,8 +103,8 @@ public final class UpdateServiceImpl implements UpdateService {
 
     @Override
     public void update(Module module) {
-        if (WebUtils.isURLNotReachable(module.getDescriptorURL())) {
-            throw new IllegalStateException("The URL is not reachable");
+        if (webHelper.isNotReachable(module.getDescriptorURL())) {
+            return;
         }
 
         if (module.getState() == ModuleState.STARTED) {
@@ -114,8 +118,8 @@ public final class UpdateServiceImpl implements UpdateService {
 
     @Override
     public Version getMostRecentCoreVersion() {
-        if (WebUtils.isURLNotReachable(Core.DESCRIPTOR_FILE_URL)) {
-            throw new IllegalStateException("The URL is not reachable");
+        if (webHelper.isNotReachable(Core.DESCRIPTOR_FILE_URL)) {
+            return null;
         }
 
         synchronized (this) {
@@ -125,8 +129,8 @@ public final class UpdateServiceImpl implements UpdateService {
 
     @Override
     public Version getMostRecentVersion(Versionable object) {
-        if (WebUtils.isURLNotReachable(object.getDescriptorURL())) {
-            throw new IllegalStateException("The URL is not reachable");
+        if (webHelper.isNotReachable(object.getDescriptorURL())) {
+            return null;
         }
 
         synchronized (this) {
@@ -213,7 +217,7 @@ public final class UpdateServiceImpl implements UpdateService {
     @Override
     public List<String> getPossibleUpdates(Iterable<? extends Module> modules) {
         if (WebUtils.isInternetNotReachable()) {
-            throw new IllegalStateException("The URL is not reachable");
+            return CollectionUtils.emptyList();
         }
 
         List<String> messages = CollectionUtils.newList(2);
@@ -248,8 +252,8 @@ public final class UpdateServiceImpl implements UpdateService {
 
     @Override
     public boolean isCurrentVersionUpToDate() {
-        if (WebUtils.isURLNotReachable(Core.DESCRIPTOR_FILE_URL)) {
-            throw new IllegalStateException("The URL is not reachable");
+        if (webHelper.isNotReachable(Core.DESCRIPTOR_FILE_URL)) {
+            return true;
         }
 
         Collection<Version> versions;
@@ -263,8 +267,8 @@ public final class UpdateServiceImpl implements UpdateService {
 
     @Override
     public boolean isUpToDate(Module object) {
-        if (WebUtils.isURLNotReachable(object.getDescriptorURL())) {
-            throw new IllegalStateException("The URL is not reachable");
+        if (webHelper.isNotReachable(object.getDescriptorURL())) {
+            return true;
         }
 
         Collection<Version> versions;
