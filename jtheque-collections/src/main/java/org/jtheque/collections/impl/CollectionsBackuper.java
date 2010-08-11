@@ -1,9 +1,9 @@
 package org.jtheque.collections.impl;
 
-import org.jtheque.collections.able.DaoCollections;
-import org.jtheque.collections.able.DataCollection;
-import org.jtheque.file.able.ModuleBackup;
-import org.jtheque.file.able.ModuleBackuper;
+import org.jtheque.collections.DaoCollections;
+import org.jtheque.collections.DataCollection;
+import org.jtheque.file.ModuleBackup;
+import org.jtheque.file.ModuleBackuper;
 import org.jtheque.utils.annotations.Immutable;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.collections.ArrayUtils;

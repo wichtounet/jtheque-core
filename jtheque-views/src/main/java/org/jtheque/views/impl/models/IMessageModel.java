@@ -16,8 +16,8 @@ package org.jtheque.views.impl.models;
  * limitations under the License.
  */
 
-import org.jtheque.messages.able.Message;
-import org.jtheque.ui.able.Model;
+import org.jtheque.messages.Message;
+import org.jtheque.ui.Model;
 
 /**
  * @author Baptiste Wicht

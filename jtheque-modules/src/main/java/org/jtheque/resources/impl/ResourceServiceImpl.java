@@ -1,14 +1,14 @@
 package org.jtheque.resources.impl;
 
 import org.jtheque.core.utils.SystemProperty;
-import org.jtheque.errors.able.ErrorService;
-import org.jtheque.errors.able.Errors;
-import org.jtheque.events.able.EventLevel;
-import org.jtheque.events.able.EventService;
-import org.jtheque.events.able.Events;
-import org.jtheque.resources.able.Resource;
-import org.jtheque.resources.able.ResourceService;
-import org.jtheque.states.able.StateService;
+import org.jtheque.errors.ErrorService;
+import org.jtheque.errors.Errors;
+import org.jtheque.events.EventLevel;
+import org.jtheque.events.EventService;
+import org.jtheque.events.Events;
+import org.jtheque.resources.Resource;
+import org.jtheque.resources.ResourceService;
+import org.jtheque.states.StateService;
 import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.collections.ArrayUtils;

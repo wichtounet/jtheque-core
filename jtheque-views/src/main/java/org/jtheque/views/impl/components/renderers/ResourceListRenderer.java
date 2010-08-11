@@ -16,8 +16,8 @@ package org.jtheque.views.impl.components.renderers;
  * limitations under the License.
  */
 
-import org.jtheque.resources.able.Resource;
-import org.jtheque.ui.able.components.Borders;
+import org.jtheque.resources.Resource;
+import org.jtheque.ui.components.Borders;
 import org.jtheque.ui.utils.builders.FilthyPanelBuilder;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.ui.utils.builders.PanelBuilder;

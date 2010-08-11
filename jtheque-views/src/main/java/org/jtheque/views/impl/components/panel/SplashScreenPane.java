@@ -1,12 +1,12 @@
 package org.jtheque.views.impl.components.panel;
 
-import org.jtheque.core.able.Core;
-import org.jtheque.core.able.application.Application;
+import org.jtheque.core.Core;
+import org.jtheque.core.application.Application;
 import org.jtheque.ui.utils.AnimationUtils;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.ui.ImageUtils;
 import org.jtheque.utils.ui.PaintUtils;
-import org.jtheque.views.able.panel.SplashView;
+import org.jtheque.views.panel.SplashView;
 
 import org.jdesktop.jxlayer.JXLayer;
 import org.jdesktop.jxlayer.plaf.BufferedLayerUI;

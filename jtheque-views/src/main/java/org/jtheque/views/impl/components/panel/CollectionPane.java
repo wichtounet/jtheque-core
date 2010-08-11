@@ -16,20 +16,20 @@ package org.jtheque.views.impl.components.panel;
  * limitations under the License.
  */
 
-import org.jtheque.core.able.Core;
+import org.jtheque.core.Core;
 import org.jtheque.utils.SimplePropertiesCache;
-import org.jtheque.i18n.able.LanguageService;
-import org.jtheque.ui.able.Controller;
-import org.jtheque.ui.able.components.Components;
-import org.jtheque.ui.able.components.TextField;
-import org.jtheque.ui.able.components.filthy.Filthy;
+import org.jtheque.i18n.LanguageService;
+import org.jtheque.ui.Controller;
+import org.jtheque.ui.components.Components;
+import org.jtheque.ui.components.TextField;
+import org.jtheque.ui.components.filthy.Filthy;
 import org.jtheque.ui.utils.AbstractPanelView;
 import org.jtheque.ui.utils.AnimationUtils;
 import org.jtheque.ui.utils.actions.ActionFactory;
 import org.jtheque.ui.utils.actions.JThequeAction;
 import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.utils.ui.SwingUtils;
-import org.jtheque.views.able.panel.CollectionView;
+import org.jtheque.views.panel.CollectionView;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
@@ -47,7 +47,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.Window;
 
-import static org.jtheque.ui.able.components.filthy.FilthyConstants.*;
+import static org.jtheque.ui.components.filthy.FilthyConstants.*;
 
 /**
  * @author Baptiste Wicht

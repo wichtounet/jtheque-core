@@ -16,7 +16,7 @@ package org.jtheque.core.impl;
  * limitations under the License.
  */
 
-import org.jtheque.core.able.CoreConfiguration;
+import org.jtheque.core.CoreConfiguration;
 import org.jtheque.states.utils.AbstractConcurrentState;
 import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.bean.IntDate;

@@ -16,8 +16,8 @@ package org.jtheque.ui.utils;
  * limitations under the License.
  */
 
-import org.jtheque.errors.able.Error;
-import org.jtheque.errors.able.Errors;
+import org.jtheque.errors.Error;
+import org.jtheque.errors.Errors;
 import org.jtheque.utils.StringUtils;
 
 import javax.swing.ComboBoxModel;
@@ -85,7 +85,7 @@ public final class ValidationUtils {
      * @param name   The name of the field.
      * @param errors The errors list.
      */
-    public static void rejectIfNothingSelected(ComboBoxModel model, String name, Collection<Error> errors) {
+    public static void rejectIfNothingSelected(ComboBoxModel model, String name, Collection<org.jtheque.errors.Error> errors) {
         if (model.getSelectedItem() == null) {
             errors.add(Errors.newI18nError("error.validation.nothing.selected", new Object[]{name}));
         }
@@ -126,7 +126,7 @@ public final class ValidationUtils {
      * @param name   The name of the list.
      * @param errors The errors to fill.
      */
-    public static void rejectIfEmpty(JList list, String name, Collection<org.jtheque.errors.able.Error> errors) {
+    public static void rejectIfEmpty(JList list, String name, Collection<Error> errors) {
         if (list != null && list.getModel().getSize() < 1) {
             errors.add(Errors.newI18nError("error.validation.field.empty", new Object[]{name}));
         }

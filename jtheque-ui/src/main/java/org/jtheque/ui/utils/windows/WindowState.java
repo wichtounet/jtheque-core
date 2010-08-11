@@ -1,14 +1,14 @@
 package org.jtheque.ui.utils.windows;
 
-import org.jtheque.core.able.Core;
+import org.jtheque.core.Core;
 import org.jtheque.core.utils.OSGiUtils;
-import org.jtheque.errors.able.Error;
-import org.jtheque.errors.able.ErrorService;
-import org.jtheque.i18n.able.Internationalizable;
-import org.jtheque.i18n.able.LanguageService;
-import org.jtheque.images.able.ImageService;
-import org.jtheque.ui.able.Controller;
-import org.jtheque.ui.able.constraints.Constraint;
+import org.jtheque.errors.Error;
+import org.jtheque.errors.ErrorService;
+import org.jtheque.i18n.Internationalizable;
+import org.jtheque.i18n.LanguageService;
+import org.jtheque.images.ImageService;
+import org.jtheque.ui.Controller;
+import org.jtheque.ui.constraints.Constraint;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.collections.ArrayUtils;
 import org.jtheque.utils.collections.CollectionUtils;
@@ -51,7 +51,7 @@ import java.util.Map;
  *
  * @author Baptiste Wicht
  */
-public final class WindowState implements org.jtheque.ui.able.WindowState {
+public final class WindowState implements org.jtheque.ui.WindowState {
     private String titleKey;
     private Object[] titleReplaces;
 
@@ -312,7 +312,7 @@ public final class WindowState implements org.jtheque.ui.able.WindowState {
      * @return true if the view content is valid else false.
      */
     public boolean validateContent() {
-        Collection<org.jtheque.errors.able.Error> errors = CollectionUtils.newList(5);
+        Collection<Error> errors = CollectionUtils.newList(5);
 
         ((ManagedWindow) window).validate(errors);
 

@@ -1,11 +1,11 @@
 package org.jtheque.views.impl.controllers;
 
 import org.jtheque.core.utils.SystemProperty;
-import org.jtheque.ui.able.Action;
+import org.jtheque.ui.Action;
 import org.jtheque.ui.utils.AbstractController;
 import org.jtheque.utils.print.PrintUtils;
 import org.jtheque.utils.ui.SimpleSwingWorker;
-import org.jtheque.views.able.windows.LicenseView;
+import org.jtheque.views.windows.LicenseView;
 
 import java.io.File;
 

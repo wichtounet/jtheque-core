@@ -1,14 +1,14 @@
 package org.jtheque.views.impl.controllers;
 
-import org.jtheque.core.able.Core;
-import org.jtheque.modules.able.ModuleDescription;
-import org.jtheque.modules.able.ModuleService;
-import org.jtheque.ui.able.Action;
-import org.jtheque.ui.able.UIUtils;
+import org.jtheque.core.Core;
+import org.jtheque.modules.ModuleDescription;
+import org.jtheque.modules.ModuleService;
+import org.jtheque.ui.Action;
+import org.jtheque.ui.UIUtils;
 import org.jtheque.ui.utils.AbstractController;
-import org.jtheque.update.able.InstallationResult;
-import org.jtheque.update.able.UpdateService;
-import org.jtheque.views.able.panel.RepositoryView;
+import org.jtheque.update.InstallationResult;
+import org.jtheque.update.UpdateService;
+import org.jtheque.views.panel.RepositoryView;
 
 import javax.annotation.Resource;
 

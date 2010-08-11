@@ -1,6 +1,6 @@
 package org.jtheque.schemas.impl;
 
-import org.jtheque.states.able.State;
+import org.jtheque.states.State;
 import org.jtheque.states.utils.AbstractState;
 import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.bean.Version;

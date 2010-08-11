@@ -1,25 +1,25 @@
 package org.jtheque.views.impl.controllers;
 
-import org.jtheque.collections.able.CollectionListener;
-import org.jtheque.collections.able.CollectionsService;
-import org.jtheque.core.able.Core;
-import org.jtheque.core.able.lifecycle.LifeCycle;
-import org.jtheque.modules.able.ModuleService;
-import org.jtheque.modules.able.Module;
-import org.jtheque.modules.able.ModuleState;
-import org.jtheque.ui.able.Action;
-import org.jtheque.ui.able.Controller;
-import org.jtheque.ui.able.UIUtils;
+import org.jtheque.collections.CollectionListener;
+import org.jtheque.collections.CollectionsService;
+import org.jtheque.core.Core;
+import org.jtheque.core.lifecycle.LifeCycle;
+import org.jtheque.modules.ModuleService;
+import org.jtheque.modules.Module;
+import org.jtheque.modules.ModuleState;
+import org.jtheque.ui.Action;
+import org.jtheque.ui.Controller;
+import org.jtheque.ui.UIUtils;
 import org.jtheque.ui.utils.AbstractController;
-import org.jtheque.update.able.UpdateService;
-import org.jtheque.update.able.InstallationResult;
+import org.jtheque.update.UpdateService;
+import org.jtheque.update.InstallationResult;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.io.SimpleFilter;
 import org.jtheque.utils.ui.SimpleSwingWorker;
 import org.jtheque.utils.ui.SwingUtils;
-import org.jtheque.views.able.ViewService;
-import org.jtheque.views.able.panel.ModuleView;
-import org.jtheque.views.able.panel.RepositoryView;
+import org.jtheque.views.ViewService;
+import org.jtheque.views.panel.ModuleView;
+import org.jtheque.views.panel.RepositoryView;
 
 import javax.annotation.Resource;
 

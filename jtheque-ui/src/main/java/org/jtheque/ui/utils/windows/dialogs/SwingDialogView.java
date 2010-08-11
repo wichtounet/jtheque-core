@@ -17,17 +17,16 @@ package org.jtheque.ui.utils.windows.dialogs;
  */
 
 import org.jtheque.core.utils.OSGiUtils;
-import org.jtheque.i18n.able.LanguageService;
-import org.jtheque.ui.able.Controller;
+import org.jtheque.i18n.InternationalizableContainer;
+import org.jtheque.i18n.LanguageService;
+import org.jtheque.ui.Controller;
+import org.jtheque.ui.Model;
+import org.jtheque.ui.WindowState;
+import org.jtheque.ui.WindowView;
 import org.jtheque.utils.SimplePropertiesCache;
-import org.jtheque.errors.able.Error;
-import org.jtheque.i18n.able.Internationalizable;
-import org.jtheque.i18n.able.InternationalizableContainer;
-import org.jtheque.ui.able.Model;
-import org.jtheque.ui.able.WindowState;
-import org.jtheque.ui.able.WindowView;
+import org.jtheque.i18n.Internationalizable;
 import org.jtheque.ui.utils.actions.ActionFactory;
-import org.jtheque.ui.able.constraints.Constraint;
+import org.jtheque.ui.constraints.Constraint;
 import org.jtheque.ui.utils.windows.ManagedWindow;
 import org.jtheque.utils.ui.SwingUtils;
 
@@ -187,7 +186,7 @@ public abstract class SwingDialogView<T extends Model> extends JDialog
     }
 
     @Override
-    public void validate(Collection<Error> errors) {
+    public void validate(Collection<org.jtheque.errors.Error> errors) {
         state.validate(errors); //Default validation using constraint
     }
 

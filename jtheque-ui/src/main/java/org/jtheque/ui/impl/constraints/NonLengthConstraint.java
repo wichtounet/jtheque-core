@@ -1,6 +1,6 @@
 package org.jtheque.ui.impl.constraints;
 
-import org.jtheque.ui.able.constraints.Constraint;
+import org.jtheque.ui.constraints.Constraint;
 
 /*
  * Copyright JTheque (Baptiste Wicht)

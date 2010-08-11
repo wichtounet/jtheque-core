@@ -1,9 +1,9 @@
 package org.jtheque.resources.impl;
 
-import org.jtheque.resources.able.Resource;
-import org.jtheque.states.able.Load;
-import org.jtheque.states.able.Save;
-import org.jtheque.states.able.State;
+import org.jtheque.resources.Resource;
+import org.jtheque.states.Load;
+import org.jtheque.states.Save;
+import org.jtheque.states.State;
 import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.collections.CollectionUtils;

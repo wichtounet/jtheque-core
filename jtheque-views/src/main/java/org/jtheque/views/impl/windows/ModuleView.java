@@ -16,16 +16,16 @@ package org.jtheque.views.impl.windows;
  * limitations under the License.
  */
 
-import org.jtheque.i18n.able.LanguageService;
-import org.jtheque.modules.able.Module;
-import org.jtheque.resources.able.Resource;
-import org.jtheque.ui.able.Model;
-import org.jtheque.ui.able.components.LayerTabbedPane;
+import org.jtheque.i18n.LanguageService;
+import org.jtheque.modules.Module;
+import org.jtheque.resources.Resource;
+import org.jtheque.ui.Model;
+import org.jtheque.ui.components.LayerTabbedPane;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.ui.utils.windows.dialogs.SwingFilthyBuildedDialogView;
 import org.jtheque.utils.ui.GridBagUtils;
-import org.jtheque.views.able.components.ModulesPanelView;
-import org.jtheque.views.able.components.ResourcePanelView;
+import org.jtheque.views.components.ModulesPanelView;
+import org.jtheque.views.components.ResourcePanelView;
 
 import javax.swing.JComponent;
 
@@ -34,7 +34,7 @@ import javax.swing.JComponent;
  *
  * @author Baptiste Wicht
  */
-public final class ModuleView extends SwingFilthyBuildedDialogView<Model> implements org.jtheque.views.able.panel.ModuleView {
+public final class ModuleView extends SwingFilthyBuildedDialogView<Model> implements org.jtheque.views.panel.ModuleView {
     private ModulesPanelView modulesPanel;
     private ResourcePanelView resourcePanel;
 

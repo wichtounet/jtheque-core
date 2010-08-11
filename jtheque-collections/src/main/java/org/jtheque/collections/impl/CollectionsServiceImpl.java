@@ -16,15 +16,15 @@ package org.jtheque.collections.impl;
  * limitations under the License.
  */
 
-import org.jtheque.collections.able.CollectionListener;
-import org.jtheque.collections.able.CollectionsService;
-import org.jtheque.collections.able.DaoCollections;
-import org.jtheque.collections.able.DataCollection;
-import org.jtheque.core.able.Core;
-import org.jtheque.file.able.FileService;
-import org.jtheque.persistence.able.DataListener;
-import org.jtheque.schemas.able.Schema;
-import org.jtheque.schemas.able.SchemaService;
+import org.jtheque.collections.CollectionListener;
+import org.jtheque.collections.DaoCollections;
+import org.jtheque.collections.DataCollection;
+import org.jtheque.collections.CollectionsService;
+import org.jtheque.core.Core;
+import org.jtheque.file.FileService;
+import org.jtheque.persistence.DataListener;
+import org.jtheque.schemas.Schema;
+import org.jtheque.schemas.SchemaService;
 import org.jtheque.utils.CryptoUtils;
 import org.jtheque.utils.Hasher;
 import org.jtheque.utils.SimplePropertiesCache;

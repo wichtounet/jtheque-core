@@ -1,6 +1,6 @@
 package org.jtheque.i18n.impl;
 
-import org.jtheque.states.able.State;
+import org.jtheque.states.State;
 import org.jtheque.states.utils.AbstractConcurrentState;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.annotations.ThreadSafe;

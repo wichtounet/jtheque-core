@@ -1,6 +1,6 @@
 package org.jtheque.update.impl;
 
-import org.jtheque.core.able.Core;
+import org.jtheque.core.Core;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.io.FileUtils;

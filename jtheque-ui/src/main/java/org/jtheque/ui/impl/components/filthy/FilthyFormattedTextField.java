@@ -1,6 +1,6 @@
 package org.jtheque.ui.impl.components.filthy;
 
-import org.jtheque.ui.able.components.TextField;
+import org.jtheque.ui.components.TextField;
 
 import javax.swing.JFormattedTextField;
 import javax.swing.JTextField;

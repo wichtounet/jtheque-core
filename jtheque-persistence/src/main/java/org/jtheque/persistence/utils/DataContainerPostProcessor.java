@@ -1,7 +1,7 @@
 package org.jtheque.persistence.utils;
 
-import org.jtheque.persistence.able.DataContainer;
-import org.jtheque.persistence.able.Entity;
+import org.jtheque.persistence.DataContainer;
+import org.jtheque.persistence.Entity;
 
 import org.springframework.beans.factory.config.BeanPostProcessor;
 

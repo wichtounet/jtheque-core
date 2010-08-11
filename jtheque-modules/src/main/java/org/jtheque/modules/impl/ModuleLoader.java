@@ -1,15 +1,16 @@
 package org.jtheque.modules.impl;
 
-import org.jtheque.core.able.Core;
+import org.jtheque.core.Core;
 import org.jtheque.core.utils.OSGiUtils;
-import org.jtheque.errors.able.ErrorService;
-import org.jtheque.errors.able.Errors;
-import org.jtheque.i18n.able.I18NResourceFactory;
-import org.jtheque.i18n.able.LanguageService;
-import org.jtheque.modules.able.Module;
-import org.jtheque.modules.able.ModuleState;
-import org.jtheque.resources.able.Resource;
-import org.jtheque.resources.able.ResourceService;
+import org.jtheque.errors.ErrorService;
+import org.jtheque.errors.Errors;
+import org.jtheque.i18n.I18NResource;
+import org.jtheque.i18n.I18NResourceFactory;
+import org.jtheque.i18n.LanguageService;
+import org.jtheque.modules.Module;
+import org.jtheque.modules.ModuleState;
+import org.jtheque.resources.Resource;
+import org.jtheque.resources.ResourceService;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.ThreadUtils;
 import org.jtheque.utils.annotations.Immutable;
@@ -277,7 +278,7 @@ public final class ModuleLoader implements BundleContextAware {
      */
     private void loadI18NResources(Module module) {
         for (I18NResource i18NResource : moduleService.getResources(module).getI18NResources()) {
-            List<org.jtheque.i18n.able.I18NResource> i18NResources = CollectionUtils.newList(i18NResource.getResources().size());
+            List<I18NResource> i18NResources = CollectionUtils.newList(i18NResource.getResources().size());
 
             for (String resource : i18NResource.getResources()) {
                 if (resource.startsWith("classpath:")) {
@@ -287,7 +288,7 @@ public final class ModuleLoader implements BundleContextAware {
             }
 
             languageService.registerResource(i18NResource.getName(), i18NResource.getVersion(),
-                    i18NResources.toArray(new org.jtheque.i18n.able.I18NResource[i18NResources.size()]));
+                    i18NResources.toArray(new org.jtheque.i18n.I18NResource[i18NResources.size()]));
         }
     }
 

@@ -1,6 +1,6 @@
 package org.jtheque.lifecycle.application;
 
-import org.jtheque.core.able.application.ApplicationProperties;
+import org.jtheque.core.application.ApplicationProperties;
 import org.jtheque.core.utils.SystemProperty;
 import org.jtheque.utils.annotations.Immutable;
 import org.jtheque.utils.collections.ArrayUtils;

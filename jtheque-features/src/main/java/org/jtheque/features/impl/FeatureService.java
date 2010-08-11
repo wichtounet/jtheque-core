@@ -16,17 +16,17 @@ package org.jtheque.features.impl;
  * limitations under the License.
  */
 
-import org.jtheque.features.able.CoreFeature;
-import org.jtheque.features.able.Feature;
-import org.jtheque.features.able.FeatureListener;
-import org.jtheque.features.able.Features;
-import org.jtheque.features.able.Feature.FeatureType;
-import org.jtheque.features.able.Menu;
-import org.jtheque.i18n.able.LanguageService;
-import org.jtheque.modules.able.ModuleResourceCache;
-import org.jtheque.modules.able.ModuleService;
-import org.jtheque.modules.able.Module;
-import org.jtheque.modules.able.ModuleListener;
+import org.jtheque.features.CoreFeature;
+import org.jtheque.features.Feature;
+import org.jtheque.features.FeatureListener;
+import org.jtheque.features.Menu;
+import org.jtheque.features.Features;
+import org.jtheque.features.Feature.FeatureType;
+import org.jtheque.i18n.LanguageService;
+import org.jtheque.modules.ModuleResourceCache;
+import org.jtheque.modules.ModuleService;
+import org.jtheque.modules.Module;
+import org.jtheque.modules.ModuleListener;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.annotations.GuardedInternally;
 import org.jtheque.utils.annotations.ThreadSafe;
@@ -44,7 +44,7 @@ import java.util.Set;
  * @author Baptiste Wicht
  */
 @ThreadSafe
-public final class FeatureService implements org.jtheque.features.able.FeatureService, ModuleListener {
+public final class FeatureService implements org.jtheque.features.FeatureService, ModuleListener {
     @GuardedInternally
     private final WeakEventListenerList<FeatureListener> listeners = WeakEventListenerList.create();
 

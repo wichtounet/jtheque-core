@@ -21,7 +21,7 @@ package org.jtheque.views.utils;
  *
  * @author Baptiste Wicht
  */
-public final class WindowConfiguration implements org.jtheque.views.able.WindowConfiguration {
+public final class WindowConfiguration implements org.jtheque.views.WindowConfiguration {
     private int width;
     private int height;
     private int positionX;

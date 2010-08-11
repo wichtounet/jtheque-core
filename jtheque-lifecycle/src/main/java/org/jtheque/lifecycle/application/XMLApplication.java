@@ -1,7 +1,7 @@
 package org.jtheque.lifecycle.application;
 
-import org.jtheque.core.able.application.Application;
-import org.jtheque.core.able.application.ApplicationProperties;
+import org.jtheque.core.application.Application;
+import org.jtheque.core.application.ApplicationProperties;
 import org.jtheque.core.utils.ImageDescriptor;
 import org.jtheque.core.utils.ImageType;
 import org.jtheque.utils.annotations.NotThreadSafe;

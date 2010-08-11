@@ -12,10 +12,10 @@
 
     <bean id="daoNotes" class="org.jtheque.persistence.impl.DaoNotes">
         <constructor-arg>
-            <osgi:reference interface="org.jtheque.images.able.ImageService"/>
+            <osgi:reference interface="org.jtheque.images.ImageService"/>
         </constructor-arg>
         <constructor-arg>
-            <osgi:reference interface="org.jtheque.i18n.able.LanguageService"/>
+            <osgi:reference interface="org.jtheque.i18n.LanguageService"/>
         </constructor-arg>
     </bean>
 
@@ -45,8 +45,8 @@
 
     <!-- OSGI Services Registrations -->
 
-    <osgi:service ref="persistenceManager" interface="org.jtheque.persistence.able.PersistenceService"/>
-    <osgi:service ref="daoNotes" interface="org.jtheque.persistence.able.DaoNotes"/>
-    <osgi:service ref="daoPersistenceContext" interface="org.jtheque.persistence.able.DaoPersistenceContext"/>
+    <osgi:service ref="persistenceManager" interface="org.jtheque.persistence.PersistenceService"/>
+    <osgi:service ref="daoNotes" interface="org.jtheque.persistence.DaoNotes"/>
+    <osgi:service ref="daoPersistenceContext" interface="org.jtheque.persistence.DaoPersistenceContext"/>
 
 </beans>

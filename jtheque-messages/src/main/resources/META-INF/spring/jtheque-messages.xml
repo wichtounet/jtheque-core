@@ -15,18 +15,18 @@
 
     <bean id="messageService" class="org.jtheque.messages.impl.MessageService">
         <constructor-arg>
-            <osgi:reference interface="org.jtheque.core.able.Core"/>
+            <osgi:reference interface="org.jtheque.core.Core"/>
         </constructor-arg>
         <constructor-arg>
-            <osgi:reference interface="org.jtheque.modules.able.ModuleService"/>
+            <osgi:reference interface="org.jtheque.modules.ModuleService"/>
         </constructor-arg>
         <constructor-arg>
-            <osgi:reference interface="org.jtheque.errors.able.ErrorService"/>
+            <osgi:reference interface="org.jtheque.errors.ErrorService"/>
         </constructor-arg>
         <constructor-arg>
-            <osgi:reference interface="org.jtheque.events.able.EventService"/>
+            <osgi:reference interface="org.jtheque.events.EventService"/>
         </constructor-arg>
     </bean>
 
-    <osgi:service ref="messageService" interface="org.jtheque.messages.able.MessageService"/>
+    <osgi:service ref="messageService" interface="org.jtheque.messages.MessageService"/>
 </beans>

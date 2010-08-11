@@ -16,19 +16,19 @@ package org.jtheque.modules.impl;
  * limitations under the License.
  */
 
-import org.jtheque.core.able.Core;
-import org.jtheque.images.able.ImageService;
-import org.jtheque.modules.able.Module;
-import org.jtheque.modules.able.ModuleDescription;
-import org.jtheque.modules.able.ModuleListener;
-import org.jtheque.modules.able.ModuleResourceCache;
-import org.jtheque.modules.able.ModuleService;
-import org.jtheque.modules.able.ModuleState;
-import org.jtheque.modules.able.Repository;
-import org.jtheque.modules.able.SwingLoader;
-import org.jtheque.states.able.StateService;
-import org.jtheque.ui.able.UIUtils;
-import org.jtheque.update.able.InstallationResult;
+import org.jtheque.core.Core;
+import org.jtheque.images.ImageService;
+import org.jtheque.modules.Module;
+import org.jtheque.modules.ModuleDescription;
+import org.jtheque.modules.ModuleListener;
+import org.jtheque.modules.ModuleResourceCache;
+import org.jtheque.modules.ModuleService;
+import org.jtheque.modules.ModuleState;
+import org.jtheque.modules.Repository;
+import org.jtheque.modules.SwingLoader;
+import org.jtheque.states.StateService;
+import org.jtheque.ui.UIUtils;
+import org.jtheque.update.InstallationResult;
 import org.jtheque.utils.SimplePropertiesCache;
 import org.jtheque.utils.annotations.GuardedInternally;
 import org.jtheque.utils.collections.CollectionUtils;
@@ -46,7 +46,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-import static org.jtheque.modules.able.ModuleState.*;
+import static org.jtheque.modules.ModuleState.*;
 
 /**
  * A module manager implementation. It manage the cycle life of the modules.

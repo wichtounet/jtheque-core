@@ -1,7 +1,7 @@
 package org.jtheque.ui.impl;
 
+import org.jtheque.ui.ViewDelegate;
 import org.jtheque.utils.SimplePropertiesCache;
-import org.jtheque.ui.able.ViewDelegate;
 import org.jtheque.utils.ui.SwingUtils;
 
 import org.slf4j.LoggerFactory;

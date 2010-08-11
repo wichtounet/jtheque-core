@@ -25,7 +25,7 @@ import org.jtheque.utils.collections.ArrayUtils;
  * @author Baptiste Wicht
  */
 @Immutable
-public final class Query implements org.jtheque.persistence.able.Query {
+public final class Query implements org.jtheque.persistence.Query {
     private final String sqlQuery;
     private final Object[] parameters;
 

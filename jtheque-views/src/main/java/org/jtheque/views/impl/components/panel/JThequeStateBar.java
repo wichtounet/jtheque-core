@@ -19,8 +19,8 @@ package org.jtheque.views.impl.components.panel;
 import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.utils.ui.SwingUtils;
-import org.jtheque.views.able.Views;
-import org.jtheque.views.able.components.StateBarComponent;
+import org.jtheque.views.Views;
+import org.jtheque.views.components.StateBarComponent;
 
 import javax.swing.Box;
 import javax.swing.JPanel;

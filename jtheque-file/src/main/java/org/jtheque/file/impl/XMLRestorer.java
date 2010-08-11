@@ -16,8 +16,8 @@ package org.jtheque.file.impl;
  * limitations under the License.
  */
 
-import org.jtheque.file.able.FileService.XmlBackupVersion;
-import org.jtheque.file.able.ModuleBackup;
+import org.jtheque.file.FileService.XmlBackupVersion;
+import org.jtheque.file.ModuleBackup;
 import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.collections.CollectionUtils;

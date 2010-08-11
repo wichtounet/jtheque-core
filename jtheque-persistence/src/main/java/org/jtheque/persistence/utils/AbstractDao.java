@@ -16,11 +16,11 @@ package org.jtheque.persistence.utils;
  * limitations under the License.
  */
 
-import org.jtheque.persistence.able.Dao;
-import org.jtheque.persistence.able.DaoPersistenceContext;
-import org.jtheque.persistence.able.DataListener;
-import org.jtheque.persistence.able.Entity;
-import org.jtheque.persistence.able.QueryMapper;
+import org.jtheque.persistence.Dao;
+import org.jtheque.persistence.DaoPersistenceContext;
+import org.jtheque.persistence.DataListener;
+import org.jtheque.persistence.QueryMapper;
+import org.jtheque.persistence.Entity;
 import org.jtheque.utils.annotations.GuardedInternally;
 import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.collections.WeakEventListenerList;

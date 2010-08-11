@@ -10,6 +10,6 @@
 
     <bean id="fileService" class="org.jtheque.file.impl.FileService"/>
 
-    <osgi:service ref="fileService" interface="org.jtheque.file.able.FileService"/>
+    <osgi:service ref="fileService" interface="org.jtheque.file.FileService"/>
 
 </beans>

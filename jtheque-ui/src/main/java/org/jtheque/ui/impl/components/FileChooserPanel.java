@@ -16,7 +16,7 @@ package org.jtheque.ui.impl.components;
  * limitations under the License.
  */
 
-import org.jtheque.ui.able.components.FileChooser;
+import org.jtheque.ui.components.FileChooser;
 import org.jtheque.ui.utils.builders.JThequePanelBuilder;
 import org.jtheque.ui.utils.builders.PanelBuilder;
 import org.jtheque.utils.ui.SwingUtils;

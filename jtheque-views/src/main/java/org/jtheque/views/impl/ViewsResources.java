@@ -1,6 +1,6 @@
 package org.jtheque.views.impl;
 
-import org.jtheque.images.able.ImageService;
+import org.jtheque.images.ImageService;
 
 import org.springframework.core.io.ClassPathResource;
 

@@ -1,9 +1,9 @@
 package org.jtheque.ui.utils;
 
-import org.jtheque.ui.able.Action;
-import org.jtheque.ui.able.Controller;
-import org.jtheque.ui.able.ControllerException;
-import org.jtheque.ui.able.View;
+import org.jtheque.ui.Action;
+import org.jtheque.ui.ControllerException;
+import org.jtheque.ui.View;
+import org.jtheque.ui.Controller;
 import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.ui.SwingUtils;
 

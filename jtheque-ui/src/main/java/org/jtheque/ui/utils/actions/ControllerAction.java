@@ -1,6 +1,6 @@
 package org.jtheque.ui.utils.actions;
 
-import org.jtheque.ui.able.Controller;
+import org.jtheque.ui.Controller;
 
 import javax.swing.ImageIcon;
 

@@ -1,8 +1,8 @@
 package org.jtheque.views.impl.models;
 
-import org.jtheque.core.able.Core;
-import org.jtheque.core.able.application.Application;
-import org.jtheque.i18n.able.LanguageService;
+import org.jtheque.core.Core;
+import org.jtheque.core.application.Application;
+import org.jtheque.i18n.LanguageService;
 import org.jtheque.utils.collections.CollectionUtils;
 
 import java.util.Arrays;

@@ -41,7 +41,7 @@ public final class Messages {
      *
      * @return A new message with the given properties.
      */
-    public static org.jtheque.messages.able.Message newEmptyTodayMessage(int id) {
+    public static org.jtheque.messages.Message newEmptyTodayMessage(int id) {
         return new Message(id, "", "", IntDate.today(), "");
     }
 
@@ -66,7 +66,7 @@ public final class Messages {
      * @author Baptiste Wicht
      */
     @Immutable
-    private static final class Message implements org.jtheque.messages.able.Message {
+    private static final class Message implements org.jtheque.messages.Message {
         /**
          * The Id of the message.
          */
@@ -170,7 +170,7 @@ public final class Messages {
         }
 
         @Override
-        public int compareTo(org.jtheque.messages.able.Message o) {
+        public int compareTo(org.jtheque.messages.Message o) {
             return date.compareTo(o.getDate());
         }
     }

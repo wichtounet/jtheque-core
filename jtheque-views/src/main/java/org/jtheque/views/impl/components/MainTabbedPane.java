@@ -1,13 +1,13 @@
 package org.jtheque.views.impl.components;
 
-import org.jtheque.i18n.able.LanguageService;
-import org.jtheque.i18n.able.Internationalizable;
-import org.jtheque.ui.able.components.LayerTabbedPane;
+import org.jtheque.i18n.Internationalizable;
+import org.jtheque.i18n.LanguageService;
+import org.jtheque.ui.components.LayerTabbedPane;
 import org.jtheque.utils.bean.Numbers;
 import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.ui.SwingUtils;
-import org.jtheque.views.able.Views;
-import org.jtheque.views.able.components.MainComponent;
+import org.jtheque.views.Views;
+import org.jtheque.views.components.MainComponent;
 
 import javax.annotation.PostConstruct;
 import javax.swing.JComponent;

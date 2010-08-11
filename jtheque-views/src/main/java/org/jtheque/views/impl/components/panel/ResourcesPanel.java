@@ -1,12 +1,12 @@
 package org.jtheque.views.impl.components.panel;
 
-import org.jtheque.resources.able.Resource;
-import org.jtheque.resources.able.ResourceService;
+import org.jtheque.resources.Resource;
+import org.jtheque.resources.ResourceService;
 import org.jtheque.ui.utils.builded.OSGIFilthyBuildedPanel;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
-import org.jtheque.ui.able.components.Borders;
+import org.jtheque.ui.components.Borders;
 import org.jtheque.utils.ui.GridBagUtils;
-import org.jtheque.views.able.components.ResourcePanelView;
+import org.jtheque.views.components.ResourcePanelView;
 import org.jtheque.views.impl.components.renderers.ResourceListRenderer;
 import org.jtheque.views.impl.models.ResourceListModel;
 

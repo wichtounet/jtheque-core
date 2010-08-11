@@ -41,5 +41,5 @@ public interface ManagedWindow {
      *
      * @param errors The error's list.
      */
-    void validate(Collection<org.jtheque.errors.able.Error> errors);
+    void validate(Collection<org.jtheque.errors.Error> errors);
 }

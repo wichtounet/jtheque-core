@@ -1,8 +1,8 @@
 package org.jtheque.views.impl.controllers;
 
-import org.jtheque.ui.able.Action;
+import org.jtheque.ui.Action;
 import org.jtheque.ui.utils.AbstractController;
-import org.jtheque.views.able.windows.ConfigView;
+import org.jtheque.views.windows.ConfigView;
 
 /*
  * Copyright JTheque (Baptiste Wicht)

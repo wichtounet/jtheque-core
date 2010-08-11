@@ -16,14 +16,14 @@ package org.jtheque.views.impl.components.renderers;
  * limitations under the License.
  */
 
-import org.jtheque.i18n.able.LanguageService;
-import org.jtheque.modules.able.Module;
-import org.jtheque.ui.able.components.Borders;
+import org.jtheque.i18n.LanguageService;
+import org.jtheque.modules.Module;
+import org.jtheque.ui.components.Borders;
 import org.jtheque.ui.utils.actions.OpenSiteLinkAction;
 import org.jtheque.ui.utils.builders.FilthyPanelBuilder;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.ui.utils.builders.PanelBuilder;
-import org.jtheque.update.able.UpdateService;
+import org.jtheque.update.UpdateService;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.ui.GridBagUtils;

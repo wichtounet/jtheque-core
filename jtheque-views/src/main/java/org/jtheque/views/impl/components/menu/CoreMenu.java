@@ -1,10 +1,10 @@
 package org.jtheque.views.impl.components.menu;
 
-import org.jtheque.features.able.Feature;
+import org.jtheque.features.Feature;
 import org.jtheque.i18n.impl.LanguageService;
-import org.jtheque.ui.able.Controller;
-import org.jtheque.undo.able.IUndoRedoService;
-import org.jtheque.views.able.windows.MainView;
+import org.jtheque.ui.Controller;
+import org.jtheque.undo.IUndoRedoService;
+import org.jtheque.views.windows.MainView;
 import org.jtheque.views.impl.ViewsResources;
 import org.jtheque.views.impl.actions.undo.RedoAction;
 import org.jtheque.views.impl.actions.undo.UndoAction;

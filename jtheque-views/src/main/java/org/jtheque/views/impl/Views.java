@@ -16,25 +16,25 @@ package org.jtheque.views.impl;
  * limitations under the License.
  */
 
-import org.jtheque.core.able.Core;
-import org.jtheque.modules.able.ModuleResourceCache;
-import org.jtheque.modules.able.ModuleService;
-import org.jtheque.ui.able.Controller;
+import org.jtheque.core.Core;
+import org.jtheque.messages.MessageService;
+import org.jtheque.modules.ModuleResourceCache;
+import org.jtheque.modules.ModuleService;
+import org.jtheque.ui.Controller;
+import org.jtheque.ui.UIUtils;
+import org.jtheque.update.UpdateService;
 import org.jtheque.utils.SimplePropertiesCache;
-import org.jtheque.messages.able.MessageService;
-import org.jtheque.modules.able.Module;
-import org.jtheque.modules.able.ModuleListener;
-import org.jtheque.ui.able.UIUtils;
-import org.jtheque.update.able.UpdateService;
+import org.jtheque.modules.Module;
+import org.jtheque.modules.ModuleListener;
 import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.ui.SwingUtils;
-import org.jtheque.views.able.components.ConfigTabComponent;
-import org.jtheque.views.able.components.StateBarComponent;
-import org.jtheque.views.able.components.MainComponent;
-import org.jtheque.views.able.panel.ModuleView;
-import org.jtheque.views.able.windows.ConfigView;
-import org.jtheque.views.able.windows.MainView;
-import org.jtheque.views.able.windows.MessageView;
+import org.jtheque.views.components.ConfigTabComponent;
+import org.jtheque.views.components.StateBarComponent;
+import org.jtheque.views.components.MainComponent;
+import org.jtheque.views.panel.ModuleView;
+import org.jtheque.views.windows.ConfigView;
+import org.jtheque.views.windows.MainView;
+import org.jtheque.views.windows.MessageView;
 import org.jtheque.views.impl.components.config.JPanelConfigAppearance;
 import org.jtheque.views.impl.components.config.JPanelConfigNetwork;
 import org.jtheque.views.impl.components.config.JPanelConfigOthers;
@@ -54,7 +54,7 @@ import java.util.List;
  *
  * @author Baptiste Wicht
  */
-public final class Views implements org.jtheque.views.able.Views, ApplicationContextAware, ModuleListener {
+public final class Views implements org.jtheque.views.Views, ApplicationContextAware, ModuleListener {
     private final Collection<MainComponent> mainComponents = CollectionUtils.newList(5);
     private final Collection<StateBarComponent> stateBarComponents = CollectionUtils.newList(5);
     private final Collection<ConfigTabComponent> configPanels = CollectionUtils.newList(5);

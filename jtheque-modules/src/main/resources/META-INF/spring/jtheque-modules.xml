@@ -30,16 +30,16 @@
 
     <bean id="updateService" class="org.jtheque.update.impl.UpdateServiceImpl" />
     
-    <osgi:reference id="stateService" interface="org.jtheque.states.able.StateService"/>
-    <osgi:reference id="core" interface="org.jtheque.core.able.Core"/>
-    <osgi:reference id="errorService" interface="org.jtheque.errors.able.ErrorService"/>
-    <osgi:reference id="iuiUtils" interface="org.jtheque.ui.able.UIUtils"/>
-    <osgi:reference id="lifecycle" interface="org.jtheque.core.able.lifecycle.LifeCycle"/>
-    <osgi:reference id="languageService" interface="org.jtheque.i18n.able.LanguageService"/>
-    <osgi:reference id="imageService" interface="org.jtheque.images.able.ImageService"/>
-    <osgi:reference id="eventService" interface="org.jtheque.events.able.EventService"/>
+    <osgi:reference id="stateService" interface="org.jtheque.states.StateService"/>
+    <osgi:reference id="core" interface="org.jtheque.core.Core"/>
+    <osgi:reference id="errorService" interface="org.jtheque.errors.ErrorService"/>
+    <osgi:reference id="iuiUtils" interface="org.jtheque.ui.UIUtils"/>
+    <osgi:reference id="lifecycle" interface="org.jtheque.core.lifecycle.LifeCycle"/>
+    <osgi:reference id="languageService" interface="org.jtheque.i18n.LanguageService"/>
+    <osgi:reference id="imageService" interface="org.jtheque.images.ImageService"/>
+    <osgi:reference id="eventService" interface="org.jtheque.events.EventService"/>
 
-    <osgi:service ref="moduleService" interface="org.jtheque.modules.able.ModuleService"/>
-    <osgi:service ref="updateService" interface="org.jtheque.update.able.UpdateService"/>
-    <osgi:service ref="resourceService" interface="org.jtheque.resources.able.ResourceService"/>
+    <osgi:service ref="moduleService" interface="org.jtheque.modules.ModuleService"/>
+    <osgi:service ref="updateService" interface="org.jtheque.update.UpdateService"/>
+    <osgi:service ref="resourceService" interface="org.jtheque.resources.ResourceService"/>
 </beans>

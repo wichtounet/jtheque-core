@@ -1,8 +1,8 @@
 package org.jtheque.views.impl.controllers;
 
-import org.jtheque.ui.able.Action;
+import org.jtheque.ui.Action;
 import org.jtheque.ui.utils.AbstractController;
-import org.jtheque.views.able.windows.EventView;
+import org.jtheque.views.windows.EventView;
 
 /*
  * Copyright JTheque (Baptiste Wicht)

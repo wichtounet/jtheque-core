@@ -1,24 +1,24 @@
 package org.jtheque.lifecycle;
 
-import org.jtheque.collections.able.CollectionListener;
-import org.jtheque.collections.able.CollectionsService;
-import org.jtheque.core.able.Core;
-import org.jtheque.core.able.application.Application;
-import org.jtheque.core.able.lifecycle.LifeCycle;
+import org.jtheque.collections.CollectionListener;
+import org.jtheque.collections.CollectionsService;
+import org.jtheque.core.Core;
+import org.jtheque.core.application.Application;
+import org.jtheque.core.lifecycle.LifeCycle;
 import org.jtheque.core.utils.SystemProperty;
-import org.jtheque.events.able.EventLevel;
-import org.jtheque.events.able.EventService;
-import org.jtheque.events.able.Events;
+import org.jtheque.events.EventLevel;
+import org.jtheque.events.EventService;
+import org.jtheque.events.Events;
 import org.jtheque.lifecycle.application.XMLApplicationReader;
-import org.jtheque.modules.able.ModuleService;
+import org.jtheque.modules.ModuleService;
 import org.jtheque.utils.SimplePropertiesCache;
 import org.jtheque.utils.ThreadUtils;
 import org.jtheque.utils.annotations.NotThreadSafe;
 import org.jtheque.utils.ui.SwingUtils;
 import org.jtheque.utils.ui.edt.SimpleTask;
-import org.jtheque.views.able.SplashService;
-import org.jtheque.views.able.ViewService;
-import org.jtheque.views.able.Views;
+import org.jtheque.views.ViewService;
+import org.jtheque.views.Views;
+import org.jtheque.views.SplashService;
 
 import org.slf4j.LoggerFactory;
 

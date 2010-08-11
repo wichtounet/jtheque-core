@@ -15,6 +15,6 @@
 
     <bean id="stateService" class="org.jtheque.states.impl.StateService"/>
 
-    <osgi:service interface="org.jtheque.states.able.StateService" ref="stateService"/>
+    <osgi:service interface="org.jtheque.states.StateService" ref="stateService"/>
 
 </beans>

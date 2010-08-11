@@ -10,10 +10,10 @@
 
     <bean id="schemaManager" class="org.jtheque.schemas.impl.SchemaService">
         <constructor-arg>
-            <osgi:reference interface="org.jtheque.states.able.StateService"/>
+            <osgi:reference interface="org.jtheque.states.StateService"/>
         </constructor-arg>
     </bean>
 
-    <osgi:service id="schemaManagerService" ref="schemaManager" interface="org.jtheque.schemas.able.SchemaService"/>
+    <osgi:service id="schemaManagerService" ref="schemaManager" interface="org.jtheque.schemas.SchemaService"/>
 
 </beans>

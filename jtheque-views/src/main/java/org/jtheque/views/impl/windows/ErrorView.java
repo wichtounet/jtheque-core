@@ -1,12 +1,12 @@
 package org.jtheque.views.impl.windows;
 
-import org.jtheque.errors.able.Error;
-import org.jtheque.errors.able.Error.Level;
-import org.jtheque.errors.able.ErrorListener;
-import org.jtheque.errors.able.ErrorService;
-import org.jtheque.i18n.able.LanguageService;
-import org.jtheque.images.able.ImageService;
-import org.jtheque.ui.able.Model;
+import org.jtheque.errors.*;
+import org.jtheque.errors.Error;
+import org.jtheque.errors.Error.Level;
+import org.jtheque.errors.ErrorListener;
+import org.jtheque.i18n.LanguageService;
+import org.jtheque.images.ImageService;
+import org.jtheque.ui.Model;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.ui.utils.windows.frames.SwingFilthyBuildedFrameView;
 import org.jtheque.views.impl.ViewsResources;
@@ -47,7 +47,7 @@ import static org.jtheque.utils.ui.GridBagUtils.*;
  * @author Baptiste Wicht
  */
 public final class ErrorView extends SwingFilthyBuildedFrameView<Model> implements ListSelectionListener,
-        org.jtheque.views.able.windows.ErrorView, ErrorListener {
+        org.jtheque.views.windows.ErrorView, ErrorListener {
     private ImageIcon errorIcon;
     private ImageIcon warningIcon;
 
@@ -107,7 +107,7 @@ public final class ErrorView extends SwingFilthyBuildedFrameView<Model> implemen
     @Override
     public void valueChanged(ListSelectionEvent e) {
         if (listEvents.getSelectedValues().length > 0) {
-            org.jtheque.errors.able.Error error = (Error) listEvents.getSelectedValue();
+            org.jtheque.errors.Error error = (Error) listEvents.getSelectedValue();
 
             labelTitle.setText(error.getTitle(languageService));
             labelTitle.setToolTipText(error.getLevel().toString());

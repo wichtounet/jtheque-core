@@ -16,8 +16,8 @@ package org.jtheque.ui.impl.components;
  * limitations under the License.
  */
 
-import org.jtheque.i18n.able.LanguageService;
-import org.jtheque.i18n.able.Internationalizable;
+import org.jtheque.i18n.Internationalizable;
+import org.jtheque.i18n.LanguageService;
 
 import javax.swing.border.TitledBorder;
 

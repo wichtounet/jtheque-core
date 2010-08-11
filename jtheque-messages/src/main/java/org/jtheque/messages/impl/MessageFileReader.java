@@ -16,7 +16,7 @@ package org.jtheque.messages.impl;
  * limitations under the License.
  */
 
-import org.jtheque.messages.able.Message;
+import org.jtheque.messages.Message;
 import org.jtheque.utils.bean.IntDate;
 import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.io.FileUtils;

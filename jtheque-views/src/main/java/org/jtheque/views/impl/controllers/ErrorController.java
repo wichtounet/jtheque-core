@@ -1,7 +1,7 @@
 package org.jtheque.views.impl.controllers;
 
 import org.jtheque.ui.utils.AbstractController;
-import org.jtheque.views.able.windows.ErrorView;
+import org.jtheque.views.windows.ErrorView;
 
 /*
  * Copyright JTheque (Baptiste Wicht)

@@ -16,8 +16,8 @@ package org.jtheque.persistence.utils;
  * limitations under the License.
  */
 
-import org.jtheque.persistence.able.Entity;
-import org.jtheque.persistence.able.TemporaryContext;
+import org.jtheque.persistence.Entity;
+import org.jtheque.persistence.TemporaryContext;
 import org.jtheque.utils.annotations.ThreadSafe;
 
 /**

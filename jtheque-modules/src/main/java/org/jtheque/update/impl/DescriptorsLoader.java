@@ -1,9 +1,9 @@
 package org.jtheque.update.impl;
 
-import org.jtheque.core.able.Versionable;
-import org.jtheque.errors.able.ErrorService;
-import org.jtheque.errors.able.Errors;
-import org.jtheque.modules.able.Module;
+import org.jtheque.core.Versionable;
+import org.jtheque.errors.ErrorService;
+import org.jtheque.errors.Errors;
+import org.jtheque.modules.Module;
 import org.jtheque.utils.annotations.NotThreadSafe;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.collections.ArrayUtils;

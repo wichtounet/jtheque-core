@@ -1,9 +1,9 @@
 package org.jtheque.persistence.impl;
 
-import org.jtheque.persistence.able.DaoPersistenceContext;
-import org.jtheque.persistence.able.Entity;
-import org.jtheque.persistence.able.Query;
-import org.jtheque.persistence.able.QueryMapper;
+import org.jtheque.persistence.DaoPersistenceContext;
+import org.jtheque.persistence.Entity;
+import org.jtheque.persistence.Query;
+import org.jtheque.persistence.QueryMapper;
 import org.jtheque.utils.annotations.ThreadSafe;
 
 import org.springframework.jdbc.core.RowMapper;

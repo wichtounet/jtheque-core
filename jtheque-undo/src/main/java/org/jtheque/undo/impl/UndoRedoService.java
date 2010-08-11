@@ -16,8 +16,8 @@ package org.jtheque.undo.impl;
  * limitations under the License.
  */
 
-import org.jtheque.undo.able.IUndoRedoService;
-import org.jtheque.undo.able.StateListener;
+import org.jtheque.undo.IUndoRedoService;
+import org.jtheque.undo.StateListener;
 import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.collections.WeakEventListenerList;
 

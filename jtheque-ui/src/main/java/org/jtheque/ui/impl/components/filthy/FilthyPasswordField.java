@@ -16,7 +16,7 @@ package org.jtheque.ui.impl.components.filthy;
  * limitations under the License.
  */
 
-import org.jtheque.ui.able.components.TextField;
+import org.jtheque.ui.components.TextField;
 
 import javax.swing.JPasswordField;
 

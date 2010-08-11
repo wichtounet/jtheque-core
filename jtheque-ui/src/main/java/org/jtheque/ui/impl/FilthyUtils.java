@@ -1,7 +1,7 @@
 package org.jtheque.ui.impl;
 
-import org.jtheque.images.able.ImageService;
-import org.jtheque.ui.able.UIUtils;
+import org.jtheque.images.ImageService;
+import org.jtheque.ui.UIUtils;
 import org.jtheque.utils.ui.ImageUtils;
 import org.jtheque.utils.ui.SizeTracker;
 
@@ -38,7 +38,7 @@ import java.awt.image.BufferedImage;
  *
  * @author Baptiste Wicht
  */
-public class FilthyUtils implements org.jtheque.ui.able.FilthyUtils {
+public class FilthyUtils implements org.jtheque.ui.FilthyUtils {
     private final BufferedImage lightImage;
     private final LinearGradientPaint backgroundPaint;
 

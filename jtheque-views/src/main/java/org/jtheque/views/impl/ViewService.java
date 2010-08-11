@@ -16,16 +16,16 @@ package org.jtheque.views.impl;
  * limitations under the License.
  */
 
-import org.jtheque.core.able.Core;
+import org.jtheque.core.Core;
 import org.jtheque.core.utils.SwingSpringProxy;
-import org.jtheque.states.able.StateService;
+import org.jtheque.states.StateService;
 import org.jtheque.utils.SimplePropertiesCache;
-import org.jtheque.images.able.ImageService;
+import org.jtheque.images.ImageService;
 import org.jtheque.utils.ui.SwingUtils;
-import org.jtheque.views.able.WindowConfiguration;
-import org.jtheque.views.able.panel.CollectionView;
-import org.jtheque.views.able.windows.AboutView;
-import org.jtheque.views.able.windows.MainView;
+import org.jtheque.views.WindowConfiguration;
+import org.jtheque.views.panel.CollectionView;
+import org.jtheque.views.windows.AboutView;
+import org.jtheque.views.windows.MainView;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -38,7 +38,7 @@ import java.awt.Window;
  *
  * @author Baptiste Wicht
  */
-public final class ViewService implements org.jtheque.views.able.ViewService, ApplicationContextAware {
+public final class ViewService implements org.jtheque.views.ViewService, ApplicationContextAware {
     private final WindowsConfiguration configuration;
 
     private SwingSpringProxy<CollectionView> collectionPane;

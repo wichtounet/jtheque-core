@@ -16,8 +16,8 @@ package org.jtheque.states.utils;
  * limitations under the License.
  */
 
-import org.jtheque.states.able.Load;
-import org.jtheque.states.able.Save;
+import org.jtheque.states.Load;
+import org.jtheque.states.Save;
 import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.collections.CollectionUtils;
 

@@ -16,14 +16,14 @@ package org.jtheque.views.impl.windows;
  * limitations under the License.
  */
 
-import org.jtheque.core.able.Core;
-import org.jtheque.core.able.lifecycle.LifeCycle;
-import org.jtheque.core.able.lifecycle.TitleListener;
-import org.jtheque.i18n.able.LanguageService;
-import org.jtheque.ui.able.Model;
-import org.jtheque.ui.able.UIUtils;
-import org.jtheque.ui.able.components.Borders;
-import org.jtheque.ui.able.components.LayerTabbedPane;
+import org.jtheque.core.Core;
+import org.jtheque.core.lifecycle.LifeCycle;
+import org.jtheque.core.lifecycle.TitleListener;
+import org.jtheque.i18n.LanguageService;
+import org.jtheque.ui.Model;
+import org.jtheque.ui.UIUtils;
+import org.jtheque.ui.components.Borders;
+import org.jtheque.ui.components.LayerTabbedPane;
 import org.jtheque.ui.utils.builders.JThequePanelBuilder;
 import org.jtheque.ui.utils.builders.PanelBuilder;
 import org.jtheque.ui.utils.windows.frames.SwingFrameView;
@@ -31,9 +31,9 @@ import org.jtheque.utils.SimplePropertiesCache;
 import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.utils.ui.SwingUtils;
-import org.jtheque.views.able.ViewService;
-import org.jtheque.views.able.Views;
-import org.jtheque.views.able.components.MainComponent;
+import org.jtheque.views.ViewService;
+import org.jtheque.views.Views;
+import org.jtheque.views.components.MainComponent;
 import org.jtheque.views.impl.MainController;
 import org.jtheque.views.impl.components.MainTabbedPane;
 import org.jtheque.views.impl.components.menu.JThequeMenuBar;
@@ -56,7 +56,7 @@ import java.util.Collection;
  *
  * @author Baptiste Wicht
  */
-public final class MainView extends SwingFrameView<Model> implements TitleListener, org.jtheque.views.able.windows.MainView {
+public final class MainView extends SwingFrameView<Model> implements TitleListener, org.jtheque.views.windows.MainView {
     private MainTabbedPane tab;
 
     private MainController controller;

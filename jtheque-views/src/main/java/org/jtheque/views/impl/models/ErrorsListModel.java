@@ -32,9 +32,9 @@ package org.jtheque.views.impl.models;
  * limitations under the License.
  */
 
-import org.jtheque.errors.able.ErrorListener;
-import org.jtheque.errors.able.Error;
-import org.jtheque.errors.able.ErrorService;
+import org.jtheque.errors.*;
+import org.jtheque.errors.Error;
+import org.jtheque.errors.ErrorListener;
 import org.jtheque.ui.utils.models.SimpleListModel;
 
 import java.util.Collection;
@@ -44,7 +44,7 @@ import java.util.Collection;
  *
  * @author Baptiste Wicht
  */
-public final class ErrorsListModel extends SimpleListModel<Error> implements ErrorListener {
+public final class ErrorsListModel extends SimpleListModel<org.jtheque.errors.Error> implements ErrorListener {
     private static final long serialVersionUID = 3355362999481373712L;
 
     /**

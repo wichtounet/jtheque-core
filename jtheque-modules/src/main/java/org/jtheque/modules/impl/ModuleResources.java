@@ -16,7 +16,7 @@ package org.jtheque.modules.impl;
  * limitations under the License.
  */
 
-import org.jtheque.resources.able.Resource;
+import org.jtheque.resources.Resource;
 import org.jtheque.utils.annotations.Immutable;
 import org.jtheque.utils.collections.CollectionUtils;
 

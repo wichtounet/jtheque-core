@@ -17,7 +17,7 @@ package org.jtheque.views.impl.actions.config;
  */
 
 import org.jtheque.ui.utils.actions.JThequeSimpleAction;
-import org.jtheque.views.able.config.NetworkConfigView;
+import org.jtheque.views.config.NetworkConfigView;
 
 import java.awt.event.ActionEvent;
 

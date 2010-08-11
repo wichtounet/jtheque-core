@@ -16,7 +16,7 @@ package org.jtheque.images.impl;
  * limitations under the License.
  */
 
-import org.jtheque.images.able.ImageService;
+import org.jtheque.images.ImageService;
 import org.jtheque.utils.annotations.GuardedInternally;
 import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.collections.CollectionUtils;

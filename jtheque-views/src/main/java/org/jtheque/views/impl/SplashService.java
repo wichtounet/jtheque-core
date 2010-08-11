@@ -1,10 +1,10 @@
 package org.jtheque.views.impl;
 
-import org.jtheque.core.able.Core;
-import org.jtheque.features.able.FeatureService;
+import org.jtheque.core.Core;
+import org.jtheque.features.FeatureService;
 import org.jtheque.utils.ui.SwingUtils;
-import org.jtheque.views.able.panel.SplashView;
-import org.jtheque.views.able.windows.MainView;
+import org.jtheque.views.panel.SplashView;
+import org.jtheque.views.windows.MainView;
 import org.jtheque.views.impl.components.menu.CoreMenu;
 import org.jtheque.views.impl.components.panel.SplashScreenPane;
 
@@ -32,7 +32,7 @@ import org.springframework.context.ApplicationContextAware;
  *
  * @author Baptiste Wicht
  */
-public final class SplashService implements org.jtheque.views.able.SplashService, ApplicationContextAware {
+public final class SplashService implements org.jtheque.views.SplashService, ApplicationContextAware {
     private SplashView splashScreenPane;
     private boolean mainDisplayed;
 

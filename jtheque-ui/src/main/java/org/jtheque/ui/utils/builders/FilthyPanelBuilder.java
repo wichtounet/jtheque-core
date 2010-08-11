@@ -1,8 +1,8 @@
 package org.jtheque.ui.utils.builders;
 
-import org.jtheque.ui.able.components.Borders;
-import org.jtheque.ui.able.components.I18nLabel;
-import org.jtheque.ui.able.components.filthy.Filthy;
+import org.jtheque.ui.components.Borders;
+import org.jtheque.ui.components.I18nLabel;
+import org.jtheque.ui.components.filthy.Filthy;
 
 import org.jdesktop.swingx.JXTree;
 

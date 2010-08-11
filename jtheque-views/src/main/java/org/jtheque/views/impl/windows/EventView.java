@@ -1,12 +1,12 @@
 package org.jtheque.views.impl.windows;
 
-import org.jtheque.events.able.Event;
-import org.jtheque.events.able.EventService;
-import org.jtheque.i18n.able.LanguageService;
-import org.jtheque.ui.able.Model;
+import org.jtheque.events.Event;
+import org.jtheque.events.EventService;
+import org.jtheque.i18n.LanguageService;
+import org.jtheque.ui.Model;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.ui.utils.builders.PanelBuilder;
-import org.jtheque.ui.able.components.filthy.Filthy;
+import org.jtheque.ui.components.filthy.Filthy;
 import org.jtheque.ui.utils.models.SimpleListModel;
 import org.jtheque.ui.utils.windows.dialogs.SwingFilthyBuildedDialogView;
 import org.jtheque.utils.ui.GridBagUtils;
@@ -47,7 +47,7 @@ import java.util.Locale;
  *
  * @author Baptiste Wicht
  */
-public final class EventView extends SwingFilthyBuildedDialogView<Model> implements ListSelectionListener, ItemListener, org.jtheque.views.able.windows.EventView {
+public final class EventView extends SwingFilthyBuildedDialogView<Model> implements ListSelectionListener, ItemListener, org.jtheque.views.windows.EventView {
     private JXTable tableEvents;
     private EventsTableModel eventsModel;
 

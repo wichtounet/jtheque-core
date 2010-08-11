@@ -16,8 +16,8 @@ package org.jtheque.views.impl.models;
  * limitations under the License.
  */
 
-import org.jtheque.resources.able.Resource;
-import org.jtheque.resources.able.ResourceService;
+import org.jtheque.resources.Resource;
+import org.jtheque.resources.ResourceService;
 import org.jtheque.ui.utils.models.SimpleListModel;
 
 /**

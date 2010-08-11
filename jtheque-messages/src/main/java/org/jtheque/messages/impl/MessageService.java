@@ -16,19 +16,19 @@ package org.jtheque.messages.impl;
  * limitations under the License.
  */
 
-import org.jtheque.core.able.ApplicationListener;
-import org.jtheque.core.able.Core;
-import org.jtheque.core.able.application.Application;
-import org.jtheque.errors.able.ErrorService;
-import org.jtheque.errors.able.Errors;
-import org.jtheque.events.able.EventLevel;
-import org.jtheque.events.able.EventService;
-import org.jtheque.events.able.Events;
-import org.jtheque.messages.able.Message;
-import org.jtheque.modules.able.ModuleResourceCache;
-import org.jtheque.modules.able.ModuleService;
-import org.jtheque.modules.able.Module;
-import org.jtheque.modules.able.ModuleListener;
+import org.jtheque.core.Core;
+import org.jtheque.core.ApplicationListener;
+import org.jtheque.core.application.Application;
+import org.jtheque.errors.ErrorService;
+import org.jtheque.errors.Errors;
+import org.jtheque.events.EventLevel;
+import org.jtheque.events.EventService;
+import org.jtheque.events.Events;
+import org.jtheque.messages.Message;
+import org.jtheque.modules.ModuleResourceCache;
+import org.jtheque.modules.ModuleService;
+import org.jtheque.modules.Module;
+import org.jtheque.modules.ModuleListener;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.bean.IntDate;
 import org.jtheque.utils.collections.ArrayUtils;
@@ -45,7 +45,7 @@ import java.util.Collection;
  *
  * @author Baptiste Wicht
  */
-public final class MessageService implements org.jtheque.messages.able.MessageService, ModuleListener, ApplicationListener {
+public final class MessageService implements org.jtheque.messages.MessageService, ModuleListener, ApplicationListener {
     private final Collection<Message> messages = CollectionUtils.newList();
 
     private final Core core;

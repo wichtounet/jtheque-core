@@ -16,7 +16,7 @@ package org.jtheque.ui.impl.components;
  * limitations under the License.
  */
 
-import org.jtheque.ui.able.ViewComponent;
+import org.jtheque.ui.ViewComponent;
 
 import javax.swing.JLabel;
 

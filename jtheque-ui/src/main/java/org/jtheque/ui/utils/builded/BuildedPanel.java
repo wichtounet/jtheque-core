@@ -1,9 +1,9 @@
 package org.jtheque.ui.utils.builded;
 
-import org.jtheque.i18n.able.LanguageService;
-import org.jtheque.i18n.able.Internationalizable;
-import org.jtheque.i18n.able.InternationalizableContainer;
-import org.jtheque.ui.able.Model;
+import org.jtheque.i18n.LanguageService;
+import org.jtheque.i18n.Internationalizable;
+import org.jtheque.i18n.InternationalizableContainer;
+import org.jtheque.ui.Model;
 import org.jtheque.ui.utils.AbstractPanelView;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.ui.utils.builders.JThequePanelBuilder;

@@ -15,6 +15,6 @@
 
     <bean id="eventsService" class="org.jtheque.events.impl.EventService"/>
 
-    <osgi:service ref="eventsService" interface="org.jtheque.events.able.EventService"/>
+    <osgi:service ref="eventsService" interface="org.jtheque.events.EventService"/>
 
 </beans>

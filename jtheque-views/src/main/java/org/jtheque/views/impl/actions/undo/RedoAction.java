@@ -17,8 +17,8 @@ package org.jtheque.views.impl.actions.undo;
  */
 
 import org.jtheque.i18n.impl.LanguageService;
-import org.jtheque.undo.able.IUndoRedoService;
-import org.jtheque.undo.able.StateListener;
+import org.jtheque.undo.IUndoRedoService;
+import org.jtheque.undo.StateListener;
 
 import javax.annotation.PreDestroy;
 

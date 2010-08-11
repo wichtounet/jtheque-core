@@ -1,10 +1,10 @@
 package org.jtheque.i18n.impl;
 
 import org.jtheque.core.utils.SystemProperty;
-import org.jtheque.i18n.able.I18NResource;
-import org.jtheque.i18n.able.I18NResourceFactory;
-import org.jtheque.i18n.able.Internationalizable;
-import org.jtheque.states.able.StateService;
+import org.jtheque.i18n.I18NResource;
+import org.jtheque.i18n.I18NResourceFactory;
+import org.jtheque.i18n.Internationalizable;
+import org.jtheque.states.StateService;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.bean.Version;
@@ -42,7 +42,7 @@ import java.util.Set;
  * @author Baptiste Wicht
  */
 @ThreadSafe
-public final class LanguageService implements org.jtheque.i18n.able.LanguageService {
+public final class LanguageService implements org.jtheque.i18n.LanguageService {
     private static final String[] ZERO_LENGTH_ARRAY = new String[0];
 
     private final Map<String, String> baseNames = CollectionUtils.newConcurrentMap(10);
@@ -170,7 +170,7 @@ public final class LanguageService implements org.jtheque.i18n.able.LanguageServ
     }
 
     @Override
-    public void addInternationalizable(Internationalizable internationalizable) { 
+    public void addInternationalizable(Internationalizable internationalizable) {
         internationalizables.add(internationalizable);
     }
 

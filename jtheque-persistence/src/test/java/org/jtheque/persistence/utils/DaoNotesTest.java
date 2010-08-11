@@ -1,7 +1,7 @@
 package org.jtheque.persistence.utils;
 
-import org.jtheque.persistence.able.DaoNotes;
-import org.jtheque.persistence.able.Note;
+import org.jtheque.persistence.DaoNotes;
+import org.jtheque.persistence.Note;
 
 import org.junit.Test;
 

@@ -16,9 +16,9 @@ package org.jtheque.views.impl.models;
  * limitations under the License.
  */
 
-import org.jtheque.modules.able.ModuleService;
-import org.jtheque.modules.able.Module;
-import org.jtheque.modules.able.ModuleListener;
+import org.jtheque.modules.ModuleService;
+import org.jtheque.modules.Module;
+import org.jtheque.modules.ModuleListener;
 
 import javax.swing.DefaultListModel;
 

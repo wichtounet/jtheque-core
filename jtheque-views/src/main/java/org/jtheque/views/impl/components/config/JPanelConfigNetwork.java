@@ -16,18 +16,18 @@ package org.jtheque.views.impl.components.config;
  * limitations under the License.
  */
 
-import org.jtheque.core.able.Core;
-import org.jtheque.core.able.CoreConfiguration;
-import org.jtheque.ui.able.components.TextField;
-import org.jtheque.ui.able.components.filthy.Filthy;
-import org.jtheque.ui.able.constraints.Constraint;
-import org.jtheque.ui.able.constraints.Constraints;
+import org.jtheque.core.Core;
+import org.jtheque.core.CoreConfiguration;
+import org.jtheque.ui.components.TextField;
+import org.jtheque.ui.components.filthy.Filthy;
+import org.jtheque.ui.constraints.Constraint;
+import org.jtheque.ui.constraints.Constraints;
 import org.jtheque.ui.utils.builded.OSGIFilthyBuildedPanel;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.ui.GridBagUtils;
-import org.jtheque.views.able.components.ConfigTabComponent;
-import org.jtheque.views.able.config.NetworkConfigView;
+import org.jtheque.views.components.ConfigTabComponent;
+import org.jtheque.views.config.NetworkConfigView;
 import org.jtheque.views.impl.actions.config.CheckProxyAction;
 
 import javax.swing.JCheckBox;

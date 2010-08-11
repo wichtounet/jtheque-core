@@ -1,12 +1,12 @@
 package org.jtheque.core.impl;
 
-import org.jtheque.core.able.Core;
-import org.jtheque.core.able.lifecycle.FunctionListener;
-import org.jtheque.core.able.lifecycle.LifeCycle;
-import org.jtheque.core.able.lifecycle.TitleListener;
+import org.jtheque.core.Core;
+import org.jtheque.core.lifecycle.FunctionListener;
+import org.jtheque.core.lifecycle.LifeCycle;
+import org.jtheque.core.lifecycle.TitleListener;
 import org.jtheque.core.utils.SystemProperty;
-import org.jtheque.events.able.EventService;
-import org.jtheque.events.able.Events;
+import org.jtheque.events.EventService;
+import org.jtheque.events.Events;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.ThreadUtils;
 import org.jtheque.utils.annotations.GuardedInternally;

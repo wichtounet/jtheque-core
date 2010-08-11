@@ -2,9 +2,9 @@ package org.jtheque.ui.utils.builded;
 
 import org.jtheque.core.utils.OSGiUtils;
 import org.jtheque.core.utils.SwingSpringProxy;
-import org.jtheque.errors.able.Error;
-import org.jtheque.errors.able.ErrorService;
-import org.jtheque.i18n.able.LanguageService;
+import org.jtheque.errors.*;
+import org.jtheque.errors.Error;
+import org.jtheque.i18n.LanguageService;
 import org.jtheque.utils.collections.CollectionUtils;
 
 import org.osgi.framework.BundleContext;
@@ -109,7 +109,7 @@ public abstract class OSGIBuildedPanel extends BuildedPanel implements BundleCon
      *
      * @param errors The errors to fill.
      */
-    protected void validate(Collection<org.jtheque.errors.able.Error> errors) {
+    protected void validate(Collection<org.jtheque.errors.Error> errors) {
         //Default empty implementation
     }
 }

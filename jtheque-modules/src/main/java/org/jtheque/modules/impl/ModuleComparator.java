@@ -16,7 +16,7 @@ package org.jtheque.modules.impl;
  * limitations under the License.
  */
 
-import org.jtheque.modules.able.Module;
+import org.jtheque.modules.Module;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.collections.ArrayUtils;
 

@@ -1,6 +1,6 @@
 package org.jtheque.resources.impl;
 
-import org.jtheque.resources.able.Resource;
+import org.jtheque.resources.Resource;
 import org.jtheque.utils.annotations.Immutable;
 import org.jtheque.utils.bean.Version;
 

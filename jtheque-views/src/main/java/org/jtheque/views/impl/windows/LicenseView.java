@@ -16,20 +16,20 @@ package org.jtheque.views.impl.windows;
  * limitations under the License.
  */
 
-import org.jtheque.core.able.Core;
-import org.jtheque.ui.able.Model;
+import org.jtheque.core.Core;
+import org.jtheque.ui.Model;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.ui.utils.windows.dialogs.SwingFilthyBuildedDialogView;
 import org.jtheque.utils.io.FileUtils;
 import org.jtheque.utils.ui.GridBagUtils;
-import org.jtheque.views.able.ViewService;
+import org.jtheque.views.ViewService;
 
 /**
  * A view to display the license.
  *
  * @author Baptiste Wicht
  */
-public final class LicenseView extends SwingFilthyBuildedDialogView<Model> implements org.jtheque.views.able.windows.LicenseView {
+public final class LicenseView extends SwingFilthyBuildedDialogView<Model> implements org.jtheque.views.windows.LicenseView {
     private static final int DEFAULT_WIDTH = 800;
     private static final int DEFAULT_HEIGHT = 600;
 

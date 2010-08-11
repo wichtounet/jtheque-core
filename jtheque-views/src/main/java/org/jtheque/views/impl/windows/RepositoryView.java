@@ -16,15 +16,15 @@ package org.jtheque.views.impl.windows;
  * limitations under the License.
  */
 
-import org.jtheque.i18n.able.LanguageService;
-import org.jtheque.modules.able.ModuleDescription;
-import org.jtheque.modules.able.ModuleService;
-import org.jtheque.ui.able.Model;
+import org.jtheque.i18n.LanguageService;
+import org.jtheque.modules.ModuleDescription;
+import org.jtheque.modules.ModuleService;
+import org.jtheque.ui.Model;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.ui.utils.builders.PanelBuilder;
 import org.jtheque.ui.utils.models.SimpleListModel;
 import org.jtheque.ui.utils.windows.dialogs.SwingFilthyBuildedDialogView;
-import org.jtheque.update.able.UpdateService;
+import org.jtheque.update.UpdateService;
 import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.utils.ui.SwingUtils;
 import org.jtheque.views.impl.components.panel.ModulePanel;
@@ -38,7 +38,7 @@ import javax.swing.JList;
  *
  * @author Baptiste Wicht
  */
-public final class RepositoryView extends SwingFilthyBuildedDialogView<Model> implements org.jtheque.views.able.panel.RepositoryView {
+public final class RepositoryView extends SwingFilthyBuildedDialogView<Model> implements org.jtheque.views.panel.RepositoryView {
     private JList list;
 
     @Resource

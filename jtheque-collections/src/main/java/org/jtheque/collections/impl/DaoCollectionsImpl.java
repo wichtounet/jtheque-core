@@ -16,10 +16,10 @@ package org.jtheque.collections.impl;
  * limitations under the License.
  */
 
-import org.jtheque.collections.able.DaoCollections;
-import org.jtheque.collections.able.DataCollection;
-import org.jtheque.persistence.able.Entity;
-import org.jtheque.persistence.able.QueryMapper;
+import org.jtheque.collections.DaoCollections;
+import org.jtheque.collections.DataCollection;
+import org.jtheque.persistence.Entity;
+import org.jtheque.persistence.QueryMapper;
 import org.jtheque.persistence.utils.CachedJDBCDao;
 import org.jtheque.persistence.utils.EntityUtils;
 import org.jtheque.persistence.utils.Query;

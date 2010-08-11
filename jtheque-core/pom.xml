@@ -67,7 +67,7 @@
                 <configuration>
                     <instructions>
                         <Bundle-SymbolicName>${pom.artifactId}</Bundle-SymbolicName>
-                        <Export-Package>org.jtheque.core.able.application, org.jtheque.core.able.lifecycle,
+                        <Export-Package>org.jtheque.core.application, org.jtheque.core.lifecycle,
                             org.jtheque.core.able
                         </Export-Package>
                         <Bundle-Vendor>Baptiste Wicht</Bundle-Vendor>

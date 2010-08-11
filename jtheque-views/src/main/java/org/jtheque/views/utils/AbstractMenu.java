@@ -1,13 +1,13 @@
 package org.jtheque.views.utils;
 
-import org.jtheque.features.able.CoreFeature;
-import org.jtheque.features.able.Feature;
-import org.jtheque.features.able.Features;
-import org.jtheque.features.able.Feature.FeatureType;
-import org.jtheque.features.able.Menu;
-import org.jtheque.i18n.able.LanguageService;
-import org.jtheque.i18n.able.Internationalizable;
-import org.jtheque.ui.able.Controller;
+import org.jtheque.features.CoreFeature;
+import org.jtheque.features.Feature;
+import org.jtheque.features.Features;
+import org.jtheque.features.Menu;
+import org.jtheque.features.Feature.FeatureType;
+import org.jtheque.i18n.LanguageService;
+import org.jtheque.i18n.Internationalizable;
+import org.jtheque.ui.Controller;
 import org.jtheque.ui.utils.actions.ActionFactory;
 import org.jtheque.ui.utils.actions.JThequeAction;
 import org.jtheque.utils.collections.CollectionUtils;

@@ -16,9 +16,9 @@ package org.jtheque.views.impl.components.renderers;
  * limitations under the License.
  */
 
-import org.jtheque.i18n.able.LanguageService;
-import org.jtheque.modules.able.ModuleService;
-import org.jtheque.update.able.UpdateService;
+import org.jtheque.i18n.LanguageService;
+import org.jtheque.modules.ModuleService;
+import org.jtheque.update.UpdateService;
 import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.views.impl.components.panel.ModulePanel;
 

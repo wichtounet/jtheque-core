@@ -16,8 +16,8 @@ package org.jtheque.errors.impl;
  * limitations under the License.
  */
 
-import org.jtheque.errors.able.ErrorListener;
-import org.jtheque.errors.able.Error;
+import org.jtheque.errors.Error;
+import org.jtheque.errors.ErrorListener;
 import org.jtheque.utils.annotations.GuardedInternally;
 import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.collections.CollectionUtils;
@@ -31,7 +31,7 @@ import java.util.Collection;
  * @author Baptiste Wicht
  */
 @ThreadSafe
-public final class ErrorService implements org.jtheque.errors.able.ErrorService {
+public final class ErrorService implements org.jtheque.errors.ErrorService {
     private final Collection<Error> errors = CollectionUtils.newList();
 
     @GuardedInternally
@@ -43,7 +43,7 @@ public final class ErrorService implements org.jtheque.errors.able.ErrorService 
     }
 
     @Override
-    public synchronized void addError(Error error) {
+    public synchronized void addError(org.jtheque.errors.Error error) {
         errors.add(error);
 
         fireErrorOccurred(error);

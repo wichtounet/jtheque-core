@@ -16,7 +16,7 @@ package org.jtheque.collections.impl;
  * limitations under the License.
  */
 
-import org.jtheque.collections.able.DataCollection;
+import org.jtheque.collections.DataCollection;
 import org.jtheque.persistence.utils.AbstractEntity;
 import org.jtheque.utils.bean.EqualsBuilder;
 import org.jtheque.utils.bean.HashCodeUtils;

@@ -16,18 +16,18 @@ package org.jtheque.views.impl.components.config;
  * limitations under the License.
  */
 
-import org.jtheque.core.able.Core;
-import org.jtheque.i18n.able.LanguageService;
-import org.jtheque.ui.able.constraints.Constraint;
-import org.jtheque.ui.able.constraints.Constraints;
+import org.jtheque.core.Core;
+import org.jtheque.i18n.LanguageService;
+import org.jtheque.ui.constraints.Constraint;
+import org.jtheque.ui.constraints.Constraints;
 import org.jtheque.ui.utils.builded.OSGIFilthyBuildedPanel;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
-import org.jtheque.ui.able.components.filthy.Filthy;
+import org.jtheque.ui.components.filthy.Filthy;
 import org.jtheque.ui.utils.models.SimpleListModel;
 import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.ui.GridBagUtils;
-import org.jtheque.views.able.components.ConfigTabComponent;
-import org.jtheque.views.able.config.AppearanceConfigView;
+import org.jtheque.views.components.ConfigTabComponent;
+import org.jtheque.views.config.AppearanceConfigView;
 
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;

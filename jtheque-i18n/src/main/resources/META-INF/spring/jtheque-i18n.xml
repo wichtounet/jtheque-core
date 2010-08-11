@@ -17,7 +17,7 @@
         <constructor-arg ref="stateService"/>
     </bean>
 
-    <osgi:service ref="languageService" interface="org.jtheque.i18n.able.LanguageService"/>
+    <osgi:service ref="languageService" interface="org.jtheque.i18n.LanguageService"/>
 
-    <osgi:reference id="stateService" interface="org.jtheque.states.able.StateService"/>
+    <osgi:reference id="stateService" interface="org.jtheque.states.StateService"/>
 </beans>

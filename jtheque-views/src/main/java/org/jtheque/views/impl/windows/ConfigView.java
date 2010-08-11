@@ -16,16 +16,16 @@ package org.jtheque.views.impl.windows;
  * limitations under the License.
  */
 
-import org.jtheque.i18n.able.LanguageService;
-import org.jtheque.ui.able.Model;
+import org.jtheque.i18n.LanguageService;
+import org.jtheque.ui.Model;
 import org.jtheque.utils.SimplePropertiesCache;
-import org.jtheque.ui.able.constraints.Constraint;
+import org.jtheque.ui.constraints.Constraint;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
-import org.jtheque.ui.able.components.LayerTabbedPane;
+import org.jtheque.ui.components.LayerTabbedPane;
 import org.jtheque.ui.utils.windows.dialogs.SwingFilthyBuildedDialogView;
 import org.jtheque.utils.ui.GridBagUtils;
-import org.jtheque.views.able.Views;
-import org.jtheque.views.able.components.ConfigTabComponent;
+import org.jtheque.views.Views;
+import org.jtheque.views.components.ConfigTabComponent;
 
 import org.slf4j.LoggerFactory;
 
@@ -36,7 +36,7 @@ import java.util.Map;
  *
  * @author Baptiste Wicht
  */
-public final class ConfigView extends SwingFilthyBuildedDialogView<Model> implements org.jtheque.views.able.windows.ConfigView {
+public final class ConfigView extends SwingFilthyBuildedDialogView<Model> implements org.jtheque.views.windows.ConfigView {
     private LayerTabbedPane tab;
 
     @Override

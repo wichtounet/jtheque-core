@@ -16,13 +16,13 @@ package org.jtheque.file.impl;
  * limitations under the License.
  */
 
-import org.jtheque.file.able.Exporter;
-import org.jtheque.file.able.Importer;
-import org.jtheque.file.able.ModuleBackup;
-import org.jtheque.file.able.ModuleBackuper;
-import org.jtheque.modules.able.Module;
-import org.jtheque.modules.able.ModuleListener;
-import org.jtheque.modules.able.ModuleResourceCache;
+import org.jtheque.file.Exporter;
+import org.jtheque.file.Importer;
+import org.jtheque.file.ModuleBackup;
+import org.jtheque.file.ModuleBackuper;
+import org.jtheque.modules.Module;
+import org.jtheque.modules.ModuleListener;
+import org.jtheque.modules.ModuleResourceCache;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.annotations.GuardedBy;
 import org.jtheque.utils.annotations.GuardedInternally;
@@ -46,7 +46,7 @@ import java.util.Set;
  * @author Baptiste Wicht
  */
 @ThreadSafe
-public final class FileService implements org.jtheque.file.able.FileService, ModuleListener {
+public final class FileService implements org.jtheque.file.FileService, ModuleListener {
     @GuardedInternally
     private final List<ModuleBackuper> backupers = CollectionUtils.newConcurrentList();
 

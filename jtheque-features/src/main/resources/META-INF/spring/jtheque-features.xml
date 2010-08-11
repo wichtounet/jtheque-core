@@ -10,12 +10,12 @@
 
     <bean id="featureService" class="org.jtheque.features.impl.FeatureService">
         <constructor-arg>
-            <osgi:reference interface="org.jtheque.i18n.able.LanguageService"/>
+            <osgi:reference interface="org.jtheque.i18n.LanguageService"/>
         </constructor-arg>
         <constructor-arg>
-            <osgi:reference interface="org.jtheque.modules.able.ModuleService"/>
+            <osgi:reference interface="org.jtheque.modules.ModuleService"/>
         </constructor-arg>
     </bean>
 
-    <osgi:service ref="featureService" interface="org.jtheque.features.able.FeatureService"/>
+    <osgi:service ref="featureService" interface="org.jtheque.features.FeatureService"/>
 </beans>

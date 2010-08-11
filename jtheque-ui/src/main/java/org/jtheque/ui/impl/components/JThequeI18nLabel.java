@@ -16,8 +16,8 @@ package org.jtheque.ui.impl.components;
  * limitations under the License.
  */
 
-import org.jtheque.i18n.able.LanguageService;
-import org.jtheque.ui.able.components.I18nLabel;
+import org.jtheque.i18n.LanguageService;
+import org.jtheque.ui.components.I18nLabel;
 import org.jtheque.utils.collections.ArrayUtils;
 
 import java.awt.Color;

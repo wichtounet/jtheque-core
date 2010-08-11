@@ -16,8 +16,8 @@ package org.jtheque.views.impl.windows;
  * limitations under the License.
  */
 
-import org.jtheque.messages.able.Message;
-import org.jtheque.messages.able.MessageService;
+import org.jtheque.messages.Message;
+import org.jtheque.messages.MessageService;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.ui.utils.builders.PanelBuilder;
 import org.jtheque.ui.utils.windows.dialogs.SwingFilthyBuildedDialogView;
@@ -33,7 +33,7 @@ import javax.swing.JTextArea;
  *
  * @author Baptiste Wicht
  */
-public final class MessageView extends SwingFilthyBuildedDialogView<IMessageModel> implements org.jtheque.views.able.windows.MessageView {
+public final class MessageView extends SwingFilthyBuildedDialogView<IMessageModel> implements org.jtheque.views.windows.MessageView {
     private JLabel dateLabel;
     private JLabel sourceLabel;
     private JLabel titleLabel;

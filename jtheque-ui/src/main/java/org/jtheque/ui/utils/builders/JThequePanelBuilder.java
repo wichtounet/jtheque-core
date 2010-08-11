@@ -1,11 +1,11 @@
 package org.jtheque.ui.utils.builders;
 
-import org.jtheque.i18n.able.Internationalizable;
-import org.jtheque.i18n.able.InternationalizableContainer;
-import org.jtheque.ui.able.components.Borders;
-import org.jtheque.ui.able.components.Components;
-import org.jtheque.ui.able.components.I18nLabel;
-import org.jtheque.ui.able.components.JThequeCheckBox;
+import org.jtheque.i18n.Internationalizable;
+import org.jtheque.i18n.InternationalizableContainer;
+import org.jtheque.ui.components.Borders;
+import org.jtheque.ui.components.Components;
+import org.jtheque.ui.components.I18nLabel;
+import org.jtheque.ui.components.JThequeCheckBox;
 import org.jtheque.utils.ui.ButtonBarBuilder;
 import org.jtheque.utils.ui.GridBagUtils;
 

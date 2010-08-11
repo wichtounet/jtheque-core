@@ -1,9 +1,8 @@
 package org.jtheque.ui.impl.constraints;
 
-import org.jtheque.errors.able.Error;
-import org.jtheque.errors.able.Errors;
-import org.jtheque.ui.able.components.FileChooser;
-import org.jtheque.ui.able.constraints.Constraint;
+import org.jtheque.errors.Errors;
+import org.jtheque.ui.components.FileChooser;
+import org.jtheque.ui.constraints.Constraint;
 import org.jtheque.ui.utils.ValidationUtils;
 
 import java.io.File;
@@ -58,7 +57,7 @@ public final class ValidFileConstraint implements Constraint {
     }
 
     @Override
-    public void validate(Object field, Collection<Error> errors) {
+    public void validate(Object field, Collection<org.jtheque.errors.Error> errors) {
         if (field instanceof FileChooser) {
             String filePath = ((FileChooser) field).getFilePath();
 

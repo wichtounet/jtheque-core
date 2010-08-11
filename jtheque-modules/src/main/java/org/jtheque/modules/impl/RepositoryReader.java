@@ -16,9 +16,9 @@ package org.jtheque.modules.impl;
  * limitations under the License.
  */
 
-import org.jtheque.core.able.Core;
-import org.jtheque.modules.able.ModuleDescription;
-import org.jtheque.modules.able.Repository;
+import org.jtheque.core.Core;
+import org.jtheque.modules.ModuleDescription;
+import org.jtheque.modules.Repository;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.bean.InternationalString;

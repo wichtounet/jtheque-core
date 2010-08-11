@@ -1,12 +1,12 @@
 package org.jtheque.views.impl.controllers;
 
-import org.jtheque.collections.able.CollectionsService;
-import org.jtheque.core.able.lifecycle.LifeCycle;
-import org.jtheque.i18n.able.LanguageService;
-import org.jtheque.ui.able.Action;
+import org.jtheque.collections.CollectionsService;
+import org.jtheque.core.lifecycle.LifeCycle;
+import org.jtheque.i18n.LanguageService;
+import org.jtheque.ui.Action;
 import org.jtheque.ui.utils.AbstractController;
 import org.jtheque.utils.bean.Response;
-import org.jtheque.views.able.panel.CollectionView;
+import org.jtheque.views.panel.CollectionView;
 
 import javax.annotation.Resource;
 

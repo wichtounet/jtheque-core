@@ -1,9 +1,9 @@
 package org.jtheque.modules.impl;
 
-import org.jtheque.core.able.Core;
-import org.jtheque.modules.able.Module;
-import org.jtheque.ui.able.UIUtils;
-import org.jtheque.update.able.InstallationResult;
+import org.jtheque.core.Core;
+import org.jtheque.modules.Module;
+import org.jtheque.ui.UIUtils;
+import org.jtheque.update.InstallationResult;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.ThreadUtils;
 import org.jtheque.utils.annotations.NotThreadSafe;
@@ -27,8 +27,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Semaphore;
 
-import static org.jtheque.modules.able.ModuleState.DISABLED;
-import static org.jtheque.modules.able.ModuleState.STARTED;
+import static org.jtheque.modules.ModuleState.DISABLED;
+import static org.jtheque.modules.ModuleState.STARTED;
 
 /*
  * Copyright JTheque (Baptiste Wicht)

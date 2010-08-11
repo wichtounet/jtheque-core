@@ -1,15 +1,15 @@
 package org.jtheque.views.utils;
 
-import org.jtheque.features.able.FeatureService;
-import org.jtheque.features.able.Menu;
-import org.jtheque.file.able.FileService;
-import org.jtheque.file.able.ModuleBackuper;
-import org.jtheque.schemas.able.SchemaService;
-import org.jtheque.schemas.able.Schema;
-import org.jtheque.views.able.Views;
-import org.jtheque.views.able.components.ConfigTabComponent;
-import org.jtheque.views.able.components.StateBarComponent;
-import org.jtheque.views.able.components.MainComponent;
+import org.jtheque.features.FeatureService;
+import org.jtheque.features.Menu;
+import org.jtheque.file.FileService;
+import org.jtheque.file.ModuleBackuper;
+import org.jtheque.schemas.Schema;
+import org.jtheque.schemas.SchemaService;
+import org.jtheque.views.Views;
+import org.jtheque.views.components.ConfigTabComponent;
+import org.jtheque.views.components.StateBarComponent;
+import org.jtheque.views.components.MainComponent;
 
 import org.springframework.beans.factory.config.BeanPostProcessor;
 

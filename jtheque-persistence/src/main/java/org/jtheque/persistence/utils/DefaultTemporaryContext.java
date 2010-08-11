@@ -1,6 +1,6 @@
 package org.jtheque.persistence.utils;
 
-import org.jtheque.persistence.able.TemporaryContext;
+import org.jtheque.persistence.TemporaryContext;
 import org.jtheque.utils.annotations.ThreadSafe;
 
 /*

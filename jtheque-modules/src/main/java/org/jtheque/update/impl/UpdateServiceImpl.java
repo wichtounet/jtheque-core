@@ -16,21 +16,21 @@ package org.jtheque.update.impl;
  * limitations under the License.
  */
 
-import org.jtheque.core.able.Core;
-import org.jtheque.core.able.Versionable;
+import org.jtheque.core.Core;
+import org.jtheque.core.Versionable;
 import org.jtheque.core.utils.OSGiUtils;
 import org.jtheque.core.utils.SystemProperty;
-import org.jtheque.errors.able.ErrorService;
-import org.jtheque.errors.able.Errors;
-import org.jtheque.events.able.EventLevel;
-import org.jtheque.events.able.EventService;
-import org.jtheque.events.able.Events;
-import org.jtheque.modules.able.Module;
-import org.jtheque.modules.able.ModuleState;
-import org.jtheque.resources.able.ResourceService;
-import org.jtheque.ui.able.UIUtils;
-import org.jtheque.update.able.InstallationResult;
-import org.jtheque.update.able.UpdateService;
+import org.jtheque.errors.ErrorService;
+import org.jtheque.errors.Errors;
+import org.jtheque.events.EventLevel;
+import org.jtheque.events.Events;
+import org.jtheque.events.EventService;
+import org.jtheque.modules.Module;
+import org.jtheque.modules.ModuleState;
+import org.jtheque.resources.ResourceService;
+import org.jtheque.ui.UIUtils;
+import org.jtheque.update.InstallationResult;
+import org.jtheque.update.UpdateService;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.annotations.GuardedBy;
 import org.jtheque.utils.annotations.ThreadSafe;

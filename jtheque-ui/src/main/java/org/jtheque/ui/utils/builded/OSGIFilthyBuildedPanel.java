@@ -2,10 +2,10 @@ package org.jtheque.ui.utils.builded;
 
 import org.jtheque.core.utils.OSGiUtils;
 import org.jtheque.core.utils.SwingSpringProxy;
-import org.jtheque.errors.able.Error;
-import org.jtheque.errors.able.ErrorService;
-import org.jtheque.i18n.able.LanguageService;
-import org.jtheque.ui.able.FilthyUtils;
+import org.jtheque.errors.Error;
+import org.jtheque.errors.ErrorService;
+import org.jtheque.i18n.LanguageService;
+import org.jtheque.ui.FilthyUtils;
 import org.jtheque.utils.collections.CollectionUtils;
 
 import org.osgi.framework.BundleContext;
@@ -135,7 +135,7 @@ public abstract class OSGIFilthyBuildedPanel extends FilthyBuildedPanel implemen
      *
      * @param errors The errors.
      */
-    public void validate(Collection<org.jtheque.errors.able.Error> errors) {
+    public void validate(Collection<Error> errors) {
         //Default empty implementation
     }
 }

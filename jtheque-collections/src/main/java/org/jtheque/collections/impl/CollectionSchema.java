@@ -16,8 +16,8 @@ package org.jtheque.collections.impl;
  * limitations under the License.
  */
 
-import org.jtheque.collections.able.DaoCollections;
-import org.jtheque.schemas.able.DefaultSchema;
+import org.jtheque.collections.DaoCollections;
+import org.jtheque.schemas.DefaultSchema;
 import org.jtheque.utils.bean.Version;
 
 /**

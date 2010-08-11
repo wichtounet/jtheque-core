@@ -32,14 +32,14 @@ package org.jtheque.core.impl;
  * limitations under the License.
  */
 
-import org.jtheque.core.able.ApplicationListener;
-import org.jtheque.core.able.Core;
-import org.jtheque.core.able.CoreConfiguration;
-import org.jtheque.core.able.FilesContainer;
-import org.jtheque.core.able.FoldersContainer;
-import org.jtheque.core.able.application.Application;
-import org.jtheque.images.able.ImageService;
-import org.jtheque.states.able.StateService;
+import org.jtheque.core.ApplicationListener;
+import org.jtheque.core.Core;
+import org.jtheque.core.CoreConfiguration;
+import org.jtheque.core.FilesContainer;
+import org.jtheque.core.FoldersContainer;
+import org.jtheque.core.application.Application;
+import org.jtheque.images.ImageService;
+import org.jtheque.states.StateService;
 import org.jtheque.utils.annotations.GuardedInternally;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.collections.CollectionUtils;

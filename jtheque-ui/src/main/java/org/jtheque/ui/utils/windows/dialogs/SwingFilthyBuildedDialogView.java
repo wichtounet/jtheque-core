@@ -16,9 +16,9 @@ package org.jtheque.ui.utils.windows.dialogs;
  * limitations under the License.
  */
 
-import org.jtheque.ui.able.FilthyUtils;
-import org.jtheque.ui.able.Model;
-import org.jtheque.ui.able.components.filthy.FilthyBackgroundPanel;
+import org.jtheque.ui.FilthyUtils;
+import org.jtheque.ui.Model;
+import org.jtheque.ui.components.filthy.FilthyBackgroundPanel;
 import org.jtheque.ui.utils.builders.FilthyPanelBuilder;
 import org.jtheque.ui.utils.builders.JThequePanelBuilder;
 

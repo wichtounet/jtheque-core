@@ -16,8 +16,8 @@ package org.jtheque.core.impl;
  * limitations under the License.
  */
 
-import org.jtheque.core.able.Core;
-import org.jtheque.core.able.FilesContainer;
+import org.jtheque.core.Core;
+import org.jtheque.core.FilesContainer;
 import org.jtheque.utils.annotations.ThreadSafe;
 
 import java.io.File;

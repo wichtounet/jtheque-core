@@ -1,9 +1,9 @@
 package org.jtheque.views.impl.components.panel;
 
-import org.jtheque.core.able.Core;
-import org.jtheque.core.able.application.Application;
-import org.jtheque.i18n.able.LanguageService;
-import org.jtheque.i18n.able.Internationalizable;
+import org.jtheque.core.Core;
+import org.jtheque.core.application.Application;
+import org.jtheque.i18n.LanguageService;
+import org.jtheque.i18n.Internationalizable;
 import org.jtheque.ui.utils.AnimationUtils;
 import org.jtheque.utils.DesktopUtils;
 import org.jtheque.utils.StringUtils;
@@ -12,8 +12,8 @@ import org.jtheque.utils.ui.ImageUtils;
 import org.jtheque.utils.ui.PaintUtils;
 import org.jtheque.utils.ui.SizeTracker;
 import org.jtheque.utils.ui.SwingUtils;
-import org.jtheque.views.able.windows.AboutView;
-import org.jtheque.views.able.windows.LicenseView;
+import org.jtheque.views.windows.AboutView;
+import org.jtheque.views.windows.LicenseView;
 import org.jtheque.views.impl.models.AboutInfo;
 import org.jtheque.views.impl.models.AboutModel;
 

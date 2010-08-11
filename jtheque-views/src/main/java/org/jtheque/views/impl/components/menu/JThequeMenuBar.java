@@ -16,13 +16,13 @@ package org.jtheque.views.impl.components.menu;
  * limitations under the License.
  */
 
-import org.jtheque.features.able.Feature;
-import org.jtheque.features.able.FeatureListener;
-import org.jtheque.features.able.FeatureService;
-import org.jtheque.i18n.able.LanguageService;
-import org.jtheque.i18n.able.Internationalizable;
-import org.jtheque.i18n.able.InternationalizableContainer;
-import org.jtheque.images.able.ImageService;
+import org.jtheque.features.Feature;
+import org.jtheque.features.FeatureService;
+import org.jtheque.features.FeatureListener;
+import org.jtheque.i18n.Internationalizable;
+import org.jtheque.i18n.LanguageService;
+import org.jtheque.i18n.InternationalizableContainer;
+import org.jtheque.images.ImageService;
 import org.jtheque.utils.bean.Numbers;
 import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.ui.SwingUtils;

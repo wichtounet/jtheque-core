@@ -1,16 +1,16 @@
 package org.jtheque.views.impl.components.panel;
 
-import org.jtheque.i18n.able.LanguageService;
-import org.jtheque.modules.able.ModuleService;
-import org.jtheque.modules.able.Module;
-import org.jtheque.ui.able.FilthyUtils;
+import org.jtheque.i18n.LanguageService;
+import org.jtheque.modules.ModuleService;
+import org.jtheque.modules.Module;
+import org.jtheque.ui.FilthyUtils;
 import org.jtheque.ui.utils.builded.OSGIFilthyBuildedPanel;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
-import org.jtheque.update.able.UpdateService;
+import org.jtheque.update.UpdateService;
 import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.utils.ui.SwingUtils;
-import org.jtheque.views.able.components.ModulesPanelView;
-import org.jtheque.views.able.panel.ModuleView;
+import org.jtheque.views.components.ModulesPanelView;
+import org.jtheque.views.panel.ModuleView;
 import org.jtheque.views.impl.components.renderers.ModuleListRenderer;
 import org.jtheque.views.impl.models.ModuleListModel;
 

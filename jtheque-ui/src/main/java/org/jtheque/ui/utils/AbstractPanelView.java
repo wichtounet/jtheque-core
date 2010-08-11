@@ -1,7 +1,7 @@
 package org.jtheque.ui.utils;
 
-import org.jtheque.ui.able.Model;
-import org.jtheque.ui.able.View;
+import org.jtheque.ui.Model;
+import org.jtheque.ui.View;
 import org.jtheque.utils.ui.SwingUtils;
 
 import org.jdesktop.swingx.JXPanel;

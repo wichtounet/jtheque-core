@@ -16,11 +16,11 @@ package org.jtheque.modules.impl;
  * limitations under the License.
  */
 
-import org.jtheque.modules.able.Module;
-import org.jtheque.modules.able.ModuleState;
-import org.jtheque.states.able.Load;
-import org.jtheque.states.able.Save;
-import org.jtheque.states.able.State;
+import org.jtheque.modules.Module;
+import org.jtheque.modules.ModuleState;
+import org.jtheque.states.Load;
+import org.jtheque.states.Save;
+import org.jtheque.states.State;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.collections.CollectionUtils;

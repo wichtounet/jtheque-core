@@ -16,8 +16,8 @@ package org.jtheque.persistence.impl;
  * limitations under the License.
  */
 
-import org.jtheque.persistence.able.DataContainer;
-import org.jtheque.persistence.able.Entity;
+import org.jtheque.persistence.Entity;
+import org.jtheque.persistence.DataContainer;
 import org.jtheque.persistence.utils.DataContainerProvider;
 import org.jtheque.utils.annotations.ThreadSafe;
 
@@ -27,7 +27,7 @@ import org.jtheque.utils.annotations.ThreadSafe;
  * @author Baptiste Wicht
  */
 @ThreadSafe
-public final class PersistenceService implements org.jtheque.persistence.able.PersistenceService {
+public final class PersistenceService implements org.jtheque.persistence.PersistenceService {
     @Override
     public void clearDatabase() {
         synchronized (this) {
