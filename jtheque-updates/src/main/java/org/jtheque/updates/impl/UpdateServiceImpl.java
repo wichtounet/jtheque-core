@@ -19,12 +19,6 @@ package org.jtheque.updates.impl;
 import org.jtheque.core.Core;
 import org.jtheque.core.Versionable;
 import org.jtheque.core.utils.OSGiUtils;
-import org.jtheque.core.utils.SystemProperty;
-import org.jtheque.errors.ErrorService;
-import org.jtheque.errors.Errors;
-import org.jtheque.events.EventLevel;
-import org.jtheque.events.Events;
-import org.jtheque.events.EventService;
 import org.jtheque.modules.Module;
 import org.jtheque.modules.ModuleState;
 import org.jtheque.resources.ResourceService;
@@ -32,6 +26,7 @@ import org.jtheque.ui.UIUtils;
 import org.jtheque.updates.InstallationResult;
 import org.jtheque.updates.UpdateService;
 import org.jtheque.utils.StringUtils;
+import org.jtheque.utils.SystemProperty;
 import org.jtheque.utils.annotations.GuardedBy;
 import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.bean.Version;
@@ -65,12 +60,6 @@ public final class UpdateServiceImpl implements UpdateService {
     private UIUtils uiUtils;
 
     @Resource
-    private EventService eventService;
-
-    @Resource
-    private ErrorService errorService;
-
-    @Resource
     private ResourceService resourceService;
 
     @GuardedBy("this")
@@ -78,8 +67,8 @@ public final class UpdateServiceImpl implements UpdateService {
 
     @Override
     public void updateCore() {
-        if (isDescriptorNotReachable(Core.DESCRIPTOR_FILE_URL)) {
-            return;
+        if (WebUtils.isURLNotReachable(Core.DESCRIPTOR_FILE_URL)) {
+            throw new IllegalStateException("The URL is not reachable");
         }
 
         synchronized (this) {
@@ -95,34 +84,23 @@ public final class UpdateServiceImpl implements UpdateService {
 
     @Override
     public InstallationResult installModule(String url) {
-        if (!WebUtils.isURLReachable(url)) {
-            addNotReachableError(url);
-
-            eventService.addEvent(
-                    Events.newEvent(EventLevel.ERROR, "System", "events.updates.network", EventService.CORE_EVENT_LOG));
-
+        if (WebUtils.isURLNotReachable(url)) {
             return new SimpleInstallationResult(false, "");
         }
 
-        try {
-            synchronized (this) {
-                ModuleVersion moduleVersion = descriptorsLoader.getMostRecentModuleVersion(url);
+        synchronized (this) {
+            ModuleVersion moduleVersion = descriptorsLoader.getMostRecentModuleVersion(url);
 
-                applyModuleVersion(moduleVersion);
+            applyModuleVersion(moduleVersion);
 
-                return new SimpleInstallationResult(true, moduleVersion.getModuleFile());
-            }
-        } catch (Exception e) {
-            LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
-
-            return new SimpleInstallationResult(false, "");
+            return new SimpleInstallationResult(true, moduleVersion.getModuleFile());
         }
     }
 
     @Override
     public void update(Module module) {
-        if (isDescriptorNotReachable(module.getDescriptorURL())) {
-            return;
+        if (WebUtils.isURLNotReachable(module.getDescriptorURL())) {
+            throw new IllegalStateException("The URL is not reachable");
         }
 
         if (module.getState() == ModuleState.STARTED) {
@@ -136,8 +114,8 @@ public final class UpdateServiceImpl implements UpdateService {
 
     @Override
     public Version getMostRecentCoreVersion() {
-        if (isDescriptorNotReachable(Core.DESCRIPTOR_FILE_URL)) {
-            return null;
+        if (WebUtils.isURLNotReachable(Core.DESCRIPTOR_FILE_URL)) {
+            throw new IllegalStateException("The URL is not reachable");
         }
 
         synchronized (this) {
@@ -147,29 +125,12 @@ public final class UpdateServiceImpl implements UpdateService {
 
     @Override
     public Version getMostRecentVersion(Versionable object) {
-        if (isDescriptorNotReachable(object.getDescriptorURL())) {
-            return null;
+        if (WebUtils.isURLNotReachable(object.getDescriptorURL())) {
+            throw new IllegalStateException("The URL is not reachable");
         }
 
         synchronized (this) {
             return descriptorsLoader.getMostRecentVersion(object);
-        }
-    }
-
-    /**
-     * Add a not reachable error to the errors.
-     *
-     * @param url the not reachable URL.
-     */
-    private void addNotReachableError(String url) {
-        if (WebUtils.isInternetReachable()) {
-            errorService.addError(Errors.newI18nError(
-                    "modules.updates.network.resource.title", ArrayUtils.EMPTY_ARRAY,
-                    "modules.updates.network.resource", new Object[]{url}));
-        } else {
-            errorService.addError(Errors.newI18nError(
-                    "modules.updates.network.internet.title", ArrayUtils.EMPTY_ARRAY,
-                    "modules.updates.network.internet", new Object[]{url}));
         }
     }
 
@@ -180,10 +141,6 @@ public final class UpdateServiceImpl implements UpdateService {
      * @param version The current version.
      */
     private void update(Module module, Version version) {
-        if (isDescriptorNotReachable(module.getDescriptorURL())) {
-            return;
-        }
-
         ModuleVersion onlineVersion = descriptorsLoader.getModuleVersion(version, module);
 
         if (onlineVersion == null) {
@@ -200,26 +157,6 @@ public final class UpdateServiceImpl implements UpdateService {
 
             uiUtils.displayI18nText("message.application.updated");
         }
-    }
-
-    /**
-     * Indicate if the descriptor is not reachable.
-     *
-     * @param url The descriptors url to test for reachability.
-     *
-     * @return true if the descriptor is not reachable else false.
-     */
-    private boolean isDescriptorNotReachable(String url) {
-        if (WebUtils.isURLReachable(url)) {
-            return false;
-        }
-
-        addNotReachableError(url);
-
-        eventService.addEvent(
-                Events.newEvent(EventLevel.ERROR, "System", "events.updates.network", EventService.CORE_EVENT_LOG));
-
-        return true;
     }
 
     /**
@@ -275,10 +212,8 @@ public final class UpdateServiceImpl implements UpdateService {
 
     @Override
     public List<String> getPossibleUpdates(Iterable<? extends Module> modules) {
-        if (!WebUtils.isInternetReachable()) {
-            errorService.addError(Errors.newI18nError("internet.necessary"));
-
-            return CollectionUtils.emptyList();
+        if (WebUtils.isInternetNotReachable()) {
+            throw new IllegalStateException("The URL is not reachable");
         }
 
         List<String> messages = CollectionUtils.newList(2);
@@ -313,8 +248,8 @@ public final class UpdateServiceImpl implements UpdateService {
 
     @Override
     public boolean isCurrentVersionUpToDate() {
-        if (isDescriptorNotReachable(Core.DESCRIPTOR_FILE_URL)) {
-            return true;
+        if (WebUtils.isURLNotReachable(Core.DESCRIPTOR_FILE_URL)) {
+            throw new IllegalStateException("The URL is not reachable");
         }
 
         Collection<Version> versions;
@@ -328,8 +263,8 @@ public final class UpdateServiceImpl implements UpdateService {
 
     @Override
     public boolean isUpToDate(Module object) {
-        if (isDescriptorNotReachable(object.getDescriptorURL())) {
-            return true;
+        if (WebUtils.isURLNotReachable(object.getDescriptorURL())) {
+            throw new IllegalStateException("The URL is not reachable");
         }
 
         Collection<Version> versions;

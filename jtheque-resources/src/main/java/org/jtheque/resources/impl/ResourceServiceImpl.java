@@ -1,6 +1,5 @@
 package org.jtheque.resources.impl;
 
-import org.jtheque.core.utils.SystemProperty;
 import org.jtheque.errors.ErrorService;
 import org.jtheque.errors.Errors;
 import org.jtheque.events.EventLevel;
@@ -9,6 +8,7 @@ import org.jtheque.events.Events;
 import org.jtheque.resources.Resource;
 import org.jtheque.resources.ResourceService;
 import org.jtheque.states.StateService;
+import org.jtheque.utils.SystemProperty;
 import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.collections.ArrayUtils;

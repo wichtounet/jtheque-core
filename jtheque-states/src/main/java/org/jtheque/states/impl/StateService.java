@@ -16,10 +16,10 @@ package org.jtheque.states.impl;
  * limitations under the License.
  */
 
-import org.jtheque.core.utils.SystemProperty;
 import org.jtheque.states.State;
 import org.jtheque.states.Load;
 import org.jtheque.states.Save;
+import org.jtheque.utils.SystemProperty;
 import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.bean.ReflectionUtils;
 import org.jtheque.utils.collections.CollectionUtils;

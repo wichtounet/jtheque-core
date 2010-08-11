@@ -1,7 +1,7 @@
 package org.jtheque.lifecycle.application;
 
 import org.jtheque.core.application.ApplicationProperties;
-import org.jtheque.core.utils.SystemProperty;
+import org.jtheque.utils.SystemProperty;
 import org.jtheque.utils.annotations.Immutable;
 import org.jtheque.utils.collections.ArrayUtils;
 
@@ -31,13 +31,13 @@ import java.util.Locale;
  * @author Baptiste Wicht
  */
 @Immutable
-final class I18nAplicationProperties implements ApplicationProperties {
+final class I18nApplicationProperties implements ApplicationProperties {
     private final ReloadableResourceBundleMessageSource resourceBundle;
 
     /**
-     * Construct a new I18nAplicationProperties.
+     * Construct a new I18nApplicationProperties.
      */
-    I18nAplicationProperties() {
+    I18nApplicationProperties() {
         super();
 
         resourceBundle = new ReloadableResourceBundleMessageSource();

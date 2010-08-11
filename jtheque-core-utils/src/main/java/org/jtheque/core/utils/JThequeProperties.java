@@ -1,5 +1,6 @@
 package org.jtheque.core.utils;
 
+import org.jtheque.utils.SystemProperty;
 import org.jtheque.utils.io.FileUtils;
 
 import java.io.File;
@@ -27,45 +28,17 @@ import java.security.PrivilegedAction;
  *
  * @author Baptiste Wicht
  */
-public enum SystemProperty {
-    JAVA_IO_TMP_DIR("java.io.tmpdir") {
-        @Override
-        public String get() {
-            String value = super.get();
-
-            if (!value.endsWith(File.separator)) {
-                value += File.separator;
-            }
-
-            FileUtils.createIfNotExists(new File(value));
-
-            return value;
-        }
-    },
-
-    USER_DIR("user.dir") {
-        @Override
-        public String get() {
-            String value = super.get();
-
-            if (!value.endsWith("/")) {
-                return value + '/';
-            }
-
-            return value;
-        }
-    },
-
+public enum JThequeProperties {
     JTHEQUE_LOG("jtheque.log");
 
     private final String name;
 
     /**
-     * Construct a new SystemProperty.
+     * Construct a new JThequeProperties.
      *
      * @param name the name of the property.
      */
-    SystemProperty(String name) {
+    JThequeProperties(String name) {
         this.name = name;
     }
 
@@ -88,7 +61,7 @@ public enum SystemProperty {
      *
      * @param value The value of the property.
      */
-    public final void set(final String value) {
+    public void set(final String value) {
         AccessController.doPrivileged(new PrivilegedAction<String>() {
             @Override
             public String run() {
@@ -102,7 +75,7 @@ public enum SystemProperty {
      *
      * @return The name of the property.
      */
-    public final String getName() {
+    public String getName() {
         return name;
     }
 }

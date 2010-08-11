@@ -3,8 +3,8 @@ package org.jtheque.lifecycle.application;
 import org.jtheque.core.application.Application;
 import org.jtheque.core.utils.ImageDescriptor;
 import org.jtheque.core.utils.ImageType;
-import org.jtheque.core.utils.SystemProperty;
 import org.jtheque.utils.StringUtils;
+import org.jtheque.utils.SystemProperty;
 import org.jtheque.utils.annotations.NotThreadSafe;
 import org.jtheque.utils.bean.InternationalString;
 import org.jtheque.utils.bean.Version;
@@ -184,7 +184,7 @@ public final class XMLApplicationReader {
      */
     private void readApplicationProperties(Object i18nElement, XMLApplication application) throws XMLException {
         if (reader.getNode("files", i18nElement) != null || reader.getNode("name", i18nElement) == null) {
-            application.setApplicationProperties(new I18nAplicationProperties());
+            application.setApplicationProperties(new I18nApplicationProperties());
         } else {
             application.setApplicationProperties(new DirectValuesApplicationProperties(
                     readInternationalString("author", i18nElement),
@@ -210,7 +210,7 @@ public final class XMLApplicationReader {
         Collection<Node> elements = reader.getNodes(path + "/*", parentElement);
 
         Map<String, String> resources = CollectionUtils.newHashMap(5);
-        
+
         for (Node child : elements) {
             resources.put(child.getNodeName(), child.getTextContent());
         }

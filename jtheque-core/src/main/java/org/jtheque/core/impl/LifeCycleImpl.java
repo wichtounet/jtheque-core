@@ -4,10 +4,10 @@ import org.jtheque.core.Core;
 import org.jtheque.core.lifecycle.FunctionListener;
 import org.jtheque.core.lifecycle.LifeCycle;
 import org.jtheque.core.lifecycle.TitleListener;
-import org.jtheque.core.utils.SystemProperty;
 import org.jtheque.events.EventService;
 import org.jtheque.events.Events;
 import org.jtheque.utils.StringUtils;
+import org.jtheque.utils.SystemProperty;
 import org.jtheque.utils.ThreadUtils;
 import org.jtheque.utils.annotations.GuardedInternally;
 import org.jtheque.utils.annotations.ThreadSafe;
@@ -42,7 +42,7 @@ import java.io.File;
 @ThreadSafe
 public final class LifeCycleImpl implements LifeCycle {
     private static final int RESTART_EXIT_CODE = 666;
-    
+
     @GuardedInternally
     private final WeakEventListenerList<FunctionListener> functionListeners = WeakEventListenerList.create();
 

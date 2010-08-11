@@ -1,16 +1,16 @@
 package org.jtheque.events.impl;
 
-import org.jtheque.core.utils.SystemProperty;
 import org.jtheque.events.Event;
 import org.jtheque.events.EventLevel;
 import org.jtheque.events.Events;
+import org.jtheque.utils.SystemProperty;
 import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.io.FileUtils;
-import org.jtheque.xml.utils.XMLReader;
-import org.jtheque.xml.utils.XMLWriter;
 import org.jtheque.xml.utils.XML;
 import org.jtheque.xml.utils.XMLException;
+import org.jtheque.xml.utils.XMLReader;
+import org.jtheque.xml.utils.XMLWriter;
 
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Node;

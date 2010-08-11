@@ -1,11 +1,11 @@
 package org.jtheque.i18n.impl;
 
-import org.jtheque.core.utils.SystemProperty;
 import org.jtheque.i18n.I18NResource;
 import org.jtheque.i18n.I18NResourceFactory;
 import org.jtheque.i18n.Internationalizable;
 import org.jtheque.states.StateService;
 import org.jtheque.utils.StringUtils;
+import org.jtheque.utils.SystemProperty;
 import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.collections.CollectionUtils;

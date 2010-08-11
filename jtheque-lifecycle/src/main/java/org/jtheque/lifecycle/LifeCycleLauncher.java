@@ -5,13 +5,14 @@ import org.jtheque.collections.CollectionsService;
 import org.jtheque.core.Core;
 import org.jtheque.core.application.Application;
 import org.jtheque.core.lifecycle.LifeCycle;
-import org.jtheque.core.utils.SystemProperty;
+import org.jtheque.core.utils.JThequeProperties;
 import org.jtheque.events.EventLevel;
 import org.jtheque.events.EventService;
 import org.jtheque.events.Events;
 import org.jtheque.lifecycle.application.XMLApplicationReader;
 import org.jtheque.modules.ModuleService;
 import org.jtheque.utils.SimplePropertiesCache;
+import org.jtheque.utils.SystemProperty;
 import org.jtheque.utils.ThreadUtils;
 import org.jtheque.utils.annotations.NotThreadSafe;
 import org.jtheque.utils.ui.SwingUtils;
@@ -128,8 +129,8 @@ public class LifeCycleLauncher implements CollectionListener {
 
         String level = "DEBUG";
 
-        if (SystemProperty.JTHEQUE_LOG.get() != null) {
-            level = SystemProperty.JTHEQUE_LOG.get();
+        if (JThequeProperties.JTHEQUE_LOG.get() != null) {
+            level = JThequeProperties.JTHEQUE_LOG.get();
         }
 
         rootLogger.setLevel(Level.toLevel(level));
