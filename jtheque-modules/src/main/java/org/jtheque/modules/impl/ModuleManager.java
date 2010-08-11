@@ -3,7 +3,6 @@ package org.jtheque.modules.impl;
 import org.jtheque.core.Core;
 import org.jtheque.modules.Module;
 import org.jtheque.ui.UIUtils;
-import org.jtheque.update.InstallationResult;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.ThreadUtils;
 import org.jtheque.utils.annotations.NotThreadSafe;
@@ -166,7 +165,7 @@ public final class ModuleManager {
 
                 uiUtils.displayI18nText("error.module.not.installed");
             } else if (exists(module.getId())) {
-                uiUtils.displayI18nText("errors.module.install.already.exists");
+                uiUtils.displayI18nText("errors.module.installFromRepository.already.exists");
             } else {
                 modules.add(module);
 
@@ -194,7 +193,7 @@ public final class ModuleManager {
             target = new File(core.getFolders().getModulesFolder(), file.getName());
 
             if (target.exists()) {
-                uiUtils.displayI18nText("errors.module.install.already.exists");
+                uiUtils.displayI18nText("errors.module.installFromRepository.already.exists");
 
                 return null;
             } else {
@@ -203,7 +202,7 @@ public final class ModuleManager {
                 } catch (CopyException e) {
                     LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
 
-                    uiUtils.displayI18nText("errors.module.install.copy");
+                    uiUtils.displayI18nText("errors.module.installFromRepository.copy");
 
                     return null;
                 }
@@ -259,8 +258,8 @@ public final class ModuleManager {
         return true;
     }
 
-    Module installModule(InstallationResult result) {
-        Module module = moduleLoader.installModule(new File(core.getFolders().getModulesFolder(), result.getJarFile()));
+    Module installModuleFromRepository(File file) {
+        Module module = moduleLoader.installModule(file);
         
         uiUtils.displayI18nText("message.module.repository.installed");
 

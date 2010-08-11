@@ -75,9 +75,9 @@ public class RepositoryController extends AbstractController<RepositoryView> {
     }
 
     /**
-     * install the selected module.
+     * installFromRepository the selected module.
      */
-    @Action("repository.actions.install")
+    @Action("repository.actions.installFromRepository")
     public void install() {
         ModuleDescription description = getView().getSelectedModule();
 
@@ -89,7 +89,7 @@ public class RepositoryController extends AbstractController<RepositoryView> {
             } else {
                 InstallationResult result = updateService.installModule(description.getDescriptorURL());
 
-                moduleService.install(result);
+                moduleService.installFromRepository(result);
             }
         }
     }

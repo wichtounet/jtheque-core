@@ -135,7 +135,7 @@ public final class ModuleLoader implements BundleContextAware {
     /**
      * Install the module.
      *
-     * @param file The file to the module to install.
+     * @param file The file to the module to installFromRepository.
      *
      * @return The installed module.
      */
@@ -390,7 +390,7 @@ public final class ModuleLoader implements BundleContextAware {
         /**
          * Construct a new ModuleLoader task for the given file.
          *
-         * @param file The file to install.
+         * @param file The file to installFromRepository.
          */
         private ModuleLoaderTask(File file) {
             this.file = file;

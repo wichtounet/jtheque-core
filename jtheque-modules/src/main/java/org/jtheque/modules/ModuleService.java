@@ -16,8 +16,6 @@ package org.jtheque.modules;
  * limitations under the License.
  */
 
-import org.jtheque.update.InstallationResult;
-
 import java.io.File;
 import java.util.Collection;
 
@@ -76,7 +74,7 @@ public interface ModuleService {
      */
     Module getModuleById(String name);
 
-    void install(InstallationResult result);
+    void installFromRepository(String jarFile);
 
     /**
      * Enable a module.

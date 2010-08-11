@@ -84,7 +84,7 @@ public interface ResourceService {
     /**
      * Install the given resource.
      *
-     * @param resource The resource to install.
+     * @param resource The resource to installFromRepository.
      */
     void installResource(Resource resource);
 

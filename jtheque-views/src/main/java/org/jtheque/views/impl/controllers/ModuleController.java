@@ -128,12 +128,16 @@ public class ModuleController extends AbstractController<ModuleView> {
      */
     @Action("modules.actions.url.new")
     public void installURL() {
-        String url = uiUtils.askI18nText("dialogs.modules.install.url");
+        String url = uiUtils.askI18nText("dialogs.modules.installFromRepository.url");
 
         if (StringUtils.isNotEmpty(url)) {
             InstallationResult result = updateService.installModule(url);
 
-            moduleService.install(result);
+            if (result.isInstalled()) {
+                moduleService.installFromRepository(result.getJarFile());
+            } else {
+                uiUtils.displayI18nText("error.repository.module.not.installed");
+            }
         }
     }
 

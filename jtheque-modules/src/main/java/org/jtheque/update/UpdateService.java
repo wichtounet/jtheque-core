@@ -31,8 +31,9 @@ import java.util.List;
 @ThreadSafe
 public interface UpdateService {
     /**
-     * Update JTheque Core to the most recent version. This method search on internet the datas of the version we want to download and download all the
-     * files useful and org.jtheque.update the local files. Last, we reboot the program.
+     * Update JTheque Core to the most recent version. This method search on internet the datas of the version we want
+     * to download and download all the files useful and org.jtheque.update the local files. Last, we reboot the
+     * program.
      */
     void updateCore();
 
@@ -45,6 +46,8 @@ public interface UpdateService {
 
     /**
      * Verify if there is a new update available and if the user want to org.jtheque.update the application.
+     *
+     * @param modules The modules to test for updates.
      *
      * @return An empty list if there were no updates therefore a list containing i18n messages to display about the
      *         state of updates.

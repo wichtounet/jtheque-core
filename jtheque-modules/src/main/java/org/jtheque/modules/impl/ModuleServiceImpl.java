@@ -28,7 +28,6 @@ import org.jtheque.modules.Repository;
 import org.jtheque.modules.SwingLoader;
 import org.jtheque.states.StateService;
 import org.jtheque.ui.UIUtils;
-import org.jtheque.update.InstallationResult;
 import org.jtheque.utils.SimplePropertiesCache;
 import org.jtheque.utils.annotations.GuardedInternally;
 import org.jtheque.utils.collections.CollectionUtils;
@@ -295,12 +294,9 @@ public final class ModuleServiceImpl implements ModuleService {
     }
 
     @Override
-    public void install(InstallationResult result) {
-        if (result.isInstalled()) {
-            installModule(moduleManager.installModule(result));
-        } else {
-            uiUtils.displayI18nText("error.repository.module.not.installed");
-        }
+    public void installFromRepository(String jarFile) {
+        installModule(
+                moduleManager.installModuleFromRepository(new File(core.getFolders().getModulesFolder(), jarFile)));
     }
 
     @Override
