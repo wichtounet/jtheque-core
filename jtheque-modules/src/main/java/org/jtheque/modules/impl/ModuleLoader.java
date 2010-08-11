@@ -4,7 +4,6 @@ import org.jtheque.core.Core;
 import org.jtheque.core.utils.OSGiUtils;
 import org.jtheque.errors.ErrorService;
 import org.jtheque.errors.Errors;
-import org.jtheque.i18n.I18NResource;
 import org.jtheque.i18n.I18NResourceFactory;
 import org.jtheque.i18n.LanguageService;
 import org.jtheque.modules.Module;
@@ -278,7 +277,7 @@ public final class ModuleLoader implements BundleContextAware {
      */
     private void loadI18NResources(Module module) {
         for (I18NResource i18NResource : moduleService.getResources(module).getI18NResources()) {
-            List<I18NResource> i18NResources = CollectionUtils.newList(i18NResource.getResources().size());
+            List<org.jtheque.i18n.I18NResource> i18NResources = CollectionUtils.newList(i18NResource.getResources().size());
 
             for (String resource : i18NResource.getResources()) {
                 if (resource.startsWith("classpath:")) {
@@ -527,7 +526,7 @@ public final class ModuleLoader implements BundleContextAware {
         private final String messagesUrl;
         private final boolean collection;
 
-        private ModuleState state;
+        private volatile ModuleState state;
 
         /**
          * Create a module container using the given builder informations.

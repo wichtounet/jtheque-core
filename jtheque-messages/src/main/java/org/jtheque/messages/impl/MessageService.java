@@ -46,7 +46,7 @@ import java.util.Collection;
  * @author Baptiste Wicht
  */
 public final class MessageService implements org.jtheque.messages.MessageService, ModuleListener, ApplicationListener {
-    private final Collection<Message> messages = CollectionUtils.newList();
+    private final Collection<Message> messages = CollectionUtils.newConcurrentList();
 
     private final Core core;
     private final ErrorService errorService;
@@ -74,7 +74,7 @@ public final class MessageService implements org.jtheque.messages.MessageService
     }
 
     @Override
-    public synchronized boolean isDisplayNeeded() {
+    public boolean isDisplayNeeded() {
         IntDate previousDate = core.getConfiguration().getMessagesLastRead();
 
         for (Message message : messages) {
@@ -92,7 +92,7 @@ public final class MessageService implements org.jtheque.messages.MessageService
     }
 
     @Override
-    public synchronized Collection<Message> getMessages() {
+    public Collection<Message> getMessages() {
         return CollectionUtils.protect(messages);
     }
 

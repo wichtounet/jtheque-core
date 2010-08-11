@@ -398,10 +398,12 @@ public final class ModuleServiceImpl implements ModuleService {
      * @param module The module to set the state.
      * @param state  The state.
      */
-    private synchronized void setState(Module module, ModuleState state) {
-        module.setState(state);
+    private void setState(Module module, ModuleState state) {
+        synchronized (this){
+            module.setState(state);
 
-        configuration.setState(module.getId(), state);
+            configuration.setState(module.getId(), state);
+        }
     }
 
     /**

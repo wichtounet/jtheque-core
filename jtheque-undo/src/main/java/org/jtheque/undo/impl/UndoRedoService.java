@@ -48,7 +48,7 @@ public final class UndoRedoService extends UndoManager implements IUndoRedoServi
     }
 
     @Override
-    public synchronized void undo() {
+    public void undo() {
         try {
             super.undo();
         } catch (CannotUndoException e) {
@@ -59,7 +59,7 @@ public final class UndoRedoService extends UndoManager implements IUndoRedoServi
     }
 
     @Override
-    public synchronized void redo() {
+    public void redo() {
         try {
             super.redo();
         } catch (CannotUndoException e) {
@@ -70,23 +70,26 @@ public final class UndoRedoService extends UndoManager implements IUndoRedoServi
     }
 
     @Override
-    public synchronized void addStateListener(StateListener stateListener) {
+    public void addStateListener(StateListener stateListener) {
         eventListenerList.add(stateListener);
     }
 
     @Override
-    public synchronized void removeStateListener(StateListener stateListener) {
+    public void removeStateListener(StateListener stateListener) {
         eventListenerList.remove(stateListener);
     }
 
     /**
      * Update the state of the undo/redo action.
      */
-    private synchronized void fireStateChanged() {
+    private void fireStateChanged() {
+        String undoName = getUndoPresentationName();
+        String redoName = getRedoPresentationName();
+        boolean canRedo = canRedo();
+        boolean canUndo = canUndo();
+
         for (StateListener stateListener : eventListenerList) {
-            stateListener.stateChanged(
-                    getUndoPresentationName(), canUndo(),
-                    getRedoPresentationName(), canRedo());
+            stateListener.stateChanged(undoName, canUndo, redoName, canRedo);
         }
     }
 }

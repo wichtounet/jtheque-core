@@ -97,38 +97,40 @@ public final class LanguageService implements org.jtheque.i18n.LanguageService {
     }
 
     @Override
-    public synchronized void registerResource(String name, Version version, I18NResource... resources) {
-        Version previousVersion = state.getResourceVersion(name);
+    public void registerResource(String name, Version version, I18NResource... resources) {
+        synchronized (this) {
+            Version previousVersion = state.getResourceVersion(name);
 
-        File folder = new File(SystemProperty.USER_DIR.get(), "i18n");
+            File folder = new File(SystemProperty.USER_DIR.get(), "i18n");
 
-        FileUtils.createIfNotExists(folder);
+            FileUtils.createIfNotExists(folder);
 
-        if (previousVersion == null || version.isGreaterThan(previousVersion)) {
-            state.setResourceVersion(name, version);
+            if (previousVersion == null || version.isGreaterThan(previousVersion)) {
+                state.setResourceVersion(name, version);
 
-            for (I18NResource resource : resources) {
-                File resourceFile = new File(folder, resource.getFileName());
+                for (I18NResource resource : resources) {
+                    File resourceFile = new File(folder, resource.getFileName());
 
-                FileUtils.delete(resourceFile);
+                    FileUtils.delete(resourceFile);
 
-                try {
-                    FileUtils.copy(resource.getResource().getInputStream(), resourceFile);
-                } catch (CopyException e) {
-                    LoggerFactory.getLogger(getClass()).error("Unable to copy resource {}", resource);
-                    LoggerFactory.getLogger(getClass()).error("Cause exception", e);
-                } catch (IOException e) {
-                    LoggerFactory.getLogger(getClass()).error("Unable to copy resource {}", resource);
-                    LoggerFactory.getLogger(getClass()).error("Cause exception", e);
+                    try {
+                        FileUtils.copy(resource.getResource().getInputStream(), resourceFile);
+                    } catch (CopyException e) {
+                        LoggerFactory.getLogger(getClass()).error("Unable to copy resource {}", resource);
+                        LoggerFactory.getLogger(getClass()).error("Cause exception", e);
+                    } catch (IOException e) {
+                        LoggerFactory.getLogger(getClass()).error("Unable to copy resource {}", resource);
+                        LoggerFactory.getLogger(getClass()).error("Cause exception", e);
+                    }
                 }
             }
+
+            String baseName = "file:" + folder + '/' + getBaseName(resources[0]);
+
+            resourceBundle.addBaseName(baseName);
+
+            baseNames.put(name, baseName);
         }
-
-        String baseName = "file:" + folder + '/' + getBaseName(resources[0]);
-
-        resourceBundle.addBaseName(baseName);
-
-        baseNames.put(name, baseName);
     }
 
     @Override
@@ -142,7 +144,7 @@ public final class LanguageService implements org.jtheque.i18n.LanguageService {
     public void setCurrentLanguage(String language) {
         String shortForm = toShortForm(language);
 
-        synchronized (lock){
+        synchronized (lock) {
             state.setLanguage(shortForm);
 
             setCurrentLocale(toLocale(shortForm));
@@ -238,8 +240,8 @@ public final class LanguageService implements org.jtheque.i18n.LanguageService {
         return "en";
     }
 
-    private static Locale toLocale(String shortForm){
-        if("fr".equals(shortForm)){
+    private static Locale toLocale(String shortForm) {
+        if ("fr".equals(shortForm)) {
             return Locale.FRENCH;
         } else if ("de".equals(shortForm)) {
             return Locale.GERMAN;
