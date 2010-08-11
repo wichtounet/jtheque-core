@@ -47,7 +47,7 @@ public interface IUpdateService {
      * @return An empty list if there were no updates therefore a list containing i18n messages to display about the
      *         state of updates.
      */
-    List<String> getPossibleUpdates();
+    List<String> getPossibleUpdates(Iterable<Module> modules);
 
     /**
      * Indicate if the current version of the core is the last version.

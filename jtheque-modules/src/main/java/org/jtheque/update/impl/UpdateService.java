@@ -26,7 +26,6 @@ import org.jtheque.events.able.EventLevel;
 import org.jtheque.events.able.EventService;
 import org.jtheque.events.able.Events;
 import org.jtheque.modules.able.Module;
-import org.jtheque.modules.able.ModuleService;
 import org.jtheque.modules.able.ModuleState;
 import org.jtheque.resources.able.ResourceService;
 import org.jtheque.ui.able.UIUtils;
@@ -50,7 +49,7 @@ import java.util.Set;
 
 /**
  * Manage the update of the application and its module. This class can go on internet to verify if a more recent version
- * of something is available and download one new version if there is one. 
+ * of something is available and download one new version if there is one.
  *
  * @author Baptiste Wicht
  */
@@ -60,9 +59,6 @@ public final class UpdateService implements IUpdateService {
 
     @Resource
     private UIUtils uiUtils;
-
-    @Resource
-    private ModuleService moduleService;
 
     @Resource
     private EventService eventService;
@@ -83,7 +79,7 @@ public final class UpdateService implements IUpdateService {
 
         CoreVersion onlineVersion = versionsLoader.getCoreVersion(getMostRecentCoreVersion());
 
-        if (onlineVersion == null || onlineVersion.getVersion().equals(Core.VERSION)){
+        if (onlineVersion == null || onlineVersion.getVersion().equals(Core.VERSION)) {
             return;
         }
 
@@ -100,7 +96,7 @@ public final class UpdateService implements IUpdateService {
 
             return new SimpleInstallationResult(false, "");
         }
-        
+
         try {
             ModuleVersion moduleVersion = versionsLoader.getMostRecentModuleVersion(url);
 
@@ -153,20 +149,8 @@ public final class UpdateService implements IUpdateService {
         } else {
             applyModuleVersion(onlineVersion);
 
-            boolean restart = false;
-
-            if (module.getState() == ModuleState.STARTED) {
-                moduleService.stopModule(module);
-
-                restart = true;
-            }
-
             OSGiUtils.update(module.getBundle(),
                     new File(core.getFolders().getModulesFolder(), onlineVersion.getModuleFile()));
-
-            if (restart) {
-                moduleService.startModule(module);
-            }
 
             uiUtils.displayI18nText("message.application.updated");
         }
@@ -175,7 +159,7 @@ public final class UpdateService implements IUpdateService {
     /**
      * Indicate if the descriptor is not reachable.
      *
-     * @param url The descriptor's url to test for reachability.
+     * @param url The descriptors url to test for reachability.
      *
      * @return true if the descriptor is not reachable else false.
      */
@@ -204,7 +188,7 @@ public final class UpdateService implements IUpdateService {
                         new File(core.getFolders().getModulesFolder(), moduleVersion.getModuleFile()).getAbsolutePath());
             }
 
-            for(FileDescriptor resource : moduleVersion.getResources()){
+            for (FileDescriptor resource : moduleVersion.getResources()) {
                 resourceService.getOrDownloadResource(resource.getId(), resource.getVersion(), resource.getUrl());
             }
         } catch (FileException e) {
@@ -244,7 +228,7 @@ public final class UpdateService implements IUpdateService {
     }
 
     @Override
-    public List<String> getPossibleUpdates() {
+    public List<String> getPossibleUpdates(Iterable<Module> modules) {
         if (!WebUtils.isInternetReachable()) {
             errorService.addError(Errors.newI18nError("internet.necessary"));
 
@@ -253,7 +237,7 @@ public final class UpdateService implements IUpdateService {
 
         List<String> messages = CollectionUtils.newList(2);
 
-        if (isAModuleNotUpToDate()) {
+        if (isAModuleNotUpToDate(modules)) {
             messages.add("dialogs.propose.module.update");
         }
 
@@ -267,10 +251,12 @@ public final class UpdateService implements IUpdateService {
     /**
      * Indicate if all modules are up to date.
      *
+     * @param modules The modules to test for possible updates.
+     *
      * @return true if all modules are up to date else false.
      */
-    private boolean isAModuleNotUpToDate() {
-        for (Module module : moduleService.getModules()) {
+    private boolean isAModuleNotUpToDate(Iterable<Module> modules) {
+        for (Module module : modules) {
             if (!isUpToDate(module)) {
                 return true;
             }
@@ -295,7 +281,6 @@ public final class UpdateService implements IUpdateService {
         }
 
         return isUpToDate(object.getVersion(), versionsLoader.getVersions(object));
-
     }
 
     /**
@@ -320,6 +305,10 @@ public final class UpdateService implements IUpdateService {
     public void update(Module module) {
         if (isDescriptorNotReachable(module.getDescriptorURL())) {
             return;
+        }
+
+        if (module.getState() == ModuleState.STARTED) {
+            throw new IllegalArgumentException("The module must be stopped");
         }
 
         update(module, getMostRecentVersion(module));
