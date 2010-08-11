@@ -4,8 +4,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>org.jtheque.modules</artifactId>
-    <name>org.jtheque.modules</name>
+    <artifactId>org.jtheque.updates</artifactId>
+    <name>org.jtheque.updates</name>
     <packaging>bundle</packaging>
 
     <parent>
@@ -29,14 +29,20 @@
 
         <dependency>
             <groupId>org.jtheque</groupId>
+            <artifactId>org.jtheque.utils</artifactId>
+            <version>1.1.4-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jtheque</groupId>
             <artifactId>org.jtheque.resources</artifactId>
             <version>2.1-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>org.jtheque</groupId>
-            <artifactId>org.jtheque.utils</artifactId>
-            <version>1.1.4-SNAPSHOT</version>
+            <artifactId>org.jtheque.modules</artifactId>
+            <version>2.1-SNAPSHOT</version>
         </dependency>
 
         <dependency>
@@ -53,12 +59,6 @@
 
         <dependency>
             <groupId>org.jtheque</groupId>
-            <artifactId>org.jtheque.ui</artifactId>
-            <version>2.1-SNAPSHOT</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.jtheque</groupId>
             <artifactId>org.jtheque.core</artifactId>
             <version>2.1-SNAPSHOT</version>
         </dependency>
@@ -67,34 +67,6 @@
             <groupId>org.jtheque</groupId>
             <artifactId>org.jtheque.states</artifactId>
             <version>2.1-SNAPSHOT</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.osgi</groupId>
-            <artifactId>spring-osgi-core</artifactId>
-            <version>1.2.1</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springframework.osgi</groupId>
-                    <artifactId>spring-osgi-io</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.springframework</groupId>
-                    <artifactId>org.springframework.aop</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.springframework</groupId>
-                    <artifactId>org.springframework.beans</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.springframework</groupId>
-                    <artifactId>org.springframework.context</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.springframework</groupId>
-                    <artifactId>org.springframework.core</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
     </dependencies>
 
@@ -108,26 +80,11 @@
                     <instructions>
                         <Bundle-SymbolicName>${pom.artifactId}</Bundle-SymbolicName>
                         <Export-Package>
-                            org.jtheque.modules.able, org.jtheque.modules.utils,
-                            org.jtheque.update.able, org.jtheque.resources.able
+                            org.jtheque.updates
                         </Export-Package>
                         <Bundle-Vendor>Baptiste Wicht</Bundle-Vendor>
                         <Spring-Context>*;create-asynchronously:=false;publish-context:=false</Spring-Context>
                     </instructions>
-                </configuration>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <configuration>
-                    <excludes>
-                        <exclude>*</exclude>
-                    </excludes>
-                    <includes>
-                        <include>**/org/jtheque/modules/**/*Test.java</include>
-                        <include>**/org/jtheque/update/**/*Test.java</include>
-                    </includes>
                 </configuration>
             </plugin>
         </plugins>

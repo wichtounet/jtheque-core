@@ -1,4 +1,4 @@
-package org.jtheque.update.impl;
+package org.jtheque.updates.impl;
 
 import org.jtheque.core.Versionable;
 import org.jtheque.errors.ErrorService;

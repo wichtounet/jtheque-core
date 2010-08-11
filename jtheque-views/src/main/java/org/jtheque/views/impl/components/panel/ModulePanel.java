@@ -22,7 +22,7 @@ import org.jtheque.modules.ModuleService;
 import org.jtheque.ui.utils.builders.FilthyPanelBuilder;
 import org.jtheque.ui.utils.builders.PanelBuilder;
 import org.jtheque.ui.components.Borders;
-import org.jtheque.update.UpdateService;
+import org.jtheque.updates.UpdateService;
 import org.jtheque.utils.ui.GridBagUtils;
 
 import javax.swing.JLabel;

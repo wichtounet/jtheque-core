@@ -1,4 +1,4 @@
-package org.jtheque.update.impl;
+package org.jtheque.updates.impl;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -29,8 +29,8 @@ import org.jtheque.modules.Module;
 import org.jtheque.modules.ModuleState;
 import org.jtheque.resources.ResourceService;
 import org.jtheque.ui.UIUtils;
-import org.jtheque.update.InstallationResult;
-import org.jtheque.update.UpdateService;
+import org.jtheque.updates.InstallationResult;
+import org.jtheque.updates.UpdateService;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.annotations.GuardedBy;
 import org.jtheque.utils.annotations.ThreadSafe;

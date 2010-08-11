@@ -1,4 +1,4 @@
-package org.jtheque.update.impl;
+package org.jtheque.updates.impl;
 
 import org.jtheque.utils.annotations.Immutable;
 import org.jtheque.utils.collections.CollectionUtils;

@@ -1,6 +1,5 @@
-package org.jtheque.update.impl;
+package org.jtheque.updates.impl;
 
-import org.jtheque.core.Core;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.io.FileUtils;
@@ -31,46 +30,51 @@ import java.util.List;
  * limitations under the License.
  */
 
-class CoreDescriptorReader {
-    private CoreDescriptorReader() {
+final class ModuleDescriptorReader {
+    private ModuleDescriptorReader() {
         throw new AssertionError();
     }
 
     /**
-     * Read the core descriptor at the specified URL.
+     * Read the module from the given URL.
      *
-     * @return The core descriptor or null if there were an error during the reading.
+     * @param url The url to the module descriptor.
+     *
+     * @return The module descriptor.
      */
-    static CoreDescriptor readCoreDescriptor() {
+    static ModuleDescriptor readModuleDescriptor(String url) {
+        XMLReader<Node> reader = XML.newJavaFactory().newReader();
+
         try {
-            return readCoreDescriptor(new URL(Core.DESCRIPTOR_FILE_URL));
+            return readModuleDescriptor(reader, new URL(url));
         } catch (MalformedURLException e) {
             return null;
         }
     }
 
     /**
-     * Read the core descriptor at the given URL.
+     * Read the module descriptor using the given reader and url.
      *
-     * @param url The URL to read the core descriptor from.
+     * @param reader The XML Reader
+     * @param url    The URL of the file.
      *
-     * @return The core descriptor or null if there were a problem reading the file.
+     * @return The module descriptor.
      */
-    private static CoreDescriptor readCoreDescriptor(URL url) {
-        XMLReader<Node> reader = XML.newJavaFactory().newReader();
-
+    private static ModuleDescriptor readModuleDescriptor(XMLReader<Node> reader, URL url) {
         try {
             reader.openURL(url);
 
-            List<CoreVersion> versions = CollectionUtils.newList(5);
+            String id = reader.readString("id", reader.getRootElement());
+
+            List<ModuleVersion> versions = CollectionUtils.newList();
 
             for (Object currentNode : reader.getNodes("version", reader.getRootElement())) {
-                versions.add(readCoreVersion(currentNode, reader));
+                versions.add(readModuleVersion(currentNode, reader));
             }
 
-            return new CoreDescriptor(versions);
+            return new ModuleDescriptor(id, versions);
         } catch (XMLException e) {
-            LoggerFactory.getLogger(CoreDescriptorReader.class).error("Unable to read versions file", e);
+            LoggerFactory.getLogger(ModuleDescriptorReader.class).error("Unable to read versions file", e);
         } finally {
             FileUtils.close(reader);
         }
@@ -79,23 +83,27 @@ class CoreDescriptorReader {
     }
 
     /**
-     * Read the CoreVersion from the given node and using the given reader.
+     * Read the module version.
      *
      * @param currentNode The current node.
-     * @param reader      The reader.
+     * @param reader      The XML reader.
      *
-     * @return The core version.
+     * @return The ModuleVersion.
      *
-     * @throws XMLException If an exception occurs during XML processing.
+     * @throws XMLException If an error occurs during XML parsing.
      */
-    private static CoreVersion readCoreVersion(Object currentNode, XMLReader<Node> reader) throws XMLException {
-        List<FileDescriptor> descriptors = CollectionUtils.newList(25);
+    private static ModuleVersion readModuleVersion(Object currentNode, XMLReader<Node> reader) throws XMLException {
+        List<FileDescriptor> resources = CollectionUtils.newList(10);
 
-        for (Object libraryNode : reader.getNodes("bundles/bundle", currentNode)) {
-            descriptors.add(readFileDescriptor(libraryNode, reader));
+        for(Object node : reader.getNodes("module/resource", currentNode)){
+            resources.add(readFileDescriptor(node, reader));
         }
 
-        return new CoreVersion(Version.get(reader.readString("@name", currentNode)), descriptors);
+        return new ModuleVersion(
+                Version.get(reader.readString("@name", currentNode)),
+                Version.get(reader.readString("module/@core", currentNode)),
+                reader.readString("module/file", currentNode),
+                reader.readString("module/url", currentNode), resources);
     }
 
     /**

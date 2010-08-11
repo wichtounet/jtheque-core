@@ -32,6 +32,8 @@
         <module>jtheque-schemas</module>
         <module>jtheque-file</module>
         <module>jtheque-ui</module>
+        <module>jtheque-resources</module>
+        <module>jtheque-updates</module>
     </modules>
 
     <url>http://jtheque.developpez.com/utilities/core</url>

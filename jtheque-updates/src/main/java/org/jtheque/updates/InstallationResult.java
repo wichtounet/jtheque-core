@@ -1,4 +1,4 @@
-package org.jtheque.update;
+package org.jtheque.updates;
 
 /*
  * Copyright JTheque (Baptiste Wicht)

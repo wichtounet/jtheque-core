@@ -22,7 +22,7 @@ import org.jtheque.modules.ModuleResourceCache;
 import org.jtheque.modules.ModuleService;
 import org.jtheque.ui.Controller;
 import org.jtheque.ui.UIUtils;
-import org.jtheque.update.UpdateService;
+import org.jtheque.updates.UpdateService;
 import org.jtheque.utils.SimplePropertiesCache;
 import org.jtheque.modules.Module;
 import org.jtheque.modules.ModuleListener;

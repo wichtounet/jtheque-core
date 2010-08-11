@@ -6,7 +6,7 @@ import org.jtheque.modules.Module;
 import org.jtheque.ui.FilthyUtils;
 import org.jtheque.ui.utils.builded.OSGIFilthyBuildedPanel;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
-import org.jtheque.update.UpdateService;
+import org.jtheque.updates.UpdateService;
 import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.utils.ui.SwingUtils;
 import org.jtheque.views.components.ModulesPanelView;

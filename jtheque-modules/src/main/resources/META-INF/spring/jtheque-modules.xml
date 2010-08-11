@@ -28,7 +28,7 @@
     <bean id="moduleManager" class="org.jtheque.modules.impl.ModuleManager" />
 
 
-    <bean id="updateService" class="org.jtheque.update.impl.UpdateServiceImpl" />
+    <bean id="updateService" class="org.jtheque.updates.impl.UpdateServiceImpl" />
     
     <osgi:reference id="stateService" interface="org.jtheque.states.StateService"/>
     <osgi:reference id="core" interface="org.jtheque.core.Core"/>
@@ -40,6 +40,6 @@
     <osgi:reference id="eventService" interface="org.jtheque.events.EventService"/>
 
     <osgi:service ref="moduleService" interface="org.jtheque.modules.ModuleService"/>
-    <osgi:service ref="updateService" interface="org.jtheque.update.UpdateService"/>
+    <osgi:service ref="updateService" interface="org.jtheque.updates.UpdateService"/>
     <osgi:service ref="resourceService" interface="org.jtheque.resources.ResourceService"/>
 </beans>

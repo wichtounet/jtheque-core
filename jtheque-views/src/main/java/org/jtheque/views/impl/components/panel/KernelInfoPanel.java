@@ -22,7 +22,7 @@ import org.jtheque.ui.FilthyUtils;
 import org.jtheque.ui.utils.builded.FilthyBuildedPanel;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.ui.utils.builders.PanelBuilder;
-import org.jtheque.update.UpdateService;
+import org.jtheque.updates.UpdateService;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.views.panel.ModuleView;

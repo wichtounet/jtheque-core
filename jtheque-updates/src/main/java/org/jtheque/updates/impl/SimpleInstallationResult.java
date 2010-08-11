@@ -1,6 +1,6 @@
-package org.jtheque.update.impl;
+package org.jtheque.updates.impl;
 
-import org.jtheque.update.InstallationResult;
+import org.jtheque.updates.InstallationResult;
 import org.jtheque.utils.annotations.Immutable;
 
 /*

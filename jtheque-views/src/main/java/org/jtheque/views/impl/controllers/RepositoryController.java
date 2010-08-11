@@ -6,8 +6,8 @@ import org.jtheque.modules.ModuleService;
 import org.jtheque.ui.Action;
 import org.jtheque.ui.UIUtils;
 import org.jtheque.ui.utils.AbstractController;
-import org.jtheque.update.InstallationResult;
-import org.jtheque.update.UpdateService;
+import org.jtheque.updates.InstallationResult;
+import org.jtheque.updates.UpdateService;
 import org.jtheque.views.panel.RepositoryView;
 
 import javax.annotation.Resource;
@@ -89,7 +89,7 @@ public class RepositoryController extends AbstractController<RepositoryView> {
             } else {
                 InstallationResult result = updateService.installModule(description.getDescriptorURL());
 
-                moduleService.installFromRepository(result);
+                moduleService.installFromRepository(result.getJarFile());
             }
         }
     }
