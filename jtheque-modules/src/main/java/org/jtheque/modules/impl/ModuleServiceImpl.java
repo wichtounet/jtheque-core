@@ -21,15 +21,16 @@ import org.jtheque.images.able.ImageService;
 import org.jtheque.modules.able.Module;
 import org.jtheque.modules.able.ModuleDescription;
 import org.jtheque.modules.able.ModuleListener;
+import org.jtheque.modules.able.ModuleResourceCache;
 import org.jtheque.modules.able.ModuleService;
 import org.jtheque.modules.able.ModuleState;
 import org.jtheque.modules.able.Repository;
 import org.jtheque.modules.able.SwingLoader;
-import org.jtheque.modules.able.ModuleResourceCache;
 import org.jtheque.states.able.StateService;
 import org.jtheque.ui.able.UIUtils;
 import org.jtheque.update.able.InstallationResult;
 import org.jtheque.utils.SimplePropertiesCache;
+import org.jtheque.utils.annotations.GuardedInternally;
 import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.collections.WeakEventListenerList;
 import org.jtheque.utils.ui.SwingUtils;
@@ -53,14 +54,17 @@ import static org.jtheque.modules.able.ModuleState.*;
  * @author Baptiste Wicht
  */
 public final class ModuleServiceImpl implements ModuleService {
+    private final Map<String, SwingLoader> loaders = CollectionUtils.newConcurrentMap(5);
+    private final Map<Module, ModuleResources> resources = CollectionUtils.newConcurrentMap(5);
+
+    @GuardedInternally
     private final WeakEventListenerList<ModuleListener> listeners = WeakEventListenerList.create();
-    private final Map<String, SwingLoader> loaders = CollectionUtils.newHashMap();
-    private final Map<Module, ModuleResources> resources = CollectionUtils.newHashMap();
 
     /**
      * The configuration of the module manager. It seems the informations about the modules who're installed or
      * disabled.
      */
+    @GuardedInternally
     private final ModuleConfiguration configuration;
 
     @Resource
@@ -74,6 +78,8 @@ public final class ModuleServiceImpl implements ModuleService {
 
     @Resource
     private ModuleManager moduleManager;
+
+    private volatile boolean loaded;
 
     /**
      * Indicate if there is a collection module.
@@ -89,6 +95,12 @@ public final class ModuleServiceImpl implements ModuleService {
     @Override
     public void load() {
         SwingUtils.assertNotEDT("load()");
+
+        if (loaded) {
+            throw new IllegalStateException("Cannot be loaded twice");
+        }
+
+        loaded = true;
 
         moduleManager.loadModules();
 
@@ -118,7 +130,9 @@ public final class ModuleServiceImpl implements ModuleService {
     public void startModules() {
         SwingUtils.assertNotEDT("startModules()");
 
-        moduleManager.startAll();
+        synchronized (this) {
+            moduleManager.startAll();
+        }
     }
 
     /**
@@ -127,8 +141,10 @@ public final class ModuleServiceImpl implements ModuleService {
     @PreDestroy
     private void shutdown() {
         stopModules();
-        
-        moduleManager.uninstallModules();
+
+        synchronized (this) {
+            moduleManager.uninstallModules();
+        }
     }
 
     /**
@@ -175,26 +191,29 @@ public final class ModuleServiceImpl implements ModuleService {
     public void startModule(Module module) {
         SwingUtils.assertNotEDT("startModule(Module)");
 
-        if (module.getState() == STARTED) {
-            throw new IllegalStateException("The module is already started. ");
-        }
+        LoggerFactory.getLogger(getClass()).debug("Start module {}", module.getBundle().getSymbolicName());
 
         if (needTwoPhasesLoading(module)) {
             throw new IllegalStateException("The module needs a collection");
         }
 
-        LoggerFactory.getLogger(getClass()).debug("Start module {}", module.getBundle().getSymbolicName());
+        synchronized (this) {
+            if (module.getState() == STARTED) {
+                throw new IllegalStateException("The module is already started. ");
+            }
+
+            setState(module, STARTED);
+        }
 
         //Add images resources
         loadImageResources(module);
 
         moduleManager.startModule(module);
 
-        if (loaders.containsKey(module.getId())) {
-            loaders.remove(module.getId()).afterAll();
+        SwingLoader loader = loaders.remove(module.getId());
+        if (loader != null) {
+            loader.afterAll();
         }
-
-        setState(module, STARTED);
 
         fireModuleStarted(module);
 
@@ -221,15 +240,15 @@ public final class ModuleServiceImpl implements ModuleService {
     public void stopModule(Module module) {
         SwingUtils.assertNotEDT("stopModule(Module)");
 
-        if (module.getState() != STARTED) {
-            throw new IllegalStateException("The module is already started. ");
-        }
-
         LoggerFactory.getLogger(getClass()).debug("Stop module {}", module.getBundle().getSymbolicName());
 
-        setState(module, INSTALLED);
+        synchronized (this) {
+            if (module.getState() != STARTED) {
+                throw new IllegalStateException("The module is already started. ");
+            }
 
-        fireModuleStopped(module);
+            setState(module, INSTALLED);
+        }
 
         for (ImageResource imageResource : resources.get(module).getImageResources()) {
             imageService.releaseResource(imageResource.getName());
@@ -238,6 +257,8 @@ public final class ModuleServiceImpl implements ModuleService {
         ModuleResourceCache.removeModule(module.getId());
 
         moduleManager.stopModule(module);
+
+        fireModuleStopped(module);
 
         LoggerFactory.getLogger(getClass()).debug("Module {} stopped", module.getBundle().getSymbolicName());
     }
@@ -262,7 +283,7 @@ public final class ModuleServiceImpl implements ModuleService {
     public void installModule(File file) {
         Module module = moduleManager.installModule(file);
 
-        if(module != null){
+        if (module != null) {
             installModule(module);
         }
     }
