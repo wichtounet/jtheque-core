@@ -17,17 +17,12 @@ import org.jtheque.utils.ThreadUtils;
 import org.jtheque.utils.annotations.NotThreadSafe;
 import org.jtheque.utils.ui.SwingUtils;
 import org.jtheque.utils.ui.edt.SimpleTask;
+import org.jtheque.views.SplashService;
 import org.jtheque.views.ViewService;
 import org.jtheque.views.Views;
-import org.jtheque.views.SplashService;
-
-import org.slf4j.LoggerFactory;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
-
-import ch.qos.logback.classic.Level;
-import ch.qos.logback.classic.Logger;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -83,7 +78,6 @@ public class LifeCycleLauncher implements CollectionListener {
     @PostConstruct
     public void start() {
         configureDefaultsProperties();
-        configureLogging();
 
         Application application = new XMLApplicationReader().readApplication(SystemProperty.USER_DIR.get() + "/application.xml");
 
@@ -119,21 +113,6 @@ public class LifeCycleLauncher implements CollectionListener {
         SimplePropertiesCache.put("config-view-loaded", true);
         SimplePropertiesCache.put("statebar-loaded", true);
         SimplePropertiesCache.put("collectionChosen", true);
-    }
-
-    /**
-     * Configure the logging.
-     */
-    private static void configureLogging() {
-        Logger rootLogger = (Logger) LoggerFactory.getLogger("root");
-
-        String level = "DEBUG";
-
-        if (JThequeProperties.JTHEQUE_LOG.get() != null) {
-            level = JThequeProperties.JTHEQUE_LOG.get();
-        }
-
-        rootLogger.setLevel(Level.toLevel(level));
     }
 
     @Override

@@ -3,11 +3,18 @@ package org.jtheque.osgi;
 import org.jtheque.osgi.server.BundleState;
 import org.jtheque.osgi.server.FelixServer;
 import org.jtheque.osgi.server.OSGiServer;
+import org.jtheque.utils.StringUtils;
+import org.jtheque.utils.SystemProperty;
 import org.jtheque.utils.io.FileUtils;
+
+import org.slf4j.LoggerFactory;
 
 import java.io.Closeable;
 import java.io.File;
 import java.util.Collection;
+
+import ch.qos.logback.classic.Level;
+import ch.qos.logback.classic.Logger;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -106,9 +113,22 @@ public final class Kernel implements Closeable {
         if (args.length > 0) {
             System.setProperty("user.dir", args[0]);
         }
+
+        configureLogging();
         
         Thread.currentThread().setName("JTheque-MainThread");
 
         new Kernel().start();
+    }
+
+    /**
+     * Configure the logging.
+     */
+    private static void configureLogging() {
+        Logger rootLogger = (Logger) LoggerFactory.getLogger("root");
+
+        if (StringUtils.isNotEmpty(System.getProperty("jtheque.log"))) {
+            rootLogger.setLevel(Level.toLevel(System.getProperty("jtheque.log")));
+        }
     }
 }
