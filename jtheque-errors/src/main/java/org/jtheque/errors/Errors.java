@@ -27,7 +27,7 @@ import java.lang.*;
  * A builder for Error objects.
  *
  * @author Baptiste Wicht
- * @see org.jtheque.errors.Error
+ * @see Error
  */
 public final class Errors {
     public static final Object[] EMPTY_REPLACES = ArrayUtils.EMPTY_ARRAY;
@@ -46,7 +46,7 @@ public final class Errors {
      *
      * @return The created error. 
      */
-    public static org.jtheque.errors.Error newError(String title) {
+    public static Error newError(String title) {
         return new JThequeError(title, Level.ERROR, null, null);
     }
 
@@ -58,7 +58,7 @@ public final class Errors {
      *
      * @return The created error.
      */
-    public static org.jtheque.errors.Error newError(String title, Level level) {
+    public static Error newError(String title, Level level) {
         return new JThequeError(title, level, null, null);
     }
 
@@ -70,7 +70,7 @@ public final class Errors {
      *
      * @return The created error.
      */
-    public static org.jtheque.errors.Error newError(String title, String details) {
+    public static Error newError(String title, String details) {
         return new JThequeError(title, Level.ERROR, details, null);
     }
 
@@ -81,7 +81,7 @@ public final class Errors {
      *
      * @return The created error.
      */
-    public static org.jtheque.errors.Error newError(Throwable exception) {
+    public static Error newError(Throwable exception) {
         return new JThequeError(exception.getMessage(), Level.ERROR, null, exception);
     }
 
@@ -93,7 +93,7 @@ public final class Errors {
      *
      * @return The created error.
      */
-    public static org.jtheque.errors.Error newError(String title, Throwable exception) {
+    public static Error newError(String title, Throwable exception) {
         return new JThequeError(title, Level.ERROR, null, exception);
     }
 
@@ -104,7 +104,7 @@ public final class Errors {
      *
      * @return The created error.
      */
-    public static org.jtheque.errors.Error newI18nError(String message) {
+    public static Error newI18nError(String message) {
         return new InternationalizedError(message, EMPTY_REPLACES, null, EMPTY_REPLACES);
     }
 
@@ -116,7 +116,7 @@ public final class Errors {
      *
      * @return The created error.
      */
-    public static org.jtheque.errors.Error newI18nError(String message, Object[] replaces) {
+    public static Error newI18nError(String message, Object[] replaces) {
         return new InternationalizedError(message, replaces, null, EMPTY_REPLACES);
     }
 
@@ -129,7 +129,7 @@ public final class Errors {
      *
      * @return The created error.
      */
-    public static org.jtheque.errors.Error newI18nError(String message, Object[] replaces, String details) {
+    public static Error newI18nError(String message, Object[] replaces, String details) {
         return new InternationalizedError(message, replaces, details, EMPTY_REPLACES);
     }
 
@@ -143,7 +143,7 @@ public final class Errors {
      *
      * @return The created error.
      */
-    public static org.jtheque.errors.Error newI18nError(String message, Object[] replaces, String details, Object[] replacesDetails) {
+    public static Error newI18nError(String message, Object[] replaces, String details, Object[] replacesDetails) {
         return new InternationalizedError(message, replaces, details, replacesDetails);
     }
 
@@ -154,7 +154,7 @@ public final class Errors {
      * @see Errors
      */
     @Immutable
-    private static class JThequeError implements org.jtheque.errors.Error {
+    private static class JThequeError implements Error {
         private final String title;
         private final Throwable exception;
         private final String details;

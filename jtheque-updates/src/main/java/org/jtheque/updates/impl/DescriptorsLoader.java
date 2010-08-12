@@ -53,7 +53,7 @@ final class DescriptorsLoader {
      *
      * @return A List containing all the versions from.
      */
-    Collection<Version> getVersions(Module object) {
+    Collection<Version> getVersions(Versionable object) {
         ModuleDescriptor descriptor = getModuleDescriptor(object.getDescriptorURL());
 
         if (descriptor != null) {
@@ -97,7 +97,7 @@ final class DescriptorsLoader {
      *
      * @return A List containing all the online versions of the object.
      */
-    Collection<ModuleVersion> getOnlineVersions(Module object) {
+    Iterable<ModuleVersion> getOnlineVersions(Versionable object) {
         return getModuleDescriptor(object.getDescriptorURL()).getVersions();
     }
 

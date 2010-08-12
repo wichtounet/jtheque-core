@@ -34,7 +34,6 @@ package org.jtheque.views.impl.models;
 
 import org.jtheque.errors.*;
 import org.jtheque.errors.Error;
-import org.jtheque.errors.ErrorListener;
 import org.jtheque.ui.utils.models.SimpleListModel;
 
 import java.util.Collection;

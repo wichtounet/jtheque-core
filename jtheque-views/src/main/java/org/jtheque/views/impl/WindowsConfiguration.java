@@ -50,7 +50,7 @@ public final class WindowsConfiguration extends AbstractState {
      * @param core        The core.
      * @param viewService The view service.
      */
-    public WindowsConfiguration(Core core, org.jtheque.views.ViewService viewService) {
+    public WindowsConfiguration(Core core, ViewService viewService) {
         super();
 
         this.core = core;

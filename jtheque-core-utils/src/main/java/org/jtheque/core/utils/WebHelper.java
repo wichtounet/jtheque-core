@@ -48,7 +48,7 @@ public class WebHelper {
         addNotReachableError(url);
 
         eventService.addEvent(
-                Events.newEvent(EventLevel.ERROR, "System", "events.updates.network", EventService.CORE_EVENT_LOG));
+                Events.newEvent(EventLevel.ERROR, "System", "events.network.error", EventService.CORE_EVENT_LOG));
 
         return true;
     }

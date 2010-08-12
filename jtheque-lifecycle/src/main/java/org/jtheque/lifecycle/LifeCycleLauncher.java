@@ -5,7 +5,6 @@ import org.jtheque.collections.CollectionsService;
 import org.jtheque.core.Core;
 import org.jtheque.core.application.Application;
 import org.jtheque.core.lifecycle.LifeCycle;
-import org.jtheque.core.utils.JThequeProperties;
 import org.jtheque.events.EventLevel;
 import org.jtheque.events.EventService;
 import org.jtheque.events.Events;

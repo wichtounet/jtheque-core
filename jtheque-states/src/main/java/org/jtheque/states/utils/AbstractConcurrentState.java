@@ -74,11 +74,7 @@ public abstract class AbstractConcurrentState {
      * @return The value of the property with the given key or the given default value if the property doesn't exist.
      */
     protected final String getProperty(String key, String defaults) {
-        if (properties.containsKey(key)) {
-            return properties.get(key);
-        } else {
-            return defaults;
-        }
+        return properties.containsKey(key) ? properties.get(key) : defaults;
     }
 
     /**

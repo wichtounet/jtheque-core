@@ -3,7 +3,6 @@ package org.jtheque.views.impl.windows;
 import org.jtheque.errors.*;
 import org.jtheque.errors.Error;
 import org.jtheque.errors.Error.Level;
-import org.jtheque.errors.ErrorListener;
 import org.jtheque.i18n.LanguageService;
 import org.jtheque.images.ImageService;
 import org.jtheque.ui.Model;

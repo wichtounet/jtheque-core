@@ -49,7 +49,7 @@ final class RepositoryReader {
     }
 
     static Repository getCachedRepository(String strUrl) {
-        synchronized (RepositoryReader.class){
+        synchronized (RepositoryReader.class) {
             if (repository == null) {
                 repository = read(strUrl);
             }
@@ -84,7 +84,10 @@ final class RepositoryReader {
     /**
      * Read the application informations from the reader.
      *
-     * @param reader     The reader to use.
+     * @param reader The reader to use.
+     *
+     * @return The name of the application.
+     *
      * @throws XMLException If an error occurs during the XML reading process.
      */
     private static String readApplication(XMLReader<Node> reader) throws XMLException {
@@ -94,7 +97,10 @@ final class RepositoryReader {
     /**
      * Read the modules informations from the reader.
      *
-     * @param reader     The reader to use.
+     * @param reader The reader to use.
+     *
+     * @return The List of modules contained in the repository.
+     *
      * @throws XMLException If an error occurs during the XML reading process.
      */
     private static List<ModuleDescription> readModules(XMLReader<Node> reader) throws XMLException {
@@ -126,7 +132,10 @@ final class RepositoryReader {
     /**
      * Read the title of the repository from the reader.
      *
-     * @param reader     The reader to use.
+     * @param reader The reader to use.
+     *
+     * @return Read the title of the repository.
+     *
      * @throws XMLException If an error occurs during the XML reading process.
      */
     private static InternationalString readTitle(XMLReader<Node> reader) throws XMLException {

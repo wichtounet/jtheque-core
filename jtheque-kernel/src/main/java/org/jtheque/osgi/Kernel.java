@@ -4,7 +4,6 @@ import org.jtheque.osgi.server.BundleState;
 import org.jtheque.osgi.server.FelixServer;
 import org.jtheque.osgi.server.OSGiServer;
 import org.jtheque.utils.StringUtils;
-import org.jtheque.utils.SystemProperty;
 import org.jtheque.utils.io.FileUtils;
 
 import org.slf4j.LoggerFactory;

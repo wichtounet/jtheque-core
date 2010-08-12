@@ -53,7 +53,7 @@ public final class JTheque {
     }
 
     /**
-     * Launch the application. If the return code if greater than 0, the applicaition will be restarted. 
+     * Launch the application. If the return code if greater than 0, the applicaition will be restarted.
      */
     private static void launch() {
         int ret = launchJTheque();
@@ -66,8 +66,9 @@ public final class JTheque {
     /**
      * Launch JTheque.
      *
-     * @return The return code. 
+     * @return The return code.
      */
+    @SuppressWarnings({"UseOfSystemOutOrSystemErr"})
     private static int launchJTheque() {
         int returnCode;
 
@@ -81,12 +82,7 @@ public final class JTheque {
         PrintStream out = System.out;
         PrintStream err = System.err;
 
-        BuildLogger logger = new DefaultLogger();
-        logger.setOutputPrintStream(out);
-        logger.setErrorPrintStream(err);
-        logger.setMessageOutputLevel(Project.MSG_INFO);
-
-        project.addBuildListener(logger);
+        project.addBuildListener(createLogger(out, err));
 
         System.setOut(new PrintStream(new DemuxOutputStream(project, false)));
         System.setErr(new PrintStream(new DemuxOutputStream(project, true)));
@@ -97,14 +93,7 @@ public final class JTheque {
         try {
             project.log("Launch JTheque Kernel");
 
-            Java javaTask = new Java();
-            javaTask.setTaskName("JTheque");
-            javaTask.setProject(project);
-            javaTask.setFork(true);
-            javaTask.setFailonerror(true);
-            javaTask.setCloneVm(true);
-            javaTask.setClassname(Kernel.class.getName());
-            javaTask.init();
+            Java javaTask = createJavaTask(project);
 
             returnCode = javaTask.executeJava();
         } catch (BuildException e) {
@@ -119,5 +108,44 @@ public final class JTheque {
         System.setErr(err);
 
         return returnCode;
+    }
+
+    /**
+     * Create a simple logger to out and err streams.
+     *
+     * @param out The output stream.
+     * @param err The error stream.
+     *
+     * @return The create logger.
+     */
+    private static BuildLogger createLogger(PrintStream out, PrintStream err) {
+        BuildLogger logger = new DefaultLogger();
+
+        logger.setOutputPrintStream(out);
+        logger.setErrorPrintStream(err);
+        logger.setMessageOutputLevel(Project.MSG_INFO);
+
+        return logger;
+    }
+
+    /**
+     * Create the Java Task for launching the Kernel.
+     *
+     * @param project The project to launch the task in.
+     *
+     * @return The created Java Task.
+     */
+    private static Java createJavaTask(Project project) {
+        Java javaTask = new Java();
+
+        javaTask.setTaskName("JTheque");
+        javaTask.setProject(project);
+        javaTask.setFork(true);
+        javaTask.setFailonerror(true);
+        javaTask.setCloneVm(true);
+        javaTask.setClassname(Kernel.class.getName());
+        javaTask.init();
+
+        return javaTask;
     }
 }
