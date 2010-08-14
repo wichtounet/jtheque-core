@@ -36,7 +36,7 @@ import java.awt.geom.Ellipse2D;
  *
  * @author Alexander Potochkin
  */
-public class BusyPainterUI extends LockableUI implements ActionListener {
+public final class BusyPainterUI extends LockableUI implements ActionListener {
     private static final long serialVersionUID = -6855096525375295509L;
     
     private final transient BusyPainter busyPainter;

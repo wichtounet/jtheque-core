@@ -46,7 +46,7 @@ import java.awt.LayoutManager;
  * @author Baptiste Wicht
  */
 public final class Filthy {
-    private static final FilthyRenderer LIST_RENDERER = new FilthyRenderer();
+    private static final ListCellRenderer LIST_RENDERER = new FilthyRenderer();
 
     /**
      * Utility class, not instantiable.

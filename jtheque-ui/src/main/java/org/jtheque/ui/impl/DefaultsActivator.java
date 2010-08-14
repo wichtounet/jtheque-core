@@ -52,7 +52,7 @@ import javax.swing.UnsupportedLookAndFeelException;
  *
  * @author Baptiste Wicht
  */
-public class DefaultsActivator implements BundleActivator {
+public final class DefaultsActivator implements BundleActivator {
     @Override
     public void start(BundleContext bundleContext) {
         SwingUtils.inEdt(new ActivateDefaults());

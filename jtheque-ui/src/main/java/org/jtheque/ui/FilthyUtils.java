@@ -16,6 +16,7 @@ package org.jtheque.ui;
  * limitations under the License.
  */
 
+import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.ui.SizeTracker;
 
 import java.awt.Component;
@@ -27,6 +28,7 @@ import java.awt.Image;
  *
  * @author Baptiste Wicht
  */
+@ThreadSafe
 public interface FilthyUtils {
     /**
      * Paint a filthy buffered background on the given graphics.

@@ -21,7 +21,7 @@ package org.jtheque.ui;
  *
  * @author Baptiste Wicht
  */
-public class ControllerException extends RuntimeException {
+public final class ControllerException extends RuntimeException {
     private static final long serialVersionUID = -1359873732036438173L;
 
     /**

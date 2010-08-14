@@ -13,8 +13,7 @@
 
     <context:annotation-config/>
 
-    <bean id="uiUtils" class="org.jtheque.ui.impl.UIUtils">
-        <constructor-arg ref="viewDelegate"/>
+    <bean id="uiUtils" class="org.jtheque.ui.impl.UIUtilsImpl">
         <constructor-arg>
             <osgi:reference interface="org.jtheque.i18n.LanguageService"/>
         </constructor-arg>
@@ -28,8 +27,6 @@
             <osgi:reference interface="org.jtheque.images.ImageService"/>
         </constructor-arg>
     </bean>
-
-    <bean id="viewDelegate" class="org.jtheque.ui.impl.SwingViewDelegate"/>
 
     <osgi:service interface="org.jtheque.ui.UIUtils" ref="uiUtils"/>
     <osgi:service interface="org.jtheque.ui.FilthyUtils" ref="filthyUtils"/>

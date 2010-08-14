@@ -1,5 +1,7 @@
 package org.jtheque.ui;
 
+import org.jtheque.utils.annotations.ThreadSafe;
+
 /*
  * Copyright JTheque (Baptiste Wicht)
  *
@@ -21,15 +23,9 @@ package org.jtheque.ui;
  *
  * @author Baptiste Wicht
  */
+@ThreadSafe
 public interface UIUtils {
     String LIGHT_IMAGE = "jtheque-ui-light";
-
-    /**
-     * Return the delegate view manager.
-     *
-     * @return The delegate view manager.
-     */
-    ViewDelegate getDelegate();
 
     /**
      * Ask the user for confirmation with internationalized message.
@@ -68,4 +64,37 @@ public interface UIUtils {
      * @return The text the user has entered. 
      */
     String askI18nText(String key);
+
+    /**
+     * Ask the user for a yes or no answer.
+     *
+     * @param text  The question.
+     * @param title The question title.
+     *
+     * @return true if the user has answered yes else false.
+     */
+    boolean askUserForConfirmation(String text, String title);
+
+    /**
+     * Display the text.
+     *
+     * @param text The text to display.
+     */
+    void displayText(String text);
+
+    /**
+     * Run the runnable in the view.
+     *
+     * @param runnable The runnable to run in the view.
+     */
+    void run(Runnable runnable);
+
+    /**
+     * Ask the user for text.
+     *
+     * @param title The question to ask to the user.
+     *
+     * @return The text of the user.
+     */
+    String askText(String title);
 }
