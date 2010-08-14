@@ -30,6 +30,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -39,7 +40,8 @@ import java.util.List;
  *
  * @author Baptiste Wicht
  */
-public final class JThequeStateBar extends JPanel {
+public final class
+        JThequeStateBar extends JPanel {
     private int currentColumn;
 
     private final GridBagUtils gbc = new GridBagUtils();
@@ -205,7 +207,9 @@ public final class JThequeStateBar extends JPanel {
      *
      * @author Baptiste Wicht
      */
-    private static final class LeftToRightComparator implements Comparator<StateBarComponent> {
+    private static final class LeftToRightComparator implements Comparator<StateBarComponent>, Serializable {
+        private static final long serialVersionUID = -631261758296927536L;
+
         @Override
         public int compare(StateBarComponent component, StateBarComponent other) {
             return component.getPosition().compareTo(other.getPosition());

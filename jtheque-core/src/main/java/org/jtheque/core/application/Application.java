@@ -65,7 +65,7 @@ public interface Application {
      *
      * @return true if we must display the license else false.
      */
-    boolean isDisplayLicense();
+    boolean isLicenseDisplayed();
 
     /**
      * Return the path to the license.

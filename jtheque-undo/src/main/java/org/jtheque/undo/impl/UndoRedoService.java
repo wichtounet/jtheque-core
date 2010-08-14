@@ -39,7 +39,7 @@ public final class UndoRedoService extends UndoManager implements IUndoRedoServi
     private final WeakEventListenerList<StateListener> eventListenerList = WeakEventListenerList.create();
 
     @Override
-    public synchronized boolean addEdit(UndoableEdit arg0) {
+    public boolean addEdit(UndoableEdit arg0) {
         boolean add = super.addEdit(arg0);
 
         fireStateChanged();

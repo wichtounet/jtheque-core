@@ -25,18 +25,19 @@ import java.util.Collection;
  */
 public interface Constraint {
     /**
-     * Return the max length of the value.
+     * Return the max length of the value. If the constraint doesn't need to control length, this method
+     * return a number with non-sense. 
      *
      * @return The max length of the value.
      */
-    int maxLength();
+    int getMaxLength();
 
     /**
      * Indicate if we must control length or not.
      *
      * @return true if we must control length else false.
      */
-    boolean mustControlLength();
+    boolean isLengthControlled();
 
     /**
      * Validate the field.

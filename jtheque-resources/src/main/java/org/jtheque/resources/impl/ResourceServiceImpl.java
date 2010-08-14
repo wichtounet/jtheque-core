@@ -192,17 +192,15 @@ public final class ResourceServiceImpl implements ResourceService, BundleContext
     public void installResource(Resource resource) {
         SwingUtils.assertNotEDT("installResource(Resource)");
 
-        if (resource.isLibrary()) {
-            if (!installedBundles.containsKey(resource.getId())) {
-                try {
-                    Bundle bundle = bundleContext.installBundle("file:" +
-                            getResourceFolder(resource.getId(), resource.getVersion()).getAbsolutePath() +
-                            '/' + resource.getFile());
+        if (resource.isLibrary() && !installedBundles.containsKey(resource.getId())) {
+            try {
+                Bundle bundle = bundleContext.installBundle("file:" +
+                        getResourceFolder(resource.getId(), resource.getVersion()).getAbsolutePath() +
+                        '/' + resource.getFile());
 
-                    installedBundles.put(resource.getId(), bundle);
-                } catch (BundleException e) {
-                    LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
-                }
+                installedBundles.put(resource.getId(), bundle);
+            } catch (BundleException e) {
+                LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
             }
         }
     }

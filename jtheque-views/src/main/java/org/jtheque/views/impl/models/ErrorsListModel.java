@@ -32,8 +32,9 @@ package org.jtheque.views.impl.models;
  * limitations under the License.
  */
 
-import org.jtheque.errors.*;
 import org.jtheque.errors.Error;
+import org.jtheque.errors.ErrorListener;
+import org.jtheque.errors.ErrorService;
 import org.jtheque.ui.utils.models.SimpleListModel;
 
 import java.util.Collection;

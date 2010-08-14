@@ -33,6 +33,7 @@ import org.jtheque.utils.io.FileException;
 import org.jtheque.xml.utils.XMLException;
 
 import java.io.File;
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -181,7 +182,9 @@ public final class FileService implements org.jtheque.file.FileService, ModuleLi
      *
      * @author Baptiste Wicht
      */
-    private static final class ModuleBackupComparator implements Comparator<ModuleBackuper> {
+    private static final class ModuleBackupComparator implements Comparator<ModuleBackuper>, Serializable {
+        private static final long serialVersionUID = -6570472886580751916L;
+
         @Override
         public int compare(ModuleBackuper backup1, ModuleBackuper backup2) {
             boolean hasDependency = StringUtils.isNotEmpty(backup1.getDependencies());

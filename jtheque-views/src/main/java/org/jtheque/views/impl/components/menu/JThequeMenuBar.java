@@ -31,6 +31,7 @@ import javax.swing.AbstractButton;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -63,18 +64,6 @@ public final class JThequeMenuBar extends JMenuBar implements FeatureListener, I
         this.featureService = featureService;
 
         languageService.addInternationalizable(this);
-    }
-
-    /**
-     * A comparator to sort the Features by position.
-     *
-     * @author Baptiste Wicht
-     */
-    private static final class ByPositionComparator implements Comparator<Feature> {
-        @Override
-        public int compare(Feature feature, Feature other) {
-            return Numbers.compare(feature.getPosition(), other.getPosition());
-        }
     }
 
     /**
@@ -263,5 +252,19 @@ public final class JThequeMenuBar extends JMenuBar implements FeatureListener, I
         }
 
         SwingUtils.refresh(this);
+    }
+
+    /**
+     * A comparator to sort the Features by position.
+     *
+     * @author Baptiste Wicht
+     */
+    private static final class ByPositionComparator implements Comparator<Feature>, Serializable {
+        private static final long serialVersionUID = 2723796561895917073L;
+
+        @Override
+        public int compare(Feature feature, Feature other) {
+            return Numbers.compare(feature.getPosition(), other.getPosition());
+        }
     }
 }

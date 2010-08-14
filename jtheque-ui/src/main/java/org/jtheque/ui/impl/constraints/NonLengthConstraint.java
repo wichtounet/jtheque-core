@@ -47,12 +47,12 @@ public abstract class NonLengthConstraint implements Constraint {
     }
 
     @Override
-    public int maxLength() {
+    public int getMaxLength() {
         return -1;
     }
 
     @Override
-    public boolean mustControlLength() {
+    public boolean isLengthControlled() {
         return false;
     }
 

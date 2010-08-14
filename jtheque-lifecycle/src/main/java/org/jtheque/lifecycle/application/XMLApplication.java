@@ -73,7 +73,7 @@ final class XMLApplication implements Application {
     }
 
     @Override
-    public boolean isDisplayLicense() {
+    public boolean isLicenseDisplayed() {
         return displayLicense;
     }
 

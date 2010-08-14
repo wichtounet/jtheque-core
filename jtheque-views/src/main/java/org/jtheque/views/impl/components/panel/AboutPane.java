@@ -244,7 +244,7 @@ public final class AboutPane extends JXPanel implements AboutView, International
      * @param y         The y position to start painting the license.
      */
     private void paintLicense(Graphics g2, Color textColor, int x, int y) {
-        if (core.getApplication().isDisplayLicense()) {
+        if (core.getApplication().isLicenseDisplayed()) {
             int xLicense = x + paintWidth - getFontMetrics(fontInfos).stringWidth(model.getLicense());
 
             PaintUtils.drawString(g2, model.getLicense(), xLicense, y + 150, fontInfos, textColor);

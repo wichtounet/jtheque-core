@@ -28,7 +28,7 @@ import org.jtheque.utils.bean.IntDate;
  */
 public final class Messages {
     /**
-     * Utility class, not instantiable. 
+     * Utility class, not instantiable.
      */
     private Messages() {
         throw new AssertionError();
@@ -80,7 +80,7 @@ public final class Messages {
         /**
          * The text of the message.
          */
-        private final String message;
+        private final String text;
 
         /**
          * The date of the message.
@@ -95,18 +95,18 @@ public final class Messages {
         /**
          * Construct a new Message.
          *
-         * @param id      The id of the message.
-         * @param title   The title of the message.
-         * @param message The message.
-         * @param date    The date of the message.
-         * @param source  The source of the message.
+         * @param id     The id of the message.
+         * @param title  The title of the message.
+         * @param text   The message.
+         * @param date   The date of the message.
+         * @param source The source of the message.
          */
-        private Message(int id, String title, String message, IntDate date, String source) {
+        private Message(int id, String title, String text, IntDate date, String source) {
             super();
 
             this.id = id;
             this.title = title;
-            this.message = message;
+            this.text = text;
             this.date = new IntDate(date);
             this.source = source;
         }
@@ -122,8 +122,8 @@ public final class Messages {
         }
 
         @Override
-        public String getMessage() {
-            return message;
+        public String getText() {
+            return text;
         }
 
         @Override
@@ -141,7 +141,7 @@ public final class Messages {
             return "Message{" +
                     "id=" + id +
                     ", title='" + title + '\'' +
-                    ", message='" + message + '\'' +
+                    ", text='" + text + '\'' +
                     ", date=" + date +
                     ", source='" + source + '\'' +
                     '}';
@@ -155,7 +155,7 @@ public final class Messages {
                 return EqualsBuilder.newBuilder(this, other).
                         addField(id, other.id).
                         addField(date, other.date).
-                        addField(message, other.message).
+                        addField(text, other.text).
                         addField(source, other.source).
                         addField(title, other.title).
                         areEquals();
@@ -166,7 +166,7 @@ public final class Messages {
 
         @Override
         public int hashCode() {
-            return HashCodeUtils.hashCodeDirect(id, title, message, date, source);
+            return HashCodeUtils.hashCodeDirect(id, title, text, date, source);
         }
 
         @Override

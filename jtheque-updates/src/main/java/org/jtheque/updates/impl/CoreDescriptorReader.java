@@ -31,7 +31,7 @@ import java.util.List;
  * limitations under the License.
  */
 
-class CoreDescriptorReader {
+final class CoreDescriptorReader {
     private CoreDescriptorReader() {
         throw new AssertionError();
     }

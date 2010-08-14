@@ -36,14 +36,10 @@ public final class SchemaConfiguration extends AbstractConcurrentState {
      *
      * @return The version of the schema.
      */
-    public synchronized Version getVersion(String name) {
+    public Version getVersion(String name) {
         String property = getProperty(name + "-version", "null");
-
-        if ("null".equals(property)) {
-            return null;
-        }
-
-        return Version.get(property);
+        
+        return "null".equals(property) ? null : Version.get(property);
     }
 
     /**

@@ -55,12 +55,12 @@ public final class MaxLengthConstraint implements Constraint {
     }
 
     @Override
-    public int maxLength() {
+    public int getMaxLength() {
         return maxLength;
     }
 
     @Override
-    public boolean mustControlLength() {
+    public boolean isLengthControlled() {
         return true;
     }
 

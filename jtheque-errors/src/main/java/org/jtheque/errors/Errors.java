@@ -5,8 +5,6 @@ import org.jtheque.i18n.LanguageService;
 import org.jtheque.utils.annotations.Immutable;
 import org.jtheque.utils.collections.ArrayUtils;
 
-import java.lang.*;
-
 /*
  * Copyright JTheque (Baptiste Wicht)
  *
@@ -30,10 +28,10 @@ import java.lang.*;
  * @see Error
  */
 public final class Errors {
-    public static final Object[] EMPTY_REPLACES = ArrayUtils.EMPTY_ARRAY;
+    private static final Object[] EMPTY_REPLACES = ArrayUtils.EMPTY_ARRAY;
 
     /**
-     * Utility class, not instantiable. 
+     * Utility class, not instantiable.
      */
     private Errors() {
         throw new AssertionError();
@@ -44,7 +42,7 @@ public final class Errors {
      *
      * @param title The message of the error.
      *
-     * @return The created error. 
+     * @return The created error.
      */
     public static Error newError(String title) {
         return new JThequeError(title, Level.ERROR, null, null);

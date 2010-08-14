@@ -78,7 +78,7 @@ public final class MessageView extends SwingFilthyBuildedDialogView<IMessageMode
         sourceLabel = builder.addLabel(getModel().isDefaultMessage() ? "" : getModel().getCurrentMessage().getSource(), builder.gbcSet(1, 1));
         titleLabel = builder.addLabel(getModel().isDefaultMessage() ? "" : getModel().getCurrentMessage().getTitle(), builder.gbcSet(1, 2));
 
-        messageArea = builder.addScrolledTextArea(getModel().isDefaultMessage() ? "" : getModel().getCurrentMessage().getMessage(),
+        messageArea = builder.addScrolledTextArea(getModel().isDefaultMessage() ? "" : getModel().getCurrentMessage().getText(),
                 builder.gbcSet(0, 3, GridBagUtils.BOTH, GridBagUtils.LINE_START, 2, 1));
         messageArea.setRows(8);
         messageArea.setEnabled(false);
@@ -104,7 +104,7 @@ public final class MessageView extends SwingFilthyBuildedDialogView<IMessageMode
             dateLabel.setText(message.getDate().getStrDate());
             sourceLabel.setText(message.getSource());
             titleLabel.setText(message.getTitle());
-            messageArea.setText(message.getMessage());
+            messageArea.setText(message.getText());
         }
     }
 }

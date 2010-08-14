@@ -2,7 +2,7 @@ package org.jtheque.schemas;
 
 import org.jtheque.core.utils.OSGiUtils;
 import org.jtheque.utils.StringUtils;
-import org.jtheque.utils.bean.BeanUtils;
+import org.jtheque.utils.bean.EqualsBuilder;
 import org.jtheque.utils.bean.HashCodeUtils;
 import org.jtheque.utils.collections.ArrayUtils;
 
@@ -150,8 +150,17 @@ public abstract class AbstractSchema implements Schema {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        return BeanUtils.areEquals(this, obj, "id", "version");
+    public boolean equals(Object o) {
+        if (o instanceof Schema) {
+            Schema other = (Schema) o;
+
+            return EqualsBuilder.newBuilder(this, other).
+                    addField(getId(), other.getId()).
+                    addField(getVersion(), other.getVersion()).
+                    areEquals();
+        }
+
+        return false;
     }
 
     @Override

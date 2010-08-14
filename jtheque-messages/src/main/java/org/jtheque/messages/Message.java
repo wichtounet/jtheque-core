@@ -43,7 +43,7 @@ public interface Message extends Comparable<Message> {
      *
      * @return The text of the message.
      */
-    String getMessage();
+    String getText();
 
     /**
      * Return the date of the message.

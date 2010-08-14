@@ -27,7 +27,6 @@ import org.jtheque.modules.ModuleState;
 import org.jtheque.modules.Repository;
 import org.jtheque.modules.SwingLoader;
 import org.jtheque.states.StateService;
-import org.jtheque.ui.UIUtils;
 import org.jtheque.utils.SimplePropertiesCache;
 import org.jtheque.utils.annotations.GuardedInternally;
 import org.jtheque.utils.collections.CollectionUtils;
@@ -71,9 +70,6 @@ public final class ModuleServiceImpl implements ModuleService {
 
     @Resource
     private ImageService imageService;
-
-    @Resource
-    private UIUtils uiUtils;
 
     @Resource
     private ModuleManager moduleManager;
@@ -395,7 +391,7 @@ public final class ModuleServiceImpl implements ModuleService {
      * @param state  The state.
      */
     private void setState(Module module, ModuleState state) {
-        synchronized (this){
+        synchronized (this) {
             module.setState(state);
 
             configuration.setState(module.getId(), state);

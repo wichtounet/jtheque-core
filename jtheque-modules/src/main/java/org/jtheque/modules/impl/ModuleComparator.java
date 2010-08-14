@@ -20,9 +20,17 @@ import org.jtheque.modules.Module;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.collections.ArrayUtils;
 
+import java.io.Serializable;
 import java.util.Comparator;
 
-final class ModuleComparator implements Comparator<Module> {
+/**
+ * A comparator for modules. Sort the modules in the order they need to be launched.
+ *
+ * @author Baptiste Wicht
+ */
+final class ModuleComparator implements Comparator<Module>, Serializable {
+    private static final long serialVersionUID = 2805880990486998739L;
+
     @Override
     public int compare(Module o1, Module o2) {
         boolean hasDependency = hasDependency(o1);

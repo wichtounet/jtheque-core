@@ -62,9 +62,6 @@ public class GeneralController extends AbstractController<MainView> {
     private ViewService viewService;
 
     @Resource
-    private Core core;
-
-    @Resource
     private LifeCycle lifeCycle;
 
     @Resource

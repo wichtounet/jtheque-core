@@ -74,8 +74,8 @@ public final class ConstraintManager {
      * @param fieldName The name of the field.
      */
     public static void configure(JTextField field, String fieldName) {
-        if (CONSTRAINTS.containsKey(fieldName) && CONSTRAINTS.get(fieldName).mustControlLength()) {
-            DocumentFilter filter = new DocumentLengthFilterAvert(CONSTRAINTS.get(fieldName).maxLength(), field);
+        if (CONSTRAINTS.containsKey(fieldName) && CONSTRAINTS.get(fieldName).isLengthControlled()) {
+            DocumentFilter filter = new DocumentLengthFilterAvert(CONSTRAINTS.get(fieldName).getMaxLength(), field);
             Document document = field.getDocument();
             ((AbstractDocument) document).setDocumentFilter(filter);
         }

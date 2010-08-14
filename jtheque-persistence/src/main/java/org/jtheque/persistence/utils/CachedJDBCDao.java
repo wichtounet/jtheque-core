@@ -88,7 +88,7 @@ public abstract class CachedJDBCDao<T extends Entity> extends AbstractDao<T> {
     }
 
     /**
-     * Load the cache.
+     * Load the cache. Will only be called only. 
      */
     protected abstract void loadCache();
 
