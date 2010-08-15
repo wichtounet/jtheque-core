@@ -99,6 +99,9 @@ public final class AboutPane extends JXPanel implements AboutView, International
     @Resource
     private LanguageService languageService;
 
+    /**
+     * Create the view. 
+     */
     @PostConstruct
     public void create(){
         setOpaque(false);
@@ -124,6 +127,9 @@ public final class AboutPane extends JXPanel implements AboutView, International
         init();
     }
 
+    /**
+     * Init the about pane. 
+     */
     private void init() {
         model.refresh(core, languageService);
         inited = false;

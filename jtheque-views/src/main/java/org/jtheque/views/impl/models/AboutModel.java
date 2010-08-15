@@ -24,6 +24,11 @@ import java.util.Collection;
  * limitations under the License.
  */
 
+/**
+ * A model to contain the informations of the about view.
+ *
+ * @author Baptiste Wicht
+ */
 public final class AboutModel {
     public static final int CREDITS_HEIGHT = 75;
     public static final int VIEW_HEIGHT = 400;
@@ -36,7 +41,13 @@ public final class AboutModel {
     private AboutInfo[] infos;
     private Collection<String> credits;
 
-    public void refresh(Core core, LanguageService i18n){
+    /**
+     * Refresh the model informations.
+     *
+     * @param core The core.
+     * @param i18n The language service.
+     */
+    public void refresh(Core core, LanguageService i18n) {
         Application application = core.getApplication();
 
         copyright = application.getI18nProperties().getCopyright();
@@ -58,18 +69,38 @@ public final class AboutModel {
         }
     }
 
+    /**
+     * Return the license.
+     *
+     * @return The license.
+     */
     public String getLicense() {
         return license;
     }
 
+    /**
+     * Return the copypright.
+     *
+     * @return The copyright.
+     */
     public String getCopyright() {
         return copyright;
     }
 
+    /**
+     * All the about informations.
+     *
+     * @return The about informations.
+     */
     public AboutInfo[] getInfos() {
         return infos;
     }
 
+    /**
+     * Return the credits line.
+     *
+     * @return A Collection containing all the credits line.
+     */
     public Collection<String> getCredits() {
         return credits;
     }

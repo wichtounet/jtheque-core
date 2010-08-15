@@ -16,6 +16,8 @@ package org.jtheque.views;
  * limitations under the License.
  */
 
+import org.jtheque.utils.annotations.ThreadSafe;
+
 import java.awt.Window;
 
 /**
@@ -23,6 +25,7 @@ import java.awt.Window;
  *
  * @author Baptiste Wicht
  */
+@ThreadSafe
 public interface ViewService {
     /**
      * Display the about view.

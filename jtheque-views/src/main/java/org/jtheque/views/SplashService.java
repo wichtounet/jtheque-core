@@ -1,5 +1,7 @@
 package org.jtheque.views;
 
+import org.jtheque.utils.annotations.ThreadSafe;
+
 /*
  * Copyright JTheque (Baptiste Wicht)
  *
@@ -17,10 +19,11 @@ package org.jtheque.views;
  */
 
 /**
- * A splash manager specification.
+ * A service to manage the splash screen. 
  *
  * @author Baptiste Wicht
  */
+@ThreadSafe
 public interface SplashService {
     /**
      * Display the splash screen.

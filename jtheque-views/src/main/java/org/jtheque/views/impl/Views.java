@@ -26,6 +26,7 @@ import org.jtheque.updates.UpdateService;
 import org.jtheque.utils.SimplePropertiesCache;
 import org.jtheque.modules.Module;
 import org.jtheque.modules.ModuleListener;
+import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.ui.SwingUtils;
 import org.jtheque.views.components.ConfigTabComponent;
@@ -54,10 +55,11 @@ import java.util.List;
  *
  * @author Baptiste Wicht
  */
+@ThreadSafe
 public final class Views implements org.jtheque.views.Views, ApplicationContextAware, ModuleListener {
-    private final Collection<MainComponent> mainComponents = CollectionUtils.newList(5);
-    private final Collection<StateBarComponent> stateBarComponents = CollectionUtils.newList(5);
-    private final Collection<ConfigTabComponent> configPanels = CollectionUtils.newList(5);
+    private final Collection<MainComponent> mainComponents = CollectionUtils.newConcurrentList();
+    private final Collection<StateBarComponent> stateBarComponents = CollectionUtils.newConcurrentList();
+    private final Collection<ConfigTabComponent> configPanels = CollectionUtils.newConcurrentList();
 
     private ApplicationContext applicationContext;
 
@@ -97,8 +99,13 @@ public final class Views implements org.jtheque.views.Views, ApplicationContextA
     }
 
     @Override
-    public void setSelectedView(MainComponent component) {
-        generalController.getView().setSelectedComponent(component.getImpl());
+    public void setSelectedView(final MainComponent component) {
+        SwingUtils.inEdt(new Runnable(){
+            @Override
+            public void run() {
+                generalController.getView().setSelectedComponent(component.getImpl());
+            }
+        });
     }
 
     @Override
@@ -119,21 +126,23 @@ public final class Views implements org.jtheque.views.Views, ApplicationContextA
 
     @Override
     public MainView getMainView() {
+        SwingUtils.assertEDT("Views.getMainView()");
+
         return generalController.getView();
     }
 
     @Override
-    public void setApplicationContext(ApplicationContext applicationContext) {
-        this.applicationContext = applicationContext;
-    }
-
-    @Override
-    public void addMainComponent(String moduleId, MainComponent component) {
+    public void addMainComponent(String moduleId, final MainComponent component) {
         mainComponents.add(component);
 
-        generalController.getView().sendMessage("add", component);
-
         ModuleResourceCache.addResource(moduleId, MainComponent.class, component);
+
+        SwingUtils.inEdt(new Runnable(){
+            @Override
+            public void run() {
+                generalController.getView().sendMessage("add", component);
+            }
+        });
     }
 
     @Override
@@ -142,22 +151,32 @@ public final class Views implements org.jtheque.views.Views, ApplicationContextA
     }
 
     @Override
-    public void setSelectedMainComponent(MainComponent component) {
+    public void setSelectedMainComponent(final MainComponent component) {
         if (mainComponents.size() > 1) {
-            generalController.getView().getTabbedPane().setSelectedComponent(component.getImpl());
+            SwingUtils.inEdt(new Runnable() {
+                @Override
+                public void run() {
+                    generalController.getView().getTabbedPane().setSelectedComponent(component.getImpl());
+                }
+            });
         }
     }
 
     @Override
-    public void addStateBarComponent(String moduleId, StateBarComponent component) {
+    public void addStateBarComponent(String moduleId, final StateBarComponent component) {
         if (component != null && component.getComponent() != null) {
             stateBarComponents.add(component);
 
-            if (SimplePropertiesCache.get("statebar-loaded", Boolean.class)) {
-                generalController.getView().getStateBar().addComponent(component);
-            }
-
             ModuleResourceCache.addResource(moduleId, StateBarComponent.class, component);
+
+            if (SimplePropertiesCache.get("statebar-loaded", Boolean.class)) {
+                SwingUtils.inEdt(new Runnable() {
+                    @Override
+                    public void run() {
+                        generalController.getView().getStateBar().addComponent(component);
+                    }
+                });
+            }
         }
     }
 
@@ -167,14 +186,19 @@ public final class Views implements org.jtheque.views.Views, ApplicationContextA
     }
 
     @Override
-    public void addConfigTabComponent(String moduleId, ConfigTabComponent component) {
+    public void addConfigTabComponent(String moduleId, final ConfigTabComponent component) {
         configPanels.add(component);
 
-        if (SimplePropertiesCache.get("config-view-loaded", Boolean.class)) {
-            configController.getView().sendMessage("add", component);
-        }
-
         ModuleResourceCache.addResource(moduleId, ConfigTabComponent.class, component);
+
+        if (SimplePropertiesCache.get("config-view-loaded", Boolean.class)) {
+            SwingUtils.inEdt(new Runnable() {
+                @Override
+                public void run() {
+                    configController.getView().sendMessage("add", component);
+                }
+            });
+        }
     }
 
     @Override
@@ -210,6 +234,11 @@ public final class Views implements org.jtheque.views.Views, ApplicationContextA
                 }
             }
         }
+    }
+
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) {
+        this.applicationContext = applicationContext;
     }
 
     @Override

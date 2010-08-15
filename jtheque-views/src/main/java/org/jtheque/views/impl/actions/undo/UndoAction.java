@@ -20,8 +20,6 @@ import org.jtheque.i18n.impl.LanguageService;
 import org.jtheque.undo.IUndoRedoService;
 import org.jtheque.undo.StateListener;
 
-import javax.annotation.PreDestroy;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
@@ -32,7 +30,7 @@ import java.awt.event.KeyEvent;
  */
 public final class UndoAction extends AbstractAction implements StateListener {
     private static final long serialVersionUID = -7472749854626200137L;
-    
+
     private final transient IUndoRedoService undoRedoService;
     private final transient LanguageService languageService;
 
@@ -51,11 +49,6 @@ public final class UndoAction extends AbstractAction implements StateListener {
         undoRedoService.addStateListener(this);
 
         setEnabled(false);
-    }
-
-    @PreDestroy
-    private void removeListener(){
-        undoRedoService.removeStateListener(this);
     }
 
     @Override

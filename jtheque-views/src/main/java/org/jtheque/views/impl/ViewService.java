@@ -21,6 +21,7 @@ import org.jtheque.core.utils.SwingSpringProxy;
 import org.jtheque.states.StateService;
 import org.jtheque.utils.SimplePropertiesCache;
 import org.jtheque.images.ImageService;
+import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.ui.SwingUtils;
 import org.jtheque.views.WindowConfiguration;
 import org.jtheque.views.panel.CollectionView;
@@ -38,6 +39,7 @@ import java.awt.Window;
  *
  * @author Baptiste Wicht
  */
+@ThreadSafe
 public final class ViewService implements org.jtheque.views.ViewService, ApplicationContextAware {
     private final WindowsConfiguration configuration;
 
@@ -61,28 +63,41 @@ public final class ViewService implements org.jtheque.views.ViewService, Applica
 
     @Override
     public void displayAboutView() {
-        SimplePropertiesCache.get("mainView", MainView.class).setGlassPane(aboutPane.get().getImpl());
+        SwingUtils.inEdt(new Runnable(){
+            @Override
+            public void run() {
+                SimplePropertiesCache.get("mainView", MainView.class).setGlassPane(aboutPane.get().getImpl());
 
-        aboutPane.get().appear();
+                aboutPane.get().appear();
+            }
+        });
     }
 
     @Override
     public void displayCollectionView() {
-        SimplePropertiesCache.get("mainView", MainView.class).setGlassPane(collectionPane.get().getImpl());
+        SwingUtils.inEdt(new Runnable() {
+            @Override
+            public void run() {
+                SimplePropertiesCache.get("mainView", MainView.class).setGlassPane(collectionPane.get().getImpl());
 
-        collectionPane.get().appear();
+                collectionPane.get().appear();
+            }
+        });
     }
 
     @Override
     public void closeCollectionView() {
-        SimplePropertiesCache.get("mainView", MainView.class).setGlassPane(null);
+        SwingUtils.inEdt(new Runnable() {
+            @Override
+            public void run() {
+                SimplePropertiesCache.get("mainView", MainView.class).setGlassPane(null);
+            }
+        });
     }
 
     @Override
     public void saveState(Window window, String name) {
-        if (configuration != null) {
-            configuration.update(name, window);
-        }
+        configuration.update(name, window);
     }
 
     @Override

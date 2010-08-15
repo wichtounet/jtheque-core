@@ -2,7 +2,9 @@ package org.jtheque.views.impl;
 
 import org.jtheque.core.Core;
 import org.jtheque.features.FeatureService;
+import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.ui.SwingUtils;
+import org.jtheque.views.impl.windows.MainViewImpl;
 import org.jtheque.views.panel.SplashView;
 import org.jtheque.views.windows.MainView;
 import org.jtheque.views.impl.components.menu.CoreMenu;
@@ -32,11 +34,12 @@ import org.springframework.context.ApplicationContextAware;
  *
  * @author Baptiste Wicht
  */
+@ThreadSafe
 public final class SplashService implements org.jtheque.views.SplashService, ApplicationContextAware {
     private SplashView splashScreenPane;
     private boolean mainDisplayed;
 
-    private org.jtheque.views.impl.windows.MainView mainView;
+    private MainViewImpl mainView;
     private final Core core;
     private ApplicationContext applicationContext;
 
@@ -56,7 +59,7 @@ public final class SplashService implements org.jtheque.views.SplashService, App
         SwingUtils.inEdt(new Runnable() {
             @Override
             public void run() {
-                mainView = (org.jtheque.views.impl.windows.MainView) applicationContext.getBean(MainView.class);
+                mainView = (MainViewImpl) applicationContext.getBean(MainView.class);
                 
                 splashScreenPane = new SplashScreenPane(core);
             }
@@ -76,6 +79,16 @@ public final class SplashService implements org.jtheque.views.SplashService, App
 
                 splashScreenPane.appearsAndAnimate();
             }
+
+            /**
+             * Display the main view if necessary.
+             */
+            private void displayMainViewIfNecessary() {
+                if (!mainDisplayed) {
+                    mainDisplayed = true;
+                    mainView.display();
+                }
+            }
         });
     }
 
@@ -88,16 +101,6 @@ public final class SplashService implements org.jtheque.views.SplashService, App
                 mainView.getContent().setUI(null);
             }
         });
-    }
-
-    /**
-     * Display the main view if necessary.
-     */
-    private void displayMainViewIfNecessary() {
-        if (!mainDisplayed) {
-            mainDisplayed = true;
-            mainView.display();
-        }
     }
 
     @Override

@@ -4,7 +4,7 @@ import org.jtheque.core.Core;
 import org.jtheque.states.Load;
 import org.jtheque.states.Save;
 import org.jtheque.states.State;
-import org.jtheque.states.utils.AbstractState;
+import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.views.ViewService;
 import org.jtheque.views.WindowConfiguration;
@@ -37,9 +37,10 @@ import java.util.Map.Entry;
  *
  * @author Baptiste Wicht
  */
+@ThreadSafe
 @State(id = "jtheque-windows-configuration", delegated = true)
-public final class WindowsConfiguration extends AbstractState {
-    private final Map<String, WindowConfiguration> configurations = CollectionUtils.newHashMap(10);
+public final class WindowsConfiguration {
+    private final Map<String, WindowConfiguration> configurations = CollectionUtils.newConcurrentMap(10);
 
     private final Core core;
     private final ViewService viewService;

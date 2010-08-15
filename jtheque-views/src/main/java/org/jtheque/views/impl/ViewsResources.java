@@ -21,7 +21,7 @@ import org.springframework.core.io.ClassPathResource;
  */
 
 /**
- * A simple registrer for the resources of the view.
+ * A simple register for the resources of the view.
  *
  * @author Baptiste Wicht
  */

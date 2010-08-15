@@ -38,7 +38,9 @@ import org.jtheque.views.impl.MainController;
 import org.jtheque.views.impl.components.MainTabbedPane;
 import org.jtheque.views.impl.components.menu.JThequeMenuBar;
 import org.jtheque.views.impl.components.panel.JThequeStateBar;
+import org.jtheque.views.windows.MainView;
 
+import javax.annotation.Resource;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -56,7 +58,7 @@ import java.util.Collection;
  *
  * @author Baptiste Wicht
  */
-public final class MainView extends SwingFrameView<Model> implements TitleListener, org.jtheque.views.windows.MainView {
+public final class MainViewImpl extends SwingFrameView<Model> implements TitleListener, MainView {
     private MainTabbedPane tab;
 
     private MainController controller;
@@ -70,36 +72,35 @@ public final class MainView extends SwingFrameView<Model> implements TitleListen
 
     private JThequeStateBar stateBar;
 
-    private final ViewService viewService;
-    private final LanguageService languageService;
-    private final Views views;
-    private final UIUtils uiUtils;
-    private final Core core;
-    private final LifeCycle lifeCycle;
+    @Resource
+    private ViewService viewService;
+    
+    @Resource
+    private LanguageService languageService;
+
+    @Resource
+    private Views views;
+
+    @Resource
+    private UIUtils uiUtils;
+
+    @Resource
+    private Core core;
+
+    @Resource
+    private LifeCycle lifeCycle;
+
     private final JThequeMenuBar menuBar;
 
     /**
-     * Construct a new MainView.
+     * Construct a new MainViewImpl.
      *
-     * @param core            The core.
-     * @param viewService     The view service.
-     * @param views           The views.
-     * @param uiUtils         The ui utils.
      * @param menuBar         The menu bar.
-     * @param languageService The language service.
-     * @param lifeCycle       The lifecycle.
      */
-    public MainView(Core core, ViewService viewService, Views views, UIUtils uiUtils, JThequeMenuBar menuBar,
-                    LanguageService languageService, LifeCycle lifeCycle) {
+    public MainViewImpl(JThequeMenuBar menuBar) {
         super();
 
-        this.core = core;
-        this.viewService = viewService;
-        this.views = views;
-        this.uiUtils = uiUtils;
         this.menuBar = menuBar;
-        this.languageService = languageService;
-        this.lifeCycle = lifeCycle;
 
         SimplePropertiesCache.put("mainView", this);
     }
@@ -148,7 +149,7 @@ public final class MainView extends SwingFrameView<Model> implements TitleListen
 
                 addWindowListener(controller);
 
-                viewService.configureView(MainView.this, "main", DEFAULT_WIDTH, DEFAULT_HEIGHT);
+                viewService.configureView(MainViewImpl.this, "main", DEFAULT_WIDTH, DEFAULT_HEIGHT);
             }
         });
     }

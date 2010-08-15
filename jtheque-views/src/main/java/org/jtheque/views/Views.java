@@ -16,6 +16,7 @@ package org.jtheque.views;
  * limitations under the License.
  */
 
+import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.views.components.ConfigTabComponent;
 import org.jtheque.views.components.StateBarComponent;
 import org.jtheque.views.components.MainComponent;
@@ -28,9 +29,10 @@ import java.util.Collection;
  *
  * @author Baptiste Wicht
  */
+@ThreadSafe
 public interface Views {
     /**
-     * Return the main view.
+     * Return the main view. Must be called in EDT. 
      *
      * @return the main view.
      */

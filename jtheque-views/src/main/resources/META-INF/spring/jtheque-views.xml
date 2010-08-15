@@ -26,11 +26,7 @@
 
     <bean id="views" class="org.jtheque.views.impl.Views"/>
 
-    <bean class="org.jtheque.views.impl.windows.MainView" lazy-init="true">
-        <constructor-arg ref="core"/>
-        <constructor-arg ref="viewService"/>
-        <constructor-arg ref="views"/>
-        <constructor-arg ref="uiUtils"/>
+    <bean class="org.jtheque.views.impl.windows.MainViewImpl" lazy-init="true">
         <constructor-arg>
             <bean class="org.jtheque.views.impl.components.menu.JThequeMenuBar">
                 <constructor-arg ref="imageService"/>
@@ -38,7 +34,6 @@
                 <constructor-arg ref="featureService"/>
             </bean>
         </constructor-arg>
-        <constructor-arg ref="languageService"/>
     </bean>
 
     <bean class="org.jtheque.views.impl.components.menu.CoreMenu"/>
@@ -98,11 +93,7 @@
 
     <bean class="org.jtheque.views.impl.components.panel.CollectionPane" lazy-init="true" />
 
-    <bean class="org.jtheque.views.impl.components.panel.AboutPane" lazy-init="true">
-        <constructor-arg ref="licenseView"/>
-        <constructor-arg ref="core"/>
-        <constructor-arg ref="languageService"/>
-    </bean>
+    <bean class="org.jtheque.views.impl.components.panel.AboutPane" lazy-init="true" />
 
     <!-- OSGi References -->
 
@@ -114,6 +105,7 @@
     <osgi:reference id="languageService" interface="org.jtheque.i18n.LanguageService"/>
     <osgi:reference id="updateService" interface="org.jtheque.updates.UpdateService"/>
     <osgi:reference id="featureService" interface="org.jtheque.features.FeatureService"/>
+    <osgi:reference id="lifeCycle" interface="org.jtheque.core.lifecycle.LifeCycle"/>
     <osgi:reference id="stateService" interface="org.jtheque.states.StateService"/>
     <osgi:reference id="moduleService" interface="org.jtheque.modules.ModuleService"/>
     <osgi:reference id="imageService" interface="org.jtheque.images.ImageService"/>

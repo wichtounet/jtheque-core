@@ -20,8 +20,6 @@ import org.jtheque.i18n.impl.LanguageService;
 import org.jtheque.undo.IUndoRedoService;
 import org.jtheque.undo.StateListener;
 
-import javax.annotation.PreDestroy;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
@@ -40,7 +38,7 @@ public final class RedoAction extends AbstractAction implements StateListener {
      * Construct a new RedoAction.
      *
      * @param undoRedoService The undo redo service.
-     * @param languageService The language service. 
+     * @param languageService The language service.
      */
     public RedoAction(IUndoRedoService undoRedoService, LanguageService languageService) {
         super("undo.actions.redo", KeyEvent.VK_Y);
@@ -51,11 +49,6 @@ public final class RedoAction extends AbstractAction implements StateListener {
         undoRedoService.addStateListener(this);
 
         setEnabled(false);
-    }
-
-    @PreDestroy
-    private void removeListener() {
-        undoRedoService.removeStateListener(this);
     }
 
     @Override
