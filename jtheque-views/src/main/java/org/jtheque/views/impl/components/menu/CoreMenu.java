@@ -1,7 +1,7 @@
 package org.jtheque.views.impl.components.menu;
 
 import org.jtheque.features.Feature;
-import org.jtheque.i18n.impl.LanguageService;
+import org.jtheque.i18n.LanguageService;
 import org.jtheque.ui.Controller;
 import org.jtheque.undo.IUndoRedoService;
 import org.jtheque.views.windows.MainView;

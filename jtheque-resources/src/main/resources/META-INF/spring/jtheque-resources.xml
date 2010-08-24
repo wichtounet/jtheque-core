@@ -18,8 +18,7 @@
     </bean>
     
     <osgi:reference id="stateService" interface="org.jtheque.states.StateService"/>
-    <osgi:reference id="errorService" interface="org.jtheque.errors.ErrorService"/>
-    <osgi:reference id="eventService" interface="org.jtheque.events.EventService"/>
+    <osgi:reference id="webHelper" interface="org.jtheque.core.utils.WebHelper"/>
 
     <osgi:service ref="resourceService" interface="org.jtheque.resources.ResourceService"/>
 </beans>

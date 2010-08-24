@@ -16,7 +16,7 @@ package org.jtheque.views.impl.actions.undo;
  * limitations under the License.
  */
 
-import org.jtheque.i18n.impl.LanguageService;
+import org.jtheque.i18n.LanguageService;
 import org.jtheque.undo.IUndoRedoService;
 import org.jtheque.undo.StateListener;
 

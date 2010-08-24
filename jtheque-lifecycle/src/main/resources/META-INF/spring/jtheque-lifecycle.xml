@@ -19,9 +19,7 @@
     <osgi:reference id="views" interface="org.jtheque.views.Views"/>
     <osgi:reference id="viewService" interface="org.jtheque.views.ViewService"/>
     <osgi:reference id="splashService" interface="org.jtheque.views.SplashService"/>
-    <osgi:reference id="messageService" interface="org.jtheque.messages.MessageService"/>
     <osgi:reference id="eventService" interface="org.jtheque.events.EventService"/>
     <osgi:reference id="collectionsService" interface="org.jtheque.collections.CollectionsService"/>
     <osgi:reference id="moduleService" interface="org.jtheque.modules.ModuleService"/>
-
 </beans>

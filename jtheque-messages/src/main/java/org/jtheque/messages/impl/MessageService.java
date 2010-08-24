@@ -32,6 +32,7 @@ import org.jtheque.xml.utils.XMLException;
 
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 
 import java.util.Collection;
@@ -47,20 +48,22 @@ public final class MessageService implements org.jtheque.messages.MessageService
     @Resource
     private WebHelper webHelper;
 
-    private final Core core;
+    @Resource
+    private Core core;
 
     /**
      * Construct a new MessageService.
      *
-     * @param core          The core.
      * @param moduleService The module service.
      */
-    public MessageService(Core core, ModuleService moduleService) {
+    public MessageService(ModuleService moduleService) {
         super();
 
-        this.core = core;
-
         moduleService.addModuleListener("", this);
+    }
+
+    @PostConstruct
+    public void init(){
         core.addApplicationListener(this);
 
         loadMessageFile(core.getCoreMessageFileURL(), null);
@@ -126,7 +129,10 @@ public final class MessageService implements org.jtheque.messages.MessageService
             Collection<Message> readMessages = MessageFileReader.readMessagesFile(url);
 
             messages.addAll(readMessages);
-            ModuleResourceCache.addAllResource(module.getId(), Message.class, readMessages);
+
+            if(module != null){
+                ModuleResourceCache.addAllResource(module.getId(), Message.class, readMessages);
+            }
         } catch (XMLException e) {
             LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
         }

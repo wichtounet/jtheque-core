@@ -16,4 +16,7 @@
     <bean id="webHelper" class="org.jtheque.core.utils.WebHelper" />
 
     <osgi:service ref="webHelper" interface="org.jtheque.core.utils.WebHelper"/>
+
+    <osgi:reference id="errorService" interface="org.jtheque.errors.ErrorService"/>
+    <osgi:reference id="eventService" interface="org.jtheque.events.EventService"/>
 </beans>

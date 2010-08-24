@@ -27,10 +27,9 @@
     <osgi:reference id="core" interface="org.jtheque.core.Core"/>
     <osgi:reference id="errorService" interface="org.jtheque.errors.ErrorService"/>
     <osgi:reference id="iuiUtils" interface="org.jtheque.ui.UIUtils"/>
-    <osgi:reference id="lifecycle" interface="org.jtheque.core.lifecycle.LifeCycle"/>
     <osgi:reference id="languageService" interface="org.jtheque.i18n.LanguageService"/>
+    <osgi:reference id="resourceService" interface="org.jtheque.resources.ResourceService"/>
     <osgi:reference id="imageService" interface="org.jtheque.images.ImageService"/>
-    <osgi:reference id="eventService" interface="org.jtheque.events.EventService"/>
 
     <osgi:service ref="moduleService" interface="org.jtheque.modules.ModuleService"/>
 </beans>

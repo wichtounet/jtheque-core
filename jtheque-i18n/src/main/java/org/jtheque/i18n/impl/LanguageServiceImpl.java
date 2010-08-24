@@ -3,6 +3,7 @@ package org.jtheque.i18n.impl;
 import org.jtheque.i18n.I18NResource;
 import org.jtheque.i18n.I18NResourceFactory;
 import org.jtheque.i18n.Internationalizable;
+import org.jtheque.i18n.LanguageService;
 import org.jtheque.states.StateService;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.SystemProperty;
@@ -42,7 +43,7 @@ import java.util.Set;
  * @author Baptiste Wicht
  */
 @ThreadSafe
-public final class LanguageService implements org.jtheque.i18n.LanguageService {
+public final class LanguageServiceImpl implements LanguageService {
     private static final String[] ZERO_LENGTH_ARRAY = new String[0];
 
     private final Map<String, String> baseNames = CollectionUtils.newConcurrentMap(10);
@@ -59,7 +60,7 @@ public final class LanguageService implements org.jtheque.i18n.LanguageService {
      *
      * @param stateService The state service.
      */
-    public LanguageService(StateService stateService) {
+    public LanguageServiceImpl(StateService stateService) {
         super();
 
         state = stateService.getState(new LanguageState());
@@ -249,7 +250,7 @@ public final class LanguageService implements org.jtheque.i18n.LanguageService {
             return Locale.ENGLISH;
         }
 
-        LoggerFactory.getLogger(LanguageService.class).error("Unable to get the locale");
+        LoggerFactory.getLogger(LanguageServiceImpl.class).error("Unable to get the locale");
 
         return Locale.ENGLISH;
     }

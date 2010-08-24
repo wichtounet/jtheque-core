@@ -14,12 +14,11 @@
     <context:annotation-config/>
 
     <bean id="updateService" class="org.jtheque.updates.impl.UpdateServiceImpl" />
-    
-    <osgi:reference id="stateService" interface="org.jtheque.states.StateService"/>
-    <osgi:reference id="core" interface="org.jtheque.core.Core"/>
-    <osgi:reference id="iuiUtils" interface="org.jtheque.ui.UIUtils"/>
-    <osgi:reference id="lifecycle" interface="org.jtheque.core.lifecycle.LifeCycle"/>
-    <osgi:reference id="languageService" interface="org.jtheque.i18n.LanguageService"/>
 
     <osgi:service ref="updateService" interface="org.jtheque.updates.UpdateService"/>
+
+    <osgi:reference id="webHelper" interface="org.jtheque.core.utils.WebHelper"/>
+    <osgi:reference id="resourceService" interface="org.jtheque.resources.ResourceService"/>
+    <osgi:reference id="core" interface="org.jtheque.core.Core"/>
+    <osgi:reference id="iuiUtils" interface="org.jtheque.ui.UIUtils"/>
 </beans>

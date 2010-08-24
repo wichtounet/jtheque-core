@@ -30,21 +30,21 @@ public interface FoldersContainer {
     /**
      * Return the application folder. It seems the root folder where the application is launched.
      *
-     * @return The File object who denotes the application folder.
+     * @return The File object who denotes the application folder or {@code null} if the application is not launched.
      */
     File getApplicationFolder();
 
     /**
      * Returns the logs folder. It seems the folder where the logs are located.
      *
-     * @return the File object who denotes the logs folder.
+     * @return the File object who denotes the logs folder or {@code null} if the application is not launched.
      */
     File getLogsFolder();
 
     /**
      * Return the modules folder. It seems the folder where the modules are located.
      *
-     * @return The File object who denotes the modules folder.
+     * @return The File object who denotes the modules folder or {@code null} if the application is not launched. 
      */
     File getModulesFolder();
 }

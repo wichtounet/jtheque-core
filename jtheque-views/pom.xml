@@ -158,7 +158,11 @@
                     <instructions>
                         <Bundle-SymbolicName>${pom.artifactId}</Bundle-SymbolicName>
                         <Export-Package>
-                            org.jtheque.views.able, org.jtheque.views.able.*,
+                            org.jtheque.views,
+                            org.jtheque.views.components,
+                            org.jtheque.views.config,
+                            org.jtheque.views.panel,
+                            org.jtheque.views.windows,
                             org.jtheque.views.utils
                         </Export-Package>
                         <Bundle-Vendor>Baptiste Wicht</Bundle-Vendor>

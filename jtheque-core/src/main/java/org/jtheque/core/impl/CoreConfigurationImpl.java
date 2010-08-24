@@ -17,6 +17,7 @@ package org.jtheque.core.impl;
  */
 
 import org.jtheque.core.CoreConfiguration;
+import org.jtheque.states.State;
 import org.jtheque.states.utils.AbstractConcurrentState;
 import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.bean.IntDate;
@@ -27,6 +28,7 @@ import org.jtheque.utils.bean.IntDate;
  * @author Baptiste Wicht
  */
 @ThreadSafe
+@State(id = "jtheque-core-configuration")
 public final class CoreConfigurationImpl extends AbstractConcurrentState implements CoreConfiguration {
     private static final String FALSE = "false";
 

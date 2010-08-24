@@ -16,23 +16,26 @@ package org.jtheque.core.impl;
  * limitations under the License.
  */
 
+import org.jtheque.core.ApplicationListener;
 import org.jtheque.core.Core;
 import org.jtheque.core.FoldersContainer;
+import org.jtheque.core.application.Application;
 import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.io.FileUtils;
 
 import java.io.File;
 
 /**
- * Give access to the folders of the application.
+ * Give access to the folders of the application. Pay attention that if the application has not been launched,
+ * the folders are all {@code null}. 
  *
  * @author Baptiste Wicht
  */
 @ThreadSafe
-public final class Folders implements FoldersContainer {
-    private final File applicationFolder;
-    private final File modulesFolder;
-    private final File logsFolder;
+public final class Folders implements FoldersContainer, ApplicationListener {
+    private File applicationFolder;
+    private File modulesFolder;
+    private File logsFolder;
 
     /**
      * Construct a new Folders.
@@ -42,14 +45,7 @@ public final class Folders implements FoldersContainer {
     public Folders(Core core) {
         super();
 
-        applicationFolder = new File(core.getApplication().getFolderPath());
-        FileUtils.createIfNotExists(applicationFolder);
-
-        logsFolder = new File(applicationFolder, "logs");
-        FileUtils.createIfNotExists(logsFolder);
-
-        modulesFolder = new File(applicationFolder, "modules");
-        FileUtils.createIfNotExists(modulesFolder);
+        core.addApplicationListener(this);
     }
 
     @Override
@@ -65,5 +61,17 @@ public final class Folders implements FoldersContainer {
     @Override
     public File getModulesFolder() {
         return modulesFolder;
+    }
+
+    @Override
+    public void applicationLaunched(Application application) {
+        applicationFolder = new File(application.getFolderPath());
+        FileUtils.createIfNotExists(applicationFolder);
+
+        logsFolder = new File(applicationFolder, "logs");
+        FileUtils.createIfNotExists(logsFolder);
+
+        modulesFolder = new File(applicationFolder, "modules");
+        FileUtils.createIfNotExists(modulesFolder);
     }
 }
