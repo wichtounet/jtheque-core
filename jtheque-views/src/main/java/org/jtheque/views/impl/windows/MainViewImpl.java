@@ -48,6 +48,7 @@ import javax.swing.JPanel;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Insets;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
@@ -132,14 +133,14 @@ public final class MainViewImpl extends SwingFrameView<Model> implements TitleLi
      * Build the entire view with the final content.
      */
     public void fill() {
-        //setIconImage(getDefaultWindowIcon());
-
         controller = new MainController(core, uiUtils, lifeCycle);
 
         SwingUtils.inEdt(new Runnable() {
             @Override
             public void run() {
-                setContentPane(buildContentPane());
+                setContentPane(new JPanel());
+
+                buildContentPane();
 
                 menuBar.buildMenu();
 
@@ -152,29 +153,6 @@ public final class MainViewImpl extends SwingFrameView<Model> implements TitleLi
                 viewService.configureView(MainViewImpl.this, "main", DEFAULT_WIDTH, DEFAULT_HEIGHT);
             }
         });
-    }
-
-    /**
-     * Build the content pane.
-     *
-     * @return the contentPane
-     */
-    private JComponent buildContentPane() {
-        PanelBuilder builder = new JThequePanelBuilder();
-        builder.setBorder(Borders.EMPTY_BORDER);
-
-        Component emptyPanel = new JPanel();
-        emptyPanel.setBackground(Color.white);
-
-        builder.add(emptyPanel, builder.gbcSet(0, 0, GridBagUtils.BOTH, GridBagUtils.FIRST_LINE_START, 1.0, 1.0));
-
-        stateBar = new JThequeStateBar(views);
-
-        SimplePropertiesCache.put("statebar-loaded", true);
-
-        builder.add(stateBar, builder.gbcSet(0, 1, GridBagUtils.HORIZONTAL, GridBagUtils.LAST_LINE_START));
-
-        return builder.getPanel();
     }
 
     @Override
@@ -204,18 +182,15 @@ public final class MainViewImpl extends SwingFrameView<Model> implements TitleLi
      * Add the main component to the view.
      */
     private void addComponent() {
-        if (current == 0) {
-            setFirstComponentAsView();
-        } else if (current == 1) {
-            tab = new MainTabbedPane(languageService, views);
-            tab.addChangeListener(controller);
-
-            setComponentAsView(tab);
-        } else {
+        if (current > 1){
             tab.refreshComponents();
-        }
 
-        current++;
+            current++;
+        } else {
+            current++;
+
+            buildContentPane();
+        }
     }
 
     /**
@@ -224,41 +199,55 @@ public final class MainViewImpl extends SwingFrameView<Model> implements TitleLi
      * @param component The main component to remove.
      */
     private void removeComponent(MainComponent component) {
-        if (current == 1) {
-            Component emptyPanel = new JPanel();
-            emptyPanel.setBackground(Color.white);
-
-            setComponentAsView(emptyPanel);
-        } else if (current == 2) {
-            setFirstComponentAsView();
-        } else {
+        if(current > 2) {
             tab.removeMainComponent(component);
+
+            current--;
+        } else {
+            current--;
+
+            buildContentPane();
         }
-
-        current--;
     }
 
     /**
-     * Set the first main component to be the main view.
+     * Build the content pane.
      */
-    private void setFirstComponentAsView() {
-        Collection<MainComponent> components = views.getMainComponents();
-
-        setComponentAsView(CollectionUtils.first(components).getImpl());
-    }
-
-    /**
-     * Set the given component as the main view.
-     *
-     * @param component The component to be the main view.
-     */
-    private void setComponentAsView(Component component) {
+    private void buildContentPane() {
         getContentPane().removeAll();
 
-        GridBagUtils gbc = new GridBagUtils();
+        PanelBuilder builder = new JThequePanelBuilder((JPanel) getContentPane());
+        builder.setBorder(Borders.EMPTY_BORDER);
+        builder.setDefaultInsets(new Insets(0, 0, 0, 0));
 
-        getContentPane().add(component, gbc.gbcSet(0, 0, GridBagUtils.BOTH, GridBagUtils.FIRST_LINE_START, 1.0, 1.0));
-        getContentPane().add(stateBar, gbc.gbcSet(0, 1, GridBagUtils.HORIZONTAL, GridBagUtils.LAST_LINE_START));
+        builder.add(getMainComponent(), builder.gbcSet(0, 0, GridBagUtils.BOTH, GridBagUtils.FIRST_LINE_START, 1.0, 1.0));
+
+        stateBar = new JThequeStateBar(views);
+
+        SimplePropertiesCache.put("statebar-loaded", true);
+
+        builder.add(stateBar, builder.gbcSet(0, 1, GridBagUtils.HORIZONTAL, GridBagUtils.LAST_LINE_START));
+    }
+
+    private Component getMainComponent() {
+        Component mainComponent;
+
+        if(current == 0){
+            mainComponent = new JPanel();
+            mainComponent.setBackground(Color.white);
+        } else if(current == 1) {
+            Collection<MainComponent> components = views.getMainComponents();
+
+            mainComponent = CollectionUtils.first(components).getImpl();
+        } else {
+            if(tab == null){
+                tab = new MainTabbedPane(languageService, views);
+                tab.addChangeListener(controller);
+            }
+
+            mainComponent = tab;
+        }
+        return mainComponent;
     }
 
     @Override

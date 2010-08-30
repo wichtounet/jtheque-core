@@ -106,6 +106,16 @@ public final class ModuleLoader implements BundleContextAware {
 
         File[] files = moduleDir.listFiles(new ModuleFilter());
 
+        return isLoadingConcurrent() ? loadInParralel(files) : loadSequentially(files);
+    }
+
+    private static boolean isLoadingConcurrent() {
+        String property = System.getProperty("jtheque.concurrent.load");
+
+        return StringUtils.isNotEmpty(property) && "true".equalsIgnoreCase(property);
+    }
+
+    private Collection<Module> loadInParralel(File[] files) {
         ExecutorService loadersPool = Executors.newFixedThreadPool(2 * ThreadUtils.processors());
 
         CompletionService<Module> completionService = new ExecutorCompletionService<Module>(loadersPool);
@@ -117,7 +127,7 @@ public final class ModuleLoader implements BundleContextAware {
         List<Module> modules = CollectionUtils.newList(files.length);
 
         try {
-            for (int i = 0; i < files.length; i++) {
+            for (File file : files) {
                 modules.add(completionService.take().get());
             }
         } catch (InterruptedException e) {
@@ -128,6 +138,16 @@ public final class ModuleLoader implements BundleContextAware {
         }
 
         loadersPool.shutdown();
+
+        return modules;
+    }
+
+    private Collection<Module> loadSequentially(File[] files) {
+        List<Module> modules = CollectionUtils.newList(files.length);
+
+        for (File file : files) {
+            modules.add(installModule(file));
+        }
 
         return modules;
     }
@@ -164,9 +184,6 @@ public final class ModuleLoader implements BundleContextAware {
 
         Module module = builder.build();
 
-        //Load i18n resources
-        loadI18NResources(module);
-
         if (resources == null) {
             moduleService.setResources(module, new ModuleResources(
                     CollectionUtils.<ImageResource>newList(),
@@ -174,6 +191,8 @@ public final class ModuleLoader implements BundleContextAware {
                     CollectionUtils.<Resource>newList()
             ));
         } else {
+            loadI18NResources(module, resources);
+
             moduleService.setResources(module, resources);
         }
 
@@ -273,10 +292,11 @@ public final class ModuleLoader implements BundleContextAware {
     /**
      * Load the i18n resources of the given module.
      *
-     * @param module The module to load i18n resources for.
+     * @param module    The module to load i18n resources for.
+     * @param resources The resources of the module.
      */
-    private void loadI18NResources(Module module) {
-        for (I18NResource i18NResource : moduleService.getResources(module).getI18NResources()) {
+    private void loadI18NResources(Module module, ModuleResources resources) {
+        for (I18NResource i18NResource : resources.getI18NResources()) {
             List<org.jtheque.i18n.I18NResource> i18NResources = CollectionUtils.newList(i18NResource.getResources().size());
 
             for (String resource : i18NResource.getResources()) {
@@ -306,14 +326,14 @@ public final class ModuleLoader implements BundleContextAware {
         while (reader.next("/config/i18n/i18nResource")) {
             List<String> resources = CollectionUtils.newList(5);
 
+            String name = reader.readString("@name");
+            Version version = Version.get(reader.readString("@version"));
+
             while (reader.next("classpath")) {
                 resources.add("classpath:" + reader.readString("text()"));
             }
 
-            i18NResources.add(new I18NResource(
-                    reader.readString("@name"),
-                    Version.get(reader.readString("@version")),
-                    resources));
+            i18NResources.add(new I18NResource(name, version, resources));
         }
 
         return i18NResources;

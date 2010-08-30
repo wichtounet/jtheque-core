@@ -18,13 +18,13 @@
         <constructor-arg ref="core"/>
     </bean>
 
-    <bean id="viewService" class="org.jtheque.views.impl.ViewService">
+    <bean id="viewService" class="org.jtheque.views.impl.ViewServiceImpl">
         <constructor-arg ref="stateService"/>
         <constructor-arg ref="core"/>
         <constructor-arg ref="imageService"/>
     </bean>
 
-    <bean id="views" class="org.jtheque.views.impl.Views"/>
+    <bean id="views" class="org.jtheque.views.impl.ViewsImpl"/>
 
     <bean class="org.jtheque.views.impl.windows.MainViewImpl" lazy-init="true">
         <constructor-arg>

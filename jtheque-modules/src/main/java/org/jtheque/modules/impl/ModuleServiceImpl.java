@@ -51,7 +51,7 @@ import static org.jtheque.modules.ModuleState.*;
  *
  * @author Baptiste Wicht
  */
-public final class ModuleServiceImpl implements ModuleService {
+public final class ModuleServiceImpl implements ModuleService, ModuleLauncher {
     private final Map<String, SwingLoader> loaders = CollectionUtils.newConcurrentMap(5);
     private final Map<Module, ModuleResources> resources = CollectionUtils.newConcurrentMap(5);
 
@@ -75,6 +75,7 @@ public final class ModuleServiceImpl implements ModuleService {
     private ModuleManager moduleManager;
 
     private volatile boolean loaded;
+    private volatile boolean started;
 
     /**
      * Indicate if there is a collection module.
@@ -125,9 +126,13 @@ public final class ModuleServiceImpl implements ModuleService {
     public void startModules() {
         SwingUtils.assertNotEDT("startModules()");
 
-        synchronized (this) {
-            moduleManager.startAll();
+        if (started) {
+            throw new IllegalStateException("Cannot be started twice");
         }
+
+        started = true;
+
+        moduleManager.startAll(this);
     }
 
     /**

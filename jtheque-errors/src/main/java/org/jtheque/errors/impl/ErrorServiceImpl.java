@@ -18,6 +18,7 @@ package org.jtheque.errors.impl;
 
 import org.jtheque.errors.Error;
 import org.jtheque.errors.ErrorListener;
+import org.jtheque.errors.ErrorService;
 import org.jtheque.utils.annotations.GuardedInternally;
 import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.collections.CollectionUtils;
@@ -31,7 +32,7 @@ import java.util.Collection;
  * @author Baptiste Wicht
  */
 @ThreadSafe
-public final class ErrorService implements org.jtheque.errors.ErrorService {
+public final class ErrorServiceImpl implements ErrorService {
     private final Collection<Error> errors = CollectionUtils.newConcurrentList();
 
     @GuardedInternally

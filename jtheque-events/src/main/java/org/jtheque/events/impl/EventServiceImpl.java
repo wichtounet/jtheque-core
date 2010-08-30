@@ -2,6 +2,7 @@ package org.jtheque.events.impl;
 
 import org.jtheque.events.Event;
 import org.jtheque.events.EventLevel;
+import org.jtheque.events.EventService;
 import org.jtheque.events.Events;
 import org.jtheque.utils.SystemProperty;
 import org.jtheque.utils.annotations.ThreadSafe;
@@ -46,7 +47,7 @@ import java.util.Set;
  * @author Baptiste Wicht
  */
 @ThreadSafe
-public final class EventService implements org.jtheque.events.EventService {
+public final class EventServiceImpl implements EventService {
     private final Map<String, Collection<Event>> logs = CollectionUtils.newConcurrentMap(5);
 
     @Override

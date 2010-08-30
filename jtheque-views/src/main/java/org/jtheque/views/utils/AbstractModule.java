@@ -14,7 +14,7 @@ import org.jtheque.utils.ui.SwingUtils;
 import org.jtheque.views.components.ConfigTabComponent;
 import org.jtheque.views.components.MainComponent;
 import org.jtheque.views.components.StateBarComponent;
-import org.jtheque.views.impl.Views;
+import org.jtheque.views.Views;
 
 import org.osgi.framework.BundleContext;
 import org.springframework.beans.BeansException;
@@ -73,9 +73,18 @@ public class AbstractModule implements ApplicationContextAware, BundleContextAwa
     }
 
     private void registerViews() {
+        SwingUtils.inEdt(new Runnable(){
+            @Override
+            public void run() {
+                addViewComponents();
+            }
+        });
+    }
+
+    private void addViewComponents() {
         Views views = OSGiUtils.getService(bundleContext, Views.class);
 
-        for(StateBarComponent component : getBeans(StateBarComponent.class)){
+        for (StateBarComponent component : getBeans(StateBarComponent.class)) {
             views.addStateBarComponent(module, component);
         }
 

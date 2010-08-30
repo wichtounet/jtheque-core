@@ -33,7 +33,7 @@ import javax.swing.undo.UndoableEdit;
  * @author Baptiste Wicht
  */
 @ThreadSafe
-public final class UndoRedoService extends UndoManager implements IUndoRedoService {
+public final class UndoRedoServiceImpl extends UndoManager implements IUndoRedoService {
     private static final long serialVersionUID = 6050388256567189094L;
 
     private final WeakEventListenerList<StateListener> eventListenerList = WeakEventListenerList.create();

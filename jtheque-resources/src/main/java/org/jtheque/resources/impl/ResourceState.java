@@ -10,7 +10,6 @@ import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.xml.utils.Node;
 
 import java.util.Collection;
-import java.util.Set;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -94,23 +93,12 @@ public final class ResourceState {
      * @return The corresponding Resource.
      */
     private static Resource convertToResourceSet(Node node) {
-        Set<String> files = CollectionUtils.newSet();
-        Set<String> libraries = CollectionUtils.newSet();
-        
-        for (Node child : node.getChildrens()) {
-            if ("file".equals(child.getName())) {
-                files.add(child.getText());
-            } else if ("library".equals(child.getName())) {
-                libraries.add(child.getText());
-            }
-        }
-
         return new ResourceImpl(
                 node.getAttributeValue("id"),
                 Version.get(node.getAttributeValue("version")),
                 node.getAttributeValue("url"),
                 node.getAttributeValue("file"),
-                Boolean.valueOf(node.getAttributeValue("url")));
+                Boolean.valueOf(node.getAttributeValue("library")));
     }
 
     /**

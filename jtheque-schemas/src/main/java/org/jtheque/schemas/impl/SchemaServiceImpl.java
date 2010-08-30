@@ -4,6 +4,7 @@ import org.jtheque.modules.Module;
 import org.jtheque.modules.ModuleListener;
 import org.jtheque.modules.ModuleResourceCache;
 import org.jtheque.schemas.Schema;
+import org.jtheque.schemas.SchemaService;
 import org.jtheque.states.StateService;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.annotations.ThreadSafe;
@@ -36,20 +37,20 @@ import java.util.Set;
  * A Schema manager implementation.
  *
  * @author Baptiste Wicht
- * @see org.jtheque.schemas.SchemaService
+ * @see SchemaService
  */
 @ThreadSafe
-public final class SchemaService implements org.jtheque.schemas.SchemaService, ModuleListener {
+public final class SchemaServiceImpl implements SchemaService, ModuleListener {
     private final List<Schema> schemas = CollectionUtils.newList();
 
     private final SchemaConfiguration configuration;
 
     /**
-     * Construct a new SchemaService.
+     * Construct a new SchemaServiceImpl.
      *
      * @param stateService The state stateService.
      */
-    public SchemaService(StateService stateService) {
+    public SchemaServiceImpl(StateService stateService) {
         super();
 
         configuration = stateService.getState(new SchemaConfiguration());

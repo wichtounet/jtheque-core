@@ -29,6 +29,7 @@ import org.jtheque.modules.ModuleListener;
 import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.ui.SwingUtils;
+import org.jtheque.views.Views;
 import org.jtheque.views.components.ConfigTabComponent;
 import org.jtheque.views.components.StateBarComponent;
 import org.jtheque.views.components.MainComponent;
@@ -56,7 +57,7 @@ import java.util.List;
  * @author Baptiste Wicht
  */
 @ThreadSafe
-public final class Views implements org.jtheque.views.Views, ApplicationContextAware, ModuleListener {
+public final class ViewsImpl implements Views, ApplicationContextAware, ModuleListener {
     private final Collection<MainComponent> mainComponents = CollectionUtils.newConcurrentList();
     private final Collection<StateBarComponent> stateBarComponents = CollectionUtils.newConcurrentList();
     private final Collection<ConfigTabComponent> configPanels = CollectionUtils.newConcurrentList();

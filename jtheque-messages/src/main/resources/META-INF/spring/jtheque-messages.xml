@@ -13,7 +13,7 @@
 
     <context:annotation-config/>
 
-    <bean id="messageService" class="org.jtheque.messages.impl.MessageService">
+    <bean id="messageService" class="org.jtheque.messages.impl.MessageServiceImpl">
         <constructor-arg>
             <osgi:reference interface="org.jtheque.modules.ModuleService"/>
         </constructor-arg>

@@ -18,6 +18,7 @@ package org.jtheque.persistence.impl;
 
 import org.jtheque.persistence.Entity;
 import org.jtheque.persistence.DataContainer;
+import org.jtheque.persistence.PersistenceService;
 import org.jtheque.persistence.utils.DataContainerProvider;
 import org.jtheque.utils.annotations.ThreadSafe;
 
@@ -27,7 +28,7 @@ import org.jtheque.utils.annotations.ThreadSafe;
  * @author Baptiste Wicht
  */
 @ThreadSafe
-public final class PersistenceService implements org.jtheque.persistence.PersistenceService {
+public final class PersistenceServiceImpl implements PersistenceService {
     @Override
     public void clearDatabase() {
         synchronized (this) {

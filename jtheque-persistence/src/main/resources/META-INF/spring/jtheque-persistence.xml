@@ -8,7 +8,7 @@
             http://www.springframework.org/schema/osgi
             http://www.springframework.org/schema/osgi/spring-osgi.xsd">
 
-    <bean id="persistenceManager" class="org.jtheque.persistence.impl.PersistenceService"/>
+    <bean id="persistenceManager" class="org.jtheque.persistence.impl.PersistenceServiceImpl"/>
 
     <bean id="daoNotes" class="org.jtheque.persistence.impl.DaoNotes">
         <constructor-arg>

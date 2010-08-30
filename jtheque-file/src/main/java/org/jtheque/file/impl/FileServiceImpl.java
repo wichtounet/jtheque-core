@@ -17,6 +17,7 @@ package org.jtheque.file.impl;
  */
 
 import org.jtheque.file.Exporter;
+import org.jtheque.file.FileService;
 import org.jtheque.file.Importer;
 import org.jtheque.file.ModuleBackup;
 import org.jtheque.file.ModuleBackuper;
@@ -47,7 +48,7 @@ import java.util.Set;
  * @author Baptiste Wicht
  */
 @ThreadSafe
-public final class FileService implements org.jtheque.file.FileService, ModuleListener {
+public final class FileServiceImpl implements FileService, ModuleListener {
     @GuardedInternally
     private final List<ModuleBackuper> backupers = CollectionUtils.newConcurrentList();
 

@@ -13,7 +13,7 @@
 
     <context:annotation-config/>
 
-    <bean id="stateService" class="org.jtheque.states.impl.StateService"/>
+    <bean id="stateService" class="org.jtheque.states.impl.StateServiceImpl"/>
 
     <osgi:service interface="org.jtheque.states.StateService" ref="stateService"/>
 

@@ -21,6 +21,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -105,16 +106,30 @@ public final class ModuleManager {
         }
     }
 
-    void startAll() {
-        ModuleStarter starter = new ModuleStarter();
+    void startAll(ModuleLauncher moduleLauncher) {
+        if(isStartingConcurrent()){
+            ModuleStarter starter = new ModuleStarter(moduleLauncher);
 
-        for (Module module : modules) {
-            if (canBeLoaded(module) && areAllDependenciesSatisfied(module)) {
-                starter.addModule(module);
+            for (Module module : modules) {
+                if (canBeLoaded(module) && areAllDependenciesSatisfied(module)) {
+                    starter.addModule(module);
+                }
+            }
+
+            starter.startAll();
+        } else {
+            for (Module module : modules) {
+                if (canBeLoaded(module) && areAllDependenciesSatisfied(module)) {
+                    moduleLauncher.startModule(module);
+                }
             }
         }
+    }
 
-        starter.startAll();
+    private static boolean isStartingConcurrent() {
+        String property = System.getProperty("jtheque.concurrent.start");
+
+        return StringUtils.isNotEmpty(property) && "true".equalsIgnoreCase(property);
     }
 
     /**
@@ -151,7 +166,9 @@ public final class ModuleManager {
         modules.addAll(moduleLoader.loadModules());
 
         CollectionUtils.filter(modules, new CoreVersionFilter(core, uiUtils));
-        CollectionUtils.sort(modules, new ModuleComparator());
+
+        //Must cast to perform the good sort
+        CollectionUtils.sort((CopyOnWriteArrayList<Module>) modules, new ModuleComparator());
     }
 
     Module installModule(File file) {
@@ -288,11 +305,18 @@ public final class ModuleManager {
      */
     private final class ModuleStarter {
         private final Set<Module> startList = CollectionUtils.newSet(5);
+        private final ModuleLauncher moduleLauncher;
 
         private final ExecutorService startersPool = Executors.newFixedThreadPool(ThreadUtils.processors());
 
         private final Semaphore semaphore = new Semaphore(0, true);
         private CountDownLatch countDown;
+
+        private ModuleStarter(ModuleLauncher moduleLauncher) {
+            super();
+
+            this.moduleLauncher = moduleLauncher;
+        }
 
         /**
          * Add a module to start.
@@ -346,7 +370,7 @@ public final class ModuleManager {
                 Module module = iterator.next();
 
                 if (canBeStarted(module)) {
-                    startersPool.submit(new ModuleStarterRunnable(this, module));
+                    startersPool.submit(new ModuleStarterRunnable(this, module, moduleLauncher));
                     iterator.remove();
                 }
             }
@@ -370,6 +394,7 @@ public final class ModuleManager {
     private final class ModuleStarterRunnable implements Runnable {
         private final ModuleStarter starter;
         private final Module module;
+        private final ModuleLauncher moduleLauncher;
 
         /**
          * Construct a ModuleStarterRunnable for the given module.
@@ -377,16 +402,18 @@ public final class ModuleManager {
          * @param starter The starter.
          * @param module  The module to start.
          */
-        private ModuleStarterRunnable(ModuleStarter starter, Module module) {
+        private ModuleStarterRunnable(ModuleStarter starter, Module module, ModuleLauncher moduleLauncher) {
             super();
 
             this.starter = starter;
             this.module = module;
+            this.moduleLauncher = moduleLauncher;
+
         }
 
         @Override
         public void run() {
-            startModule(module);
+            moduleLauncher.startModule(module);
 
             starter.semaphore.release();
             starter.countDown.countDown();

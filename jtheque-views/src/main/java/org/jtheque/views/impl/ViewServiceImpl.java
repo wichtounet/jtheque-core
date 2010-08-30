@@ -23,6 +23,7 @@ import org.jtheque.utils.SimplePropertiesCache;
 import org.jtheque.images.ImageService;
 import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.ui.SwingUtils;
+import org.jtheque.views.ViewService;
 import org.jtheque.views.WindowConfiguration;
 import org.jtheque.views.panel.CollectionView;
 import org.jtheque.views.windows.AboutView;
@@ -40,20 +41,20 @@ import java.awt.Window;
  * @author Baptiste Wicht
  */
 @ThreadSafe
-public final class ViewService implements org.jtheque.views.ViewService, ApplicationContextAware {
+public final class ViewServiceImpl implements ViewService, ApplicationContextAware {
     private final WindowsConfiguration configuration;
 
     private SwingSpringProxy<CollectionView> collectionPane;
     private SwingSpringProxy<AboutView> aboutPane;
 
     /**
-     * Construct a new ViewService.
+     * Construct a new ViewServiceImpl.
      *
      * @param stateService The state service.
      * @param core         The core.
      * @param imageService The resource service.
      */
-    public ViewService(StateService stateService, Core core, ImageService imageService) {
+    public ViewServiceImpl(StateService stateService, Core core, ImageService imageService) {
         super();
 
         configuration = stateService.getState(new WindowsConfiguration(core, this));

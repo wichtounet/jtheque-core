@@ -117,6 +117,8 @@ public final class ResourceServiceImpl implements ResourceService, BundleContext
         Resource resource = getResource(id, version);
 
         if (resource == null) {
+            LoggerFactory.getLogger(getClass()).debug("Resource {} not installed, download it at URL {}", id, url);
+
             resource = downloadResource(url, version);
 
             resourceState.addResource(resource);

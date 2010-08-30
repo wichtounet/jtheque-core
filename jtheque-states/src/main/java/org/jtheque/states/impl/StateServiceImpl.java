@@ -19,6 +19,7 @@ package org.jtheque.states.impl;
 import org.jtheque.states.State;
 import org.jtheque.states.Load;
 import org.jtheque.states.Save;
+import org.jtheque.states.StateService;
 import org.jtheque.utils.SystemProperty;
 import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.bean.ReflectionUtils;
@@ -48,7 +49,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author Baptiste Wicht
  */
 @ThreadSafe
-public final class StateService implements org.jtheque.states.StateService {
+public final class StateServiceImpl implements StateService {
     private final Map<String, Object> states = new ConcurrentHashMap<String, Object>(10);
     private final Map<String, Map<String, String>> properties = new ConcurrentHashMap<String, Map<String, String>>(5);
     private final Map<String, Collection<Node>> nodes = new ConcurrentHashMap<String, Collection<Node>>(5);
@@ -287,9 +288,9 @@ public final class StateService implements org.jtheque.states.StateService {
         try {
             return (T) saveMethod.invoke(state);
         } catch (IllegalAccessException e) {
-            LoggerFactory.getLogger(StateService.class).error("Unable to access the @Save method of " + state, e);
+            LoggerFactory.getLogger(StateServiceImpl.class).error("Unable to access the @Save method of " + state, e);
         } catch (InvocationTargetException e) {
-            LoggerFactory.getLogger(StateService.class).error("Unable to invoke the @Save method of " + state, e);
+            LoggerFactory.getLogger(StateServiceImpl.class).error("Unable to invoke the @Save method of " + state, e);
         }
 
         return null;

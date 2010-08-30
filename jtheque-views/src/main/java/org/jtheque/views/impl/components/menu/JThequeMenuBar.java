@@ -193,20 +193,30 @@ public final class JThequeMenuBar extends JMenuBar implements FeatureListener, I
 
     @Override
     public void featureAdded(Feature feature) {
-        removeAll();
+        SwingUtils.inEdt(new Runnable(){
+            @Override
+            public void run() {
+                removeAll();
 
-        buildMenu();
+                buildMenu();
 
-        SwingUtils.refresh(this);
+                SwingUtils.refresh(JThequeMenuBar.this);
+            }
+        });
     }
 
     @Override
     public void featureRemoved(Feature feature) {
         for (int i = 0; i < getMenuCount(); i++) {
-            JMenu menu = getMenu(i);
+            final JMenu menu = getMenu(i);
 
             if (isCorrespondingMenu(feature, menu)) {
-                remove(menu);
+                SwingUtils.inEdt(new Runnable() {
+                    @Override
+                    public void run() {
+                        remove(menu);
+                    }
+                });
 
                 break;
             }
@@ -226,14 +236,19 @@ public final class JThequeMenuBar extends JMenuBar implements FeatureListener, I
     }
 
     @Override
-    public void featureModified(Feature feature) {
+    public void featureModified(final Feature feature) {
         for (int i = 0; i < getMenuCount(); i++) {
-            JMenu menu = getMenu(i);
+            final JMenu menu = getMenu(i);
 
             if (isCorrespondingMenu(feature, menu)) {
-                menu.removeAll();
+                SwingUtils.inEdt(new Runnable() {
+                    @Override
+                    public void run() {
+                        menu.removeAll();
 
-                addSubFeatures(feature, menu);
+                        addSubFeatures(feature, menu);
+                    }
+                });
 
                 break;
             }

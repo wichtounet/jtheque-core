@@ -16,6 +16,7 @@
     <bean class="org.jtheque.lifecycle.LifeCycleLauncher" lazy-init="false" />
 
     <osgi:reference id="core" interface="org.jtheque.core.Core" />
+    <osgi:reference id="lifeCycle" interface="org.jtheque.core.lifecycle.LifeCycle"/>
     <osgi:reference id="views" interface="org.jtheque.views.Views"/>
     <osgi:reference id="viewService" interface="org.jtheque.views.ViewService"/>
     <osgi:reference id="splashService" interface="org.jtheque.views.SplashService"/>

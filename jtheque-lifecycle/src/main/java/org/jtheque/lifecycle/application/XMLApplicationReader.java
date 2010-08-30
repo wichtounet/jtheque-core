@@ -267,13 +267,25 @@ public final class XMLApplicationReader {
         if (reader.existsNode("options", reader.getRootElement())) {
             Object optionsElement = reader.getNode("options", reader.getRootElement());
 
-            if (reader.existsValue("license", optionsElement) && StringUtils.isNotEmpty(reader.readString("license", optionsElement))) {
+            if (exists("licence", optionsElement)) {
                 application.displayLicense();
                 application.setProperty("application.license", SystemProperty.USER_DIR.get() + reader.readString("license", optionsElement));
-            } else {
-                application.setProperty("application.license", SystemProperty.USER_DIR.get() + "LICENSE.txt");
+            }
+
+            if(exists("concurrent.load", optionsElement)) {
+                application.setProperty("concurrent.load", reader.readString("concurrent.load", optionsElement));
+                System.setProperty("jtheque.concurrent.load", reader.readString("concurrent.load", optionsElement));
+            }
+
+            if (exists("concurrent.start", optionsElement)) {
+                application.setProperty("concurrent.start", reader.readString("concurrent.start", optionsElement));
+                System.setProperty("jtheque.concurrent.start", reader.readString("concurrent.start", optionsElement));
             }
         }
+    }
+
+    private boolean exists(String request, Object optionsElement) throws XMLException {
+        return reader.existsValue(request, optionsElement) && StringUtils.isNotEmpty(reader.readString(request, optionsElement));
     }
 
     /**

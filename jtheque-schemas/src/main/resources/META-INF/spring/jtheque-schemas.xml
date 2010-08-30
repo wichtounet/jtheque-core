@@ -8,7 +8,7 @@
             http://www.springframework.org/schema/osgi
             http://www.springframework.org/schema/osgi/spring-osgi.xsd">
 
-    <bean id="schemaManager" class="org.jtheque.schemas.impl.SchemaService">
+    <bean id="schemaManager" class="org.jtheque.schemas.impl.SchemaServiceImpl">
         <constructor-arg>
             <osgi:reference interface="org.jtheque.states.StateService"/>
         </constructor-arg>

@@ -21,6 +21,7 @@ import org.jtheque.core.Core;
 import org.jtheque.core.application.Application;
 import org.jtheque.core.utils.WebHelper;
 import org.jtheque.messages.Message;
+import org.jtheque.messages.MessageService;
 import org.jtheque.modules.Module;
 import org.jtheque.modules.ModuleListener;
 import org.jtheque.modules.ModuleResourceCache;
@@ -42,7 +43,7 @@ import java.util.Collection;
  *
  * @author Baptiste Wicht
  */
-public final class MessageService implements org.jtheque.messages.MessageService, ModuleListener, ApplicationListener {
+public final class MessageServiceImpl implements MessageService, ModuleListener, ApplicationListener {
     private final Collection<Message> messages = CollectionUtils.newConcurrentList();
 
     @Resource
@@ -52,11 +53,11 @@ public final class MessageService implements org.jtheque.messages.MessageService
     private Core core;
 
     /**
-     * Construct a new MessageService.
+     * Construct a new MessageServiceImpl.
      *
      * @param moduleService The module service.
      */
-    public MessageService(ModuleService moduleService) {
+    public MessageServiceImpl(ModuleService moduleService) {
         super();
 
         moduleService.addModuleListener("", this);

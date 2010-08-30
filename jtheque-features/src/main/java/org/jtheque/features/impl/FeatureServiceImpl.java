@@ -19,6 +19,7 @@ package org.jtheque.features.impl;
 import org.jtheque.features.CoreFeature;
 import org.jtheque.features.Feature;
 import org.jtheque.features.FeatureListener;
+import org.jtheque.features.FeatureService;
 import org.jtheque.features.Menu;
 import org.jtheque.features.Features;
 import org.jtheque.features.Feature.FeatureType;
@@ -44,7 +45,7 @@ import java.util.Set;
  * @author Baptiste Wicht
  */
 @ThreadSafe
-public final class FeatureService implements org.jtheque.features.FeatureService, ModuleListener {
+public final class FeatureServiceImpl implements FeatureService, ModuleListener {
     @GuardedInternally
     private final WeakEventListenerList<FeatureListener> listeners = WeakEventListenerList.create();
 
@@ -59,12 +60,12 @@ public final class FeatureService implements org.jtheque.features.FeatureService
     private final Collection<Feature> features = CollectionUtils.newConcurrentList();
 
     /**
-     * Construct a new FeatureService.
+     * Construct a new FeatureServiceImpl.
      *
      * @param languageService The language service.
      * @param moduleService   The module service.
      */
-    public FeatureService(LanguageService languageService, ModuleService moduleService) {
+    public FeatureServiceImpl(LanguageService languageService, ModuleService moduleService) {
         super();
 
         this.languageService = languageService;

@@ -45,7 +45,7 @@ final class ModuleDescriptor {
         this.id = id;
         this.moduleVersions = CollectionUtils.protectedCopy(moduleVersions);
 
-        mostRecent = CollectionUtils.last(moduleVersions);
+        mostRecent = moduleVersions.isEmpty() ? null : CollectionUtils.last(moduleVersions);
     }
 
     /**
