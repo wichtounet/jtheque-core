@@ -8,7 +8,6 @@ import org.jtheque.events.EventService;
 import org.jtheque.events.Events;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.SystemProperty;
-import org.jtheque.utils.ThreadUtils;
 import org.jtheque.utils.annotations.GuardedInternally;
 import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.collections.WeakEventListenerList;
@@ -60,12 +59,7 @@ public final class LifeCycleImpl implements LifeCycle {
 
     @Override
     public void exit() {
-        ThreadUtils.inNewThread(new Runnable() {
-            @Override
-            public void run() {
-                exit(0);
-            }
-        });
+        exit(0);
     }
 
     @Override
