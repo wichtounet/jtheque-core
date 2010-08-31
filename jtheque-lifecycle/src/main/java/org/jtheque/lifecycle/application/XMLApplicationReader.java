@@ -265,22 +265,34 @@ public final class XMLApplicationReader {
      */
     private void readOptions(XMLApplication application) throws XMLException {
         if (reader.existsNode("options", reader.getRootElement())) {
-            Object optionsElement = reader.getNode("options", reader.getRootElement());
+            Object element = reader.getNode("options", reader.getRootElement());
 
-            if (exists("licence", optionsElement)) {
+            if (exists("licence", element)) {
                 application.displayLicense();
-                application.setProperty("application.license", SystemProperty.USER_DIR.get() + reader.readString("license", optionsElement));
+                application.setProperty("application.license", SystemProperty.USER_DIR.get() + reader.readString("license", element));
             }
 
-            if(exists("concurrent.load", optionsElement)) {
-                application.setProperty("concurrent.load", reader.readString("concurrent.load", optionsElement));
-                System.setProperty("jtheque.concurrent.load", reader.readString("concurrent.load", optionsElement));
-            }
+            readOption(application, element, "concurrent.load");
+            readOption(application, element, "concurrent.start");
 
-            if (exists("concurrent.start", optionsElement)) {
-                application.setProperty("concurrent.start", reader.readString("concurrent.start", optionsElement));
-                System.setProperty("jtheque.concurrent.start", reader.readString("concurrent.start", optionsElement));
-            }
+            readProperty(application, element, "url.bugs");
+            readProperty(application, element, "url.improvement");
+            readProperty(application, element, "url.help");
+        }
+    }
+
+    private void readOption(XMLApplication application, Object element, String option) throws XMLException {
+        if(exists(option, element)) {
+            application.setProperty(option, reader.readString(option, element));
+            System.setProperty("jtheque." + option, reader.readString(option, element));
+        }
+    }
+
+    private void readProperty(XMLApplication application, Object element, String property) throws XMLException {
+        if (exists(property, element)){
+            application.setProperty(property, reader.readString(property, element));
+        } else {
+            application.setProperty(property, "");
         }
     }
 

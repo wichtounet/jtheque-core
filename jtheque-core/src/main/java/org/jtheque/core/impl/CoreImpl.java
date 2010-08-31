@@ -35,11 +35,11 @@ package org.jtheque.core.impl;
 import org.jtheque.core.ApplicationListener;
 import org.jtheque.core.Core;
 import org.jtheque.core.CoreConfiguration;
-import org.jtheque.core.FilesContainer;
 import org.jtheque.core.FoldersContainer;
 import org.jtheque.core.application.Application;
 import org.jtheque.images.ImageService;
 import org.jtheque.states.StateService;
+import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.annotations.GuardedInternally;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.collections.CollectionUtils;
@@ -72,9 +72,6 @@ public final class CoreImpl implements Core {
     private final FoldersContainer foldersContainer;
 
     @GuardedInternally
-    private final FilesContainer filesContainer;
-
-    @GuardedInternally
     private final CoreConfiguration configuration;
 
     private final ImageService imageService;
@@ -93,7 +90,6 @@ public final class CoreImpl implements Core {
         this.imageService = imageService;
 
         foldersContainer = new Folders(this);
-        filesContainer = new Files(this);
 
         configuration = stateService.getState(new CoreConfigurationImpl());
 
@@ -180,11 +176,6 @@ public final class CoreImpl implements Core {
     }
 
     @Override
-    public FilesContainer getFiles() {
-        return filesContainer;
-    }
-
-    @Override
     public CoreConfiguration getConfiguration() {
         return configuration;
     }
@@ -196,5 +187,26 @@ public final class CoreImpl implements Core {
         }
 
         return languages;
+    }
+
+    @Override
+    public String getImprovementURL() {
+        return getURL("url.improvement", BUG_TRACKER_URL);
+    }
+
+    @Override
+    public String getBugTrackerURL() {
+        return getURL("url.bugs", BUG_TRACKER_URL);
+    }
+
+    @Override
+    public String getHelpURL() {
+        return getURL("url.help", HELP_URL);
+    }
+
+    private String getURL(String property, String defaultURL) {
+        String applicationURL = application.getProperty(property);
+
+        return StringUtils.isNotEmpty(applicationURL) ? applicationURL : defaultURL;
     }
 }

@@ -57,13 +57,6 @@ public interface Core {
     FoldersContainer getFolders();
 
     /**
-     * Return the files of the application.
-     *
-     * @return The files of the application.
-     */
-    FilesContainer getFiles();
-
-    /**
      * Add an internationalized credits message.
      *
      * @param key The internationalized key.
@@ -120,4 +113,10 @@ public interface Core {
      * @param listener The application listener.
      */
     void removeApplicationListener(ApplicationListener listener);
+
+    String getHelpURL();
+
+    String getBugTrackerURL();
+
+    String getImprovementURL();
 }
