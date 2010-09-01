@@ -1,6 +1,7 @@
 package org.jtheque.osgi;
 
 import org.apache.tools.ant.BuildException;
+import org.apache.tools.ant.BuildListener;
 import org.apache.tools.ant.BuildLogger;
 import org.apache.tools.ant.DefaultLogger;
 import org.apache.tools.ant.DemuxOutputStream;
@@ -53,7 +54,7 @@ public final class JTheque {
     }
 
     /**
-     * Launch the application. If the return code if greater than 0, the applicaition will be restarted.
+     * Launch the application. If the return code if greater than 0, the application will be restarted.
      */
     private static void launch() {
         int ret = launchJTheque();
@@ -118,7 +119,7 @@ public final class JTheque {
      *
      * @return The create logger.
      */
-    private static BuildLogger createLogger(PrintStream out, PrintStream err) {
+    private static BuildListener createLogger(PrintStream out, PrintStream err) {
         BuildLogger logger = new DefaultLogger();
 
         logger.setOutputPrintStream(out);

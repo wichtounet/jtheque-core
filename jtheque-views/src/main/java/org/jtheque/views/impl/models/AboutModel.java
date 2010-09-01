@@ -79,7 +79,7 @@ public final class AboutModel {
     }
 
     /**
-     * Return the copypright.
+     * Return the copyright.
      *
      * @return The copyright.
      */

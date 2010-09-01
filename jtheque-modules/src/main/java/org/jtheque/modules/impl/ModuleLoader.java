@@ -106,7 +106,7 @@ public final class ModuleLoader implements BundleContextAware {
 
         File[] files = moduleDir.listFiles(new ModuleFilter());
 
-        return isLoadingConcurrent() ? loadInParralel(files) : loadSequentially(files);
+        return isLoadingConcurrent() ? loadInParallel(files) : loadSequentially(files);
     }
 
     private static boolean isLoadingConcurrent() {
@@ -115,7 +115,7 @@ public final class ModuleLoader implements BundleContextAware {
         return StringUtils.isNotEmpty(property) && "true".equalsIgnoreCase(property);
     }
 
-    private Collection<Module> loadInParralel(File[] files) {
+    private Collection<Module> loadInParallel(File[] files) {
         ExecutorService loadersPool = Executors.newFixedThreadPool(2 * ThreadUtils.processors());
 
         CompletionService<Module> completionService = new ExecutorCompletionService<Module>(loadersPool);
@@ -264,7 +264,7 @@ public final class ModuleLoader implements BundleContextAware {
      * @param bundle    The bundle.
      */
     private static void readManifestInformations(Builder container, Bundle bundle) {
-        @SuppressWarnings("unchecked") //We kwnow that the bundle headers are a String<->String Map
+        @SuppressWarnings("unchecked") //We know that the bundle headers are a String<->String Map
                 Dictionary<String, String> headers = bundle.getHeaders();
 
         container.setId(headers.get("Bundle-SymbolicName"));

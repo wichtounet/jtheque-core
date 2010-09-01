@@ -1,5 +1,6 @@
 package org.jtheque.messages.impl;
 
+import org.jtheque.messages.Message;
 import org.jtheque.utils.annotations.Immutable;
 import org.jtheque.utils.bean.EqualsBuilder;
 import org.jtheque.utils.bean.HashCodeUtils;
@@ -41,8 +42,8 @@ public final class Messages {
      *
      * @return A new message with the given properties.
      */
-    public static org.jtheque.messages.Message newEmptyTodayMessage(int id) {
-        return new Message(id, "", "", IntDate.today(), "");
+    public static Message newEmptyTodayMessage(int id) {
+        return new MessageImpl(id, "", "", IntDate.today(), "");
     }
 
     /**
@@ -57,7 +58,7 @@ public final class Messages {
      * @return A new message with the given properties.
      */
     public static Message newMessage(int id, String title, String message, IntDate date, String source) {
-        return new Message(id, title, message, date, source);
+        return new MessageImpl(id, title, message, date, source);
     }
 
     /**
@@ -66,7 +67,7 @@ public final class Messages {
      * @author Baptiste Wicht
      */
     @Immutable
-    private static final class Message implements org.jtheque.messages.Message {
+    private static final class MessageImpl implements Message {
         /**
          * The Id of the message.
          */
@@ -93,7 +94,7 @@ public final class Messages {
         private final String source;
 
         /**
-         * Construct a new Message.
+         * Construct a new MessageImpl.
          *
          * @param id     The id of the message.
          * @param title  The title of the message.
@@ -101,7 +102,7 @@ public final class Messages {
          * @param date   The date of the message.
          * @param source The source of the message.
          */
-        private Message(int id, String title, String text, IntDate date, String source) {
+        private MessageImpl(int id, String title, String text, IntDate date, String source) {
             super();
 
             this.id = id;
@@ -138,7 +139,7 @@ public final class Messages {
 
         @Override
         public String toString() {
-            return "Message{" +
+            return "MessageImpl{" +
                     "id=" + id +
                     ", title='" + title + '\'' +
                     ", text='" + text + '\'' +
@@ -149,8 +150,8 @@ public final class Messages {
 
         @Override
         public boolean equals(Object o) {
-            if (o instanceof Message) {
-                Message other = (Message) o;
+            if (o instanceof MessageImpl) {
+                MessageImpl other = (MessageImpl) o;
 
                 return EqualsBuilder.newBuilder(this, other).
                         addField(id, other.id).
@@ -170,7 +171,7 @@ public final class Messages {
         }
 
         @Override
-        public int compareTo(org.jtheque.messages.Message o) {
+        public int compareTo(Message o) {
             return date.compareTo(o.getDate());
         }
     }

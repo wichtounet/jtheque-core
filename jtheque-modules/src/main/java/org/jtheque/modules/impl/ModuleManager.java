@@ -107,7 +107,7 @@ public final class ModuleManager {
     }
 
     void startAll(ModuleLauncher moduleLauncher) {
-        if(isStartingConcurrent()){
+        if (isStartingConcurrent()) {
             ModuleStarter starter = new ModuleStarter(moduleLauncher);
 
             for (Module module : modules) {
@@ -196,7 +196,7 @@ public final class ModuleManager {
     }
 
     /**
-     * Install the module file. It seems copy it into the application directory and make verifications for the existance
+     * Install the module file. It seems copy it into the application directory and make verifications for the existence
      * of the file.
      *
      * @param file The file of the module.
@@ -277,7 +277,7 @@ public final class ModuleManager {
 
     Module installModuleFromRepository(File file) {
         Module module = moduleLoader.installModule(file);
-        
+
         uiUtils.displayI18nText("message.module.repository.installed");
 
         return module;
@@ -285,7 +285,7 @@ public final class ModuleManager {
 
     void uninstallModule(Module module) {
         moduleLoader.uninstallModule(module);
-        
+
         modules.remove(module);
 
         try {
@@ -399,8 +399,9 @@ public final class ModuleManager {
         /**
          * Construct a ModuleStarterRunnable for the given module.
          *
-         * @param starter The starter.
-         * @param module  The module to start.
+         * @param starter        The starter.
+         * @param module         The module to start.
+         * @param moduleLauncher The module launcher to start the module.
          */
         private ModuleStarterRunnable(ModuleStarter starter, Module module, ModuleLauncher moduleLauncher) {
             super();

@@ -17,7 +17,7 @@ package org.jtheque.ui;
  */
 
 /**
- * A controller exception. This is a runtime excception that can occurs during handle actions from a controller.
+ * A controller exception. This is a runtime exception that can occurs during handle actions from a controller.
  *
  * @author Baptiste Wicht
  */
