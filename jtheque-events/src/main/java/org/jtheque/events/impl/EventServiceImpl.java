@@ -22,6 +22,7 @@ import javax.annotation.PreDestroy;
 
 import java.io.File;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Map;
 import java.util.Set;
@@ -52,6 +53,12 @@ public final class EventServiceImpl implements EventService {
     @GuardedInternally
     private final Map<String, Collection<Event>> logs = CollectionUtils.newConcurrentMap(5);
 
+    public EventServiceImpl() {
+        super();
+
+        logs.put(CORE_EVENT_LOG, CollectionUtils.<Event>newSet(50));
+    }
+
     @Override
     public Set<String> getEventLogs() {
         return logs.keySet();
@@ -80,30 +87,30 @@ public final class EventServiceImpl implements EventService {
     public void importFromXML() {
         File f = new File(SystemProperty.USER_DIR.get(), "/logs.xml");
 
-        if (!f.exists()) {
-            createEmptyEventFile(f);
-        }
+        if (f.exists()) {
+            XMLReader<Node> reader = XML.newJavaFactory().newReader();
 
-        XMLReader<Node> reader = XML.newJavaFactory().newReader();
+            try {
+                reader.openFile(f);
 
-        try {
-            reader.openFile(f);
+                for (Object currentNode : reader.getNodes("log", reader.getRootElement())) {
+                    String name = reader.readString("@name", currentNode);
 
-            for (Object currentNode : reader.getNodes("log", reader.getRootElement())) {
-                String name = reader.readString("@name", currentNode);
+                    Collection<Node> elements = reader.getNodes("event", currentNode);
 
-                Collection<Node> elements = reader.getNodes("event", currentNode);
+                    logs.put(name, CollectionUtils.<Event>newList(elements.size()));
 
-                logs.put(name, CollectionUtils.<Event>newList(elements.size()));
-
-                for (Node element : elements) {
-                    logs.get(name).add(readEvent(reader, name, element));
+                    for (Node element : elements) {
+                        logs.get(name).add(readEvent(reader, name, element));
+                    }
                 }
+            } catch (XMLException e) {
+                LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
+            } finally {
+                FileUtils.close(reader);
             }
-        } catch (XMLException e) {
-            LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
-        } finally {
-            FileUtils.close(reader);
+        } else {
+            createEmptyEventFile(f);
         }
     }
 

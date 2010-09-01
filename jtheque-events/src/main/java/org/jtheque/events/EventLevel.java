@@ -71,8 +71,10 @@ public enum EventLevel {
                 return WARN;
             case 10:
                 return ERROR;
-            default:
+            case 100:
                 return INFO;
+            default:
+                return null;
         }
     }
 }
