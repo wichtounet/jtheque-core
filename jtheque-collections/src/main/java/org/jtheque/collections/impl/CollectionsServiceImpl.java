@@ -46,7 +46,10 @@ import java.util.Collection;
  */
 @ThreadSafe
 public final class CollectionsServiceImpl implements CollectionsService {
+    @GuardedInternally
     private final DaoCollections daoCollections;
+    
+    @GuardedInternally
     private final Core core;
 
     @GuardedInternally

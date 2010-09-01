@@ -22,6 +22,7 @@ import org.jtheque.states.Load;
 import org.jtheque.states.Save;
 import org.jtheque.states.State;
 import org.jtheque.utils.StringUtils;
+import org.jtheque.utils.annotations.GuardedInternally;
 import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.xml.utils.Node;
@@ -38,6 +39,7 @@ import java.util.Map.Entry;
 @ThreadSafe
 @State(id = "jtheque-modules-configuration", delegated = true)
 final class ModuleConfiguration {
+    @GuardedInternally
     private final Map<String, ModuleState> states = CollectionUtils.newConcurrentMap(20);
 
     /**

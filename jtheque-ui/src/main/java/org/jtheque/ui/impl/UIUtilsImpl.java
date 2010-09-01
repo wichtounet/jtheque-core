@@ -4,6 +4,7 @@ import org.jtheque.i18n.LanguageService;
 import org.jtheque.images.ImageService;
 import org.jtheque.ui.UIUtils;
 import org.jtheque.utils.SimplePropertiesCache;
+import org.jtheque.utils.annotations.GuardedInternally;
 import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.ui.SwingUtils;
 
@@ -42,6 +43,7 @@ import java.lang.reflect.InvocationTargetException;
 public final class UIUtilsImpl implements UIUtils {
     private static final String MAIN_VIEW_CACHE = "mainView";
 
+    @GuardedInternally
     private final LanguageService languageService;
 
     /**

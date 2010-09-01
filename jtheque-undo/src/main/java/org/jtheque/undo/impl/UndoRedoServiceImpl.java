@@ -18,6 +18,7 @@ package org.jtheque.undo.impl;
 
 import org.jtheque.undo.IUndoRedoService;
 import org.jtheque.undo.StateListener;
+import org.jtheque.utils.annotations.GuardedInternally;
 import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.collections.WeakEventListenerList;
 
@@ -36,6 +37,7 @@ import javax.swing.undo.UndoableEdit;
 public final class UndoRedoServiceImpl extends UndoManager implements IUndoRedoService {
     private static final long serialVersionUID = 6050388256567189094L;
 
+    @GuardedInternally
     private final WeakEventListenerList<StateListener> eventListenerList = WeakEventListenerList.create();
 
     @Override

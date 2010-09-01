@@ -5,6 +5,7 @@ import org.jtheque.events.EventLevel;
 import org.jtheque.events.EventService;
 import org.jtheque.events.Events;
 import org.jtheque.utils.SystemProperty;
+import org.jtheque.utils.annotations.GuardedInternally;
 import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.io.FileUtils;
@@ -48,6 +49,7 @@ import java.util.Set;
  */
 @ThreadSafe
 public final class EventServiceImpl implements EventService {
+    @GuardedInternally
     private final Map<String, Collection<Event>> logs = CollectionUtils.newConcurrentMap(5);
 
     @Override

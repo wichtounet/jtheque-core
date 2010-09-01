@@ -26,6 +26,7 @@ import org.jtheque.updates.UpdateService;
 import org.jtheque.utils.SimplePropertiesCache;
 import org.jtheque.modules.Module;
 import org.jtheque.modules.ModuleListener;
+import org.jtheque.utils.annotations.GuardedInternally;
 import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.ui.SwingUtils;
@@ -58,8 +59,13 @@ import java.util.List;
  */
 @ThreadSafe
 public final class ViewsImpl implements Views, ApplicationContextAware, ModuleListener {
+    @GuardedInternally
     private final Collection<MainComponent> mainComponents = CollectionUtils.newConcurrentList();
+    
+    @GuardedInternally
     private final Collection<StateBarComponent> stateBarComponents = CollectionUtils.newConcurrentList();
+
+    @GuardedInternally
     private final Collection<ConfigTabComponent> configPanels = CollectionUtils.newConcurrentList();
 
     private ApplicationContext applicationContext;

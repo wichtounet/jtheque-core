@@ -1,5 +1,6 @@
 package org.jtheque.ui.constraints;
 
+import org.jtheque.utils.annotations.GuardedInternally;
 import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.ui.DocumentLengthFilterAvert;
@@ -35,6 +36,7 @@ import java.util.Map;
  */
 @ThreadSafe
 public final class ConstraintManager {
+    @GuardedInternally
     private static final Map<String, Constraint> CONSTRAINTS = CollectionUtils.newConcurrentMap(20);
 
     /**

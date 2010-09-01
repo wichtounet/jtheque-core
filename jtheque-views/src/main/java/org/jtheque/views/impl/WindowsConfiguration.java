@@ -4,6 +4,7 @@ import org.jtheque.core.Core;
 import org.jtheque.states.Load;
 import org.jtheque.states.Save;
 import org.jtheque.states.State;
+import org.jtheque.utils.annotations.GuardedInternally;
 import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.views.ViewService;
@@ -40,6 +41,7 @@ import java.util.Map.Entry;
 @ThreadSafe
 @State(id = "jtheque-windows-configuration", delegated = true)
 public final class WindowsConfiguration {
+    @GuardedInternally
     private final Map<String, WindowConfiguration> configurations = CollectionUtils.newConcurrentMap(10);
 
     private final Core core;

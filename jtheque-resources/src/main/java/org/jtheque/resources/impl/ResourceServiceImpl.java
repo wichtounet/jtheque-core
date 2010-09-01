@@ -5,6 +5,7 @@ import org.jtheque.resources.Resource;
 import org.jtheque.resources.ResourceService;
 import org.jtheque.states.StateService;
 import org.jtheque.utils.SystemProperty;
+import org.jtheque.utils.annotations.GuardedInternally;
 import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.collections.CollectionUtils;
@@ -46,9 +47,13 @@ import java.util.Map;
  */
 @ThreadSafe
 public final class ResourceServiceImpl implements ResourceService, BundleContextAware {
-    private final Map<String, ResourceDescriptor> descriptorCache = CollectionUtils.newHashMap(5);
-    private final Map<String, Bundle> installedBundles = CollectionUtils.newHashMap(20);
+    @GuardedInternally
+    private final Map<String, ResourceDescriptor> descriptorCache = CollectionUtils.newConcurrentMap(5);
 
+    @GuardedInternally
+    private final Map<String, Bundle> installedBundles = CollectionUtils.newConcurrentMap(20);
+
+    @GuardedInternally
     private final ResourceState resourceState;
 
     @javax.annotation.Resource

@@ -65,13 +65,15 @@ public final class Folders implements FoldersContainer, ApplicationListener {
 
     @Override
     public void applicationLaunched(Application application) {
-        applicationFolder = new File(application.getFolderPath());
-        FileUtils.createIfNotExists(applicationFolder);
+        synchronized (this){
+            applicationFolder = new File(application.getFolderPath());
+            FileUtils.createIfNotExists(applicationFolder);
 
-        logsFolder = new File(applicationFolder, "logs");
-        FileUtils.createIfNotExists(logsFolder);
+            logsFolder = new File(applicationFolder, "logs");
+            FileUtils.createIfNotExists(logsFolder);
 
-        modulesFolder = new File(applicationFolder, "modules");
-        FileUtils.createIfNotExists(modulesFolder);
+            modulesFolder = new File(applicationFolder, "modules");
+            FileUtils.createIfNotExists(modulesFolder);
+        }
     }
 }

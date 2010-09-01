@@ -7,6 +7,8 @@ import org.jtheque.schemas.Schema;
 import org.jtheque.schemas.SchemaService;
 import org.jtheque.states.StateService;
 import org.jtheque.utils.StringUtils;
+import org.jtheque.utils.annotations.GuardedBy;
+import org.jtheque.utils.annotations.GuardedInternally;
 import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.collections.CollectionUtils;
@@ -41,8 +43,10 @@ import java.util.Set;
  */
 @ThreadSafe
 public final class SchemaServiceImpl implements SchemaService, ModuleListener {
+    @GuardedBy("schemas")
     private final List<Schema> schemas = CollectionUtils.newList();
 
+    @GuardedInternally
     private final SchemaConfiguration configuration;
 
     /**

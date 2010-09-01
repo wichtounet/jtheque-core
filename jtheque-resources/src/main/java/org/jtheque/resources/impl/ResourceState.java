@@ -4,6 +4,7 @@ import org.jtheque.resources.Resource;
 import org.jtheque.states.Load;
 import org.jtheque.states.Save;
 import org.jtheque.states.State;
+import org.jtheque.utils.annotations.GuardedInternally;
 import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.collections.CollectionUtils;
@@ -35,6 +36,7 @@ import java.util.Collection;
 @ThreadSafe
 @State(id = "jtheque-resources", delegated = true)
 public final class ResourceState {
+    @GuardedInternally
     private final Collection<Resource> resources = CollectionUtils.newConcurrentList();
 
     /**

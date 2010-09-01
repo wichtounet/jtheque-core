@@ -4,6 +4,7 @@ import org.jtheque.persistence.DaoPersistenceContext;
 import org.jtheque.persistence.Entity;
 import org.jtheque.persistence.Query;
 import org.jtheque.persistence.QueryMapper;
+import org.jtheque.utils.annotations.GuardedInternally;
 import org.jtheque.utils.annotations.ThreadSafe;
 
 import org.springframework.jdbc.core.RowMapper;
@@ -37,6 +38,7 @@ import java.util.List;
  */
 @ThreadSafe
 public final class SpringDaoPersistenceContext implements DaoPersistenceContext {
+    @GuardedInternally
     private final SimpleJdbcTemplate jdbcTemplate;
 
     private final Object idCoherencyLock = new Object();

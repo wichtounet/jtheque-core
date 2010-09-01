@@ -2,6 +2,7 @@ package org.jtheque.features;
 
 import org.jtheque.features.Feature.FeatureType;
 import org.jtheque.ui.utils.actions.JThequeAction;
+import org.jtheque.utils.annotations.GuardedInternally;
 import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.collections.CollectionUtils;
 
@@ -92,7 +93,9 @@ public final class Features {
      */
     @ThreadSafe
     private static final class Feature implements org.jtheque.features.Feature {
+        @GuardedInternally
         private final Collection<org.jtheque.features.Feature> subFeatures = CollectionUtils.newConcurrentList();
+        
         private final JThequeAction action;
         private final FeatureType type;
         private final String titleKey;

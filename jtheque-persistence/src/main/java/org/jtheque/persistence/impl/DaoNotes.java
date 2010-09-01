@@ -3,6 +3,7 @@ package org.jtheque.persistence.impl;
 import org.jtheque.i18n.LanguageService;
 import org.jtheque.images.ImageService;
 import org.jtheque.persistence.Note;
+import org.jtheque.utils.annotations.GuardedInternally;
 import org.jtheque.utils.annotations.ThreadSafe;
 
 import org.springframework.core.io.ClassPathResource;
@@ -34,6 +35,8 @@ import java.awt.image.BufferedImage;
 @ThreadSafe
 public final class DaoNotes implements org.jtheque.persistence.DaoNotes {
     private final BufferedImage[] stars;
+    
+    @GuardedInternally
     private final LanguageService languageService;
 
     /**

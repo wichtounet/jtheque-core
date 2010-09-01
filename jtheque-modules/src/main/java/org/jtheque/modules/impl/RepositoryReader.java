@@ -20,6 +20,7 @@ import org.jtheque.core.Core;
 import org.jtheque.modules.ModuleDescription;
 import org.jtheque.modules.Repository;
 import org.jtheque.utils.StringUtils;
+import org.jtheque.utils.annotations.GuardedBy;
 import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.bean.InternationalString;
 import org.jtheque.utils.bean.Version;
@@ -42,6 +43,7 @@ import java.util.Map;
  */
 @ThreadSafe
 final class RepositoryReader {
+    @GuardedBy("RepositoryReader.class")
     private static Repository repository;
 
     private RepositoryReader() {

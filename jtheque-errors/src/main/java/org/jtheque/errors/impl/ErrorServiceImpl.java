@@ -33,6 +33,7 @@ import java.util.Collection;
  */
 @ThreadSafe
 public final class ErrorServiceImpl implements ErrorService {
+    @GuardedInternally
     private final Collection<Error> errors = CollectionUtils.newConcurrentList();
 
     @GuardedInternally

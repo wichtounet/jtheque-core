@@ -65,6 +65,9 @@ public class GeneralController extends AbstractController<MainView> {
     private LifeCycle lifeCycle;
 
     @Resource
+    private Core core;
+
+    @Resource
     private Controller<ConfigView> configController;
 
     @Resource
@@ -121,7 +124,7 @@ public class GeneralController extends AbstractController<MainView> {
      */
     @Action("menu.help")
     public void help() {
-        DesktopUtils.browse(Core.HELP_URL);
+        DesktopUtils.browse(core.getHelpURL());
     }
 
     /**
@@ -129,7 +132,7 @@ public class GeneralController extends AbstractController<MainView> {
      */
     @Action("menu.bug")
     public void bug() {
-        DesktopUtils.browse(Core.BUG_TRACKER_URL);
+        DesktopUtils.browse(core.getBugTrackerURL());
     }
 
     /**
@@ -137,7 +140,7 @@ public class GeneralController extends AbstractController<MainView> {
      */
     @Action("menu.improvement")
     public void improvement() {
-        DesktopUtils.browse(Core.BUG_TRACKER_URL);
+        DesktopUtils.browse(core.getImprovementURL());
     }
 
     /**

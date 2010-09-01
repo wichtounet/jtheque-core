@@ -21,6 +21,7 @@ import org.jtheque.states.Load;
 import org.jtheque.states.Save;
 import org.jtheque.states.StateService;
 import org.jtheque.utils.SystemProperty;
+import org.jtheque.utils.annotations.GuardedInternally;
 import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.bean.ReflectionUtils;
 import org.jtheque.utils.collections.CollectionUtils;
@@ -50,9 +51,14 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 @ThreadSafe
 public final class StateServiceImpl implements StateService {
-    private final Map<String, Object> states = new ConcurrentHashMap<String, Object>(10);
-    private final Map<String, Map<String, String>> properties = new ConcurrentHashMap<String, Map<String, String>>(5);
-    private final Map<String, Collection<Node>> nodes = new ConcurrentHashMap<String, Collection<Node>>(5);
+    @GuardedInternally
+    private final Map<String, Object> states = CollectionUtils.newConcurrentMap(10);
+
+    @GuardedInternally
+    private final Map<String, Map<String, String>> properties = CollectionUtils.newConcurrentMap(5);
+    
+    @GuardedInternally
+    private final Map<String, Collection<Node>> nodes = CollectionUtils.newConcurrentMap(5);
 
     @Override
     public <T> T getState(T state) {

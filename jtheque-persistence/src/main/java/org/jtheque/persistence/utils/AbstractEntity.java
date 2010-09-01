@@ -18,6 +18,7 @@ package org.jtheque.persistence.utils;
 
 import org.jtheque.persistence.Entity;
 import org.jtheque.persistence.TemporaryContext;
+import org.jtheque.utils.annotations.GuardedInternally;
 import org.jtheque.utils.annotations.ThreadSafe;
 
 /**
@@ -29,6 +30,7 @@ import org.jtheque.utils.annotations.ThreadSafe;
 public abstract class AbstractEntity implements Entity {
     private volatile int id;
 
+    @GuardedInternally
     private final TemporaryContext temporaryContext = new DefaultTemporaryContext();
 
     @Override

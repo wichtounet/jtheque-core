@@ -7,6 +7,7 @@ import org.jtheque.i18n.LanguageService;
 import org.jtheque.states.StateService;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.SystemProperty;
+import org.jtheque.utils.annotations.GuardedInternally;
 import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.collections.CollectionUtils;
@@ -47,9 +48,16 @@ import java.util.Set;
 public final class LanguageServiceImpl implements LanguageService {
     private static final String[] ZERO_LENGTH_ARRAY = new String[0];
 
+    @GuardedInternally
     private final Map<String, String> baseNames = CollectionUtils.newConcurrentMap(10);
+    
+    @GuardedInternally
     private final Set<Internationalizable> internationalizables = CollectionUtils.newConcurrentSet();
+
+    @GuardedInternally
     private final JThequeResourceBundle resourceBundle = new JThequeResourceBundle();
+
+    @GuardedInternally
     private final LanguageState state;
 
     private volatile Locale locale = Locale.getDefault();

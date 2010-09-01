@@ -18,6 +18,7 @@ package org.jtheque.states.utils;
 
 import org.jtheque.states.Load;
 import org.jtheque.states.Save;
+import org.jtheque.utils.annotations.GuardedInternally;
 import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.collections.CollectionUtils;
 
@@ -30,6 +31,7 @@ import java.util.Map;
  */
 @ThreadSafe
 public abstract class AbstractConcurrentState {
+    @GuardedInternally
     private final Map<String, String> properties = CollectionUtils.newConcurrentMap(10);
 
     /**
