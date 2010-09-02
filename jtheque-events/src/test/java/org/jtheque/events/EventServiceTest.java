@@ -106,7 +106,7 @@ public class EventServiceTest {
         eventService.addEvent(event);
 
         assertEquals(2, eventService.getEventLogs().size());
-        assertTrue(eventService.getEvents(EventService.CORE_EVENT_LOG).contains(event));
+        assertTrue(eventService.getEvents(eventLog).contains(event));
         assertTrue(eventService.getEventLogs().contains(eventLog));
     }
 }
