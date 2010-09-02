@@ -59,13 +59,13 @@ public final class EventServiceImpl implements EventService {
     }
 
     @Override
-    public Set<String> getEventLogs() {
-        return logs.keySet();
+    public Collection<String> getEventLogs() {
+        return CollectionUtils.protect(logs.keySet());
     }
 
     @Override
     public Collection<Event> getEvents(String log) {
-        return logs.get(log);
+        return CollectionUtils.protect(logs.get(log));
     }
 
     @Override

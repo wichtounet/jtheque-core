@@ -33,16 +33,16 @@ public interface EventService {
     /**
      * Return all the logs.
      *
-     * @return A Set containing all the logs.
+     * @return A Collection containing all the logs. The Collection is unmodifiable.
      */
-    Set<String> getEventLogs();
+    Collection<String> getEventLogs();
 
     /**
      * Return all the events from a log.
      *
      * @param log The event log to get the events from.
      *
-     * @return A List containing all the events of the log.
+     * @return A Collection containing all the events of the log. The Collection is unmodifiable.
      */
     Collection<Event> getEvents(String log);
 

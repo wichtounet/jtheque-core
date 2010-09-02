@@ -87,4 +87,26 @@ public class EventServiceTest {
     public void noEventsByDefault() {
         assertEquals(0, eventService.getEvents(EventService.CORE_EVENT_LOG).size());
     }
+
+    @Test
+    public void addEventInDefaultLog(){
+        Event event = Events.newEvent(EventLevel.INFO, "source", "key", EventService.CORE_EVENT_LOG);
+
+        eventService.addEvent(event);
+
+        assertEquals(1, eventService.getEventLogs().size());
+        assertTrue(eventService.getEvents(EventService.CORE_EVENT_LOG).contains(event));
+    }
+
+    @Test
+    public void addEventInNewLog() {
+        String eventLog = "Super log of mine";
+        Event event = Events.newEvent(EventLevel.INFO, "source", "key", eventLog);
+
+        eventService.addEvent(event);
+
+        assertEquals(2, eventService.getEventLogs().size());
+        assertTrue(eventService.getEvents(EventService.CORE_EVENT_LOG).contains(event));
+        assertTrue(eventService.getEventLogs().contains(eventLog));
+    }
 }
