@@ -37,7 +37,7 @@ import static org.junit.Assert.assertNotNull;
  */
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "jtheque-events-test.xml")
+@ContextConfiguration(locations = "jtheque-errors-test.xml")
 public class ErrorServiceTest {
     @Resource
     private ErrorService errorService;
