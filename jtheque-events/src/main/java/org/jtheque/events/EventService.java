@@ -3,7 +3,6 @@ package org.jtheque.events;
 import org.jtheque.utils.annotations.ThreadSafe;
 
 import java.util.Collection;
-import java.util.Set;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
