@@ -61,7 +61,7 @@ public final class ValidationUtils {
      */
     public static void rejectIfLongerThan(CharSequence field, String name, int max, Collection<Error> errors) {
         if (!StringUtils.isEmpty(field) && field.length() > max) {
-            errors.add(Errors.newI18nError("error.validation.field.lenght", new Object[]{name, max}));
+            errors.add(Errors.newI18nError("error.validation.field.length", new Object[]{name, max}));
         }
     }
 

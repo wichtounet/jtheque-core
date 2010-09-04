@@ -39,7 +39,7 @@ final class ModuleVersion {
      * Create a new ModuleVersion.
      *
      * @param version     The version.
-     * @param coreVersion The core versio needed by this module version.
+     * @param coreVersion The core version needed by this module version.
      * @param moduleFile  The module JAR file name.
      * @param moduleURL   The URL to the module file.
      * @param resources   The resources needed by this module version.

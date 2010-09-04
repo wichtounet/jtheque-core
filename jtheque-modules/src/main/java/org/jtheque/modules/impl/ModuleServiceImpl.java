@@ -329,7 +329,7 @@ public final class ModuleServiceImpl implements ModuleService, ModuleLauncher {
     @Override
     public String canBeStarted(Module module) {
         if (module.getCoreVersion() != null && module.getCoreVersion().isGreaterThan(Core.VERSION)) {
-            return "modules.message.versionproblem";
+            return "modules.message.version.problem";
         }
 
         if (!moduleManager.areAllDependenciesSatisfiedAndActive(module)) {

@@ -101,7 +101,7 @@ public class ModuleController extends AbstractController<ModuleView> {
 
         if (module.getState() == ModuleState.DISABLED) {
             if (module.getCoreVersion().isGreaterThan(Core.VERSION)) {
-                uiUtils.displayI18nText("modules.message.versionproblem");
+                uiUtils.displayI18nText("modules.message.version.problem");
             } else {
                 moduleService.enableModule(module);
                 getView().refreshList();

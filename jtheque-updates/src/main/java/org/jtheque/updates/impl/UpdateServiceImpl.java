@@ -152,7 +152,7 @@ public final class UpdateServiceImpl implements UpdateService {
         }
 
         if (onlineVersion.getCoreVersion().isGreaterThan(Core.VERSION)) {
-            uiUtils.displayI18nText("modules.message.versionproblem");
+            uiUtils.displayI18nText("modules.message.version.problem");
         } else {
             applyModuleVersion(onlineVersion);
 

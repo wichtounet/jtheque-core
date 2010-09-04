@@ -138,7 +138,7 @@ public final class ModulePanel extends JPanel {
                     "repository.module.current",
                     moduleService.getModuleById(module.getId()).getVersion().getVersion()));
         } else {
-            currentLabel.setText(languageService.getMessage("repository.module.current.notinstalled"));
+            currentLabel.setText(languageService.getMessage("repository.module.current.not.installed"));
         }
     }
 }

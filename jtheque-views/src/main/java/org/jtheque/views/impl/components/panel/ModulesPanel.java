@@ -61,8 +61,8 @@ public final class ModulesPanel extends OSGIFilthyBuildedPanel implements Module
         builder.addButtonBar(builder.gbcSet(0, 2, GridBagUtils.HORIZONTAL, GridBagUtils.BASELINE_LEADING, 1.0, 0.0),
                 moduleView.getAction("modules.actions.stop"),
                 moduleView.getAction("modules.actions.start"),
-                moduleView.getAction("modules.actions.activate"),
-                moduleView.getAction("modules.actions.desactivate"));
+                moduleView.getAction("modules.actions.enable"),
+                moduleView.getAction("modules.actions.disable"));
 
         builder.addButtonBar(builder.gbcSet(0, 3, GridBagUtils.HORIZONTAL, GridBagUtils.BASELINE_LEADING, 1.0, 0.0),
                 moduleView.getAction("modules.actions.url.new"),

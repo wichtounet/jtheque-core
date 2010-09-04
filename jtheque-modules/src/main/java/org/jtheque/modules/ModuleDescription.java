@@ -5,7 +5,7 @@ import org.jtheque.utils.bean.InternationalString;
 import org.jtheque.utils.bean.Version;
 
 /**
- * A module description. This description is getted from a repository.
+ * A module description. This description is acquired from a repository.
  *
  * @author Baptiste Wicht
  */
