@@ -156,15 +156,9 @@ public final class XMLApplicationReader {
      */
     private void readLanguages(Object i18nElement, XMLApplication application) throws XMLException {
         if (reader.existsNode("languages", i18nElement)) {
-            Collection<Node> nodes = reader.getNodes("languages/language", i18nElement);
+            Collection<Node> nodes = reader.getNodes("languages/*", i18nElement);
 
             Collection<String> languages = CollectionUtils.newList(nodes.size());
-
-            for (Node languageElement : nodes) {
-                languages.add(languageElement.getTextContent());
-            }
-
-            nodes = reader.getNodes("languages/*", i18nElement);
 
             for (Node languageElement : nodes) {
                 languages.add(languageElement.getTextContent());
@@ -236,19 +230,7 @@ public final class XMLApplicationReader {
             path.append("images/");
             path.append(reader.readString("image", iconElement));
 
-            if (reader.existsValue("@image", iconElement)) {
-                path.append(reader.readString("@image", iconElement));
-            } else {
-                path.append(reader.readString("image", iconElement));
-            }
-
-            String typeStr = "";
-
-            if (reader.existsNode("type", iconElement)) {
-                typeStr = reader.readString("type", iconElement);
-            } else if (reader.existsValue("@type", iconElement)) {
-                typeStr = reader.readString("@type", iconElement);
-            }
+            String typeStr = reader.readString("@type", iconElement);
 
             return new ImageDescriptor(path.toString(), ImageType.resolve(typeStr));
         }

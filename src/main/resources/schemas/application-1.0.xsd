@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    
+    <xs:element name="application" type="applicationType"/>
+
+    <xs:complexType name="applicationType">
+        <xs:sequence>
+            <xs:element type="xs:anyURI" name="repository" minOccurs="0" maxOccurs="1"/>
+            <xs:element type="xs:anyURI" name="messages" minOccurs="0" maxOccurs="1"/>
+            <xs:element type="xs:string" name="folder" minOccurs="0" maxOccurs="1"/>
+            <xs:element type="i18nType" name="i18n" minOccurs="1" maxOccurs="1"/>
+            <xs:element type="imageDescription" name="logo" minOccurs="1" maxOccurs="1"/>
+            <xs:element type="imageDescription" name="icon" minOccurs="1" maxOccurs="1"/>
+            <xs:element type="propertiesType" name="properties" minOccurs="0" maxOccurs="1"/>
+            <xs:element type="optionsType" name="options" minOccurs="0" maxOccurs="1"/>
+        </xs:sequence>
+        <xs:attribute type="xs:float" name="version"/>
+    </xs:complexType>
+
+    <xs:complexType name="i18nType">
+        <xs:sequence>
+            <xs:element type="languagesType" name="languages" minOccurs="1" maxOccurs="1"/>
+            <xs:element type="xs:element" name="files" minOccurs="0" maxOccurs="1"/>
+            <xs:element type="xs:element" name="name" minOccurs="0" maxOccurs="1"/>
+            <xs:element type="xs:element" name="author" minOccurs="0" maxOccurs="1"/>
+            <xs:element type="xs:element" name="site" minOccurs="0" maxOccurs="1"/>
+            <xs:element type="xs:element" name="email" minOccurs="0" maxOccurs="1"/>
+            <xs:element type="xs:element" name="copyright" minOccurs="0" maxOccurs="1"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="languagesType">
+        <xs:sequence>
+            <xs:element type="xs:element" name="fr" minOccurs="0" maxOccurs="1"/>
+            <xs:element type="xs:element" name="en" minOccurs="0" maxOccurs="1"/>
+            <xs:element type="xs:element" name="de" minOccurs="0" maxOccurs="1"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="imageDescription">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute type="xs:string" name="image"/>
+                <xs:attribute type="imageType" name="type"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:simpleType name="imageType">
+        <xs:restriction base="xs:string" >
+            <xs:enumeration value="png"/>
+            <xs:enumeration value="jpg"/>
+            <xs:enumeration value="jpeg"/>
+            <xs:enumeration value="gif"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="propertiesType">
+        <xs:sequence>
+            <xs:any minOccurs="0" maxOccurs="unbounded" processContents="lax" />
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="optionsType">
+        <xs:sequence>
+            <xs:element type="xs:string" name="license" minOccurs="0" maxOccurs="1"/>
+            <xs:element type="xs:element" name="concurrent.load" minOccurs="0" maxOccurs="1"/>
+            <xs:element type="xs:element" name="concurrent.start" minOccurs="0" maxOccurs="1"/>
+            <xs:element type="xs:string" name="url.bugs" minOccurs="0" maxOccurs="1"/>
+            <xs:element type="xs:string" name="url.improvement" minOccurs="0" maxOccurs="1"/>
+            <xs:element type="xs:string" name="url.help" minOccurs="0" maxOccurs="1"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>
