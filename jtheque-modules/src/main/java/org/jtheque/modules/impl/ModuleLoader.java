@@ -127,7 +127,7 @@ public final class ModuleLoader implements BundleContextAware {
         List<Module> modules = CollectionUtils.newList(files.length);
 
         try {
-            for (File file : files) {
+            for (int i = 0; i < files.length; i++) {
                 modules.add(completionService.take().get());
             }
         } catch (InterruptedException e) {
