@@ -33,9 +33,9 @@ import java.io.File;
  */
 @ThreadSafe
 public final class Folders implements FoldersContainer, ApplicationListener {
-    private File applicationFolder;
-    private File modulesFolder;
-    private File logsFolder;
+    private volatile File applicationFolder;
+    private volatile File modulesFolder;
+    private volatile File logsFolder;
 
     /**
      * Construct a new Folders.
@@ -50,30 +50,40 @@ public final class Folders implements FoldersContainer, ApplicationListener {
 
     @Override
     public File getApplicationFolder() {
+        if (applicationFolder == null) {
+            throw new IllegalStateException("The application has not been launched. ");
+        }
+
         return applicationFolder;
     }
 
     @Override
     public File getLogsFolder() {
+        if (logsFolder == null) {
+            throw new IllegalStateException("The application has not been launched. ");
+        }
+
         return logsFolder;
     }
 
     @Override
     public File getModulesFolder() {
+        if(modulesFolder == null){
+            throw new IllegalStateException("The application has not been launched. ");
+        }
+
         return modulesFolder;
     }
 
     @Override
     public void applicationLaunched(Application application) {
-        synchronized (this){
-            applicationFolder = new File(application.getFolderPath());
-            FileUtils.createIfNotExists(applicationFolder);
+        applicationFolder = new File(application.getFolderPath());
+        FileUtils.createIfNotExists(applicationFolder);
 
-            logsFolder = new File(applicationFolder, "logs");
-            FileUtils.createIfNotExists(logsFolder);
+        logsFolder = new File(applicationFolder, "logs");
+        FileUtils.createIfNotExists(logsFolder);
 
-            modulesFolder = new File(applicationFolder, "modules");
-            FileUtils.createIfNotExists(modulesFolder);
-        }
+        modulesFolder = new File(applicationFolder, "modules");
+        FileUtils.createIfNotExists(modulesFolder);
     }
 }
