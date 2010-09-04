@@ -17,7 +17,6 @@ import org.jtheque.views.components.StateBarComponent;
 import org.jtheque.views.Views;
 
 import org.osgi.framework.BundleContext;
-import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.osgi.context.BundleContextAware;

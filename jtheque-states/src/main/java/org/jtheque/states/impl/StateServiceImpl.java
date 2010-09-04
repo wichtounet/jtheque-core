@@ -158,7 +158,7 @@ public final class StateServiceImpl implements StateService {
      * Load the states. Must only be called from Spring Framework.
      */
     @PostConstruct
-    private void loadStates() {
+    public void loadStates() {
         XMLReader<org.w3c.dom.Node> reader = XML.newJavaFactory().newReader();
 
         try {
@@ -208,7 +208,7 @@ public final class StateServiceImpl implements StateService {
      * Save the states. Must only be called from Spring Framework.
      */
     @PreDestroy
-    private void saveStates() {
+    public void saveStates() {
         XMLWriter<org.w3c.dom.Node> writer = XML.newJavaFactory().newWriter("states");
 
         writeStates(writer);

@@ -79,7 +79,7 @@ public class ModuleController extends AbstractController<ModuleView> {
      * Disable the selected module.
      */
     @Action("modules.actions.enable")
-    public void disable() {
+    public void disableModule() {
         Module module = getView().getSelectedModule();
 
         String error = moduleService.canBeDisabled(module);
@@ -96,7 +96,7 @@ public class ModuleController extends AbstractController<ModuleView> {
      * Enable the selected module.
      */
     @Action("modules.actions.disable")
-    public void enable() {
+    public void enableModule() {
         Module module = getView().getSelectedModule();
 
         if (module.getState() == ModuleState.DISABLED) {
@@ -145,7 +145,7 @@ public class ModuleController extends AbstractController<ModuleView> {
      * Uninstall the given module.
      */
     @Action("modules.actions.uninstall")
-    public void uninstall() {
+    public void uninstallModule() {
         Module module = getView().getSelectedModule();
 
         String error = moduleService.canBeUninstalled(module);
@@ -168,7 +168,7 @@ public class ModuleController extends AbstractController<ModuleView> {
      * Stop the selected module.
      */
     @Action("modules.actions.stop")
-    public void stop() {
+    public void stopModule() {
         final Module module = getView().getSelectedModule();
 
         String error = moduleService.canBeStopped(module);
@@ -184,7 +184,7 @@ public class ModuleController extends AbstractController<ModuleView> {
      * Start the selected module.
      */
     @Action("modules.actions.start")
-    public void start() {
+    public void startModule() {
         Module module = getView().getSelectedModule();
 
         String error = moduleService.canBeStarted(module);

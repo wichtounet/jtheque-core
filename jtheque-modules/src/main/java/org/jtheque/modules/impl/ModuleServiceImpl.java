@@ -139,7 +139,7 @@ public final class ModuleServiceImpl implements ModuleService, ModuleLauncher {
      * Stop and uninstall all the modules.
      */
     @PreDestroy
-    private void shutdown() {
+    public void shutdown() {
         stopModules();
 
         synchronized (this) {

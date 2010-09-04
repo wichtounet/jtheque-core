@@ -85,7 +85,7 @@ final class ModuleVersion {
         return moduleURL;
     }
 
-    Collection<FileDescriptor> getResources() {
+    Iterable<FileDescriptor> getResources() {
         return resources;
     }
 }
