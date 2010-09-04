@@ -77,6 +77,22 @@ public class CoreTest {
     }
 
     @Test
+    public void loaded() {
+        assertNotNull(core.getConfiguration());
+        assertNotNull(core.getFolders());
+    }
+
+    @Test
+    @DirtiesContext
+    public void foldersExists() {
+        core.launchApplication(new TestApplication());
+        
+        assertTrue(core.getFolders().getApplicationFolder().exists());
+        assertTrue(core.getFolders().getLogsFolder().exists());
+        assertTrue(core.getFolders().getModulesFolder().exists());
+    }
+
+    @Test
     @DirtiesContext
     public void launchApplication(){
         Application application = new TestApplication();
@@ -88,6 +104,12 @@ public class CoreTest {
         assertEquals(2, core.getPossibleLanguages().size());
         assertTrue(core.getPossibleLanguages().contains("Français"));
         assertTrue(core.getPossibleLanguages().contains("English"));
+    }
+
+    @Test(expected = IllegalStateException.class)
+    @DirtiesContext
+    public void languagesWithoutApplication() {
+        core.getPossibleLanguages();
     }
 
     @Test(expected = IllegalStateException.class)

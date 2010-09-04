@@ -27,6 +27,14 @@ public class EventsTest {
     }
 
     @Test
+    public void levels() {
+        assertEquals(100, EventLevel.get(100).intValue());
+        assertEquals(50, EventLevel.get(50).intValue());
+        assertEquals(10, EventLevel.get(10).intValue());
+        assertNull(EventLevel.get(0));
+    }
+
+    @Test
     public void logIsTheSameAsSpecified() {
         String log = "Test log";
 

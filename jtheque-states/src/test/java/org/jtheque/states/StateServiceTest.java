@@ -1,5 +1,7 @@
 package org.jtheque.states;
 
+import org.jtheque.states.utils.AbstractConcurrentState;
+import org.jtheque.states.utils.AbstractState;
 import org.jtheque.utils.SystemProperty;
 import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.io.FileUtils;
@@ -20,7 +22,8 @@ import java.util.Map;
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.Logger;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -99,6 +102,12 @@ public class StateServiceTest {
         stateService.getState(new IncompleteState4());
     }
 
+    @Test
+    public void defaultStatesValid(){
+        stateService.getState(new ValidEmptyState());
+        stateService.getState(new ValidEmptyConcurrentState());
+    }
+
     private static final class IncompleteState1 {}
 
     @State(id="jtheque-states-test-configuration")
@@ -118,5 +127,15 @@ public class StateServiceTest {
         public Map<String, String> getProperties() {
             return CollectionUtils.newHashMap();
         }
+    }
+
+    @State(id = "jtheque-states-test-configuration-1")
+    private static final class ValidEmptyState extends AbstractState {
+
+    }
+
+    @State(id = "jtheque-states-test-configuration-2")
+    private static final class ValidEmptyConcurrentState extends AbstractConcurrentState {
+
     }
 }
