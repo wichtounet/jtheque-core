@@ -85,6 +85,11 @@ public final class ModuleLoader implements BundleContextAware {
 
     private final ModuleServiceImpl moduleService;
 
+    /**
+     * Construct a new ModuleLoader.
+     *
+     * @param moduleService The module service. 
+     */
     public ModuleLoader(ModuleServiceImpl moduleService) {
         super();
 
@@ -109,12 +114,23 @@ public final class ModuleLoader implements BundleContextAware {
         return isLoadingConcurrent() ? loadInParallel(files) : loadSequentially(files);
     }
 
+    /**
+     * Indicate if we must make the loading concurrent.
+     * @return {@code true} if the loading is concurrent otherwise {@code false}.
+     */
     private static boolean isLoadingConcurrent() {
         String property = System.getProperty("jtheque.concurrent.load");
 
         return StringUtils.isNotEmpty(property) && "true".equalsIgnoreCase(property);
     }
 
+    /**
+     * Load all the modules from the given files in parallel (using one thread per processor).
+     *
+     * @param files The files to load the modules from.
+     *
+     * @return A Collection containing all the loaded modules.
+     */
     private Collection<Module> loadInParallel(File[] files) {
         ExecutorService loadersPool = Executors.newFixedThreadPool(2 * ThreadUtils.processors());
 
@@ -142,6 +158,13 @@ public final class ModuleLoader implements BundleContextAware {
         return modules;
     }
 
+    /**
+     * Load all the modules from the given files sequentially.
+     *
+     * @param files The files to load the modules from.
+     *
+     * @return A Collection containing all the loaded modules.
+     */
     private Collection<Module> loadSequentially(File[] files) {
         List<Module> modules = CollectionUtils.newList(files.length);
 

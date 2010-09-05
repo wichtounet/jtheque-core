@@ -46,6 +46,11 @@ import static org.jtheque.modules.ModuleState.STARTED;
  * limitations under the License.
  */
 
+/**
+ * A manager for the modules. It is only used by the module service.
+ *
+ * @author Baptiste Wicht
+ */
 @NotThreadSafe
 public final class ModuleManager {
     private final List<Module> modules = CollectionUtils.newConcurrentList();
@@ -59,10 +64,22 @@ public final class ModuleManager {
     @Resource
     private ModuleLoader moduleLoader;
 
+    /**
+     * Return all the modules.
+     *
+     * @return A Collection containing all the modules.
+     */
     Collection<Module> getModules() {
         return modules;
     }
 
+    /**
+     * Return the module with the given ID.
+     *
+     * @param id The id of the module to search.
+     *
+     * @return The module with the specified id or {@code null} if there is no module with this id.
+     */
     Module getModuleById(String id) {
         for (Module module : modules) {
             if (id.equals(module.getId())) {
@@ -84,12 +101,20 @@ public final class ModuleManager {
         return getModuleById(id) != null;
     }
 
+    /**
+     * Uninstall the modules.
+     */
     void uninstallModules() {
         for (Module module : modules) {
             uninstallModule(module);
         }
     }
 
+    /**
+     * Stop the given module.
+     *
+     * @param module The module to stop.
+     */
     void stopModule(Module module) {
         try {
             module.getBundle().stop();
@@ -98,6 +123,11 @@ public final class ModuleManager {
         }
     }
 
+    /**
+     * Start the given module.
+     *
+     * @param module The module to start.
+     */
     void startModule(Module module) {
         try {
             module.getBundle().start();
@@ -106,6 +136,11 @@ public final class ModuleManager {
         }
     }
 
+    /**
+     * Start all the modules using the given launcher.
+     *
+     * @param moduleLauncher The launcher to use.
+     */
     void startAll(ModuleLauncher moduleLauncher) {
         if (isStartingConcurrent()) {
             ModuleStarter starter = new ModuleStarter(moduleLauncher);
@@ -126,6 +161,11 @@ public final class ModuleManager {
         }
     }
 
+    /**
+     * Indicate if the starting must be made in concurrent.
+     *
+     * @return {@code true} if the starting is made in parallel or sequentially ({@code false}).
+     */
     private static boolean isStartingConcurrent() {
         String property = System.getProperty("jtheque.concurrent.start");
 
@@ -161,6 +201,9 @@ public final class ModuleManager {
         return false;
     }
 
+    /**
+     * Load all the modules.
+     */
     void loadModules() {
         //Load all modules
         modules.addAll(moduleLoader.loadModules());
@@ -171,6 +214,13 @@ public final class ModuleManager {
         CollectionUtils.sort((CopyOnWriteArrayList<Module>) modules, new ModuleComparator());
     }
 
+    /**
+     * Install the module from the given file.
+     *
+     * @param file The file to install.
+     *
+     * @return The installed module or {@code null} if the module file cannot be installed.
+     */
     Module installModule(File file) {
         File moduleFile = installModuleFile(file);
 
@@ -275,6 +325,13 @@ public final class ModuleManager {
         return true;
     }
 
+    /**
+     * Install the module from the repository from the file.
+     *
+     * @param file The file of the module.
+     *
+     * @return The installed Module.
+     */
     Module installModuleFromRepository(File file) {
         Module module = moduleLoader.installModule(file);
 
@@ -283,6 +340,11 @@ public final class ModuleManager {
         return module;
     }
 
+    /**
+     * Uninstall the module.
+     *
+     * @param module The module to uninstall.
+     */
     void uninstallModule(Module module) {
         moduleLoader.uninstallModule(module);
 
@@ -312,6 +374,11 @@ public final class ModuleManager {
         private final Semaphore semaphore = new Semaphore(0, true);
         private CountDownLatch countDown;
 
+        /**
+         * Construct a new ModuleStarter.
+         *
+         * @param moduleLauncher The module launcher to use.
+         */
         private ModuleStarter(ModuleLauncher moduleLauncher) {
             super();
 
@@ -376,6 +443,13 @@ public final class ModuleManager {
             }
         }
 
+        /**
+         * Indicate if the module can be started.
+         *
+         * @param module The module to test.
+         *
+         * @return {@code true} if the module can be started else {@code false}.
+         */
         public boolean canBeStarted(Module module) {
             if (module.getCoreVersion() != null && module.getCoreVersion().isGreaterThan(Core.VERSION)) {
                 return false;

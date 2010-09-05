@@ -35,6 +35,13 @@ final class RepositoryImpl implements Repository {
     private final String application;
     private final Collection<ModuleDescription> modules;
 
+    /**
+     * Create a new RepositoryImpl.
+     *
+     * @param title       The title of the repository.
+     * @param application The application of the repository.
+     * @param modules     The modules of the repository.
+     */
     RepositoryImpl(InternationalString title, String application, Collection<ModuleDescription> modules) {
         super();
 

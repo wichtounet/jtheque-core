@@ -37,7 +37,7 @@ public final class ModuleResourceCache {
 
     @GuardedBy("COHERENCY_LOCK")
     private static final Map<String, Map<Class<?>, Set<Object>>> CACHE = CollectionUtils.newHashMap(8);
-    
+
     /**
      * Utility class, not instantiable.
      */
@@ -61,7 +61,15 @@ public final class ModuleResourceCache {
         }
     }
 
-    public static <T> void addAllResource(String id, Class<T> resourceType, Collection<T> resources) {
+    /**
+     * Add all the resources of the given type to the cache.
+     *
+     * @param id           The id of the module.
+     * @param resourceType The type of resource.
+     * @param resources    The resources to add.
+     * @param <T>          The type of resource.
+     */
+    public static <T> void addAllResources(String id, Class<T> resourceType, Collection<T> resources) {
         if (StringUtils.isNotEmpty(id)) {
             Set<T> resourceCache = check(id, resourceType);
 
@@ -69,9 +77,19 @@ public final class ModuleResourceCache {
         }
     }
 
+    /**
+     * Return the Set of the resources of this type. If there is no cache for the module, the cache is created. If
+     * there is no cache for the given resource type, the cache is created. 
+     *
+     * @param id           The id of the module.
+     * @param resourceType The type of resources.
+     * @param <T>          The type of resource.
+     *
+     * @return The Set of the resources of this type for the given module.
+     */
     private static <T> Set<T> check(String id, Class<T> resourceType) {
         synchronized (COHERENCY_LOCK) {
-            if(!CACHE.containsKey(id)){
+            if (!CACHE.containsKey(id)) {
                 CACHE.put(id, CollectionUtils.<Class<?>, Set<Object>>newHashMap(5));
             }
 

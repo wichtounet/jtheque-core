@@ -29,6 +29,12 @@ final class SimpleInstallationResult implements InstallationResult {
     private final boolean installed;
     private final String jarFile;
 
+    /**
+     * Construct a new SimpleInstallationResult.
+     *
+     * @param installed Indicate if the installation has succeeded.
+     * @param jarFile   The name of the JAR file.
+     */
     SimpleInstallationResult(boolean installed, String jarFile) {
         super();
 

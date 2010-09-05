@@ -30,7 +30,15 @@ import java.util.List;
  * limitations under the License.
  */
 
+/**
+ * A reader for module descriptors.
+ *
+ * @author Baptiste Wicht
+ */
 final class ModuleDescriptorReader {
+    /**
+     * Utility class, not instantiable. 
+     */
     private ModuleDescriptorReader() {
         throw new AssertionError();
     }

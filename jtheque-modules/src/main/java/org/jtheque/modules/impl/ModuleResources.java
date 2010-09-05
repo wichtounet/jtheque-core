@@ -33,6 +33,13 @@ final class ModuleResources {
     private final Collection<I18NResource> i18nResources;
     private final Collection<Resource> resources;
 
+    /**
+     * Create a new ModuleResources.
+     *
+     * @param imageResources The image resources.
+     * @param i18nResources  The i18n resources.
+     * @param resources      The resources.
+     */
     ModuleResources(Collection<ImageResource> imageResources, Collection<I18NResource> i18nResources, Collection<Resource> resources) {
         super();
 
@@ -41,14 +48,29 @@ final class ModuleResources {
         this.resources = CollectionUtils.protectedCopy(resources);
     }
 
+    /**
+     * Return all the image resources.
+     *
+     * @return An Iterable on the image resources.
+     */
     public Iterable<ImageResource> getImageResources() {
         return imageResources;
     }
 
+    /**
+     * Return all the i18n resources.
+     *
+     * @return An Iterable on the i18n resources.
+     */
     public Iterable<I18NResource> getI18NResources() {
         return i18nResources;
     }
 
+    /**
+     * Return all the resources.
+     *
+     * @return An Iterable on the resources.
+     */
     public Iterable<Resource> getResources() {
         return resources;
     }

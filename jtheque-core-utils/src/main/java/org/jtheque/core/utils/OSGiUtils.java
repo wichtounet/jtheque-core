@@ -43,7 +43,7 @@ public final class OSGiUtils {
      * Return the service of the given class in the given bundle context.
      *
      * @param context The bundle context
-     * @param type  The class to get the service for.
+     * @param type    The class to get the service for.
      * @param <T>     The type of service.
      *
      * @return The service of the given type.
@@ -58,6 +58,12 @@ public final class OSGiUtils {
         return null;
     }
 
+    /**
+     * Update the bundle with the given file.
+     *
+     * @param bundle The bundle to update.
+     * @param file   The new file of the bundle.
+     */
     public static void update(Bundle bundle, File file) {
         try {
             bundle.update(FileUtils.asInputStream(file));

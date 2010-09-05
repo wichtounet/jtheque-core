@@ -54,6 +54,11 @@ final class ModuleVersion {
         this.resources = CollectionUtils.protectedCopy(resources);
     }
 
+    /**
+     * Return the Version of the module.
+     *
+     * @return The Version of the module.
+     */
     Version getVersion() {
         return version;
     }
@@ -85,6 +90,11 @@ final class ModuleVersion {
         return moduleURL;
     }
 
+    /**
+     * Return all the resources.
+     *
+     * @return An Iterable on all the resources of the module.
+     */
     Iterable<FileDescriptor> getResources() {
         return resources;
     }

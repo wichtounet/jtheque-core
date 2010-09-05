@@ -263,23 +263,51 @@ public final class XMLApplicationReader {
         }
     }
 
+    /**
+     * Read the option from the application.
+     *
+     * @param application the application.
+     * @param element     The current element.
+     * @param option      The option to read.
+     *
+     * @throws XMLException if an error occurs during the XML processing.
+     */
     private void readOption(XMLApplication application, Object element, String option) throws XMLException {
-        if(exists(option, element)) {
+        if (exists(option, element)) {
             application.setProperty(option, reader.readString(option, element));
             System.setProperty("jtheque." + option, reader.readString(option, element));
         }
     }
 
+    /**
+     * Read the property from the application.
+     *
+     * @param application the application.
+     * @param element     The current element.
+     * @param property    The property to read.
+     *
+     * @throws XMLException if an error occurs during the XML processing.
+     */
     private void readProperty(XMLApplication application, Object element, String property) throws XMLException {
-        if (exists(property, element)){
+        if (exists(property, element)) {
             application.setProperty(property, reader.readString(property, element));
         } else {
             application.setProperty(property, "");
         }
     }
 
-    private boolean exists(String request, Object optionsElement) throws XMLException {
-        return reader.existsValue(request, optionsElement) && StringUtils.isNotEmpty(reader.readString(request, optionsElement));
+    /**
+     * Indicate if the value exists or not.
+     *
+     * @param request The XPath request.
+     * @param element The current element.
+     *
+     * @return {@code true} if the value exists or not.
+     *
+     * @throws XMLException if an error occurs during the XML processing.
+     */
+    private boolean exists(String request, Object element) throws XMLException {
+        return reader.existsValue(request, element) && StringUtils.isNotEmpty(reader.readString(request, element));
     }
 
     /**

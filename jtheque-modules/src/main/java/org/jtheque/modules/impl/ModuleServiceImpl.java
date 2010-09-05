@@ -82,6 +82,11 @@ public final class ModuleServiceImpl implements ModuleService, ModuleLauncher {
      */
     private boolean collectionModule;
 
+    /**
+     * Create a new ModuleServiceImpl.
+     *
+     * @param stateService The state service.
+     */
     public ModuleServiceImpl(StateService stateService) {
         super();
 
@@ -288,6 +293,11 @@ public final class ModuleServiceImpl implements ModuleService, ModuleLauncher {
         }
     }
 
+    /**
+     * Install the given module.
+     *
+     * @param module The module to install.
+     */
     private void installModule(Module module) {
         configuration.add(module);
 
@@ -447,10 +457,23 @@ public final class ModuleServiceImpl implements ModuleService, ModuleLauncher {
         }
     }
 
+    /**
+     * Return the resources of the given module.
+     *
+     * @param module The module to get the resources for.
+     *
+     * @return The ModuleResources of the module.
+     */
     ModuleResources getResources(Module module) {
         return resources.get(module);
     }
 
+    /**
+     * Set the resources of the module.
+     *
+     * @param module    The module.
+     * @param resources The module resources.
+     */
     void setResources(Module module, ModuleResources resources) {
         this.resources.put(module, resources);
     }

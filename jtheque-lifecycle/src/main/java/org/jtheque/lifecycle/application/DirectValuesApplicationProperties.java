@@ -33,9 +33,18 @@ final class DirectValuesApplicationProperties implements ApplicationProperties {
     private final InternationalString email;
     private final InternationalString copyright;
 
+    /**
+     * Construct a new DirectValuesApplicationProperties.
+     *
+     * @param author    The author of the application.
+     * @param name      The name of the application.
+     * @param site      The site of the application.
+     * @param email     The email of the author.
+     * @param copyright The copyright of the application.
+     */
     DirectValuesApplicationProperties(InternationalString author, InternationalString name,
-                                             InternationalString site, InternationalString email,
-                                             InternationalString copyright) {
+                                      InternationalString site, InternationalString email,
+                                      InternationalString copyright) {
         super();
 
         this.author = author;

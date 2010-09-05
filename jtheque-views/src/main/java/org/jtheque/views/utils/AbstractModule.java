@@ -11,10 +11,10 @@ import org.jtheque.schemas.Schema;
 import org.jtheque.schemas.SchemaService;
 import org.jtheque.utils.collections.ArrayUtils;
 import org.jtheque.utils.ui.SwingUtils;
+import org.jtheque.views.Views;
 import org.jtheque.views.components.ConfigTabComponent;
 import org.jtheque.views.components.MainComponent;
 import org.jtheque.views.components.StateBarComponent;
-import org.jtheque.views.Views;
 
 import org.osgi.framework.BundleContext;
 import org.springframework.context.ApplicationContext;
@@ -41,6 +41,12 @@ import java.util.Collection;
  * limitations under the License.
  */
 
+/**
+ * An abstract JTheque Module. This abstract classes provide several facilities for implementing a module like
+ * auto-registration of the components of the context, recuperation of the spring and osgi contexts.
+ *
+ * @author Baptiste Wicht
+ */
 public class AbstractModule implements ApplicationContextAware, BundleContextAware, SwingLoader {
     private ApplicationContext applicationContext;
     private BundleContext bundleContext;
@@ -50,10 +56,21 @@ public class AbstractModule implements ApplicationContextAware, BundleContextAwa
 
     private static final String[] EMPTY_EDT_BEANS = {};
 
+    /**
+     * Create a new AbstractModule with the specified module id.
+     *
+     * @param module The id of the module.
+     */
     public AbstractModule(String module) {
         this(module, EMPTY_EDT_BEANS);
     }
 
+    /**
+     * Create a new AbstractModule with the specified module id and a list of beans to pre-load.
+     *
+     * @param module   The id of the module.
+     * @param edtBeans The beans to pre-load in EDT.
+     */
     public AbstractModule(String module, String[] edtBeans) {
         super();
 
@@ -61,6 +78,9 @@ public class AbstractModule implements ApplicationContextAware, BundleContextAwa
         this.edtBeans = ArrayUtils.copyOf(edtBeans);
     }
 
+    /**
+     * Register all the components from the application context.
+     */
     @PostConstruct
     public void register() {
         registerViews();
@@ -71,8 +91,11 @@ public class AbstractModule implements ApplicationContextAware, BundleContextAwa
         OSGiUtils.getService(bundleContext, ModuleService.class).registerSwingLoader(module, this);
     }
 
+    /**
+     * Register the views.
+     */
     private void registerViews() {
-        SwingUtils.inEdt(new Runnable(){
+        SwingUtils.inEdt(new Runnable() {
             @Override
             public void run() {
                 addViewComponents();
@@ -80,6 +103,9 @@ public class AbstractModule implements ApplicationContextAware, BundleContextAwa
         });
     }
 
+    /**
+     * Add the view components.
+     */
     private void addViewComponents() {
         Views views = OSGiUtils.getService(bundleContext, Views.class);
 
@@ -100,18 +126,24 @@ public class AbstractModule implements ApplicationContextAware, BundleContextAwa
         }
     }
 
+    /**
+     * Register the menus.
+     */
     private void registerMenus() {
         Collection<Menu> menus = getBeans(Menu.class);
 
-        if(!menus.isEmpty()){
+        if (!menus.isEmpty()) {
             FeatureService featureService = OSGiUtils.getService(bundleContext, FeatureService.class);
 
-            for(Menu menu : menus){
+            for (Menu menu : menus) {
                 featureService.addMenu(module, menu);
             }
         }
     }
 
+    /**
+     * Register the schemas.
+     */
     private void registerSchema() {
         Collection<Schema> schemas = getBeans(Schema.class);
 
@@ -124,6 +156,9 @@ public class AbstractModule implements ApplicationContextAware, BundleContextAwa
         }
     }
 
+    /**
+     * Register the backupers.
+     */
     private void registerBackupers() {
         Collection<ModuleBackuper> backupers = getBeans(ModuleBackuper.class);
 
@@ -136,6 +171,14 @@ public class AbstractModule implements ApplicationContextAware, BundleContextAwa
         }
     }
 
+    /**
+     * Return all the beans of the given type.
+     *
+     * @param type The type to get the beans.
+     * @param <T>  The type of beans.
+     *
+     * @return A Collection containing all the beans of this type from the application context.
+     */
     private <T> Collection<T> getBeans(Class<T> type) {
         return applicationContext.getBeansOfType(type).values();
     }
@@ -162,10 +205,20 @@ public class AbstractModule implements ApplicationContextAware, BundleContextAwa
         this.bundleContext = bundleContext;
     }
 
+    /**
+     * Return the bundle context.
+     *
+     * @return The bundle context.
+     */
     protected BundleContext getBundleContext() {
         return bundleContext;
     }
 
+    /**
+     * Return the application context.
+     *
+     * @return The application context.
+     */
     protected ApplicationContext getApplicationContext() {
         return applicationContext;
     }

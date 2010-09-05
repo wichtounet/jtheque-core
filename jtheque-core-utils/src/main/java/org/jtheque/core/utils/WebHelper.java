@@ -26,6 +26,11 @@ import javax.annotation.Resource;
  * limitations under the License.
  */
 
+/**
+ * A simple helper to manage services who needs web access.
+ *
+ * @author Baptiste Wicht
+ */
 public class WebHelper {
     @Resource
     private EventService eventService;

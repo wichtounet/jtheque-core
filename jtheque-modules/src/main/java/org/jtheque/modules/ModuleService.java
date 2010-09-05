@@ -74,6 +74,11 @@ public interface ModuleService {
      */
     Module getModuleById(String name);
 
+    /**
+     * Install the module from the repository.
+     *
+     * @param jarFile The name of the JAR file.
+     */
     void installFromRepository(String jarFile);
 
     /**

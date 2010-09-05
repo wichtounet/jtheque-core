@@ -46,10 +46,20 @@ final class RepositoryReader {
     @GuardedBy("RepositoryReader.class")
     private static Repository repository;
 
+    /**
+     * Utility class, not instantiable.
+     */
     private RepositoryReader() {
         throw new AssertionError();
     }
 
+    /**
+     * Return the cached repository from the given URL.
+     *
+     * @param strUrl The URL of the repository.
+     *
+     * @return The cached repository.
+     */
     static Repository getCachedRepository(String strUrl) {
         synchronized (RepositoryReader.class) {
             if (repository == null) {

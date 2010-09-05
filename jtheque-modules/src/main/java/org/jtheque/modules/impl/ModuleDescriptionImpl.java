@@ -34,6 +34,15 @@ public final class ModuleDescriptionImpl implements ModuleDescription {
     private final String url;
     private final Version coreVersion;
 
+    /**
+     * Create a new ModuleDescriptionImpl.
+     *
+     * @param id          The id of the module.
+     * @param name        The name of the module.
+     * @param description Description of the module.
+     * @param url         The url of the website of the module.
+     * @param coreVersion The core version needed by the module to works.
+     */
     public ModuleDescriptionImpl(String id, String name, InternationalString description, String url, Version coreVersion) {
         super();
 

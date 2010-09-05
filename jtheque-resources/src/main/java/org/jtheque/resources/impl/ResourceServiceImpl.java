@@ -132,6 +132,14 @@ public final class ResourceServiceImpl implements ResourceService, BundleContext
         return resource;
     }
 
+    /**
+     * Download the given resource.
+     *
+     * @param url     The URL of the resource descriptor.
+     * @param version The version to download.
+     *
+     * @return The downloaded resource.
+     */
     private Resource downloadResource(String url, Version version) {
         SwingUtils.assertNotEDT("downloadResource(String, Version)");
 
@@ -185,6 +193,13 @@ public final class ResourceServiceImpl implements ResourceService, BundleContext
                 resourceVersion.isLibrary());
     }
 
+    /**
+     * Download the file.
+     *
+     * @param resourceFolder The resource folder.
+     * @param fileName       The name of the file.
+     * @param url            The URL of the file.
+     */
     private static void downloadFile(File resourceFolder, String fileName, String url) {
         File filePath = new File(resourceFolder, fileName);
 

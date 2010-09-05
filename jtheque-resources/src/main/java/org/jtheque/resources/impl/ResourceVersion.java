@@ -75,14 +75,29 @@ public final class ResourceVersion implements Comparable<ResourceVersion> {
         return version;
     }
 
+    /**
+     * Return the file of the resource.
+     *
+     * @return The file of the resource.
+     */
     public String getFile() {
         return file;
     }
 
+    /**
+     * Indicate if the resource version is a library or not.
+     *
+     * @return {@code true} if the resource version is a library else {@code false}.
+     */
     public boolean isLibrary() {
         return library;
     }
 
+    /**
+     * Return the URL to the resource.
+     *
+     * @return The URL to the resource. 
+     */
     public String getUrl() {
         return url;
     }

@@ -18,6 +18,17 @@ import org.jtheque.modules.Module;
  * limitations under the License.
  */
 
+/**
+ * A launcher for modules. It's not only starting the bundles, but installing the resources and managing all the things
+ * the module can do.
+ *
+ * @author Baptiste Wicht
+ */
 public interface ModuleLauncher {
+    /**
+     * Start the given module.
+     *
+     * @param module The module to start.
+     */
     void startModule(Module module);
 }

@@ -135,7 +135,7 @@ public final class MessageServiceImpl implements MessageService, ModuleListener,
             messages.addAll(readMessages);
 
             if(module != null){
-                ModuleResourceCache.addAllResource(module.getId(), Message.class, readMessages);
+                ModuleResourceCache.addAllResources(module.getId(), Message.class, readMessages);
             }
         } catch (XMLException e) {
             LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
