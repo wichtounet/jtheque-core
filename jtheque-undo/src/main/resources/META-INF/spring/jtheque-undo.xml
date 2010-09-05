@@ -10,6 +10,6 @@
 
     <bean id="undoService" class="org.jtheque.undo.impl.UndoRedoServiceImpl"/>
 
-    <osgi:service ref="undoService" interface="org.jtheque.undo.IUndoRedoService"/>
+    <osgi:service ref="undoService" interface="org.jtheque.undo.UndoRedoService"/>
 
 </beans>

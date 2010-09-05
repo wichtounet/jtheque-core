@@ -40,7 +40,7 @@ import static org.junit.Assert.*;
 @ContextConfiguration(locations = "jtheque-undo-test.xml")
 public class UndoServiceTest {
     @Resource
-    private IUndoRedoService undoService;
+    private UndoRedoService undoService;
 
     static {
         ((Logger) LoggerFactory.getLogger("root")).setLevel(Level.ERROR);

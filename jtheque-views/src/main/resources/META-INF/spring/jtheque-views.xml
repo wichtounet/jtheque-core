@@ -100,7 +100,7 @@
     <osgi:reference id="core" interface="org.jtheque.core.Core"/>
     <osgi:reference id="uiUtils" interface="org.jtheque.ui.UIUtils"/>
     <osgi:reference id="filthyUtils" interface="org.jtheque.ui.FilthyUtils"/>
-    <osgi:reference id="undoRedoService" interface="org.jtheque.undo.IUndoRedoService"/>
+    <osgi:reference id="undoRedoService" interface="org.jtheque.undo.UndoRedoService"/>
     <osgi:reference id="collectionsService" interface="org.jtheque.collections.CollectionsService"/>
     <osgi:reference id="languageService" interface="org.jtheque.i18n.LanguageService"/>
     <osgi:reference id="updateService" interface="org.jtheque.updates.UpdateService"/>

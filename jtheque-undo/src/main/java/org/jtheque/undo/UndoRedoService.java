@@ -26,7 +26,7 @@ import javax.swing.undo.UndoableEdit;
  * @author Baptiste Wicht
  */
 @ThreadSafe
-public interface IUndoRedoService {
+public interface UndoRedoService {
     /**
      * Undo the last action.
      */
