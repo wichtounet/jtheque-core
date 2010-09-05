@@ -9,7 +9,7 @@
     <groupId>org.jtheque</groupId>
     <artifactId>org.jtheque.core.parent</artifactId>
     <packaging>pom</packaging>
-    <name>org.jtheque.core.parent</name>
+    <name>jtheque-core</name>
     <version>2.1-SNAPSHOT</version>
 
     <modules>
