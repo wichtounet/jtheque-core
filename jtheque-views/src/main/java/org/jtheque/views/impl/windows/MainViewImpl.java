@@ -229,6 +229,11 @@ public final class MainViewImpl extends SwingFrameView<Model> implements TitleLi
         builder.add(stateBar, builder.gbcSet(0, 1, GridBagUtils.HORIZONTAL, GridBagUtils.LAST_LINE_START));
     }
 
+    /**
+     * Return the current main component.
+     *
+     * @return The current main component. 
+     */
     private Component getMainComponent() {
         Component mainComponent;
 

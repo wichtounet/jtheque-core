@@ -63,6 +63,9 @@ public final class MessageServiceImpl implements MessageService, ModuleListener,
         moduleService.addModuleListener("", this);
     }
 
+    /**
+     * Init the service. 
+     */
     @PostConstruct
     public void init(){
         core.addApplicationListener(this);

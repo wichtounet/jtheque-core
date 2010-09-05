@@ -20,7 +20,9 @@ import org.jtheque.utils.annotations.Immutable;
 import org.jtheque.utils.bean.IntDate;
 
 /**
- * A message specification. A message must be immutable. 
+ * A message specification. A message must be immutable.
+ *
+ * @author Baptiste Wicht
  */
 @Immutable
 public interface Message extends Comparable<Message> {

@@ -51,6 +51,9 @@ public final class EventServiceImpl implements EventService {
     @GuardedInternally
     private final Map<String, Collection<Event>> logs = CollectionUtils.newConcurrentMap(5);
 
+    /**
+     * Construct a new LogEventServiceImpl. 
+     */
     public EventServiceImpl() {
         super();
 

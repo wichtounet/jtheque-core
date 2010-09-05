@@ -87,6 +87,13 @@ final class ModuleConfiguration {
         return nodes;
     }
 
+    /**
+     * Convert a state to a Node.
+     *
+     * @param state The state to convert.
+     *
+     * @return A Node corresponding to the given state. 
+     */
     private static Node convertToNode(Entry<String, ModuleState> state) {
         Node node = new Node("module");
 

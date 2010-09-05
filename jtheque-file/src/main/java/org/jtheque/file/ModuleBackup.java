@@ -24,7 +24,7 @@ import java.util.Collection;
  */
 
 /**
- * A module backup. It's a backup of all the data of a module.
+ * A module backup. It's a backup of all the data of a module. All the instances of this are immutable. 
  *
  * @author Baptiste Wicht
  */
@@ -34,6 +34,13 @@ public final class ModuleBackup {
     private final String id;
     private final Collection<Node> nodes;
 
+    /**
+     * Create a new ModuleBackup.
+     *
+     * @param version The version of the backup.
+     * @param id      The id of the backup.
+     * @param nodes   The nodes containing in the backup.
+     */
     public ModuleBackup(Version version, String id, Collection<Node> nodes) {
         super();
 

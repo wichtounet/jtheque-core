@@ -16,6 +16,11 @@ package org.jtheque.updates;
  * limitations under the License.
  */
 
+/**
+ * The result of the installation of a module.
+ *
+ * @author Baptiste Wicht
+ */
 public interface InstallationResult {
     /**
      * Indicate if the module has been installed.

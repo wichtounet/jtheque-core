@@ -204,6 +204,15 @@ public final class CoreImpl implements Core {
         return getURL("url.help", HELP_URL);
     }
 
+    /**
+     * Return the URL with the specified property. If the application doesn't provide this property, this method
+     * return the default value of the core.
+     *
+     * @param property The property to get the URL from the application.
+     * @param defaultURL The default URL of the core.
+     *
+     * @return The URL of the application if provided else the default URL of the core. 
+     */
     private String getURL(String property, String defaultURL) {
         String applicationURL = application.getProperty(property);
 

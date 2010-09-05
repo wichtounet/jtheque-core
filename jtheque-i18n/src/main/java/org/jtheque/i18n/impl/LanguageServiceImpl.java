@@ -65,7 +65,7 @@ public final class LanguageServiceImpl implements LanguageService {
 
     @GuardedInternally
     private final Map<String, String> baseNames = CollectionUtils.newConcurrentMap(10);
-    
+
     @GuardedInternally
     private final Set<Internationalizable> internationalizables = CollectionUtils.newConcurrentSet();
 
@@ -266,6 +266,14 @@ public final class LanguageServiceImpl implements LanguageService {
         return "en";
     }
 
+    /**
+     * Transform the short language from to a Locale instance.
+     *
+     * @param shortForm The short language form.
+     *
+     * @return The Locale corresponding to the short form. If the short don't correspond to any Locale, this method
+     *         return the english Locale.
+     */
     private static Locale toLocale(String shortForm) {
         if ("fr".equals(shortForm)) {
             return Locale.FRENCH;

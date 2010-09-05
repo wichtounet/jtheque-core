@@ -31,7 +31,15 @@ import java.util.List;
  * limitations under the License.
  */
 
+/**
+ * A reader for core descriptor.
+ *
+ * @author Baptiste Wicht
+ */
 final class CoreDescriptorReader {
+    /**
+     * Utility class, not instantiable.
+     */
     private CoreDescriptorReader() {
         throw new AssertionError();
     }

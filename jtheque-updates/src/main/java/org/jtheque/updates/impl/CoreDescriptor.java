@@ -32,11 +32,16 @@ final class CoreDescriptor {
     private final Collection<CoreVersion> versions;
     private final CoreVersion mostRecent;
 
+    /**
+     * Create a new Core descriptor.
+     *
+     * @param versions The versions of the descriptor.
+     */
     CoreDescriptor(Collection<CoreVersion> versions) {
         super();
 
         this.versions = CollectionUtils.protectedCopy(versions);
-        
+
         mostRecent = CollectionUtils.last(versions);
     }
 

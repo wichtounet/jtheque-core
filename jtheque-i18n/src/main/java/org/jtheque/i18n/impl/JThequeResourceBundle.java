@@ -30,6 +30,9 @@ import java.util.Collection;
 final class JThequeResourceBundle extends ReloadableResourceBundleMessageSource {
     private final Collection<String> baseNames = CollectionUtils.newSet();
 
+    /**
+     * Construct a new JThequeResourceBundle. 
+     */
     JThequeResourceBundle() {
         super();
 

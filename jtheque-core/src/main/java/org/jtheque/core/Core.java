@@ -114,9 +114,27 @@ public interface Core {
      */
     void removeApplicationListener(ApplicationListener listener);
 
+    /**
+     * Return the URL to the help site of the current application. If the application don't provide a help URL,
+     * the help URL of the core is returned.
+     *
+     * @return The current help URL.
+     */
     String getHelpURL();
 
+    /**
+     * Return the URL to the bug tracker site of the current application. If the application don't provide a bug tracker URL,
+     * the bug tracker URL of the core is returned.
+     *
+     * @return The current bug tracker URL.
+     */
     String getBugTrackerURL();
 
+    /**
+     * Return the URL to the improvement web page of the current application. If the application don't provide a improvement URL,
+     * the improvement URL of the core is returned.
+     *
+     * @return The current improvement URL.
+     */
     String getImprovementURL();
 }
