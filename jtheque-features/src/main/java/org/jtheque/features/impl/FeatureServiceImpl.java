@@ -89,7 +89,7 @@ public final class FeatureServiceImpl implements FeatureService, ModuleListener 
      * @return The added feature.
      */
     private Feature createAndAddFeature(int position, String key) {
-        Feature feature = Features.newFeature(FeatureType.PACK, key, position);
+        Feature feature = Features.newPackFeature(position, key);
 
         features.add(feature);
 

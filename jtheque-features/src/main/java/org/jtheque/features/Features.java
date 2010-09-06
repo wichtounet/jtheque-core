@@ -2,6 +2,7 @@ package org.jtheque.features;
 
 import org.jtheque.features.Feature.FeatureType;
 import org.jtheque.ui.utils.actions.JThequeAction;
+import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.annotations.GuardedInternally;
 import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.collections.CollectionUtils;
@@ -39,7 +40,7 @@ public final class Features {
     }
 
     /**
-     * Create a main feature.
+     * Create a pack feature.
      *
      * @param position The position of the feature in the menu bar.
      * @param key      The i18n key of the feature.
@@ -47,28 +48,63 @@ public final class Features {
      *
      * @return The created main feature.
      */
-    public static Feature createPackFeature(int position, String key, Feature... features) {
+    public static Feature newPackFeature(int position, String key, Feature... features) {
         return newFeature(FeatureType.PACK, key, position, features);
     }
 
+    /**
+     * Create a separated (it seems with a line separator) feature with a given action.
+     *
+     * @param position The position of the feature.
+     * @param action   The action of the feature.
+     *
+     * @return The created Feature.
+     */
     public static Feature newActionFeature(int position, JThequeAction action) {
         return newFeature(FeatureType.ACTION, position, action);
     }
 
+    /**
+     * Create a separated (it seems with a line separator) feature with a given action.
+     *
+     * @param position The position of the feature.
+     * @param action   The action of the feature.
+     * @param icon     The icon of the feature.
+     *
+     * @return The created Feature.
+     */
     public static Feature newActionFeature(int position, JThequeAction action, String icon) {
         return newFeature(FeatureType.ACTION, position, action, icon);
     }
 
+    /**
+     * Create a separated (it seems with a line separator) feature with a given action.
+     *
+     * @param position The position of the feature.
+     * @param action   The action of the feature.
+     *
+     * @return The created Feature.
+     */
     public static Feature newSeparatedActionFeature(int position, JThequeAction action) {
         return newFeature(FeatureType.SEPARATED_ACTION, position, action);
     }
 
+
+    /**
+     * Create a separated (it seems with a line separator) feature with a given action.
+     *
+     * @param position The position of the feature.
+     * @param action   The action of the feature.
+     * @param icon     The icon of the feature.
+     *
+     * @return The created Feature.
+     */
     public static Feature newSeparatedActionFeature(int position, JThequeAction action, String icon) {
         return newFeature(FeatureType.SEPARATED_ACTION, position, action, icon);
     }
 
     /**
-     * Create a feature.
+     * Create an actions feature with the given sub features.
      *
      * @param position The position of the feature.
      * @param key      The i18n key of the feature.
@@ -81,7 +117,7 @@ public final class Features {
     }
 
     /**
-     * Create a separated (it seems with a line separator) feature.
+     * Create an actions (it seems with a line separator) feature with the given sub features.
      *
      * @param position The position of the feature.
      * @param key      The i18n key of the feature.
@@ -103,7 +139,19 @@ public final class Features {
      *
      * @return the created Feature.
      */
-    public static Feature newFeature(FeatureType type, int position, JThequeAction action, String icon) {
+    private static Feature newFeature(FeatureType type, int position, JThequeAction action, String icon) {
+        if (position < 0) {
+            throw new IllegalArgumentException("position cannot be negative");
+        }
+
+        if(action == null){
+            throw new IllegalArgumentException("action cannot be null");
+        }
+
+        if(StringUtils.isEmpty(icon)){
+            throw new IllegalArgumentException("icon cannot be empty");
+        }
+
         return new SimpleFeature(action, position, type, null, icon);
     }
 
@@ -117,6 +165,14 @@ public final class Features {
      * @return the created Feature.
      */
     private static Feature newFeature(FeatureType type, int position, JThequeAction action) {
+        if (position < 0) {
+            throw new IllegalArgumentException("position cannot be negative");
+        }
+
+        if (action == null) {
+            throw new IllegalArgumentException("action cannot be null");
+        }
+
         return new SimpleFeature(action, position, type, null, null);
     }
 
@@ -131,6 +187,14 @@ public final class Features {
      * @return the created Feature.
      */
     private static Feature newFeature(FeatureType type, String titleKey, int position, Feature... features) {
+        if (position < 0) {
+            throw new IllegalArgumentException("position cannot be negative");
+        }
+
+        if (StringUtils.isEmpty(titleKey)) {
+            throw new IllegalArgumentException("icon cannot be empty");
+        }
+
         Feature feature = new SimpleFeature(null, position, type, titleKey, null);
 
         for (Feature sub : features) {
@@ -149,7 +213,7 @@ public final class Features {
     private static final class SimpleFeature implements Feature {
         @GuardedInternally
         private final Collection<Feature> subFeatures = CollectionUtils.newConcurrentList();
-        
+
         private final JThequeAction action;
         private final FeatureType type;
         private final String titleKey;

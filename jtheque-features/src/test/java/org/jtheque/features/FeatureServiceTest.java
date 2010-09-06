@@ -2,6 +2,7 @@ package org.jtheque.features;
 
 import org.jtheque.features.Feature.FeatureType;
 import org.jtheque.i18n.LanguageService;
+import org.jtheque.ui.utils.actions.JThequeAction;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.SystemProperty;
 import org.jtheque.utils.collections.CollectionUtils;
@@ -17,6 +18,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
 
+import java.awt.event.ActionEvent;
 import java.io.File;
 import java.util.Arrays;
 import java.util.Collection;
@@ -164,7 +166,7 @@ public class FeatureServiceTest {
         public Collection<Feature> getMainFeatures() {
             List<Feature> features = CollectionUtils.newList(1);
 
-            features.add(Features.newFeature(FeatureType.PACK, 55, null));
+            features.add(Features.newPackFeature(55, "test.key"));
 
             return features;
         }
@@ -189,7 +191,12 @@ public class FeatureServiceTest {
         @Override
         public Collection<Feature> getSubFeatures(CoreFeature feature) {
             if(feature == CoreFeature.FILE){
-                return Arrays.asList(Features.newFeature(FeatureType.ACTIONS, "", 44));
+                return Arrays.asList(Features.newActionFeature(11, new JThequeAction(){
+                    @Override
+                    public void actionPerformed(ActionEvent actionEvent) {
+                        //Nothing to do
+                    }
+                }));
             }
 
             return CollectionUtils.emptyList();
