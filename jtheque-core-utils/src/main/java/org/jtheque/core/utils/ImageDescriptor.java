@@ -1,5 +1,6 @@
 package org.jtheque.core.utils;
 
+import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.annotations.Immutable;
 
 /*
@@ -36,6 +37,14 @@ public final class ImageDescriptor {
      */
     public ImageDescriptor(String image, ImageType type) {
         super();
+
+        if(type == null){
+            throw new IllegalArgumentException("type cannot be null");
+        }
+
+        if (StringUtils.isEmpty(image)) {
+            throw new IllegalArgumentException("image cannot be empty");
+        }
 
         this.image = image;
         this.type = type;

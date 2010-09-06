@@ -52,7 +52,7 @@ public enum ImageType {
      *
      * @param type The string type of the image.
      *
-     * @return The corresponding ImageType value.
+     * @return The corresponding ImageType value. 
      */
     public static ImageType resolve(String type) {
         if ("png".equalsIgnoreCase(type)) {
@@ -63,8 +63,8 @@ public enum ImageType {
             return JPEG;
         } else if("gif".equalsIgnoreCase(type)){
             return GIF;
-        } else {
-            return PNG;
         }
+
+        throw new IllegalArgumentException("The given type is not an image type. ");
     }
 }
