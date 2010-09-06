@@ -149,7 +149,7 @@ public final class FeatureServiceImpl implements FeatureService, ModuleListener 
 
     @Override
     public void removeFeatureListener(FeatureListener listener) {
-        listeners.add(listener);
+        listeners.remove(listener);
     }
 
     /**
