@@ -105,9 +105,13 @@ public final class FeatureServiceImpl implements FeatureService, ModuleListener 
         }
 
         for (CoreFeature feature : CoreFeature.values()) {
-            coreFeatures.get(feature).addSubFeatures(menu.getSubFeatures(feature));
+            Collection<Feature> subFeatures = menu.getSubFeatures(feature);
 
-            fireFeatureModified(coreFeatures.get(feature));
+            if(!subFeatures.isEmpty()){
+                coreFeatures.get(feature).addSubFeatures(subFeatures);
+
+                fireFeatureModified(coreFeatures.get(feature));
+            }
         }
 
         addFeatures(menu.getMainFeatures());
