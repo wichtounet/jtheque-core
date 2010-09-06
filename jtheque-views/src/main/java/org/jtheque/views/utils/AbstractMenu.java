@@ -2,11 +2,9 @@ package org.jtheque.views.utils;
 
 import org.jtheque.features.CoreFeature;
 import org.jtheque.features.Feature;
-import org.jtheque.features.Features;
 import org.jtheque.features.Menu;
-import org.jtheque.features.Feature.FeatureType;
-import org.jtheque.i18n.LanguageService;
 import org.jtheque.i18n.Internationalizable;
+import org.jtheque.i18n.LanguageService;
 import org.jtheque.ui.Controller;
 import org.jtheque.ui.utils.actions.ActionFactory;
 import org.jtheque.ui.utils.actions.JThequeAction;
@@ -20,6 +18,9 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+
+import static org.jtheque.features.Features.newActionFeature;
+import static org.jtheque.features.Features.newSeparatedActionFeature;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -150,45 +151,6 @@ public abstract class AbstractMenu implements Menu {
     //Utility methods
 
     /**
-     * Create a main feature.
-     *
-     * @param position The position of the feature in the menu bar.
-     * @param key      The i18n key of the feature.
-     * @param features The sub features.
-     *
-     * @return The created main feature.
-     */
-    protected static Feature createMainFeature(int position, String key, Feature... features) {
-        return Features.newFeature(FeatureType.PACK, key, position, features);
-    }
-
-    /**
-     * Create a separated (it seems with a line separator) feature.
-     *
-     * @param position The position of the feature.
-     * @param key      The i18n key of the feature.
-     * @param features The sub features.
-     *
-     * @return The created separated feature.
-     */
-    protected static Feature createSeparatedSubFeature(int position, String key, Feature... features) {
-        return Features.newFeature(FeatureType.SEPARATED_ACTIONS, key, position, features);
-    }
-
-    /**
-     * Create a feature.
-     *
-     * @param position The position of the feature.
-     * @param key      The i18n key of the feature.
-     * @param features The sub features.
-     *
-     * @return The created feature.
-     */
-    protected static Feature createSubFeature(int position, String key, Feature... features) {
-        return Features.newFeature(FeatureType.ACTIONS, key, position, features);
-    }
-
-    /**
      * Create a separated (it seems with a line separator) feature.
      *
      * @param position The position of the feature.
@@ -200,7 +162,7 @@ public abstract class AbstractMenu implements Menu {
     protected Feature createSeparatedSubFeature(int position, JThequeAction action, String image) {
         internationalizables.add(action);
 
-        return Features.newFeature(FeatureType.SEPARATED_ACTION, position, action, image);
+        return newSeparatedActionFeature(position, action, image);
     }
 
     /**
@@ -233,7 +195,7 @@ public abstract class AbstractMenu implements Menu {
     protected Feature createSeparatedSubFeature(int position, JThequeAction action) {
         internationalizables.add(action);
 
-        return Features.newFeature(FeatureType.SEPARATED_ACTION, position, action);
+        return newSeparatedActionFeature(position, action);
     }
 
     /**
@@ -248,7 +210,7 @@ public abstract class AbstractMenu implements Menu {
     protected Feature createSubFeature(int position, JThequeAction action, String image) {
         internationalizables.add(action);
 
-        return Features.newFeature(FeatureType.ACTION, position, action, image);
+        return newActionFeature(position, action, image);
     }
 
     /**
@@ -262,7 +224,7 @@ public abstract class AbstractMenu implements Menu {
     protected Feature createSubFeature(int position, JThequeAction action) {
         internationalizables.add(action);
 
-        return Features.newFeature(FeatureType.ACTION, position, action);
+        return newActionFeature(position, action);
     }
 
     /**

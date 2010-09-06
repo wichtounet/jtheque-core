@@ -39,6 +39,75 @@ public final class Features {
     }
 
     /**
+     * Create a main feature.
+     *
+     * @param position The position of the feature in the menu bar.
+     * @param key      The i18n key of the feature.
+     * @param features The sub features.
+     *
+     * @return The created main feature.
+     */
+    public static Feature createPackFeature(int position, String key, Feature... features) {
+        return newFeature(FeatureType.PACK, key, position, features);
+    }
+
+    public static Feature newActionFeature(int position, JThequeAction action) {
+        return newFeature(FeatureType.ACTION, position, action);
+    }
+
+    public static Feature newActionFeature(int position, JThequeAction action, String icon) {
+        return newFeature(FeatureType.ACTION, position, action, icon);
+    }
+
+    public static Feature newSeparatedActionFeature(int position, JThequeAction action) {
+        return newFeature(FeatureType.SEPARATED_ACTION, position, action);
+    }
+
+    public static Feature newSeparatedActionFeature(int position, JThequeAction action, String icon) {
+        return newFeature(FeatureType.SEPARATED_ACTION, position, action, icon);
+    }
+
+    /**
+     * Create a feature.
+     *
+     * @param position The position of the feature.
+     * @param key      The i18n key of the feature.
+     * @param features The sub features.
+     *
+     * @return The created feature.
+     */
+    public static Feature newActionsFeature(int position, String key, Feature... features) {
+        return newFeature(FeatureType.ACTIONS, key, position, features);
+    }
+
+    /**
+     * Create a separated (it seems with a line separator) feature.
+     *
+     * @param position The position of the feature.
+     * @param key      The i18n key of the feature.
+     * @param features The sub features.
+     *
+     * @return The created separated feature.
+     */
+    public static Feature newSeparatedActionsFeature(int position, String key, Feature... features) {
+        return newFeature(FeatureType.SEPARATED_ACTIONS, key, position, features);
+    }
+
+    /**
+     * Construct a new Feature for an action.
+     *
+     * @param type     The type of feature.
+     * @param position The position of the feature in the parent.
+     * @param action   The action to execute when the feature is pressed.
+     * @param icon     The icon of the feature.
+     *
+     * @return the created Feature.
+     */
+    public static Feature newFeature(FeatureType type, int position, JThequeAction action, String icon) {
+        return new SimpleFeature(action, position, type, null, icon);
+    }
+
+    /**
      * Construct a new Feature for an action.
      *
      * @param type     The type of feature.
@@ -47,8 +116,8 @@ public final class Features {
      *
      * @return the created Feature.
      */
-    public static org.jtheque.features.Feature newFeature(FeatureType type, int position, JThequeAction action) {
-        return new Feature(action, position, type, null, null);
+    private static Feature newFeature(FeatureType type, int position, JThequeAction action) {
+        return new SimpleFeature(action, position, type, null, null);
     }
 
     /**
@@ -61,29 +130,14 @@ public final class Features {
      *
      * @return the created Feature.
      */
-    public static org.jtheque.features.Feature newFeature(FeatureType type, String titleKey, int position, org.jtheque.features.Feature... features) {
-        org.jtheque.features.Feature feature = new Feature(null, position, type, titleKey, null);
+    private static Feature newFeature(FeatureType type, String titleKey, int position, Feature... features) {
+        Feature feature = new SimpleFeature(null, position, type, titleKey, null);
 
-        for (org.jtheque.features.Feature sub : features) {
+        for (Feature sub : features) {
             feature.addSubFeature(sub);
         }
 
         return feature;
-    }
-
-
-    /**
-     * Construct a new Feature for an action.
-     *
-     * @param type     The type of feature.
-     * @param position The position of the feature in the parent.
-     * @param action   The action to execute when the feature is pressed.
-     * @param icon     The icon of the feature.
-     *
-     * @return the created Feature.
-     */
-    public static org.jtheque.features.Feature newFeature(FeatureType type, int position, JThequeAction action, String icon) {
-        return new Feature(action, position, type, null, icon);
     }
 
     /**
@@ -92,9 +146,9 @@ public final class Features {
      * @author Baptiste Wicht
      */
     @ThreadSafe
-    private static final class Feature implements org.jtheque.features.Feature {
+    private static final class SimpleFeature implements Feature {
         @GuardedInternally
-        private final Collection<org.jtheque.features.Feature> subFeatures = CollectionUtils.newConcurrentList();
+        private final Collection<Feature> subFeatures = CollectionUtils.newConcurrentList();
         
         private final JThequeAction action;
         private final FeatureType type;
@@ -111,7 +165,7 @@ public final class Features {
          * @param titleKey The i18n title key.
          * @param icon     The icon name.
          */
-        private Feature(JThequeAction action, int position, FeatureType type, String titleKey, String icon) {
+        private SimpleFeature(JThequeAction action, int position, FeatureType type, String titleKey, String icon) {
             super();
 
             this.action = action;
@@ -137,12 +191,12 @@ public final class Features {
         }
 
         @Override
-        public Collection<org.jtheque.features.Feature> getSubFeatures() {
+        public Collection<Feature> getSubFeatures() {
             return Collections.unmodifiableCollection(subFeatures);
         }
 
         @Override
-        public void addSubFeature(org.jtheque.features.Feature feature) {
+        public void addSubFeature(Feature feature) {
             if (feature.getType() == FeatureType.PACK) {
                 throw new IllegalArgumentException("Cannot add feature of type Pack to a menu");
             }
@@ -151,14 +205,14 @@ public final class Features {
         }
 
         @Override
-        public void addSubFeatures(Collection<org.jtheque.features.Feature> subFeatures) {
-            for (org.jtheque.features.Feature feature : subFeatures) {
+        public void addSubFeatures(Collection<Feature> subFeatures) {
+            for (Feature feature : subFeatures) {
                 addSubFeature(feature);
             }
         }
 
         @Override
-        public void removeSubFeatures(Collection<org.jtheque.features.Feature> features) {
+        public void removeSubFeatures(Collection<Feature> features) {
             subFeatures.removeAll(features);
         }
 

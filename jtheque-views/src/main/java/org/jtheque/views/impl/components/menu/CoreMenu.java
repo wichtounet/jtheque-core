@@ -4,11 +4,11 @@ import org.jtheque.features.Feature;
 import org.jtheque.i18n.LanguageService;
 import org.jtheque.ui.Controller;
 import org.jtheque.undo.UndoRedoService;
-import org.jtheque.views.windows.MainView;
 import org.jtheque.views.impl.ViewsResources;
 import org.jtheque.views.impl.actions.undo.RedoAction;
 import org.jtheque.views.impl.actions.undo.UndoAction;
 import org.jtheque.views.utils.OSGIMenu;
+import org.jtheque.views.windows.MainView;
 
 import java.awt.event.KeyEvent;
 import java.util.List;
