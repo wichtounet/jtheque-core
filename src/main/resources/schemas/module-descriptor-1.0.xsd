@@ -16,8 +16,6 @@
     <xs:complexType name="versionType">
         <xs:sequence>
             <xs:element type="moduleType" name="module" minOccurs="0" maxOccurs="1"/>
-            <xs:element type="librariesType" name="libraries" minOccurs="0" maxOccurs="1"/>
-            <xs:element type="filesType" name="files" minOccurs="0" maxOccurs="1"/>
         </xs:sequence>
         <xs:attribute type="xs:string" name="name"/>
     </xs:complexType>
@@ -26,23 +24,12 @@
         <xs:sequence>
             <xs:element type="xs:string" name="file"/>
             <xs:element type="xs:anyURI" name="url"/>
+            <xs:element type="resourceType" name="resource" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
         <xs:attribute type="xs:string" name="core"/>
     </xs:complexType>
 
-    <xs:complexType name="librariesType">
-        <xs:sequence>
-            <xs:element type="fileDescriptor" name="library" minOccurs="0" maxOccurs="unbounded" />
-        </xs:sequence>
-    </xs:complexType>
-
-    <xs:complexType name="filesType">
-        <xs:sequence>
-            <xs:element type="fileDescriptor" name="file" minOccurs="0" maxOccurs="unbounded"/>
-        </xs:sequence>
-    </xs:complexType>
-
-    <xs:complexType name="fileDescriptor">
+    <xs:complexType name="resourceType">
         <xs:sequence>
             <xs:element type="xs:string" name="name"/>
             <xs:element type="xs:string" name="version"/>
