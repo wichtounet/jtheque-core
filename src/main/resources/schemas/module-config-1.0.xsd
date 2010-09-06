@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://jtheque.baptiste-wicht.com/schema/module-config" version="1.0">
+
+    <xs:element name="config" type="configType"/>
+
+    <xs:complexType name="configType">
+        <xs:sequence>
+            <xs:element type="i18nType" name="i18n" minOccurs="0" maxOccurs="1"/>
+            <xs:element type="imagesType" name="images" minOccurs="0" maxOccurs="1"/>
+            <xs:element type="resourcesType" name="resources" minOccurs="0" maxOccurs="1"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="i18nType">
+        <xs:sequence>
+            <xs:element type="i18nResourceType" name="resource" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="imagesType">
+        <xs:sequence>
+            <xs:element type="imageResourceType" name="resource" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="resourcesType">
+        <xs:sequence>
+            <xs:element type="resourceType" name="resource" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="i18nResourceType">
+        <xs:sequence>
+            <xs:element type="xs:string" name="classpath" minOccurs="1" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute type="xs:string" name="name"/>
+        <xs:attribute type="xs:string" name="version"/>
+    </xs:complexType>
+
+    <xs:complexType name="imageResourceType">
+        <xs:sequence>
+            <xs:element type="xs:string" name="classpath" minOccurs="1" maxOccurs="1"/>
+        </xs:sequence>
+        <xs:attribute type="xs:string" name="name"/>
+    </xs:complexType>
+
+    <xs:complexType name="resourceType">
+        <xs:attribute type="xs:string" name="id"/>
+        <xs:attribute type="xs:string" name="version"/>
+        <xs:attribute type="xs:anyURI" name="url"/>
+    </xs:complexType>
+</xs:schema>

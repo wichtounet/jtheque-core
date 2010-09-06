@@ -1,38 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified"
            xmlns:xs="http://www.w3.org/2001/XMLSchema"
-           targetNamespace="http://jtheque.baptiste-wicht.com/schema/module-descriptor" version="1.0">
+           targetNamespace="http://jtheque.baptiste-wicht.com/schema/core-descriptor" version="1.0">
 
     <xs:element name="descriptor" type="descriptorType"/>
 
     <xs:complexType name="descriptorType">
         <xs:sequence>
-            <xs:element type="xs:string" name="id"/>
             <xs:element type="versionType" name="version" minOccurs="1" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
 
     <xs:complexType name="versionType">
         <xs:sequence>
-            <xs:element type="moduleType" name="module" minOccurs="0" maxOccurs="1"/>
+            <xs:element type="bundlesType" name="bundles" minOccurs="1" maxOccurs="1"/>
         </xs:sequence>
         <xs:attribute type="xs:string" name="name"/>
     </xs:complexType>
 
-    <xs:complexType name="moduleType">
+    <xs:complexType name="bundlesType">
         <xs:sequence>
-            <xs:element type="xs:string" name="file"/>
-            <xs:element type="xs:anyURI" name="url"/>
-            <xs:element type="resourceType" name="resource" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element type="bundleType" name="bundle" minOccurs="1" maxOccurs="unbounded"/>
         </xs:sequence>
-        <xs:attribute type="xs:string" name="core"/>
+        <xs:attribute type="xs:string" name="name"/>
     </xs:complexType>
 
-    <xs:complexType name="resourceType">
+    <xs:complexType name="bundleType">
         <xs:sequence>
             <xs:element type="xs:string" name="name"/>
-            <xs:element type="xs:string" name="version"/>
             <xs:element type="xs:anyURI" name="url"/>
         </xs:sequence>
     </xs:complexType>
+    
 </xs:schema>

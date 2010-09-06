@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
-<descriptor>
+<descriptor xmlns="http://jtheque.baptiste-wicht.com/schema/core-descriptor"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+            http://jtheque.baptiste-wicht.com/schema/core-descriptor
+            http://jtheque.baptiste-wicht.com/files/schema/core-descriptor-1.0.xsd">
+
     <version name="2.1.1">
         <bundles>
             <bundle>
