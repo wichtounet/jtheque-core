@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://jtheque.baptiste-wicht.com/schema/messages" version="1.0">
+    
+    <xs:element name="messages" type="messagesType"/>
+
+    <xs:complexType name="messagesType">
+        <xs:sequence>
+            <xs:element type="xs:string" name="source" minOccurs="1" maxOccurs="1"/>
+            <xs:element type="messageType" name="message" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="messageType">
+        <xs:sequence>
+            <xs:element type="xs:string" name="title" minOccurs="0" maxOccurs="1"/>
+            <xs:element type="xs:string" name="content" minOccurs="0" maxOccurs="1"/>
+            <xs:element type="xs:int" name="date" minOccurs="0" maxOccurs="1"/>
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:string" />
+    </xs:complexType>
+</xs:schema>
