@@ -47,4 +47,24 @@ public class ErrorsTest {
         assertEquals("Details 3", error.getDetails(null));
         assertEquals(Level.ERROR, error.getLevel());
     }
+
+    @Test
+    public void throwable() {
+        Throwable throwable = new RuntimeException("Simple message");
+
+        Error error = Errors.newError(throwable);
+
+        assertEquals("Simple message", error.getTitle(null));
+        assertEquals(Level.ERROR, error.getLevel());
+    }
+
+    @Test
+    public void throwableTitle() {
+        Throwable throwable = new RuntimeException("Simple message");
+
+        Error error = Errors.newError("Simple title", throwable);
+
+        assertEquals("Simple title", error.getTitle(null));
+        assertEquals(Level.ERROR, error.getLevel());
+    }
 }
