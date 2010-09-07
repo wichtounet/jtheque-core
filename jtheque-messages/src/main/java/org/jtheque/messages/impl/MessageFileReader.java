@@ -82,11 +82,11 @@ final class MessageFileReader {
 
         List<Message> messages = CollectionUtils.newList();
 
-        for (Object currentNode : reader.getNodes("messages/message", reader.getRootElement())) {
+        for (Object currentNode : reader.getNodes("message", reader.getRootElement())) {
             messages.add(Messages.newMessage(
-                    reader.readInt("id", currentNode),
+                    reader.readInt("@id", currentNode),
                     reader.readString("title", currentNode),
-                    reader.readString("message", currentNode),
+                    reader.readString("content", currentNode),
                     new IntDate(reader.readInt("date", currentNode)),
                     source));
         }
