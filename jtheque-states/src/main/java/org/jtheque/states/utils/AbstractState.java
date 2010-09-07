@@ -49,7 +49,7 @@ public abstract class AbstractState {
      */
     @Save
     public Map<String, String> getProperties() {
-        return CollectionUtils.copyOf(properties);
+        return CollectionUtils.protect(properties);
     }
 
     /**
