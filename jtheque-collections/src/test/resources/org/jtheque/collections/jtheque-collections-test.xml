@@ -16,21 +16,20 @@
             http://www.springframework.org/schema/osgi
             http://www.springframework.org/schema/osgi/spring-osgi.xsd
             http://www.springframework.org/schema/tx
-            http://www.springframework.org/schema/tx/spring-tx-2.5.xsd"
-       default-lazy-init="true">
+            http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
 
     <context:annotation-config/>
 
     <tx:annotation-driven transaction-manager="transactionManager"/>
 
-    <bean id="collectionSchema" class="org.jtheque.collections.impl.CollectionSchema" lazy-init="false"/>
-
-    <!--
+    <bean id="collectionSchema" class="org.jtheque.collections.impl.CollectionSchema">
+        <property name="jdbcTemplate" ref="jdbcTemplate" />
+    </bean>
 
     <bean id="collectionsService" class="org.jtheque.collections.impl.CollectionsServiceImpl" lazy-init="false">
         <constructor-arg ref="daoCollections"/>
         <constructor-arg>
-            <osgi:reference interface="org.jtheque.file.FileService"/>
+            <bean class="org.jtheque.file.impl.FileServiceImpl" />
         </constructor-arg>
         <constructor-arg>
             <bean class="org.jtheque.core.impl.CoreImpl" >
@@ -45,8 +44,6 @@
         </constructor-arg>
         <constructor-arg ref="collectionSchema"/>
     </bean>
-
-    -->
 
     <bean id="stateService" class="org.jtheque.states.impl.StateServiceImpl" />
     <bean id="imageService" class="org.jtheque.images.impl.ImageServiceImpl"/>
