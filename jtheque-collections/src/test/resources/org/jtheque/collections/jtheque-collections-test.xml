@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:osgi="http://www.springframework.org/schema/osgi"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="
+            http://www.springframework.org/schema/aop
+            http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+            http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+            http://www.springframework.org/schema/context
+            http://www.springframework.org/schema/context/spring-context-2.5.xsd
+            http://www.springframework.org/schema/osgi
+            http://www.springframework.org/schema/osgi/spring-osgi.xsd
+            http://www.springframework.org/schema/tx
+            http://www.springframework.org/schema/tx/spring-tx-2.5.xsd"
+       default-lazy-init="true">
+
+    <context:annotation-config/>
+
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+
+    <bean id="collectionSchema" class="org.jtheque.collections.impl.CollectionSchema" lazy-init="false"/>
+
+    <!--
+
+    <bean id="collectionsService" class="org.jtheque.collections.impl.CollectionsServiceImpl" lazy-init="false">
+        <constructor-arg ref="daoCollections"/>
+        <constructor-arg>
+            <osgi:reference interface="org.jtheque.file.FileService"/>
+        </constructor-arg>
+        <constructor-arg>
+            <bean class="org.jtheque.core.impl.CoreImpl" >
+                <constructor-arg index="0" ref="stateService"/>
+                <constructor-arg index="1" ref="imageService"/>
+            </bean>
+        </constructor-arg>
+        <constructor-arg>
+            <bean class="org.jtheque.schemas.impl.SchemaServiceImpl" >
+                <constructor-arg ref="stateService" />
+            </bean>
+        </constructor-arg>
+        <constructor-arg ref="collectionSchema"/>
+    </bean>
+
+    -->
+
+    <bean id="stateService" class="org.jtheque.states.impl.StateServiceImpl" />
+    <bean id="imageService" class="org.jtheque.images.impl.ImageServiceImpl"/>
+
+    <bean id="daoCollections" class="org.jtheque.collections.impl.DaoCollectionsImpl"/>
+
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.SingleConnectionDataSource"
+          destroy-method="destroy">
+        <property name="driverClassName" value="org.h2.Driver"/>
+        <property name="url" value="jdbc:h2:~/db/test"/>
+        <property name="username" value="sa"/>
+        <property name="password" value=""/>
+    </bean>
+
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.simple.SimpleJdbcTemplate">
+        <constructor-arg ref="dataSource"/>
+    </bean>
+
+    <bean id="daoPersistenceContext" class="org.jtheque.persistence.impl.SpringDaoPersistenceContext">
+        <constructor-arg ref="jdbcTemplate"/>
+    </bean>
+
+    
+</beans>
