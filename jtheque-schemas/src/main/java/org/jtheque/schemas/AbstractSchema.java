@@ -43,7 +43,7 @@ public abstract class AbstractSchema implements Schema {
      *
      * @param jdbcTemplate The template to set.
      */
-    void setJdbcTemplate(SimpleJdbcTemplate jdbcTemplate) {
+    public void setJdbcTemplate(SimpleJdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
