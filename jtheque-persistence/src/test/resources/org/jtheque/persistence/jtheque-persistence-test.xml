@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:osgi="http://www.springframework.org/schema/osgi"
+       xsi:schemaLocation="
+            http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+            http://www.springframework.org/schema/osgi
+            http://www.springframework.org/schema/osgi/spring-osgi.xsd">
+
+    <bean id="daoNotes" class="org.jtheque.persistence.impl.DaoNotes">
+        <constructor-arg>
+            <bean class="org.jtheque.images.impl.ImageServiceImpl" />
+        </constructor-arg>
+        <constructor-arg>
+            <bean class="org.jtheque.i18n.impl.LanguageServiceImpl" >
+                <constructor-arg>
+                    <bean class="org.jtheque.states.impl.StateServiceImpl" />
+                </constructor-arg>
+            </bean>
+        </constructor-arg>
+    </bean>
+
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.SingleConnectionDataSource"
+          destroy-method="destroy">
+        <property name="driverClassName" value="org.h2.Driver"/>
+        <property name="url" value="jdbc:h2:db/jtheque"/>
+        <property name="username" value="sa"/>
+        <property name="password" value=""/>
+    </bean>
+
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.simple.SimpleJdbcTemplate">
+        <constructor-arg ref="dataSource"/>
+    </bean>
+
+    <bean id="daoPersistenceContext" class="org.jtheque.persistence.impl.SpringDaoPersistenceContext">
+        <constructor-arg ref="jdbcTemplate"/>
+    </bean>
+
+</beans>

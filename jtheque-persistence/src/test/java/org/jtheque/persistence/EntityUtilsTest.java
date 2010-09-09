@@ -1,4 +1,4 @@
-package org.jtheque.persistence.able;
+package org.jtheque.persistence;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -16,7 +16,6 @@ package org.jtheque.persistence.able;
  * limitations under the License.
  */
 
-import org.jtheque.persistence.Entity;
 import org.jtheque.persistence.utils.AbstractEntity;
 import org.jtheque.persistence.utils.EntityUtils;
 

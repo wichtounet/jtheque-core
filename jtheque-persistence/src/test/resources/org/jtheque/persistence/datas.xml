@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dataset>
+    <T_TEST ID='1' TITLE='Test 1' TRIGGER="1" />
+    <T_TEST ID='2' TITLE='Test 2' TRIGGER="2" />
+    <T_TEST ID='3' TITLE='Unit 2' TRIGGER="4" />
+    <T_TEST ID='4' TITLE='Unit 4' TRIGGER="8" />
+    <T_TEST ID='5' TITLE='GOF 4' TRIGGER="16" />
+</dataset>

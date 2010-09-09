@@ -1,9 +1,9 @@
-package org.jtheque.persistence.utils;
-
-import org.jtheque.persistence.DaoNotes;
-import org.jtheque.persistence.Note;
+package org.jtheque.persistence;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
 
@@ -30,8 +30,8 @@ import static org.junit.Assert.assertEquals;
  *
  * @author Baptiste Wicht
  */
-//@RunWith(SpringJUnit4ClassRunner.class)
-//@ContextConfiguration(locations = {"/META-INF/spring/jtheque-persistence.xml"})
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = {"jtheque-persistence-test.xml"})
 public class DaoNotesTest {
     @Resource
     private DaoNotes daoNotes;
