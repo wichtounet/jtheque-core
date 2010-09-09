@@ -73,7 +73,7 @@ public enum Note {
         Note note = MIDDLE;
 
         for (Note n : values()) {
-            if (n.ordinal() == e) {
+            if (n.intValue() == e) {
                 note = n;
                 break;
             }
