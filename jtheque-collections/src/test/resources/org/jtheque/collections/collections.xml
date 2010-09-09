@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <dataset>
     <T_COLLECTIONS ID='1' TITLE='Collection 1' PROTECTED='FALSE' PASSWORD=''/>
-    <T_COLLECTIONS ID='2' TITLE='Collection 2' PROTECTED='FALSE' PASSWORD=''/>
+    <T_COLLECTIONS ID='2' TITLE='Collection 2' PROTECTED='TRUE' PASSWORD='salut'/>
 </dataset>
