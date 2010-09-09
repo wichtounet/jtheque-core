@@ -50,7 +50,7 @@ import static org.junit.Assert.*;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "jtheque-persistence-test.xml")
 public class SimpleJDBCDaoTest extends AbstractDBUnitTest {
-    private DaoTest dao;
+    private BasicDao dao;
 
     @Resource
     private DataSource dataSource;
@@ -73,7 +73,7 @@ public class SimpleJDBCDaoTest extends AbstractDBUnitTest {
 
     @Before
     public void before(){
-        dao = new DaoTest();
+        dao = new BasicDao();
 
         try {
             Field f = dao.getClass().getSuperclass().getSuperclass().getDeclaredField("persistenceContext");
@@ -161,13 +161,13 @@ public class SimpleJDBCDaoTest extends AbstractDBUnitTest {
         assertEquals(0, getTable("T_TEST").getRowCount());
     }
 
-    private static final class DaoTest extends SimpleJDBCDao<TestEntity> {
+    private static final class BasicDao extends SimpleJDBCDao<TestEntity> {
         private static final String TABLE = "T_TEST";
 
         private final QueryMapper queryMapper = new TestEntityQueryMapper();
         private final RowMapper<TestEntity> rowMapper = new TestEntityRowMapper();
 
-        private DaoTest() {
+        private BasicDao() {
             super(TABLE);
         }
 
