@@ -24,9 +24,9 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * A JUnit test case to test the EntityUtils class.
@@ -36,7 +36,7 @@ import static org.junit.Assert.assertTrue;
 public class EntityUtilsTest {
     @Test
     public void testContainsID() {
-        Collection<SimpleEntity> entities = new ArrayList<SimpleEntity>(5);
+        Collection<SimpleEntity> entities = new ArrayList<SimpleEntity>(10);
 
         for (int i = 4; i < 12; i++) {
             entities.add(new SimpleEntity(i));
@@ -51,11 +51,36 @@ public class EntityUtilsTest {
         assertFalse(EntityUtils.containsID(entities, 14));
     }
 
+    @Test
+    public void getByTemporaryId(){
+        List<SimpleEntity> entities = new ArrayList<SimpleEntity>(10);
+
+        for (int i = 0; i < 10; i++) {
+            entities.add(new SimpleEntity(i, i));
+        }
+
+        for (int i = 0; i < 10; i++) {
+            SimpleEntity entity = entities.get(i);
+
+            assertSame(entity, EntityUtils.getByTemporaryId(entities, i));
+        }
+
+        assertNull(EntityUtils.getByTemporaryId(entities, 10));
+        assertNull(EntityUtils.getByTemporaryId(entities, -1));
+        assertNull(EntityUtils.getByTemporaryId(entities, 100));
+    }
+
     private static final class SimpleEntity extends AbstractEntity {
         private SimpleEntity(int id) {
             super();
 
             setId(id);
+        }
+
+        private SimpleEntity(int id, int temporaryId) {
+            this(id);
+
+            getTemporaryContext().setId(temporaryId);
         }
 
         @Override
