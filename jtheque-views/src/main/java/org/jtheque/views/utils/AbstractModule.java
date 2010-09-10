@@ -7,6 +7,9 @@ import org.jtheque.file.FileService;
 import org.jtheque.file.ModuleBackuper;
 import org.jtheque.modules.ModuleService;
 import org.jtheque.modules.SwingLoader;
+import org.jtheque.persistence.DataContainer;
+import org.jtheque.persistence.Entity;
+import org.jtheque.persistence.utils.DataContainerProvider;
 import org.jtheque.schemas.Schema;
 import org.jtheque.schemas.SchemaService;
 import org.jtheque.utils.collections.ArrayUtils;
@@ -87,6 +90,7 @@ public class AbstractModule implements ApplicationContextAware, BundleContextAwa
         registerMenus();
         registerSchema();
         registerBackupers();
+        registerDataContainers();
 
         OSGiUtils.getService(bundleContext, ModuleService.class).registerSwingLoader(module, this);
     }
@@ -168,6 +172,18 @@ public class AbstractModule implements ApplicationContextAware, BundleContextAwa
             for (ModuleBackuper backuper : backupers) {
                 fileService.registerBackuper(module, backuper);
             }
+        }
+    }
+
+    /**
+     * Register data containers. 
+     */
+    @SuppressWarnings("unchecked")
+    private void registerDataContainers() {
+        Collection<DataContainer> containers = getBeans(DataContainer.class);
+
+        for(DataContainer<? extends Entity> container : containers){
+            DataContainerProvider.getInstance().addContainer(container);
         }
     }
 

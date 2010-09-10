@@ -19,8 +19,6 @@
         </constructor-arg>
     </bean>
 
-    <bean class="org.jtheque.persistence.utils.DataContainerPostProcessor"/>
-
     <!-- Persistence  -->
 
     <bean id="dataSource" class="org.springframework.jdbc.datasource.SingleConnectionDataSource"
