@@ -3,9 +3,11 @@ package org.jtheque.collections;
 import org.jtheque.utils.unit.db.AbstractDBUnitTest;
 
 import org.dbunit.dataset.DataSetException;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -37,11 +39,13 @@ import static org.junit.Assert.*;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "jtheque-collections-test.xml")
 public class DaoCollectionsTest extends AbstractDBUnitTest {
-    @Resource
     private DaoCollections daoCollections;
 
     @Resource
     private DataSource dataSource;
+
+    @Resource
+    private ApplicationContext applicationContext;
 
     static {
         ((Logger) LoggerFactory.getLogger("root")).setLevel(Level.ERROR);
@@ -54,6 +58,13 @@ public class DaoCollectionsTest extends AbstractDBUnitTest {
     @PostConstruct
     public void init() {
         initDB(dataSource);
+    }
+
+    @Before
+    public void before(){
+        initDB(dataSource);
+
+        daoCollections = applicationContext.getBean(DaoCollections.class);
     }
 
     @Test
@@ -126,7 +137,7 @@ public class DaoCollectionsTest extends AbstractDBUnitTest {
 
         DataCollection collection2 = daoCollections.getCollection("Collection 3");
 
-        assertSame(collection, collection2);
+        assertEquals(collection, collection2);
     }
 
     @Test

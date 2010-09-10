@@ -48,7 +48,7 @@
     <bean id="stateService" class="org.jtheque.states.impl.StateServiceImpl" />
     <bean id="imageService" class="org.jtheque.images.impl.ImageServiceImpl"/>
 
-    <bean id="daoCollections" class="org.jtheque.collections.impl.DaoCollectionsImpl"/>
+    <bean id="daoCollections" class="org.jtheque.collections.impl.DaoCollectionsImpl" scope="prototype"/>
 
     <bean id="dataSource" class="org.springframework.jdbc.datasource.SingleConnectionDataSource"
           destroy-method="destroy">
