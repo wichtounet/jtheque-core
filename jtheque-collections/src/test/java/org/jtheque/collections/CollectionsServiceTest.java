@@ -36,7 +36,7 @@ import ch.qos.logback.classic.Logger;
 import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "jtheque-collections-test.xml")
+@ContextConfiguration(locations = "jtheque-collections-test-service.xml")
 public class CollectionsServiceTest extends AbstractDBUnitTest {
     @Resource
     private CollectionsService collectionsService;

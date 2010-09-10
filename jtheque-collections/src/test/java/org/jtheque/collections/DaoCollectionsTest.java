@@ -37,7 +37,7 @@ import static org.junit.Assert.*;
  */
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "jtheque-collections-test.xml")
+@ContextConfiguration(locations = "jtheque-collections-test-dao.xml")
 public class DaoCollectionsTest extends AbstractDBUnitTest {
     private DaoCollections daoCollections;
 
