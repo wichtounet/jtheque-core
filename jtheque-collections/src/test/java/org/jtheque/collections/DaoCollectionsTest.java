@@ -62,7 +62,7 @@ public class DaoCollectionsTest extends AbstractDBUnitTest {
     }
 
     @Test
-    public void getMovies() {
+    public void getCollections() {
         assertEquals(2, daoCollections.getCollections().size());
     }
 
@@ -109,7 +109,7 @@ public class DaoCollectionsTest extends AbstractDBUnitTest {
 
         daoCollections.setCurrentCollection(collection);
 
-        assertSame(collection, daoCollections.getCurrentCollection());
+        assertEquals(collection, daoCollections.getCurrentCollection());
     }
 
     @Test
