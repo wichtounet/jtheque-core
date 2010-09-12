@@ -145,6 +145,14 @@ public final class Errors {
         return new InternationalizedError(message, replaces, details, replacesDetails);
     }
 
+    public static Error newI18nError(String message, Throwable throwable) {
+        return new InternationalizedError(message, EMPTY_REPLACES, throwable);
+    }
+
+    public static Error newI18nError(String message, Object[] replaces, Throwable throwable) {
+        return new InternationalizedError(message, replaces, throwable);
+    }
+
     /**
      * A basic error implementation. This class is immutable.
      *
@@ -271,6 +279,20 @@ public final class Errors {
             detailsReplaces = ArrayUtils.copyOf(replacesDetails);
         }
 
+        /**
+         * Construct a new InternationalizedError.
+         *
+         * @param message   The message key.
+         * @param replaces  The replaces for the internationalization variable arguments of the message.
+         * @param exception The exception that produces this error.
+         */
+        private InternationalizedError(String message, Object[] replaces, Throwable exception) {
+            super(message, Level.ERROR, "", exception);
+
+            titleReplaces = ArrayUtils.copyOf(replaces);
+            detailsReplaces = ArrayUtils.EMPTY_ARRAY;
+        }
+
         @Override
         public String getTitle(LanguageService languageService) {
             return languageService.getMessage(getTitle(), titleReplaces);
@@ -279,9 +301,7 @@ public final class Errors {
         @Override
         public String getDetails(LanguageService languageService) {
             if (getException() != null) {
-                return languageService.getMessage(getDetails(), detailsReplaces) +
-                        '\n' + getException().getMessage() +
-                        '\n' + getCustomStackTrace(getException());
+                return getException().getLocalizedMessage() + '\n' + getCustomStackTrace(getException());
             }
 
             return languageService.getMessage(getDetails(), detailsReplaces);

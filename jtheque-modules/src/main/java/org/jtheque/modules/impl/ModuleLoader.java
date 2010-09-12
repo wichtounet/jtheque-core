@@ -7,6 +7,8 @@ import org.jtheque.errors.Errors;
 import org.jtheque.i18n.I18NResourceFactory;
 import org.jtheque.i18n.LanguageService;
 import org.jtheque.modules.Module;
+import org.jtheque.modules.ModuleException;
+import org.jtheque.modules.ModuleException.ModuleOperation;
 import org.jtheque.modules.ModuleState;
 import org.jtheque.resources.Resource;
 import org.jtheque.resources.ResourceService;
@@ -25,7 +27,6 @@ import org.jtheque.xml.utils.XMLOverReader;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleException;
-import org.slf4j.LoggerFactory;
 import org.springframework.osgi.context.BundleContextAware;
 
 import java.io.File;
@@ -88,7 +89,7 @@ public final class ModuleLoader implements BundleContextAware {
     /**
      * Construct a new ModuleLoader.
      *
-     * @param moduleService The module service. 
+     * @param moduleService The module service.
      */
     public ModuleLoader(ModuleServiceImpl moduleService) {
         super();
@@ -116,6 +117,7 @@ public final class ModuleLoader implements BundleContextAware {
 
     /**
      * Indicate if we must make the loading concurrent.
+     *
      * @return {@code true} if the loading is concurrent otherwise {@code false}.
      */
     private static boolean isLoadingConcurrent() {
@@ -131,6 +133,7 @@ public final class ModuleLoader implements BundleContextAware {
      *
      * @return A Collection containing all the loaded modules.
      */
+    @SuppressWarnings({"ForLoopReplaceableByForEach"})
     private Collection<Module> loadInParallel(File[] files) {
         ExecutorService loadersPool = Executors.newFixedThreadPool(2 * ThreadUtils.processors());
 
@@ -169,7 +172,12 @@ public final class ModuleLoader implements BundleContextAware {
         List<Module> modules = CollectionUtils.newList(files.length);
 
         for (File file : files) {
-            modules.add(installModule(file));
+            try {
+                modules.add(installModule(file));
+            } catch (ModuleException e) {
+                //Do not rethrow the exception to try to install the others module. 
+                OSGiUtils.getService(bundleContext, ErrorService.class).addError(Errors.newError(e));
+            }
         }
 
         return modules;
@@ -182,7 +190,7 @@ public final class ModuleLoader implements BundleContextAware {
      *
      * @return The installed module.
      */
-    public Module installModule(File file) {
+    public Module installModule(File file) throws ModuleException {
         Builder builder = new Builder();
 
         ModuleResources resources = null;
@@ -198,11 +206,9 @@ public final class ModuleLoader implements BundleContextAware {
             //Get informations from manifest
             readManifestInformations(builder, bundle);
         } catch (BundleException e) {
-            LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
-            OSGiUtils.getService(bundleContext, ErrorService.class).addError(Errors.newError(e));
+            throw new ModuleException(e, ModuleOperation.INSTALL);
         } catch (IOException e) {
-            LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
-            OSGiUtils.getService(bundleContext, ErrorService.class).addError(Errors.newError(e));
+            throw new ModuleException(e, ModuleOperation.INSTALL);
         }
 
         Module module = builder.build();
@@ -231,14 +237,18 @@ public final class ModuleLoader implements BundleContextAware {
      *
      * @throws IOException If an error occurs during Jar File reading.
      */
-    private ModuleResources readConfig(File file) throws IOException {
-        JarFile jarFile = new JarFile(file);
-        ZipEntry configEntry = jarFile.getEntry("module.xml");
+    private ModuleResources readConfig(File file) throws IOException, ModuleException {
+        JarFile jarFile = null;
+        try {
+            jarFile = new JarFile(file);
 
-        ModuleResources resources = null;
+            ZipEntry configEntry = jarFile.getEntry("module.xml");
 
-        if (configEntry != null) {
-            resources = importConfig(jarFile.getInputStream(configEntry));
+            if (configEntry == null) {
+                throw new ModuleException("error.module.config", ModuleOperation.LOAD);
+            }
+
+            ModuleResources resources = importConfig(jarFile.getInputStream(configEntry));
 
             //Install necessary resources before installing the bundle
             for (Resource resource : resources.getResources()) {
@@ -246,11 +256,13 @@ public final class ModuleLoader implements BundleContextAware {
                     resourceService.installResource(resource);
                 }
             }
+
+            return resources;
+        } finally {
+            if (jarFile != null) {
+                jarFile.close();
+            }
         }
-
-        jarFile.close();
-
-        return resources;
     }
 
     /**
@@ -260,7 +272,7 @@ public final class ModuleLoader implements BundleContextAware {
      *
      * @return The ModuleResources of the module.
      */
-    private ModuleResources importConfig(InputStream stream) {
+    private ModuleResources importConfig(InputStream stream) throws ModuleException {
         XMLOverReader reader = XML.newJavaFactory().newOverReader();
 
         try {
@@ -271,13 +283,10 @@ public final class ModuleLoader implements BundleContextAware {
                     importI18NResources(reader),
                     importResources(reader));
         } catch (XMLException e) {
-            LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
-            OSGiUtils.getService(bundleContext, ErrorService.class).addError(Errors.newError(e));
+            throw new ModuleException(e, ModuleOperation.LOAD);
         } finally {
             FileUtils.close(reader);
         }
-
-        return null;
     }
 
     /**
@@ -441,12 +450,18 @@ public final class ModuleLoader implements BundleContextAware {
 
         @Override
         public Module call() {
-            return installModule(file);
+            try {
+                return installModule(file);
+            } catch (ModuleException e) {
+                OSGiUtils.getService(bundleContext, ErrorService.class).addError(Errors.newError(e));
+            }
+
+            return null;
         }
     }
 
     /**
-     * A Builder for the ModuleContainer instance.
+     * A Builder for the SimpleModule instance.
      *
      * @author Baptiste Wicht
      */
@@ -548,7 +563,7 @@ public final class ModuleLoader implements BundleContextAware {
          * @return The module to build.
          */
         public Module build() {
-            return new ModuleContainer(this);
+            return new SimpleModule(this);
         }
     }
 
@@ -558,7 +573,7 @@ public final class ModuleLoader implements BundleContextAware {
      * @author Baptiste Wicht
      */
     @Immutable
-    private final class ModuleContainer implements Module {
+    private final class SimpleModule implements Module {
         private final String id;
         private final Bundle bundle;
         private final Version version;
@@ -576,7 +591,7 @@ public final class ModuleLoader implements BundleContextAware {
          *
          * @param builder The builder to get the informations from.
          */
-        private ModuleContainer(Builder builder) {
+        private SimpleModule(Builder builder) {
             super();
 
             id = builder.id;

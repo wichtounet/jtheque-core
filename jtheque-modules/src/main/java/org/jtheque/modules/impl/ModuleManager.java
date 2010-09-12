@@ -1,7 +1,11 @@
 package org.jtheque.modules.impl;
 
 import org.jtheque.core.Core;
+import org.jtheque.errors.ErrorService;
+import org.jtheque.errors.Errors;
 import org.jtheque.modules.Module;
+import org.jtheque.modules.ModuleException;
+import org.jtheque.modules.ModuleException.ModuleOperation;
 import org.jtheque.ui.UIUtils;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.ThreadUtils;
@@ -62,6 +66,9 @@ public final class ModuleManager {
     private UIUtils uiUtils;
 
     @Resource
+    private ErrorService errorService;
+
+    @Resource
     private ModuleLoader moduleLoader;
 
     /**
@@ -106,20 +113,12 @@ public final class ModuleManager {
      */
     void uninstallModules() {
         for (Module module : modules) {
-            uninstallModule(module);
-        }
-    }
-
-    /**
-     * Stop the given module.
-     *
-     * @param module The module to stop.
-     */
-    void stopModule(Module module) {
-        try {
-            module.getBundle().stop();
-        } catch (BundleException e) {
-            LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
+            try {
+                uninstallModule(module);
+            } catch (ModuleException e) {
+                //Cannot do anything else, it's shutdown time
+                LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
+            }
         }
     }
 
@@ -127,12 +126,31 @@ public final class ModuleManager {
      * Start the given module.
      *
      * @param module The module to start.
+     *
+     * @throws org.jtheque.modules.ModuleException
+     *          If there is an OSGi error during start.
      */
-    void startModule(Module module) {
+    void startModule(Module module) throws ModuleException {
         try {
             module.getBundle().start();
         } catch (BundleException e) {
-            LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
+            throw new ModuleException(e, ModuleOperation.START);
+        }
+    }
+
+    /**
+     * Stop the given module.
+     *
+     * @param module The module to stop.
+     *
+     * @throws org.jtheque.modules.ModuleException
+     *          If there is an OSGi error during start.
+     */
+    void stopModule(Module module) throws ModuleException {
+        try {
+            module.getBundle().stop();
+        } catch (BundleException e) {
+            throw new ModuleException(e, ModuleOperation.STOP);
         }
     }
 
@@ -155,7 +173,11 @@ public final class ModuleManager {
         } else {
             for (Module module : modules) {
                 if (canBeLoaded(module) && areAllDependenciesSatisfied(module)) {
-                    moduleLauncher.startModule(module);
+                    try {
+                        moduleLauncher.startModule(module);
+                    } catch (ModuleException e) {
+                        errorService.addError(Errors.newError(e));
+                    }
                 }
             }
         }
@@ -220,29 +242,28 @@ public final class ModuleManager {
      * @param file The file to install.
      *
      * @return The installed module or {@code null} if the module file cannot be installed.
+     *
+     * @throws org.jtheque.modules.ModuleException
+     *          If there is problem installing the file.
      */
-    Module installModule(File file) {
+    Module installModule(File file) throws ModuleException {
         File moduleFile = installModuleFile(file);
 
-        if (moduleFile != null) {
+        try {
             Module module = moduleLoader.installModule(moduleFile);
 
-            if (module == null) {
-                FileUtils.delete(moduleFile);
-
-                uiUtils.displayI18nText("error.module.not.installed");
-            } else if (exists(module.getId())) {
-                uiUtils.displayI18nText("errors.module.installFromRepository.already.exists");
+            if (exists(module.getId())) {
+                throw new ModuleException("error.module.install.already.exists", ModuleOperation.INSTALL);
             } else {
                 modules.add(module);
 
-                uiUtils.displayI18nText("message.module.installed");
-
                 return module;
             }
-        }
+        } catch (ModuleException e){
+            FileUtils.delete(moduleFile);
 
-        return null;
+            throw e;
+        }
     }
 
     /**
@@ -252,26 +273,23 @@ public final class ModuleManager {
      * @param file The file of the module.
      *
      * @return The file were the module has been installed.
+     *
+     * @throws org.jtheque.modules.ModuleException
+     *          If there is a problem to copy the file in the good folder.
      */
-    private File installModuleFile(File file) {
+    private File installModuleFile(File file) throws ModuleException {
         File target = file;
 
         if (!FileUtils.isFileInDirectory(file, core.getFolders().getModulesFolder())) {
             target = new File(core.getFolders().getModulesFolder(), file.getName());
 
             if (target.exists()) {
-                uiUtils.displayI18nText("errors.module.installFromRepository.already.exists");
-
-                return null;
+                throw new ModuleException("errors.module.installFromRepository.already.exists", ModuleOperation.INSTALL);
             } else {
                 try {
                     FileUtils.copy(file, target);
                 } catch (CopyException e) {
-                    LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
-
-                    uiUtils.displayI18nText("errors.module.installFromRepository.copy");
-
-                    return null;
+                    throw new ModuleException(e, ModuleOperation.INSTALL);
                 }
             }
         }
@@ -331,8 +349,11 @@ public final class ModuleManager {
      * @param file The file of the module.
      *
      * @return The installed Module.
+     *
+     * @throws org.jtheque.modules.ModuleException
+     *          If an exception occurs during install.
      */
-    Module installModuleFromRepository(File file) {
+    Module installModuleFromRepository(File file) throws ModuleException {
         Module module = moduleLoader.installModule(file);
 
         uiUtils.displayI18nText("message.module.repository.installed");
@@ -344,17 +365,20 @@ public final class ModuleManager {
      * Uninstall the module.
      *
      * @param module The module to uninstall.
+     *
+     * @throws org.jtheque.modules.ModuleException
+     *          If an error occurs during the uninstallation of the bundle.
      */
-    void uninstallModule(Module module) {
-        moduleLoader.uninstallModule(module);
-
-        modules.remove(module);
-
+    void uninstallModule(Module module) throws ModuleException {
         try {
             module.getBundle().uninstall();
         } catch (BundleException e) {
-            LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
+            throw new ModuleException(e, ModuleOperation.UNINSTALL);
         }
+
+        moduleLoader.uninstallModule(module);
+
+        modules.remove(module);
 
         //Delete the bundle file
         FileUtils.delete(StringUtils.delete(module.getBundle().getLocation(), "file:"));
@@ -417,6 +441,10 @@ public final class ModuleManager {
                     }
                 } catch (InterruptedException e) {
                     LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
+
+                    Thread.currentThread().interrupt();
+
+                    break;
                 }
             }
 
@@ -424,6 +452,8 @@ public final class ModuleManager {
                 countDown.await();
             } catch (InterruptedException e) {
                 LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
+
+                Thread.currentThread().interrupt();
             }
 
             startersPool.shutdown();
@@ -438,6 +468,11 @@ public final class ModuleManager {
 
                 if (canBeStarted(module)) {
                     startersPool.submit(new ModuleStarterRunnable(this, module, moduleLauncher));
+                    iterator.remove();
+                } else if (!(canBeLoaded(module) && areAllDependenciesSatisfied(module))) {
+                    //Perhaps the start of the module has not been successful and this module cannot be launcher anymore
+
+                    countDown.countDown();
                     iterator.remove();
                 }
             }
@@ -488,7 +523,11 @@ public final class ModuleManager {
 
         @Override
         public void run() {
-            moduleLauncher.startModule(module);
+            try {
+                moduleLauncher.startModule(module);
+            } catch (ModuleException e) {
+                errorService.addError(Errors.newError(e));
+            }
 
             starter.semaphore.release();
             starter.countDown.countDown();

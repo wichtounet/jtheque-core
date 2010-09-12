@@ -1,6 +1,7 @@
 package org.jtheque.modules.impl;
 
 import org.jtheque.modules.Module;
+import org.jtheque.modules.ModuleException;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -30,5 +31,5 @@ public interface ModuleLauncher {
      *
      * @param module The module to start.
      */
-    void startModule(Module module);
+    void startModule(Module module) throws ModuleException;
 }

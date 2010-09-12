@@ -20,6 +20,7 @@ import org.jtheque.core.Core;
 import org.jtheque.images.ImageService;
 import org.jtheque.modules.Module;
 import org.jtheque.modules.ModuleDescription;
+import org.jtheque.modules.ModuleException;
 import org.jtheque.modules.ModuleListener;
 import org.jtheque.modules.ModuleResourceCache;
 import org.jtheque.modules.ModuleService;
@@ -43,6 +44,7 @@ import java.io.File;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentMap;
 
 import static org.jtheque.modules.ModuleState.*;
 
@@ -81,6 +83,8 @@ public final class ModuleServiceImpl implements ModuleService, ModuleLauncher {
      * Indicate if there is a collection module.
      */
     private boolean collectionModule;
+
+    private final ConcurrentMap<String, Object> moduleLocks = CollectionUtils.newConcurrentMap(10);
 
     /**
      * Create a new ModuleServiceImpl.
@@ -156,13 +160,17 @@ public final class ModuleServiceImpl implements ModuleService, ModuleLauncher {
      * Stop all the modules
      */
     private void stopModules() {
-        List<Module> modulesToUnplug = CollectionUtils.copyOf(moduleManager.getModules());
+        List<Module> modulesToStop = CollectionUtils.copyOf(moduleManager.getModules());
 
-        CollectionUtils.reverse(modulesToUnplug);
+        CollectionUtils.reverse(modulesToStop);
 
-        for (Module module : modulesToUnplug) {
+        for (Module module : modulesToStop) {
             if (module.getState() == STARTED) {
-                stopModule(module);
+                try {
+                    stopModule(module);
+                } catch (ModuleException e) {
+                    LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
+                }
             }
         }
     }
@@ -193,7 +201,7 @@ public final class ModuleServiceImpl implements ModuleService, ModuleLauncher {
     }
 
     @Override
-    public void startModule(Module module) {
+    public void startModule(Module module) throws ModuleException {
         SwingUtils.assertNotEDT("startModule(Module)");
 
         LoggerFactory.getLogger(getClass()).debug("Start module {}", module.getBundle().getSymbolicName());
@@ -202,22 +210,22 @@ public final class ModuleServiceImpl implements ModuleService, ModuleLauncher {
             throw new IllegalStateException("The module needs a collection");
         }
 
-        synchronized (this) {
+        synchronized (getModuleLock(module)) {
             if (module.getState() == STARTED) {
                 throw new IllegalStateException("The module is already started. ");
             }
 
+            moduleManager.startModule(module);
+
             setState(module, STARTED);
-        }
 
-        //Add images resources
-        loadImageResources(module);
+            //Add images resources
+            loadImageResources(module);
 
-        moduleManager.startModule(module);
-
-        SwingLoader loader = loaders.remove(module.getId());
-        if (loader != null) {
-            loader.afterAll();
+            SwingLoader loader = loaders.remove(module.getId());
+            if (loader != null) {
+                loader.afterAll();
+            }
         }
 
         fireModuleStarted(module);
@@ -242,50 +250,54 @@ public final class ModuleServiceImpl implements ModuleService, ModuleLauncher {
     }
 
     @Override
-    public void stopModule(Module module) {
+    public void stopModule(Module module) throws ModuleException {
         SwingUtils.assertNotEDT("stopModule(Module)");
 
         LoggerFactory.getLogger(getClass()).debug("Stop module {}", module.getBundle().getSymbolicName());
 
-        synchronized (this) {
+        synchronized (getModuleLock(module)) {
             if (module.getState() != STARTED) {
-                throw new IllegalStateException("The module is already started. ");
+                throw new IllegalStateException("The module is not started. ");
             }
+
+            moduleManager.stopModule(module);
+
+            for (ImageResource imageResource : resources.get(module).getImageResources()) {
+                imageService.releaseResource(imageResource.getName());
+            }
+
+            ModuleResourceCache.removeModule(module.getId());
 
             setState(module, INSTALLED);
         }
 
-        for (ImageResource imageResource : resources.get(module).getImageResources()) {
-            imageService.releaseResource(imageResource.getName());
-        }
-
-        ModuleResourceCache.removeModule(module.getId());
-
-        moduleManager.stopModule(module);
-
         fireModuleStopped(module);
 
-        LoggerFactory.getLogger(getClass()).debug("Module {} stopped", module.getBundle().getSymbolicName());
+        LoggerFactory.getLogger(getClass()).debug("Module {} has been stopped", module.getBundle().getSymbolicName());
     }
 
     @Override
     public void enableModule(Module module) {
-        if (module.getState() == DISABLED) {
-            setState(module, INSTALLED);
+        synchronized (getModuleLock(module)) {
+            if (module.getState() == DISABLED) {
+                setState(module, INSTALLED);
+            }
         }
     }
 
     @Override
-    public void disableModule(Module module) {
-        if (module.getState() == STARTED) {
-            stopModule(module);
+    public void disableModule(Module module) throws ModuleException {
+        synchronized (getModuleLock(module)) {
+            if (module.getState() == STARTED) {
+                stopModule(module);
+            }
 
             setState(module, DISABLED);
         }
     }
 
     @Override
-    public void installModule(File file) {
+    public void installModule(File file) throws ModuleException {
         Module module = moduleManager.installModule(file);
 
         if (module != null) {
@@ -305,28 +317,30 @@ public final class ModuleServiceImpl implements ModuleService, ModuleLauncher {
     }
 
     @Override
-    public void installFromRepository(String jarFile) {
+    public void installFromRepository(String jarFile) throws ModuleException {
         installModule(
                 moduleManager.installModuleFromRepository(new File(core.getFolders().getModulesFolder(), jarFile)));
     }
 
     @Override
-    public void uninstallModule(Module module) {
-        if (module.getState() == STARTED) {
-            stopModule(module);
+    public void uninstallModule(Module module) throws ModuleException {
+        synchronized (getModuleLock(module)) {
+            if (module.getState() == STARTED) {
+                stopModule(module);
+            }
+
+            moduleManager.uninstallModule(module);
+
+            configuration.remove(module);
+
+            fireModuleUninstalled(module);
+
+            for (ModuleListener listener : ModuleResourceCache.getResources(module.getId(), ModuleListener.class)) {
+                listeners.remove(listener);
+            }
+
+            ModuleResourceCache.removeModule(module.getId());
         }
-
-        configuration.remove(module);
-
-        moduleManager.uninstallModule(module);
-
-        fireModuleUninstalled(module);
-
-        for (ModuleListener listener : ModuleResourceCache.getResources(module.getId(), ModuleListener.class)) {
-            listeners.remove(listener);
-        }
-
-        ModuleResourceCache.removeModule(module.getId());
     }
 
     @Override
@@ -338,50 +352,58 @@ public final class ModuleServiceImpl implements ModuleService, ModuleLauncher {
 
     @Override
     public String canBeStarted(Module module) {
-        if (module.getCoreVersion() != null && module.getCoreVersion().isGreaterThan(Core.VERSION)) {
-            return "modules.message.version.problem";
-        }
+        synchronized (getModuleLock(module)) {
+            if (module.getCoreVersion() != null && module.getCoreVersion().isGreaterThan(Core.VERSION)) {
+                return "modules.message.version.problem";
+            }
 
-        if (!moduleManager.areAllDependenciesSatisfiedAndActive(module)) {
-            return "error.module.not.loaded.dependency";
-        }
+            if (!moduleManager.areAllDependenciesSatisfiedAndActive(module)) {
+                return "error.module.not.loaded.dependency";
+            }
 
-        return "";
+            return "";
+        }
     }
 
     @Override
     public String canBeStopped(Module module) {
-        if (module.getState() != STARTED) {
-            return "error.module.not.started";
-        }
+        synchronized (getModuleLock(module)) {
+            if (module.getState() != STARTED) {
+                return "error.module.not.started";
+            }
 
-        if (moduleManager.isThereIsActiveDependenciesOn(module)) {
-            return "error.module.dependencies";
-        }
+            if (moduleManager.isThereIsActiveDependenciesOn(module)) {
+                return "error.module.dependencies";
+            }
 
-        return "";
+            return "";
+        }
     }
 
     @Override
     public String canBeUninstalled(Module module) {
-        if (module.getState() == STARTED && moduleManager.isThereIsActiveDependenciesOn(module)) {
-            return "error.module.dependencies";
-        }
+        synchronized (getModuleLock(module)) {
+            if (module.getState() == STARTED && moduleManager.isThereIsActiveDependenciesOn(module)) {
+                return "error.module.dependencies";
+            }
 
-        return "";
+            return "";
+        }
     }
 
     @Override
     public String canBeDisabled(Module module) {
-        if (module.getState() == DISABLED) {
-            return "error.module.not.enabled";
-        }
+        synchronized (getModuleLock(module)) {
+            if (module.getState() == DISABLED) {
+                return "error.module.not.enabled";
+            }
 
-        if (module.getState() == STARTED && moduleManager.isThereIsActiveDependenciesOn(module)) {
-            return "error.module.dependencies";
-        }
+            if (module.getState() == STARTED && moduleManager.isThereIsActiveDependenciesOn(module)) {
+                return "error.module.dependencies";
+            }
 
-        return "";
+            return "";
+        }
     }
 
     @Override
@@ -406,11 +428,17 @@ public final class ModuleServiceImpl implements ModuleService, ModuleLauncher {
      * @param state  The state.
      */
     private void setState(Module module, ModuleState state) {
-        synchronized (this) {
+        synchronized (getModuleLock(module)) {
             module.setState(state);
 
             configuration.setState(module.getId(), state);
         }
+    }
+
+    private Object getModuleLock(Module module) {
+        moduleLocks.putIfAbsent(module.getId(), new Object());
+
+        return moduleLocks.get(module.getId());
     }
 
     /**

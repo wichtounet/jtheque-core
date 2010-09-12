@@ -4,15 +4,19 @@ import org.jtheque.collections.CollectionListener;
 import org.jtheque.collections.CollectionsService;
 import org.jtheque.core.Core;
 import org.jtheque.core.lifecycle.LifeCycle;
-import org.jtheque.modules.ModuleService;
+import org.jtheque.errors.ErrorService;
+import org.jtheque.errors.Errors;
 import org.jtheque.modules.Module;
+import org.jtheque.modules.ModuleException;
+import org.jtheque.modules.ModuleException.ModuleOperation;
+import org.jtheque.modules.ModuleService;
 import org.jtheque.modules.ModuleState;
 import org.jtheque.ui.Action;
 import org.jtheque.ui.Controller;
 import org.jtheque.ui.UIUtils;
 import org.jtheque.ui.utils.AbstractController;
-import org.jtheque.updates.UpdateService;
 import org.jtheque.updates.InstallationResult;
+import org.jtheque.updates.UpdateService;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.io.SimpleFilter;
 import org.jtheque.utils.ui.SimpleSwingWorker;
@@ -60,6 +64,9 @@ public class ModuleController extends AbstractController<ModuleView> {
     private CollectionsService collectionsService;
 
     @Resource
+    private ErrorService errorService;
+
+    @Resource
     private ViewService viewService;
 
     @Resource
@@ -85,7 +92,12 @@ public class ModuleController extends AbstractController<ModuleView> {
         String error = moduleService.canBeDisabled(module);
 
         if (StringUtils.isEmpty(error)) {
-            moduleService.disableModule(module);
+            try {
+                moduleService.disableModule(module);
+            } catch (ModuleException e) {
+                addModuleError(e, "error.module.cannot.stop");
+            }
+
             getView().refreshList();
         } else {
             uiUtils.displayI18nText(error);
@@ -119,7 +131,21 @@ public class ModuleController extends AbstractController<ModuleView> {
         File file = SwingUtils.chooseFile(new SimpleFilter("JAR File (*.jar)", "jar"));
 
         if (file != null) {
-            moduleService.installModule(file);
+            try {
+                moduleService.installModule(file);
+
+                uiUtils.displayI18nText("message.module.installed");
+            } catch (ModuleException e) {
+                addModuleError(e, "error.module.cannot.install");
+            }
+        }
+    }
+
+    private void addModuleError(ModuleException e, String defaultMessage) {
+        if(e.hasI18nMessage()){
+            errorService.addError(Errors.newI18nError(e.getI18nMessage(), e));
+        } else {
+            errorService.addError(Errors.newI18nError(defaultMessage, e));
         }
     }
 
@@ -134,7 +160,11 @@ public class ModuleController extends AbstractController<ModuleView> {
             InstallationResult result = updateService.installModule(url);
 
             if (result.isInstalled()) {
-                moduleService.installFromRepository(result.getJarFile());
+                try {
+                    moduleService.installFromRepository(result.getJarFile());
+                } catch (ModuleException e) {
+                    addModuleError(e,"error.repository.module.not.installed");
+                }
             } else {
                 uiUtils.displayI18nText("error.repository.module.not.installed");
             }
@@ -156,7 +186,16 @@ public class ModuleController extends AbstractController<ModuleView> {
                     "dialogs.confirm.uninstall.title");
 
             if (confirm) {
-                moduleService.uninstallModule(module);
+                try {
+                    moduleService.uninstallModule(module);
+                } catch (ModuleException e) {
+                    if(e.getOperation() == ModuleOperation.STOP){
+                        addModuleError(e, "error.module.cannot.stop");
+                    } else if(e.getOperation() == ModuleOperation.UNINSTALL){
+                        addModuleError(e, "error.module.cannot.uninstall");
+                    }
+                }
+
                 getView().refreshList();
             }
         } else {
@@ -273,7 +312,11 @@ public class ModuleController extends AbstractController<ModuleView> {
 
         @Override
         protected void doWork() {
-            moduleService.startModule(module);
+            try {
+                moduleService.startModule(module);
+            } catch (ModuleException e) {
+                addModuleError(e, "error.module.cannot.start");
+            }
         }
 
         @Override
@@ -307,7 +350,11 @@ public class ModuleController extends AbstractController<ModuleView> {
 
         @Override
         protected void doWork() {
-            moduleService.stopModule(module);
+            try {
+                moduleService.stopModule(module);
+            } catch (ModuleException e) {
+                addModuleError(e, "error.module.cannot.stop");
+            }
         }
     }
 
@@ -346,7 +393,13 @@ public class ModuleController extends AbstractController<ModuleView> {
             boolean restart = false;
 
             if (module.getState() == ModuleState.STARTED) {
-                moduleService.stopModule(module);
+                try {
+                    moduleService.stopModule(module);
+                } catch (ModuleException e) {
+                    addModuleError(e, "error.module.cannot.stop");
+
+                    return;
+                }
 
                 restart = true;
             }
@@ -354,7 +407,11 @@ public class ModuleController extends AbstractController<ModuleView> {
             updateService.update(module);
 
             if (restart) {
-                moduleService.startModule(module);
+                try {
+                    moduleService.startModule(module);
+                } catch (ModuleException e) {
+                    addModuleError(e, "error.module.cannot.start");
+                }
             }
         }
     }

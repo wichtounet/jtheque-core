@@ -79,7 +79,7 @@ public interface ModuleService {
      *
      * @param jarFile The name of the JAR file.
      */
-    void installFromRepository(String jarFile);
+    void installFromRepository(String jarFile) throws ModuleException;
 
     /**
      * Enable a module.
@@ -97,22 +97,26 @@ public interface ModuleService {
      * Disable the module.
      *
      * @param module The module to disable.
+     *
+     * @throws ModuleException If an error occurs during stop (if started) the module.
      */
-    void disableModule(Module module);
+    void disableModule(Module module) throws ModuleException;
 
     /**
      * Install the module of the file.
      *
      * @param file The file of the module.
      */
-    void installModule(File file);
+    void installModule(File file) throws ModuleException;
 
     /**
      * Uninstall the module.
      *
      * @param module The module to uninstall.
+     *
+     * @throws ModuleException If an error occurs during uninstall or stop (if started) the module.
      */
-    void uninstallModule(Module module);
+    void uninstallModule(Module module) throws ModuleException;
 
     /**
      * Test if a module can ben started.
@@ -157,7 +161,7 @@ public interface ModuleService {
      *
      * @throws IllegalStateException If the module is already started.
      */
-    void startModule(Module module);
+    void startModule(Module module) throws ModuleException;
 
     /**
      * Stop the module.
@@ -165,8 +169,9 @@ public interface ModuleService {
      * @param module The module to stop.
      *
      * @throws IllegalStateException If the module is already stopped.
+     * @throws ModuleException       If the module cannot be stopped.
      */
-    void stopModule(Module module);
+    void stopModule(Module module) throws ModuleException;
 
     /**
      * Indicate if the primary module is collection based.

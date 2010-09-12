@@ -1,7 +1,10 @@
 package org.jtheque.views.impl.controllers;
 
 import org.jtheque.core.Core;
+import org.jtheque.errors.ErrorService;
+import org.jtheque.errors.Errors;
 import org.jtheque.modules.ModuleDescription;
+import org.jtheque.modules.ModuleException;
 import org.jtheque.modules.ModuleService;
 import org.jtheque.ui.Action;
 import org.jtheque.ui.UIUtils;
@@ -57,10 +60,13 @@ public class RepositoryController extends AbstractController<RepositoryView> {
     private ModuleService moduleService;
 
     @Resource
+    private ErrorService errorService;
+
+    @Resource
     private UpdateService updateService;
 
     /**
-     * Construct a new RepositoryController. 
+     * Construct a new RepositoryController.
      */
     public RepositoryController() {
         super(RepositoryView.class);
@@ -83,13 +89,19 @@ public class RepositoryController extends AbstractController<RepositoryView> {
 
         if (description.getCoreVersion().isGreaterThan(Core.VERSION)) {
             uiUtils.displayI18nText("error.module.version.core");
+        } else if (moduleService.isInstalled(description.getId())) {
+            uiUtils.displayI18nText("message.repository.module.installed");
         } else {
-            if (moduleService.isInstalled(description.getId())) {
-                uiUtils.displayI18nText("message.repository.module.installed");
-            } else {
-                InstallationResult result = updateService.installModule(description.getDescriptorURL());
+            InstallationResult result = updateService.installModule(description.getDescriptorURL());
 
+            try {
                 moduleService.installFromRepository(result.getJarFile());
+            } catch (ModuleException e) {
+                if (e.hasI18nMessage()) {
+                    errorService.addError(Errors.newI18nError(e.getI18nMessage(), e));
+                } else {
+                    errorService.addError(Errors.newI18nError("error.module.install.repository.not.installed", e));
+                }
             }
         }
     }
