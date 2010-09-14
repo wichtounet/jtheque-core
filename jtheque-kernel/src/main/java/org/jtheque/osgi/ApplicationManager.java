@@ -129,8 +129,6 @@ final class ApplicationManager {
         public void run() {
             while (!serverSocket.isClosed() && serverSocket != null) {
                 try {
-
-
                     Application application = new Application(serverSocket.accept());
                     applications.add(application);
 
