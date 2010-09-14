@@ -42,6 +42,8 @@ final class I18nApplicationProperties implements ApplicationProperties {
 
         resourceBundle = new ReloadableResourceBundleMessageSource();
 
+        resourceBundle.setAlwaysUseMessageFormat(false);
+        resourceBundle.setUseCodeAsDefaultMessage(true);
         resourceBundle.setBasename("file:" + SystemProperty.USER_DIR.get() + "i18n/application");
     }
 
