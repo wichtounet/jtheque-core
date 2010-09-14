@@ -8,6 +8,7 @@ import org.jtheque.events.EventService;
 import org.jtheque.events.Events;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.SystemProperty;
+import org.jtheque.utils.ThreadUtils;
 import org.jtheque.utils.annotations.GuardedInternally;
 import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.collections.WeakEventListenerList;
@@ -74,10 +75,15 @@ public final class LifeCycleImpl implements LifeCycle {
      *
      * @param code The exit code.
      */
-    private void exit(int code) {
+    private void exit(final int code) {
         eventService.addEvent(Events.newInfoEvent("User", "events.close", EventService.CORE_EVENT_LOG));
 
-        Runtime.getRuntime().exit(code);
+        ThreadUtils.inNewThread(new Runnable(){
+            @Override
+            public void run() {
+                Runtime.getRuntime().exit(code);
+            }
+        });
     }
 
     @Override
