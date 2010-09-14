@@ -3,12 +3,15 @@ package org.jtheque.persistence;
 import org.jtheque.persistence.utils.AbstractEntity;
 import org.jtheque.persistence.utils.CachedJDBCDao;
 import org.jtheque.persistence.utils.Query;
+import org.jtheque.utils.SystemProperty;
 import org.jtheque.utils.bean.EqualsBuilder;
 import org.jtheque.utils.bean.HashCodeUtils;
 import org.jtheque.utils.bean.ReflectionUtils;
+import org.jtheque.utils.io.FileUtils;
 import org.jtheque.utils.unit.db.AbstractDBUnitTest;
 
 import org.dbunit.dataset.DataSetException;
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,6 +25,7 @@ import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.sql.DataSource;
 
+import java.io.File;
 import java.lang.reflect.Field;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -58,12 +62,28 @@ public class CachedJDBCDaoTest extends AbstractDBUnitTest {
     @Resource
     private DaoPersistenceContext daoPersistenceContext;
 
+    private static String userDir;
+
     static {
         ((Logger) LoggerFactory.getLogger("root")).setLevel(Level.ERROR);
+
+        userDir = SystemProperty.USER_DIR.get();
+
+        File folder = new File(SystemProperty.JAVA_IO_TMP_DIR.get(), "jtheque");
+        folder.mkdirs();
+
+        SystemProperty.USER_DIR.set(folder.getAbsolutePath());
     }
 
     public CachedJDBCDaoTest() {
         super("datas.xml");
+    }
+
+    @AfterClass
+    public static void after() {
+        FileUtils.delete(new File(SystemProperty.JAVA_IO_TMP_DIR.get(), "jtheque"));
+
+        SystemProperty.USER_DIR.set(userDir);
     }
 
     @PostConstruct

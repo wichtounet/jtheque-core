@@ -52,6 +52,6 @@
     <bean id="errorService" class="org.jtheque.errors.impl.ErrorServiceImpl"/>
     <bean id="stateService" class="org.jtheque.states.impl.StateServiceImpl"/>
     <bean id="eventService" class="org.jtheque.events.impl.EventServiceImpl"/>
-    <bean id="webHelper" class="org.jtheque.core.utils.WebHelper"/>
+    <bean id="webHelper" class="org.jtheque.core.utils.impl.SimpleWebHelper"/>
 
 </beans>

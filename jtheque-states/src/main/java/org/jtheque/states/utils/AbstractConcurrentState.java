@@ -88,4 +88,8 @@ public abstract class AbstractConcurrentState {
     protected final void setProperty(String key, String value) {
         properties.put(key, value);
     }
+
+    protected final void removeProperty(String key){
+        properties.remove(key);
+    }
 }

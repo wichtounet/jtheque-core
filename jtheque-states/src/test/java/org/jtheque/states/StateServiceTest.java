@@ -7,7 +7,6 @@ import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.io.FileUtils;
 
 import org.junit.AfterClass;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.LoggerFactory;
@@ -47,15 +46,12 @@ public class StateServiceTest {
     @Resource
     private StateService stateService;
 
-    private static String userDir;
+    private static final String USER_DIR;
 
     static {
         ((Logger) LoggerFactory.getLogger("root")).setLevel(Level.ERROR);
-    }
-    
-    @BeforeClass
-    public static void before(){
-        userDir = SystemProperty.USER_DIR.get();
+
+        USER_DIR = SystemProperty.USER_DIR.get();
 
         File folder = new File(SystemProperty.JAVA_IO_TMP_DIR.get(), "jtheque");
         folder.mkdirs();
@@ -67,7 +63,7 @@ public class StateServiceTest {
     public static void after() {
         FileUtils.delete(new File(SystemProperty.JAVA_IO_TMP_DIR.get(), "jtheque"));
 
-        SystemProperty.USER_DIR.set(userDir);
+        SystemProperty.USER_DIR.set(USER_DIR);
     }
 
     @Test

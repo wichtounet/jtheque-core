@@ -63,10 +63,7 @@ public class FileServiceTest {
 
     static {
         ((Logger) LoggerFactory.getLogger("root")).setLevel(Level.ERROR);
-    }
 
-    @BeforeClass
-    public static void before() {
         userDir = SystemProperty.USER_DIR.get();
 
         File folder = new File(SystemProperty.JAVA_IO_TMP_DIR.get(), "jtheque");
@@ -74,7 +71,7 @@ public class FileServiceTest {
 
         SystemProperty.USER_DIR.set(folder.getAbsolutePath());
     }
-
+    
     @AfterClass
     public static void after() {
         FileUtils.delete(new File(SystemProperty.JAVA_IO_TMP_DIR.get(), "jtheque"));

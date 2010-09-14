@@ -46,10 +46,7 @@ public class EventServiceTest {
 
     static {
         ((Logger) LoggerFactory.getLogger("root")).setLevel(Level.ERROR);
-    }
 
-    @BeforeClass
-    public static void before() {
         userDir = SystemProperty.USER_DIR.get();
 
         File folder = new File(SystemProperty.JAVA_IO_TMP_DIR.get(), "jtheque");
