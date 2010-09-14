@@ -74,10 +74,6 @@ final class ModuleDescriptor {
      * @throws NoSuchElementException If the version's file contains no version.
      */
     ModuleVersion getMostRecentVersion() {
-        if (moduleVersions.isEmpty()) {
-            throw new NoSuchElementException("The descriptor contains no versions. ");
-        }
-
         return mostRecent;
     }
 }

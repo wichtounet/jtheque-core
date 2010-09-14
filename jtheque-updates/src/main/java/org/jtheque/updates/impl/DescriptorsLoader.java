@@ -166,7 +166,11 @@ final class DescriptorsLoader {
     Version getMostRecentVersion(Versionable object) {
         ModuleDescriptor descriptor = getModuleDescriptor(object.getDescriptorURL());
 
-        return descriptor != null ? descriptor.getMostRecentVersion().getVersion() : null;
+        if (descriptor == null || descriptor.getMostRecentVersion() == null) {
+            return null;
+        } else {
+            return descriptor.getMostRecentVersion().getVersion();
+        }
     }
 
     /**
@@ -176,6 +180,7 @@ final class DescriptorsLoader {
      *
      * @return The most recent module version of the descriptor.
      */
+
     ModuleVersion getMostRecentModuleVersion(String url) {
         ModuleDescriptor versionsFile = getModuleDescriptor(url);
 
