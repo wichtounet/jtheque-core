@@ -428,7 +428,7 @@ public final class ModuleManager {
 
             countDown = new CountDownLatch(startList.size());
 
-            startReadyModules();
+            //startReadyModules();
 
             while (true) {
                 try {
@@ -470,7 +470,7 @@ public final class ModuleManager {
                     startersPool.submit(new ModuleStarterRunnable(this, module, moduleLauncher));
                     iterator.remove();
                 } else if (!(canBeLoaded(module) && areAllDependenciesSatisfied(module))) {
-                    //Perhaps the start of the module has not been successful and this module cannot be launcher anymore
+                    //Perhaps the start of a module has not been successful and this module cannot be launched anymore
 
                     countDown.countDown();
                     iterator.remove();

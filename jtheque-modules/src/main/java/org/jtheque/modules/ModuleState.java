@@ -22,19 +22,22 @@ package org.jtheque.modules;
  * @author Baptiste Wicht
  */
 public enum ModuleState {
-    STARTED("modules.states.started"),
-    INSTALLED("modules.states.installed"),
-    DISABLED("modules.states.disabled");
+    INSTALLED("modules.states.installed", 0),
+    STARTED("modules.states.started", 1),
+    DISABLED("modules.states.disabled", 2);
 
     private final String key;
+    private final int value;
 
     /**
      * Construct a new ModuleState.
      *
-     * @param key The i18n key of the module state.
+     * @param key   The i18n key of the module state.
+     * @param value The value of the state (used to write it to configuration files).
      */
-    ModuleState(String key) {
+    ModuleState(String key, int value) {
         this.key = key;
+        this.value = value;
     }
 
     /**
@@ -46,23 +49,24 @@ public enum ModuleState {
         return key;
     }
 
-    /**
-     * Return the enum value from the ordinal value.
-     *
-     * @param ordinal The ordinal value.
-     *
-     * @return The enum value corresponding to the ordinal value.
-     */
-    public static ModuleState valueOf(int ordinal) {
-        ModuleState state = STARTED;
+    public int getValue() {
+        return value;
+    }
 
+    /**
+     * Return the enum value from the value.
+     *
+     * @param value The value of the state.
+     *
+     * @return The enum value corresponding to the value.
+     */
+    public static ModuleState valueOf(int value) {
         for (ModuleState s : values()) {
-            if (s.ordinal() == ordinal) {
-                state = s;
-                break;
+            if (s.value == value) {
+                return s;
             }
         }
 
-        return state;
+        throw new IllegalArgumentException("The value is not a value of a state. ");
     }
 }

@@ -110,13 +110,7 @@ public final class ModuleServiceImpl implements ModuleService, ModuleLauncher {
         moduleManager.loadModules();
 
         for (Module module : moduleManager.getModules()) {
-            //Configuration
-            if (configuration.containsModule(module)) {
-                module.setState(configuration.getState(module.getId()));
-            } else {
-                module.setState(INSTALLED);
-                configuration.add(module);
-            }
+            configuration.setInitialState(module);
 
             //If a collection module must be launched
             if (ModuleManager.canBeLoaded(module) && module.isCollection()) {
@@ -215,12 +209,17 @@ public final class ModuleServiceImpl implements ModuleService, ModuleLauncher {
                 throw new IllegalStateException("The module is already started. ");
             }
 
-            moduleManager.startModule(module);
+            try {
+                loadImageResources(module);
+                
+                moduleManager.startModule(module);
+            } catch (ModuleException e){
+                unloadImageResources(module);
+
+                throw e;
+            }
 
             setState(module, STARTED);
-
-            //Add images resources
-            loadImageResources(module);
 
             SwingLoader loader = loaders.remove(module.getId());
             if (loader != null) {
@@ -231,6 +230,12 @@ public final class ModuleServiceImpl implements ModuleService, ModuleLauncher {
         fireModuleStarted(module);
 
         LoggerFactory.getLogger(getClass()).debug("Module {} started", module.getBundle().getSymbolicName());
+    }
+
+    private void unloadImageResources(Module module) {
+        for (ImageResource imageResource : resources.get(module).getImageResources()) {
+            imageService.releaseResource(imageResource.getName());
+        }
     }
 
     /**
@@ -262,9 +267,7 @@ public final class ModuleServiceImpl implements ModuleService, ModuleLauncher {
 
             moduleManager.stopModule(module);
 
-            for (ImageResource imageResource : resources.get(module).getImageResources()) {
-                imageService.releaseResource(imageResource.getName());
-            }
+            unloadImageResources(module);
 
             ModuleResourceCache.removeModule(module.getId());
 
@@ -311,7 +314,7 @@ public final class ModuleServiceImpl implements ModuleService, ModuleLauncher {
      * @param module The module to install.
      */
     private void installModule(Module module) {
-        configuration.add(module);
+        configuration.update(module);
 
         fireModuleInstalled(module);
     }
@@ -422,17 +425,15 @@ public final class ModuleServiceImpl implements ModuleService, ModuleLauncher {
     }
 
     /**
-     * Set the state of a module.
+     * Set the state of a module. Not thread safe, must be called with a lock on getModuleLock(module)
      *
      * @param module The module to set the state.
      * @param state  The state.
      */
     private void setState(Module module, ModuleState state) {
-        synchronized (getModuleLock(module)) {
-            module.setState(state);
+        module.setState(state);
 
-            configuration.setState(module.getId(), state);
-        }
+        configuration.update(module);
     }
 
     private Object getModuleLock(Module module) {

@@ -355,7 +355,7 @@ public final class ModuleLoader implements BundleContextAware {
     private static List<I18NResource> importI18NResources(XMLOverReader reader) throws XMLException {
         List<I18NResource> i18NResources = CollectionUtils.newList();
 
-        while (reader.next("/config/i18n/i18nResource")) {
+        while (reader.next("/config/i18n/resource")) {
             List<String> resources = CollectionUtils.newList(5);
 
             String name = reader.readString("@name");
