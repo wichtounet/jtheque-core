@@ -83,16 +83,6 @@ public final class CoreConfigurationImpl extends AbstractConcurrentState impleme
     }
 
     @Override
-    public void setMustDeleteLogs(boolean value) {
-        setProperty("deleteLog", Boolean.toString(value));
-    }
-
-    @Override
-    public boolean mustDeleteLogs() {
-        return Boolean.valueOf(getProperty("deleteLog", FALSE));
-    }
-
-    @Override
     public void setUserEmail(String value) {
         setProperty("userEmail", value);
     }

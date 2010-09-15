@@ -18,11 +18,12 @@ package org.jtheque.views.impl.windows;
 
 import org.jtheque.i18n.LanguageService;
 import org.jtheque.ui.Model;
-import org.jtheque.utils.SimplePropertiesCache;
+import org.jtheque.ui.components.LayerTabbedPane;
 import org.jtheque.ui.constraints.Constraint;
 import org.jtheque.ui.utils.builders.I18nPanelBuilder;
-import org.jtheque.ui.components.LayerTabbedPane;
 import org.jtheque.ui.utils.windows.dialogs.SwingFilthyBuildedDialogView;
+import org.jtheque.utils.SimplePropertiesCache;
+import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.views.Views;
 import org.jtheque.views.components.ConfigTabComponent;
@@ -30,6 +31,7 @@ import org.jtheque.views.components.ConfigTabComponent;
 import org.slf4j.LoggerFactory;
 
 import java.util.Map;
+import java.util.Set;
 
 /**
  * A view for the configuration.
@@ -38,6 +40,8 @@ import java.util.Map;
  */
 public final class ConfigView extends SwingFilthyBuildedDialogView<Model> implements org.jtheque.views.windows.ConfigView {
     private LayerTabbedPane tab;
+
+    private final Set<ConfigTabComponent> components = CollectionUtils.newSet(5);
 
     @Override
     protected void initView() {
@@ -53,10 +57,12 @@ public final class ConfigView extends SwingFilthyBuildedDialogView<Model> implem
 
         for (ConfigTabComponent component : getService(Views.class).getConfigTabComponents()) {
             tab.addLayeredTab(languageService.getMessage(component.getTitleKey()), component.getComponent());
-
+            
             for (Map.Entry<Object, Constraint> constraint : component.getConstraints().entrySet()) {
                 addConstraint(constraint.getKey(), constraint.getValue());
             }
+
+            components.add(component);
         }
 
         builder.add(tab, builder.gbcSet(0, 0, GridBagUtils.BOTH));
@@ -85,7 +91,15 @@ public final class ConfigView extends SwingFilthyBuildedDialogView<Model> implem
         if ("add".equals(message)) {
             ConfigTabComponent component = (ConfigTabComponent) value;
 
+            if(components.contains(component)){
+                return;
+            }
+            
             tab.addLayeredTab(getService(LanguageService.class).getMessage(component.getTitleKey()), component.getComponent());
+
+            components.add(component);
+
+            pack();
         } else if ("remove".equals(message)) {
             ConfigTabComponent component = (ConfigTabComponent) value;
 
@@ -94,6 +108,10 @@ public final class ConfigView extends SwingFilthyBuildedDialogView<Model> implem
             if(index >= 0){
                 tab.removeTabAt(index);
             }
+
+            components.remove(component);
+
+            pack();
         }
     }
 }

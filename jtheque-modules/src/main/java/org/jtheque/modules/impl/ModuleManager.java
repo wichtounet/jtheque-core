@@ -109,20 +109,6 @@ public final class ModuleManager {
     }
 
     /**
-     * Uninstall the modules.
-     */
-    void uninstallModules() {
-        for (Module module : modules) {
-            try {
-                uninstallModule(module);
-            } catch (ModuleException e) {
-                //Cannot do anything else, it's shutdown time
-                LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
-            }
-        }
-    }
-
-    /**
      * Start the given module.
      *
      * @param module The module to start.

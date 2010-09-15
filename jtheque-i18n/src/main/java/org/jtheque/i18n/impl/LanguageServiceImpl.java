@@ -209,7 +209,7 @@ public final class LanguageServiceImpl implements LanguageService {
 
     @Override
     public String getCurrentLanguage() {
-        return locale.getDisplayLanguage();
+        return StringUtils.setFirstLetterUpper(locale.getDisplayLanguage());
     }
 
     @Override

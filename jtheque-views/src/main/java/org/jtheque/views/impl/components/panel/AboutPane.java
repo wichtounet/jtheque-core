@@ -2,8 +2,8 @@ package org.jtheque.views.impl.components.panel;
 
 import org.jtheque.core.Core;
 import org.jtheque.core.application.Application;
-import org.jtheque.i18n.LanguageService;
 import org.jtheque.i18n.Internationalizable;
+import org.jtheque.i18n.LanguageService;
 import org.jtheque.ui.utils.AnimationUtils;
 import org.jtheque.utils.DesktopUtils;
 import org.jtheque.utils.StringUtils;
@@ -12,10 +12,10 @@ import org.jtheque.utils.ui.ImageUtils;
 import org.jtheque.utils.ui.PaintUtils;
 import org.jtheque.utils.ui.SizeTracker;
 import org.jtheque.utils.ui.SwingUtils;
-import org.jtheque.views.windows.AboutView;
-import org.jtheque.views.windows.LicenseView;
+import org.jtheque.views.impl.controllers.LicenseController;
 import org.jtheque.views.impl.models.AboutInfo;
 import org.jtheque.views.impl.models.AboutModel;
+import org.jtheque.views.windows.AboutView;
 
 import org.jdesktop.swingx.JXPanel;
 import org.pushingpixels.trident.Timeline;
@@ -91,19 +91,19 @@ public final class AboutPane extends JXPanel implements AboutView, International
     private final AboutModel model = new AboutModel();
 
     @Resource
-    private LicenseView licenseView;
-
-    @Resource
     private Core core;
 
     @Resource
     private LanguageService languageService;
 
+    @Resource
+    private LicenseController licenseController;
+
     /**
-     * Create the view. 
+     * Create the view.
      */
     @PostConstruct
-    public void create(){
+    public void create() {
         setOpaque(false);
         setVisible(true);
 
@@ -128,7 +128,7 @@ public final class AboutPane extends JXPanel implements AboutView, International
     }
 
     /**
-     * Init the about pane. 
+     * Init the about pane.
      */
     private void init() {
         model.refresh(core, languageService);
@@ -409,7 +409,7 @@ public final class AboutPane extends JXPanel implements AboutView, International
     }
 
     /**
-     * Set the start position. Called from Trident. 
+     * Set the start position. Called from Trident.
      *
      * @param start The position. +
      */
@@ -475,7 +475,7 @@ public final class AboutPane extends JXPanel implements AboutView, International
             } else if (shapes.get("license").contains(event.getPoint())) {
                 disappear();
 
-                licenseView.display();
+                licenseController.getView().display();
             }
         }
     }

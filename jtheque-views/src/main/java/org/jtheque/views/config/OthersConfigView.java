@@ -16,18 +16,11 @@ package org.jtheque.views.config;
  * limitations under the License.
  */
 
-import javax.swing.JCheckBox;
-
 /**
  * A config view for others specification.
  *
  * @author Baptiste Wicht
  */
 public interface OthersConfigView {
-    /**
-     * Return the checkbox indicating if we must delete logs or not.
-     *
-     * @return boxDeleteLogs The check box indicating if we must delete logs or not.
-     */
-    JCheckBox getBoxDeleteLogs();
+    
 }

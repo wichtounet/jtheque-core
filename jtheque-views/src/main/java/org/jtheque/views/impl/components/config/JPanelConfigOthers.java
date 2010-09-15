@@ -39,14 +39,12 @@ import java.util.Map;
  * @author Baptiste Wicht
  */
 public final class JPanelConfigOthers extends OSGIFilthyBuildedPanel implements OthersConfigView, ConfigTabComponent {
-    private JCheckBox boxDeleteLogs;
     private JCheckBox checkBoxStart;
     private TextField fieldEmail;
     private TextField fieldSmtpHost;
 
     @Override
     protected void buildView(I18nPanelBuilder builder) {
-        addLogsPanel(builder);
         addMailPanel(builder);
 
         checkBoxStart = builder.addI18nCheckBox("update.view.verify", builder.gbcSet(0, 2));
@@ -60,27 +58,12 @@ public final class JPanelConfigOthers extends OSGIFilthyBuildedPanel implements 
     }
 
     /**
-     * Add the "logs" panel.
-     *
-     * @param parent The parent builder.
-     */
-    private void addLogsPanel(I18nPanelBuilder parent) {
-        I18nPanelBuilder builder = parent.addPanel(parent.gbcSet(0, 0, GridBagUtils.HORIZONTAL, GridBagUtils.FIRST_LINE_START));
-        builder.setI18nTitleBorder("config.others.logs.title");
-
-        boxDeleteLogs = builder.addI18nCheckBox("config.others.logs.delete",
-                builder.gbcSet(0, 0, GridBagUtils.HORIZONTAL, GridBagUtils.BASELINE_LEADING, 2, 1));
-
-        builder.addI18nLabel("config.others.logs.days", builder.gbcSet(0, 1));
-    }
-
-    /**
      * Add the "mail" panel.
      *
      * @param parent The parent builder.
      */
     private void addMailPanel(I18nPanelBuilder parent) {
-        I18nPanelBuilder builder = parent.addPanel(parent.gbcSet(0, 1, GridBagUtils.HORIZONTAL, GridBagUtils.FIRST_LINE_START));
+        I18nPanelBuilder builder = parent.addPanel(parent.gbcSet(0, 0, GridBagUtils.HORIZONTAL, GridBagUtils.FIRST_LINE_START));
         builder.setI18nTitleBorder("config.others.mail.title");
 
         builder.addI18nLabel("config.others.mail.userEmail", builder.gbcSet(0, 0, GridBagUtils.NONE, GridBagUtils.BASELINE_TRAILING));
@@ -97,7 +80,6 @@ public final class JPanelConfigOthers extends OSGIFilthyBuildedPanel implements 
         CoreConfiguration config = getService(Core.class).getConfiguration();
 
         checkBoxStart.setSelected(config.verifyUpdateOnStartup());
-        boxDeleteLogs.setSelected(config.mustDeleteLogs());
         fieldEmail.setText(config.getUserEmail());
         fieldSmtpHost.setText(config.getSmtpHost());
     }
@@ -107,7 +89,6 @@ public final class JPanelConfigOthers extends OSGIFilthyBuildedPanel implements 
         CoreConfiguration config = getService(Core.class).getConfiguration();
 
         config.setVerifyUpdateOnStartup(checkBoxStart.isSelected());
-        config.setMustDeleteLogs(boxDeleteLogs.isSelected());
         config.setUserEmail(fieldEmail.getText());
         config.setSmtpHost(fieldSmtpHost.getText());
     }
@@ -115,11 +96,6 @@ public final class JPanelConfigOthers extends OSGIFilthyBuildedPanel implements 
     @Override
     public void cancel() {
         fillAllFields();
-    }
-
-    @Override
-    public JCheckBox getBoxDeleteLogs() {
-        return boxDeleteLogs;
     }
 
     @Override

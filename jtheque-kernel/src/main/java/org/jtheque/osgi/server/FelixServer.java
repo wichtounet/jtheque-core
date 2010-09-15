@@ -1,6 +1,7 @@
 package org.jtheque.osgi.server;
 
 import org.jtheque.utils.collections.CollectionUtils;
+import org.jtheque.utils.io.FileUtils;
 
 import org.apache.felix.framework.Felix;
 import org.osgi.framework.Bundle;
@@ -47,11 +48,38 @@ public final class FelixServer implements OSGiServer {
     public void start() {
         getLogger().debug("Starting Felix Server");
 
+        emptyFelixCache();
+
+        startFelixServer();
+
+        autoDeploy();
+
+        getLogger().info("Felix started with {} cached bundles", bundles.size());
+    }
+
+
+    /**
+     * Empty the cache.
+     */
+    private void emptyFelixCache() {
         long startTime = System.currentTimeMillis();
 
-        Map<String, Object> configMap = CollectionUtils.newHashMap(5);
+        for(File f : CACHE_DIR.listFiles()){
+            FileUtils.delete(f);
+        }
 
-        configMap.put("felix.cache.bufsize", "8192");
+        getLogger().debug("Cache cleaned in {} ms", System.currentTimeMillis() - startTime);
+    }
+
+    /**
+     * Start the Felix server. 
+     */
+    private void startFelixServer() {
+        long startTime = System.currentTimeMillis();
+
+        Map<String, Object> configMap = CollectionUtils.newHashMap(2);
+
+        configMap.put("felix.cache.bufsize", "16384");
         configMap.put("org.osgi.framework.storage", CACHE_DIR.getAbsolutePath());
         //configMap.put("org.osgi.framework.bootdelegation", "org.netbeans.lib.profiler, org.netbeans.lib.profiler.*");
 
@@ -68,10 +96,6 @@ public final class FelixServer implements OSGiServer {
         }
 
         getLogger().debug("Felix Server started in {} ms", System.currentTimeMillis() - startTime);
-
-        autoDeploy();
-
-        getLogger().info("Felix started with {} cached bundles : {}", bundles.size(), bundles);
     }
 
     /**

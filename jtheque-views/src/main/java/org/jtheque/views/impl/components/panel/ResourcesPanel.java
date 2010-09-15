@@ -43,8 +43,6 @@ public final class ResourcesPanel extends OSGIFilthyBuildedPanel implements Reso
         resourcesList = builder.addScrolledList(new ResourceListModel(resourceService), new ResourceListRenderer(),
                 builder.gbcSet(0, 0, GridBagUtils.BOTH, GridBagUtils.FIRST_LINE_START, 1.0, 1.0));
         resourcesList.setBorder(Borders.EMPTY_BORDER);
-
-        //builder.addButtonBar(builder.gbcSet(0, 1, GridBagUtils.HORIZONTAL, GridBagUtils.FIRST_LINE_START), new UpdateUpdatableAction());
     }
 
     @Override

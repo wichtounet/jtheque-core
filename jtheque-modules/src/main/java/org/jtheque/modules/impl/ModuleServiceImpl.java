@@ -37,12 +37,10 @@ import org.jtheque.utils.ui.SwingUtils;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.UrlResource;
 
-import javax.annotation.PreDestroy;
 import javax.annotation.Resource;
 
 import java.io.File;
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentMap;
 
@@ -136,37 +134,6 @@ public final class ModuleServiceImpl implements ModuleService, ModuleLauncher {
         started = true;
 
         moduleManager.startAll(this);
-    }
-
-    /**
-     * Stop and uninstall all the modules.
-     */
-    @PreDestroy
-    public void shutdown() {
-        stopModules();
-
-        synchronized (this) {
-            moduleManager.uninstallModules();
-        }
-    }
-
-    /**
-     * Stop all the modules
-     */
-    private void stopModules() {
-        List<Module> modulesToStop = CollectionUtils.copyOf(moduleManager.getModules());
-
-        CollectionUtils.reverse(modulesToStop);
-
-        for (Module module : modulesToStop) {
-            if (module.getState() == STARTED) {
-                try {
-                    stopModule(module);
-                } catch (ModuleException e) {
-                    LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
-                }
-            }
-        }
     }
 
     @Override

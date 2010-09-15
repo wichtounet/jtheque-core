@@ -97,20 +97,6 @@ public interface CoreConfiguration {
     String getProxyAddress();
 
     /**
-     * Set if we must delete the logs or not.
-     *
-     * @param value A boolean tag indicating if we must delete the logs or not.
-     */
-    void setMustDeleteLogs(boolean value);
-
-    /**
-     * Indicate if we must delete the logs or not.
-     *
-     * @return <code>true</code> if we must delete the logs else <code>false</code>
-     */
-    boolean mustDeleteLogs();
-
-    /**
      * Set the email of the user.
      *
      * @param value The new email to set

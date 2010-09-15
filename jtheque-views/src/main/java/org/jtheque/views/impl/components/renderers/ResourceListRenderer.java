@@ -30,6 +30,7 @@ import javax.swing.ListCellRenderer;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Font;
 
 /**
  * A renderer to display a resource in a list.
@@ -62,11 +63,9 @@ public final class ResourceListRenderer extends JPanel implements ListCellRender
     @Override
     public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
         if (isSelected) {
-            setBackground(Color.blue);
-            setChildsForeground(Color.white);
+            setChildsFont(getFont().deriveFont(Font.BOLD));
         } else {
-            setBackground(Color.white);
-            setChildsForeground(Color.blue);
+            setChildsFont(getFont().deriveFont(Font.PLAIN));
         }
 
         Resource resource = (Resource) value;
@@ -78,13 +77,13 @@ public final class ResourceListRenderer extends JPanel implements ListCellRender
     }
 
     /**
-     * Set the foreground of the childs.
+     * Set the font of the childs.
      *
-     * @param color The foreground color.
+     * @param font The font of the childs.
      */
-    private void setChildsForeground(Color color) {
-        labelName.setForeground(color);
-        labelCurrentVersion.setForeground(color);
-        labelCurrentVersion1.setForeground(color);
+    private void setChildsFont(Font font) {
+        labelName.setFont(font);
+        labelCurrentVersion.setFont(font);
+        labelCurrentVersion1.setFont(font);
     }
 }
