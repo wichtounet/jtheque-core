@@ -249,7 +249,7 @@ public final class XMLApplicationReader {
         if (reader.existsNode("options", reader.getRootElement())) {
             Object element = reader.getNode("options", reader.getRootElement());
 
-            if (exists("licence", element)) {
+            if (exists("license", element)) {
                 application.displayLicense();
                 application.setProperty("application.license", SystemProperty.USER_DIR.get() + reader.readString("license", element));
             }
