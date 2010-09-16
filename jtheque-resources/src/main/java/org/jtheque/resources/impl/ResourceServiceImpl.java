@@ -243,7 +243,7 @@ public final class ResourceServiceImpl implements ResourceService, BundleContext
     private static File getResourceFolder(String id, Version version) {
         File file = new File(SystemProperty.USER_DIR.get(), "resources/" + id + '/' + version);
 
-        if (!file.mkdirs()) {
+        if (!file.exists() && !file.mkdirs()) {
             LoggerFactory.getLogger(ResourceServiceImpl.class).error("Unable to create the resource folder {}", file.getAbsolutePath());
         }
 
