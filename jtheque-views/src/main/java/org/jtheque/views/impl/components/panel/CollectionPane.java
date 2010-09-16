@@ -135,6 +135,7 @@ public final class CollectionPane extends AbstractPanelView implements Collectio
 
         textField = Filthy.newTextField();
         textField.setText(core.getConfiguration().getLastCollection());
+        textField.getField().setCaretPosition(textField.getText().length());
 
         SwingUtils.addFieldValidateAction(textField.getField(), chooseAction);
 
