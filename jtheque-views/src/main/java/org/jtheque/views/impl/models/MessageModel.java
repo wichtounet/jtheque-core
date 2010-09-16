@@ -18,10 +18,6 @@ package org.jtheque.views.impl.models;
 
 import org.jtheque.messages.Message;
 import org.jtheque.messages.MessageService;
-import org.jtheque.utils.collections.CollectionUtils;
-
-import java.util.ArrayList;
-import java.util.ListIterator;
 
 /**
  * A model for the messages view.
@@ -29,10 +25,8 @@ import java.util.ListIterator;
  * @author Baptiste Wicht
  */
 public final class MessageModel implements IMessageModel {
-    private final MessageService messageService;
-    private final Message defaultMessage;
-
-    private final ListIterator<Message> iterator;
+    private final Message[] messages;
+    private int current;
 
     /**
      * Construct a new MessageModel.
@@ -42,42 +36,31 @@ public final class MessageModel implements IMessageModel {
     public MessageModel(MessageService messageService) {
         super();
 
-        this.messageService = messageService;
-
-        iterator = new ArrayList<Message>(messageService.getMessages()).listIterator();
-
-        defaultMessage = messageService.getEmptyMessage();
-    }
-
-    @Override
-    public Message getNextMessage() {
-        if (!iterator.hasNext()) {
-            CollectionUtils.goToFirst(iterator);
-        }
-
-        return messageService.getMessages().isEmpty() ? defaultMessage : iterator.next();
+        messages = messageService.getMessages().toArray(new Message[messageService.getMessages().size()]);
     }
 
     @Override
     public Message getCurrentMessage() {
-        if (!iterator.hasPrevious()) {
-            CollectionUtils.goToLast(iterator);
-        }
+        return current == messages.length ? null : messages[current];
+    }
 
-        return messageService.getMessages().isEmpty() ? defaultMessage : iterator.previous();
+    @Override
+    public Message getNextMessage() {
+        return messages[++current];
     }
 
     @Override
     public Message getPreviousMessage() {
-        if (!iterator.hasNext()) {
-            CollectionUtils.goToFirst(iterator);
-        }
-
-        return messageService.getMessages().isEmpty() ? defaultMessage : iterator.next();
+        return messages[--current];
     }
 
     @Override
-    public boolean isDefaultMessage() {
-        return messageService.getMessages().isEmpty();
+    public boolean hasNext() {
+        return current < messages.length;
+    }
+
+    @Override
+    public boolean hasPrevious() {
+        return current > 0;
     }
 }

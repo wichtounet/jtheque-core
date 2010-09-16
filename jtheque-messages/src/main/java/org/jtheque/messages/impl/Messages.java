@@ -36,6 +36,17 @@ public final class Messages {
     }
 
     /**
+     * Create a new empty message.
+     *
+     * @param id The id of the message.
+     *
+     * @return A new message with the given properties.
+     */
+    public static Message newEmptyMessage(int id) {
+        return new MessageImpl(id, "", "", null, "");
+    }
+
+    /**
      * Create a new message at the date of today.
      *
      * @param id The id of the message.
@@ -108,7 +119,7 @@ public final class Messages {
             this.id = id;
             this.title = title;
             this.text = text;
-            this.date = new IntDate(date);
+            this.date = date == null ? date : new IntDate(date);
             this.source = source;
         }
 
@@ -129,7 +140,7 @@ public final class Messages {
 
         @Override
         public IntDate getDate() {
-            return new IntDate(date);
+            return date == null ? date : new IntDate(date);
         }
 
         @Override

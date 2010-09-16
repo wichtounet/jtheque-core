@@ -20,6 +20,8 @@ import org.jtheque.messages.Message;
 import org.jtheque.ui.Model;
 
 /**
+ * A simple model for the messages. 
+ *
  * @author Baptiste Wicht
  */
 public interface IMessageModel extends Model {
@@ -45,9 +47,16 @@ public interface IMessageModel extends Model {
     Message getPreviousMessage();
 
     /**
-     * Indicate if the model is currently displaying the default message or a real message.
+     * Indicate if the model has a next element or not.
      *
-     * @return true if the current message is the default message else false.
+     * @return {@code true} if the model has a next element otherwise {@code false}.
      */
-    boolean isDefaultMessage();
+    boolean hasNext();
+
+    /**
+     * Indicate if the model has a previous element or not.
+     *
+     * @return {@code true} if the model has a previous element otherwise {@code false}.
+     */
+    boolean hasPrevious();
 }

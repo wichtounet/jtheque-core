@@ -25,6 +25,7 @@ import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.views.impl.models.IMessageModel;
 import org.jtheque.views.impl.models.MessageModel;
 
+import javax.swing.Action;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
 
@@ -38,6 +39,8 @@ public final class MessageView extends SwingFilthyBuildedDialogView<IMessageMode
     private JLabel sourceLabel;
     private JLabel titleLabel;
     private JTextArea messageArea;
+    private Action nextAction;
+    private Action previousAction;
 
     @Override
     protected void initView() {
@@ -51,10 +54,17 @@ public final class MessageView extends SwingFilthyBuildedDialogView<IMessageMode
         addLabels(builder);
         addFields(builder);
 
+        nextAction = getAction("messages.actions.display.next");
+        previousAction = getAction("messages.actions.display.previous");
+
+        updateActions();
+
         builder.addButtonBar(builder.gbcSet(0, 4, GridBagUtils.HORIZONTAL, GridBagUtils.LINE_END, 2, 1),
-                getAction("messages.actions.close"),
-                getAction("messages.actions.display.next"),
-                getAction("messages.actions.display.previous"));
+                getAction("messages.actions.close"), nextAction, previousAction);
+
+        if(getModel().getCurrentMessage() != null){
+            setMessage(getModel().getCurrentMessage());
+        }
     }
 
     /**
@@ -74,12 +84,11 @@ public final class MessageView extends SwingFilthyBuildedDialogView<IMessageMode
      * @param builder The builder to add the fields to.
      */
     private void addFields(PanelBuilder builder) {
-        dateLabel = builder.addLabel(getModel().isDefaultMessage() ? "" : getModel().getCurrentMessage().getDate().getStrDate(), builder.gbcSet(1, 0));
-        sourceLabel = builder.addLabel(getModel().isDefaultMessage() ? "" : getModel().getCurrentMessage().getSource(), builder.gbcSet(1, 1));
-        titleLabel = builder.addLabel(getModel().isDefaultMessage() ? "" : getModel().getCurrentMessage().getTitle(), builder.gbcSet(1, 2));
+        dateLabel = builder.addLabel("", builder.gbcSet(1, 0));
+        sourceLabel = builder.addLabel("", builder.gbcSet(1, 1));
+        titleLabel = builder.addLabel("", builder.gbcSet(1, 2));
 
-        messageArea = builder.addScrolledTextArea(getModel().isDefaultMessage() ? "" : getModel().getCurrentMessage().getText(),
-                builder.gbcSet(0, 3, GridBagUtils.BOTH, GridBagUtils.LINE_START, 2, 1));
+        messageArea = builder.addScrolledTextArea("", builder.gbcSet(0, 3, GridBagUtils.BOTH, GridBagUtils.LINE_START, 2, 1));
         messageArea.setRows(8);
         messageArea.setEnabled(false);
     }
@@ -87,11 +96,23 @@ public final class MessageView extends SwingFilthyBuildedDialogView<IMessageMode
     @Override
     public void next() {
         setMessage(getModel().getNextMessage());
+
+        updateActions();
     }
 
     @Override
     public void previous() {
         setMessage(getModel().getPreviousMessage());
+
+        updateActions();
+    }
+
+    /**
+     * Update the state of the actions.
+     */
+    private void updateActions() {
+        nextAction.setEnabled(getModel().hasNext());
+        previousAction.setEnabled(getModel().hasPrevious());
     }
 
     /**
@@ -100,11 +121,9 @@ public final class MessageView extends SwingFilthyBuildedDialogView<IMessageMode
      * @param message The message to display.
      */
     private void setMessage(Message message) {
-        if (getModel().isDefaultMessage()) {
-            dateLabel.setText(message.getDate().getStrDate());
-            sourceLabel.setText(message.getSource());
-            titleLabel.setText(message.getTitle());
-            messageArea.setText(message.getText());
-        }
+        dateLabel.setText(message.getDate().getStrDate());
+        sourceLabel.setText(message.getSource());
+        titleLabel.setText(message.getTitle());
+        messageArea.setText(message.getText());
     }
 }

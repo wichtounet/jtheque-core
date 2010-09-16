@@ -27,6 +27,7 @@ import org.jtheque.modules.ModuleListener;
 import org.jtheque.modules.ModuleResourceCache;
 import org.jtheque.modules.ModuleService;
 import org.jtheque.utils.StringUtils;
+import org.jtheque.utils.ThreadUtils;
 import org.jtheque.utils.bean.IntDate;
 import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.xml.utils.XMLException;
@@ -70,7 +71,12 @@ public final class MessageServiceImpl implements MessageService, ModuleListener,
     public void init(){
         core.addApplicationListener(this);
 
-        loadMessageFile(core.getCoreMessageFileURL(), null);
+        ThreadUtils.inNewThread(new Runnable(){
+            @Override
+            public void run() {
+                loadMessageFile(core.getCoreMessageFileURL(), null);
+            }
+        });
     }
 
     @Override
@@ -88,7 +94,7 @@ public final class MessageServiceImpl implements MessageService, ModuleListener,
 
     @Override
     public Message getEmptyMessage() {
-        return Messages.newEmptyTodayMessage(-1);
+        return Messages.newEmptyMessage(-1);
     }
 
     @Override
