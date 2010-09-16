@@ -4,14 +4,16 @@ import org.jtheque.events.Event;
 import org.jtheque.events.EventLevel;
 import org.jtheque.events.EventService;
 import org.jtheque.events.Events;
+import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.SystemProperty;
+import org.jtheque.utils.ThreadUtils;
 import org.jtheque.utils.annotations.GuardedInternally;
 import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.io.FileUtils;
 import org.jtheque.xml.utils.XML;
 import org.jtheque.xml.utils.XMLException;
-import org.jtheque.xml.utils.XMLReader;
+import org.jtheque.xml.utils.XMLOverReader;
 import org.jtheque.xml.utils.XMLWriter;
 
 import org.slf4j.LoggerFactory;
@@ -52,7 +54,7 @@ public final class EventServiceImpl implements EventService {
     private final Map<String, Collection<Event>> logs = CollectionUtils.newConcurrentMap(5);
 
     /**
-     * Construct a new LogEventServiceImpl. 
+     * Construct a new LogEventServiceImpl.
      */
     public EventServiceImpl() {
         super();
@@ -86,32 +88,47 @@ public final class EventServiceImpl implements EventService {
      */
     @PostConstruct
     public void importFromXML() {
-        File f = new File(SystemProperty.USER_DIR.get(), "/logs.xml");
+        final File f = new File(SystemProperty.USER_DIR.get(), "/logs.xml");
 
         if (f.exists()) {
-            XMLReader<Node> reader = XML.newJavaFactory().newReader();
-
-            try {
-                reader.openFile(f);
-
-                for (Object currentNode : reader.getNodes("log", reader.getRootElement())) {
-                    String name = reader.readString("@name", currentNode);
-
-                    Collection<Node> elements = reader.getNodes("event", currentNode);
-
-                    logs.put(name, CollectionUtils.<Event>newList(elements.size()));
-
-                    for (Node element : elements) {
-                        logs.get(name).add(readEvent(reader, name, element));
-                    }
+            ThreadUtils.inNewThread(new Runnable(){
+                @Override
+                public void run() {
+                    readEvents(f);
                 }
-            } catch (XMLException e) {
-                LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
-            } finally {
-                FileUtils.close(reader);
-            }
+            });
         } else {
             createEmptyEventFile(f);
+        }
+    }
+
+    private void readEvents(File f) {
+        XMLOverReader reader = XML.newJavaFactory().newOverReader();
+
+        try {
+            reader.openFile(f);
+
+            while (reader.next("log")) {
+                String name = reader.readString("@name");
+
+                Collection<Event> events = CollectionUtils.newList(50);
+
+                while (reader.next("event")) {
+                    events.add(Events.newEvent(
+                            EventLevel.get(reader.readInt("@level")),
+                            new Date(reader.readLong("@date")),
+                            reader.readString("@source"),
+                            reader.readString("@title"),
+                            reader.readString("@details"),
+                            name));
+                }
+
+                logs.put(name, events);
+            }
+        } catch (XMLException e) {
+            LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
+        } finally {
+            FileUtils.close(reader);
         }
     }
 
@@ -124,27 +141,6 @@ public final class EventServiceImpl implements EventService {
         XMLWriter<Node> writer = XML.newJavaFactory().newWriter("logs");
 
         writer.write(f.getAbsolutePath());
-    }
-
-    /**
-     * Read the log from the XML.
-     *
-     * @param reader  The reader to use.
-     * @param name    The name of the log.
-     * @param element The element to read the log from.
-     *
-     * @return The Event.
-     *
-     * @throws XMLException If an error occurs during the xml reading.
-     */
-    private static Event readEvent(XMLReader<Node> reader, String name, Object element) throws XMLException {
-        return Events.newEvent(
-                EventLevel.get(reader.readInt("level", element)),
-                new Date(reader.readLong("date", element)),
-                reader.readString("source", element),
-                reader.readString("title", element),
-                reader.readString("details", element),
-                name);
     }
 
     /**
@@ -177,10 +173,14 @@ public final class EventServiceImpl implements EventService {
         for (Event event : events) {
             writer.add("event");
 
-            writer.addOnly("level", Integer.toString(event.getLevel().intValue()));
-            writer.addOnly("date", Long.toString(event.getDate().getTime()));
-            writer.addOnly("source", event.getSource());
-            writer.addOnly("title", event.getTitleKey());
+            writer.addAttribute("level", Integer.toString(event.getLevel().intValue()));
+            writer.addAttribute("date", Long.toString(event.getDate().getTime()));
+            writer.addAttribute("source", event.getSource());
+            writer.addAttribute("title", event.getTitleKey());
+
+            if(StringUtils.isNotEmpty(event.getDetailsKey())){
+                writer.addAttribute("details", event.getDetailsKey());
+            }
 
             writer.switchToParent();
         }
