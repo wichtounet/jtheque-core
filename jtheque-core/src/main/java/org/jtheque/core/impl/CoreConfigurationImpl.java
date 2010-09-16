@@ -31,6 +31,7 @@ import org.jtheque.utils.bean.IntDate;
 @State(id = "jtheque-core-configuration")
 public final class CoreConfigurationImpl extends AbstractConcurrentState implements CoreConfiguration {
     private static final String FALSE = "false";
+    private static final String TRUE = "true";
 
     @Override
     public boolean verifyUpdateOnStartup() {
@@ -44,7 +45,7 @@ public final class CoreConfigurationImpl extends AbstractConcurrentState impleme
 
     @Override
     public boolean retainSizeAndPositionOfWindow() {
-        return Boolean.parseBoolean(getProperty("retainSizeAndPositionOfWindow", FALSE));
+        return Boolean.parseBoolean(getProperty("retainSizeAndPositionOfWindow", TRUE));
     }
 
     @Override
