@@ -161,7 +161,7 @@ public final class XMLApplicationReader {
             Collection<String> languages = CollectionUtils.newList(nodes.size());
 
             for (Node languageElement : nodes) {
-                languages.add(languageElement.getTextContent());
+                languages.add(languageElement.getNodeName());
             }
 
             application.setSupportedLanguages(languages.toArray(new String[languages.size()]));
