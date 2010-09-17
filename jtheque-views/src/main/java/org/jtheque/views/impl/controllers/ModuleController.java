@@ -85,7 +85,7 @@ public class ModuleController extends AbstractController<ModuleView> {
     /**
      * Disable the selected module.
      */
-    @Action("modules.actions.enable")
+    @Action("modules.actions.disable")
     public void disableModule() {
         Module module = getView().getSelectedModule();
 
@@ -107,7 +107,7 @@ public class ModuleController extends AbstractController<ModuleView> {
     /**
      * Enable the selected module.
      */
-    @Action("modules.actions.disable")
+    @Action("modules.actions.enable")
     public void enableModule() {
         Module module = getView().getSelectedModule();
 
