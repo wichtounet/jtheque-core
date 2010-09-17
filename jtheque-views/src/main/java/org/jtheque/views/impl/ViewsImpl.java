@@ -18,29 +18,29 @@ package org.jtheque.views.impl;
 
 import org.jtheque.core.Core;
 import org.jtheque.messages.MessageService;
+import org.jtheque.modules.Module;
+import org.jtheque.modules.ModuleListener;
 import org.jtheque.modules.ModuleResourceCache;
 import org.jtheque.modules.ModuleService;
 import org.jtheque.ui.Controller;
 import org.jtheque.ui.UIUtils;
 import org.jtheque.updates.UpdateService;
 import org.jtheque.utils.SimplePropertiesCache;
-import org.jtheque.modules.Module;
-import org.jtheque.modules.ModuleListener;
 import org.jtheque.utils.annotations.GuardedInternally;
 import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.ui.SwingUtils;
 import org.jtheque.views.Views;
 import org.jtheque.views.components.ConfigTabComponent;
-import org.jtheque.views.components.StateBarComponent;
 import org.jtheque.views.components.MainComponent;
+import org.jtheque.views.components.StateBarComponent;
+import org.jtheque.views.impl.components.config.JPanelConfigAppearance;
+import org.jtheque.views.impl.components.config.JPanelConfigNetwork;
+import org.jtheque.views.impl.components.config.JPanelConfigOthers;
 import org.jtheque.views.panel.ModuleView;
 import org.jtheque.views.windows.ConfigView;
 import org.jtheque.views.windows.MainView;
 import org.jtheque.views.windows.MessageView;
-import org.jtheque.views.impl.components.config.JPanelConfigAppearance;
-import org.jtheque.views.impl.components.config.JPanelConfigNetwork;
-import org.jtheque.views.impl.components.config.JPanelConfigOthers;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -61,7 +61,7 @@ import java.util.List;
 public final class ViewsImpl implements Views, ApplicationContextAware, ModuleListener {
     @GuardedInternally
     private final Collection<MainComponent> mainComponents = CollectionUtils.newConcurrentList();
-    
+
     @GuardedInternally
     private final Collection<StateBarComponent> stateBarComponents = CollectionUtils.newConcurrentList();
 
@@ -107,7 +107,7 @@ public final class ViewsImpl implements Views, ApplicationContextAware, ModuleLi
 
     @Override
     public void setSelectedView(final MainComponent component) {
-        SwingUtils.inEdt(new Runnable(){
+        SwingUtils.inEdt(new Runnable() {
             @Override
             public void run() {
                 generalController.getView().setSelectedComponent(component.getImpl());
@@ -144,7 +144,7 @@ public final class ViewsImpl implements Views, ApplicationContextAware, ModuleLi
 
         ModuleResourceCache.addResource(moduleId, MainComponent.class, component);
 
-        SwingUtils.inEdt(new Runnable(){
+        SwingUtils.inEdt(new Runnable() {
             @Override
             public void run() {
                 generalController.getView().sendMessage("add", component);
@@ -215,7 +215,7 @@ public final class ViewsImpl implements Views, ApplicationContextAware, ModuleLi
 
     @Override
     public void init() {
-        SwingUtils.inEdt(new Runnable(){
+        SwingUtils.inEdt(new Runnable() {
             @Override
             public void run() {
                 addConfigTabComponent("", applicationContext.getBean(JPanelConfigAppearance.class));
@@ -280,10 +280,15 @@ public final class ViewsImpl implements Views, ApplicationContextAware, ModuleLi
      * @param components The main components to remove.
      */
     private void removeMainComponents(Iterable<MainComponent> components) {
-        for (MainComponent component : components) {
+        for (final MainComponent component : components) {
             mainComponents.remove(component);
 
-            generalController.getView().sendMessage("remove", component);
+            SwingUtils.inEdt(new Runnable() {
+                @Override
+                public void run() {
+                    generalController.getView().sendMessage("remove", component);
+                }
+            });
         }
     }
 
@@ -293,11 +298,16 @@ public final class ViewsImpl implements Views, ApplicationContextAware, ModuleLi
      * @param components The state bar components to remove.
      */
     private void removeStateBarComponents(Iterable<StateBarComponent> components) {
-        for (StateBarComponent component : components) {
+        for (final StateBarComponent component : components) {
             stateBarComponents.remove(component);
 
             if (component != null && component.getComponent() != null) {
-                generalController.getView().getStateBar().removeComponent(component);
+                SwingUtils.inEdt(new Runnable() {
+                    @Override
+                    public void run() {
+                        generalController.getView().getStateBar().removeComponent(component);
+                    }
+                });
             }
         }
     }
@@ -308,11 +318,16 @@ public final class ViewsImpl implements Views, ApplicationContextAware, ModuleLi
      * @param components The config tab components to remove.
      */
     private void removeConfigTabComponents(Iterable<ConfigTabComponent> components) {
-        for (ConfigTabComponent component : components) {
+        for (final ConfigTabComponent component : components) {
             configPanels.remove(component);
 
             if (SimplePropertiesCache.get("config-view-loaded", Boolean.class)) {
-                configController.getView().sendMessage("remove", component);
+                SwingUtils.inEdt(new Runnable() {
+                    @Override
+                    public void run() {
+                        configController.getView().sendMessage("remove", component);
+                    }
+                });
             }
         }
     }
