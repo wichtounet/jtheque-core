@@ -236,12 +236,12 @@ public final class ModuleServiceImpl implements ModuleService, ModuleLauncher {
 
             unloadImageResources(module);
 
+            fireModuleStopped(module);
+
             ModuleResourceCache.removeModule(module.getId());
 
             setState(module, INSTALLED);
         }
-
-        fireModuleStopped(module);
 
         LoggerFactory.getLogger(getClass()).debug("Module {} has been stopped", module.getBundle().getSymbolicName());
     }
