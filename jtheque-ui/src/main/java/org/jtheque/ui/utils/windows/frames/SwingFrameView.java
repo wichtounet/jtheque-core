@@ -69,8 +69,6 @@ public abstract class SwingFrameView<T extends Model> extends JFrame
         super.setContentPane(state.getContent());
 
         init();
-
-        SwingUtils.centerFrame(this);
     }
 
     /**

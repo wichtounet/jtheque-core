@@ -27,6 +27,7 @@ import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.views.Views;
 import org.jtheque.views.components.ConfigTabComponent;
+import org.jtheque.views.windows.ConfigView;
 
 import org.slf4j.LoggerFactory;
 
@@ -38,7 +39,7 @@ import java.util.Set;
  *
  * @author Baptiste Wicht
  */
-public final class ConfigView extends SwingFilthyBuildedDialogView<Model> implements org.jtheque.views.windows.ConfigView {
+public final class SwingConfigView extends SwingFilthyBuildedDialogView<Model> implements ConfigView {
     private LayerTabbedPane tab;
 
     private final Set<ConfigTabComponent> components = CollectionUtils.newSet(5);

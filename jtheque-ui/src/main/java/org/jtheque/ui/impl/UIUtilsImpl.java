@@ -1,16 +1,18 @@
 package org.jtheque.ui.impl;
 
+import org.jtheque.core.Core;
 import org.jtheque.i18n.LanguageService;
 import org.jtheque.images.ImageService;
+import org.jtheque.states.StateService;
 import org.jtheque.ui.UIUtils;
 import org.jtheque.utils.SimplePropertiesCache;
-import org.jtheque.utils.annotations.GuardedInternally;
 import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.ui.SwingUtils;
 
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
 
+import javax.annotation.Resource;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
@@ -43,21 +45,34 @@ import java.lang.reflect.InvocationTargetException;
 public final class UIUtilsImpl implements UIUtils {
     private static final String MAIN_VIEW_CACHE = "mainView";
 
-    @GuardedInternally
-    private final LanguageService languageService;
+    private final WindowsConfiguration configuration;
+
+    @Resource
+    private LanguageService languageService;
 
     /**
      * Create a new UIUtilsImpl.
      *
-     * @param languageService The language service.
-     * @param imageService    The resource service.
+     * @param stateService The state service.
+     * @param imageService The resource service.
+     * @param core         The core
      */
-    public UIUtilsImpl(LanguageService languageService, ImageService imageService) {
+    public UIUtilsImpl(StateService stateService, ImageService imageService, Core core) {
         super();
 
-        this.languageService = languageService;
+        configuration = stateService.getState(new WindowsConfiguration(core));
 
         imageService.registerResource(LIGHT_IMAGE, new ClassPathResource("org/jtheque/ui/light.png"));
+    }
+
+    @Override
+    public void saveState(Window window, String name) {
+        configuration.update(name, window);
+    }
+
+    @Override
+    public void configureView(Window view, String name, int defaultWidth, int defaultHeight) {
+        configuration.configure(name, view, defaultWidth, defaultHeight);
     }
 
     @Override

@@ -19,6 +19,7 @@ package org.jtheque.views.impl;
 import org.jtheque.core.Core;
 import org.jtheque.core.lifecycle.LifeCycle;
 import org.jtheque.ui.UIUtils;
+import org.jtheque.views.impl.windows.MainViewImpl;
 
 import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeEvent;
@@ -36,6 +37,7 @@ public final class MainController extends WindowAdapter implements ChangeListene
     private final Core core;
     private final UIUtils uiUtils;
     private final LifeCycle lifeCycle;
+    private final MainViewImpl mainView;
 
     /**
      * Construct a new MainController.
@@ -43,13 +45,15 @@ public final class MainController extends WindowAdapter implements ChangeListene
      * @param core      The core.
      * @param uiUtils   The UI Utils.
      * @param lifeCycle The lifeCycle
+     * @param mainView  The main view.
      */
-    public MainController(Core core, UIUtils uiUtils, LifeCycle lifeCycle) {
+    public MainController(Core core, UIUtils uiUtils, LifeCycle lifeCycle, MainViewImpl mainView) {
         super();
 
         this.core = core;
         this.uiUtils = uiUtils;
         this.lifeCycle = lifeCycle;
+        this.mainView = mainView;
     }
 
     @Override
@@ -74,6 +78,8 @@ public final class MainController extends WindowAdapter implements ChangeListene
                 "dialogs.confirm.exit.title", applicationName);
 
         if (yes) {
+            mainView.closeDown();
+            
             lifeCycle.exit();
         }
     }

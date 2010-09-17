@@ -23,19 +23,21 @@ import org.jtheque.ui.utils.windows.dialogs.SwingFilthyBuildedDialogView;
 import org.jtheque.utils.io.FileUtils;
 import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.views.ViewService;
+import org.jtheque.views.windows.LicenseView;
 
 /**
  * A view to display the license.
  *
  * @author Baptiste Wicht
  */
-public final class LicenseView extends SwingFilthyBuildedDialogView<Model> implements org.jtheque.views.windows.LicenseView {
+public final class SwingLicenseView extends SwingFilthyBuildedDialogView<Model> implements LicenseView {
     private static final int DEFAULT_WIDTH = 800;
     private static final int DEFAULT_HEIGHT = 600;
 
     @Override
     protected void initView() {
         setTitleKey("license.view.title", getService(Core.class).getApplication().getI18nProperties().getName());
+        setDefaults("license", DEFAULT_WIDTH, DEFAULT_HEIGHT);
     }
 
     @Override
@@ -46,7 +48,5 @@ public final class LicenseView extends SwingFilthyBuildedDialogView<Model> imple
         builder.addButtonBar(builder.gbcSet(0, 1, GridBagUtils.HORIZONTAL),
                 getAction("license.actions.print"),
                 getAction("license.actions.close"));
-
-        getService(ViewService.class).configureView(this, "license", DEFAULT_WIDTH, DEFAULT_HEIGHT);
     }
 }

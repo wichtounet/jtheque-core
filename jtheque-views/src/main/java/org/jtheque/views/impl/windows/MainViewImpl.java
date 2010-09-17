@@ -47,7 +47,6 @@ import javax.swing.JPanel;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.Insets;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -111,6 +110,8 @@ public final class MainViewImpl extends SwingFrameView<Model> implements TitleLi
      */
     @Override
     public void init() {
+        SwingUtils.assertEDT("MainViewImpl.init()");
+
         setTitle(lifeCycle.getTitle());
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
@@ -123,8 +124,7 @@ public final class MainViewImpl extends SwingFrameView<Model> implements TitleLi
 
         setContentPane(background);
 
-        setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
-        setMinimumSize(new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT));
+        uiUtils.configureView(this, "main", DEFAULT_WIDTH, DEFAULT_HEIGHT);
 
         lifeCycle.addTitleListener(this);
     }
@@ -133,7 +133,7 @@ public final class MainViewImpl extends SwingFrameView<Model> implements TitleLi
      * Build the entire view with the final content.
      */
     public void fill() {
-        controller = new MainController(core, uiUtils, lifeCycle);
+        controller = new MainController(core, uiUtils, lifeCycle, this);
 
         SwingUtils.inEdt(new Runnable() {
             @Override
@@ -149,8 +149,6 @@ public final class MainViewImpl extends SwingFrameView<Model> implements TitleLi
                 removeWindowListener(tempListener);
 
                 addWindowListener(controller);
-
-                viewService.configureView(MainViewImpl.this, "main", DEFAULT_WIDTH, DEFAULT_HEIGHT);
             }
         });
     }
@@ -282,8 +280,8 @@ public final class MainViewImpl extends SwingFrameView<Model> implements TitleLi
 
     @Override
     public void closeDown() {
-        if (viewService != null) {
-            viewService.saveState(this, "main");
+        if (uiUtils != null) {
+            uiUtils.saveState(this, "main");
         }
 
         super.closeDown();

@@ -2,6 +2,8 @@ package org.jtheque.ui;
 
 import org.jtheque.utils.annotations.ThreadSafe;
 
+import java.awt.Window;
+
 /*
  * Copyright JTheque (Baptiste Wicht)
  *
@@ -97,4 +99,22 @@ public interface UIUtils {
      * @return The text of the user.
      */
     String askText(String title);
+
+    /**
+     * Save the current state of the window.
+     *
+     * @param window The window.
+     * @param name   The name of the view.
+     */
+    void saveState(Window window, String name);
+
+    /**
+     * Configure a view. It seems sets the size and location of the view.
+     *
+     * @param window        The window to configure.
+     * @param name          The name of the view.
+     * @param defaultWidth  The default width of the view.
+     * @param defaultHeight The default height of the view.
+     */
+    void configureView(Window window, String name, int defaultWidth, int defaultHeight);
 }

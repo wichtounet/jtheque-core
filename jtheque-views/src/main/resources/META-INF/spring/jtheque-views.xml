@@ -40,7 +40,7 @@
 
     <!--  Views -->
 
-    <bean id="configView" class="org.jtheque.views.impl.windows.ConfigView" lazy-init="true">
+    <bean id="configView" class="org.jtheque.views.impl.windows.SwingConfigView" lazy-init="true">
         <property name="controller" ref="configController"/>
     </bean>
 
@@ -60,7 +60,7 @@
         <property name="controller" ref="repositoryController"/>
     </bean>
     
-    <bean id="licenseView" class="org.jtheque.views.impl.windows.LicenseView" lazy-init="true">
+    <bean id="licenseView" class="org.jtheque.views.impl.windows.SwingLicenseView" lazy-init="true">
         <property name="controller" ref="licenseController"/>
     </bean>
 

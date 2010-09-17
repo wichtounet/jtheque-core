@@ -17,17 +17,18 @@ package org.jtheque.ui.utils.windows.dialogs;
  */
 
 import org.jtheque.core.utils.OSGiUtils;
+import org.jtheque.i18n.Internationalizable;
 import org.jtheque.i18n.InternationalizableContainer;
 import org.jtheque.i18n.LanguageService;
 import org.jtheque.ui.Controller;
 import org.jtheque.ui.Model;
+import org.jtheque.ui.UIUtils;
 import org.jtheque.ui.WindowState;
 import org.jtheque.ui.WindowView;
-import org.jtheque.utils.SimplePropertiesCache;
-import org.jtheque.i18n.Internationalizable;
-import org.jtheque.ui.utils.actions.ActionFactory;
 import org.jtheque.ui.constraints.Constraint;
+import org.jtheque.ui.utils.actions.ActionFactory;
 import org.jtheque.ui.utils.windows.ManagedWindow;
+import org.jtheque.utils.SimplePropertiesCache;
 import org.jtheque.utils.ui.SwingUtils;
 
 import org.osgi.framework.BundleContext;
@@ -44,6 +45,8 @@ import javax.swing.JFrame;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Frame;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.Collection;
 
 /**
@@ -56,6 +59,10 @@ public abstract class SwingDialogView<T extends Model> extends JDialog
     private T model;
 
     private final org.jtheque.ui.utils.windows.WindowState state = new org.jtheque.ui.utils.windows.WindowState(this);
+
+    private String id;
+    private int defaultWidth = -1;
+    private int defaultHeight = 1;
 
     /**
      * Construct a SwingDialogView modal to the main view.
@@ -72,13 +79,25 @@ public abstract class SwingDialogView<T extends Model> extends JDialog
         state.build();
 
         setResizable(true);
-        setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+
+        //To allow save of the state of the window before closing the view
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                closeDown();
+            }
+        });
 
         getService(LanguageService.class).addInternationalizable(this);
 
         super.setContentPane(state.getContent());
 
         init();
+
+        if (id != null && defaultHeight > 0 && defaultWidth > 0) {
+            getService(UIUtils.class).configureView(this, id, defaultWidth, defaultHeight);
+        }
     }
 
     /**
@@ -118,6 +137,10 @@ public abstract class SwingDialogView<T extends Model> extends JDialog
 
     @Override
     public void closeDown() {
+        if (id != null) {
+            getService(UIUtils.class).saveState(this, id);
+        }
+        
         setVisible(false);
     }
 
@@ -149,6 +172,12 @@ public abstract class SwingDialogView<T extends Model> extends JDialog
      */
     protected final void setTitleKey(String key, Object... replaces) {
         state.setTitleKey(key, replaces);
+    }
+
+    protected void setDefaults(String id, int defaultWidth, int defaultHeight) {
+        this.id = id;
+        this.defaultWidth = defaultWidth;
+        this.defaultHeight = defaultHeight;
     }
 
     @Override

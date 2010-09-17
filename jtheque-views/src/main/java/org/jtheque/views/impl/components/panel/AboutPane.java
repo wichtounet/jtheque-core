@@ -120,11 +120,11 @@ public final class AboutPane extends JXPanel implements AboutView, International
         addMouseListener(new MouseController());
         addMouseMotionListener(new MouseMotionController());
 
+        init();
+
         timeline = AnimationUtils.createInterpolationAnimation(this, 4 * 1000, "start", 0, model.getCreditsHeight());
 
         shapes.put("license", new GeneralPath()); //Set a default path to avoid NPE if display license is false
-
-        init();
     }
 
     /**

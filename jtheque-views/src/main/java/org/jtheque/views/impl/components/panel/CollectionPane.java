@@ -134,8 +134,11 @@ public final class CollectionPane extends AbstractPanelView implements Collectio
         gbc.setDefaultInsets(new Insets(0, 0, 0, 0));
 
         textField = Filthy.newTextField();
-        textField.setText(core.getConfiguration().getLastCollection());
-        textField.getField().setCaretPosition(textField.getText().length());
+
+        String lastCollection = core.getConfiguration().getLastCollection();
+
+        textField.setText(lastCollection);
+        textField.getField().setCaretPosition(lastCollection.length());
 
         SwingUtils.addFieldValidateAction(textField.getField(), chooseAction);
 
