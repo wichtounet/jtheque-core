@@ -15,11 +15,11 @@ import org.jtheque.ui.Action;
 import org.jtheque.ui.Controller;
 import org.jtheque.ui.UIUtils;
 import org.jtheque.ui.utils.AbstractController;
+import org.jtheque.ui.utils.BetterSwingWorker;
 import org.jtheque.updates.InstallationResult;
 import org.jtheque.updates.UpdateService;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.io.SimpleFilter;
-import org.jtheque.utils.ui.SimpleSwingWorker;
 import org.jtheque.utils.ui.SwingUtils;
 import org.jtheque.views.ViewService;
 import org.jtheque.views.panel.ModuleView;
@@ -76,7 +76,7 @@ public class ModuleController extends AbstractController<ModuleView> {
     private Controller<RepositoryView> repositoryController;
 
     /**
-     * Create a new ModuleController. 
+     * Create a new ModuleController.
      */
     public ModuleController() {
         super(ModuleView.class);
@@ -142,7 +142,7 @@ public class ModuleController extends AbstractController<ModuleView> {
     }
 
     private void addModuleError(ModuleException e, String defaultMessage) {
-        if(e.hasI18nMessage()){
+        if (e.hasI18nMessage()) {
             errorService.addError(Errors.newI18nError(e.getI18nMessage(), e));
         } else {
             errorService.addError(Errors.newI18nError(defaultMessage, e));
@@ -163,7 +163,7 @@ public class ModuleController extends AbstractController<ModuleView> {
                 try {
                     moduleService.installFromRepository(result.getJarFile());
                 } catch (ModuleException e) {
-                    addModuleError(e,"error.repository.module.not.installed");
+                    addModuleError(e, "error.repository.module.not.installed");
                 }
             } else {
                 uiUtils.displayI18nText("error.repository.module.not.installed");
@@ -189,9 +189,9 @@ public class ModuleController extends AbstractController<ModuleView> {
                 try {
                     moduleService.uninstallModule(module);
                 } catch (ModuleException e) {
-                    if(e.getOperation() == ModuleOperation.STOP){
+                    if (e.getOperation() == ModuleOperation.STOP) {
                         addModuleError(e, "error.module.cannot.stop");
-                    } else if(e.getOperation() == ModuleOperation.UNINSTALL){
+                    } else if (e.getOperation() == ModuleOperation.UNINSTALL) {
                         addModuleError(e, "error.module.cannot.uninstall");
                     }
                 }
@@ -213,7 +213,7 @@ public class ModuleController extends AbstractController<ModuleView> {
         String error = moduleService.canBeStopped(module);
 
         if (StringUtils.isEmpty(error)) {
-            new StopModuleWorker(module).start();
+            new StopModuleWorker(module).execute();
         } else {
             uiUtils.displayI18nText(error);
         }
@@ -234,7 +234,7 @@ public class ModuleController extends AbstractController<ModuleView> {
                 viewService.displayCollectionView();
                 collectionsService.addCollectionListener(new StartModuleWorker(module));
             } else {
-                new StartModuleWorker(module).start();
+                new StartModuleWorker(module).execute();
             }
         } else {
             uiUtils.displayI18nText(error);
@@ -251,7 +251,7 @@ public class ModuleController extends AbstractController<ModuleView> {
         if (updateService.isUpToDate(module)) {
             uiUtils.displayI18nText("message.update.no.version");
         } else {
-            new UpdateModuleWorker(module).start();
+            new UpdateModuleWorker(module).execute();
         }
     }
 
@@ -263,7 +263,7 @@ public class ModuleController extends AbstractController<ModuleView> {
         if (updateService.isCurrentVersionUpToDate()) {
             uiUtils.displayI18nText("message.update.no.version");
         } else {
-            new UpdateCoreWorker().start();
+            new UpdateCoreWorker().execute();
         }
     }
 
@@ -280,7 +280,7 @@ public class ModuleController extends AbstractController<ModuleView> {
      *
      * @author Baptiste Wicht
      */
-    private abstract class ModuleWorker extends SimpleSwingWorker {
+    private abstract class ModuleWorker extends BetterSwingWorker {
         @Override
         protected final void before() {
             getView().getWindowState().startWait();
@@ -311,7 +311,7 @@ public class ModuleController extends AbstractController<ModuleView> {
         }
 
         @Override
-        protected void doWork() {
+        protected void doInBackground() {
             try {
                 moduleService.startModule(module);
             } catch (ModuleException e) {
@@ -325,7 +325,7 @@ public class ModuleController extends AbstractController<ModuleView> {
 
             viewService.closeCollectionView();
 
-            start();
+            execute();
 
             getView().display();
         }
@@ -349,7 +349,7 @@ public class ModuleController extends AbstractController<ModuleView> {
         }
 
         @Override
-        protected void doWork() {
+        protected void doInBackground() {
             try {
                 moduleService.stopModule(module);
             } catch (ModuleException e) {
@@ -365,7 +365,7 @@ public class ModuleController extends AbstractController<ModuleView> {
      */
     private final class UpdateCoreWorker extends ModuleWorker {
         @Override
-        protected void doWork() {
+        protected void doInBackground() {
             updateService.updateCore();
             lifeCycle.restart();
         }
@@ -389,7 +389,7 @@ public class ModuleController extends AbstractController<ModuleView> {
         }
 
         @Override
-        protected void doWork() {
+        protected void doInBackground() {
             boolean restart = false;
 
             if (module.getState() == ModuleState.STARTED) {

@@ -8,9 +8,9 @@ import org.jtheque.ui.Action;
 import org.jtheque.ui.Controller;
 import org.jtheque.ui.UIUtils;
 import org.jtheque.ui.utils.AbstractController;
+import org.jtheque.ui.utils.BetterSwingWorker;
 import org.jtheque.utils.DesktopUtils;
 import org.jtheque.utils.io.SimpleFilter;
-import org.jtheque.utils.ui.SimpleSwingWorker;
 import org.jtheque.utils.ui.SwingUtils;
 import org.jtheque.views.ViewService;
 import org.jtheque.views.panel.ModuleView;
@@ -116,7 +116,7 @@ public class GeneralController extends AbstractController<MainView> {
         final boolean yes = uiUtils.askI18nUserForConfirmation(
                 "dialogs.confirm.clear.database", "dialogs.confirm.clear.database.title");
 
-        new RestoreWorker(yes, file).start();
+        new RestoreWorker(yes, file).execute();
     }
 
     /**
@@ -196,6 +196,8 @@ public class GeneralController extends AbstractController<MainView> {
      */
     @Action("menu.exit")
     public void exit() {
+        getView().closeDown();
+
         lifeCycle.exit();
     }
 
@@ -204,7 +206,7 @@ public class GeneralController extends AbstractController<MainView> {
      *
      * @author Baptiste Wicht
      */
-    private final class RestoreWorker extends SimpleSwingWorker {
+    private final class RestoreWorker extends BetterSwingWorker {
         private final boolean clear;
         private final File file;
 
@@ -227,7 +229,7 @@ public class GeneralController extends AbstractController<MainView> {
         }
 
         @Override
-        protected void doWork() {
+        protected void doInBackground() {
             if (clear) {
                 persistenceService.clearDatabase();
             }

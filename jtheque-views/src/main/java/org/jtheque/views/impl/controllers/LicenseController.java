@@ -2,9 +2,9 @@ package org.jtheque.views.impl.controllers;
 
 import org.jtheque.ui.Action;
 import org.jtheque.ui.utils.AbstractController;
+import org.jtheque.ui.utils.BetterSwingWorker;
 import org.jtheque.utils.SystemProperty;
 import org.jtheque.utils.print.PrintUtils;
-import org.jtheque.utils.ui.SimpleSwingWorker;
 import org.jtheque.views.windows.LicenseView;
 
 import java.io.File;
@@ -67,7 +67,7 @@ public class LicenseController extends AbstractController<LicenseView> {
      */
     @Action("license.actions.print")
     public void print() {
-        new PrintWorker().start();
+        new PrintWorker().execute();
     }
 
     /**
@@ -75,14 +75,14 @@ public class LicenseController extends AbstractController<LicenseView> {
      *
      * @author Baptiste Wicht
      */
-    private final class PrintWorker extends SimpleSwingWorker {
+    private final class PrintWorker extends BetterSwingWorker {
         @Override
         protected void before() {
             getView().getWindowState().startWait();
         }
 
         @Override
-        protected void doWork() {
+        protected void doInBackground() {
             PrintUtils.printLineFiles(new File(SystemProperty.USER_DIR.get(), "license.txt"));
         }
 
