@@ -92,13 +92,7 @@ public class ModuleController extends AbstractController<ModuleView> {
         String error = moduleService.canBeDisabled(module);
 
         if (StringUtils.isEmpty(error)) {
-            try {
-                moduleService.disableModule(module);
-            } catch (ModuleException e) {
-                addModuleError(e, "error.module.cannot.stop");
-            }
-
-            getView().refreshList();
+            new DisableModuleWorker(module).execute();
         } else {
             uiUtils.displayI18nText(error);
         }
@@ -352,6 +346,33 @@ public class ModuleController extends AbstractController<ModuleView> {
         protected void doInBackground() {
             try {
                 moduleService.stopModule(module);
+            } catch (ModuleException e) {
+                addModuleError(e, "error.module.cannot.stop");
+            }
+        }
+    }
+
+    /**
+     * A simple swing worker to disable the module.
+     *
+     * @author Baptiste Wicht
+     */
+    private final class DisableModuleWorker extends ModuleWorker {
+        private final Module module;
+
+        /**
+         * Construct a new DisableModuleWorker for the given module.
+         *
+         * @param module The module to disable.
+         */
+        private DisableModuleWorker(Module module) {
+            this.module = module;
+        }
+
+        @Override
+        protected void doInBackground() {
+            try {
+                moduleService.disableModule(module);
             } catch (ModuleException e) {
                 addModuleError(e, "error.module.cannot.stop");
             }
