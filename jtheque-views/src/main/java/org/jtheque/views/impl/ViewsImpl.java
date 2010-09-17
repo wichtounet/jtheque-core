@@ -60,13 +60,13 @@ import java.util.List;
 @ThreadSafe
 public final class ViewsImpl implements Views, ApplicationContextAware, ModuleListener {
     @GuardedInternally
-    private final Collection<MainComponent> mainComponents = CollectionUtils.newConcurrentList();
+    private final Collection<MainComponent> mainComponents = CollectionUtils.newConcurrentSet();
 
     @GuardedInternally
-    private final Collection<StateBarComponent> stateBarComponents = CollectionUtils.newConcurrentList();
+    private final Collection<StateBarComponent> stateBarComponents = CollectionUtils.newConcurrentSet();
 
     @GuardedInternally
-    private final Collection<ConfigTabComponent> configPanels = CollectionUtils.newConcurrentList();
+    private final Collection<ConfigTabComponent> configPanels = CollectionUtils.newConcurrentSet();
 
     private ApplicationContext applicationContext;
 
