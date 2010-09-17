@@ -124,10 +124,6 @@ public class AbstractModule implements ApplicationContextAware, BundleContextAwa
         for (ConfigTabComponent component : getBeans(ConfigTabComponent.class)) {
             views.addConfigTabComponent(module, component);
         }
-
-        for (StateBarComponent component : getBeans(StateBarComponent.class)) {
-            views.addStateBarComponent(module, component);
-        }
     }
 
     /**
