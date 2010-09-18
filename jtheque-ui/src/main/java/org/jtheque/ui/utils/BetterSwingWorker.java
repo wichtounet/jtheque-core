@@ -32,6 +32,9 @@ import java.util.concurrent.ExecutionException;
 public abstract class BetterSwingWorker {
     private final SwingWorker<Void, Void> worker = new SimpleSwingWorker();
 
+    /**
+     * Execute the SwingWorker.
+     */
     public void execute() {
         SwingUtils.inEdt(new Runnable() {
             @Override
@@ -43,14 +46,31 @@ public abstract class BetterSwingWorker {
         worker.execute();
     }
 
-    protected void before() {
+    /**
+     * Will be executed in the EDT at the start of the execute.
+     */
+    protected void before(){
         //Nothing by default
     }
 
+    /**
+     * Action make in background.
+     *
+     * @throws Exception If something happens during the operation.
+     */
     protected abstract void doInBackground() throws Exception;
 
+    /**
+     * Called in the EDT after the completion of
+     */
     protected abstract void done();
 
+    /**
+     * A simple swing worker that doesn't swallow exceptions.
+     *
+     * @author Baptiste Wicht
+     * @author Jonathan Giles
+     */
     private class SimpleSwingWorker extends SwingWorker<Void, Void> {
         @Override
         protected Void doInBackground() throws Exception {
