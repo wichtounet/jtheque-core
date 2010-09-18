@@ -486,6 +486,11 @@ public final class AboutPane extends JXPanel implements AboutView, International
     private final class MouseMotionController extends MouseMotionAdapter {
         @Override
         public void mouseMoved(MouseEvent event) {
+            //Perhaps the view is not entirely loaded
+            if(shapes == null){
+                return;
+            }
+
             if (shapes.get("quit").contains(event.getPoint()) ||
                     shapes.get("url").contains(event.getPoint()) ||
                     shapes.get("license").contains(event.getPoint())) {
