@@ -189,6 +189,8 @@ public final class UpdateServiceImpl implements UpdateService {
      * @param coreVersion The core version to apply.
      */
     private void applyCoreVersion(CoreVersion coreVersion) {
+        LoggerFactory.getLogger(getClass()).debug("Apply core version {}", coreVersion.getVersion());
+
         File bundlesFolder = new File(SystemProperty.USER_DIR.get(), "bundles");
 
         Set<File> currentBundles = ArrayUtils.asSet(bundlesFolder.listFiles());
@@ -199,12 +201,12 @@ public final class UpdateServiceImpl implements UpdateService {
 
             if (currentBundles.contains(f)) {
                 currentBundles.remove(f);
-            } else {
-                try {
-                    WebUtils.downloadFile(newBundle.getUrl(), f.getAbsolutePath());
-                } catch (FileException e) {
-                    LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
-                }
+            }
+
+            try {
+                WebUtils.downloadFile(newBundle.getUrl(), f.getAbsolutePath());
+            } catch (FileException e) {
+                LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
             }
         }
 
