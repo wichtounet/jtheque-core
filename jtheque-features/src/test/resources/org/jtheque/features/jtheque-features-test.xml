@@ -27,8 +27,9 @@
     </bean>
 
     <bean id="uiUtils" class="org.jtheque.ui.impl.UIUtilsImpl">
-        <constructor-arg index="0" ref="languageService"/>
-        <constructor-arg index="1" ref="imageService"/>
+        <constructor-arg ref="stateService" />
+        <constructor-arg ref="imageService" />
+        <constructor-arg ref="core" />
     </bean>
 
     <bean id="languageService" class="org.jtheque.i18n.impl.LanguageServiceImpl">

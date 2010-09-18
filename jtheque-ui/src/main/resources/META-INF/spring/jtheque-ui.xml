@@ -14,19 +14,19 @@
     <context:annotation-config/>
 
     <bean id="uiUtils" class="org.jtheque.ui.impl.UIUtilsImpl">
-        <constructor-arg>
-            <osgi:reference interface="org.jtheque.i18n.LanguageService"/>
-        </constructor-arg>
-        <constructor-arg>
-            <osgi:reference interface="org.jtheque.images.ImageService"/>
-        </constructor-arg>
+        <constructor-arg ref="stateService"/>
+        <constructor-arg ref="imageService" />
+        <constructor-arg ref="core" />
     </bean>
 
     <bean id="filthyUtils" class="org.jtheque.ui.impl.FilthyUtils">
-        <constructor-arg>
-            <osgi:reference interface="org.jtheque.images.ImageService"/>
-        </constructor-arg>
+        <constructor-arg ref="imageService" />
     </bean>
+
+    <osgi:reference id="imageService" interface="org.jtheque.images.ImageService" />
+    <osgi:reference id="languageService" interface="org.jtheque.i18n.LanguageService" />
+    <osgi:reference id="stateService" interface="org.jtheque.states.StateService" />
+    <osgi:reference id="core" interface="org.jtheque.core.Core" />
 
     <osgi:service interface="org.jtheque.ui.UIUtils" ref="uiUtils"/>
     <osgi:service interface="org.jtheque.ui.FilthyUtils" ref="filthyUtils"/>
