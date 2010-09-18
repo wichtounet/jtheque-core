@@ -203,6 +203,8 @@ public final class UpdateServiceImpl implements UpdateService {
                 currentBundles.remove(f);
             }
 
+            LoggerFactory.getLogger(getClass()).debug("Download bundle {}", newBundle.getId());
+
             try {
                 WebUtils.downloadFile(newBundle.getUrl(), f.getAbsolutePath());
             } catch (FileException e) {
@@ -212,6 +214,8 @@ public final class UpdateServiceImpl implements UpdateService {
 
         //Delete the remaining files
         for (File f : currentBundles) {
+            LoggerFactory.getLogger(getClass()).debug("Delete bundle {}", f.getAbsolutePath());
+
             FileUtils.delete(f);
         }
     }
