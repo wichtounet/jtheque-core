@@ -83,7 +83,7 @@ public class RepositoryController extends AbstractController<RepositoryView> {
     /**
      * installFromRepository the selected module.
      */
-    @Action("repository.actions.installFromRepository")
+    @Action("repository.actions.install")
     public void install() {
         ModuleDescription description = getView().getSelectedModule();
 
