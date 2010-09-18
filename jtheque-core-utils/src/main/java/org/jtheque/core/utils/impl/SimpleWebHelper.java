@@ -40,9 +40,9 @@ public class SimpleWebHelper implements WebHelper {
     private ErrorService errorService;
 
     @Override
-    public boolean isNotReachable(String url) {
+    public boolean isReachable(String url) {
         if (WebUtils.isURLReachable(url)) {
-            return false;
+            return true;
         }
 
         addNotReachableError(url);
@@ -50,7 +50,7 @@ public class SimpleWebHelper implements WebHelper {
         eventService.addEvent(
                 Events.newEvent(EventLevel.ERROR, "System", "events.network.error", EventService.CORE_EVENT_LOG));
 
-        return true;
+        return false;
     }
 
     /**

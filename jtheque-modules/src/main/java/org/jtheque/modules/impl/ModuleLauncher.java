@@ -30,6 +30,9 @@ public interface ModuleLauncher {
      * Start the given module.
      *
      * @param module The module to start.
+     *
+     * @throws org.jtheque.modules.ModuleException
+     *          If an error occurs during module starting.
      */
     void startModule(Module module) throws ModuleException;
 }

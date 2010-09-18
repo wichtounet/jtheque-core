@@ -145,10 +145,27 @@ public final class Errors {
         return new InternationalizedError(message, replaces, details, replacesDetails);
     }
 
+    /**
+     * Create a new I18n error with a specific message key and the details obtained from the throwable trace.
+     *
+     * @param message   The i18n message key.
+     * @param throwable The throwable for the details.
+     *
+     * @return The created error.
+     */
     public static Error newI18nError(String message, Throwable throwable) {
         return new InternationalizedError(message, EMPTY_REPLACES, throwable);
     }
 
+    /**
+     * Create a new I18n error with a specific message key and the details obtained from the throwable trace.
+     *
+     * @param message   The i18n message key.
+     * @param replaces  The i18n replaces.
+     * @param throwable The throwable for the details.
+     *
+     * @return The created error.
+     */
     public static Error newI18nError(String message, Object[] replaces, Throwable throwable) {
         return new InternationalizedError(message, replaces, throwable);
     }

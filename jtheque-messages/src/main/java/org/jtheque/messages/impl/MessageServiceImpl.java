@@ -131,20 +131,18 @@ public final class MessageServiceImpl implements MessageService, ModuleListener,
      * @param module The module to load the message file from.
      */
     private void loadMessageFile(String url, Module module) {
-        if (webHelper.isNotReachable(url)) {
-            return;
-        }
+        if (webHelper.isReachable(url)) {
+            try {
+                Collection<Message> readMessages = MessageFileReader.readMessagesFile(url);
 
-        try {
-            Collection<Message> readMessages = MessageFileReader.readMessagesFile(url);
+                messages.addAll(readMessages);
 
-            messages.addAll(readMessages);
-
-            if(module != null){
-                ModuleResourceCache.addAllResources(module.getId(), Message.class, readMessages);
+                if (module != null) {
+                    ModuleResourceCache.addAllResources(module.getId(), Message.class, readMessages);
+                }
+            } catch (XMLException e) {
+                LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
             }
-        } catch (XMLException e) {
-            LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
         }
     }
 

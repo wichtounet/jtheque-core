@@ -178,9 +178,9 @@ public final class ModuleServiceImpl implements ModuleService, ModuleLauncher {
 
             try {
                 loadImageResources(module);
-                
+
                 moduleManager.startModule(module);
-            } catch (ModuleException e){
+            } catch (ModuleException e) {
                 unloadImageResources(module);
 
                 throw e;
@@ -199,6 +199,11 @@ public final class ModuleServiceImpl implements ModuleService, ModuleLauncher {
         LoggerFactory.getLogger(getClass()).debug("Module {} started", module.getBundle().getSymbolicName());
     }
 
+    /**
+     * Unload the image resources of the module.
+     *
+     * @param module The module to unload the image resources.
+     */
     private void unloadImageResources(Module module) {
         for (ImageResource imageResource : resources.get(module).getImageResources()) {
             imageService.releaseResource(imageResource.getName());
@@ -403,6 +408,13 @@ public final class ModuleServiceImpl implements ModuleService, ModuleLauncher {
         configuration.update(module);
     }
 
+    /**
+     * Return the lock for the module.
+     *
+     * @param module The module to get the lock for.
+     *
+     * @return The lock of the module.
+     */
     private Object getModuleLock(Module module) {
         moduleLocks.putIfAbsent(module.getId(), new Object());
 

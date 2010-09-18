@@ -140,7 +140,7 @@ public abstract class SwingDialogView<T extends Model> extends JDialog
         if (id != null) {
             getService(UIUtils.class).saveState(this, id);
         }
-        
+
         setVisible(false);
     }
 
@@ -174,6 +174,13 @@ public abstract class SwingDialogView<T extends Model> extends JDialog
         state.setTitleKey(key, replaces);
     }
 
+    /**
+     * Indicate that the view location and size is managed by the UIUtils service.
+     *
+     * @param id            The id of the view, must be unique.
+     * @param defaultWidth  The default width.
+     * @param defaultHeight The default height.
+     */
     protected void setDefaults(String id, int defaultWidth, int defaultHeight) {
         this.id = id;
         this.defaultWidth = defaultWidth;

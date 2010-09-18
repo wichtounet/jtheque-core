@@ -33,7 +33,11 @@ import static org.jtheque.modules.ModuleState.INSTALLED;
 @ThreadSafe
 @State(id = "jtheque-modules-configuration")
 final class ModuleConfiguration extends AbstractConcurrentState {
-
+    /**
+     * Update the module state.
+     *
+     * @param module The module to update the state in the config.
+     */
     void update(Module module) {
         setProperty(module.getId(), Boolean.toString(module.getState() != DISABLED));
     }
@@ -47,6 +51,11 @@ final class ModuleConfiguration extends AbstractConcurrentState {
         removeProperty(module.getId());
     }
 
+    /**
+     * Set the initial state of the module.
+     *
+     * @param module The module.
+     */
     void setInitialState(Module module) {
         module.setState(INSTALLED);
 

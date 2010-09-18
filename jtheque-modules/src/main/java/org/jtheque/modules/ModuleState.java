@@ -49,6 +49,11 @@ public enum ModuleState {
         return key;
     }
 
+    /**
+     * Return the int value of the state.
+     *
+     * @return The int vlaue of the state.
+     */
     public int getValue() {
         return value;
     }

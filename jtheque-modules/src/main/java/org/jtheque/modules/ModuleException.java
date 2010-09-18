@@ -18,9 +18,19 @@ import org.jtheque.utils.StringUtils;
  * limitations under the License.
  */
 
+/**
+ * An exception for a module operation.
+ *
+ * @author Baptiste Wicht
+ */
 public class ModuleException extends Exception {
     private static final long serialVersionUID = 6510172212610174776L;
 
+    /**
+     * The type of operation.
+     *
+     * @author Baptiste Wicht
+     */
     public enum ModuleOperation {
         START,
         STOP,
@@ -32,21 +42,36 @@ public class ModuleException extends Exception {
     private final ModuleOperation operation;
     private final String i18nMessage;
 
+    /**
+     * Create a new ModuleException.
+     *
+     * @param cause     The cause of the exception.
+     * @param operation The operation that caused the error.
+     */
     public ModuleException(Throwable cause, ModuleOperation operation) {
-        super(cause);
-
-        this.operation = operation;
-
-        i18nMessage = "";
+        this("", cause, operation);
     }
 
-    public ModuleException(String i18nMessage, Throwable cause, ModuleOperation operation){
+    /**
+     * Create a new ModuleException.
+     *
+     * @param i18nMessage The i18n message of the error.
+     * @param cause       The cause of the exception.
+     * @param operation   The operation that caused the error.
+     */
+    public ModuleException(String i18nMessage, Throwable cause, ModuleOperation operation) {
         super(cause);
 
         this.i18nMessage = i18nMessage;
         this.operation = operation;
     }
 
+    /**
+     * Create a new ModuleException without exception cause.
+     *
+     * @param i18nMessage The i18n message of the error.
+     * @param operation   The operation that caused the error.
+     */
     public ModuleException(String i18nMessage, ModuleOperation operation) {
         super();
 
@@ -54,14 +79,29 @@ public class ModuleException extends Exception {
         this.operation = operation;
     }
 
+    /**
+     * Return the operation that caused the exception.
+     *
+     * @return The operation that caused the exception.
+     */
     public ModuleOperation getOperation() {
         return operation;
     }
 
-    public boolean hasI18nMessage(){
+    /**
+     * Indicate if the exception has an i18n message or not.
+     *
+     * @return {@code true} if the exception has an i18n message otherwise {@code false}.
+     */
+    public boolean hasI18nMessage() {
         return StringUtils.isNotEmpty(i18nMessage);
     }
 
+    /**
+     * Return the i18n message of the exception.
+     *
+     * @return The i18n message of the exception.
+     */
     public String getI18nMessage() {
         return i18nMessage;
     }

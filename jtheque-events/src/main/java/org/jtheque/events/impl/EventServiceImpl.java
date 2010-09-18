@@ -84,14 +84,14 @@ public final class EventServiceImpl implements EventService {
     }
 
     /**
-     * Import from XML.
+     * Import from XML. The import is made asynchronously to avoid making the application pause during launching. 
      */
     @PostConstruct
     public void importFromXML() {
         final File f = new File(SystemProperty.USER_DIR.get(), "/logs.xml");
 
         if (f.exists()) {
-            ThreadUtils.inNewThread(new Runnable(){
+            ThreadUtils.inNewThread(new Runnable() {
                 @Override
                 public void run() {
                     readEvents(f);
@@ -102,6 +102,11 @@ public final class EventServiceImpl implements EventService {
         }
     }
 
+    /**
+     * Read all the events from the file.
+     *
+     * @param f The file to read events from.
+     */
     private void readEvents(File f) {
         XMLOverReader reader = XML.newJavaFactory().newOverReader();
 
@@ -178,7 +183,7 @@ public final class EventServiceImpl implements EventService {
             writer.addAttribute("source", event.getSource());
             writer.addAttribute("title", event.getTitleKey());
 
-            if(StringUtils.isNotEmpty(event.getDetailsKey())){
+            if (StringUtils.isNotEmpty(event.getDetailsKey())) {
                 writer.addAttribute("details", event.getDetailsKey());
             }
 

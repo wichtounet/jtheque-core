@@ -78,6 +78,8 @@ public interface ModuleService {
      * Install the module from the repository.
      *
      * @param jarFile The name of the JAR file.
+     *
+     * @throws ModuleException If an error occurs during installation.
      */
     void installFromRepository(String jarFile) throws ModuleException;
 
@@ -106,6 +108,8 @@ public interface ModuleService {
      * Install the module of the file.
      *
      * @param file The file of the module.
+     *
+     * @throws ModuleException If an error occurs during installation.
      */
     void installModule(File file) throws ModuleException;
 
@@ -160,6 +164,7 @@ public interface ModuleService {
      * @param module The module to Start.
      *
      * @throws IllegalStateException If the module is already started.
+     * @throws ModuleException       If an error occurs during starting.
      */
     void startModule(Module module) throws ModuleException;
 

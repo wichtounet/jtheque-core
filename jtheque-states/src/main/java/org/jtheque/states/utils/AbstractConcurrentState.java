@@ -89,6 +89,11 @@ public abstract class AbstractConcurrentState {
         properties.put(key, value);
     }
 
+    /**
+     * Remove the property.
+     *
+     * @param key The property to remove. 
+     */
     protected final void removeProperty(String key){
         properties.remove(key);
     }

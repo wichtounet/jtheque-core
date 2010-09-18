@@ -5,7 +5,7 @@
             http://jtheque.baptiste-wicht.com/schema/core-descriptor
             http://jtheque.baptiste-wicht.com/files/schema/core-descriptor-1.0.xsd">
 
-    <version name="2.1.1">
+    <version name="2.1.0">
         <bundles>
             <bundle>
                 <name>org.jtheque.substance-6.0.0.jar</name>

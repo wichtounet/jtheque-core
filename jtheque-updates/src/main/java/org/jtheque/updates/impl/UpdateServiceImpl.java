@@ -71,71 +71,67 @@ public final class UpdateServiceImpl implements UpdateService {
 
     @Override
     public void updateCore() {
-        if (webHelper.isNotReachable(Core.DESCRIPTOR_FILE_URL)) {
-            return;
-        }
+        if (webHelper.isReachable(Core.DESCRIPTOR_FILE_URL)) {
+            synchronized (this) {
+                CoreVersion onlineVersion = descriptorsLoader.getCoreVersion(getMostRecentCoreVersion());
 
-        synchronized (this) {
-            CoreVersion onlineVersion = descriptorsLoader.getCoreVersion(getMostRecentCoreVersion());
+                if (onlineVersion == null || onlineVersion.getVersion().equals(Core.VERSION)) {
+                    return;
+                }
 
-            if (onlineVersion == null || onlineVersion.getVersion().equals(Core.VERSION)) {
-                return;
+                applyCoreVersion(onlineVersion);
             }
-
-            applyCoreVersion(onlineVersion);
         }
     }
 
     @Override
     public InstallationResult installModule(String url) {
-        if (webHelper.isNotReachable(url)) {
-            return new SimpleInstallationResult(false, "");
+        if (webHelper.isReachable(url)) {
+            synchronized (this) {
+                ModuleVersion moduleVersion = descriptorsLoader.getMostRecentModuleVersion(url);
+
+                applyModuleVersion(moduleVersion);
+
+                return new SimpleInstallationResult(true, moduleVersion.getModuleFile());
+            }
         }
-
-        synchronized (this) {
-            ModuleVersion moduleVersion = descriptorsLoader.getMostRecentModuleVersion(url);
-
-            applyModuleVersion(moduleVersion);
-
-            return new SimpleInstallationResult(true, moduleVersion.getModuleFile());
-        }
+        
+        return new SimpleInstallationResult(false, "");
     }
 
     @Override
     public void update(Module module) {
-        if (webHelper.isNotReachable(module.getDescriptorURL())) {
-            return;
-        }
+        if (webHelper.isReachable(module.getDescriptorURL())) {
+            if (module.getState() == ModuleState.STARTED) {
+                throw new IllegalArgumentException("The module must be stopped");
+            }
 
-        if (module.getState() == ModuleState.STARTED) {
-            throw new IllegalArgumentException("The module must be stopped");
-        }
-
-        synchronized (this) {
-            update(module, getMostRecentVersion(module));
+            synchronized (this) {
+                update(module, getMostRecentVersion(module));
+            }
         }
     }
 
     @Override
     public Version getMostRecentCoreVersion() {
-        if (webHelper.isNotReachable(Core.DESCRIPTOR_FILE_URL)) {
-            return null;
+        if (webHelper.isReachable(Core.DESCRIPTOR_FILE_URL)) {
+            synchronized (this) {
+                return descriptorsLoader.getMostRecentCoreVersion();
+            }
         }
 
-        synchronized (this) {
-            return descriptorsLoader.getMostRecentCoreVersion();
-        }
+        return null;
     }
 
     @Override
     public Version getMostRecentVersion(Versionable object) {
-        if (webHelper.isNotReachable(object.getDescriptorURL())) {
-            return null;
+        if (webHelper.isReachable(object.getDescriptorURL())) {
+            synchronized (this) {
+                return descriptorsLoader.getMostRecentVersion(object);
+            }
         }
 
-        synchronized (this) {
-            return descriptorsLoader.getMostRecentVersion(object);
-        }
+        return null;
     }
 
     /**
@@ -258,32 +254,32 @@ public final class UpdateServiceImpl implements UpdateService {
 
     @Override
     public boolean isCurrentVersionUpToDate() {
-        if (webHelper.isNotReachable(Core.DESCRIPTOR_FILE_URL)) {
-            return true;
+        if (webHelper.isReachable(Core.DESCRIPTOR_FILE_URL)) {
+            Collection<Version> versions;
+
+            synchronized (this) {
+                versions = descriptorsLoader.getCoreVersions();
+            }
+
+            return isUpToDate(Core.VERSION, versions);
         }
-
-        Collection<Version> versions;
-
-        synchronized (this) {
-            versions = descriptorsLoader.getCoreVersions();
-        }
-
-        return isUpToDate(Core.VERSION, versions);
+        
+        return true;
     }
 
     @Override
     public boolean isUpToDate(Module object) {
-        if (webHelper.isNotReachable(object.getDescriptorURL())) {
-            return true;
+        if (webHelper.isReachable(object.getDescriptorURL())) {
+            Collection<Version> versions;
+
+            synchronized (this) {
+                versions = descriptorsLoader.getVersions(object);
+            }
+
+            return isUpToDate(object.getVersion(), versions);
         }
 
-        Collection<Version> versions;
-        
-        synchronized (this) {
-            versions = descriptorsLoader.getVersions(object);
-        }
-
-        return isUpToDate(object.getVersion(), versions);
+        return true;
     }
 
     /**

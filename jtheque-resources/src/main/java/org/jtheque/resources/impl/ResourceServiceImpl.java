@@ -143,32 +143,30 @@ public final class ResourceServiceImpl implements ResourceService, BundleContext
     private Resource downloadResource(String url, Version version) {
         SwingUtils.assertNotEDT("downloadResource(String, Version)");
 
-        if (webHelper.isNotReachable(url)) {
-            return null;
-        }
+        if (webHelper.isReachable(url)) {
+            if (!descriptorCache.containsKey(url)) {
+                descriptorCache.put(url, ResourceDescriptorReader.readResourceDescriptor(url));
+            }
 
-        if (!descriptorCache.containsKey(url)) {
-            descriptorCache.put(url, ResourceDescriptorReader.readResourceDescriptor(url));
-        }
+            ResourceDescriptor descriptor = descriptorCache.get(url);
 
-        ResourceDescriptor descriptor = descriptorCache.get(url);
+            if (descriptor == null) {
+                return null;
+            }
 
-        if (descriptor == null) {
-            return null;
-        }
+            Resource cachedResource = getResource(descriptor.getId(), version);
 
-        Resource cachedResource = getResource(descriptor.getId(), version);
+            if (cachedResource != null) {
+                return cachedResource;
+            }
 
-        if (cachedResource != null) {
-            return cachedResource;
-        }
-
-        for (ResourceVersion resourceVersion : descriptor.getVersions()) {
-            if (resourceVersion.getVersion().equals(version)) {
-                return downloadResource(descriptor, resourceVersion);
+            for (ResourceVersion resourceVersion : descriptor.getVersions()) {
+                if (resourceVersion.getVersion().equals(version)) {
+                    return downloadResource(descriptor, resourceVersion);
+                }
             }
         }
-
+        
         return null;
     }
 

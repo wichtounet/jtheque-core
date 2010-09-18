@@ -135,6 +135,12 @@ public class ModuleController extends AbstractController<ModuleView> {
         }
     }
 
+    /**
+     * Add an error to the view from the ModuleException.
+     *
+     * @param e              The exception.
+     * @param defaultMessage The default message if the exception is not internationalized.
+     */
     private void addModuleError(ModuleException e, String defaultMessage) {
         if (e.hasI18nMessage()) {
             errorService.addError(Errors.newI18nError(e.getI18nMessage(), e));

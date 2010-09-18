@@ -189,6 +189,9 @@ public final class ModuleLoader implements BundleContextAware {
      * @param file The file to the module to installFromRepository.
      *
      * @return The installed module.
+     *
+     * @throws org.jtheque.modules.ModuleException
+     *          If an error occurs during module installation.
      */
     public Module installModule(File file) throws ModuleException {
         Builder builder = new Builder();
@@ -236,6 +239,8 @@ public final class ModuleLoader implements BundleContextAware {
      * @return The module resources.
      *
      * @throws IOException If an error occurs during Jar File reading.
+     * @throws org.jtheque.modules.ModuleException
+     *                     If the config cannot be read.
      */
     private ModuleResources readConfig(File file) throws IOException, ModuleException {
         JarFile jarFile = null;
@@ -271,6 +276,9 @@ public final class ModuleLoader implements BundleContextAware {
      * @param stream The stream to the file.
      *
      * @return The ModuleResources of the module.
+     *
+     * @throws org.jtheque.modules.ModuleException
+     *          If the config cannot be read properly.
      */
     private ModuleResources importConfig(InputStream stream) throws ModuleException {
         XMLOverReader reader = XML.newJavaFactory().newOverReader();
