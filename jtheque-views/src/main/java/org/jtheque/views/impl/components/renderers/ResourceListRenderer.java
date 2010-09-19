@@ -28,7 +28,6 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.ListCellRenderer;
 
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 

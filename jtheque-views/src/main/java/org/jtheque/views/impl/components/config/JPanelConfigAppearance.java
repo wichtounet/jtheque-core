@@ -18,7 +18,6 @@ package org.jtheque.views.impl.components.config;
 
 import org.jtheque.core.Core;
 import org.jtheque.i18n.LanguageService;
-import org.jtheque.ui.components.Borders;
 import org.jtheque.ui.components.filthy.Filthy;
 import org.jtheque.ui.constraints.Constraint;
 import org.jtheque.ui.constraints.Constraints;

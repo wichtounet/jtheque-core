@@ -4,7 +4,6 @@ import org.jtheque.utils.annotations.Immutable;
 import org.jtheque.utils.collections.CollectionUtils;
 
 import java.util.Collection;
-import java.util.NoSuchElementException;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -70,8 +69,6 @@ final class ModuleDescriptor {
      * Return the most recent version of the VersionsFile.
      *
      * @return The most recent version.
-     *
-     * @throws NoSuchElementException If the version's file contains no version.
      */
     ModuleVersion getMostRecentVersion() {
         return mostRecent;

@@ -22,7 +22,6 @@ import org.jtheque.ui.utils.builders.I18nPanelBuilder;
 import org.jtheque.ui.utils.windows.dialogs.SwingFilthyBuildedDialogView;
 import org.jtheque.utils.io.FileUtils;
 import org.jtheque.utils.ui.GridBagUtils;
-import org.jtheque.views.ViewService;
 import org.jtheque.views.windows.LicenseView;
 
 /**

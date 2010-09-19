@@ -18,8 +18,6 @@ package org.jtheque.views;
 
 import org.jtheque.utils.annotations.ThreadSafe;
 
-import java.awt.Window;
-
 /**
  * A view manager.
  *
@@ -38,7 +36,7 @@ public interface ViewService {
     void displayCollectionView();
 
     /**
-     * Close the collection view. 
+     * Close the collection view.
      */
     void closeCollectionView();
 }
