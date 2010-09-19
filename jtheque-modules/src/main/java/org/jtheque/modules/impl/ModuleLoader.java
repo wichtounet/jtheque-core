@@ -216,18 +216,10 @@ public final class ModuleLoader implements BundleContextAware {
 
         Module module = builder.build();
 
-        if (resources == null) {
-            moduleService.setResources(module, new ModuleResources(
-                    CollectionUtils.<ImageResource>newList(),
-                    CollectionUtils.<I18NResource>newList(),
-                    CollectionUtils.<Resource>newList()
-            ));
-        } else {
-            loadI18NResources(module, resources);
+        loadI18NResources(module, resources);
 
-            moduleService.setResources(module, resources);
-        }
-
+        moduleService.setResources(module, resources);
+        
         return module;
     }
 
