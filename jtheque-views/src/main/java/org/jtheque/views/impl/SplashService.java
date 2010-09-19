@@ -68,28 +68,7 @@ public final class SplashService implements org.jtheque.views.SplashService, App
 
     @Override
     public void displaySplashScreen() {
-        SwingUtils.inEdt(new Runnable() {
-            @Override
-            public void run() {
-                displayMainViewIfNecessary();
-
-                mainView.getContent().setUI(splashScreenPane.getImpl());
-
-                mainView.refresh();
-
-                splashScreenPane.appearsAndAnimate();
-            }
-
-            /**
-             * Display the main view if necessary.
-             */
-            private void displayMainViewIfNecessary() {
-                if (!mainDisplayed) {
-                    mainDisplayed = true;
-                    mainView.display();
-                }
-            }
-        });
+        SwingUtils.inEdt(new DisplaySplashScreenRunnable());
     }
 
     @Override
@@ -120,5 +99,33 @@ public final class SplashService implements org.jtheque.views.SplashService, App
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) {
         this.applicationContext = applicationContext;
+    }
+
+    /**
+     * A runnable to display the Splash Screen.
+     *
+     * @author Baptiste Wicht
+     */
+    private class DisplaySplashScreenRunnable implements Runnable {
+        @Override
+        public void run() {
+            displayMainViewIfNecessary();
+
+            mainView.getContent().setUI(splashScreenPane.getImpl());
+
+            mainView.refresh();
+
+            splashScreenPane.appearsAndAnimate();
+        }
+
+        /**
+         * Display the main view if necessary.
+         */
+        private void displayMainViewIfNecessary() {
+            if (!mainDisplayed) {
+                mainDisplayed = true;
+                mainView.display();
+            }
+        }
     }
 }
