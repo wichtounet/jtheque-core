@@ -16,9 +16,7 @@ package org.jtheque.views.impl;
  * limitations under the License.
  */
 
-import org.jtheque.core.Core;
 import org.jtheque.core.utils.SwingSpringProxy;
-import org.jtheque.states.StateService;
 import org.jtheque.utils.SimplePropertiesCache;
 import org.jtheque.images.ImageService;
 import org.jtheque.utils.annotations.ThreadSafe;
@@ -30,8 +28,6 @@ import org.jtheque.views.windows.MainView;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
-
-import java.awt.Window;
 
 /**
  * A view manager implementation.
@@ -46,11 +42,9 @@ public final class ViewServiceImpl implements ViewService, ApplicationContextAwa
     /**
      * Construct a new ViewServiceImpl.
      *
-     * @param stateService The state service.
-     * @param core         The core.
      * @param imageService The resource service.
      */
-    public ViewServiceImpl(StateService stateService, Core core, ImageService imageService) {
+    public ViewServiceImpl(ImageService imageService) {
         super();
 
         ViewsResources.registerResources(imageService);
