@@ -31,7 +31,6 @@ import org.jtheque.utils.SimplePropertiesCache;
 import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.ui.GridBagUtils;
 import org.jtheque.utils.ui.SwingUtils;
-import org.jtheque.views.ViewService;
 import org.jtheque.views.Views;
 import org.jtheque.views.components.MainComponent;
 import org.jtheque.views.impl.MainController;
@@ -73,9 +72,6 @@ public final class MainViewImpl extends SwingFrameView<Model> implements TitleLi
     private JThequeStateBar stateBar;
 
     @Resource
-    private ViewService viewService;
-    
-    @Resource
     private LanguageService languageService;
 
     @Resource
@@ -95,7 +91,7 @@ public final class MainViewImpl extends SwingFrameView<Model> implements TitleLi
     /**
      * Construct a new MainViewImpl.
      *
-     * @param menuBar         The menu bar.
+     * @param menuBar The menu bar.
      */
     public MainViewImpl(JThequeMenuBar menuBar) {
         super();
@@ -180,7 +176,7 @@ public final class MainViewImpl extends SwingFrameView<Model> implements TitleLi
      * Add the main component to the view.
      */
     private void addComponent() {
-        if (current > 1){
+        if (current > 1) {
             tab.refreshComponents();
 
             current++;
@@ -197,7 +193,7 @@ public final class MainViewImpl extends SwingFrameView<Model> implements TitleLi
      * @param component The main component to remove.
      */
     private void removeComponent(MainComponent component) {
-        if(current > 2) {
+        if (current > 2) {
             tab.removeMainComponent(component);
 
             current--;
@@ -230,20 +226,20 @@ public final class MainViewImpl extends SwingFrameView<Model> implements TitleLi
     /**
      * Return the current main component.
      *
-     * @return The current main component. 
+     * @return The current main component.
      */
     private Component getMainComponent() {
         Component mainComponent;
 
-        if(current == 0){
+        if (current == 0) {
             mainComponent = new JPanel();
             mainComponent.setBackground(Color.white);
-        } else if(current == 1) {
+        } else if (current == 1) {
             Collection<MainComponent> components = views.getMainComponents();
 
             mainComponent = CollectionUtils.first(components).getImpl();
         } else {
-            if(tab == null){
+            if (tab == null) {
                 tab = new MainTabbedPane(languageService, views);
                 tab.addChangeListener(controller);
             }
