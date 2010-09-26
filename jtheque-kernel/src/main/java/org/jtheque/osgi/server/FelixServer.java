@@ -166,7 +166,7 @@ public final class FelixServer implements OSGiServer {
 
             bundles.put(bundle.getSymbolicName(), bundle);
 
-            getLogger().info("Installed bundle {}", bundle.getSymbolicName());
+            getLogger().info("Installed bundle {}:{}", bundle.getSymbolicName(), bundle.getVersion());
         } catch (BundleException e) {
             getLogger().error("Unable to install bundle at path {} due to {}", path, e.getMessage());
             getLogger().error(e.getMessage(), e);

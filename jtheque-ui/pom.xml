@@ -48,13 +48,13 @@
         <dependency>
             <groupId>org.substance</groupId>
             <artifactId>org.jtheque.substance</artifactId>
-            <version>6.0.0</version>
+            <version>6.1.0</version>
         </dependency>
 
         <dependency>
             <groupId>org.trident</groupId>
             <artifactId>org.jtheque.trident</artifactId>
-            <version>1.2.0</version>
+            <version>1.3.0</version>
         </dependency>
 
         <dependency>
