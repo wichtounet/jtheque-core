@@ -1,5 +1,7 @@
 package org.jtheque.osgi;
 
+import org.jtheque.utils.SystemProperty;
+
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.BuildListener;
 import org.apache.tools.ant.BuildLogger;
@@ -8,6 +10,7 @@ import org.apache.tools.ant.DemuxOutputStream;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.taskdefs.Java;
 
+import java.io.File;
 import java.io.PrintStream;
 
 /*
@@ -145,6 +148,7 @@ public final class JTheque {
         javaTask.setFailonerror(true);
         javaTask.setCloneVm(true);
         javaTask.setClassname(Kernel.class.getName());
+        javaTask.setDir(new File(SystemProperty.USER_DIR.get(), "core"));
         javaTask.init();
 
         return javaTask;

@@ -1,5 +1,6 @@
 package org.jtheque.osgi.server;
 
+import org.jtheque.utils.SystemProperty;
 import org.jtheque.utils.collections.CollectionUtils;
 import org.jtheque.utils.io.FileUtils;
 
@@ -37,8 +38,8 @@ import java.util.Map;
  * @author Baptiste Wicht
  */
 public final class FelixServer implements OSGiServer {
-    private static final File BUNDLES_DIR = new File(System.getProperty("user.dir") + "/bundles");
-    private static final File CACHE_DIR = new File(System.getProperty("user.dir") + "/cache");
+    private static final File BUNDLES_DIR = new File(SystemProperty.USER_DIR.get(), "bundles");
+    private static final File CACHE_DIR = new File(SystemProperty.USER_DIR.get(), "cache");
 
     private final Map<String, Bundle> bundles = CollectionUtils.newHashMap(50);
 
@@ -64,7 +65,7 @@ public final class FelixServer implements OSGiServer {
     private void emptyFelixCache() {
         long startTime = System.currentTimeMillis();
 
-        for(File f : CACHE_DIR.listFiles()){
+        for (File f : CACHE_DIR.listFiles()) {
             FileUtils.delete(f);
         }
 
@@ -72,7 +73,7 @@ public final class FelixServer implements OSGiServer {
     }
 
     /**
-     * Start the Felix server. 
+     * Start the Felix server.
      */
     private void startFelixServer() {
         long startTime = System.currentTimeMillis();
@@ -109,9 +110,9 @@ public final class FelixServer implements OSGiServer {
         for (File f : BUNDLES_DIR.listFiles(new JarFileFilter())) {
             String name = f.getName();
 
-            installIfNecessary(
-                    name.substring(0, name.indexOf('-')),
-                    f.getAbsolutePath());
+            getLogger().info("auto-deploy {} file" + f.getName());
+
+            installIfNecessary(name.substring(0, name.indexOf('-')), f.getAbsolutePath());
         }
 
         getLogger().info("Auto deploy ends in {} ms", System.currentTimeMillis() - startTime);

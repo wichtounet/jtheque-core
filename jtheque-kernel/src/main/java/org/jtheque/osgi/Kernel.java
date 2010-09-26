@@ -4,6 +4,7 @@ import org.jtheque.osgi.server.BundleState;
 import org.jtheque.osgi.server.FelixServer;
 import org.jtheque.osgi.server.OSGiServer;
 import org.jtheque.utils.StringUtils;
+import org.jtheque.utils.SystemProperty;
 import org.jtheque.utils.io.FileUtils;
 
 import org.slf4j.LoggerFactory;
@@ -110,7 +111,9 @@ public final class Kernel implements Closeable {
      */
     public static void main(String[] args) {
         if (args.length > 0) {
-            System.setProperty("user.dir", args[0]);
+            SystemProperty.USER_DIR.set(args[0]);
+        } else {
+            SystemProperty.USER_DIR.set(SystemProperty.USER_DIR.get() + "core/");
         }
 
         configureLogging();

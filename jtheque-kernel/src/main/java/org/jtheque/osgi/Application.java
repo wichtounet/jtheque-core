@@ -16,11 +16,12 @@ package org.jtheque.osgi;
  * limitations under the License.
  */
 
-import org.jtheque.ui.View;
-import org.jtheque.utils.SimplePropertiesCache;
 import org.jtheque.utils.io.FileUtils;
+import org.jtheque.utils.io.SocketUtils;
 
 import org.slf4j.LoggerFactory;
+
+import javax.swing.JOptionPane;
 
 import java.io.BufferedReader;
 import java.io.DataInputStream;
@@ -62,7 +63,9 @@ final class Application extends Thread {
                 String command = reader.readLine();
 
                 if ("open".equals(command)) {
-                    SimplePropertiesCache.<View>get("mainView", View.class).toFirstPlan();
+                    JOptionPane.showMessageDialog(null,
+                            "The application cannot be launched twice\n" +
+                            "L'application ne peut pas être lancée plusieurs fois");
                 }
 
                 interrupt();
@@ -75,12 +78,7 @@ final class Application extends Thread {
     @Override
     public void interrupt() {
         FileUtils.close(reader);
-
-        try {
-            socket.close();
-        } catch (IOException e) {
-            LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
-        }
+        SocketUtils.close(socket);
 
         super.interrupt();
     }
