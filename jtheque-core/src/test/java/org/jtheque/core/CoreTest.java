@@ -2,27 +2,21 @@ package org.jtheque.core;
 
 import org.jtheque.core.application.Application;
 import org.jtheque.core.application.ApplicationProperties;
+import org.jtheque.core.impl.Folders;
 import org.jtheque.core.utils.ImageType;
+import org.jtheque.unit.AbstractJThequeTest;
 import org.jtheque.utils.SystemProperty;
 import org.jtheque.utils.bean.Version;
-import org.jtheque.utils.io.FileUtils;
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.slf4j.LoggerFactory;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
 
-import java.io.File;
 import java.util.concurrent.atomic.AtomicInteger;
-
-import ch.qos.logback.classic.Level;
-import ch.qos.logback.classic.Logger;
 
 import static org.junit.Assert.*;
 
@@ -44,29 +38,9 @@ import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "jtheque-core-test.xml")
-public class CoreTest {
+public class CoreTest extends AbstractJThequeTest {
     @Resource
     private Core core;
-
-    private static final String userDir;
-
-    static {
-        ((Logger) LoggerFactory.getLogger("root")).setLevel(Level.ERROR);
-
-        userDir = SystemProperty.USER_DIR.get();
-
-        File folder = new File(SystemProperty.JAVA_IO_TMP_DIR.get(), "jtheque");
-        folder.mkdirs();
-
-        SystemProperty.USER_DIR.set(folder.getAbsolutePath());
-    }
-
-    @AfterClass
-    public static void after() {
-        FileUtils.delete(new File(SystemProperty.JAVA_IO_TMP_DIR.get(), "jtheque"));
-
-        SystemProperty.USER_DIR.set(userDir);
-    }
 
     @Test
     public void initOK() {
@@ -76,22 +50,17 @@ public class CoreTest {
     @Test
     public void loaded() {
         assertNotNull(core.getConfiguration());
-        assertNotNull(core.getFolders());
     }
 
     @Test
-    @DirtiesContext
     public void foldersExists() {
-        core.launchApplication(new TestApplication());
-        
-        assertTrue(core.getFolders().getApplicationFolder().exists());
-        assertTrue(core.getFolders().getLogsFolder().exists());
-        assertTrue(core.getFolders().getModulesFolder().exists());
+        assertTrue(Folders.getApplicationFolder().exists());
+        assertTrue(Folders.getModulesFolder().exists());
     }
 
     @Test
     @DirtiesContext
-    public void launchApplication(){
+    public void launchApplication() {
         Application application = new TestApplication();
 
         core.launchApplication(application);
@@ -123,7 +92,7 @@ public class CoreTest {
 
         final Application launchedApplication = new TestApplication();
 
-        core.addApplicationListener(new ApplicationListener(){
+        core.addApplicationListener(new ApplicationListener() {
             @Override
             public void applicationLaunched(Application application) {
                 assertEquals(application, launchedApplication);
@@ -140,16 +109,16 @@ public class CoreTest {
 
     @Test
     @DirtiesContext
-    public void applicationURLs(){
+    public void applicationURLs() {
         core.launchApplication(new TestApplication());
-        
+
         assertEquals("help-application-url", core.getHelpURL());
         assertEquals("bugs-application-url", core.getBugTrackerURL());
         assertEquals("improvement-application-url", core.getImprovementURL());
     }
 
     @Test
-    public void creditsMessage(){
+    public void creditsMessage() {
         int oldSize = core.getCreditsMessage().size();
         core.addCreditsMessage("super.key");
 
@@ -205,7 +174,7 @@ public class CoreTest {
 
         @Override
         public ApplicationProperties getI18nProperties() {
-            return new ApplicationProperties(){
+            return new ApplicationProperties() {
                 @Override
                 public String getName() {
                     return "test-application-name";
@@ -240,7 +209,7 @@ public class CoreTest {
 
         @Override
         public String getProperty(String key) {
-            if("url.help".equals(key)){
+            if ("url.help".equals(key)) {
                 return "help-application-url";
             } else if ("url.bugs".equals(key)) {
                 return "bugs-application-url";

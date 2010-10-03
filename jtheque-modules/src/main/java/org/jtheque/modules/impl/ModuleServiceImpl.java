@@ -17,6 +17,7 @@ package org.jtheque.modules.impl;
  */
 
 import org.jtheque.core.Core;
+import org.jtheque.core.impl.Folders;
 import org.jtheque.images.ImageService;
 import org.jtheque.modules.Module;
 import org.jtheque.modules.ModuleDescription;
@@ -293,8 +294,7 @@ public final class ModuleServiceImpl implements ModuleService, ModuleLauncher {
 
     @Override
     public void installFromRepository(String jarFile) throws ModuleException {
-        installModule(
-                moduleManager.installModuleFromRepository(new File(core.getFolders().getModulesFolder(), jarFile)));
+        installModule(moduleManager.installModuleFromRepository(new File(Folders.getModulesFolder(), jarFile)));
     }
 
     @Override

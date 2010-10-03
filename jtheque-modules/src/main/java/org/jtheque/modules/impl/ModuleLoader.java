@@ -1,6 +1,7 @@
 package org.jtheque.modules.impl;
 
 import org.jtheque.core.Core;
+import org.jtheque.core.impl.Folders;
 import org.jtheque.core.utils.OSGiUtils;
 import org.jtheque.errors.ErrorService;
 import org.jtheque.errors.Errors;
@@ -108,9 +109,7 @@ public final class ModuleLoader implements BundleContextAware {
      * @return All the loaded modules.
      */
     public Collection<Module> loadModules() {
-        File moduleDir = core.getFolders().getModulesFolder();
-
-        File[] files = moduleDir.listFiles(new ModuleFilter());
+        File[] files = Folders.getModulesFolder().listFiles(new ModuleFilter());
 
         return isLoadingConcurrent() ? loadInParallel(files) : loadSequentially(files);
     }

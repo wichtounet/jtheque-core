@@ -50,13 +50,6 @@ public interface Core {
     String getCoreMessageFileURL();
 
     /**
-     * Return the folders of the application.
-     *
-     * @return The folders of the application.
-     */
-    FoldersContainer getFolders();
-
-    /**
      * Add an internationalized credits message.
      *
      * @param key The internationalized key.

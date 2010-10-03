@@ -1,22 +1,13 @@
 package org.jtheque.events;
 
-import org.jtheque.utils.SystemProperty;
-import org.jtheque.utils.io.FileUtils;
+import org.jtheque.unit.AbstractJThequeTest;
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.slf4j.LoggerFactory;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
-
-import java.io.File;
-
-import ch.qos.logback.classic.Level;
-import ch.qos.logback.classic.Logger;
 
 import static org.junit.Assert.*;
 
@@ -38,29 +29,9 @@ import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "jtheque-events-test.xml")
-public class EventServiceTest {
+public class EventServiceTest extends AbstractJThequeTest {
     @Resource
     private EventService eventService;
-
-    private static String userDir;
-
-    static {
-        ((Logger) LoggerFactory.getLogger("root")).setLevel(Level.ERROR);
-
-        userDir = SystemProperty.USER_DIR.get();
-
-        File folder = new File(SystemProperty.JAVA_IO_TMP_DIR.get(), "jtheque");
-        folder.mkdirs();
-
-        SystemProperty.USER_DIR.set(folder.getAbsolutePath());
-    }
-
-    @AfterClass
-    public static void after() {
-        FileUtils.delete(new File(SystemProperty.JAVA_IO_TMP_DIR.get(), "jtheque"));
-
-        SystemProperty.USER_DIR.set(userDir);
-    }
 
     @Test
     public void initOK() {
@@ -68,14 +39,7 @@ public class EventServiceTest {
     }
 
     @Test
-    public void configCreated() {
-        File folder = new File(SystemProperty.JAVA_IO_TMP_DIR.get(), "jtheque");
-
-        assertTrue(new File(folder, "logs.xml").exists());
-    }
-
-    @Test
-    public void onlyOneLogByDefault(){
+    public void onlyOneLogByDefault() {
         assertEquals(1, eventService.getEventLogs().size());
         assertTrue(eventService.getEventLogs().contains(EventService.CORE_EVENT_LOG));
     }
@@ -86,7 +50,7 @@ public class EventServiceTest {
     }
 
     @Test
-    public void addEventInDefaultLog(){
+    public void addEventInDefaultLog() {
         Event event = Events.newEvent(EventLevel.INFO, "source", "key", EventService.CORE_EVENT_LOG);
 
         eventService.addEvent(event);

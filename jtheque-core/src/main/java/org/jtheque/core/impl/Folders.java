@@ -16,74 +16,67 @@ package org.jtheque.core.impl;
  * limitations under the License.
  */
 
-import org.jtheque.core.ApplicationListener;
-import org.jtheque.core.Core;
-import org.jtheque.core.FoldersContainer;
-import org.jtheque.core.application.Application;
+import org.jtheque.utils.SystemProperty;
 import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.io.FileUtils;
 
 import java.io.File;
 
 /**
- * Give access to the folders of the application. Pay attention that if the application has not been launched,
- * the folders are all {@code null}. 
+ * Give access to the folders of the application.
  *
  * @author Baptiste Wicht
  */
 @ThreadSafe
-public final class Folders implements FoldersContainer, ApplicationListener {
-    private volatile File applicationFolder;
-    private volatile File modulesFolder;
-    private volatile File logsFolder;
+public final class Folders {
+    private static final File CORE_FOLDER;
+    private static final File APPLICATION_FOLDER;
+    private static final File MODULES_FOLDER;
+
+    static {
+        File userDir = new File(SystemProperty.USER_DIR.get());
+
+        CORE_FOLDER = new File(userDir, "application");
+        FileUtils.createIfNotExists(CORE_FOLDER);
+
+        APPLICATION_FOLDER = new File(userDir, "core");
+        FileUtils.createIfNotExists(APPLICATION_FOLDER);
+
+        MODULES_FOLDER = new File(userDir, "modules");
+        FileUtils.createIfNotExists(MODULES_FOLDER);
+    }
 
     /**
-     * Construct a new Folders.
-     *
-     * @param core The core.
+     * Utility class, not instantiable. 
      */
-    public Folders(Core core) {
-        super();
-
-        core.addApplicationListener(this);
+    private Folders() {
+        throw new AssertionError();
     }
 
-    @Override
-    public File getApplicationFolder() {
-        if (applicationFolder == null) {
-            throw new IllegalStateException("The application has not been launched. ");
-        }
-
-        return applicationFolder;
+    /**
+     * Return the core folder. It seems the folder where the files of the core are located.
+     *
+     * @return The File object who denotes the core folder.
+     */
+    public static File getCoreFolder() {
+        return CORE_FOLDER;
     }
 
-    @Override
-    public File getLogsFolder() {
-        if (logsFolder == null) {
-            throw new IllegalStateException("The application has not been launched. ");
-        }
-
-        return logsFolder;
+    /**
+     * Return the application folder.
+     *
+     * @return The File object who denotes the application folder.
+     */
+    public static File getApplicationFolder() {
+        return APPLICATION_FOLDER;
     }
 
-    @Override
-    public File getModulesFolder() {
-        if(modulesFolder == null){
-            throw new IllegalStateException("The application has not been launched. ");
-        }
-
-        return modulesFolder;
-    }
-
-    @Override
-    public void applicationLaunched(Application application) {
-        applicationFolder = new File(application.getFolderPath());
-        FileUtils.createIfNotExists(applicationFolder);
-
-        logsFolder = new File(applicationFolder, "logs");
-        FileUtils.createIfNotExists(logsFolder);
-
-        modulesFolder = new File(applicationFolder, "modules");
-        FileUtils.createIfNotExists(modulesFolder);
+    /**
+     * Return the modules folder. It seems the folder where the modules are located.
+     *
+     * @return The File object who denotes the modules folder.
+     */
+    public static File getModulesFolder() {
+        return MODULES_FOLDER;
     }
 }

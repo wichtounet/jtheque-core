@@ -1,6 +1,7 @@
 package org.jtheque.lifecycle.application;
 
 import org.jtheque.core.application.Application;
+import org.jtheque.core.impl.Folders;
 import org.jtheque.core.utils.ImageDescriptor;
 import org.jtheque.core.utils.ImageType;
 import org.jtheque.utils.StringUtils;
@@ -16,7 +17,6 @@ import org.jtheque.xml.utils.XMLReader;
 
 import org.w3c.dom.Node;
 
-import java.io.File;
 import java.util.Collection;
 import java.util.Map;
 
@@ -120,14 +120,6 @@ public final class XMLApplicationReader {
      * @throws XMLException if an error occurs during the XML processing.
      */
     private void readApplicationValues(XMLApplication application) throws XMLException {
-        String folder = reader.readString("folder", reader.getRootElement());
-
-        if (StringUtils.isEmpty(folder) || !new File(folder).exists()) {
-            application.setProperty("application.folder.path", new File(SystemProperty.USER_DIR.get()).getParentFile().getAbsolutePath());
-        } else {
-            application.setProperty("application.folder.path", new File(folder).getAbsolutePath());
-        }
-
         application.setProperty("application.repository", reader.readString("repository", reader.getRootElement()));
         application.setProperty("application.messages", reader.readString("messages", reader.getRootElement()));
     }
@@ -226,7 +218,7 @@ public final class XMLApplicationReader {
         if (reader.existsNode(node, reader.getRootElement())) {
             Object iconElement = reader.getNode(node, reader.getRootElement());
 
-            StringBuilder path = new StringBuilder(SystemProperty.USER_DIR.get());
+            StringBuilder path = new StringBuilder(Folders.getApplicationFolder().getAbsolutePath());
             path.append("images/");
             path.append(reader.readString("@image", iconElement));
 
@@ -251,7 +243,9 @@ public final class XMLApplicationReader {
 
             if (exists("license", element)) {
                 application.displayLicense();
-                application.setProperty("application.license", SystemProperty.USER_DIR.get() + reader.readString("license", element));
+                
+                application.setProperty("application.license",
+                        Folders.getApplicationFolder().getAbsolutePath() + reader.readString("license", element));
             }
 
             readOption(application, element, "concurrent.load");

@@ -35,7 +35,6 @@ package org.jtheque.core.impl;
 import org.jtheque.core.ApplicationListener;
 import org.jtheque.core.Core;
 import org.jtheque.core.CoreConfiguration;
-import org.jtheque.core.FoldersContainer;
 import org.jtheque.core.application.Application;
 import org.jtheque.images.ImageService;
 import org.jtheque.states.StateService;
@@ -69,9 +68,6 @@ public final class CoreImpl implements Core {
     private Collection<String> languages;
 
     @GuardedInternally
-    private final FoldersContainer foldersContainer;
-
-    @GuardedInternally
     private final CoreConfiguration configuration;
 
     private final ImageService imageService;
@@ -88,8 +84,6 @@ public final class CoreImpl implements Core {
         super();
 
         this.imageService = imageService;
-
-        foldersContainer = new Folders(this);
 
         configuration = stateService.getState(new CoreConfigurationImpl());
 
@@ -136,7 +130,7 @@ public final class CoreImpl implements Core {
     /**
      * Fire an application launched event.
      *
-     * @param application The new application. 
+     * @param application The new application.
      */
     private void fireApplicationLaunched(Application application) {
         for (ApplicationListener applicationListener : listeners) {
@@ -171,11 +165,6 @@ public final class CoreImpl implements Core {
     }
 
     @Override
-    public FoldersContainer getFolders() {
-        return foldersContainer;
-    }
-
-    @Override
     public CoreConfiguration getConfiguration() {
         return configuration;
     }
@@ -205,13 +194,13 @@ public final class CoreImpl implements Core {
     }
 
     /**
-     * Return the URL with the specified property. If the application doesn't provide this property, this method
-     * return the default value of the core.
+     * Return the URL with the specified property. If the application doesn't provide this property, this method return
+     * the default value of the core.
      *
-     * @param property The property to get the URL from the application.
+     * @param property   The property to get the URL from the application.
      * @param defaultURL The default URL of the core.
      *
-     * @return The URL of the application if provided else the default URL of the core. 
+     * @return The URL of the application if provided else the default URL of the core.
      */
     private String getURL(String property, String defaultURL) {
         String applicationURL = application.getProperty(property);

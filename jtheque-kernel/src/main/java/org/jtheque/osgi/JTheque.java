@@ -50,7 +50,7 @@ public final class JTheque {
      */
     public static void main(String[] args) {
         if (args.length > 0) {
-            System.setProperty("user.dir", args[0]);
+            SystemProperty.USER_DIR.set(args[0]);
         }
 
         launch();

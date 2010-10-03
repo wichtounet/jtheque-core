@@ -1,10 +1,10 @@
 package org.jtheque.resources.impl;
 
+import org.jtheque.core.impl.Folders;
 import org.jtheque.core.utils.WebHelper;
 import org.jtheque.resources.Resource;
 import org.jtheque.resources.ResourceService;
 import org.jtheque.states.StateService;
-import org.jtheque.utils.SystemProperty;
 import org.jtheque.utils.annotations.GuardedInternally;
 import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.bean.Version;
@@ -239,7 +239,7 @@ public final class ResourceServiceImpl implements ResourceService, BundleContext
      * @return The folder of the resource.
      */
     private static File getResourceFolder(String id, Version version) {
-        File file = new File(SystemProperty.USER_DIR.get(), "resources/" + id + '/' + version);
+        File file = new File(Folders.getCoreFolder(), "resources/" + id + '/' + version);
 
         if (!file.exists() && !file.mkdirs()) {
             LoggerFactory.getLogger(ResourceServiceImpl.class).error("Unable to create the resource folder {}", file.getAbsolutePath());

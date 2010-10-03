@@ -65,7 +65,7 @@ public final class LifeCycleImpl implements LifeCycle {
 
     @Override
     public void restart() {
-        FileUtils.clearFolder(new File(SystemProperty.USER_DIR.get() + "cache"));
+        FileUtils.clearFolder(new File(Folders.getCoreFolder(), "cache"));
 
         exit(RESTART_EXIT_CODE);
     }

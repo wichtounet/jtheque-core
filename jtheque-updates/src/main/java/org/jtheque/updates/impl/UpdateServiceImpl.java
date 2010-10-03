@@ -18,6 +18,7 @@ package org.jtheque.updates.impl;
 
 import org.jtheque.core.Core;
 import org.jtheque.core.Versionable;
+import org.jtheque.core.impl.Folders;
 import org.jtheque.core.utils.OSGiUtils;
 import org.jtheque.core.utils.WebHelper;
 import org.jtheque.modules.Module;
@@ -152,8 +153,7 @@ public final class UpdateServiceImpl implements UpdateService {
         } else {
             applyModuleVersion(onlineVersion);
 
-            OSGiUtils.update(module.getBundle(),
-                    new File(core.getFolders().getModulesFolder(), onlineVersion.getModuleFile()));
+            OSGiUtils.update(module.getBundle(), new File(Folders.getModulesFolder(), onlineVersion.getModuleFile()));
 
             uiUtils.displayI18nText("message.application.updated");
         }
@@ -168,7 +168,7 @@ public final class UpdateServiceImpl implements UpdateService {
         try {
             if (StringUtils.isNotEmpty(moduleVersion.getModuleFile())) {
                 WebUtils.downloadFile(moduleVersion.getModuleURL(),
-                        new File(core.getFolders().getModulesFolder(), moduleVersion.getModuleFile()).getAbsolutePath());
+                        new File(Folders.getModulesFolder(), moduleVersion.getModuleFile()).getAbsolutePath());
             }
 
             for (FileDescriptor resource : moduleVersion.getResources()) {
@@ -187,7 +187,7 @@ public final class UpdateServiceImpl implements UpdateService {
     private void applyCoreVersion(CoreVersion coreVersion) {
         LoggerFactory.getLogger(getClass()).debug("Apply core version {}", coreVersion.getVersion());
 
-        File bundlesFolder = new File(SystemProperty.USER_DIR.get(), "bundles");
+        File bundlesFolder = new File(Folders.getCoreFolder(), "bundles");
 
         Set<File> currentBundles = ArrayUtils.asSet(bundlesFolder.listFiles());
 

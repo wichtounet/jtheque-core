@@ -1,24 +1,16 @@
 package org.jtheque.errors;
 
-import org.jtheque.utils.SystemProperty;
-import org.jtheque.utils.io.FileUtils;
+import org.jtheque.unit.AbstractJThequeTest;
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.slf4j.LoggerFactory;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
 
-import java.io.File;
 import java.util.concurrent.atomic.AtomicInteger;
-
-import ch.qos.logback.classic.Level;
-import ch.qos.logback.classic.Logger;
 
 import static org.junit.Assert.*;
 
@@ -40,29 +32,9 @@ import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "jtheque-errors-test.xml")
-public class ErrorServiceTest {
+public class ErrorServiceTest extends AbstractJThequeTest {
     @Resource
     private ErrorService errorService;
-
-    private static String userDir;
-
-    static {
-        ((Logger) LoggerFactory.getLogger("root")).setLevel(Level.ERROR);
-
-        userDir = SystemProperty.USER_DIR.get();
-
-        File folder = new File(SystemProperty.JAVA_IO_TMP_DIR.get(), "jtheque");
-        folder.mkdirs();
-
-        SystemProperty.USER_DIR.set(folder.getAbsolutePath());
-    }
-
-    @AfterClass
-    public static void after() {
-        FileUtils.delete(new File(SystemProperty.JAVA_IO_TMP_DIR.get(), "jtheque"));
-
-        SystemProperty.USER_DIR.set(userDir);
-    }
 
     @Test
     public void initOK() {
@@ -99,7 +71,7 @@ public class ErrorServiceTest {
 
         final AtomicInteger integer = new AtomicInteger(0);
 
-        errorService.addErrorListener(new ErrorListener(){
+        errorService.addErrorListener(new ErrorListener() {
             @Override
             public void errorOccurred(Error occuredError) {
                 integer.incrementAndGet();

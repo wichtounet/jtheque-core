@@ -9,7 +9,6 @@
         <xs:sequence>
             <xs:element type="xs:anyURI" name="repository" minOccurs="0" maxOccurs="1"/>
             <xs:element type="xs:anyURI" name="messages" minOccurs="0" maxOccurs="1"/>
-            <xs:element type="xs:string" name="folder" minOccurs="0" maxOccurs="1"/>
             <xs:element type="i18nType" name="i18n" minOccurs="1" maxOccurs="1"/>
             <xs:element type="imageDescription" name="logo" minOccurs="1" maxOccurs="1"/>
             <xs:element type="imageDescription" name="icon" minOccurs="1" maxOccurs="1"/>

@@ -1,30 +1,21 @@
 package org.jtheque.core;
 
 import org.jtheque.core.CoreTest.TestApplication;
-import org.jtheque.core.application.Application;
 import org.jtheque.core.lifecycle.FunctionListener;
 import org.jtheque.core.lifecycle.LifeCycle;
 import org.jtheque.core.lifecycle.TitleListener;
-import org.jtheque.utils.SystemProperty;
-import org.jtheque.utils.io.FileUtils;
+import org.jtheque.unit.AbstractJThequeTest;
 
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.slf4j.LoggerFactory;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
 
-import java.io.File;
 import java.util.concurrent.atomic.AtomicInteger;
-
-import ch.qos.logback.classic.Level;
-import ch.qos.logback.classic.Logger;
 
 import static org.junit.Assert.*;
 
@@ -46,32 +37,12 @@ import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "jtheque-core-test.xml")
-public class LifeCycleTest {
+public class LifeCycleTest extends AbstractJThequeTest {
     @Resource
     private LifeCycle lifeCycle;
 
     @Resource
     private Core core;
-
-    private static String userDir;
-
-    static {
-        ((Logger) LoggerFactory.getLogger("root")).setLevel(Level.ERROR);
-
-        userDir = SystemProperty.USER_DIR.get();
-
-        File folder = new File(SystemProperty.JAVA_IO_TMP_DIR.get(), "jtheque");
-        folder.mkdirs();
-
-        SystemProperty.USER_DIR.set(folder.getAbsolutePath());
-    }
-
-    @AfterClass
-    public static void after() {
-        FileUtils.delete(new File(SystemProperty.JAVA_IO_TMP_DIR.get(), "jtheque"));
-
-        SystemProperty.USER_DIR.set(userDir);
-    }
 
     @Before
     public void launchApplication() {

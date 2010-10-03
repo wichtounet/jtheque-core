@@ -127,7 +127,7 @@ public final class LanguageServiceImpl implements LanguageService {
         synchronized (this) {
             Version previousVersion = state.getResourceVersion(name);
 
-            File folder = new File(SystemProperty.USER_DIR.get(), "i18n");
+            File folder = new File(SystemProperty.USER_DIR.get(), "core/i18n");
 
             FileUtils.createIfNotExists(folder);
 

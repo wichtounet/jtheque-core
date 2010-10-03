@@ -3,16 +3,13 @@ package org.jtheque.features;
 import org.jtheque.features.Feature.FeatureType;
 import org.jtheque.i18n.LanguageService;
 import org.jtheque.ui.utils.actions.JThequeAction;
+import org.jtheque.unit.AbstractJThequeTest;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.SystemProperty;
 import org.jtheque.utils.collections.CollectionUtils;
-import org.jtheque.utils.io.FileUtils;
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.slf4j.LoggerFactory;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -24,9 +21,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
-
-import ch.qos.logback.classic.Level;
-import ch.qos.logback.classic.Logger;
 
 import static org.junit.Assert.*;
 
@@ -48,29 +42,9 @@ import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "jtheque-features-test.xml")
-public class FeatureServiceTest {
+public class FeatureServiceTest extends AbstractJThequeTest {
     @Resource
     private FeatureService featureService;
-
-    private static String userDir;
-
-    static {
-        ((Logger) LoggerFactory.getLogger("root")).setLevel(Level.ERROR);
-        
-        userDir = SystemProperty.USER_DIR.get();
-
-        File folder = new File(SystemProperty.JAVA_IO_TMP_DIR.get(), "jtheque");
-        folder.mkdirs();
-
-        SystemProperty.USER_DIR.set(folder.getAbsolutePath());
-    }
-
-    @AfterClass
-    public static void after() {
-        FileUtils.delete(new File(SystemProperty.JAVA_IO_TMP_DIR.get(), "jtheque"));
-
-        SystemProperty.USER_DIR.set(userDir);
-    }
 
     @Test
     public void initOK() {
@@ -78,17 +52,10 @@ public class FeatureServiceTest {
     }
 
     @Test
-    public void configCreated() {
-        File folder = new File(SystemProperty.JAVA_IO_TMP_DIR.get(), "jtheque");
-
-        assertTrue(new File(folder, "config.xml").exists());
-    }
-
-    @Test
-    public void defaultFeatures(){
+    public void defaultFeatures() {
         assertEquals(4, featureService.getFeatures().size());
 
-        for(Feature feature : featureService.getFeatures()){
+        for (Feature feature : featureService.getFeatures()) {
             assertEquals(FeatureType.PACK, feature.getType());
 
             assertTrue(StringUtils.equalsOneOf(feature.getTitleKey(), "menu.file", "menu.help", "menu.advanced", "menu.edit"));
@@ -96,7 +63,7 @@ public class FeatureServiceTest {
     }
 
     @Test
-    public void listenerCalledForMainFeatures(){
+    public void listenerCalledForMainFeatures() {
         final AtomicInteger addCounter = new AtomicInteger(0);
         final AtomicInteger removeCounter = new AtomicInteger(0);
         final AtomicInteger modifyCounter = new AtomicInteger(0);
@@ -187,8 +154,8 @@ public class FeatureServiceTest {
 
         @Override
         public Collection<Feature> getSubFeatures(CoreFeature feature) {
-            if(feature == CoreFeature.FILE){
-                return Arrays.asList(Features.newActionFeature(11, new JThequeAction(){
+            if (feature == CoreFeature.FILE) {
+                return Arrays.asList(Features.newActionFeature(11, new JThequeAction() {
                     @Override
                     public void actionPerformed(ActionEvent actionEvent) {
                         //Nothing to do

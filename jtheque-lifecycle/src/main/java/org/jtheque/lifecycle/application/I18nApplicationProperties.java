@@ -1,7 +1,7 @@
 package org.jtheque.lifecycle.application;
 
 import org.jtheque.core.application.ApplicationProperties;
-import org.jtheque.utils.SystemProperty;
+import org.jtheque.core.impl.Folders;
 import org.jtheque.utils.annotations.Immutable;
 import org.jtheque.utils.collections.ArrayUtils;
 
@@ -44,7 +44,7 @@ final class I18nApplicationProperties implements ApplicationProperties {
 
         resourceBundle.setAlwaysUseMessageFormat(false);
         resourceBundle.setUseCodeAsDefaultMessage(true);
-        resourceBundle.setBasename("file:" + SystemProperty.USER_DIR.get() + "i18n/application");
+        resourceBundle.setBasename("file:" + Folders.getApplicationFolder().getAbsolutePath() + "/i18n/application");
     }
 
     @Override

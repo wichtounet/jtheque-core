@@ -1,6 +1,7 @@
 package org.jtheque.modules.impl;
 
 import org.jtheque.core.Core;
+import org.jtheque.core.impl.Folders;
 import org.jtheque.errors.ErrorService;
 import org.jtheque.errors.Errors;
 import org.jtheque.modules.Module;
@@ -263,11 +264,11 @@ public final class ModuleManager {
      * @throws org.jtheque.modules.ModuleException
      *          If there is a problem to copy the file in the good folder.
      */
-    private File installModuleFile(File file) throws ModuleException {
+    private static File installModuleFile(File file) throws ModuleException {
         File target = file;
 
-        if (!FileUtils.isFileInDirectory(file, core.getFolders().getModulesFolder())) {
-            target = new File(core.getFolders().getModulesFolder(), file.getName());
+        if (!FileUtils.isFileInDirectory(file, Folders.getModulesFolder())) {
+            target = new File(Folders.getModulesFolder(), file.getName());
 
             if (target.exists()) {
                 throw new ModuleException("errors.module.installFromRepository.already.exists", ModuleOperation.INSTALL);

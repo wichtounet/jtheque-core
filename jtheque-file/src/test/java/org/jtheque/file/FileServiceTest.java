@@ -2,21 +2,18 @@ package org.jtheque.file;
 
 import org.jtheque.core.Core;
 import org.jtheque.file.FileService.XmlBackupVersion;
+import org.jtheque.unit.AbstractJThequeTest;
 import org.jtheque.utils.SystemProperty;
 import org.jtheque.utils.bean.IntDate;
 import org.jtheque.utils.bean.Version;
 import org.jtheque.utils.io.FileException;
-import org.jtheque.utils.io.FileUtils;
 import org.jtheque.xml.utils.XML;
 import org.jtheque.xml.utils.XMLException;
 import org.jtheque.xml.utils.XMLReader;
 import org.jtheque.xml.utils.XMLWriter;
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.slf4j.LoggerFactory;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -31,9 +28,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.concurrent.atomic.AtomicInteger;
-
-import ch.qos.logback.classic.Level;
-import ch.qos.logback.classic.Logger;
 
 import static org.junit.Assert.*;
 
@@ -55,29 +49,9 @@ import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "jtheque-file-test.xml")
-public class FileServiceTest {
+public class FileServiceTest extends AbstractJThequeTest {
     @Resource
     private FileService fileService;
-
-    private static String userDir;
-
-    static {
-        ((Logger) LoggerFactory.getLogger("root")).setLevel(Level.ERROR);
-
-        userDir = SystemProperty.USER_DIR.get();
-
-        File folder = new File(SystemProperty.JAVA_IO_TMP_DIR.get(), "jtheque");
-        folder.mkdirs();
-
-        SystemProperty.USER_DIR.set(folder.getAbsolutePath());
-    }
-    
-    @AfterClass
-    public static void after() {
-        FileUtils.delete(new File(SystemProperty.JAVA_IO_TMP_DIR.get(), "jtheque"));
-
-        SystemProperty.USER_DIR.set(userDir);
-    }
 
     @Test
     public void initOK() {
@@ -85,12 +59,12 @@ public class FileServiceTest {
     }
 
     @Test
-    public void exporters(){
+    public void exporters() {
         final AtomicInteger counter = new AtomicInteger(0);
 
         final Collection<String> datas = Arrays.asList("data1", "data2", "data3");
 
-        fileService.registerExporter("no-module", new Exporter<String>(){
+        fileService.registerExporter("no-module", new Exporter<String>() {
             @Override
             public boolean canExportTo(String fileType) {
                 return "xml".equals(fileType);
@@ -144,14 +118,14 @@ public class FileServiceTest {
 
     @Test
     @DirtiesContext
-    public void restore(){
+    public void restore() {
         File backupFile = new File(SystemProperty.USER_DIR.get(), "backup.xml");
 
         createFakeBackupFile(backupFile);
 
         final AtomicInteger counter = new AtomicInteger(0);
 
-        fileService.registerBackuper("no-module", new ModuleBackuper(){
+        fileService.registerBackuper("no-module", new ModuleBackuper() {
             @Override
             public String getId() {
                 return "test-backup";
@@ -176,7 +150,7 @@ public class FileServiceTest {
 
                 assertEquals(1, backup.getNodes().size());
 
-                for(org.jtheque.xml.utils.Node node : backup.getNodes()){
+                for (org.jtheque.xml.utils.Node node : backup.getNodes()) {
                     assertEquals("simple", node.getName());
                     assertEquals("true", node.getAttributeValue("test"));
                 }
@@ -196,10 +170,10 @@ public class FileServiceTest {
 
     @Test
     @DirtiesContext
-    public void backup(){
+    public void backup() {
         File restoreFile = new File(SystemProperty.USER_DIR.get(), "restore.xml");
 
-        fileService.registerBackuper("no-module", new ModuleBackuper(){
+        fileService.registerBackuper("no-module", new ModuleBackuper() {
             @Override
             public String getId() {
                 return "test-backup";
@@ -242,7 +216,7 @@ public class FileServiceTest {
 
             assertEquals(1, nodes.size());
 
-            for(Node node : nodes){
+            for (Node node : nodes) {
                 NodeList childrens = node.getChildNodes();
 
                 assertEquals("test-backup", getNode("id", childrens).getTextContent());
@@ -271,8 +245,8 @@ public class FileServiceTest {
     }
 
     private static Node getNode(String name, NodeList childrens) {
-        for(int i = 0; i < childrens.getLength(); i++){
-            if(name.equals(childrens.item(i).getNodeName())){
+        for (int i = 0; i < childrens.getLength(); i++) {
+            if (name.equals(childrens.item(i).getNodeName())) {
                 return childrens.item(i);
             }
         }

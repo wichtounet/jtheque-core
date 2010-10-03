@@ -68,7 +68,7 @@ public final class Kernel implements Closeable {
      * Start all the bundles. The bundles are started in the order of the "start" file.
      */
     private void startBundles() {
-        Collection<String> bundles = FileUtils.getLinesOf(new File(System.getProperty("user.dir") + "/bundles", "start"));
+        Collection<String> bundles = FileUtils.getLinesOf(new File(SystemProperty.USER_DIR.get() + "core/bundles", "start"));
 
         for(String bundle : bundles){
             startIfNotStarted(bundle);
@@ -112,8 +112,6 @@ public final class Kernel implements Closeable {
     public static void main(String[] args) {
         if (args.length > 0) {
             SystemProperty.USER_DIR.set(args[0]);
-        } else {
-            SystemProperty.USER_DIR.set(SystemProperty.USER_DIR.get() + "core/");
         }
 
         configureLogging();

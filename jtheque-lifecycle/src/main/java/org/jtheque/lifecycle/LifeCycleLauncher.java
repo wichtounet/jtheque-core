@@ -4,6 +4,7 @@ import org.jtheque.collections.CollectionListener;
 import org.jtheque.collections.CollectionsService;
 import org.jtheque.core.Core;
 import org.jtheque.core.application.Application;
+import org.jtheque.core.impl.Folders;
 import org.jtheque.core.lifecycle.LifeCycle;
 import org.jtheque.events.EventLevel;
 import org.jtheque.events.EventService;
@@ -11,7 +12,6 @@ import org.jtheque.events.Events;
 import org.jtheque.lifecycle.application.XMLApplicationReader;
 import org.jtheque.modules.ModuleService;
 import org.jtheque.utils.SimplePropertiesCache;
-import org.jtheque.utils.SystemProperty;
 import org.jtheque.utils.ThreadUtils;
 import org.jtheque.utils.annotations.NotThreadSafe;
 import org.jtheque.utils.ui.SwingUtils;
@@ -78,7 +78,7 @@ public class LifeCycleLauncher implements CollectionListener {
     public void start() {
         configureDefaultsProperties();
 
-        Application application = new XMLApplicationReader().readApplication(SystemProperty.USER_DIR.get() + "/application.xml");
+        Application application = new XMLApplicationReader().readApplication(Folders.getApplicationFolder() + "/application.xml");
 
         core.launchApplication(application);
 

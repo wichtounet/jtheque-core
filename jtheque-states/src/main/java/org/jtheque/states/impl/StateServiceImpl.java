@@ -161,47 +161,38 @@ public final class StateServiceImpl implements StateService {
     public void loadStates() {
         XMLReader<org.w3c.dom.Node> reader = XML.newJavaFactory().newReader();
 
-        try {
-            reader.openFile(getConfigFile());
+        if(new File(getConfigFilePath()).exists()){
+            try {
+                reader.openFile(getConfigFilePath());
 
-            for (Object stateNode : reader.getNodes("state", reader.getRootElement())) {
-                String id = reader.readString("@id", stateNode);
-                boolean delegated = reader.readBoolean("@delegated", stateNode);
+                for (Object stateNode : reader.getNodes("state", reader.getRootElement())) {
+                    String id = reader.readString("@id", stateNode);
+                    boolean delegated = reader.readBoolean("@delegated", stateNode);
 
-                if (delegated) {
-                    Collection<org.w3c.dom.Node> nodeElements = reader.getNodes("*", stateNode);
+                    if (delegated) {
+                        Collection<org.w3c.dom.Node> nodeElements = reader.getNodes("*", stateNode);
 
-                    Collection<Node> stateNodes = XML.newJavaFactory().newNodeLoader().resolveNodeStates(nodeElements);
+                        Collection<Node> stateNodes = XML.newJavaFactory().newNodeLoader().resolveNodeStates(nodeElements);
 
-                    nodes.put(id, stateNodes);
-                } else {
-                    Collection<org.w3c.dom.Node> propertyElements = reader.getNodes("properties/property", stateNode);
+                        nodes.put(id, stateNodes);
+                    } else {
+                        Collection<org.w3c.dom.Node> propertyElements = reader.getNodes("properties/property", stateNode);
 
-                    Map<String, String> stateProperties = CollectionUtils.newHashMap(propertyElements.size());
+                        Map<String, String> stateProperties = CollectionUtils.newHashMap(propertyElements.size());
 
-                    for (Object propertyNode : propertyElements) {
-                        stateProperties.put(reader.readString("@key", propertyNode), reader.readString("@value", propertyNode));
+                        for (Object propertyNode : propertyElements) {
+                            stateProperties.put(reader.readString("@key", propertyNode), reader.readString("@value", propertyNode));
+                        }
+
+                        properties.put(id, stateProperties);
                     }
-
-                    properties.put(id, stateProperties);
                 }
+            } catch (XMLException e) {
+                LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
+            } finally {
+                FileUtils.close(reader);
             }
-        } catch (XMLException e) {
-            LoggerFactory.getLogger(getClass()).error(e.getMessage(), e);
-        } finally {
-            FileUtils.close(reader);
         }
-    }
-
-    /**
-     * Init the config file.
-     *
-     * @param file The config file.
-     */
-    private static void initConfigFile(File file) {
-        XMLWriter<org.w3c.dom.Node> writer = XML.newJavaFactory().newWriter("states");
-
-        writer.write(file.getAbsolutePath());
     }
 
     /**
@@ -215,7 +206,7 @@ public final class StateServiceImpl implements StateService {
         writeProperties(writer);
         writeNodes(writer);
 
-        writer.write(getConfigFile().getAbsolutePath());
+        writer.write(getConfigFilePath());
     }
 
     /**
@@ -348,19 +339,11 @@ public final class StateServiceImpl implements StateService {
     }
 
     /**
-     * Return the config file.
+     * Return the path to the config file.
      *
-     * @return The config file.
+     * @return The path to the config file.
      */
-    private static File getConfigFile() {
-        File configFile = new File(SystemProperty.USER_DIR.get(), "config.xml");
-
-        if (!configFile.exists()) {
-            FileUtils.createEmptyFile(configFile.getAbsolutePath());
-
-            initConfigFile(configFile);
-        }
-
-        return configFile;
+    private static String getConfigFilePath() {
+        return new File(SystemProperty.USER_DIR.get(), "core/config.xml").getAbsolutePath();
     }
 }

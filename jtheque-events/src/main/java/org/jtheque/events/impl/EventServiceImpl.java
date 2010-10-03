@@ -50,11 +50,13 @@ import java.util.Map;
  */
 @ThreadSafe
 public final class EventServiceImpl implements EventService {
+    private final File eventsFile = new File(SystemProperty.USER_DIR.get(), "core/logs.xml");
+    
     @GuardedInternally
     private final Map<String, Collection<Event>> logs = CollectionUtils.newConcurrentMap(5);
 
     /**
-     * Construct a new LogEventServiceImpl.
+     * Construct a new EventServiceImpl.
      */
     public EventServiceImpl() {
         super();
@@ -88,17 +90,13 @@ public final class EventServiceImpl implements EventService {
      */
     @PostConstruct
     public void importFromXML() {
-        final File f = new File(SystemProperty.USER_DIR.get(), "/logs.xml");
-
-        if (f.exists()) {
+        if (eventsFile.exists()) {
             ThreadUtils.inNewThread(new Runnable() {
                 @Override
                 public void run() {
-                    readEvents(f);
+                    readEvents(eventsFile);
                 }
             });
-        } else {
-            createEmptyEventFile(f);
         }
     }
 
@@ -138,17 +136,6 @@ public final class EventServiceImpl implements EventService {
     }
 
     /**
-     * Create an empty event file.
-     *
-     * @param f The file.
-     */
-    private static void createEmptyEventFile(File f) {
-        XMLWriter<Node> writer = XML.newJavaFactory().newWriter("logs");
-
-        writer.write(f.getAbsolutePath());
-    }
-
-    /**
      * Save the events to XML.
      */
     @PreDestroy
@@ -165,7 +152,7 @@ public final class EventServiceImpl implements EventService {
             writer.switchToParent();
         }
 
-        writer.write(SystemProperty.USER_DIR.get() + "/logs.xml");
+        writer.write(eventsFile.getAbsolutePath());
     }
 
     /**

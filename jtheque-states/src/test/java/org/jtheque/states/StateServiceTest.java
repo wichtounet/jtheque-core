@@ -2,27 +2,19 @@ package org.jtheque.states;
 
 import org.jtheque.states.utils.AbstractConcurrentState;
 import org.jtheque.states.utils.AbstractState;
-import org.jtheque.utils.SystemProperty;
+import org.jtheque.unit.AbstractJThequeTest;
 import org.jtheque.utils.collections.CollectionUtils;
-import org.jtheque.utils.io.FileUtils;
 
-import org.junit.AfterClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.slf4j.LoggerFactory;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
 
-import java.io.File;
 import java.util.Map;
 
-import ch.qos.logback.classic.Level;
-import ch.qos.logback.classic.Logger;
-
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
 /*
  * Copyright JTheque (Baptiste Wicht)
@@ -42,40 +34,13 @@ import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "jtheque-states-test.xml")
-public class StateServiceTest {
+public class StateServiceTest extends AbstractJThequeTest {
     @Resource
     private StateService stateService;
-
-    private static final String USER_DIR;
-
-    static {
-        ((Logger) LoggerFactory.getLogger("root")).setLevel(Level.ERROR);
-
-        USER_DIR = SystemProperty.USER_DIR.get();
-
-        File folder = new File(SystemProperty.JAVA_IO_TMP_DIR.get(), "jtheque");
-        folder.mkdirs();
-
-        SystemProperty.USER_DIR.set(folder.getAbsolutePath());
-    }
-
-    @AfterClass
-    public static void after() {
-        FileUtils.delete(new File(SystemProperty.JAVA_IO_TMP_DIR.get(), "jtheque"));
-
-        SystemProperty.USER_DIR.set(USER_DIR);
-    }
 
     @Test
     public void initOK() {
         assertNotNull(stateService);
-    }
-
-    @Test
-    public void configCreated() {
-        File folder = new File(SystemProperty.JAVA_IO_TMP_DIR.get(), "jtheque");
-
-        assertTrue(new File(folder, "config.xml").exists());
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -99,15 +64,17 @@ public class StateServiceTest {
     }
 
     @Test
-    public void defaultStatesValid(){
+    public void defaultStatesValid() {
         stateService.getState(new ValidEmptyState());
         stateService.getState(new ValidEmptyConcurrentState());
     }
 
-    private static final class IncompleteState1 {}
+    private static final class IncompleteState1 {
+    }
 
-    @State(id="jtheque-states-test-configuration")
-    private static final class IncompleteState2 {}
+    @State(id = "jtheque-states-test-configuration")
+    private static final class IncompleteState2 {
+    }
 
     @State(id = "jtheque-states-test-configuration")
     private static final class IncompleteState3 {
