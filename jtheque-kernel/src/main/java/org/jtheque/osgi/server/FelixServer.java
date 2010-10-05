@@ -38,8 +38,8 @@ import java.util.Map;
  * @author Baptiste Wicht
  */
 public final class FelixServer implements OSGiServer {
-    private static final File BUNDLES_DIR = new File(SystemProperty.USER_DIR.get(), "bundles");
-    private static final File CACHE_DIR = new File(SystemProperty.USER_DIR.get(), "cache");
+    private static final File BUNDLES_DIR = new File(SystemProperty.USER_DIR.get(), "core/bundles");
+    private static final File CACHE_DIR = new File(SystemProperty.USER_DIR.get(), "core/cache");
 
     private final Map<String, Bundle> bundles = CollectionUtils.newHashMap(50);
 
@@ -47,6 +47,8 @@ public final class FelixServer implements OSGiServer {
 
     @Override
     public void start() {
+        System.out.println(SystemProperty.USER_DIR.get());
+
         getLogger().debug("Starting Felix Server");
 
         emptyFelixCache();

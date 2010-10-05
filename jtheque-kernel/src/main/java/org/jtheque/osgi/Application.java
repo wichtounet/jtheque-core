@@ -65,7 +65,8 @@ final class Application extends Thread {
                 if ("open".equals(command)) {
                     JOptionPane.showMessageDialog(null,
                             "The application cannot be launched twice\n" +
-                            "L'application ne peut pas être lancée plusieurs fois");
+                            "L'application ne peut pas être lancée plusieurs fois\n" +
+                             "Der Applikation kann nicht zweimal gestarted sein");
                 }
 
                 interrupt();
