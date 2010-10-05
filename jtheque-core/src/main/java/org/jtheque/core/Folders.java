@@ -36,10 +36,10 @@ public final class Folders {
     static {
         File userDir = new File(SystemProperty.USER_DIR.get());
 
-        CORE_FOLDER = new File(userDir, "application");
+        CORE_FOLDER = new File(userDir, "core");
         FileUtils.createIfNotExists(CORE_FOLDER);
 
-        APPLICATION_FOLDER = new File(userDir, "core");
+        APPLICATION_FOLDER = new File(userDir, "application");
         FileUtils.createIfNotExists(APPLICATION_FOLDER);
 
         MODULES_FOLDER = new File(userDir, "modules");
