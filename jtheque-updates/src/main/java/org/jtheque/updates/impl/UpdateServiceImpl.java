@@ -17,8 +17,8 @@ package org.jtheque.updates.impl;
  */
 
 import org.jtheque.core.Core;
+import org.jtheque.core.Folders;
 import org.jtheque.core.Versionable;
-import org.jtheque.core.impl.Folders;
 import org.jtheque.core.utils.OSGiUtils;
 import org.jtheque.core.utils.WebHelper;
 import org.jtheque.modules.Module;
@@ -28,7 +28,6 @@ import org.jtheque.ui.UIUtils;
 import org.jtheque.updates.InstallationResult;
 import org.jtheque.updates.UpdateService;
 import org.jtheque.utils.StringUtils;
-import org.jtheque.utils.SystemProperty;
 import org.jtheque.utils.annotations.GuardedBy;
 import org.jtheque.utils.annotations.ThreadSafe;
 import org.jtheque.utils.bean.Version;

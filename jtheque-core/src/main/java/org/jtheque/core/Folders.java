@@ -1,4 +1,4 @@
-package org.jtheque.core.impl;
+package org.jtheque.core;
 
 /*
  * Copyright JTheque (Baptiste Wicht)

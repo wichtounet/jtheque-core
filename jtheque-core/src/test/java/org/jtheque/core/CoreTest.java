@@ -2,7 +2,6 @@ package org.jtheque.core;
 
 import org.jtheque.core.application.Application;
 import org.jtheque.core.application.ApplicationProperties;
-import org.jtheque.core.impl.Folders;
 import org.jtheque.core.utils.ImageType;
 import org.jtheque.unit.AbstractJThequeTest;
 import org.jtheque.utils.SystemProperty;

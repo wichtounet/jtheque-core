@@ -1,7 +1,7 @@
 package org.jtheque.modules.impl;
 
 import org.jtheque.core.Core;
-import org.jtheque.core.impl.Folders;
+import org.jtheque.core.Folders;
 import org.jtheque.core.utils.OSGiUtils;
 import org.jtheque.errors.ErrorService;
 import org.jtheque.errors.Errors;

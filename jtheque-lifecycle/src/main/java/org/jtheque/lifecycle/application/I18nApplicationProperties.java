@@ -1,7 +1,7 @@
 package org.jtheque.lifecycle.application;
 
 import org.jtheque.core.application.ApplicationProperties;
-import org.jtheque.core.impl.Folders;
+import org.jtheque.core.Folders;
 import org.jtheque.utils.annotations.Immutable;
 import org.jtheque.utils.collections.ArrayUtils;
 

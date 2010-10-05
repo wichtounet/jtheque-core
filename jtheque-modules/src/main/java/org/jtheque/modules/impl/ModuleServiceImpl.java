@@ -17,7 +17,7 @@ package org.jtheque.modules.impl;
  */
 
 import org.jtheque.core.Core;
-import org.jtheque.core.impl.Folders;
+import org.jtheque.core.Folders;
 import org.jtheque.images.ImageService;
 import org.jtheque.modules.Module;
 import org.jtheque.modules.ModuleDescription;

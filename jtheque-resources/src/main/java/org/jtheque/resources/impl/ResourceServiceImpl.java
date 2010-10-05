@@ -1,6 +1,6 @@
 package org.jtheque.resources.impl;
 
-import org.jtheque.core.impl.Folders;
+import org.jtheque.core.Folders;
 import org.jtheque.core.utils.WebHelper;
 import org.jtheque.resources.Resource;
 import org.jtheque.resources.ResourceService;

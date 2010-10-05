@@ -1,11 +1,10 @@
 package org.jtheque.lifecycle.application;
 
 import org.jtheque.core.application.Application;
-import org.jtheque.core.impl.Folders;
+import org.jtheque.core.Folders;
 import org.jtheque.core.utils.ImageDescriptor;
 import org.jtheque.core.utils.ImageType;
 import org.jtheque.utils.StringUtils;
-import org.jtheque.utils.SystemProperty;
 import org.jtheque.utils.annotations.NotThreadSafe;
 import org.jtheque.utils.bean.InternationalString;
 import org.jtheque.utils.bean.Version;
