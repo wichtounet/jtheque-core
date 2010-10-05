@@ -18,16 +18,16 @@ package org.jtheque.features.impl;
 
 import org.jtheque.features.CoreFeature;
 import org.jtheque.features.Feature;
+import org.jtheque.features.Feature.FeatureType;
 import org.jtheque.features.FeatureListener;
 import org.jtheque.features.FeatureService;
-import org.jtheque.features.Menu;
 import org.jtheque.features.Features;
-import org.jtheque.features.Feature.FeatureType;
+import org.jtheque.features.Menu;
 import org.jtheque.i18n.LanguageService;
-import org.jtheque.modules.ModuleResourceCache;
-import org.jtheque.modules.ModuleService;
 import org.jtheque.modules.Module;
 import org.jtheque.modules.ModuleListener;
+import org.jtheque.modules.ModuleResourceCache;
+import org.jtheque.modules.ModuleService;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.annotations.GuardedInternally;
 import org.jtheque.utils.annotations.ThreadSafe;
@@ -107,7 +107,7 @@ public final class FeatureServiceImpl implements FeatureService, ModuleListener 
         for (CoreFeature feature : CoreFeature.values()) {
             Collection<Feature> subFeatures = menu.getSubFeatures(feature);
 
-            if(!subFeatures.isEmpty()){
+            if (!subFeatures.isEmpty()) {
                 coreFeatures.get(feature).addSubFeatures(subFeatures);
 
                 fireFeatureModified(coreFeatures.get(feature));
@@ -159,7 +159,9 @@ public final class FeatureServiceImpl implements FeatureService, ModuleListener 
      */
     private void fireFeatureAdded(Feature feature) {
         for (FeatureListener listener : listeners) {
-            listener.featureAdded(feature);
+            if (listener != null) {
+                listener.featureAdded(feature);
+            }
         }
     }
 
@@ -170,7 +172,9 @@ public final class FeatureServiceImpl implements FeatureService, ModuleListener 
      */
     private void fireFeatureRemoved(Feature feature) {
         for (FeatureListener listener : listeners) {
-            listener.featureRemoved(feature);
+            if (listener != null) {
+                listener.featureRemoved(feature);
+            }
         }
     }
 
@@ -181,7 +185,9 @@ public final class FeatureServiceImpl implements FeatureService, ModuleListener 
      */
     private void fireFeatureModified(Feature feature) {
         for (FeatureListener listener : listeners) {
-            listener.featureModified(feature);
+            if (listener != null) {
+                listener.featureModified(feature);
+            }
         }
     }
 

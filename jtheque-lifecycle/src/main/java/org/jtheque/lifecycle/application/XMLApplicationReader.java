@@ -223,6 +223,10 @@ public final class XMLApplicationReader {
 
             String typeStr = reader.readString("@type", iconElement);
 
+            if(StringUtils.isEmpty(typeStr)){
+                typeStr = "png";
+            }
+
             return new ImageDescriptor(path.toString(), ImageType.resolve(typeStr));
         }
 

@@ -47,8 +47,6 @@ public final class FelixServer implements OSGiServer {
 
     @Override
     public void start() {
-        System.out.println(SystemProperty.USER_DIR.get());
-
         getLogger().debug("Starting Felix Server");
 
         emptyFelixCache();

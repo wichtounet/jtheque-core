@@ -71,8 +71,6 @@ public final class DefaultsActivator implements BundleActivator {
     private static class ActivateDefaults implements Runnable {
         @Override
         public void run() {
-            System.out.println("I'm here !");
-
             UIManager.put("ClassLoader", SubstanceBusinessBlackSteelLookAndFeel.class.getClassLoader());
             UIManager.getLookAndFeelDefaults().put("ClassLoader", SubstanceBusinessBlackSteelLookAndFeel.class.getClassLoader());
             
@@ -81,7 +79,6 @@ public final class DefaultsActivator implements BundleActivator {
             } catch (UnsupportedLookAndFeelException e) {
                 throw new RuntimeException(e);
             }
-
 
             JFrame.setDefaultLookAndFeelDecorated(true);
             JDialog.setDefaultLookAndFeelDecorated(true);

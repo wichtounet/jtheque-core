@@ -1,6 +1,7 @@
 package org.jtheque.schemas;
 
 import org.jtheque.core.utils.OSGiUtils;
+import org.jtheque.persistence.DaoPersistenceContext;
 import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.bean.EqualsBuilder;
 import org.jtheque.utils.bean.HashCodeUtils;
@@ -53,7 +54,9 @@ public abstract class AbstractSchema implements Schema {
      * @param bundleContext The bundle context to search for the JDBC template.
      */
     void setJdbcTemplate(BundleContext bundleContext) {
-        jdbcTemplate = OSGiUtils.getService(bundleContext, SimpleJdbcTemplate.class);
+        DaoPersistenceContext daoPersistenceContext = OSGiUtils.getService(bundleContext, DaoPersistenceContext.class);
+
+        jdbcTemplate = daoPersistenceContext.getTemplate();
     }
 
     /**
