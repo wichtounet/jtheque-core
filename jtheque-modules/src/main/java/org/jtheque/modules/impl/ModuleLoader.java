@@ -303,6 +303,8 @@ public final class ModuleLoader implements BundleContextAware {
 
         if (StringUtils.isNotEmpty(headers.get("Module-Core"))) {
             container.setCoreVersion(Version.get(headers.get("Module-Core")));
+        } else {
+            container.setCoreVersion(Core.VERSION);
         }
 
         container.setUrl(headers.get("Module-Url"));
