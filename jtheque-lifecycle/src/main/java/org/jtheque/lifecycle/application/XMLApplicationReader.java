@@ -218,7 +218,7 @@ public final class XMLApplicationReader {
             Object iconElement = reader.getNode(node, reader.getRootElement());
 
             StringBuilder path = new StringBuilder(Folders.getApplicationFolder().getAbsolutePath());
-            path.append("images/");
+            path.append("/images/");
             path.append(reader.readString("@image", iconElement));
 
             String typeStr = reader.readString("@type", iconElement);
