@@ -24,7 +24,7 @@
     <bean id="dataSource" class="org.springframework.jdbc.datasource.SingleConnectionDataSource"
           destroy-method="destroy">
         <property name="driverClassName" value="org.h2.Driver"/>
-        <property name="url" value="jdbc:h2:db/jtheque"/>
+        <property name="url" value="jdbc:h2:core/db/jtheque"/>
         <property name="username" value="sa"/>
         <property name="password" value=""/>
     </bean>
