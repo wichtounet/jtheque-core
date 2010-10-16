@@ -1,7 +1,9 @@
 package org.jtheque.errors;
 
 import org.jtheque.errors.Error.Level;
+import org.jtheque.i18n.InternationalizableException;
 import org.jtheque.i18n.LanguageService;
+import org.jtheque.utils.StringUtils;
 import org.jtheque.utils.annotations.Immutable;
 import org.jtheque.utils.collections.ArrayUtils;
 
@@ -80,6 +82,14 @@ public final class Errors {
      * @return The created error.
      */
     public static Error newError(Throwable exception) {
+        if(exception instanceof InternationalizableException){
+            InternationalizableException i18nException = (InternationalizableException) exception;
+
+            if(StringUtils.isNotEmpty(i18nException.getI18nMessage())){
+                return newI18nError(i18nException.getI18nMessage());
+            }
+        }
+
         return new JThequeError(exception.getMessage(), Level.ERROR, null, exception);
     }
 

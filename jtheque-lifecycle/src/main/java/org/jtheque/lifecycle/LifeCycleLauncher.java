@@ -142,6 +142,11 @@ public class LifeCycleLauncher implements CollectionListener {
 
         lifeCycle.refreshTitle();
 
-        views.displayConditionalViews();
+        SwingUtils.inEdt(new Runnable() {
+            @Override
+            public void run() {
+                views.displayConditionalViews();
+            }
+        });
     }
 }

@@ -125,9 +125,11 @@ public final class UpdateServiceImpl implements UpdateService {
 
     @Override
     public Version getMostRecentVersion(Versionable object) {
-        if (webHelper.isReachable(object.getDescriptorURL())) {
-            synchronized (this) {
-                return descriptorsLoader.getMostRecentVersion(object);
+        if(StringUtils.isNotEmpty(object.getDescriptorURL())){
+            if (webHelper.isReachable(object.getDescriptorURL())) {
+                synchronized (this) {
+                    return descriptorsLoader.getMostRecentVersion(object);
+                }
             }
         }
 

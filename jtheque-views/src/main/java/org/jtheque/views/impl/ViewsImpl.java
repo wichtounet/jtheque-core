@@ -17,6 +17,8 @@ package org.jtheque.views.impl;
  */
 
 import org.jtheque.core.Core;
+import org.jtheque.i18n.Internationalizable;
+import org.jtheque.i18n.LanguageService;
 import org.jtheque.messages.MessageService;
 import org.jtheque.modules.Module;
 import org.jtheque.modules.ModuleListener;
@@ -39,6 +41,7 @@ import org.jtheque.views.impl.components.config.JPanelConfigNetwork;
 import org.jtheque.views.impl.components.config.JPanelConfigOthers;
 import org.jtheque.views.panel.ModuleView;
 import org.jtheque.views.windows.ConfigView;
+import org.jtheque.views.windows.ErrorView;
 import org.jtheque.views.windows.MainView;
 import org.jtheque.views.windows.MessageView;
 
@@ -86,6 +89,9 @@ public final class ViewsImpl implements Views, ApplicationContextAware, ModuleLi
     private Controller<MainView> generalController;
 
     @Resource
+    private Controller<ErrorView> errorController;
+
+    @Resource
     private MessageService messageService;
 
     @Resource
@@ -96,6 +102,9 @@ public final class ViewsImpl implements Views, ApplicationContextAware, ModuleLi
 
     @Resource
     private UpdateService updateService;
+
+    @Resource
+    private LanguageService languageService;
 
     /**
      * Register a module listener to the module service.
@@ -141,6 +150,16 @@ public final class ViewsImpl implements Views, ApplicationContextAware, ModuleLi
     @Override
     public void addMainComponent(String moduleId, final MainComponent component) {
         mainComponents.add(component);
+
+        if(component instanceof Internationalizable){
+            languageService.addInternationalizable((Internationalizable) component);
+            ((Internationalizable) component).refreshText(languageService);
+        }
+
+        if (component.getImpl() instanceof Internationalizable) {
+            languageService.addInternationalizable((Internationalizable) component.getImpl());
+            ((Internationalizable) component.getImpl()).refreshText(languageService);
+        }
 
         ModuleResourceCache.addResource(moduleId, MainComponent.class, component);
 
@@ -240,6 +259,10 @@ public final class ViewsImpl implements Views, ApplicationContextAware, ModuleLi
                     break;
                 }
             }
+        }
+
+        if(errorController.getView().isNotEmpty()){
+            errorController.getView().display();
         }
     }
 

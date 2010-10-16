@@ -1,5 +1,6 @@
 package org.jtheque.modules;
 
+import org.jtheque.i18n.InternationalizableException;
 import org.jtheque.utils.StringUtils;
 
 /*
@@ -23,7 +24,7 @@ import org.jtheque.utils.StringUtils;
  *
  * @author Baptiste Wicht
  */
-public class ModuleException extends Exception {
+public class ModuleException extends Exception implements InternationalizableException {
     private static final long serialVersionUID = 6510172212610174776L;
 
     /**
@@ -97,11 +98,7 @@ public class ModuleException extends Exception {
         return StringUtils.isNotEmpty(i18nMessage);
     }
 
-    /**
-     * Return the i18n message of the exception.
-     *
-     * @return The i18n message of the exception.
-     */
+    @Override
     public String getI18nMessage() {
         return i18nMessage;
     }

@@ -29,6 +29,11 @@ import static org.junit.Assert.fail;
  * limitations under the License.
  */
 
+/**
+ * A simple abstract JTheque test.
+ *
+ * @author Baptiste Wicht
+ */
 public class AbstractJThequeTest {
     static {
         ((Logger) LoggerFactory.getLogger("root")).setLevel(Level.ERROR);
@@ -45,18 +50,33 @@ public class AbstractJThequeTest {
         getSubFolder("application");
     }
 
+    /**
+     * Return the sub folder in the JTheque folder.
+     *
+     * @param folderName The name of the folder.
+     *
+     * @return The sub folder.
+     */
     static File getSubFolder(String folderName) {
         return getFolder(SystemProperty.USER_DIR, folderName);
     }
 
-    private static File getFolder(SystemProperty dir, String folderName) {
-        File folder = new File(dir.get(), folderName);
+    /**
+     * Return the folder in the given dir.
+     *
+     * @param dir    The dir to search into.
+     * @param folder The folder to search.
+     *
+     * @return The folder in the dir.
+     */
+    private static File getFolder(SystemProperty dir, String folder) {
+        File f = new File(dir.get(), folder);
 
-        if (!folder.exists() && !folder.mkdirs()) {
+        if (!f.exists() && !f.mkdirs()) {
             fail();
         }
 
-        return folder;
+        return f;
     }
 
     @AfterClass

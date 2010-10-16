@@ -132,4 +132,9 @@ public final class ErrorView extends SwingFilthyBuildedFrameView<Model> implemen
     public void errorOccurred(Error error) {
         display();
     }
+
+    @Override
+    public boolean isNotEmpty() {
+        return listEvents.getModel().getSize() > 0;
+    }
 }

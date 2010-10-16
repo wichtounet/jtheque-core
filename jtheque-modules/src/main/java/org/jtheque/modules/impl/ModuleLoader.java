@@ -208,9 +208,9 @@ public final class ModuleLoader implements BundleContextAware {
             //Get informations from manifest
             readManifestInformations(builder, bundle);
         } catch (BundleException e) {
-            throw new ModuleException(e, ModuleOperation.INSTALL);
+            throw new ModuleException("error.module.config", e, ModuleOperation.INSTALL);
         } catch (IOException e) {
-            throw new ModuleException(e, ModuleOperation.INSTALL);
+            throw new ModuleException("error.module.config", ModuleOperation.INSTALL);
         }
 
         Module module = builder.build();
@@ -241,7 +241,10 @@ public final class ModuleLoader implements BundleContextAware {
             ZipEntry configEntry = jarFile.getEntry("module.xml");
 
             if (configEntry == null) {
-                throw new ModuleException("error.module.config", ModuleOperation.LOAD);
+                return new ModuleResources(
+                        CollectionUtils.<ImageResource>emptyList(),
+                        CollectionUtils.<I18NResource>emptyList(),
+                        CollectionUtils.<Resource>emptyList());
             }
 
             ModuleResources resources = importConfig(jarFile.getInputStream(configEntry));
